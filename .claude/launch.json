@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "curio",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8123", "--directory", "C:\\Users\\ukbch\\curio"],
+      "port": 8123
+    }
+  ]
+}
