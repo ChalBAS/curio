@@ -58,7 +58,7 @@ Never: ads, data sales, pay-to-win, paywalled learning.
 - **Streaks** — daily-challenge streak with best-streak record.
 - **Depth facts** — every answer reveals a one-line "whoa" fact. The soul of
   the app.
-- Question bank: 72 curated questions, 6 categories (History, Science,
+- Question bank: 48 curated questions, 6 categories (History, Science,
   Geography, Arts & Letters, Tech & Math, Nature).
 
 ## 7. Roadmap after MVP
@@ -80,6 +80,29 @@ for the full teardown, ranked edge features, and verified monetization models.*
 
 Positioning line, validated by the market's retreat from free:
 **"Duolingo's fun, without the wall."**
+
+## 7b. Inclusivity track (founder direction, 2026-07-12)
+
+Three founder-driven differentiators — knowledge for *everyone*, not just
+quiz-sharp adults. Almost no competitor does any of these well:
+
+- **Age-appropriate modes.** A 10-year-old and an adult shouldn't get the
+  same questions. Age bands (Kids ~8-12 / Teen / Adult) with their own
+  question pools, reading level, and daily challenge. Builds on the existing
+  per-question `diff` field; add an `ageBand` field. Also the gateway to the
+  B2B schools market. Safety note: kids mode must stay COPPA-clean — no
+  accounts, no tracking (already true of the whole app).
+- **Learning-disability support.** Rare-to-nonexistent in this category and
+  both mission-critical and grant-fundable (accessibility foundations, EU
+  accessibility funds). Concretely: dyslexia-friendly mode (font, spacing,
+  tinted background), no-timer / extended-timer mode (timers punish processing
+  -speed differences, not knowledge), read-aloud via free browser speech
+  synthesis, reduced-motion mode, high-contrast mode, plain-language question
+  variants. Ship as a "Comfort" settings panel — everyone benefits.
+- **Translations (later).** Architecture now, languages later: keep UI
+  strings in one strings table; per-language question banks (facts don't
+  translate 1:1 — they need cultural localization, not just translation).
+  Start with the founder's languages (EN/FR) when ready.
 
 ## 8. Success metrics
 
