@@ -105,7 +105,11 @@
     var order = shuffledIndices(q.options.length, seed);
     var opts = order.map(function (i) { return q.options[i]; });
     var ans = order.indexOf(q.answer);
-    return { id: qid(q), q: q.q, cat: q.cat, diff: q.diff, fact: q.fact, options: opts, answer: ans };
+    return { id: qid(q), q: q.q, cat: q.cat, diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, options: opts, answer: ans };
+  }
+  function srcLink(url) {
+    if (!url) return "";
+    return ' <a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">source ↗</a>';
   }
 
   // ---------- stats (Brain Map) ----------
@@ -186,6 +190,37 @@
     return s;
   }
 
+  // ---------- recall matching (typo-tolerant) ----------
+  function normText(s) {
+    return String(s).toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g, "") // strip accents
+      .replace(/^(the|a|an)\s+/, "").replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
+  }
+  function editDistance(a, b) {
+    var m = a.length, n = b.length;
+    if (Math.abs(m - n) > 2) return 99;
+    var row = [];
+    for (var j = 0; j <= n; j++) row[j] = j;
+    for (var i = 1; i <= m; i++) {
+      var prev = row[0]; row[0] = i;
+      for (var k = 1; k <= n; k++) {
+        var tmp = row[k];
+        row[k] = Math.min(row[k] + 1, row[k - 1] + 1, prev + (a[i - 1] === b[k - 1] ? 0 : 1));
+        prev = tmp;
+      }
+    }
+    return row[n];
+  }
+  function recallMatches(typed, correctOption) {
+    var t = normText(typed), c = normText(correctOption);
+    if (!t || t.length < 2) return false;
+    if (t === c) return true;
+    if (c.length >= 5 && editDistance(t, c) <= 2) return true;
+    // multi-word answers: typing the distinctive word is enough ("curie" for "Marie Curie")
+    var words = c.split(" ").filter(function (w) { return w.length >= 4; });
+    return words.length > 1 && words.indexOf(t) !== -1;
+  }
+
   // ---------- share ----------
   function shareOrCopy(text, msgEl) {
     if (navigator.share) {
@@ -261,6 +296,14 @@
         '<p>' + (daily ? '<span class="done-badge">Done today — ' + daily.score + '/' + DAILY_COUNT + '. Come back tomorrow.</span>' : "Today's five. Shareable score. The daily ritual.") + '</p>' +
       '</div>'
     ));
+    if (truthPool().length >= 4) {
+      modes.appendChild(el(
+        '<div class="card mode" id="modeTruth">' +
+          '<div class="emoji">🔎</div><h3>Fact or Fake?</h3>' +
+          '<p>Real facts hide among convincing fakes. Spot the tricks — every verdict comes with a source.</p>' +
+        '</div>'
+      ));
+    }
     wrap.appendChild(modes);
 
     // category picker feeding quick-fire
@@ -311,6 +354,8 @@
     });
     var sv = wrap.querySelector("#startVault");
     if (sv) sv.addEventListener("click", startVaultSession);
+    var mt = wrap.querySelector("#modeTruth");
+    if (mt) mt.addEventListener("click", startTruthLab);
     wrap.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); render(comfortView()); });
 
     return wrap;
@@ -450,6 +495,37 @@
         opts.appendChild(b);
       });
       node.appendChild(body);
+
+      // Explain it back: on repeat vault visits, recall from memory before seeing options.
+      var vItem = cfg.vault ? getVault()[q.id] : null;
+      if (vItem && (vItem.rung || 0) >= 1) {
+        opts.classList.add("hidden");
+        var recall = el(
+          '<div class="recall">' +
+            '<div class="mini" style="margin-bottom:8px">🧠 You’ve seen this one. Strengthen it: recall the answer from memory first (+25).</div>' +
+            '<div class="recallrow">' +
+              '<input class="recallinput" id="recallIn" type="text" autocomplete="off" placeholder="Type your answer…" aria-label="Type your answer from memory">' +
+              '<button class="btn" id="recallGo">Check</button>' +
+            '</div>' +
+            '<div class="btnrow"><button class="btn ghost" id="recallSkip">Show the options instead</button></div>' +
+          '</div>'
+        );
+        node.appendChild(recall);
+        function revealOpts() { recall.remove(); opts.classList.remove("hidden"); }
+        recall.querySelector("#recallSkip").addEventListener("click", revealOpts);
+        recall.querySelector("#recallGo").addEventListener("click", function () {
+          var typed = recall.querySelector("#recallIn").value;
+          if (recallMatches(typed, q.options[q.answer])) {
+            revealOpts();
+            choose(q.answer, q, opts, timeLeft, true);
+          } else {
+            revealOpts(); // no penalty — pick from the options as usual
+          }
+        });
+        recall.querySelector("#recallIn").addEventListener("keydown", function (e) {
+          if (e.key === "Enter") recall.querySelector("#recallGo").click();
+        });
+      }
       node.querySelector("#quit").addEventListener("click", function () { stopTimer(); render(homeView()); });
 
       function speakQuestion() {
@@ -473,7 +549,7 @@
 
     function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
 
-    function choose(i, q, opts, tLeft) {
+    function choose(i, q, opts, tLeft, recalled) {
       if (answered) return;
       answered = true; stopTimer();
       var correct = i === q.answer;
@@ -481,7 +557,7 @@
         correctCount++;
         // Speed bonus only when timed, capped so Relaxed mode can't out-score Normal.
         var bonus = secs ? Math.min(Math.max(0, tLeft), 15) * 10 : 0;
-        score += 100 + bonus + (q.diff - 1) * 25;
+        score += 100 + bonus + (q.diff - 1) * 25 + (recalled ? 25 : 0);
       }
       marks.push(correct);
       recordAnswer(q.cat, correct);
@@ -495,10 +571,28 @@
         else if (bi === i) { b.classList.add("wrong"); b.querySelector(".key").textContent = "✗"; }
       });
       var head = correct ? "Correct! " : (i === -1 ? "Time! " : "Not quite. ");
-      var fact = el('<div class="fact"><b>' + head + '</b>' + esc(q.fact) + '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? "Next →" : "See results →") + '</button></div></div>');
+      var hasDeeper = q.deeper && q.deeper.length > 0;
+      var fact = el('<div class="fact"><b>' + head + '</b>' + esc(q.fact) + srcLink(q.src) +
+        '<div class="deeperbox"></div>' +
+        '<div class="btnrow">' +
+          '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? "Next →" : "See results →") + '</button>' +
+          (hasDeeper ? '<button class="btn ghost" id="deeper">🕳️ Go deeper</button>' : '') +
+        '</div></div>');
       node.appendChild(fact);
       requestAnimationFrame(function () { fact.classList.add("show"); });
       speak(head + q.fact);
+      if (hasDeeper) {
+        var dIdx = 0, dBox = fact.querySelector(".deeperbox"), dBtn = fact.querySelector("#deeper");
+        dBtn.addEventListener("click", function () {
+          if (dIdx >= q.deeper.length) return;
+          var d = el('<div class="fact-deeper">🕳️ ' + esc(q.deeper[dIdx]) + '</div>');
+          dBox.appendChild(d);
+          requestAnimationFrame(function () { d.classList.add("show"); });
+          speak(q.deeper[dIdx]);
+          dIdx++;
+          if (dIdx >= q.deeper.length) { dBtn.disabled = true; dBtn.textContent = "🕳️ Bottom reached"; }
+        });
+      }
       fact.querySelector("#next").addEventListener("click", function () {
         idx++;
         if (idx < cfg.questions.length) show();
@@ -581,6 +675,103 @@
         if (more) more.addEventListener("click", startVaultSession);
       }
     });
+  }
+
+  // ---------- Fact or Fake? (media literacy) ----------
+  var TRUTH_ROUND = 8;
+  function truthPool() {
+    var all = window.CURIO_STATEMENTS || [];
+    return settings.ageMode === "kids" ? all.filter(function (s) { return s.kids; }) : all;
+  }
+  function startTruthLab() {
+    var pool = truthPool().slice();
+    if (pool.length < 4) { render(homeView()); return; }
+    for (var i = pool.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = pool[i]; pool[i] = pool[k]; pool[k] = t; }
+    var sts = pool.slice(0, Math.min(TRUTH_ROUND, pool.length));
+    var idx = 0, score = 0, correctCount = 0, answered = false;
+    var node = el('<div class="card"></div>');
+    render(node);
+    show();
+
+    function show() {
+      answered = false;
+      var st = sts[idx];
+      node.innerHTML = "";
+      node.appendChild(el(
+        '<div class="quizhead">' +
+          '<button class="btn ghost" id="quit" style="padding:8px 12px;font-size:13px">← Quit</button>' +
+          '<div class="progress"><i style="width:' + Math.round(idx / sts.length * 100) + '%"></i></div>' +
+          '<div class="qmeta">' + (idx + 1) + '/' + sts.length + '</div>' +
+        '</div>'
+      ));
+      node.appendChild(el(
+        '<div>' +
+          '<span class="qcat">🔎 Fact or Fake? · ' + (CAT_EMOJI[st.cat] || "") + " " + esc(st.cat) + '</span>' +
+          '<div class="qtext">“' + esc(st.s) + '”' + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="Read aloud">🔊</button>' : '') + '</div>' +
+          '<div class="truthbtns">' +
+            '<button class="opt truthopt" id="btnFact"><span class="key">✅</span><span>Fact — this is real</span></button>' +
+            '<button class="opt truthopt" id="btnFake"><span class="key">🚫</span><span>Fake — don’t fall for it</span></button>' +
+          '</div>' +
+        '</div>'
+      ));
+      node.querySelector("#quit").addEventListener("click", function () { render(homeView()); });
+      var sb = node.querySelector("#speakBtn");
+      if (sb) sb.addEventListener("click", function () { speak(st.s); });
+      if (canSpeak()) speak(st.s);
+      node.querySelector("#btnFact").addEventListener("click", function () { pick(true, st); });
+      node.querySelector("#btnFake").addEventListener("click", function () { pick(false, st); });
+    }
+
+    function pick(saidTrue, st) {
+      if (answered) return;
+      answered = true;
+      var correct = saidTrue === st.truth;
+      if (correct) { correctCount++; score += 100; }
+      recordAnswer(st.cat, correct);
+      var fBtn = node.querySelector("#btnFact"), kBtn = node.querySelector("#btnFake");
+      fBtn.disabled = kBtn.disabled = true;
+      (st.truth ? fBtn : kBtn).classList.add("correct");
+      if (!correct) (saidTrue ? fBtn : kBtn).classList.add("wrong");
+      // The explain text itself opens with "Real."/"Fake.", so the head just
+      // carries the reaction + emoji to avoid doubling the verdict word.
+      var head = (correct ? "Nice catch! " : "Gotcha — ") + (st.truth ? "✅ " : "🚫 ");
+      var fact = el('<div class="fact"><b>' + head + '</b>' + esc(st.explain) + srcLink(st.src) +
+        '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < sts.length ? "Next →" : "See results →") + '</button></div></div>');
+      node.appendChild(fact);
+      requestAnimationFrame(function () { fact.classList.add("show"); });
+      speak(head + st.explain);
+      fact.querySelector("#next").addEventListener("click", function () {
+        idx++;
+        if (idx < sts.length) show(); else done();
+      });
+    }
+
+    function done() {
+      var hi = LS.get("truthhi", 0);
+      var isHi = score > hi;
+      if (isHi) LS.set("truthhi", score);
+      var res = el(
+        '<div class="card result">' +
+          '<div class="scorebig">' + correctCount + '/' + sts.length + '</div>' +
+          '<h2>' + (isHi && score > 0 ? "🏆 New best!" : truthPraise(correctCount, sts.length)) + '</h2>' +
+          '<div class="sub">Every claim you just checked had a source. Real life should be so kind — so ask for one.</div>' +
+          '<div class="btnrow" style="justify-content:center">' +
+            '<button class="btn" id="again">Play again</button>' +
+            '<button class="btn ghost" id="home">Home</button>' +
+          '</div>' +
+        '</div>'
+      );
+      render(res);
+      res.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+      res.querySelector("#again").addEventListener("click", startTruthLab);
+    }
+  }
+  function truthPraise(c, t) {
+    var r = c / t;
+    if (r === 1) return "Unfoolable. 🔎";
+    if (r >= 0.75) return "Sharp eye for nonsense.";
+    if (r >= 0.5) return "The fakes are sneaky — that’s the point.";
+    return "Now you know the tricks. They only work once.";
   }
 
   // ---------- quickfire ----------

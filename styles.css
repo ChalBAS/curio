@@ -101,7 +101,12 @@ body {
 .opt:disabled { cursor: default; }
 
 /* Fact reveal */
-.fact { margin-top: 16px; padding: 15px 16px; border-radius: 12px; background: rgba(124,108,255,.12); border: 1px solid rgba(124,108,255,.35); font-size: 14.5px; line-height: 1.5; opacity: 0; transform: translateY(6px); transition: all .25s ease; }
+/* Entrance animation runs automatically on insertion — visibility never
+   depends on requestAnimationFrame (which pauses in backgrounded tabs). */
+/* Animate only a subtle slide — never opacity — so the content is readable
+   even if the animation is paused (backgrounded tab) at its first frame. */
+@keyframes curioReveal { from { transform: translateY(6px); } to { transform: none; } }
+.fact { margin-top: 16px; padding: 15px 16px; border-radius: 12px; background: rgba(124,108,255,.12); border: 1px solid rgba(124,108,255,.35); font-size: 14.5px; line-height: 1.5; opacity: 1; animation: curioReveal .25s ease; }
 .fact.show { opacity: 1; transform: none; }
 .fact b { color: var(--brand); }
 .timer { font-variant-numeric: tabular-nums; font-weight: 800; }
@@ -150,6 +155,22 @@ body {
 .cf-group:last-of-type { border-bottom: none; }
 .cf-title { font-weight: 800; font-size: 15px; }
 .cf-group .cats { margin-top: 8px; }
+
+/* Source links + rabbit holes */
+.srclink { color: var(--brand2); text-decoration: none; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+.srclink:hover { text-decoration: underline; }
+.fact-deeper { margin-top: 10px; padding: 12px 14px; border-radius: 10px; background: rgba(255,209,102,.10); border: 1px solid rgba(255,209,102,.3); font-size: 14px; line-height: 1.5; opacity: 1; animation: curioReveal .25s ease; }
+.fact-deeper.show { opacity: 1; transform: none; }
+
+/* Fact or Fake */
+.truthbtns { display: grid; gap: 11px; }
+.truthopt { font-size: 16px; }
+
+/* Recall (explain it back) */
+.recall { margin-top: 4px; }
+.recallrow { display: flex; gap: 10px; }
+.recallinput { flex: 1; font-family: var(--font); font-size: 16px; color: var(--ink); background: var(--card2); border: 1.5px solid var(--line); border-radius: 12px; padding: 13px 14px; }
+.recallinput:focus { outline: none; border-color: var(--accent); }
 
 /* Header gear + speak buttons */
 .gearbtn { appearance: none; cursor: pointer; background: var(--card); border: 1px solid var(--line); color: var(--ink); font-size: 16px; padding: 7px 11px; border-radius: 999px; margin-left: auto; margin-right: 10px; }
