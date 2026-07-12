@@ -67,9 +67,13 @@ Never: ads, data sales, pay-to-win, paywalled learning.
 for the full teardown, ranked edge features, and verified monetization models.*
 
 - v1.0 ✅ shipped: MVP + PWA (installable, offline, icons, install prompts).
-- v1.1: **Memory Vault** (spaced repetition on missed facts, inside the daily
-  loop) + **Rabbit Holes** (depth facts link to connected facts) + more
-  questions (target 500).
+- v1.1 ✅ shipped 2026-07-12 (see MORNING.md): **Memory Vault** (SRS ladder
+  1/3/7/16/35d), **Comfort panel** (no-timer, dyslexia, text size, read-aloud,
+  reduced motion, high contrast), **Kids mode** (69 kid-flagged Qs), **Brain
+  Map** (per-domain mastery), bank 48 → 120 fact-checked questions, native
+  share sheet, versioned assets.
+- v1.2: **Rabbit Holes** (depth facts link to connected facts), per-fact
+  source citations, more questions (target 500).
 - v2: accounts, global daily leaderboard, friend leagues, **Curio Nights**
   (free pub-quiz group mode, no player cap — Kahoot just cut free to 10),
   supporter tier + nerd-credential cosmetics.
