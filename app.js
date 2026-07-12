@@ -94,10 +94,18 @@
     var order = shuffledIndices(p.length, seed);
     return order.slice(0, DAILY_COUNT).map(function (i) { return p[i]; });
   }
-  function quickfireQuestions(cat) {
+  function quickfireQuestions(cat, region) {
     var p = pool().filter(function (x) { return cat === "All" || x.cat === cat; });
+    if (region && region !== "All") p = p.filter(function (x) { return x.region === region; });
     for (var i = p.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = p[i]; p[i] = p[k]; p[k] = t; }
     return p.slice(0, Math.min(QUICKFIRE_COUNT, p.length));
+  }
+  // Regions present among History questions (for the region sub-filter), in a stable order.
+  function historyRegions() {
+    var order = ["Africa", "Americas", "Asia", "Europe", "MiddleEast", "Global"];
+    var have = {};
+    Q.forEach(function (x) { if (x.cat === "History" && x.region) have[x.region] = true; });
+    return order.filter(function (r) { return have[r]; });
   }
 
   // For each question, shuffle the option display order deterministically per session.
@@ -105,8 +113,9 @@
     var order = shuffledIndices(q.options.length, seed);
     var opts = order.map(function (i) { return q.options[i]; });
     var ans = order.indexOf(q.answer);
-    return { id: qid(q), q: q.q, cat: q.cat, diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, options: opts, answer: ans };
+    return { id: qid(q), q: q.q, cat: q.cat, region: q.region, theme: q.theme, diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, options: opts, answer: ans };
   }
+  var REGION_LABEL = { Africa: "Africa", Americas: "Americas", Asia: "Asia", Europe: "Europe", MiddleEast: "Middle East", Global: "Global" };
   function srcLink(url) {
     if (!url) return "";
     return ' <a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">source ↗</a>';
@@ -304,21 +313,45 @@
         '</div>'
       ));
     }
+    if (cityPacks().length) {
+      modes.appendChild(el(
+        '<div class="card mode" id="modeTravel">' +
+          '<div class="emoji">🧳</div><h3>Before you travel</h3>' +
+          '<p>' + cityPacks().length + ' cities, told from their own history. Learn the place, the food, and a few words before you go.</p>' +
+        '</div>'
+      ));
+    }
     wrap.appendChild(modes);
 
     // category picker feeding quick-fire
-    var picker = el('<div class="card"><div class="section-title" style="margin-top:0">Quick-Fire topic</div><div class="cats"></div><div class="btnrow"><button class="btn block" id="startQuick">Start Quick-Fire ⚡</button></div></div>');
+    var picker = el('<div class="card"><div class="section-title" style="margin-top:0">Quick-Fire topic</div><div class="cats"></div><div class="regionrow hidden"><div class="mini" style="margin:2px 0 6px">History by region — every part of the world, on its own terms:</div><div class="cats regioncats"></div></div><div class="btnrow"><button class="btn block" id="startQuick">Start Quick-Fire ⚡</button></div></div>');
     var cats = picker.querySelector(".cats");
+    var regionRow = picker.querySelector(".regionrow");
+    var regionCats = picker.querySelector(".regioncats");
     var chosen = LS.get("lastCat", "All");
+    var chosenRegion = "All";
+    function syncRegionRow() { regionRow.classList.toggle("hidden", chosen !== "History" || historyRegions().length === 0); }
     ["All"].concat(CATS).forEach(function (c) {
       var b = el('<button class="chip" aria-pressed="' + (c === chosen ? "true" : "false") + '">' + (CAT_EMOJI[c] || "✨") + " " + c + '</button>');
       b.addEventListener("click", function () {
         chosen = c; LS.set("lastCat", c);
         cats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
         b.setAttribute("aria-pressed", "true");
+        syncRegionRow();
       });
       cats.appendChild(b);
     });
+    ["All"].concat(historyRegions()).forEach(function (rg) {
+      var label = rg === "All" ? "🌍 All regions" : (rg === "Africa" ? "🌍" : rg === "Americas" ? "🌎" : rg === "Asia" ? "🌏" : rg === "Europe" ? "🏰" : rg === "MiddleEast" ? "🕌" : "🗺️") + " " + (REGION_LABEL[rg] || rg);
+      var b = el('<button class="chip" aria-pressed="' + (rg === chosenRegion ? "true" : "false") + '">' + label + '</button>');
+      b.addEventListener("click", function () {
+        chosenRegion = rg;
+        regionCats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+        b.setAttribute("aria-pressed", "true");
+      });
+      regionCats.appendChild(b);
+    });
+    syncRegionRow();
     wrap.appendChild(picker);
 
     // Brain Map
@@ -348,7 +381,7 @@
     // wire
     wrap.querySelector("#startDaily").addEventListener("click", startDaily);
     wrap.querySelector("#modeDaily").addEventListener("click", startDaily);
-    picker.querySelector("#startQuick").addEventListener("click", function () { startQuickfire(chosen); });
+    picker.querySelector("#startQuick").addEventListener("click", function () { startQuickfire(chosen, chosen === "History" ? chosenRegion : "All"); });
     wrap.querySelector("#modeQuick").addEventListener("click", function () {
       picker.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "center" });
     });
@@ -356,6 +389,8 @@
     if (sv) sv.addEventListener("click", startVaultSession);
     var mt = wrap.querySelector("#modeTruth");
     if (mt) mt.addEventListener("click", startTruthLab);
+    var mtr = wrap.querySelector("#modeTravel");
+    if (mtr) mtr.addEventListener("click", function () { render(cityHomeView()); });
     wrap.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); render(comfortView()); });
 
     return wrap;
@@ -481,9 +516,12 @@
           '<div class="qmeta">' + (idx + 1) + '/' + cfg.questions.length + (secs ? ' · <span class="timer" id="timer">' + secs + 's</span>' : '') + '</div>' +
         '</div>'
       ));
+      var catLabel = q.theme || q.cat || "";
+      var catEmoji = CAT_EMOJI[q.cat] || cfg.emoji || "";
+      var regionBit = q.region && REGION_LABEL[q.region] ? ' · ' + REGION_LABEL[q.region] : "";
       var body = el(
         '<div>' +
-          '<span class="qcat">' + (CAT_EMOJI[q.cat] || "") + " " + esc(q.cat) + ' · ' + ["Easy", "Medium", "Hard"][q.diff - 1] + (cfg.vault ? ' · 🗝️ Vault' : '') + '</span>' +
+          '<span class="qcat">' + catEmoji + " " + esc(catLabel) + regionBit + ' · ' + ["Easy", "Medium", "Hard"][q.diff - 1] + (cfg.vault ? ' · 🗝️ Vault' : '') + '</span>' +
           '<div class="qtext">' + esc(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="Read this question aloud">🔊</button>' : '') + '</div>' +
           '<div class="opts"></div>' +
         '</div>'
@@ -560,9 +598,11 @@
         score += 100 + bonus + (q.diff - 1) * 25 + (recalled ? 25 : 0);
       }
       marks.push(correct);
-      recordAnswer(q.cat, correct);
-      if (cfg.vault) { if (correct) vaultHit(q.id); else vaultMiss(q.id); }
-      else if (!correct) vaultMiss(q.id);
+      if (!cfg.noStats) {
+        recordAnswer(q.cat, correct);
+        if (cfg.vault) { if (correct) vaultHit(q.id); else vaultMiss(q.id); }
+        else if (!correct) vaultMiss(q.id);
+      }
 
       var buttons = opts.querySelectorAll(".opt");
       buttons.forEach(function (b, bi) {
@@ -677,6 +717,104 @@
     });
   }
 
+  // ---------- City packs ("Before you travel") ----------
+  function cityPacks() { return window.CURIO_CITYPACKS || []; }
+
+  function cityHomeView() {
+    var packs = cityPacks();
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">← Home</button><h2 style="margin:0 auto">🧳 Before you travel</h2><span style="width:64px"></span></div>'));
+    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free, offline, no ads.</p>'));
+    packs.forEach(function (p) {
+      var card = el(
+        '<div class="card mode citycard">' +
+          '<div class="cityrow"><span class="cityemoji">' + (p.emoji || "🌍") + '</span>' +
+          '<div><h3>' + esc(p.city) + '</h3><div class="mini">' + esc(p.country) + ' · ' + (REGION_LABEL[p.region] || esc(p.region)) + '</div></div></div>' +
+          '<p>' + esc(p.blurb) + '</p>' +
+        '</div>'
+      );
+      card.addEventListener("click", function () { cityPackView(p); });
+      wrap.appendChild(card);
+    });
+    wrap.querySelector("#back").addEventListener("click", function () { render(homeView()); });
+    return wrap;
+  }
+
+  function cityPackView(pack) {
+    var node = el('<div class="grid"></div>');
+    node.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">← Cities</button><h2 style="margin:0 auto">' + (pack.emoji || "🌍") + ' ' + esc(pack.city) + '</h2><span style="width:64px"></span></div>'));
+
+    var play = el('<div class="card"><p style="margin:0 0 12px">' + esc(pack.blurb) + '</p><button class="btn block" id="playCity">▶ Play the ' + esc(pack.city) + ' quiz (' + pack.questions.length + ')</button></div>');
+    node.appendChild(play);
+
+    // Key phrases
+    if (pack.phrases && pack.phrases.length) {
+      var pcard = el('<div class="card"><div class="section-title" style="margin-top:0">🗣️ Key phrases · ' + esc(pack.lang || "") + '</div></div>');
+      pack.phrases.forEach(function (ph) {
+        var row = el(
+          '<div class="phrase">' +
+            '<div class="phrase-main"><b>' + esc(ph.phrase) + '</b>' + (canSpeak() ? ' <button class="speakbtn phrase-speak" aria-label="Say it">🔊</button>' : '') + '</div>' +
+            '<div class="mini">' + esc(ph.meaning) + ' · <i>' + esc(ph.pron) + '</i></div>' +
+          '</div>'
+        );
+        var sp = row.querySelector(".phrase-speak");
+        if (sp) sp.addEventListener("click", function () { speakLang(ph.phrase, pack.lang); });
+        pcard.appendChild(row);
+      });
+      node.appendChild(pcard);
+    }
+
+    // Know before you go
+    if (pack.tips && pack.tips.length) {
+      var tcard = el('<div class="card"><div class="section-title" style="margin-top:0">🧭 Know before you go</div></div>');
+      var ul = el('<ul class="tips"></ul>');
+      pack.tips.forEach(function (t) { ul.appendChild(el('<li>' + esc(t) + '</li>')); });
+      tcard.appendChild(ul);
+      node.appendChild(tcard);
+    }
+
+    render(node);
+    node.querySelector("#back").addEventListener("click", function () { render(cityHomeView()); });
+    play.querySelector("#playCity").addEventListener("click", function () {
+      runQuiz({
+        questions: pack.questions,
+        timed: false,
+        noStats: true,
+        emoji: pack.emoji,
+        onDone: function (r) {
+          var res = el(
+            '<div class="card result">' +
+              '<div class="scorebig">' + r.correct + '/' + r.total + '</div>' +
+              '<h2>' + praise(r.correct, r.total) + '</h2>' +
+              '<div class="sub">' + esc(pack.city) + ' · ready for your trip 🧳</div>' +
+              '<div class="btnrow" style="justify-content:center">' +
+                '<button class="btn" id="again">Play again</button>' +
+                '<button class="btn ghost" id="pack">Back to ' + esc(pack.city) + '</button>' +
+                '<button class="btn ghost" id="home">Home</button>' +
+              '</div>' +
+            '</div>'
+          );
+          render(res);
+          res.querySelector("#again").addEventListener("click", function () { play.querySelector("#playCity").click(); });
+          res.querySelector("#pack").addEventListener("click", function () { cityPackView(pack); });
+          res.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+        }
+      });
+    });
+  }
+
+  // Speak a phrase in its own language when the browser has a matching voice.
+  var LANG_CODE = { Italian: "it-IT", Japanese: "ja-JP", "Egyptian Arabic": "ar-EG", Arabic: "ar", Spanish: "es-ES", Turkish: "tr-TR" };
+  function speakLang(text, lang) {
+    if (!canSpeak()) return;
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = LANG_CODE[lang] || "en-US"; u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+
   // ---------- Fact or Fake? (media literacy) ----------
   var TRUTH_ROUND = 8;
   function truthPool() {
@@ -775,17 +913,18 @@
   }
 
   // ---------- quickfire ----------
-  function startQuickfire(cat) {
-    var qs = quickfireQuestions(cat);
+  function startQuickfire(cat, region) {
+    var qs = quickfireQuestions(cat, region);
     if (!qs.length) { render(homeView()); return; }
+    var label = cat + (region && region !== "All" ? " · " + (REGION_LABEL[region] || region) : "");
     runQuiz({
       questions: qs,
       timed: true,
-      onDone: function (r) { quickResultView(r, cat); }
+      onDone: function (r) { quickResultView(r, label, cat, region); }
     });
   }
 
-  function quickResultView(r, cat) {
+  function quickResultView(r, label, cat, region) {
     var hi = LS.get("hiscore", 0);
     var isHi = r.score > hi;
     if (isHi) LS.set("hiscore", r.score);
@@ -793,7 +932,7 @@
       '<div class="card result">' +
         '<div class="scorebig">' + r.score + '</div>' +
         '<h2>' + (isHi ? "🏆 New high score!" : praise(r.correct, r.total)) + '</h2>' +
-        '<div class="sub">' + r.correct + '/' + r.total + ' correct · ' + esc(cat) + '</div>' +
+        '<div class="sub">' + r.correct + '/' + r.total + ' correct · ' + esc(label) + '</div>' +
         '<div class="btnrow" style="justify-content:center">' +
           '<button class="btn" id="save">Save to leaderboard</button>' +
           '<button class="btn ghost" id="again">Play again</button>' +
@@ -804,7 +943,7 @@
     );
     render(node);
     node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
-    node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat); });
+    node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
     node.querySelector("#save").addEventListener("click", function () {
       var name = (prompt("Name for the leaderboard:", LS.get("playerName", "Nerd")) || "").trim().slice(0, 16) || "Nerd";
       LS.set("playerName", name);

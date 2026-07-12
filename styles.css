@@ -166,6 +166,22 @@ body {
 .truthbtns { display: grid; gap: 11px; }
 .truthopt { font-size: 16px; }
 
+/* City packs */
+.citycard { cursor: pointer; }
+.cityrow { display: flex; align-items: center; gap: 12px; }
+.cityemoji { font-size: 30px; line-height: 1; }
+.citycard h3 { margin: 0; font-size: 18px; }
+.citycard p { margin: 10px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+.phrase { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.phrase:last-child { border-bottom: none; }
+.phrase-main { font-size: 16px; }
+.phrase-main b { font-weight: 700; }
+.tips { list-style: none; margin: 6px 0 0; padding: 0; }
+.tips li { position: relative; padding: 8px 0 8px 24px; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.5; }
+.tips li:last-child { border-bottom: none; }
+.tips li::before { content: "•"; position: absolute; left: 6px; color: var(--brand); font-weight: 800; }
+.regionrow { margin-top: 10px; }
+
 /* Recall (explain it back) */
 .recall { margin-top: 4px; }
 .recallrow { display: flex; gap: 10px; }
