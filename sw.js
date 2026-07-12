@@ -1,12 +1,14 @@
 /* Curio service worker — offline-first for a fully static app.
-   Bump CACHE when you change any cached file to force an update. */
-const CACHE = "curio-v1";
+   Releasing a change: bump CACHE *and* the ?v= asset versions here and in
+   index.html. Install fetches with cache:"reload" so the HTTP cache can
+   never pin a stale asset into a new SW cache. */
+const CACHE = "curio-v2";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css",
-  "./app.js",
-  "./questions.js",
+  "./styles.css?v=2",
+  "./app.js?v=2",
+  "./questions.js?v=2",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
@@ -16,7 +18,11 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE)
+      .then((c) => Promise.all(ASSETS.map((u) => c.add(new Request(u, { cache: "reload" })))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", (e) => {

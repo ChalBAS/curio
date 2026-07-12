@@ -1,4 +1,6 @@
-/* Curio — v1 MVP. Vanilla JS, no build, state in localStorage. */
+/* Curio — v1.1. Vanilla JS, no build, state in localStorage.
+   Modules: LS (storage) · Settings/Comfort · Stats (Brain Map) · Vault (SRS)
+   · quiz engine · views. */
 (function () {
   "use strict";
 
@@ -7,7 +9,7 @@
   var CAT_EMOJI = { History: "🏛️", Science: "🔬", Geography: "🌍", Arts: "🎨", Tech: "💻", Nature: "🦉" };
   var DAILY_COUNT = 5;
   var QUICKFIRE_COUNT = 10;
-  var QUICKFIRE_SECS = 15;
+  var VAULT_SESSION_MAX = 10;
 
   // ---------- storage ----------
   var LS = {
@@ -15,9 +17,19 @@
     set: function (k, v) { try { localStorage.setItem("curio." + k, JSON.stringify(v)); } catch (e) {} }
   };
 
+  // ---------- stable question ids (hash of question text) ----------
+  function qid(q) {
+    var h = 5381, s = q.q;
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return "q" + (h >>> 0).toString(36);
+  }
+  var BY_ID = {};
+  Q.forEach(function (q) { BY_ID[qid(q)] = q; });
+
   // ---------- date helpers (local day) ----------
-  function todayKey(d) { d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
   function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function todayKey(d) { d = d || new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function addDaysKey(days) { return todayKey(new Date(Date.now() + days * 86400000)); }
   function dayNumber(d) { d = d || new Date(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000); }
 
   // Deterministic PRNG so everyone gets the same daily set.
@@ -29,16 +41,63 @@
     return arr;
   }
 
+  // ---------- settings / comfort ----------
+  var DEFAULT_SETTINGS = {
+    timer: "normal",      // normal (15s) | relaxed (30s) | off
+    dyslexia: false,
+    textSize: "normal",   // normal | large | xl
+    motion: "normal",     // normal | reduced
+    contrast: "normal",   // normal | high
+    readAloud: false,
+    ageMode: "all"        // all | kids
+  };
+  var settings = Object.assign({}, DEFAULT_SETTINGS, LS.get("settings", {}));
+  function saveSettings() { LS.set("settings", settings); applySettings(); }
+  function applySettings() {
+    var root = document.documentElement;
+    root.classList.toggle("dyslexia", settings.dyslexia);
+    root.classList.toggle("fs-large", settings.textSize === "large");
+    root.classList.toggle("fs-xl", settings.textSize === "xl");
+    root.classList.toggle("rmotion", settings.motion === "reduced");
+    root.classList.toggle("hcontrast", settings.contrast === "high");
+  }
+  function timerSecs() {
+    if (settings.timer === "off") return null;
+    return settings.timer === "relaxed" ? 30 : 15;
+  }
+
+  // ---------- read aloud ----------
+  function canSpeak() { return settings.readAloud && "speechSynthesis" in window; }
+  function speak(text) {
+    if (!canSpeak()) return;
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US"; u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  function hushed() { try { if ("speechSynthesis" in window) window.speechSynthesis.cancel(); } catch (e) {} }
+
+  // ---------- question pools (age mode) ----------
+  function pool() {
+    if (settings.ageMode !== "kids") return Q;
+    var kids = Q.filter(function (x) { return x.kids; });
+    if (kids.length >= QUICKFIRE_COUNT) return kids;
+    // Fallback while the kids bank is small: pad with easy questions.
+    var easy = Q.filter(function (x) { return !x.kids && x.diff === 1; });
+    return kids.concat(easy);
+  }
   function dailyQuestions() {
-    var seed = dayNumber() + 1;
-    var order = shuffledIndices(Q.length, seed);
-    return order.slice(0, DAILY_COUNT).map(function (i) { return Q[i]; });
+    var p = pool();
+    var seed = dayNumber() + (settings.ageMode === "kids" ? 51000 : 1);
+    var order = shuffledIndices(p.length, seed);
+    return order.slice(0, DAILY_COUNT).map(function (i) { return p[i]; });
   }
   function quickfireQuestions(cat) {
-    var pool = cat === "All" ? Q.slice() : Q.filter(function (x) { return x.cat === cat; });
-    // random each play
-    for (var i = pool.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = pool[i]; pool[i] = pool[k]; pool[k] = t; }
-    return pool.slice(0, Math.min(QUICKFIRE_COUNT, pool.length));
+    var p = pool().filter(function (x) { return cat === "All" || x.cat === cat; });
+    for (var i = p.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = p[i]; p[i] = p[k]; p[k] = t; }
+    return p.slice(0, Math.min(QUICKFIRE_COUNT, p.length));
   }
 
   // For each question, shuffle the option display order deterministically per session.
@@ -46,19 +105,79 @@
     var order = shuffledIndices(q.options.length, seed);
     var opts = order.map(function (i) { return q.options[i]; });
     var ans = order.indexOf(q.answer);
-    return { q: q.q, cat: q.cat, diff: q.diff, fact: q.fact, options: opts, answer: ans };
+    return { id: qid(q), q: q.q, cat: q.cat, diff: q.diff, fact: q.fact, options: opts, answer: ans };
   }
+
+  // ---------- stats (Brain Map) ----------
+  function getStats() {
+    var s = LS.get("stats", null);
+    if (!s) { s = { cats: {}, mastered: 0 }; CATS.forEach(function (c) { s.cats[c] = { s: 0, c: 0 }; }); }
+    CATS.forEach(function (c) { if (!s.cats[c]) s.cats[c] = { s: 0, c: 0 }; });
+    return s;
+  }
+  function recordAnswer(cat, correct) {
+    var s = getStats();
+    if (s.cats[cat]) { s.cats[cat].s++; if (correct) s.cats[cat].c++; }
+    LS.set("stats", s);
+  }
+  function levelFor(st) {
+    if (!st.s) return { name: "Unexplored", icon: "·" };
+    var acc = st.c / st.s;
+    if (acc >= 0.85 && st.s >= 15) return { name: "Sage", icon: "🧙" };
+    if (acc >= 0.70 && st.s >= 8) return { name: "Scholar", icon: "🎓" };
+    if (acc >= 0.55) return { name: "Apprentice", icon: "📖" };
+    return { name: "Explorer", icon: "🧭" };
+  }
+
+  // ---------- Memory Vault (spaced repetition) ----------
+  // Ladder of intervals in days; survive the last rung and the fact is Mastered.
+  var LADDER = [1, 3, 7, 16, 35];
+  function getVault() { return LS.get("vault", {}); }
+  function setVault(v) { LS.set("vault", v); }
+  function pruneVault() { // drop orphans (question text changed/removed)
+    var v = getVault(), changed = false;
+    Object.keys(v).forEach(function (id) { if (!BY_ID[id]) { delete v[id]; changed = true; } });
+    if (changed) setVault(v);
+  }
+  function vaultMiss(id) { // wrong anywhere -> (re)enter the ladder at rung 0
+    var v = getVault();
+    var item = v[id] || { rung: 0, wrong: 0 };
+    item.rung = 0; item.wrong = (item.wrong || 0) + 1; item.due = addDaysKey(LADDER[0]);
+    v[id] = item; setVault(v);
+  }
+  function vaultHit(id) { // correct in a vault review -> climb; past the top = mastered
+    var v = getVault(); var item = v[id];
+    if (!item) return;
+    item.rung = (item.rung || 0) + 1;
+    if (item.rung >= LADDER.length) {
+      delete v[id];
+      var s = getStats(); s.mastered = (s.mastered || 0) + 1; LS.set("stats", s);
+    } else {
+      item.due = addDaysKey(LADDER[item.rung]);
+      v[id] = item;
+    }
+    setVault(v);
+  }
+  function vaultDue() {
+    var v = getVault(), tk = todayKey(), out = [];
+    Object.keys(v).forEach(function (id) {
+      if (v[id].due <= tk && BY_ID[id]) out.push(BY_ID[id]);
+    });
+    return out;
+  }
+  function vaultCount() { return Object.keys(getVault()).length; }
 
   // ---------- DOM ----------
   var app = document.getElementById("app");
   function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function render(node) { hushed(); app.innerHTML = ""; app.appendChild(node); window.scrollTo(0, 0); }
 
   // ---------- streak ----------
   function getStreak() { return LS.get("streak", { count: 0, best: 0, last: null }); }
   function bumpStreak() {
     var s = getStreak(), tk = todayKey();
-    if (s.last === tk) return s; // already counted today
+    if (s.last === tk) return s;
     var yk = todayKey(new Date(Date.now() - 86400000));
     s.count = (s.last === yk) ? s.count + 1 : 1;
     s.best = Math.max(s.best || 0, s.count);
@@ -67,17 +186,39 @@
     return s;
   }
 
-  // ---------- views ----------
-  function render(node) { app.innerHTML = ""; app.appendChild(node); window.scrollTo(0, 0); }
+  // ---------- share ----------
+  function shareOrCopy(text, msgEl) {
+    if (navigator.share) {
+      navigator.share({ text: text }).then(function () {
+        if (msgEl) msgEl.textContent = "Shared! 🎉";
+      }).catch(function () { /* user cancelled */ });
+      return;
+    }
+    copy(text, msgEl);
+  }
+  function copy(text, msgEl) {
+    function ok() { if (msgEl) msgEl.textContent = "Copied to clipboard! 📋 Paste it anywhere."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, function () { fallback(); });
+    } else fallback();
+    function fallback() {
+      var ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); ok(); } catch (e) { if (msgEl) msgEl.textContent = text; }
+      document.body.removeChild(ta);
+    }
+  }
 
+  // ---------- home ----------
   function homeView() {
     var s = getStreak();
-    var daily = LS.get("daily." + todayKey(), null);
+    var daily = LS.get("daily." + todayKey() + (settings.ageMode === "kids" ? ".kids" : ""), null);
+    var due = vaultDue();
     var wrap = el('<div class="grid"></div>');
 
     wrap.appendChild(el(
       '<div class="card hero">' +
         '<span class="pill free">Free forever</span>' +
+        (settings.ageMode === "kids" ? '<span class="pill kids">Kids mode</span>' : '') +
         '<h1>Feed your brain today.</h1>' +
         '<p>Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.</p>' +
         '<div class="btnrow">' +
@@ -87,11 +228,31 @@
       '</div>'
     ));
 
+    // Memory Vault card
+    if (due.length > 0) {
+      wrap.appendChild(el(
+        '<div class="card vaultcard">' +
+          '<div class="vaultrow"><div><h3>🗝️ Memory Vault</h3>' +
+          '<p>' + due.length + ' fact' + (due.length === 1 ? "" : "s") + ' ready to strengthen. Beat them 5 times over 2 months and they’re yours for good.</p></div>' +
+          '<button class="btn" id="startVault">Review</button></div>' +
+        '</div>'
+      ));
+    } else if (vaultCount() > 0) {
+      var v = getVault();
+      var next = Object.keys(v).map(function (k) { return v[k].due; }).sort()[0];
+      wrap.appendChild(el(
+        '<div class="card vaultcard quiet">' +
+          '<h3>🗝️ Memory Vault</h3>' +
+          '<p>All ' + vaultCount() + ' facts strengthened for now. Next review: ' + esc(next) + '. Facts mastered for good: ' + (getStats().mastered || 0) + ' 🏅</p>' +
+        '</div>'
+      ));
+    }
+
     var modes = el('<div class="row"></div>');
     modes.appendChild(el(
       '<div class="card mode" id="modeQuick">' +
         '<div class="emoji">⚡</div><h3>Quick-Fire</h3>' +
-        '<p>Ten timed questions. Beat the clock, chase the speed bonus, top your high score.</p>' +
+        '<p>Ten questions' + (timerSecs() ? ", " + timerSecs() + "s each" : ", no timer") + '. Chase your high score.</p>' +
       '</div>'
     ));
     modes.appendChild(el(
@@ -117,10 +278,13 @@
     });
     wrap.appendChild(picker);
 
+    // Brain Map
+    wrap.appendChild(brainMapCard());
+
     // leaderboard
     wrap.appendChild(leaderboardCard());
 
-    // streak stats + mission
+    // streak stats
     wrap.appendChild(el(
       '<div class="card">' +
         '<div class="section-title" style="margin-top:0">Your stats</div>' +
@@ -128,13 +292,14 @@
           '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + s.count + '</div><div class="mini">current streak</div></div>' +
           '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + (s.best || 0) + '</div><div class="mini">best streak</div></div>' +
           '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + LS.get("hiscore", 0) + '</div><div class="mini">quick-fire best</div></div>' +
+          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + (getStats().mastered || 0) + '</div><div class="mini">facts mastered</div></div>' +
         '</div>' +
       '</div>'
     ));
 
     wrap.appendChild(el(
       '<div class="footer">Curio — knowledge is free, forever. No ads, no data selling.<br>' +
-      'Make being a nerd sexy again. 🧠</div>'
+      'Make being a nerd sexy again. 🧠 · <a href="#" id="openComfort2">Comfort &amp; settings</a></div>'
     ));
 
     // wire
@@ -142,10 +307,29 @@
     wrap.querySelector("#modeDaily").addEventListener("click", startDaily);
     picker.querySelector("#startQuick").addEventListener("click", function () { startQuickfire(chosen); });
     wrap.querySelector("#modeQuick").addEventListener("click", function () {
-      picker.scrollIntoView({ behavior: "smooth", block: "center" });
+      picker.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "center" });
     });
+    var sv = wrap.querySelector("#startVault");
+    if (sv) sv.addEventListener("click", startVaultSession);
+    wrap.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); render(comfortView()); });
 
     return wrap;
+  }
+
+  function brainMapCard() {
+    var st = getStats();
+    var card = el('<div class="card"><div class="section-title" style="margin-top:0">🧠 Your Brain Map</div><div class="mini" style="margin-bottom:10px">Accuracy by domain — earn Sage in all six.</div></div>');
+    CATS.forEach(function (c) {
+      var d = st.cats[c], pct = d.s ? Math.round(100 * d.c / d.s) : 0, lv = levelFor(d);
+      card.appendChild(el(
+        '<div class="bm-row">' +
+          '<span class="bm-cat">' + (CAT_EMOJI[c] || "") + " " + c + '</span>' +
+          '<span class="bm-bar" role="img" aria-label="' + c + ': ' + (d.s ? pct + '% of ' + d.s : 'unexplored') + '"><i style="width:' + pct + '%"></i></span>' +
+          '<span class="bm-lv">' + lv.icon + " " + lv.name + '</span>' +
+        '</div>'
+      ));
+    });
+    return card;
   }
 
   function leaderboardCard() {
@@ -163,11 +347,78 @@
     return card;
   }
 
+  // ---------- comfort panel ----------
+  function segRow(title, hint, options, current, onPick) {
+    var row = el('<div class="cf-group"><div class="cf-title">' + title + '</div>' + (hint ? '<div class="mini" style="margin:2px 0 8px">' + hint + '</div>' : '') + '<div class="cats"></div></div>');
+    var box = row.querySelector(".cats");
+    options.forEach(function (o) {
+      var b = el('<button class="chip" aria-pressed="' + (o.value === current ? "true" : "false") + '">' + o.label + '</button>');
+      b.addEventListener("click", function () {
+        box.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+        b.setAttribute("aria-pressed", "true");
+        onPick(o.value);
+      });
+      box.appendChild(b);
+    });
+    return row;
+  }
+
+  function comfortView() {
+    var node = el('<div class="card"></div>');
+    node.appendChild(el('<div class="quizhead" style="margin-bottom:6px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">← Home</button><h2 style="margin:0 auto">Comfort &amp; settings</h2><span style="width:64px"></span></div>'));
+    node.appendChild(el('<p class="mini" style="margin:0 0 14px">Knowledge is for everyone. Tune Curio to the way <b>you</b> read, hear and think — nothing here is ever paywalled.</p>'));
+
+    node.appendChild(segRow("⏱️ Quick-Fire timer", "Timers measure speed, not knowledge. Turn them off if they get in the way — scoring adapts fairly.", [
+      { label: "Normal (15s)", value: "normal" }, { label: "Relaxed (30s)", value: "relaxed" }, { label: "Off", value: "off" }
+    ], settings.timer, function (v) { settings.timer = v; saveSettings(); }));
+
+    node.appendChild(segRow("🔤 Dyslexia-friendly reading", "Wider spacing, taller lines, a rounder font.", [
+      { label: "Off", value: false }, { label: "On", value: true }
+    ], settings.dyslexia, function (v) { settings.dyslexia = v; saveSettings(); }));
+
+    node.appendChild(segRow("🔍 Text size", null, [
+      { label: "Normal", value: "normal" }, { label: "Large", value: "large" }, { label: "Extra large", value: "xl" }
+    ], settings.textSize, function (v) { settings.textSize = v; saveSettings(); }));
+
+    node.appendChild(segRow("🔊 Read questions aloud", "Curio speaks each question, its options, and the depth fact. Uses your device's built-in voice — free, even offline.", [
+      { label: "Off", value: false }, { label: "On", value: true }
+    ], settings.readAloud, function (v) {
+      settings.readAloud = v; saveSettings();
+      if (v) speak("Read aloud is on. Every question will be spoken.");
+    }));
+
+    node.appendChild(segRow("🎬 Motion", "Reduced turns off animations and transitions.", [
+      { label: "Full", value: "normal" }, { label: "Reduced", value: "reduced" }
+    ], settings.motion, function (v) { settings.motion = v; saveSettings(); }));
+
+    node.appendChild(segRow("🌓 Contrast", null, [
+      { label: "Normal", value: "normal" }, { label: "High", value: "high" }
+    ], settings.contrast, function (v) { settings.contrast = v; saveSettings(); }));
+
+    node.appendChild(segRow("👶 Age mode", "Kids mode uses kid-friendly questions only (ages ~8–12). No account, no tracking — ever.", [
+      { label: "Everyone", value: "all" }, { label: "Kids (8–12)", value: "kids" }
+    ], settings.ageMode, function (v) { settings.ageMode = v; saveSettings(); }));
+
+    node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="wipe" style="color:var(--bad)">Reset all my data on this device</a></div>'));
+
+    node.querySelector("#back").addEventListener("click", function () { render(homeView()); });
+    node.querySelector("#wipe").addEventListener("click", function (e) {
+      e.preventDefault();
+      if (confirm("Erase streaks, scores, vault and settings on this device?")) {
+        Object.keys(localStorage).forEach(function (k) { if (k.indexOf("curio.") === 0) localStorage.removeItem(k); });
+        settings = Object.assign({}, DEFAULT_SETTINGS);
+        applySettings(); render(homeView());
+      }
+    });
+    return node;
+  }
+
   // ---------- quiz engine ----------
+  // cfg: { questions:[...], timed:bool, vault:bool, onDone(result) }
   function runQuiz(cfg) {
-    // cfg: { title, questions:[...], timed:bool, onDone(result) }
     var idx = 0, score = 0, correctCount = 0, marks = [], answered = false, timer = null, timeLeft = 0;
     var seedBase = dayNumber() * 100;
+    var secs = cfg.timed ? timerSecs() : null;
 
     var node = el('<div class="card"></div>');
     render(node);
@@ -182,13 +433,13 @@
         '<div class="quizhead">' +
           '<button class="btn ghost" id="quit" style="padding:8px 12px;font-size:13px">← Quit</button>' +
           '<div class="progress"><i style="width:' + Math.round((idx) / cfg.questions.length * 100) + '%"></i></div>' +
-          '<div class="qmeta">' + (idx + 1) + '/' + cfg.questions.length + (cfg.timed ? ' · <span class="timer" id="timer">' + QUICKFIRE_SECS + 's</span>' : '') + '</div>' +
+          '<div class="qmeta">' + (idx + 1) + '/' + cfg.questions.length + (secs ? ' · <span class="timer" id="timer">' + secs + 's</span>' : '') + '</div>' +
         '</div>'
       ));
       var body = el(
         '<div>' +
-          '<span class="qcat">' + (CAT_EMOJI[q.cat] || "") + " " + esc(q.cat) + ' · ' + ["Easy", "Medium", "Hard"][q.diff - 1] + '</span>' +
-          '<div class="qtext">' + esc(q.q) + '</div>' +
+          '<span class="qcat">' + (CAT_EMOJI[q.cat] || "") + " " + esc(q.cat) + ' · ' + ["Easy", "Medium", "Hard"][q.diff - 1] + (cfg.vault ? ' · 🗝️ Vault' : '') + '</span>' +
+          '<div class="qtext">' + esc(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="Read this question aloud">🔊</button>' : '') + '</div>' +
           '<div class="opts"></div>' +
         '</div>'
       );
@@ -201,8 +452,15 @@
       node.appendChild(body);
       node.querySelector("#quit").addEventListener("click", function () { stopTimer(); render(homeView()); });
 
-      if (cfg.timed) {
-        timeLeft = QUICKFIRE_SECS;
+      function speakQuestion() {
+        speak(q.q + ". " + q.options.map(function (o, i) { return "Option " + "ABCD"[i] + ": " + o; }).join(". "));
+      }
+      var sb = node.querySelector("#speakBtn");
+      if (sb) sb.addEventListener("click", function (e) { e.stopPropagation(); speakQuestion(); });
+      if (canSpeak()) speakQuestion();
+
+      if (secs) {
+        timeLeft = secs;
         var tEl = node.querySelector("#timer");
         stopTimer();
         timer = setInterval(function () {
@@ -221,19 +479,26 @@
       var correct = i === q.answer;
       if (correct) {
         correctCount++;
-        var pts = 100 + (cfg.timed ? Math.max(0, tLeft) * 10 : 0) + (q.diff - 1) * 25;
-        score += pts;
+        // Speed bonus only when timed, capped so Relaxed mode can't out-score Normal.
+        var bonus = secs ? Math.min(Math.max(0, tLeft), 15) * 10 : 0;
+        score += 100 + bonus + (q.diff - 1) * 25;
       }
       marks.push(correct);
+      recordAnswer(q.cat, correct);
+      if (cfg.vault) { if (correct) vaultHit(q.id); else vaultMiss(q.id); }
+      else if (!correct) vaultMiss(q.id);
+
       var buttons = opts.querySelectorAll(".opt");
       buttons.forEach(function (b, bi) {
         b.disabled = true;
-        if (bi === q.answer) b.classList.add("correct");
-        else if (bi === i) b.classList.add("wrong");
+        if (bi === q.answer) { b.classList.add("correct"); b.querySelector(".key").textContent = "✓"; }
+        else if (bi === i) { b.classList.add("wrong"); b.querySelector(".key").textContent = "✗"; }
       });
-      var fact = el('<div class="fact"><b>' + (correct ? "Correct! " : (i === -1 ? "Time! " : "Not quite. ")) + '</b>' + esc(q.fact) + '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? "Next →" : "See results →") + '</button></div></div>');
+      var head = correct ? "Correct! " : (i === -1 ? "Time! " : "Not quite. ");
+      var fact = el('<div class="fact"><b>' + head + '</b>' + esc(q.fact) + '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? "Next →" : "See results →") + '</button></div></div>');
       node.appendChild(fact);
       requestAnimationFrame(function () { fact.classList.add("show"); });
+      speak(head + q.fact);
       fact.querySelector("#next").addEventListener("click", function () {
         idx++;
         if (idx < cfg.questions.length) show();
@@ -243,17 +508,17 @@
   }
 
   // ---------- daily ----------
+  function dailyKey() { return "daily." + todayKey() + (settings.ageMode === "kids" ? ".kids" : ""); }
   function startDaily() {
-    var existing = LS.get("daily." + todayKey(), null);
+    var existing = LS.get(dailyKey(), null);
     if (existing) { return dailyResultView(existing, true); }
     runQuiz({
-      title: "Daily Challenge",
       questions: dailyQuestions(),
       timed: false,
       onDone: function (r) {
         var s = bumpStreak();
         var rec = { score: r.correct, total: r.total, marks: r.marks, streak: s.count, date: todayKey() };
-        LS.set("daily." + todayKey(), rec);
+        LS.set(dailyKey(), rec);
         dailyResultView(rec, false);
       }
     });
@@ -262,6 +527,7 @@
   function dailyResultView(rec, already) {
     var emoji = rec.marks.map(function (m) { return m ? "🟩" : "🟥"; }).join("");
     var s = getStreak();
+    var missed = rec.marks.filter(function (m) { return !m; }).length;
     var node = el(
       '<div class="card result">' +
         '<div class="scorebig">' + rec.score + '/' + rec.total + '</div>' +
@@ -269,8 +535,9 @@
         '<div class="sub">🔥 ' + s.count + '-day streak' + (s.count === s.best && s.best > 1 ? " — your best ever!" : "") + '</div>' +
         '<div class="sharebox">' + emoji + '</div>' +
         '<div class="mini">Curio Daily · ' + rec.date + '</div>' +
+        (!already && missed ? '<div class="mini" style="margin-top:10px">🗝️ ' + missed + ' fact' + (missed === 1 ? "" : "s") + ' added to your Memory Vault — they’ll come back until you own them.</div>' : '') +
         '<div class="btnrow center" style="justify-content:center">' +
-          '<button class="btn" id="share">Copy shareable result</button>' +
+          '<button class="btn" id="share">Share result</button>' +
           '<button class="btn ghost" id="home">Home</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
@@ -279,8 +546,40 @@
     render(node);
     node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
     node.querySelector("#share").addEventListener("click", function () {
-      var text = "Curio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total + "\n🔥 " + s.count + "-day streak\nPlay free — knowledge should be.";
-      copy(text, node.querySelector("#msg"));
+      var text = "Curio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total + "\n🔥 " + s.count + "-day streak\nhttps://chalbas.github.io/curio/ — free, forever.";
+      shareOrCopy(text, node.querySelector("#msg"));
+    });
+  }
+
+  // ---------- vault session ----------
+  function startVaultSession() {
+    var due = vaultDue();
+    if (!due.length) { render(homeView()); return; }
+    // shuffle, cap the session
+    for (var i = due.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = due[i]; due[i] = due[k]; due[k] = t; }
+    var qs = due.slice(0, VAULT_SESSION_MAX);
+    runQuiz({
+      questions: qs,
+      timed: false,
+      vault: true,
+      onDone: function (r) {
+        var node = el(
+          '<div class="card result">' +
+            '<div class="scorebig">' + r.correct + '/' + r.total + '</div>' +
+            '<h2>' + (r.correct === r.total ? "Vault cleared. 🗝️" : "Strengthening in progress.") + '</h2>' +
+            '<div class="sub">' + r.correct + ' climbed the ladder · ' + (r.total - r.correct) + ' reset to tomorrow</div>' +
+            '<div class="mini">Facts mastered for good so far: ' + (getStats().mastered || 0) + ' 🏅</div>' +
+            '<div class="btnrow" style="justify-content:center">' +
+              (vaultDue().length ? '<button class="btn" id="more">Review more</button>' : '') +
+              '<button class="btn ghost" id="home">Home</button>' +
+            '</div>' +
+          '</div>'
+        );
+        render(node);
+        node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+        var more = node.querySelector("#more");
+        if (more) more.addEventListener("click", startVaultSession);
+      }
     });
   }
 
@@ -289,7 +588,6 @@
     var qs = quickfireQuestions(cat);
     if (!qs.length) { render(homeView()); return; }
     runQuiz({
-      title: "Quick-Fire",
       questions: qs,
       timed: true,
       onDone: function (r) { quickResultView(r, cat); }
@@ -337,18 +635,10 @@
     return "Everyone starts somewhere. Now you know more.";
   }
 
-  function copy(text, msgEl) {
-    function ok() { if (msgEl) msgEl.textContent = "Copied to clipboard! 📋 Paste it anywhere."; }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(ok, function () { fallback(); });
-    } else fallback();
-    function fallback() {
-      var ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
-      try { document.execCommand("copy"); ok(); } catch (e) { if (msgEl) msgEl.textContent = text; }
-      document.body.removeChild(ta);
-    }
-  }
-
   // ---------- boot ----------
+  applySettings();
+  pruneVault();
+  var gear = document.getElementById("gearBtn");
+  if (gear) gear.addEventListener("click", function () { render(comfortView()); });
   render(homeView());
 })();
