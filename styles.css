@@ -238,3 +238,11 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 .iosbanner b { color: var(--brand); }
 .iosbanner button { margin-left: auto; background: transparent; border: none; color: var(--muted); font-size: 16px; cursor: pointer; }
 .done-badge { font-size: 13px; color: var(--good); font-weight: 700; }
+/* Onboarding (FEAT-011) */
+.onb { text-align: center; padding: 34px 22px; }
+.onb-emoji { font-size: 54px; line-height: 1; margin-bottom: 12px; }
+.onb-title { font-size: 24px; margin: 0 0 10px; background: linear-gradient(90deg, var(--brand), var(--brand2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.onb-text { color: var(--muted); font-size: 15px; line-height: 1.6; max-width: 440px; margin: 0 auto 18px; }
+.onb-dots { margin-bottom: 16px; }
+.onb-dot { display: inline-block; width: 8px; height: 8px; border-radius: 99px; background: var(--card2); margin: 0 4px; }
+.onb-dot.on { background: var(--brand); }

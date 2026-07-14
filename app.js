@@ -479,7 +479,8 @@
       { label: "Everyone", value: "all" }, { label: "Kids (8–12)", value: "kids" }
     ], settings.ageMode, function (v) { settings.ageMode = v; saveSettings(); }));
 
-    node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="wipe" style="color:var(--bad)">Reset all my data on this device</a></div>'));
+    node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="replayIntro">Replay the intro</a> · <a href="#" id="wipe" style="color:var(--bad)">Reset all my data on this device</a></div>'));
+    node.querySelector("#replayIntro").addEventListener("click", function (e) { e.preventDefault(); onboardingView(0); });
 
     node.querySelector("#back").addEventListener("click", function () { render(homeView()); });
     node.querySelector("#wipe").addEventListener("click", function (e) {
@@ -965,10 +966,50 @@
     return "Everyone starts somewhere. Now you know more.";
   }
 
+  // ---------- onboarding (FEAT-011 / US-008): 3 cards, skippable, once ----------
+  function onboardingView(step) {
+    step = step || 0;
+    var slides = [
+      { emoji: "🦉", title: "Knowledge should be free.",
+        text: "Curio is a free knowledge app — no ads, no paywalls, ever. Every answer teaches you a fact worth keeping, with the source one tap away." },
+      { emoji: "📅", title: "Five questions a day.",
+        text: "Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good." },
+      { emoji: "⚙️", title: "Made for the way you learn.",
+        text: "Timers off, dyslexia-friendly reading, read-aloud, high contrast — free in Comfort settings (⚙️). A Kids mode too: no accounts, no tracking." }
+    ];
+    var s = slides[step];
+    var dots = slides.map(function (_, i) {
+      return '<span class="onb-dot' + (i === step ? " on" : "") + '"></span>';
+    }).join("");
+    var last = step === slides.length - 1;
+    var node = el(
+      '<div class="card onb">' +
+        '<div class="onb-emoji">' + s.emoji + '</div>' +
+        '<h1 class="onb-title">' + s.title + '</h1>' +
+        '<p class="onb-text">' + s.text + '</p>' +
+        '<div class="onb-dots">' + dots + '</div>' +
+        '<div class="btnrow" style="justify-content:center">' +
+          '<button class="btn" id="onbNext">' + (last ? "Play today's challenge ▶" : "Next →") + '</button>' +
+          (last ? '' : '<button class="btn ghost" id="onbSkip">Skip</button>') +
+        '</div>' +
+      '</div>'
+    );
+    render(node);
+    function finish(toDaily) {
+      LS.set("onboarded", true);
+      if (toDaily) startDaily(); else render(homeView());
+    }
+    node.querySelector("#onbNext").addEventListener("click", function () {
+      if (last) finish(true); else onboardingView(step + 1);
+    });
+    var sk = node.querySelector("#onbSkip");
+    if (sk) sk.addEventListener("click", function () { finish(false); });
+  }
+
   // ---------- boot ----------
   applySettings();
   pruneVault();
   var gear = document.getElementById("gearBtn");
   if (gear) gear.addEventListener("click", function () { render(comfortView()); });
-  render(homeView());
+  if (LS.get("onboarded", false)) { render(homeView()); } else { onboardingView(0); }
 })();
