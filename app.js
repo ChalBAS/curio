@@ -118,7 +118,9 @@
   var REGION_LABEL = { Africa: "Africa", Americas: "Americas", Asia: "Asia", Europe: "Europe", MiddleEast: "Middle East", Global: "Global" };
   function srcLink(url) {
     if (!url) return "";
-    return ' <a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">source ↗</a>';
+    // Visible, tappable chip on its own line — the CEO missed the old 12.5px inline link
+    // while testing (issue #8). If the founder misses it, users will. VAL-06 made visible.
+    return '<a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">📖 Check the source ↗</a>';
   }
 
   // ---------- stats (Brain Map) ----------

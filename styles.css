@@ -157,8 +157,11 @@ body {
 .cf-group .cats { margin-top: 8px; }
 
 /* Source links + rabbit holes */
-.srclink { color: var(--brand2); text-decoration: none; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
-.srclink:hover { text-decoration: underline; }
+.srclink { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+  color: var(--brand2); text-decoration: none; font-size: 14px; font-weight: 700;
+  background: rgba(255,143,163,.10); border: 1px solid rgba(255,143,163,.40);
+  padding: 8px 13px; border-radius: 999px; white-space: nowrap; }
+.srclink:hover { background: rgba(255,143,163,.18); border-color: var(--brand2); }
 .fact-deeper { margin-top: 10px; padding: 12px 14px; border-radius: 10px; background: rgba(255,209,102,.10); border: 1px solid rgba(255,209,102,.3); font-size: 14px; line-height: 1.5; opacity: 1; animation: curioReveal .25s ease; }
 .fact-deeper.show { opacity: 1; transform: none; }
 
