@@ -27,5 +27,7 @@ py -m http.server 8123
 
 ## Project docs
 
-- `PLAN.md` — product plan, monetization principles, roadmap
-- `RESEARCH.md` — fact-checked competitive landscape & edge strategy
+- `docs/PLAN.md` — product plan, monetization principles, roadmap
+- `docs/RESEARCH.md` — fact-checked competitive landscape & edge strategy
+- `docs/STATUS.md` — current build/gate status
+- `docs/MORNING.md` — daily working notes
