@@ -13,8 +13,8 @@ Usage:  py tools/merge_batch.py <path-to-task-output.json>
 import json, sys, os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-QFILE = os.path.join(ROOT, "questions.js")
-CFILE = os.path.join(ROOT, "citypacks.js")
+QFILE = os.path.join(ROOT, "src", "questions.js")
+CFILE = os.path.join(ROOT, "src", "citypacks.js")
 
 
 def js(s):

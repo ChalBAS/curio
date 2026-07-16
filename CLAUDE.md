@@ -5,7 +5,7 @@
 - Do what has been asked; nothing more, nothing less
 - NEVER create files unless absolutely necessary — prefer editing existing files
 - NEVER create documentation files unless explicitly requested
-- NEVER save working files or tests to root — use `/src`, `/tests`, `/docs`, `/config`, `/scripts`
+- App source lives in `/src` (app.js, questions.js, truthlab.js, citypacks.js, styles.css); content tooling in `/tools`. These MUST stay at root (static-host / PWA constraints): `index.html` (GitHub Pages entry), `sw.js` (service worker needs root scope), `manifest.webmanifest`, `icons/`, `.nojekyll`
 - ALWAYS read a file before editing it
 - NEVER commit secrets, credentials, or .env files
 - NEVER add a `Co-Authored-By` trailer to user commits unless this project's `.claude/settings.json` has `attribution.commit` set (#2078). The Claude Code Bash tool may suggest one in its default commit-message template — ignore it. `Co-Authored-By` is semantic authorship attribution under git/GitHub convention; the tool is the facilitator, not a co-author.
@@ -66,7 +66,7 @@ SendMessage({ to: "researcher", summary: "Start", message: "[task context]" })
 - **Neural**: Enabled
 
 ```bash
-npx @claude-flow/cli@latest swarm init --topology hierarchical --max-agents 8 --strategy specialized
+npx ruflo@latest swarm init --topology hierarchical --max-agents 8 --strategy specialized
 ```
 
 ### Agent Routing
@@ -95,14 +95,14 @@ npx @claude-flow/cli@latest swarm init --topology hierarchical --max-agents 8 --
 
 ### Before Any Task
 ```bash
-npx @claude-flow/cli@latest memory search --query "[task keywords]" --namespace patterns
-npx @claude-flow/cli@latest hooks route --task "[task description]"
+npx ruflo@latest memory search --query "[task keywords]" --namespace patterns
+npx ruflo@latest hooks route --task "[task description]"
 ```
 
 ### After Success
 ```bash
-npx @claude-flow/cli@latest memory store --namespace patterns --key "[name]" --value "[what worked]"
-npx @claude-flow/cli@latest hooks post-task --task-id "[id]" --success true --store-results true
+npx ruflo@latest memory store --namespace patterns --key "[name]" --value "[what worked]"
+npx ruflo@latest hooks post-task --task-id "[id]" --success true --store-results true
 ```
 
 ### MCP Tools (use `ToolSearch("keyword")` to discover)
@@ -128,7 +128,7 @@ npx @claude-flow/cli@latest hooks post-task --task-id "[id]" --success true --st
 | `document` | After API changes |
 
 ```bash
-npx @claude-flow/cli@latest hooks worker dispatch --trigger audit
+npx ruflo@latest hooks worker dispatch --trigger audit
 ```
 
 ## Agents
@@ -144,23 +144,33 @@ Any string works as a custom agent type.
 
 ## Build & Test
 
-- ALWAYS run tests after code changes
-- ALWAYS verify build succeeds before committing
+Curio is a static PWA — no bundler. `npm test` runs `node --check` on every source file (catches syntax breaks in hand-edited content banks). `npm run build` is an alias for it.
+
+- ALWAYS run `npm test` after code changes and before committing
+- On any release: bump `CACHE` in `sw.js` and the `?v=` query on every asset in both `sw.js` and `index.html` (see the sw.js header comment)
 
 ```bash
-npm run build && npm test
+npm test
 ```
+
+## Curio project notes (methodology & cost)
+
+Keep the ruflo tooling available but low-cost on this small static project — integrity over machinery:
+
+- **No background daemon.** It spawns headless `claude` sessions on an interval and burns tokens continuously. Do NOT run `ruflo daemon start` here.
+- **Swarm only for genuinely large work** (3+ files, cross-module refactors). For single-file edits, content-bank updates, and copy tweaks, just do the edit directly — do not spin up a swarm.
+- **Keep `task-observer`** as the session opener (per the global `CLAUDE.md`); it is lightweight. ruflo's swarm patterns are opt-in for big tasks, not the default for every turn.
 
 ## CLI Quick Reference
 
 ```bash
-npx @claude-flow/cli@latest init --wizard           # Setup
-npx @claude-flow/cli@latest swarm init --v3-mode     # Start swarm
-npx @claude-flow/cli@latest memory search --query "" # Vector search
-npx @claude-flow/cli@latest hooks route --task ""    # Route to agent
-npx @claude-flow/cli@latest doctor --fix             # Diagnostics
-npx @claude-flow/cli@latest security scan            # Security scan
-npx @claude-flow/cli@latest performance benchmark    # Benchmarks
+npx ruflo@latest init --wizard           # Setup
+npx ruflo@latest swarm init --v3-mode     # Start swarm
+npx ruflo@latest memory search --query "" # Vector search
+npx ruflo@latest hooks route --task ""    # Route to agent
+npx ruflo@latest doctor --fix             # Diagnostics
+npx ruflo@latest security scan            # Security scan
+npx ruflo@latest performance benchmark    # Benchmarks
 ```
 
 26 commands, 140+ subcommands. Use `--help` on any command for details.

@@ -1,0 +1,12 @@
+{
+  "name": "curio",
+  "version": "1.7.0",
+  "private": true,
+  "description": "Curio — free general-knowledge PWA. Vanilla JS, no bundler, offline-first.",
+  "scripts": {
+    "test": "node --check src/app.js && node --check src/questions.js && node --check src/truthlab.js && node --check src/citypacks.js && node --check sw.js",
+    "build": "npm test",
+    "serve": "py -m http.server 8123 --directory ."
+  },
+  "license": "UNLICENSED"
+}
