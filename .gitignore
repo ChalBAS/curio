@@ -1,0 +1,4 @@
+# ruflo / claude-flow runtime artifacts (not source)
+.claude-flow/
+.swarm/
+ruvector.db
