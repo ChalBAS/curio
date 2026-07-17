@@ -1,4 +1,4 @@
-"""Generate Curio PWA icons with Pillow. Run: py tools/make_icons.py"""
+"""Generate Qpio PWA icons with Pillow. Run: py tools/make_icons.py"""
 import os
 from PIL import Image, ImageDraw, ImageFont
 
@@ -40,11 +40,11 @@ def load_font(px):
 
 
 def draw_monogram(img, scale=0.62, dy=0.0):
-    """Draw a centered 'C' monogram sized to `scale` of the canvas."""
+    """Draw a centered 'Q' monogram sized to `scale` of the canvas."""
     size = img.size[0]
     d = ImageDraw.Draw(img)
     font = load_font(int(size * scale * 1.35))
-    ch = "C"
+    ch = "Q"
     box = d.textbbox((0, 0), ch, font=font)
     w, h = box[2] - box[0], box[3] - box[1]
     x = (size - w) / 2 - box[0]

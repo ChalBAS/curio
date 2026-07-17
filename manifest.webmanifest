@@ -1,7 +1,7 @@
 {
-  "name": "Curio — knowledge, free forever",
-  "short_name": "Curio",
-  "description": "Daily general-knowledge challenges, quick-fire quizzes and streaks. Free forever. Make being a nerd sexy again.",
+  "name": "Qpio — knowledge, free forever",
+  "short_name": "Qpio",
+  "description": "Qpio (say: cue-pee-oh) — daily general-knowledge challenges, quick-fire quizzes and streaks. Free forever. Quaero, ergo Sapio.",
   "start_url": "./index.html?source=pwa",
   "scope": "./",
   "display": "standalone",

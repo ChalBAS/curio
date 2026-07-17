@@ -249,3 +249,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 .onb-dots { margin-bottom: 16px; }
 .onb-dot { display: inline-block; width: 8px; height: 8px; border-radius: 99px; background: var(--card2); margin: 0 4px; }
 .onb-dot.on { background: var(--brand); }
+
+/* brand motto under the wordmark (D-001b: Qpio) */
+.logo{flex-wrap:wrap}
+.logo .motto{flex-basis:100%;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin-top:1px;font-style:italic}

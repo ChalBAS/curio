@@ -2,15 +2,18 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "curio-v12";
+const CACHE = "qpio-v13";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=12",
-  "./src/app.js?v=12",
-  "./src/questions.js?v=12",
-  "./src/truthlab.js?v=12",
-  "./src/citypacks.js?v=12",
+  "./src/styles.css?v=13",
+  "./src/i18n.js?v=13",
+  "./src/questions.fr.js?v=13",
+  "./src/truthlab.fr.js?v=13",
+  "./src/app.js?v=13",
+  "./src/questions.js?v=13",
+  "./src/truthlab.js?v=13",
+  "./src/citypacks.js?v=13",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",

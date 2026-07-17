@@ -1,10 +1,25 @@
 /* Curio — v1.1. Vanilla JS, no build, state in localStorage.
    Modules: LS (storage) · Settings/Comfort · Stats (Brain Map) · Vault (SRS)
-   · quiz engine · views. */
+   · quiz engine · views.
+   i18n: UI chrome goes through t() (src/i18n.js). Stored data values,
+   localStorage keys, scoring and the daily seed are language-independent. */
 (function () {
   "use strict";
 
-  var Q = window.CURIO_QUESTIONS || [];
+  // ---------- i18n (chrome strings via src/i18n.js; safe fallbacks) ----------
+  var QLANG = window.QLANG || "en";
+  var t = window.t || function (s) { return s; };
+  // Template fill: t() first (dict keys contain {placeholders}), then replace.
+  function tf(key, vars) {
+    var s = t(key);
+    if (vars) { Object.keys(vars).forEach(function (k) { s = s.replace("{" + k + "}", vars[k]); }); }
+    return s;
+  }
+
+  // ---------- question banks (per-language; FR falls back to EN while empty) ----------
+  var Q_EN = window.CURIO_QUESTIONS || [];
+  var Q_FR = window.CURIO_QUESTIONS_FR || [];
+  var Q = (QLANG === "fr" && Q_FR.length) ? Q_FR : Q_EN;
   var CATS = ["History", "Science", "Geography", "Arts", "Tech", "Nature"];
   var CAT_EMOJI = { History: "🏛️", Science: "🔬", Geography: "🌍", Arts: "🎨", Tech: "💻", Nature: "🦉" };
   var DAILY_COUNT = 5;
@@ -25,6 +40,11 @@
   }
   var BY_ID = {};
   Q.forEach(function (q) { BY_ID[qid(q)] = q; });
+  // Ids across ALL loaded banks — pruning must never wipe the other
+  // language's vault entries when the user switches languages.
+  var KNOWN_IDS = {};
+  Q_EN.forEach(function (q) { KNOWN_IDS[qid(q)] = true; });
+  Q_FR.forEach(function (q) { KNOWN_IDS[qid(q)] = true; });
 
   // ---------- date helpers (local day) ----------
   function pad(n) { return n < 10 ? "0" + n : "" + n; }
@@ -73,7 +93,7 @@
     try {
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
-      u.lang = "en-US"; u.rate = 0.95;
+      u.lang = QLANG === "fr" ? "fr-FR" : "en-US"; u.rate = 0.95;
       window.speechSynthesis.speak(u);
     } catch (e) {}
   }
@@ -120,7 +140,7 @@
     if (!url) return "";
     // Visible, tappable chip on its own line — the CEO missed the old 12.5px inline link
     // while testing (issue #8). If the founder misses it, users will. VAL-06 made visible.
-    return '<a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">📖 Check the source ↗</a>';
+    return '<a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">' + t("📖 Check the source ↗") + '</a>';
   }
 
   // ---------- stats (Brain Map) ----------
@@ -149,9 +169,9 @@
   var LADDER = [1, 3, 7, 16, 35];
   function getVault() { return LS.get("vault", {}); }
   function setVault(v) { LS.set("vault", v); }
-  function pruneVault() { // drop orphans (question text changed/removed)
+  function pruneVault() { // drop orphans (question text changed/removed in EVERY bank)
     var v = getVault(), changed = false;
-    Object.keys(v).forEach(function (id) { if (!BY_ID[id]) { delete v[id]; changed = true; } });
+    Object.keys(v).forEach(function (id) { if (!KNOWN_IDS[id]) { delete v[id]; changed = true; } });
     if (changed) setVault(v);
   }
   function vaultMiss(id) { // wrong anywhere -> (re)enter the ladder at rung 0
@@ -180,7 +200,9 @@
     });
     return out;
   }
-  function vaultCount() { return Object.keys(getVault()).length; }
+  // Count only the active language's entries (ids hash the question text, so
+  // each language keeps its own ladder; the other language's entries stay put).
+  function vaultCount() { return Object.keys(getVault()).filter(function (id) { return BY_ID[id]; }).length; }
 
   // ---------- DOM ----------
   var app = document.getElementById("app");
@@ -236,14 +258,14 @@
   function shareOrCopy(text, msgEl) {
     if (navigator.share) {
       navigator.share({ text: text }).then(function () {
-        if (msgEl) msgEl.textContent = "Shared! 🎉";
+        if (msgEl) msgEl.textContent = t("Shared! 🎉");
       }).catch(function () { /* user cancelled */ });
       return;
     }
     copy(text, msgEl);
   }
   function copy(text, msgEl) {
-    function ok() { if (msgEl) msgEl.textContent = "Copied to clipboard! 📋 Paste it anywhere."; }
+    function ok() { if (msgEl) msgEl.textContent = t("Copied to clipboard! 📋 Paste it anywhere."); }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(ok, function () { fallback(); });
     } else fallback();
@@ -263,13 +285,13 @@
 
     wrap.appendChild(el(
       '<div class="card hero">' +
-        '<span class="pill free">Free forever</span>' +
-        (settings.ageMode === "kids" ? '<span class="pill kids">Kids mode</span>' : '') +
-        '<h1>Feed your brain today.</h1>' +
-        '<p>Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.</p>' +
+        '<span class="pill free">' + t("Free forever") + '</span>' +
+        (settings.ageMode === "kids" ? '<span class="pill kids">' + t("Kids mode") + '</span>' : '') +
+        '<h1>' + t("Feed your brain today.") + '</h1>' +
+        '<p>' + t("Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.") + '</p>' +
         '<div class="btnrow">' +
-          '<button class="btn" id="startDaily">' + (daily ? "Review today's ✓" : "Play daily challenge") + '</button>' +
-          (s.count > 0 ? '<span class="streakchip">🔥 ' + s.count + ' day' + (s.count === 1 ? "" : "s") + '</span>' : '') +
+          '<button class="btn" id="startDaily">' + (daily ? t("Review today's ✓") : t("Play daily challenge")) + '</button>' +
+          (s.count > 0 ? '<span class="streakchip">' + (s.count === 1 ? t("🔥 1 day") : tf("🔥 {n} days", { n: s.count })) + '</span>' : '') +
         '</div>' +
       '</div>'
     ));
@@ -278,18 +300,21 @@
     if (due.length > 0) {
       wrap.appendChild(el(
         '<div class="card vaultcard">' +
-          '<div class="vaultrow"><div><h3>🗝️ Memory Vault</h3>' +
-          '<p>' + due.length + ' fact' + (due.length === 1 ? "" : "s") + ' ready to strengthen. Beat them 5 times over 2 months and they’re yours for good.</p></div>' +
-          '<button class="btn" id="startVault">Review</button></div>' +
+          '<div class="vaultrow"><div><h3>' + t("🗝️ Memory Vault") + '</h3>' +
+          '<p>' + (due.length === 1
+            ? t("1 fact ready to strengthen. Beat them 5 times over 2 months and they’re yours for good.")
+            : tf("{n} facts ready to strengthen. Beat them 5 times over 2 months and they’re yours for good.", { n: due.length })) + '</p></div>' +
+          '<button class="btn" id="startVault">' + t("Review") + '</button></div>' +
         '</div>'
       ));
     } else if (vaultCount() > 0) {
       var v = getVault();
-      var next = Object.keys(v).map(function (k) { return v[k].due; }).sort()[0];
+      var next = Object.keys(v).filter(function (id) { return BY_ID[id]; }).map(function (k) { return v[k].due; }).sort()[0];
       wrap.appendChild(el(
         '<div class="card vaultcard quiet">' +
-          '<h3>🗝️ Memory Vault</h3>' +
-          '<p>All ' + vaultCount() + ' facts strengthened for now. Next review: ' + esc(next) + '. Facts mastered for good: ' + (getStats().mastered || 0) + ' 🏅</p>' +
+          '<h3>' + t("🗝️ Memory Vault") + '</h3>' +
+          '<p>' + tf("All {n} facts strengthened for now. Next review: {date}. Facts mastered for good: {m} 🏅",
+            { n: vaultCount(), date: esc(next), m: (getStats().mastered || 0) }) + '</p>' +
         '</div>'
       ));
     }
@@ -297,36 +322,38 @@
     var modes = el('<div class="row"></div>');
     modes.appendChild(el(
       '<div class="card mode" id="modeQuick">' +
-        '<div class="emoji">⚡</div><h3>Quick-Fire</h3>' +
-        '<p>Ten questions' + (timerSecs() ? ", " + timerSecs() + "s each" : ", no timer") + '. Chase your high score.</p>' +
+        '<div class="emoji">⚡</div><h3>' + t("Quick-Fire") + '</h3>' +
+        '<p>' + (timerSecs()
+          ? tf("Ten questions, {s}s each. Chase your high score.", { s: timerSecs() })
+          : t("Ten questions, no timer. Chase your high score.")) + '</p>' +
       '</div>'
     ));
     modes.appendChild(el(
       '<div class="card mode" id="modeDaily">' +
-        '<div class="emoji">📅</div><h3>Daily Challenge</h3>' +
-        '<p>' + (daily ? '<span class="done-badge">Done today — ' + daily.score + '/' + DAILY_COUNT + '. Come back tomorrow.</span>' : "Today's five. Shareable score. The daily ritual.") + '</p>' +
+        '<div class="emoji">📅</div><h3>' + t("Daily Challenge") + '</h3>' +
+        '<p>' + (daily ? '<span class="done-badge">' + tf("Done today — {score}/{total}. Come back tomorrow.", { score: daily.score, total: DAILY_COUNT }) + '</span>' : t("Today's five. Shareable score. The daily ritual.")) + '</p>' +
       '</div>'
     ));
     if (truthPool().length >= 4) {
       modes.appendChild(el(
         '<div class="card mode" id="modeTruth">' +
-          '<div class="emoji">🔎</div><h3>Fact or Fake?</h3>' +
-          '<p>Real facts hide among convincing fakes. Spot the tricks — every verdict comes with a source.</p>' +
+          '<div class="emoji">🔎</div><h3>' + t("Fact or Fake?") + '</h3>' +
+          '<p>' + t("Real facts hide among convincing fakes. Spot the tricks — every verdict comes with a source.") + '</p>' +
         '</div>'
       ));
     }
     if (cityPacks().length) {
       modes.appendChild(el(
         '<div class="card mode" id="modeTravel">' +
-          '<div class="emoji">🧳</div><h3>Before you travel</h3>' +
-          '<p>' + cityPacks().length + ' cities, told from their own history. Learn the place, the food, and a few words before you go.</p>' +
+          '<div class="emoji">🧳</div><h3>' + t("Before you travel") + '</h3>' +
+          '<p>' + tf("{n} cities, told from their own history. Learn the place, the food, and a few words before you go.", { n: cityPacks().length }) + '</p>' +
         '</div>'
       ));
     }
     wrap.appendChild(modes);
 
     // category picker feeding quick-fire
-    var picker = el('<div class="card"><div class="section-title" style="margin-top:0">Quick-Fire topic</div><div class="cats"></div><div class="regionrow hidden"><div class="mini" style="margin:2px 0 6px">History by region — every part of the world, on its own terms:</div><div class="cats regioncats"></div></div><div class="btnrow"><button class="btn block" id="startQuick">Start Quick-Fire ⚡</button></div></div>');
+    var picker = el('<div class="card"><div class="section-title" style="margin-top:0">' + t("Quick-Fire topic") + '</div><div class="cats"></div><div class="regionrow hidden"><div class="mini" style="margin:2px 0 6px">' + t("History by region — every part of the world, on its own terms:") + '</div><div class="cats regioncats"></div></div><div class="btnrow"><button class="btn block" id="startQuick">' + t("Start Quick-Fire ⚡") + '</button></div></div>');
     var cats = picker.querySelector(".cats");
     var regionRow = picker.querySelector(".regionrow");
     var regionCats = picker.querySelector(".regioncats");
@@ -334,7 +361,7 @@
     var chosenRegion = "All";
     function syncRegionRow() { regionRow.classList.toggle("hidden", chosen !== "History" || historyRegions().length === 0); }
     ["All"].concat(CATS).forEach(function (c) {
-      var b = el('<button class="chip" aria-pressed="' + (c === chosen ? "true" : "false") + '">' + (CAT_EMOJI[c] || "✨") + " " + c + '</button>');
+      var b = el('<button class="chip" aria-pressed="' + (c === chosen ? "true" : "false") + '">' + (CAT_EMOJI[c] || "✨") + " " + t(c) + '</button>');
       b.addEventListener("click", function () {
         chosen = c; LS.set("lastCat", c);
         cats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
@@ -344,7 +371,7 @@
       cats.appendChild(b);
     });
     ["All"].concat(historyRegions()).forEach(function (rg) {
-      var label = rg === "All" ? "🌍 All regions" : (rg === "Africa" ? "🌍" : rg === "Americas" ? "🌎" : rg === "Asia" ? "🌏" : rg === "Europe" ? "🏰" : rg === "MiddleEast" ? "🕌" : "🗺️") + " " + (REGION_LABEL[rg] || rg);
+      var label = rg === "All" ? t("🌍 All regions") : (rg === "Africa" ? "🌍" : rg === "Americas" ? "🌎" : rg === "Asia" ? "🌏" : rg === "Europe" ? "🏰" : rg === "MiddleEast" ? "🕌" : "🗺️") + " " + t(REGION_LABEL[rg] || rg);
       var b = el('<button class="chip" aria-pressed="' + (rg === chosenRegion ? "true" : "false") + '">' + label + '</button>');
       b.addEventListener("click", function () {
         chosenRegion = rg;
@@ -365,19 +392,19 @@
     // streak stats
     wrap.appendChild(el(
       '<div class="card">' +
-        '<div class="section-title" style="margin-top:0">Your stats</div>' +
+        '<div class="section-title" style="margin-top:0">' + t("Your stats") + '</div>' +
         '<div class="row" style="margin-top:6px">' +
-          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + s.count + '</div><div class="mini">current streak</div></div>' +
-          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + (s.best || 0) + '</div><div class="mini">best streak</div></div>' +
-          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + LS.get("hiscore", 0) + '</div><div class="mini">quick-fire best</div></div>' +
-          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + (getStats().mastered || 0) + '</div><div class="mini">facts mastered</div></div>' +
+          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + s.count + '</div><div class="mini">' + t("current streak") + '</div></div>' +
+          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + (s.best || 0) + '</div><div class="mini">' + t("best streak") + '</div></div>' +
+          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + LS.get("hiscore", 0) + '</div><div class="mini">' + t("quick-fire best") + '</div></div>' +
+          '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + (getStats().mastered || 0) + '</div><div class="mini">' + t("facts mastered") + '</div></div>' +
         '</div>' +
       '</div>'
     ));
 
     wrap.appendChild(el(
-      '<div class="footer">Curio — knowledge is free, forever. No ads, no data selling.<br>' +
-      'Make being a nerd sexy again. 🧠 · <a href="#" id="openComfort2">Comfort &amp; settings</a></div>'
+      '<div class="footer">' + t("Qpio — knowledge is free, forever. No ads, no data selling.") + '<br>' +
+      t("Make being a nerd sexy again. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a></div>'
     ));
 
     // wire
@@ -400,14 +427,14 @@
 
   function brainMapCard() {
     var st = getStats();
-    var card = el('<div class="card"><div class="section-title" style="margin-top:0">🧠 Your Brain Map</div><div class="mini" style="margin-bottom:10px">Accuracy by domain — earn Sage in all six.</div></div>');
+    var card = el('<div class="card"><div class="section-title" style="margin-top:0">' + t("🧠 Your Brain Map") + '</div><div class="mini" style="margin-bottom:10px">' + t("Accuracy by domain — earn Sage in all six.") + '</div></div>');
     CATS.forEach(function (c) {
       var d = st.cats[c], pct = d.s ? Math.round(100 * d.c / d.s) : 0, lv = levelFor(d);
       card.appendChild(el(
         '<div class="bm-row">' +
-          '<span class="bm-cat">' + (CAT_EMOJI[c] || "") + " " + c + '</span>' +
-          '<span class="bm-bar" role="img" aria-label="' + c + ': ' + (d.s ? pct + '% of ' + d.s : 'unexplored') + '"><i style="width:' + pct + '%"></i></span>' +
-          '<span class="bm-lv">' + lv.icon + " " + lv.name + '</span>' +
+          '<span class="bm-cat">' + (CAT_EMOJI[c] || "") + " " + t(c) + '</span>' +
+          '<span class="bm-bar" role="img" aria-label="' + t(c) + ': ' + (d.s ? tf("{pct}% of {n}", { pct: pct, n: d.s }) : t("unexplored")) + '"><i style="width:' + pct + '%"></i></span>' +
+          '<span class="bm-lv">' + lv.icon + " " + t(lv.name) + '</span>' +
         '</div>'
       ));
     });
@@ -416,9 +443,9 @@
 
   function leaderboardCard() {
     var board = LS.get("leaderboard", []);
-    var card = el('<div class="card"><div class="section-title" style="margin-top:0">🏆 Quick-Fire leaderboard (this device)</div></div>');
+    var card = el('<div class="card"><div class="section-title" style="margin-top:0">' + t("🏆 Quick-Fire leaderboard (this device)") + '</div></div>');
     if (!board.length) {
-      card.appendChild(el('<div class="empty">No scores yet. Play Quick-Fire to claim the top spot.</div>'));
+      card.appendChild(el('<div class="empty">' + t("No scores yet. Play Quick-Fire to claim the top spot.") + '</div>'));
     } else {
       var ul = el('<ul class="lb"></ul>');
       board.slice(0, 8).forEach(function (row, i) {
@@ -447,47 +474,59 @@
 
   function comfortView() {
     var node = el('<div class="card"></div>');
-    node.appendChild(el('<div class="quizhead" style="margin-bottom:6px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">← Home</button><h2 style="margin:0 auto">Comfort &amp; settings</h2><span style="width:64px"></span></div>'));
-    node.appendChild(el('<p class="mini" style="margin:0 0 14px">Knowledge is for everyone. Tune Curio to the way <b>you</b> read, hear and think — nothing here is ever paywalled.</p>'));
+    node.appendChild(el('<div class="quizhead" style="margin-bottom:6px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">' + t("Comfort & settings") + '</h2><span style="width:64px"></span></div>'));
+    node.appendChild(el('<p class="mini" style="margin:0 0 14px">' + t("Knowledge is for everyone. Tune Qpio to the way <b>you</b> read, hear and think — nothing here is ever paywalled.") + '</p>'));
 
-    node.appendChild(segRow("⏱️ Quick-Fire timer", "Timers measure speed, not knowledge. Turn them off if they get in the way — scoring adapts fairly.", [
-      { label: "Normal (15s)", value: "normal" }, { label: "Relaxed (30s)", value: "relaxed" }, { label: "Off", value: "off" }
+    node.appendChild(segRow(t("⏱️ Quick-Fire timer"), t("Timers measure speed, not knowledge. Turn them off if they get in the way — scoring adapts fairly."), [
+      { label: t("Normal (15s)"), value: "normal" }, { label: t("Relaxed (30s)"), value: "relaxed" }, { label: t("Off"), value: "off" }
     ], settings.timer, function (v) { settings.timer = v; saveSettings(); }));
 
-    node.appendChild(segRow("🔤 Dyslexia-friendly reading", "Wider spacing, taller lines, a rounder font.", [
-      { label: "Off", value: false }, { label: "On", value: true }
+    node.appendChild(segRow(t("🔤 Dyslexia-friendly reading"), t("Wider spacing, taller lines, a rounder font."), [
+      { label: t("Off"), value: false }, { label: t("On"), value: true }
     ], settings.dyslexia, function (v) { settings.dyslexia = v; saveSettings(); }));
 
-    node.appendChild(segRow("🔍 Text size", null, [
-      { label: "Normal", value: "normal" }, { label: "Large", value: "large" }, { label: "Extra large", value: "xl" }
+    node.appendChild(segRow(t("🔍 Text size"), null, [
+      { label: t("Normal"), value: "normal" }, { label: t("Large"), value: "large" }, { label: t("Extra large"), value: "xl" }
     ], settings.textSize, function (v) { settings.textSize = v; saveSettings(); }));
 
-    node.appendChild(segRow("🔊 Read questions aloud", "Curio speaks each question, its options, and the depth fact. Uses your device's built-in voice — free, even offline.", [
-      { label: "Off", value: false }, { label: "On", value: true }
+    node.appendChild(segRow(t("🔊 Read questions aloud"), t("Qpio speaks each question, its options, and the depth fact. Uses your device's built-in voice — free, even offline."), [
+      { label: t("Off"), value: false }, { label: t("On"), value: true }
     ], settings.readAloud, function (v) {
       settings.readAloud = v; saveSettings();
-      if (v) speak("Read aloud is on. Every question will be spoken.");
+      if (v) speak(t("Read aloud is on. Every question will be spoken."));
     }));
 
-    node.appendChild(segRow("🎬 Motion", "Reduced turns off animations and transitions.", [
-      { label: "Full", value: "normal" }, { label: "Reduced", value: "reduced" }
+    node.appendChild(segRow(t("🎬 Motion"), t("Reduced turns off animations and transitions."), [
+      { label: t("Full"), value: "normal" }, { label: t("Reduced"), value: "reduced" }
     ], settings.motion, function (v) { settings.motion = v; saveSettings(); }));
 
-    node.appendChild(segRow("🌓 Contrast", null, [
-      { label: "Normal", value: "normal" }, { label: "High", value: "high" }
+    node.appendChild(segRow(t("🌓 Contrast"), null, [
+      { label: t("Normal"), value: "normal" }, { label: t("High"), value: "high" }
     ], settings.contrast, function (v) { settings.contrast = v; saveSettings(); }));
 
-    node.appendChild(segRow("👶 Age mode", "Kids mode uses kid-friendly questions only (ages ~8–12). No account, no tracking — ever.", [
-      { label: "Everyone", value: "all" }, { label: "Kids (8–12)", value: "kids" }
+    node.appendChild(segRow(t("👶 Age mode"), t("Kids mode uses kid-friendly questions only (ages ~8–12). No account, no tracking — ever."), [
+      { label: t("Everyone"), value: "all" }, { label: t("Kids (8–12)"), value: "kids" }
     ], settings.ageMode, function (v) { settings.ageMode = v; saveSettings(); }));
 
-    node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="replayIntro">Replay the intro</a> · <a href="#" id="wipe" style="color:var(--bad)">Reset all my data on this device</a></div>'));
+    // Language picker (D-035). Preference is a raw string (read by i18n.js
+    // before JSON-based LS exists), so it bypasses the LS helper on purpose.
+    var langPref = "auto";
+    try { langPref = localStorage.getItem("curio.lang") || "auto"; } catch (e) {}
+    if (langPref !== "en" && langPref !== "fr") langPref = "auto";
+    node.appendChild(segRow("🌐 Language / Langue", t("Auto follows your device language. Changing this reloads the app."), [
+      { label: "Auto", value: "auto" }, { label: "English", value: "en" }, { label: "Français", value: "fr" }
+    ], langPref, function (v) {
+      try { localStorage.setItem("curio.lang", v); } catch (e) {}
+      location.reload();
+    }));
+
+    node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="replayIntro">' + t("Replay the intro") + '</a> · <a href="#" id="wipe" style="color:var(--bad)">' + t("Reset all my data on this device") + '</a></div>'));
     node.querySelector("#replayIntro").addEventListener("click", function (e) { e.preventDefault(); onboardingView(0); });
 
     node.querySelector("#back").addEventListener("click", function () { render(homeView()); });
     node.querySelector("#wipe").addEventListener("click", function (e) {
       e.preventDefault();
-      if (confirm("Erase streaks, scores, vault and settings on this device?")) {
+      if (confirm(t("Erase streaks, scores, vault and settings on this device?"))) {
         Object.keys(localStorage).forEach(function (k) { if (k.indexOf("curio.") === 0) localStorage.removeItem(k); });
         settings = Object.assign({}, DEFAULT_SETTINGS);
         applySettings(); render(homeView());
@@ -514,18 +553,18 @@
       node.innerHTML = "";
       node.appendChild(el(
         '<div class="quizhead">' +
-          '<button class="btn ghost" id="quit" style="padding:8px 12px;font-size:13px">← Quit</button>' +
+          '<button class="btn ghost" id="quit" style="padding:8px 12px;font-size:13px">' + t("← Quit") + '</button>' +
           '<div class="progress"><i style="width:' + Math.round((idx) / cfg.questions.length * 100) + '%"></i></div>' +
           '<div class="qmeta">' + (idx + 1) + '/' + cfg.questions.length + (secs ? ' · <span class="timer" id="timer">' + secs + 's</span>' : '') + '</div>' +
         '</div>'
       ));
       var catLabel = q.theme || q.cat || "";
       var catEmoji = CAT_EMOJI[q.cat] || cfg.emoji || "";
-      var regionBit = q.region && REGION_LABEL[q.region] ? ' · ' + REGION_LABEL[q.region] : "";
+      var regionBit = q.region && REGION_LABEL[q.region] ? ' · ' + t(REGION_LABEL[q.region]) : "";
       var body = el(
         '<div>' +
-          '<span class="qcat">' + catEmoji + " " + esc(catLabel) + regionBit + ' · ' + ["Easy", "Medium", "Hard"][q.diff - 1] + (cfg.vault ? ' · 🗝️ Vault' : '') + '</span>' +
-          '<div class="qtext">' + esc(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="Read this question aloud">🔊</button>' : '') + '</div>' +
+          '<span class="qcat">' + catEmoji + " " + esc(t(catLabel)) + regionBit + ' · ' + [t("Easy"), t("Medium"), t("Hard")][q.diff - 1] + (cfg.vault ? ' · 🗝️ ' + t("Vault") : '') + '</span>' +
+          '<div class="qtext">' + esc(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read this question aloud") + '">🔊</button>' : '') + '</div>' +
           '<div class="opts"></div>' +
         '</div>'
       );
@@ -543,12 +582,12 @@
         opts.classList.add("hidden");
         var recall = el(
           '<div class="recall">' +
-            '<div class="mini" style="margin-bottom:8px">🧠 You’ve seen this one. Strengthen it: recall the answer from memory first (+25).</div>' +
+            '<div class="mini" style="margin-bottom:8px">' + t("🧠 You’ve seen this one. Strengthen it: recall the answer from memory first (+25).") + '</div>' +
             '<div class="recallrow">' +
-              '<input class="recallinput" id="recallIn" type="text" autocomplete="off" placeholder="Type your answer…" aria-label="Type your answer from memory">' +
-              '<button class="btn" id="recallGo">Check</button>' +
+              '<input class="recallinput" id="recallIn" type="text" autocomplete="off" placeholder="' + t("Type your answer…") + '" aria-label="' + t("Type your answer from memory") + '">' +
+              '<button class="btn" id="recallGo">' + t("Check") + '</button>' +
             '</div>' +
-            '<div class="btnrow"><button class="btn ghost" id="recallSkip">Show the options instead</button></div>' +
+            '<div class="btnrow"><button class="btn ghost" id="recallSkip">' + t("Show the options instead") + '</button></div>' +
           '</div>'
         );
         node.appendChild(recall);
@@ -613,13 +652,13 @@
         if (bi === q.answer) { b.classList.add("correct"); b.querySelector(".key").textContent = "✓"; }
         else if (bi === i) { b.classList.add("wrong"); b.querySelector(".key").textContent = "✗"; }
       });
-      var head = correct ? "Correct! " : (i === -1 ? "Time! " : "Not quite. ");
+      var head = correct ? t("Correct! ") : (i === -1 ? t("Time! ") : t("Not quite. "));
       var hasDeeper = q.deeper && q.deeper.length > 0;
       var fact = el('<div class="fact"><b>' + head + '</b>' + esc(q.fact) + srcLink(q.src) +
         '<div class="deeperbox"></div>' +
         '<div class="btnrow">' +
-          '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? "Next →" : "See results →") + '</button>' +
-          (hasDeeper ? '<button class="btn ghost" id="deeper">🕳️ Go deeper</button>' : '') +
+          '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? t("Next →") : t("See results →")) + '</button>' +
+          (hasDeeper ? '<button class="btn ghost" id="deeper">' + t("🕳️ Go deeper") + '</button>' : '') +
         '</div></div>');
       node.appendChild(fact);
       requestAnimationFrame(function () { fact.classList.add("show"); });
@@ -633,7 +672,7 @@
           requestAnimationFrame(function () { d.classList.add("show"); });
           speak(q.deeper[dIdx]);
           dIdx++;
-          if (dIdx >= q.deeper.length) { dBtn.disabled = true; dBtn.textContent = "🕳️ Bottom reached"; }
+          if (dIdx >= q.deeper.length) { dBtn.disabled = true; dBtn.textContent = t("🕳️ Bottom reached"); }
         });
       }
       fact.querySelector("#next").addEventListener("click", function () {
@@ -668,14 +707,16 @@
     var node = el(
       '<div class="card result">' +
         '<div class="scorebig">' + rec.score + '/' + rec.total + '</div>' +
-        '<h2>' + (already ? "Today's challenge" : praise(rec.score, rec.total)) + '</h2>' +
-        '<div class="sub">🔥 ' + s.count + '-day streak' + (s.count === s.best && s.best > 1 ? " — your best ever!" : "") + '</div>' +
+        '<h2>' + (already ? t("Today's challenge") : praise(rec.score, rec.total)) + '</h2>' +
+        '<div class="sub">' + (s.count === 1 ? t("🔥 1-day streak") : tf("🔥 {n}-day streak", { n: s.count })) + (s.count === s.best && s.best > 1 ? t(" — your best ever!") : "") + '</div>' +
         '<div class="sharebox">' + emoji + '</div>' +
-        '<div class="mini">Curio Daily · ' + rec.date + '</div>' +
-        (!already && missed ? '<div class="mini" style="margin-top:10px">🗝️ ' + missed + ' fact' + (missed === 1 ? "" : "s") + ' added to your Memory Vault — they’ll come back until you own them.</div>' : '') +
+        '<div class="mini">Qpio Daily · ' + rec.date + '</div>' +
+        (!already && missed ? '<div class="mini" style="margin-top:10px">' + (missed === 1
+          ? t("🗝️ 1 fact added to your Memory Vault — they’ll come back until you own them.")
+          : tf("🗝️ {n} facts added to your Memory Vault — they’ll come back until you own them.", { n: missed })) + '</div>' : '') +
         '<div class="btnrow center" style="justify-content:center">' +
-          '<button class="btn" id="share">Share result</button>' +
-          '<button class="btn ghost" id="home">Home</button>' +
+          '<button class="btn" id="share">' + t("Share result") + '</button>' +
+          '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
       '</div>'
@@ -683,7 +724,9 @@
     render(node);
     node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
     node.querySelector("#share").addEventListener("click", function () {
-      var text = "Curio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total + "\n🔥 " + s.count + "-day streak\nhttps://chalbas.github.io/curio/ — free, forever.";
+      var text = "Qpio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total +
+        "\n🔥 " + (s.count === 1 ? t("1-day streak") : tf("{n}-day streak", { n: s.count })) +
+        "\nhttps://chalbas.github.io/curio/ — " + t("free, forever.");
       shareOrCopy(text, node.querySelector("#msg"));
     });
   }
@@ -703,12 +746,12 @@
         var node = el(
           '<div class="card result">' +
             '<div class="scorebig">' + r.correct + '/' + r.total + '</div>' +
-            '<h2>' + (r.correct === r.total ? "Vault cleared. 🗝️" : "Strengthening in progress.") + '</h2>' +
-            '<div class="sub">' + r.correct + ' climbed the ladder · ' + (r.total - r.correct) + ' reset to tomorrow</div>' +
-            '<div class="mini">Facts mastered for good so far: ' + (getStats().mastered || 0) + ' 🏅</div>' +
+            '<h2>' + (r.correct === r.total ? t("Vault cleared. 🗝️") : t("Strengthening in progress.")) + '</h2>' +
+            '<div class="sub">' + tf("{a} climbed the ladder · {b} reset to tomorrow", { a: r.correct, b: (r.total - r.correct) }) + '</div>' +
+            '<div class="mini">' + tf("Facts mastered for good so far: {n} 🏅", { n: (getStats().mastered || 0) }) + '</div>' +
             '<div class="btnrow" style="justify-content:center">' +
-              (vaultDue().length ? '<button class="btn" id="more">Review more</button>' : '') +
-              '<button class="btn ghost" id="home">Home</button>' +
+              (vaultDue().length ? '<button class="btn" id="more">' + t("Review more") + '</button>' : '') +
+              '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
             '</div>' +
           '</div>'
         );
@@ -726,13 +769,13 @@
   function cityHomeView() {
     var packs = cityPacks();
     var wrap = el('<div class="grid"></div>');
-    wrap.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">← Home</button><h2 style="margin:0 auto">🧳 Before you travel</h2><span style="width:64px"></span></div>'));
-    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free, offline, no ads.</p>'));
+    wrap.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">🧳 ' + t("Before you travel") + '</h2><span style="width:64px"></span></div>'));
+    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">' + t("Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free, offline, no ads.") + '</p>'));
     packs.forEach(function (p) {
       var card = el(
         '<div class="card mode citycard">' +
           '<div class="cityrow"><span class="cityemoji">' + (p.emoji || "🌍") + '</span>' +
-          '<div><h3>' + esc(p.city) + '</h3><div class="mini">' + esc(p.country) + ' · ' + (REGION_LABEL[p.region] || esc(p.region)) + '</div></div></div>' +
+          '<div><h3>' + esc(p.city) + '</h3><div class="mini">' + esc(p.country) + ' · ' + (REGION_LABEL[p.region] ? t(REGION_LABEL[p.region]) : esc(p.region)) + '</div></div></div>' +
           '<p>' + esc(p.blurb) + '</p>' +
         '</div>'
       );
@@ -745,18 +788,18 @@
 
   function cityPackView(pack) {
     var node = el('<div class="grid"></div>');
-    node.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">← Cities</button><h2 style="margin:0 auto">' + (pack.emoji || "🌍") + ' ' + esc(pack.city) + '</h2><span style="width:64px"></span></div>'));
+    node.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Cities") + '</button><h2 style="margin:0 auto">' + (pack.emoji || "🌍") + ' ' + esc(pack.city) + '</h2><span style="width:64px"></span></div>'));
 
-    var play = el('<div class="card"><p style="margin:0 0 12px">' + esc(pack.blurb) + '</p><button class="btn block" id="playCity">▶ Play the ' + esc(pack.city) + ' quiz (' + pack.questions.length + ')</button></div>');
+    var play = el('<div class="card"><p style="margin:0 0 12px">' + esc(pack.blurb) + '</p><button class="btn block" id="playCity">' + tf("▶ Play the {city} quiz ({n})", { city: esc(pack.city), n: pack.questions.length }) + '</button></div>');
     node.appendChild(play);
 
     // Key phrases
     if (pack.phrases && pack.phrases.length) {
-      var pcard = el('<div class="card"><div class="section-title" style="margin-top:0">🗣️ Key phrases · ' + esc(pack.lang || "") + '</div></div>');
+      var pcard = el('<div class="card"><div class="section-title" style="margin-top:0">🗣️ ' + t("Key phrases") + ' · ' + esc(pack.lang || "") + '</div></div>');
       pack.phrases.forEach(function (ph) {
         var row = el(
           '<div class="phrase">' +
-            '<div class="phrase-main"><b>' + esc(ph.phrase) + '</b>' + (canSpeak() ? ' <button class="speakbtn phrase-speak" aria-label="Say it">🔊</button>' : '') + '</div>' +
+            '<div class="phrase-main"><b>' + esc(ph.phrase) + '</b>' + (canSpeak() ? ' <button class="speakbtn phrase-speak" aria-label="' + t("Say it") + '">🔊</button>' : '') + '</div>' +
             '<div class="mini">' + esc(ph.meaning) + ' · <i>' + esc(ph.pron) + '</i></div>' +
           '</div>'
         );
@@ -769,7 +812,7 @@
 
     // Know before you go
     if (pack.tips && pack.tips.length) {
-      var tcard = el('<div class="card"><div class="section-title" style="margin-top:0">🧭 Know before you go</div></div>');
+      var tcard = el('<div class="card"><div class="section-title" style="margin-top:0">' + t("🧭 Know before you go") + '</div></div>');
       var ul = el('<ul class="tips"></ul>');
       pack.tips.forEach(function (t) { ul.appendChild(el('<li>' + esc(t) + '</li>')); });
       tcard.appendChild(ul);
@@ -789,11 +832,11 @@
             '<div class="card result">' +
               '<div class="scorebig">' + r.correct + '/' + r.total + '</div>' +
               '<h2>' + praise(r.correct, r.total) + '</h2>' +
-              '<div class="sub">' + esc(pack.city) + ' · ready for your trip 🧳</div>' +
+              '<div class="sub">' + esc(pack.city) + ' · ' + t("ready for your trip 🧳") + '</div>' +
               '<div class="btnrow" style="justify-content:center">' +
-                '<button class="btn" id="again">Play again</button>' +
-                '<button class="btn ghost" id="pack">Back to ' + esc(pack.city) + '</button>' +
-                '<button class="btn ghost" id="home">Home</button>' +
+                '<button class="btn" id="again">' + t("Play again") + '</button>' +
+                '<button class="btn ghost" id="pack">' + tf("Back to {city}", { city: esc(pack.city) }) + '</button>' +
+                '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
               '</div>' +
             '</div>'
           );
@@ -821,7 +864,9 @@
   // ---------- Fact or Fake? (media literacy) ----------
   var TRUTH_ROUND = 8;
   function truthPool() {
-    var all = window.CURIO_STATEMENTS || [];
+    var en = window.CURIO_STATEMENTS || [];
+    var fr = window.CURIO_STATEMENTS_FR || [];
+    var all = (QLANG === "fr" && fr.length) ? fr : en;
     return settings.ageMode === "kids" ? all.filter(function (s) { return s.kids; }) : all;
   }
   function startTruthLab() {
@@ -840,18 +885,18 @@
       node.innerHTML = "";
       node.appendChild(el(
         '<div class="quizhead">' +
-          '<button class="btn ghost" id="quit" style="padding:8px 12px;font-size:13px">← Quit</button>' +
+          '<button class="btn ghost" id="quit" style="padding:8px 12px;font-size:13px">' + t("← Quit") + '</button>' +
           '<div class="progress"><i style="width:' + Math.round(idx / sts.length * 100) + '%"></i></div>' +
           '<div class="qmeta">' + (idx + 1) + '/' + sts.length + '</div>' +
         '</div>'
       ));
       node.appendChild(el(
         '<div>' +
-          '<span class="qcat">🔎 Fact or Fake? · ' + (CAT_EMOJI[st.cat] || "") + " " + esc(st.cat) + '</span>' +
-          '<div class="qtext">“' + esc(st.s) + '”' + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="Read aloud">🔊</button>' : '') + '</div>' +
+          '<span class="qcat">🔎 ' + t("Fact or Fake?") + ' · ' + (CAT_EMOJI[st.cat] || "") + " " + esc(t(st.cat)) + '</span>' +
+          '<div class="qtext">“' + esc(st.s) + '”' + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read aloud") + '">🔊</button>' : '') + '</div>' +
           '<div class="truthbtns">' +
-            '<button class="opt truthopt" id="btnFact"><span class="key">✅</span><span>Fact — this is real</span></button>' +
-            '<button class="opt truthopt" id="btnFake"><span class="key">🚫</span><span>Fake — don’t fall for it</span></button>' +
+            '<button class="opt truthopt" id="btnFact"><span class="key">✅</span><span>' + t("Fact — this is real") + '</span></button>' +
+            '<button class="opt truthopt" id="btnFake"><span class="key">🚫</span><span>' + t("Fake — don’t fall for it") + '</span></button>' +
           '</div>' +
         '</div>'
       ));
@@ -875,9 +920,9 @@
       if (!correct) (saidTrue ? fBtn : kBtn).classList.add("wrong");
       // The explain text itself opens with "Real."/"Fake.", so the head just
       // carries the reaction + emoji to avoid doubling the verdict word.
-      var head = (correct ? "Nice catch! " : "Gotcha — ") + (st.truth ? "✅ " : "🚫 ");
+      var head = (correct ? t("Nice catch! ") : t("Gotcha — ")) + (st.truth ? "✅ " : "🚫 ");
       var fact = el('<div class="fact"><b>' + head + '</b>' + esc(st.explain) + srcLink(st.src) +
-        '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < sts.length ? "Next →" : "See results →") + '</button></div></div>');
+        '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < sts.length ? t("Next →") : t("See results →")) + '</button></div></div>');
       node.appendChild(fact);
       requestAnimationFrame(function () { fact.classList.add("show"); });
       speak(head + st.explain);
@@ -894,11 +939,11 @@
       var res = el(
         '<div class="card result">' +
           '<div class="scorebig">' + correctCount + '/' + sts.length + '</div>' +
-          '<h2>' + (isHi && score > 0 ? "🏆 New best!" : truthPraise(correctCount, sts.length)) + '</h2>' +
-          '<div class="sub">Every claim you just checked had a source. Real life should be so kind — so ask for one.</div>' +
+          '<h2>' + (isHi && score > 0 ? t("🏆 New best!") : truthPraise(correctCount, sts.length)) + '</h2>' +
+          '<div class="sub">' + t("Every claim you just checked had a source. Real life should be so kind — so ask for one.") + '</div>' +
           '<div class="btnrow" style="justify-content:center">' +
-            '<button class="btn" id="again">Play again</button>' +
-            '<button class="btn ghost" id="home">Home</button>' +
+            '<button class="btn" id="again">' + t("Play again") + '</button>' +
+            '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
           '</div>' +
         '</div>'
       );
@@ -907,19 +952,19 @@
       res.querySelector("#again").addEventListener("click", startTruthLab);
     }
   }
-  function truthPraise(c, t) {
-    var r = c / t;
-    if (r === 1) return "Unfoolable. 🔎";
-    if (r >= 0.75) return "Sharp eye for nonsense.";
-    if (r >= 0.5) return "The fakes are sneaky — that’s the point.";
-    return "Now you know the tricks. They only work once.";
+  function truthPraise(c, t_) {
+    var r = c / t_;
+    if (r === 1) return t("Unfoolable. 🔎");
+    if (r >= 0.75) return t("Sharp eye for nonsense.");
+    if (r >= 0.5) return t("The fakes are sneaky — that’s the point.");
+    return t("Now you know the tricks. They only work once.");
   }
 
   // ---------- quickfire ----------
   function startQuickfire(cat, region) {
     var qs = quickfireQuestions(cat, region);
     if (!qs.length) { render(homeView()); return; }
-    var label = cat + (region && region !== "All" ? " · " + (REGION_LABEL[region] || region) : "");
+    var label = t(cat) + (region && region !== "All" ? " · " + t(REGION_LABEL[region] || region) : "");
     runQuiz({
       questions: qs,
       timed: true,
@@ -934,12 +979,12 @@
     var node = el(
       '<div class="card result">' +
         '<div class="scorebig">' + r.score + '</div>' +
-        '<h2>' + (isHi ? "🏆 New high score!" : praise(r.correct, r.total)) + '</h2>' +
-        '<div class="sub">' + r.correct + '/' + r.total + ' correct · ' + esc(label) + '</div>' +
+        '<h2>' + (isHi ? t("🏆 New high score!") : praise(r.correct, r.total)) + '</h2>' +
+        '<div class="sub">' + tf("{c}/{t} correct", { c: r.correct, t: r.total }) + ' · ' + esc(label) + '</div>' +
         '<div class="btnrow" style="justify-content:center">' +
-          '<button class="btn" id="save">Save to leaderboard</button>' +
-          '<button class="btn ghost" id="again">Play again</button>' +
-          '<button class="btn ghost" id="home">Home</button>' +
+          '<button class="btn" id="save">' + t("Save to leaderboard") + '</button>' +
+          '<button class="btn ghost" id="again">' + t("Play again") + '</button>' +
+          '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
       '</div>'
@@ -948,36 +993,36 @@
     node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
     node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
     node.querySelector("#save").addEventListener("click", function () {
-      var name = (prompt("Name for the leaderboard:", LS.get("playerName", "Nerd")) || "").trim().slice(0, 16) || "Nerd";
+      var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Nerd")) || "").trim().slice(0, 16) || "Nerd";
       LS.set("playerName", name);
       var board = LS.get("leaderboard", []);
       board.push({ name: name, pts: r.score, date: todayKey() });
       board.sort(function (a, b) { return b.pts - a.pts; });
       LS.set("leaderboard", board.slice(0, 20));
       node.querySelector("#save").disabled = true;
-      node.querySelector("#msg").textContent = "Saved! ⭐";
+      node.querySelector("#msg").textContent = t("Saved! ⭐");
     });
   }
 
-  function praise(c, t) {
-    var r = c / t;
-    if (r === 1) return "Flawless. Certified nerd. 🧠";
-    if (r >= 0.8) return "Sharp. Very sharp.";
-    if (r >= 0.6) return "Solid work.";
-    if (r >= 0.4) return "Room to grow — you learned something.";
-    return "Everyone starts somewhere. Now you know more.";
+  function praise(c, t_) {
+    var r = c / t_;
+    if (r === 1) return t("Flawless. Certified nerd. 🧠");
+    if (r >= 0.8) return t("Sharp. Very sharp.");
+    if (r >= 0.6) return t("Solid work.");
+    if (r >= 0.4) return t("Room to grow — you learned something.");
+    return t("Everyone starts somewhere. Now you know more.");
   }
 
   // ---------- onboarding (FEAT-011 / US-008): 3 cards, skippable, once ----------
   function onboardingView(step) {
     step = step || 0;
     var slides = [
-      { emoji: "🦉", title: "Knowledge should be free.",
-        text: "Curio is a free knowledge app — no ads, no paywalls, ever. Every answer teaches you a fact worth keeping, with the source one tap away." },
-      { emoji: "📅", title: "Five questions a day.",
-        text: "Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good." },
-      { emoji: "⚙️", title: "Made for the way you learn.",
-        text: "Timers off, dyslexia-friendly reading, read-aloud, high contrast — free in Comfort settings (⚙️). A Kids mode too: no accounts, no tracking." }
+      { emoji: "🦉", title: t("Knowledge should be free."),
+        text: t("Qpio (say: cue-pee-oh) is a free knowledge app — no ads, no paywalls, ever. Every answer teaches you a fact worth keeping, with the source one tap away.") },
+      { emoji: "📅", title: t("Five questions a day."),
+        text: t("Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.") },
+      { emoji: "⚙️", title: t("Made for the way you learn."),
+        text: t("Timers off, dyslexia-friendly reading, read-aloud, high contrast — free in Comfort settings (⚙️). A Kids mode too: no accounts, no tracking.") }
     ];
     var s = slides[step];
     var dots = slides.map(function (_, i) {
@@ -991,8 +1036,8 @@
         '<p class="onb-text">' + s.text + '</p>' +
         '<div class="onb-dots">' + dots + '</div>' +
         '<div class="btnrow" style="justify-content:center">' +
-          '<button class="btn" id="onbNext">' + (last ? "Play today's challenge ▶" : "Next →") + '</button>' +
-          (last ? '' : '<button class="btn ghost" id="onbSkip">Skip</button>') +
+          '<button class="btn" id="onbNext">' + (last ? t("Play today's challenge ▶") : t("Next →")) + '</button>' +
+          (last ? '' : '<button class="btn ghost" id="onbSkip">' + t("Skip") + '</button>') +
         '</div>' +
       '</div>'
     );
