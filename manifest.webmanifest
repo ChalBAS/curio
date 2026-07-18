@@ -1,7 +1,7 @@
 {
   "name": "Qpio — knowledge, free forever",
   "short_name": "Qpio",
-  "description": "Qpio (say: cue-pee-oh) — daily general-knowledge challenges, quick-fire quizzes and streaks. Free forever. Quaero, ergo Sapio.",
+  "description": "Qpio (say: cue-pee-oh) — daily general-knowledge challenges, quick-fire quizzes and streaks. Free forever. I am curious to become wise — Quaero, ergo Sapio.",
   "start_url": "./index.html?source=pwa",
   "scope": "./",
   "display": "standalone",

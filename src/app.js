@@ -404,7 +404,7 @@
 
     wrap.appendChild(el(
       '<div class="footer">' + t("Qpio — knowledge is free, forever. No ads, no data selling.") + '<br>' +
-      t("Make being a nerd sexy again. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a></div>'
+      t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a></div>'
     ));
 
     // wire
@@ -993,7 +993,7 @@
     node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
     node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
     node.querySelector("#save").addEventListener("click", function () {
-      var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Nerd")) || "").trim().slice(0, 16) || "Nerd";
+      var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Curious")) || "").trim().slice(0, 16) || "Curious";
       LS.set("playerName", name);
       var board = LS.get("leaderboard", []);
       board.push({ name: name, pts: r.score, date: todayKey() });
@@ -1006,7 +1006,7 @@
 
   function praise(c, t_) {
     var r = c / t_;
-    if (r === 1) return t("Flawless. Certified nerd. 🧠");
+    if (r === 1) return t("Flawless. Certified sage. 🧠");
     if (r >= 0.8) return t("Sharp. Very sharp.");
     if (r >= 0.6) return t("Solid work.");
     if (r >= 0.4) return t("Room to grow — you learned something.");

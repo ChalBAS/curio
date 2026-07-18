@@ -124,7 +124,7 @@
       // --- footer ---
       "Qpio — knowledge is free, forever. No ads, no data selling.":
         "Qpio — le savoir est gratuit, pour toujours. Pas de pub, pas de vente de données.",
-      "Make being a nerd sexy again. 🧠": "Être un nerd n’a jamais été aussi sexy. 🧠",
+      "I am curious to become wise. 🧠": "La curiosité me rend sage. 🧠",
 
       // --- comfort panel ---
       "← Home": "← Accueil",
@@ -205,7 +205,7 @@
       "Copied to clipboard! 📋 Paste it anywhere.": "Copié dans le presse-papiers ! 📋 Colle-le où tu veux.",
 
       // --- praise (quiz results) ---
-      "Flawless. Certified nerd. 🧠": "Sans faute. Diplôme de nerd décroché. 🧠",
+      "Flawless. Certified sage. 🧠": "Sans faute. Niveau sage atteint. 🧠",
       "Sharp. Very sharp.": "Brillant. Vraiment brillant.",
       "Solid work.": "Du solide.",
       "Room to grow — you learned something.": "Encore de la marge — mais tu as appris quelque chose.",

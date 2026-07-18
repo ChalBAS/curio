@@ -1,7 +1,7 @@
 # 🦉 Curio
 
 **Daily general-knowledge challenges, quick-fire quizzes and streaks.
-Free forever. Make being a nerd sexy again.**
+Free forever. I am curious to become wise.**
 
 Curio is a zero-dependency progressive web app: pure HTML/CSS/JS, no build
 step, no backend, no tracking. Your streaks and scores live in your own
