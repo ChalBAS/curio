@@ -1,18 +1,19 @@
 :root {
-  --bg: #0f1020;
-  --bg2: #171a2e;
-  --card: #1e2140;
-  --card2: #262a4f;
-  --ink: #f2f3ff;
-  --muted: #9aa0c8;
-  --line: #33386a;
-  --brand: #ffd166;
-  --brand2: #ff8fa3;
-  --accent: #7c6cff;
-  --good: #4fd6a3;
-  --bad: #ff6b81;
+  /* Palette derived from the Qpio mark (D-057). Hues 180-210deg, navy -> cyan. */
+  --bg: #071722;          /* deep navy-black, the mark's darkest value */
+  --bg2: #0B2233;
+  --card: #0F2C3F;
+  --card2: #164056;
+  --ink: #EAF4F8;
+  --muted: #8FB0C0;
+  --line: #1E4A63;
+  --brand: #26BAD8;       /* the mark's brightest cyan - the single accent */
+  --brand2: #1E95AD;      /* mid teal, for depth only - not a second accent */
+  --accent: #26BAD8;
+  --good: #3FBF9A;
+  --bad: #E4695F;
   --radius: 16px;
-  --shadow: 0 10px 40px rgba(0,0,0,.45);
+  --shadow: 0 10px 40px rgba(0,0,0,.5);
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 * { box-sizing: border-box; }
@@ -21,8 +22,8 @@ body {
   font-family: var(--font);
   color: var(--ink);
   background:
-    radial-gradient(1200px 600px at 80% -10%, #2a2560 0%, transparent 60%),
-    radial-gradient(900px 500px at -10% 20%, #3a1f52 0%, transparent 55%),
+    radial-gradient(1200px 600px at 80% -10%, #0E3B52 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, #0A2C3E 0%, transparent 55%),
     var(--bg);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -33,7 +34,7 @@ body {
 .top { display: flex; align-items: center; justify-content: space-between; margin: 8px 0 22px; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 22px; letter-spacing: .3px; }
 .logo .mark { font-size: 26px; }
-.logo .name { background: linear-gradient(90deg, var(--brand), var(--brand2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.logo .name { color: var(--ink); letter-spacing: -.01em; }
 .tag { color: var(--muted); font-size: 12.5px; font-weight: 500; }
 .streakchip { display: flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); padding: 8px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; }
 
@@ -47,7 +48,7 @@ body {
   box-shadow: var(--shadow);
 }
 .hero { position: relative; overflow: hidden; }
-.hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(400px 200px at 90% 0%, rgba(255,209,102,.14), transparent 70%); pointer-events: none; }
+.hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(400px 200px at 90% 0%, rgba(38,186,216,.12), transparent 70%); pointer-events: none; }
 .hero h1 { margin: 4px 0 6px; font-size: 24px; }
 .hero p { margin: 0 0 16px; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
 .row { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -64,7 +65,7 @@ body {
 .btn {
   appearance: none; border: none; cursor: pointer; font-family: var(--font);
   font-weight: 700; font-size: 15px; color: #17162b;
-  background: linear-gradient(90deg, var(--brand), var(--brand2));
+  background: var(--brand);
   padding: 13px 20px; border-radius: 12px; transition: filter .12s ease, transform .12s ease;
 }
 .btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
@@ -82,7 +83,7 @@ body {
 /* Quiz */
 .quizhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .progress { flex: 1; height: 8px; background: var(--card2); border-radius: 999px; overflow: hidden; margin: 0 14px; }
-.progress > i { display: block; height: 100%; background: linear-gradient(90deg, var(--brand), var(--brand2)); width: 0; transition: width .3s ease; }
+.progress > i { display: block; height: 100%; background: var(--brand); width: 0; transition: width .3s ease; }
 .qmeta { color: var(--muted); font-size: 13px; font-weight: 600; white-space: nowrap; }
 .qcat { display: inline-block; font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; }
 .qtext { font-size: 21px; font-weight: 700; line-height: 1.35; margin: 2px 0 18px; }
@@ -114,7 +115,7 @@ body {
 
 /* Results */
 .result { text-align: center; }
-.scorebig { font-size: 56px; font-weight: 900; background: linear-gradient(90deg, var(--brand), var(--brand2)); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1.1; }
+.scorebig { font-size: 56px; font-weight: 900; color: var(--brand); line-height: 1.1; }
 .result h2 { margin: 6px 0 2px; }
 .result .sub { color: var(--muted); margin-bottom: 18px; }
 .sharebox { background: var(--bg2); border: 1px dashed var(--line); border-radius: 12px; padding: 14px; font-size: 20px; letter-spacing: 3px; margin: 6px 0 4px; }
@@ -147,7 +148,7 @@ body {
 .bm-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; }
 .bm-cat { width: 118px; flex: none; font-size: 13.5px; font-weight: 600; }
 .bm-bar { flex: 1; height: 10px; background: var(--card2); border-radius: 999px; overflow: hidden; }
-.bm-bar > i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--brand2)); transition: width .4s ease; }
+.bm-bar > i { display: block; height: 100%; border-radius: 999px; background: var(--brand); transition: width .4s ease; }
 .bm-lv { width: 110px; flex: none; text-align: right; font-size: 12px; color: var(--muted); font-weight: 700; }
 
 /* Comfort panel */
@@ -228,7 +229,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 /* Install affordances */
 .installbtn {
   appearance: none; cursor: pointer; font-family: var(--font); font-weight: 800; font-size: 13px;
-  color: #17162b; background: linear-gradient(90deg, var(--brand), var(--brand2));
+  color: #17162b; background: var(--brand);
   border: none; padding: 8px 14px; border-radius: 999px; margin-left: auto; margin-right: 12px;
 }
 .installbtn:hover { filter: brightness(1.06); }
@@ -244,7 +245,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 /* Onboarding (FEAT-011) */
 .onb { text-align: center; padding: 34px 22px; }
 .onb-emoji { font-size: 54px; line-height: 1; margin-bottom: 12px; }
-.onb-title { font-size: 24px; margin: 0 0 10px; background: linear-gradient(90deg, var(--brand), var(--brand2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.onb-title { font-size: 24px; margin: 0 0 10px; color: var(--ink); }
 .onb-text { color: var(--muted); font-size: 15px; line-height: 1.6; max-width: 440px; margin: 0 auto 18px; }
 .onb-dots { margin-bottom: 16px; }
 .onb-dot { display: inline-block; width: 8px; height: 8px; border-radius: 99px; background: var(--card2); margin: 0 4px; }
