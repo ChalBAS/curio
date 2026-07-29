@@ -65,6 +65,7 @@
   var DEFAULT_SETTINGS = {
     timer: "normal",      // normal (15s) | relaxed (30s) | off
     dyslexia: false,
+    anchors: false,
     textSize: "normal",   // normal | large | xl
     motion: "normal",     // normal | reduced
     contrast: "normal",   // normal | high
@@ -208,6 +209,18 @@
   var app = document.getElementById("app");
   function el(html) { var d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstChild; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  // Focus anchors (FEAT-025): bold word-initial fragments as eye fixation points.
+  // Independent implementation on our own parameters; applied to reading passages
+  // only when the user opts in (Comfort). Operates on RAW text, escapes per token.
+  function anchorize(raw) {
+    return String(raw).replace(/([A-Za-zÀ-ɏ’']+)|([^A-Za-zÀ-ɏ’']+)/g, function (m, word, rest) {
+      if (rest !== undefined) return esc(rest);
+      var letters = word.replace(/[’']/g, "");
+      var n = letters.length <= 3 ? 1 : Math.ceil(letters.length * 0.4);
+      return "<b>" + esc(word.slice(0, n)) + "</b>" + esc(word.slice(n));
+    });
+  }
+  function fmt(s2) { return settings.anchors ? anchorize(s2) : esc(s2); }
   function render(node) { hushed(); app.innerHTML = ""; app.appendChild(node); window.scrollTo(0, 0); }
 
   // ---------- streak ----------
@@ -485,6 +498,10 @@
       { label: t("Off"), value: false }, { label: t("On"), value: true }
     ], settings.dyslexia, function (v) { settings.dyslexia = v; saveSettings(); }));
 
+    node.appendChild(segRow(t("🎯 Focus anchors (bold word starts)"), t("Bolds the first letters of each word as anchor points for the eye. Some readers — many with ADHD — find it keeps focus; research hasn't confirmed a speed benefit for everyone. Keep it only if it helps you."), [
+      { label: t("Off"), value: false }, { label: t("On"), value: true }
+    ], settings.anchors, function (v) { settings.anchors = v; saveSettings(); }));
+
     node.appendChild(segRow(t("🔍 Text size"), null, [
       { label: t("Normal"), value: "normal" }, { label: t("Large"), value: "large" }, { label: t("Extra large"), value: "xl" }
     ], settings.textSize, function (v) { settings.textSize = v; saveSettings(); }));
@@ -564,7 +581,7 @@
       var body = el(
         '<div>' +
           '<span class="qcat">' + catEmoji + " " + esc(t(catLabel)) + regionBit + ' · ' + [t("Easy"), t("Medium"), t("Hard")][q.diff - 1] + (cfg.vault ? ' · 🗝️ ' + t("Vault") : '') + '</span>' +
-          '<div class="qtext">' + esc(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read this question aloud") + '">🔊</button>' : '') + '</div>' +
+          '<div class="qtext">' + fmt(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read this question aloud") + '">🔊</button>' : '') + '</div>' +
           '<div class="opts"></div>' +
         '</div>'
       );
@@ -654,7 +671,7 @@
       });
       var head = correct ? t("Correct! ") : (i === -1 ? t("Time! ") : t("Not quite. "));
       var hasDeeper = q.deeper && q.deeper.length > 0;
-      var fact = el('<div class="fact"><b>' + head + '</b>' + esc(q.fact) + srcLink(q.src) +
+      var fact = el('<div class="fact"><b>' + head + '</b>' + fmt(q.fact) + srcLink(q.src) +
         '<div class="deeperbox"></div>' +
         '<div class="btnrow">' +
           '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? t("Next →") : t("See results →")) + '</button>' +
@@ -667,7 +684,7 @@
         var dIdx = 0, dBox = fact.querySelector(".deeperbox"), dBtn = fact.querySelector("#deeper");
         dBtn.addEventListener("click", function () {
           if (dIdx >= q.deeper.length) return;
-          var d = el('<div class="fact-deeper">🕳️ ' + esc(q.deeper[dIdx]) + '</div>');
+          var d = el('<div class="fact-deeper">🕳️ ' + fmt(q.deeper[dIdx]) + '</div>');
           dBox.appendChild(d);
           requestAnimationFrame(function () { d.classList.add("show"); });
           speak(q.deeper[dIdx]);
@@ -893,7 +910,7 @@
       node.appendChild(el(
         '<div>' +
           '<span class="qcat">🔎 ' + t("Fact or Fake?") + ' · ' + (CAT_EMOJI[st.cat] || "") + " " + esc(t(st.cat)) + '</span>' +
-          '<div class="qtext">“' + esc(st.s) + '”' + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read aloud") + '">🔊</button>' : '') + '</div>' +
+          '<div class="qtext">“' + fmt(st.s) + '”' + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read aloud") + '">🔊</button>' : '') + '</div>' +
           '<div class="truthbtns">' +
             '<button class="opt truthopt" id="btnFact"><span class="key">✅</span><span>' + t("Fact — this is real") + '</span></button>' +
             '<button class="opt truthopt" id="btnFake"><span class="key">🚫</span><span>' + t("Fake — don’t fall for it") + '</span></button>' +
@@ -921,7 +938,7 @@
       // The explain text itself opens with "Real."/"Fake.", so the head just
       // carries the reaction + emoji to avoid doubling the verdict word.
       var head = (correct ? t("Nice catch! ") : t("Gotcha — ")) + (st.truth ? "✅ " : "🚫 ");
-      var fact = el('<div class="fact"><b>' + head + '</b>' + esc(st.explain) + srcLink(st.src) +
+      var fact = el('<div class="fact"><b>' + head + '</b>' + fmt(st.explain) + srcLink(st.src) +
         '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < sts.length ? t("Next →") : t("See results →")) + '</button></div></div>');
       node.appendChild(fact);
       requestAnimationFrame(function () { fact.classList.add("show"); });
