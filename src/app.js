@@ -21,7 +21,7 @@
   var Q_FR = window.CURIO_QUESTIONS_FR || [];
   var Q = (QLANG === "fr" && Q_FR.length) ? Q_FR : Q_EN;
   var CATS = ["History", "Science", "Geography", "Arts", "Tech", "Nature"];
-  var CAT_EMOJI = { History: "🏛️", Science: "🔬", Geography: "🌍", Arts: "🎨", Tech: "💻", Nature: "🦉" };
+  var CAT_EMOJI = { History: "🏛️", Science: "🔬", Geography: "🌍", Arts: "🎨", Tech: "💻", Nature: "🌿" };
   var DAILY_COUNT = 5;
   var QUICKFIRE_COUNT = 10;
   var VAULT_SESSION_MAX = 10;
@@ -1036,7 +1036,7 @@
   function onboardingView(step) {
     step = step || 0;
     var slides = [
-      { emoji: "🦉", title: t("Knowledge should be free."),
+      { emoji: "🧭", title: t("Knowledge should be free."),
         text: t("Qpio (say: cue-pee-oh) is a free knowledge app — no ads, no paywalls, ever. Every answer teaches you a fact worth keeping, with the source one tap away.") },
       { emoji: "📅", title: t("Five questions a day."),
         text: t("Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.") },
