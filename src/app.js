@@ -216,7 +216,9 @@
     return String(raw).replace(/([A-Za-zÀ-ɏ’']+)|([^A-Za-zÀ-ɏ’']+)/g, function (m, word, rest) {
       if (rest !== undefined) return esc(rest);
       var letters = word.replace(/[’']/g, "");
-      var n = letters.length <= 3 ? 1 : Math.ceil(letters.length * 0.4);
+      // stepped ladder (not a fixed ratio): 1 for <=3, 2 for 4-5, 3 for 6-8, 4 for 9+
+      var L = letters.length;
+      var n = L <= 3 ? 1 : L <= 5 ? 2 : L <= 8 ? 3 : 4;
       return "<b>" + esc(word.slice(0, n)) + "</b>" + esc(word.slice(n));
     });
   }
@@ -498,7 +500,7 @@
       { label: t("Off"), value: false }, { label: t("On"), value: true }
     ], settings.dyslexia, function (v) { settings.dyslexia = v; saveSettings(); }));
 
-    node.appendChild(segRow(t("🎯 Focus anchors (bold word starts)"), t("Bolds the first letters of each word as anchor points for the eye. Some readers — many with ADHD — find it keeps focus; research hasn't confirmed a speed benefit for everyone. Keep it only if it helps you."), [
+    node.appendChild(segRow(t("🎯 Focus anchors (bold word starts)"), t("Bolds the first letters of each word as anchor points for the eye. Some readers find it helps them focus; research hasn't confirmed a benefit. Try it — keep it only if it helps you."), [
       { label: t("Off"), value: false }, { label: t("On"), value: true }
     ], settings.anchors, function (v) { settings.anchors = v; saveSettings(); }));
 

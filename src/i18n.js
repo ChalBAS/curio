@@ -141,7 +141,7 @@
       "Wider spacing, taller lines, a rounder font.": "Espacement élargi, lignes plus hautes, police plus ronde.",
 
       "🎯 Focus anchors (bold word starts)": "🎯 Ancres de lecture (débuts de mots en gras)",
-      "Bolds the first letters of each word as anchor points for the eye. Some readers — many with ADHD — find it keeps focus; research hasn't confirmed a speed benefit for everyone. Keep it only if it helps you.": "Met en gras les premières lettres de chaque mot, comme points d'ancrage pour l'œil. Certaines personnes — beaucoup avec un TDAH — y trouvent une aide à la concentration ; la recherche n'a pas confirmé de gain de vitesse pour tout le monde. Garde-la seulement si elle t'aide.",      "🔍 Text size": "🔍 Taille du texte",
+      "Bolds the first letters of each word as anchor points for the eye. Some readers find it helps them focus; research hasn't confirmed a benefit. Try it — keep it only if it helps you.": "Met en gras les premières lettres de chaque mot, comme points d'ancrage pour l'œil. Certaines personnes y trouvent une aide à la concentration ; la recherche n'a pas confirmé de bénéfice. Essaie — garde-la seulement si elle t'aide.",      "🔍 Text size": "🔍 Taille du texte",
       "Normal": "Normal",
       "Large": "Grand",
       "Extra large": "Très grand",
