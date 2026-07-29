@@ -57,7 +57,7 @@
   function shuffledIndices(n, seed) {
     var rng = mulberry32(seed), arr = [];
     for (var i = 0; i < n; i++) arr.push(i);
-    for (var j = n - 1; j > 0; j--) { var k = Math.floor(rng() * (j + 1)); var t = arr[j]; arr[j] = arr[k]; arr[k] = t; }
+    for (var j = n - 1; j > 0; j--) { var k = Math.floor(rng() * (j + 1)); var tmp = arr[j]; arr[j] = arr[k]; arr[k] = tmp; }
     return arr;
   }
 
@@ -117,7 +117,7 @@
   function quickfireQuestions(cat, region) {
     var p = pool().filter(function (x) { return cat === "All" || x.cat === cat; });
     if (region && region !== "All") p = p.filter(function (x) { return x.region === region; });
-    for (var i = p.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = p[i]; p[i] = p[k]; p[k] = t; }
+    for (var i = p.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = p[i]; p[i] = p[k]; p[k] = tmp; }
     return p.slice(0, Math.min(QUICKFIRE_COUNT, p.length));
   }
   // Regions present among History questions (for the region sub-filter), in a stable order.
@@ -736,7 +736,7 @@
     var due = vaultDue();
     if (!due.length) { render(homeView()); return; }
     // shuffle, cap the session
-    for (var i = due.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = due[i]; due[i] = due[k]; due[k] = t; }
+    for (var i = due.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = due[i]; due[i] = due[k]; due[k] = tmp; }
     var qs = due.slice(0, VAULT_SESSION_MAX);
     runQuiz({
       questions: qs,
@@ -872,7 +872,7 @@
   function startTruthLab() {
     var pool = truthPool().slice();
     if (pool.length < 4) { render(homeView()); return; }
-    for (var i = pool.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var t = pool[i]; pool[i] = pool[k]; pool[k] = t; }
+    for (var i = pool.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = pool[i]; pool[i] = pool[k]; pool[k] = tmp; }
     var sts = pool.slice(0, Math.min(TRUTH_ROUND, pool.length));
     var idx = 0, score = 0, correctCount = 0, answered = false;
     var node = el('<div class="card"></div>');
