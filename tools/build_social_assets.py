@@ -22,7 +22,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-MARK = os.path.join(ROOT, "brand", "qpio-mark.png")
+MARK = os.path.join(ROOT, "brand", "qpio-mark-hd.png")   # 2228x1096, Real-ESRGAN 4x master
 OUT = os.path.join(ROOT, "brand", "social")
 
 NAVY = (7, 23, 34)          # --bg, the mark's own darkest value
