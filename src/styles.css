@@ -287,6 +287,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 /* room so the fixed bar never covers the last card */
 body:has(.tabbar:not(.hidden)) .wrap { padding-bottom: 120px; }
 @media (min-width: 900px) {
-  .tabbar, .resumebar { display: none !important; }
-  body:has(.tabbar) .wrap { padding-bottom: 80px; }
+  /* CEO 2026-08-02: phone and web look the same - the bar stays, centred */
+  .tabbar { left: 50%; right: auto; transform: translateX(-50%); width: min(720px, 100%); border-radius: 16px 16px 0 0; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 }

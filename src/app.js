@@ -285,8 +285,7 @@
   }
   function renderTab(tab) {
     var node;
-    if (isDesktop()) node = homeView();            // ≥900px: today's single flow, unchanged (spec §3)
-    else if (tab === "games") node = gamesTabView();
+    if (tab === "games") node = gamesTabView();
     else if (tab === "stats") node = statsTabView();
     else if (tab === "settings") node = settingsTabView();
     else node = homeTabView();
@@ -334,13 +333,11 @@
     else location.hash = "home";
   }
   function openSettings() {
-    if (isDesktop()) render(comfortView(false));   // desktop: overlay, as today
-    else tabTap("settings");                       // mobile: gear routes to the tab
+    tabTap("settings");   // one layout everywhere (CEO 2026-08-02): gear = the Settings tab
   }
   function onViewportChange() {
     // Crossing to desktop with a tabbed-away quiz would strand it (no resume
     // UI there) — surface it again before re-rendering.
-    if (isDesktop() && playActive && !playShown) showPlay();
     route();
   }
 
