@@ -1,8 +1,14 @@
-/* Curio — v1.1. Vanilla JS, no build, state in localStorage.
+/* Curio — v1.8 (FEAT-027 mobile tabs). Vanilla JS, no build, state in localStorage.
    Modules: LS (storage) · Settings/Comfort · Stats (Brain Map) · Vault (SRS)
-   · quiz engine · views.
+   · quiz engine · views · tab shell (mobile <900px).
    i18n: UI chrome goes through t() (src/i18n.js). Stored data values,
-   localStorage keys, scoring and the daily seed are language-independent. */
+   localStorage keys, scoring and the daily seed are language-independent.
+   Surfaces: tab content renders into #tabView (rebuilt on every tab
+   activation — always-fresh counts); play surfaces (quizzes, results, city
+   browse, onboarding, desktop comfort) render into the #playLayer overlay,
+   which tab switches only HIDE (CSS class) — DOM, closures and timers
+   survive until Quit/finish. Timers keep running while hidden on purpose
+   (pausing would be a lookup-the-answer cheat vector). */
 (function () {
   "use strict";
 
@@ -223,7 +229,120 @@
     });
   }
   function fmt(s2) { return settings.anchors ? anchorize(s2) : esc(s2); }
-  function render(node) { hushed(); app.innerHTML = ""; app.appendChild(node); window.scrollTo(0, 0); }
+
+  // ---------- FEAT-027: surfaces & tab shell ----------
+  // render(node) = play surface: goes to the overlay, shown above tab content.
+  function render(node) {
+    hushed();
+    playLayer.innerHTML = "";
+    playLayer.appendChild(node);
+    playActive = true;
+    showPlay();
+  }
+
+  var TAB_IDS = ["home", "games", "stats", "settings"];
+  var mqDesk = window.matchMedia("(min-width: 900px)");
+  function isDesktop() { return mqDesk.matches; }
+  var tabView, playLayer, tabBar, resumeBar;
+  var playActive = false;   // a play surface exists in #playLayer
+  var playShown = false;    // …and is currently visible
+
+  function buildShell() {
+    tabView = document.createElement("div");
+    tabView.id = "tabView";
+    playLayer = document.createElement("div");
+    playLayer.id = "playLayer";
+    playLayer.className = "hidden";
+    app.appendChild(tabView);
+    app.appendChild(playLayer);
+
+    // Home icon reuses the header mark URL so its ?v= matches index.html and
+    // the SW cache already holds it (offline-safe, no version drift here).
+    var markSrc = "brand/qpio-mark-96.png";
+    var headMark = document.querySelector(".logo img.mark");
+    if (headMark) markSrc = headMark.getAttribute("src");
+    tabBar = el(
+      '<nav class="tabbar" aria-label="' + t("Main navigation") + '">' +
+        '<button class="tabbtn" data-tab="home"><img class="ticon" src="' + markSrc + '" alt=""><span>' + t("Home") + '</span></button>' +
+        '<button class="tabbtn" data-tab="games"><span class="ticon" aria-hidden="true">🎮</span><span>' + t("Games") + '</span></button>' +
+        '<button class="tabbtn" data-tab="stats"><span class="ticon" aria-hidden="true">📊</span><span>' + t("Stats") + '</span></button>' +
+        '<button class="tabbtn" data-tab="settings"><span class="ticon" aria-hidden="true">⚙️</span><span>' + t("Settings") + '</span></button>' +
+      '</nav>'
+    );
+    tabBar.querySelectorAll(".tabbtn").forEach(function (b) {
+      b.addEventListener("click", function () { tabTap(b.getAttribute("data-tab")); });
+    });
+    document.body.appendChild(tabBar);
+
+    resumeBar = el('<button class="resumebar hidden">' + t("▶ Resume") + '</button>');
+    resumeBar.addEventListener("click", showPlay);
+    document.body.appendChild(resumeBar);
+  }
+
+  function currentTab() {
+    var h = (location.hash || "").replace(/^#/, "");
+    return TAB_IDS.indexOf(h) !== -1 ? h : "home";
+  }
+  function renderTab(tab) {
+    var node;
+    if (isDesktop()) node = homeView();            // ≥900px: today's single flow, unchanged (spec §3)
+    else if (tab === "games") node = gamesTabView();
+    else if (tab === "stats") node = statsTabView();
+    else if (tab === "settings") node = settingsTabView();
+    else node = homeTabView();
+    tabView.innerHTML = "";
+    tabView.appendChild(node);
+    if (!playShown) { hushed(); window.scrollTo(0, 0); }
+  }
+  function route() {
+    var tab = currentTab();
+    tabBar.querySelectorAll(".tabbtn").forEach(function (b) {
+      if (b.getAttribute("data-tab") === tab) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    });
+    renderTab(tab);   // activation re-render: due counts, badges, stats always fresh
+  }
+  function tabTap(id) {
+    if (playShown) hidePlay();   // hide, never destroy, a running play surface
+    if (currentTab() === id) route();
+    else location.hash = id;     // hashchange → route(); browser history for free
+  }
+  function showPlay() {
+    playShown = true;
+    playLayer.classList.remove("hidden");
+    tabView.classList.add("hidden");
+    resumeBar.classList.add("hidden");
+    window.scrollTo(0, 0);
+  }
+  function hidePlay() {
+    playShown = false;
+    playLayer.classList.add("hidden");
+    tabView.classList.remove("hidden");
+    if (playActive) resumeBar.classList.remove("hidden");
+    hushed();
+  }
+  function closePlay() {          // Quit / finish: the only paths that destroy a quiz
+    playActive = false; playShown = false;
+    playLayer.innerHTML = "";
+    playLayer.classList.add("hidden");
+    tabView.classList.remove("hidden");
+    resumeBar.classList.add("hidden");
+  }
+  function goHome() {
+    closePlay();
+    if (currentTab() === "home") route();
+    else location.hash = "home";
+  }
+  function openSettings() {
+    if (isDesktop()) render(comfortView(false));   // desktop: overlay, as today
+    else tabTap("settings");                       // mobile: gear routes to the tab
+  }
+  function onViewportChange() {
+    // Crossing to desktop with a tabbed-away quiz would strand it (no resume
+    // UI there) — surface it again before re-rendering.
+    if (isDesktop() && playActive && !playShown) showPlay();
+    route();
+  }
 
   // ---------- streak ----------
   function getStreak() { return LS.get("streak", { count: 0, best: 0, last: null }); }
@@ -291,14 +410,11 @@
     }
   }
 
-  // ---------- home ----------
-  function homeView() {
+  // ---------- home card builders (FEAT-027: shared by desktop flow and mobile tabs) ----------
+  function heroCard() {
     var s = getStreak();
-    var daily = LS.get("daily." + todayKey() + (settings.ageMode === "kids" ? ".kids" : ""), null);
-    var due = vaultDue();
-    var wrap = el('<div class="grid"></div>');
-
-    wrap.appendChild(el(
+    var daily = LS.get(dailyKey(), null);
+    var node = el(
       '<div class="card hero">' +
         '<span class="pill free">' + t("Free forever") + '</span>' +
         (settings.ageMode === "kids" ? '<span class="pill kids">' + t("Kids mode") + '</span>' : '') +
@@ -309,11 +425,15 @@
           (s.count > 0 ? '<span class="streakchip">' + (s.count === 1 ? t("🔥 1 day") : tf("🔥 {n} days", { n: s.count })) + '</span>' : '') +
         '</div>' +
       '</div>'
-    ));
+    );
+    node.querySelector("#startDaily").addEventListener("click", startDaily);
+    return node;
+  }
 
-    // Memory Vault card
+  function vaultCard() { // due → Review card · none due but vault alive → quiet card · empty → null
+    var due = vaultDue();
     if (due.length > 0) {
-      wrap.appendChild(el(
+      var node = el(
         '<div class="card vaultcard">' +
           '<div class="vaultrow"><div><h3>' + t("🗝️ Memory Vault") + '</h3>' +
           '<p>' + (due.length === 1
@@ -321,53 +441,76 @@
             : tf("{n} facts ready to strengthen. Beat them 5 times over 2 months and they’re yours for good.", { n: due.length })) + '</p></div>' +
           '<button class="btn" id="startVault">' + t("Review") + '</button></div>' +
         '</div>'
-      ));
-    } else if (vaultCount() > 0) {
+      );
+      node.querySelector("#startVault").addEventListener("click", startVaultSession);
+      return node;
+    }
+    if (vaultCount() > 0) {
       var v = getVault();
       var next = Object.keys(v).filter(function (id) { return BY_ID[id]; }).map(function (k) { return v[k].due; }).sort()[0];
-      wrap.appendChild(el(
+      return el(
         '<div class="card vaultcard quiet">' +
           '<h3>' + t("🗝️ Memory Vault") + '</h3>' +
           '<p>' + tf("All {n} facts strengthened for now. Next review: {date}. Facts mastered for good: {m} 🏅",
             { n: vaultCount(), date: esc(next), m: (getStats().mastered || 0) }) + '</p>' +
         '</div>'
-      ));
+      );
     }
+    return null;
+  }
 
-    var modes = el('<div class="row"></div>');
-    modes.appendChild(el(
+  function modeCardQuick(pickerNode) {
+    var node = el(
       '<div class="card mode" id="modeQuick">' +
         '<div class="emoji">⚡</div><h3>' + t("Quick-Fire") + '</h3>' +
         '<p>' + (timerSecs()
           ? tf("Ten questions, {s}s each. Chase your high score.", { s: timerSecs() })
           : t("Ten questions, no timer. Chase your high score.")) + '</p>' +
       '</div>'
-    ));
-    modes.appendChild(el(
+    );
+    node.addEventListener("click", function () {
+      pickerNode.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "center" });
+    });
+    return node;
+  }
+
+  function modeCardDaily() {
+    var daily = LS.get(dailyKey(), null);
+    var node = el(
       '<div class="card mode" id="modeDaily">' +
         '<div class="emoji">📅</div><h3>' + t("Daily Challenge") + '</h3>' +
         '<p>' + (daily ? '<span class="done-badge">' + tf("Done today — {score}/{total}. Come back tomorrow.", { score: daily.score, total: DAILY_COUNT }) + '</span>' : t("Today's five. Shareable score. The daily ritual.")) + '</p>' +
       '</div>'
-    ));
-    if (truthPool().length >= 4) {
-      modes.appendChild(el(
-        '<div class="card mode" id="modeTruth">' +
-          '<div class="emoji">🔎</div><h3>' + t("Fact or Fake?") + '</h3>' +
-          '<p>' + t("Real facts hide among convincing fakes. Spot the tricks — every verdict comes with a source.") + '</p>' +
-        '</div>'
-      ));
-    }
-    if (cityPacks().length) {
-      modes.appendChild(el(
-        '<div class="card mode" id="modeTravel">' +
-          '<div class="emoji">🧳</div><h3>' + t("Before you travel") + '</h3>' +
-          '<p>' + tf("{n} cities, told from their own history. Learn the place, the food, and a few words before you go.", { n: cityPacks().length }) + '</p>' +
-        '</div>'
-      ));
-    }
-    wrap.appendChild(modes);
+    );
+    node.addEventListener("click", startDaily);
+    return node;
+  }
 
-    // category picker feeding quick-fire
+  function modeCardTruth() {
+    if (truthPool().length < 4) return null;
+    var node = el(
+      '<div class="card mode" id="modeTruth">' +
+        '<div class="emoji">🔎</div><h3>' + t("Fact or Fake?") + '</h3>' +
+        '<p>' + t("Real facts hide among convincing fakes. Spot the tricks — every verdict comes with a source.") + '</p>' +
+      '</div>'
+    );
+    node.addEventListener("click", startTruthLab);
+    return node;
+  }
+
+  function modeCardTravel() {
+    if (!cityPacks().length) return null;
+    var node = el(
+      '<div class="card mode" id="modeTravel">' +
+        '<div class="emoji">🧳</div><h3>' + t("Before you travel") + '</h3>' +
+        '<p>' + tf("{n} cities, told from their own history. Learn the place, the food, and a few words before you go.", { n: cityPacks().length }) + '</p>' +
+      '</div>'
+    );
+    node.addEventListener("click", function () { render(cityHomeView()); });
+    return node;
+  }
+
+  function quickfirePicker() { // category picker feeding quick-fire
     var picker = el('<div class="card"><div class="section-title" style="margin-top:0">' + t("Quick-Fire topic") + '</div><div class="cats"></div><div class="regionrow hidden"><div class="mini" style="margin:2px 0 6px">' + t("History by region — every part of the world, on its own terms:") + '</div><div class="cats regioncats"></div></div><div class="btnrow"><button class="btn block" id="startQuick">' + t("Start Quick-Fire ⚡") + '</button></div></div>');
     var cats = picker.querySelector(".cats");
     var regionRow = picker.querySelector(".regionrow");
@@ -396,16 +539,13 @@
       regionCats.appendChild(b);
     });
     syncRegionRow();
-    wrap.appendChild(picker);
+    picker.querySelector("#startQuick").addEventListener("click", function () { startQuickfire(chosen, chosen === "History" ? chosenRegion : "All"); });
+    return picker;
+  }
 
-    // Brain Map
-    wrap.appendChild(brainMapCard());
-
-    // leaderboard
-    wrap.appendChild(leaderboardCard());
-
-    // streak stats
-    wrap.appendChild(el(
+  function statsCard() { // streak stats (the 4 big numbers)
+    var s = getStreak();
+    return el(
       '<div class="card">' +
         '<div class="section-title" style="margin-top:0">' + t("Your stats") + '</div>' +
         '<div class="row" style="margin-top:6px">' +
@@ -415,28 +555,76 @@
           '<div style="flex:1"><div class="scorebig" style="font-size:34px">' + (getStats().mastered || 0) + '</div><div class="mini">' + t("facts mastered") + '</div></div>' +
         '</div>' +
       '</div>'
-    ));
+    );
+  }
 
-    wrap.appendChild(el(
+  function footerEl() {
+    var node = el(
       '<div class="footer">' + t("Qpio — knowledge is free, forever. No ads, no data selling.") + '<br>' +
       t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a></div>'
-    ));
+    );
+    node.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); openSettings(); });
+    return node;
+  }
 
-    // wire
-    wrap.querySelector("#startDaily").addEventListener("click", startDaily);
-    wrap.querySelector("#modeDaily").addEventListener("click", startDaily);
-    picker.querySelector("#startQuick").addEventListener("click", function () { startQuickfire(chosen, chosen === "History" ? chosenRegion : "All"); });
-    wrap.querySelector("#modeQuick").addEventListener("click", function () {
-      picker.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "center" });
-    });
-    var sv = wrap.querySelector("#startVault");
-    if (sv) sv.addEventListener("click", startVaultSession);
-    var mt = wrap.querySelector("#modeTruth");
-    if (mt) mt.addEventListener("click", startTruthLab);
-    var mtr = wrap.querySelector("#modeTravel");
-    if (mtr) mtr.addEventListener("click", function () { render(cityHomeView()); });
-    wrap.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); render(comfortView()); });
+  // ---------- compositions ----------
+  function homeView() { // desktop ≥900px: the v20 single-column flow, order unchanged
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(heroCard());
+    var vc = vaultCard(); if (vc) wrap.appendChild(vc);
+    var picker = quickfirePicker();
+    var modes = el('<div class="row"></div>');
+    modes.appendChild(modeCardQuick(picker));
+    modes.appendChild(modeCardDaily());
+    var mt = modeCardTruth(); if (mt) modes.appendChild(mt);
+    var mtr = modeCardTravel(); if (mtr) modes.appendChild(mtr);
+    wrap.appendChild(modes);
+    wrap.appendChild(picker);
+    wrap.appendChild(brainMapCard());
+    wrap.appendChild(leaderboardCard());
+    wrap.appendChild(statsCard());
+    wrap.appendChild(footerEl());
+    return wrap;
+  }
 
+  function homeTabView() { // mobile Home: hero · vault · Game Center (Daily + Fact-or-Fake) · picker · travel · footer
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(heroCard());
+    var vc = vaultCard(); if (vc) wrap.appendChild(vc);
+    var modes = el('<div class="row"></div>');
+    modes.appendChild(modeCardDaily());
+    var mt = modeCardTruth(); if (mt) modes.appendChild(mt);
+    wrap.appendChild(modes);
+    wrap.appendChild(quickfirePicker());
+    var mtr = modeCardTravel(); if (mtr) wrap.appendChild(mtr);
+    wrap.appendChild(footerEl());
+    return wrap;
+  }
+
+  function gamesTabView() { // mobile Games: every launcher (spec order)
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(modeCardDaily());
+    var vc = vaultCard(); if (vc) wrap.appendChild(vc);
+    wrap.appendChild(quickfirePicker());
+    var mt = modeCardTruth(); if (mt) wrap.appendChild(mt);
+    if (cityPacks().length) {
+      wrap.appendChild(el('<div class="section-title">🧳 ' + t("Before you travel") + '</div>'));
+      cityCards(wrap);
+    }
+    return wrap;
+  }
+
+  function statsTabView() { // mobile Stats: brain map · leaderboard · big numbers
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(brainMapCard());
+    wrap.appendChild(leaderboardCard());
+    wrap.appendChild(statsCard());
+    return wrap;
+  }
+
+  function settingsTabView() { // mobile Settings: comfort content, no back header
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(comfortView(true));
     return wrap;
   }
 
@@ -487,9 +675,13 @@
     return row;
   }
 
-  function comfortView() {
+  function comfortView(inTab) { // inTab (mobile Settings tab): no "← Home" row — it's a tab now
     var node = el('<div class="card"></div>');
-    node.appendChild(el('<div class="quizhead" style="margin-bottom:6px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">' + t("Comfort & settings") + '</h2><span style="width:64px"></span></div>'));
+    if (inTab) {
+      node.appendChild(el('<h2 style="margin:0 0 6px">' + t("Comfort & settings") + '</h2>'));
+    } else {
+      node.appendChild(el('<div class="quizhead" style="margin-bottom:6px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">' + t("Comfort & settings") + '</h2><span style="width:64px"></span></div>'));
+    }
     node.appendChild(el('<p class="mini" style="margin:0 0 14px">' + t("Knowledge is for everyone. Tune Qpio to the way <b>you</b> read, hear and think — nothing here is ever paywalled.") + '</p>'));
 
     node.appendChild(segRow(t("⏱️ Quick-Fire timer"), t("Timers measure speed, not knowledge. Turn them off if they get in the way — scoring adapts fairly."), [
@@ -542,13 +734,14 @@
     node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="replayIntro">' + t("Replay the intro") + '</a> · <a href="#" id="wipe" style="color:var(--bad)">' + t("Reset all my data on this device") + '</a></div>'));
     node.querySelector("#replayIntro").addEventListener("click", function (e) { e.preventDefault(); onboardingView(0); });
 
-    node.querySelector("#back").addEventListener("click", function () { render(homeView()); });
+    var back = node.querySelector("#back");
+    if (back) back.addEventListener("click", goHome);
     node.querySelector("#wipe").addEventListener("click", function (e) {
       e.preventDefault();
       if (confirm(t("Erase streaks, scores, vault and settings on this device?"))) {
         Object.keys(localStorage).forEach(function (k) { if (k.indexOf("curio.") === 0) localStorage.removeItem(k); });
         settings = Object.assign({}, DEFAULT_SETTINGS);
-        applySettings(); render(homeView());
+        applySettings(); goHome();
       }
     });
     return node;
@@ -625,7 +818,7 @@
           if (e.key === "Enter") recall.querySelector("#recallGo").click();
         });
       }
-      node.querySelector("#quit").addEventListener("click", function () { stopTimer(); render(homeView()); });
+      node.querySelector("#quit").addEventListener("click", function () { stopTimer(); goHome(); });
 
       function speakQuestion() {
         speak(q.q + ". " + q.options.map(function (o, i) { return "Option " + "ABCD"[i] + ": " + o; }).join(". "));
@@ -741,7 +934,7 @@
       '</div>'
     );
     render(node);
-    node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+    node.querySelector("#home").addEventListener("click", goHome);
     node.querySelector("#share").addEventListener("click", function () {
       var text = "Qpio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total +
         "\n🔥 " + (s.count === 1 ? t("1-day streak") : tf("{n}-day streak", { n: s.count })) +
@@ -753,7 +946,7 @@
   // ---------- vault session ----------
   function startVaultSession() {
     var due = vaultDue();
-    if (!due.length) { render(homeView()); return; }
+    if (!due.length) { goHome(); return; }
     // shuffle, cap the session
     for (var i = due.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = due[i]; due[i] = due[k]; due[k] = tmp; }
     var qs = due.slice(0, VAULT_SESSION_MAX);
@@ -775,7 +968,7 @@
           '</div>'
         );
         render(node);
-        node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+        node.querySelector("#home").addEventListener("click", goHome);
         var more = node.querySelector("#more");
         if (more) more.addEventListener("click", startVaultSession);
       }
@@ -785,12 +978,11 @@
   // ---------- City packs ("Before you travel") ----------
   function cityPacks() { return window.CURIO_CITYPACKS || []; }
 
-  function cityHomeView() {
-    var packs = cityPacks();
-    var wrap = el('<div class="grid"></div>');
-    wrap.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">🧳 ' + t("Before you travel") + '</h2><span style="width:64px"></span></div>'));
-    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">' + t("Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free, offline, no ads.") + '</p>'));
-    packs.forEach(function (p) {
+  // One card per city pack, appended into container. Shared by the overlay
+  // city browser (cityHomeView) and the mobile Games tab (FEAT-027) — same
+  // builder, zero logic duplication.
+  function cityCards(container) {
+    cityPacks().forEach(function (p) {
       var card = el(
         '<div class="card mode citycard">' +
           '<div class="cityrow"><span class="cityemoji">' + (p.emoji || "🌍") + '</span>' +
@@ -799,9 +991,16 @@
         '</div>'
       );
       card.addEventListener("click", function () { cityPackView(p); });
-      wrap.appendChild(card);
+      container.appendChild(card);
     });
-    wrap.querySelector("#back").addEventListener("click", function () { render(homeView()); });
+  }
+
+  function cityHomeView() {
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">🧳 ' + t("Before you travel") + '</h2><span style="width:64px"></span></div>'));
+    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">' + t("Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free, offline, no ads.") + '</p>'));
+    cityCards(wrap);
+    wrap.querySelector("#back").addEventListener("click", goHome);
     return wrap;
   }
 
@@ -862,7 +1061,7 @@
           render(res);
           res.querySelector("#again").addEventListener("click", function () { play.querySelector("#playCity").click(); });
           res.querySelector("#pack").addEventListener("click", function () { cityPackView(pack); });
-          res.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+          res.querySelector("#home").addEventListener("click", goHome);
         }
       });
     });
@@ -890,7 +1089,7 @@
   }
   function startTruthLab() {
     var pool = truthPool().slice();
-    if (pool.length < 4) { render(homeView()); return; }
+    if (pool.length < 4) { goHome(); return; }
     for (var i = pool.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = pool[i]; pool[i] = pool[k]; pool[k] = tmp; }
     var sts = pool.slice(0, Math.min(TRUTH_ROUND, pool.length));
     var idx = 0, score = 0, correctCount = 0, answered = false;
@@ -919,7 +1118,7 @@
           '</div>' +
         '</div>'
       ));
-      node.querySelector("#quit").addEventListener("click", function () { render(homeView()); });
+      node.querySelector("#quit").addEventListener("click", goHome);
       var sb = node.querySelector("#speakBtn");
       if (sb) sb.addEventListener("click", function () { speak(st.s); });
       if (canSpeak()) speak(st.s);
@@ -967,7 +1166,7 @@
         '</div>'
       );
       render(res);
-      res.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+      res.querySelector("#home").addEventListener("click", goHome);
       res.querySelector("#again").addEventListener("click", startTruthLab);
     }
   }
@@ -982,7 +1181,7 @@
   // ---------- quickfire ----------
   function startQuickfire(cat, region) {
     var qs = quickfireQuestions(cat, region);
-    if (!qs.length) { render(homeView()); return; }
+    if (!qs.length) { goHome(); return; }
     var label = t(cat) + (region && region !== "All" ? " · " + t(REGION_LABEL[region] || region) : "");
     runQuiz({
       questions: qs,
@@ -1009,7 +1208,7 @@
       '</div>'
     );
     render(node);
-    node.querySelector("#home").addEventListener("click", function () { render(homeView()); });
+    node.querySelector("#home").addEventListener("click", goHome);
     node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
     node.querySelector("#save").addEventListener("click", function () {
       var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Curious")) || "").trim().slice(0, 16) || "Curious";
@@ -1063,7 +1262,8 @@
     render(node);
     function finish(toDaily) {
       LS.set("onboarded", true);
-      if (toDaily) startDaily(); else render(homeView());
+      tabBar.classList.remove("hidden");   // first run: bar was hidden until onboarded
+      if (toDaily) startDaily(); else goHome();
     }
     node.querySelector("#onbNext").addEventListener("click", function () {
       if (last) finish(true); else onboardingView(step + 1);
@@ -1075,7 +1275,18 @@
   // ---------- boot ----------
   applySettings();
   pruneVault();
+  buildShell();
   var gear = document.getElementById("gearBtn");
-  if (gear) gear.addEventListener("click", function () { render(comfortView()); });
-  if (LS.get("onboarded", false)) { render(homeView()); } else { onboardingView(0); }
+  if (gear) gear.addEventListener("click", openSettings);
+  window.addEventListener("hashchange", route);
+  if (mqDesk.addEventListener) mqDesk.addEventListener("change", onViewportChange);
+  else if (mqDesk.addListener) mqDesk.addListener(onViewportChange); // older Safari/WebViews
+  var bootHash = (location.hash || "").replace(/^#/, "");
+  route();   // tab content always rendered underneath any overlay
+  if (!LS.get("onboarded", false)) {
+    tabBar.classList.add("hidden");   // no tab bar until onboarded (spec §4)
+    onboardingView(0);                // renders in the overlay; final button starts the daily
+  } else if (bootHash === "daily") {
+    startDaily();                     // deep entry (Charter M1): straight into today's first question
+  }
 })();

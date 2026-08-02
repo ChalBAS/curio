@@ -257,3 +257,36 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 
 /* D-055: founder's Brain-Infinity mark replaces the owl */
 .logo img.mark{height:26px;width:auto;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+
+/* FEAT-027: mobile tab shell. Bar exists only under 900px; desktop keeps the
+   single flow untouched. 44px+ targets, safe-area padding for iOS. */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; justify-content: space-around; align-items: stretch;
+  background: rgba(11, 34, 51, .96); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  padding: 6px max(8px, env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-right));
+}
+.tabbtn {
+  flex: 1 1 0; min-height: 48px; max-width: 130px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  background: none; border: 0; border-radius: 12px; cursor: pointer;
+  color: var(--muted); font: inherit; font-size: 11px; font-weight: 700; letter-spacing: .02em;
+}
+.tabbtn .ticon { font-size: 20px; line-height: 1; }
+.tabbtn img.ticon { height: 22px; width: auto; filter: grayscale(1) opacity(.65); }
+.tabbtn[aria-current="page"] { color: var(--brand); background: rgba(38, 186, 216, .1); }
+.tabbtn[aria-current="page"] img.ticon { filter: none; }
+.resumebar {
+  position: fixed; left: 50%; transform: translateX(-50%); z-index: 41;
+  bottom: calc(64px + env(safe-area-inset-bottom));
+  min-height: 44px; padding: 10px 22px; border-radius: 999px; border: 1px solid var(--brand);
+  background: var(--card); color: var(--brand); font: inherit; font-weight: 800; font-size: 14px;
+  box-shadow: var(--shadow); cursor: pointer;
+}
+/* room so the fixed bar never covers the last card */
+body:has(.tabbar:not(.hidden)) .wrap { padding-bottom: 120px; }
+@media (min-width: 900px) {
+  .tabbar, .resumebar { display: none !important; }
+  body:has(.tabbar) .wrap { padding-bottom: 80px; }
+}

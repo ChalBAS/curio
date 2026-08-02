@@ -2,23 +2,23 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v20";
+const CACHE = "qpio-v21";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=20",
-  "./brand/qpio-mark-96.png?v=20",
-  "./src/i18n.js?v=20",
-  "./src/questions.fr.js?v=20",
-  "./src/truthlab.fr.js?v=20",
-  "./src/app.js?v=20",
-  "./src/questions.js?v=20",
-  "./src/truthlab.js?v=20",
-  "./src/citypacks.js?v=20",
+  "./src/styles.css?v=21",
+  "./brand/qpio-mark-96.png?v=21",
+  "./src/i18n.js?v=21",
+  "./src/questions.fr.js?v=21",
+  "./src/truthlab.fr.js?v=21",
+  "./src/app.js?v=21",
+  "./src/questions.js?v=21",
+  "./src/truthlab.js?v=21",
+  "./src/citypacks.js?v=21",
   "./manifest.webmanifest",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png",
-  "./icons/icon-maskable-512.png",
+  "./brand/icons/qpio-icon-192.png",
+  "./brand/icons/qpio-icon-512.png",
+  "./brand/icons/qpio-icon-512-maskable.png",
   "./icons/apple-touch-icon.png",
   "./icons/favicon-32.png"
 ];
