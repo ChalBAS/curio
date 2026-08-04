@@ -122,7 +122,7 @@
       "facts mastered": "faits maîtrisés",
 
       // --- footer ---
-      "Qpio — knowledge is free, forever. No ads, no data selling.":
+      "Qpio — knowledge is free, forever. We never sell ad space or your data.":
         "Qpio — le savoir est gratuit, pour toujours. Pas de pub, pas de vente de données.",
       "I am curious to become wise. 🧠": "La curiosité me rend sage. 🧠",
 
@@ -222,7 +222,7 @@
 
       // --- city packs (UI chrome only — pack content stays English for now) ---
       "← Cities": "← Villes",
-      "Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free, offline, no ads.":
+      "Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free and offline.":
         "Apprends à connaître un lieu avant d’atterrir — sa vraie histoire (pas seulement la version touristique), sa cuisine et quelques mots de la langue locale. Gratuit, hors ligne, sans pub.",
       "▶ Play the {city} quiz ({n})": "▶ Jouer au quiz {city} ({n})",
       "Key phrases": "Phrases clés",
@@ -255,7 +255,7 @@
 
       // --- onboarding ---
       "Knowledge should be free.": "Le savoir devrait être gratuit.",
-      "Qpio (say: cue-pee-oh) is a free knowledge app — no ads, no paywalls, ever. Every answer teaches you a fact worth keeping, with the source one tap away.":
+      "Qpio (say: cue-pee-oh) is a free knowledge app — no paywalls, nothing sold about you, ever. Every answer teaches you a fact worth keeping, with the source one tap away.":
         "Qpio (prononce : « ku-pio ») est une appli de savoir gratuite — sans pub, sans paywall, pour toujours. Chaque réponse t’apprend un fait qui vaut la peine d’être retenu, avec la source à portée de doigt.",
       "Five questions a day.": "Cinq questions par jour.",
       "Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.":

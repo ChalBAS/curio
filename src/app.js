@@ -557,7 +557,7 @@
 
   function footerEl() {
     var node = el(
-      '<div class="footer">' + t("Qpio — knowledge is free, forever. No ads, no data selling.") + '<br>' +
+      '<div class="footer">' + t("Qpio — knowledge is free, forever. We never sell ad space or your data.") + '<br>' +
       t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a></div>'
     );
     node.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); openSettings(); });
@@ -584,30 +584,20 @@
     return wrap;
   }
 
-  function homeTabView() { // mobile Home: hero · vault · Game Center (Daily + Fact-or-Fake) · picker · travel · footer
+  function homeTabView() { // v23 Home: the daily ritual only - hero · vault · travel · footer (games live in the Games tab)
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(heroCard());
     var vc = vaultCard(); if (vc) wrap.appendChild(vc);
-    var modes = el('<div class="row"></div>');
-    modes.appendChild(modeCardDaily());
-    var mt = modeCardTruth(); if (mt) modes.appendChild(mt);
-    wrap.appendChild(modes);
-    wrap.appendChild(quickfirePicker());
     var mtr = modeCardTravel(); if (mtr) wrap.appendChild(mtr);
     wrap.appendChild(footerEl());
     return wrap;
   }
 
-  function gamesTabView() { // mobile Games: every launcher (spec order)
+  function gamesTabView() { // v23 Games: games only, no Home repeats - Fact-or-Fake · Quick-Fire · Brain Gym (coming)
     var wrap = el('<div class="grid"></div>');
-    wrap.appendChild(modeCardDaily());
-    var vc = vaultCard(); if (vc) wrap.appendChild(vc);
-    wrap.appendChild(quickfirePicker());
     var mt = modeCardTruth(); if (mt) wrap.appendChild(mt);
-    if (cityPacks().length) {
-      wrap.appendChild(el('<div class="section-title">🧳 ' + t("Before you travel") + '</div>'));
-      cityCards(wrap);
-    }
+    wrap.appendChild(quickfirePicker());
+    wrap.appendChild(el('<div class="card"><div class="emoji">\ud83e\udde0</div><h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3><p class="mini" style="margin:0">' + t("Memory and focus exercises built on real technique — coming soon. We teach methods, we never promise miracles.") + '</p></div>'));
     return wrap;
   }
 
@@ -995,7 +985,7 @@
   function cityHomeView() {
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">🧳 ' + t("Before you travel") + '</h2><span style="width:64px"></span></div>'));
-    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">' + t("Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free, offline, no ads.") + '</p>'));
+    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">' + t("Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free and offline.") + '</p>'));
     cityCards(wrap);
     wrap.querySelector("#back").addEventListener("click", goHome);
     return wrap;
@@ -1233,7 +1223,7 @@
     step = step || 0;
     var slides = [
       { emoji: "🧭", title: t("Knowledge should be free."),
-        text: t("Qpio (say: cue-pee-oh) is a free knowledge app — no ads, no paywalls, ever. Every answer teaches you a fact worth keeping, with the source one tap away.") },
+        text: t("Qpio (say: cue-pee-oh) is a free knowledge app — no paywalls, nothing sold about you, ever. Every answer teaches you a fact worth keeping, with the source one tap away.") },
       { emoji: "📅", title: t("Five questions a day."),
         text: t("Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.") },
       { emoji: "⚙️", title: t("Made for the way you learn."),
