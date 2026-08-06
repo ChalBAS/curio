@@ -1,0 +1,17 @@
+# ai.txt — machine-use policy for qpio.app and chalbas.github.io/curio
+# © 2026 Qpio. All rights reserved.
+# Human-readable terms: /CONTENT-LICENCE.md
+
+# Qpio expressly RESERVES its rights in respect of text and data mining,
+# including for the training, fine-tuning or evaluation of machine-learning
+# models. This is a reservation of rights for the purposes of any applicable
+# text-and-data-mining exception, including under Hong Kong, EU and UK law.
+
+User-Agent: *
+Disallow: /src/
+Disallow: /brand/
+
+# Source code is separately MIT-licensed and is not covered by this reservation.
+# See /LICENSE.
+
+# Licensing enquiries: QpioCorp@mail.com

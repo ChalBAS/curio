@@ -1,3 +1,6 @@
+// © 2026 Qpio. All rights reserved. Not covered by the MIT LICENSE.
+// Terms of use: /CONTENT-LICENCE.md · Machine use reserved: /ai.txt
+//
 // Curio "Fact or Fake?" statement bank.
 // Each: s (statement), truth (true = real, false = fake), explain (correction
 // or context — names the misinformation trick for fakes), src (citation URL),

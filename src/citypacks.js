@@ -1,3 +1,6 @@
+// © 2026 Qpio. All rights reserved. Not covered by the MIT LICENSE.
+// Terms of use: /CONTENT-LICENCE.md · Machine use reserved: /ai.txt
+//
 // Curio city packs — "Before you travel". Fact-checked pre-travel packs.
 // Each: city, country, region, emoji, lang, blurb, questions[], phrases[], tips[].
 // The city UI hides when this is empty.

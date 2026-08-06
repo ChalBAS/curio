@@ -1,3 +1,6 @@
+// © 2026 Qpio. Tous droits réservés. Non couvert par la licence MIT (/LICENSE).
+// Conditions d'utilisation : /CONTENT-LICENCE.md · Usage machine réservé : /ai.txt
+//
 // Fact or Fake — FRENCH (traduit + verifie 2026-07).
 window.CURIO_STATEMENTS_FR = [{"s":"Les humains n'utilisent que 10 % de leur cerveau.","truth":false,"cat":"Science","kids":true,"explain":"Faux. Les scanners cérébraux montrent que nous l'utilisons presque entièrement, mais pas tout en même temps. Le mythe se répand parce qu'il fait rêver — une réserve cachée de « potentiel inexploité ».","src":"https://en.wikipedia.org/wiki/Ten_percent_of_the_brain_myth"},
 {"s":"Les chauves-souris sont aveugles.","truth":false,"cat":"Nature","kids":true,"explain":"Faux. Toutes les chauves-souris voient ; beaucoup « voient » aussi par écholocation. L'expression « aveugle comme une chauve-souris » a transformé une formule accrocheuse en fait admis.","src":"https://en.wikipedia.org/wiki/Bat"},

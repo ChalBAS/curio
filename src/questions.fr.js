@@ -1,3 +1,6 @@
+// © 2026 Qpio. Tous droits réservés. Non couvert par la licence MIT (/LICENSE).
+// Conditions d'utilisation : /CONTENT-LICENCE.md · Usage machine réservé : /ai.txt
+//
 // Qpio question bank — FRENCH (traduit du banc verifie, fidelite verifiee par agent independant, 2026-07).
 // Same structure/metadata as questions.js; src citations unchanged. HELD rule: untranslated items are omitted, never shipped unverified.
 window.CURIO_QUESTIONS_FR = [{"cat":"History","region":"Africa","diff":1,"kids":true,"q":"Quelle merveille du monde antique est encore debout aujourd'hui ?","options":["Les jardins suspendus de Babylone","La grande pyramide de Gizeh","Le colosse de Rhodes","Le phare d'Alexandrie"],"answer":1,"fact":"La grande pyramide est restée la plus haute structure construite par l'humain pendant environ 3 800 ans.","src":"https://en.wikipedia.org/wiki/Great_Pyramid_of_Giza"},

@@ -1,3 +1,6 @@
+// © 2026 Qpio. All rights reserved. Not covered by the MIT LICENSE.
+// Terms of use: /CONTENT-LICENCE.md · Machine use reserved: /ai.txt
+//
 // Curio question bank — v2 curated set (120 questions).
 // Each: category, difficulty (1 easy .. 3 hard), question, options[4],
 // answer (index into options), fact (the "depth fact" revealed after),
