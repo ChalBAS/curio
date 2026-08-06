@@ -264,7 +264,7 @@
     tabBar = el(
       '<nav class="tabbar" aria-label="' + t("Main navigation") + '">' +
         '<button class="tabbtn" data-tab="home"><img class="ticon" src="' + markSrc + '" alt=""><span>' + t("Home") + '</span></button>' +
-        '<button class="tabbtn" data-tab="games"><span class="ticon" aria-hidden="true">🎮</span><span>' + t("Games") + '</span></button>' +
+        '<button class="tabbtn" data-tab="games"><span class="ticon" aria-hidden="true">🎯</span><span>' + t("Train") + '</span></button>' +
         '<button class="tabbtn" data-tab="stats"><span class="ticon" aria-hidden="true">📊</span><span>' + t("Stats") + '</span></button>' +
         '<button class="tabbtn" data-tab="settings"><span class="ticon" aria-hidden="true">⚙️</span><span>' + t("Settings") + '</span></button>' +
       '</nav>'

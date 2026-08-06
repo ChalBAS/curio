@@ -2,21 +2,21 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v24";
+const CACHE = "qpio-v25";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=24",
-  "./brand/qpio-mark-96.png?v=24",
-  "./brand/icons/qpio-icon-96.png?v=24",
-  "./brand/qpio-lockup-header.png?v=24",
-  "./src/i18n.js?v=24",
-  "./src/questions.fr.js?v=24",
-  "./src/truthlab.fr.js?v=24",
-  "./src/app.js?v=24",
-  "./src/questions.js?v=24",
-  "./src/truthlab.js?v=24",
-  "./src/citypacks.js?v=24",
+  "./src/styles.css?v=25",
+  "./brand/qpio-mark-96.png?v=25",
+  "./brand/icons/qpio-icon-96.png?v=25",
+  "./brand/qpio-lockup-header.png?v=25",
+  "./src/i18n.js?v=25",
+  "./src/questions.fr.js?v=25",
+  "./src/truthlab.fr.js?v=25",
+  "./src/app.js?v=25",
+  "./src/questions.js?v=25",
+  "./src/truthlab.js?v=25",
+  "./src/citypacks.js?v=25",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",

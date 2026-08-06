@@ -61,6 +61,16 @@
       "All {n} facts strengthened for now. Next review: {date}. Facts mastered for good: {m} 🏅":
         "Tes {n} faits sont consolidés pour l’instant. Prochaine révision : {date}. Faits maîtrisés pour de bon : {m} 🏅",
 
+      // --- tab bar (FEAT-027) ---
+      // "Train", not "Games": Qpio is not a games app (CEO, 2026-08-06).
+      "Main navigation": "Navigation principale",
+      "Train": "Exercices",
+      "Stats": "Progrès",
+      "Settings": "Réglages",
+      "Brain Gym": "Gym du cerveau",
+      "Memory and focus exercises built on real technique — coming soon. We teach methods, we never promise miracles.":
+        "Des exercices de mémoire et de concentration fondés sur de vraies techniques — bientôt disponibles. Nous enseignons des méthodes, nous ne promettons jamais de miracles.",
+
       // --- home: mode cards ---
       "Quick-Fire": "Quiz éclair",
       "Ten questions, {s}s each. Chase your high score.": "Dix questions, {s} s chacune. Bats ton record.",
