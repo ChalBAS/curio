@@ -607,10 +607,42 @@
 
   function statsTabView() { // mobile Stats: brain map · leaderboard · big numbers
     var wrap = el('<div class="grid"></div>');
+    // Day one, this tab was six rows of "Unexplored" and four zeros — the
+    // emptiest screen in the app, one tap from the quiz. Kimi flagged it in the
+    // 2026-08-04 council review; the CEO called it on 2026-08-06. Teach instead.
+    if (!statsTouched()) { wrap.appendChild(statsEmptyCard()); return wrap; }
     wrap.appendChild(brainMapCard());
     wrap.appendChild(leaderboardCard());
     wrap.appendChild(statsCard());
     return wrap;
+  }
+
+  function statsTouched() { // has this device answered anything at all?
+    var st = getStats(), n = 0;
+    CATS.forEach(function (c) { n += (st.cats[c] && st.cats[c].s) || 0; });
+    return n > 0 || LS.get("leaderboard", []).length > 0;
+  }
+
+  function statsEmptyCard() {
+    var node = el(
+      '<div class="card">' +
+        '<div class="emoji">🧠</div>' +
+        '<h3 style="margin:8px 0 6px">' + t("Nothing here yet — and that is the point.") + '</h3>' +
+        '<p class="mini" style="margin:0 0 14px">' + t("This page is your record, not a scoreboard. It fills itself in as you play.") + '</p>' +
+        '<div class="bm-row"><span class="bm-cat">🧭 ' + t("Your Brain Map") + '</span>' +
+          '<span class="bm-lv">' + t("which of the six domains you know best") + '</span></div>' +
+        '<div class="bm-row"><span class="bm-cat">🗝️ ' + t("Facts owned") + '</span>' +
+          '<span class="bm-lv">' + t("beat a fact 5 times over 2 months and it is yours") + '</span></div>' +
+        '<div class="bm-row"><span class="bm-cat">🔥 ' + t("Streak") + '</span>' +
+          '<span class="bm-lv">' + t("shown, never nagged about") + '</span></div>' +
+        '<div class="btnrow" style="margin-top:14px">' +
+          '<button class="btn" id="statsPlay">' + t("Play daily challenge") + '</button>' +
+        '</div>' +
+        '<p class="mini" style="margin:12px 0 0;opacity:.7">' + t("One round is enough to fill it.") + '</p>' +
+      '</div>'
+    );
+    node.querySelector("#statsPlay").addEventListener("click", startDaily);
+    return node;
   }
 
   function settingsTabView() { // mobile Settings: comfort content, no back header
@@ -919,13 +951,11 @@
           : tf("🗝️ {n} facts added to your Memory Vault — they’ll come back until you own them.", { n: missed })) + '</div>' : '') +
         '<div class="btnrow center" style="justify-content:center">' +
           '<button class="btn" id="share">' + t("Share result") + '</button>' +
-          '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
       '</div>'
     );
     render(node);
-    node.querySelector("#home").addEventListener("click", goHome);
     node.querySelector("#share").addEventListener("click", function () {
       var text = "Qpio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total +
         "\n🔥 " + (s.count === 1 ? t("1-day streak") : tf("{n}-day streak", { n: s.count })) +
@@ -954,12 +984,10 @@
             '<div class="mini">' + tf("Facts mastered for good so far: {n} 🏅", { n: (getStats().mastered || 0) }) + '</div>' +
             '<div class="btnrow" style="justify-content:center">' +
               (vaultDue().length ? '<button class="btn" id="more">' + t("Review more") + '</button>' : '') +
-              '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
             '</div>' +
           '</div>'
         );
         render(node);
-        node.querySelector("#home").addEventListener("click", goHome);
         var more = node.querySelector("#more");
         if (more) more.addEventListener("click", startVaultSession);
       }
@@ -1045,14 +1073,12 @@
               '<div class="btnrow" style="justify-content:center">' +
                 '<button class="btn" id="again">' + t("Play again") + '</button>' +
                 '<button class="btn ghost" id="pack">' + tf("Back to {city}", { city: esc(pack.city) }) + '</button>' +
-                '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
               '</div>' +
             '</div>'
           );
           render(res);
           res.querySelector("#again").addEventListener("click", function () { play.querySelector("#playCity").click(); });
           res.querySelector("#pack").addEventListener("click", function () { cityPackView(pack); });
-          res.querySelector("#home").addEventListener("click", goHome);
         }
       });
     });
@@ -1152,12 +1178,10 @@
           '<div class="sub">' + t("Every claim you just checked had a source. Real life should be so kind — so ask for one.") + '</div>' +
           '<div class="btnrow" style="justify-content:center">' +
             '<button class="btn" id="again">' + t("Play again") + '</button>' +
-            '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
           '</div>' +
         '</div>'
       );
       render(res);
-      res.querySelector("#home").addEventListener("click", goHome);
       res.querySelector("#again").addEventListener("click", startTruthLab);
     }
   }
@@ -1193,13 +1217,11 @@
         '<div class="btnrow" style="justify-content:center">' +
           '<button class="btn" id="save">' + t("Save to leaderboard") + '</button>' +
           '<button class="btn ghost" id="again">' + t("Play again") + '</button>' +
-          '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
       '</div>'
     );
     render(node);
-    node.querySelector("#home").addEventListener("click", goHome);
     node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
     node.querySelector("#save").addEventListener("click", function () {
       var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Curious")) || "").trim().slice(0, 16) || "Curious";

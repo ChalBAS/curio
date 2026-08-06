@@ -64,6 +64,19 @@
       // --- tab bar (FEAT-027) ---
       // "Train", not "Games": Qpio is not a games app (CEO, 2026-08-06).
       "Main navigation": "Navigation principale",
+
+      // --- Stats: day-one empty state ---
+      "Nothing here yet — and that is the point.": "Rien ici pour l’instant — et c’est voulu.",
+      "This page is your record, not a scoreboard. It fills itself in as you play.":
+        "Cette page est ton carnet, pas un classement. Elle se remplit au fil de tes parties.",
+      "Your Brain Map": "Ta carte du cerveau",
+      "which of the six domains you know best": "lequel des six domaines tu maîtrises le mieux",
+      "Facts owned": "Faits acquis",
+      "beat a fact 5 times over 2 months and it is yours": "réussis un fait 5 fois en 2 mois et il est à toi",
+      "Streak": "Série",
+      "shown, never nagged about": "affichée, jamais réclamée",
+      "One round is enough to fill it.": "Une seule partie suffit à la remplir.",
+
       "▶ Resume": "▶ Reprendre",
       "🔍 Text size": "🔍 Taille du texte",
       "Train": "Exercices",
