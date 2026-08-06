@@ -236,7 +236,11 @@
     hushed();
     playLayer.innerHTML = "";
     playLayer.appendChild(node);
-    playActive = true;
+    // A result card means the quiz is over. Keeping playActive true here left a
+    // "▶ Resume" pill offering to reopen a finished quiz (CEO first-run review,
+    // 2026-08-06). Every result view — daily, vault, city, quick-fire, truthlab
+    // — renders `.card.result`.
+    playActive = !node.classList.contains("result");
     showPlay();
   }
 

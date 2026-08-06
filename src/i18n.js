@@ -64,6 +64,8 @@
       // --- tab bar (FEAT-027) ---
       // "Train", not "Games": Qpio is not a games app (CEO, 2026-08-06).
       "Main navigation": "Navigation principale",
+      "▶ Resume": "▶ Reprendre",
+      "🔍 Text size": "🔍 Taille du texte",
       "Train": "Exercices",
       "Stats": "Progrès",
       "Settings": "Réglages",
