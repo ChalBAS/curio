@@ -166,6 +166,18 @@ body {
 .fact-deeper { margin-top: 10px; padding: 12px 14px; border-radius: 10px; background: rgba(255,209,102,.10); border: 1px solid rgba(255,209,102,.3); font-size: 14px; line-height: 1.5; opacity: 1; animation: curioReveal .25s ease; }
 .fact-deeper.show { opacity: 1; transform: none; }
 
+/* After an answer, the options you did not pick are removed — they carried
+   information only while the choice was open, and every one of them competes
+   with the fact for attention (CEO, 2026-08-08).
+   display:none rather than a fold: .opts is a grid, so a collapsed row would
+   still leave its 11px gap behind, and dead space is exactly what this change
+   exists to remove. */
+.opts.answered .opt.spent { display: none; }
+
+/* The one destination offered at the moment of peak curiosity — right under
+   the fact, beside Next. Never sold (VAL-12). */
+.gf-inline { margin-top: 12px; }
+
 /* Go further — the destinations after the daily (D-061). Wrong answers lead. */
 .gofurther { margin-top: 14px; }
 .gf-item { padding: 12px 0; border-top: 1px solid var(--line); }

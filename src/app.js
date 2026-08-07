@@ -887,20 +887,48 @@
         else if (!correct) vaultMiss(q.id);
       }
 
+      // Once the answer is known, the options you did not pick carry no
+      // information — they were only ever there to be chosen between. They
+      // collapse away so the fact, and where it leads, own the screen
+      // (CEO, 2026-08-08). The correct one always stays; a wrong pick stays
+      // too, because seeing what you chose is the whole point of being wrong.
       var buttons = opts.querySelectorAll(".opt");
       buttons.forEach(function (b, bi) {
         b.disabled = true;
         if (bi === q.answer) { b.classList.add("correct"); b.querySelector(".key").textContent = "✓"; }
         else if (bi === i) { b.classList.add("wrong"); b.querySelector(".key").textContent = "✗"; }
+        else { b.classList.add("spent"); }
       });
+      opts.classList.add("answered");
+
       var head = correct ? t("Correct! ") : (i === -1 ? t("Time! ") : t("Not quite. "));
       var hasDeeper = q.deeper && q.deeper.length > 0;
+      // The one destination worth offering at the moment of peak curiosity.
+      // Never sold, never ordered by money — Charter VAL-12 / D-061.
+      var lead = null;
+      if (window.CURIO_GO) {
+        var dests = window.CURIO_GO.goFor(q);
+        for (var di = 0; di < dests.length; di++) {
+          if (dests[di].kind !== "source") { lead = dests[di]; break; }
+        }
+      }
+      var leadLabel = !lead ? "" :
+        lead.kind === "see"   ? tf("See it at {where}", { where: esc(lead.title) }) :
+        lead.kind === "visit" ? tf("Visit {where}",     { where: esc(lead.title) }) :
+                                tf("Read about {name}", { name: esc(lead.title) });
+
       var fact = el('<div class="fact"><b>' + head + '</b>' + fmt(q.fact) + srcLink(q.src) +
         '<div class="deeperbox"></div>' +
         '<div class="btnrow">' +
           '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? t("Next →") : t("See results →")) + '</button>' +
           (hasDeeper ? '<button class="btn ghost" id="deeper">' + t("🕳️ Go deeper") + '</button>' : '') +
-        '</div></div>');
+        '</div>' +
+        (lead ? '<a class="gf-link gf-inline" href="' + srcLink0(lead.url) + '" target="_blank" rel="noopener">' +
+                  '<span class="gf-ico" aria-hidden="true">' + lead.icon + '</span>' +
+                  '<span class="gf-text">' + leadLabel +
+                    (lead.sub ? '<span class="gf-sub">' + esc(lead.sub) + '</span>' : '') +
+                  '</span><span class="gf-go" aria-hidden="true">↗</span></a>' : '') +
+        '</div>');
       node.appendChild(fact);
       requestAnimationFrame(function () { fact.classList.add("show"); });
       // The feedback lands below four option cards, so on a phone the answer,
@@ -975,11 +1003,13 @@
           : tf("🗝️ {n} facts added to your Memory Vault — they’ll come back until you own them.", { n: missed })) + '</div>' : '') +
         '<div class="btnrow center" style="justify-content:center">' +
           '<button class="btn" id="share">' + t("Share result") + '</button>' +
+          '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
       '</div>'
     );
     render(node);
+    node.querySelector("#home").addEventListener("click", goHome);
     node.querySelector("#share").addEventListener("click", function () {
       var text = "Qpio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total +
         "\n🔥 " + (s.count === 1 ? t("1-day streak") : tf("{n}-day streak", { n: s.count })) +
