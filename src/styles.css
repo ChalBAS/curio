@@ -166,6 +166,27 @@ body {
 .fact-deeper { margin-top: 10px; padding: 12px 14px; border-radius: 10px; background: rgba(255,209,102,.10); border: 1px solid rgba(255,209,102,.3); font-size: 14px; line-height: 1.5; opacity: 1; animation: curioReveal .25s ease; }
 .fact-deeper.show { opacity: 1; transform: none; }
 
+/* Go further — the destinations after the daily (D-061). Wrong answers lead. */
+.gofurther { margin-top: 14px; }
+.gf-item { padding: 12px 0; border-top: 1px solid var(--line); }
+.gf-item:first-of-type { border-top: 0; padding-top: 4px; }
+.gf-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.gf-mark { color: var(--bad, #ff6b6b); font-weight: 800; font-size: 15px; line-height: 1; }
+.gf-name { font-weight: 700; font-size: 15.5px; letter-spacing: -.01em; }
+.gf-missed .gf-name { color: var(--ink); }
+.gf-item:not(.gf-missed) .gf-name { color: var(--muted); font-weight: 600; }
+.gf-links { display: grid; gap: 7px; }
+.gf-link { display: flex; align-items: center; gap: 10px; text-decoration: none;
+  padding: 10px 12px; border-radius: 11px; background: rgba(38,186,216,.07);
+  border: 1px solid rgba(38,186,216,.22); color: var(--ink); font-size: 14px; line-height: 1.35; }
+.gf-link:hover { background: rgba(38,186,216,.14); border-color: var(--brand); }
+.gf-ico { font-size: 17px; line-height: 1; flex: 0 0 auto; }
+.gf-text { flex: 1 1 auto; min-width: 0; }
+.gf-sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.gf-go { flex: 0 0 auto; color: var(--brand); font-weight: 700; }
+.gf-note { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); opacity: .75; }
+.rmotion .gf-link { transition: none; }
+
 /* Fact or Fake */
 .truthbtns { display: grid; gap: 11px; }
 .truthopt { font-size: 16px; }

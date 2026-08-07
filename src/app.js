@@ -983,9 +983,88 @@
     node.querySelector("#share").addEventListener("click", function () {
       var text = "Qpio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total +
         "\n🔥 " + (s.count === 1 ? t("1-day streak") : tf("{n}-day streak", { n: s.count })) +
-        "\nhttps://chalbas.github.io/curio/ — " + t("free, forever.");
+        "\nhttps://qpio.app — " + t("free, forever.");
       shareOrCopy(text, node.querySelector("#msg"));
     });
+    // The daily set is deterministic for the day, so the questions can be
+    // re-derived here and matched to rec.marks by position. Only for today's
+    // record — an older one would pair marks with the wrong questions.
+    if (rec.date === todayKey()) {
+      var gf = goFurtherCard(dailyQuestions(), rec.marks);
+      if (gf) node.parentNode.appendChild(gf);
+    }
+  }
+
+  // ---------- go further ----------
+  // The reason the app exists. Someone has just been wrong about something —
+  // the strongest moment of curiosity there is — and until now we showed them
+  // a score and stopped. Wrong answers lead, because that is where the pull is.
+  //
+  // Nothing here is ever sold. See src/golinks.js and Charter VAL-12 (D-061).
+  function goFurtherCard(questions, marks) {
+    if (!window.CURIO_GO || !questions || !questions.length) return null;
+
+    var wrong = [], right = [];
+    questions.forEach(function (q, i) {
+      var dest = window.CURIO_GO.goFor(q);
+      if (!dest.length) return;
+      (marks && marks[i] === false ? wrong : right).push({ q: q, dest: dest });
+    });
+    if (!wrong.length && !right.length) return null;
+
+    var card = el('<div class="card gofurther"></div>');
+    card.appendChild(el(
+      '<div class="section-title" style="margin-top:0">' + t("🕳️ Go further") + '</div>' +
+      '<div class="mini" style="margin-bottom:12px">' +
+      (wrong.length
+        ? t("Start with the ones you missed — that is where the curiosity is.")
+        : t("Nothing missed today. Here is where these lead anyway.")) +
+      '</div>'
+    ));
+
+    function row(item, missed) {
+      var slug = window.CURIO_GO.entityOf(item.q);
+      var name = window.CURIO_GO.titleOf(slug);
+      var wrap = el('<div class="gf-item' + (missed ? " gf-missed" : "") + '"></div>');
+      wrap.appendChild(el(
+        '<div class="gf-head">' +
+          (missed ? '<span class="gf-mark">✗</span>' : '') +
+          '<span class="gf-name">' + esc(name) + '</span>' +
+        '</div>'
+      ));
+      var links = el('<div class="gf-links"></div>');
+      item.dest.forEach(function (d) {
+        var label =
+          d.kind === "see"    ? tf("See it at {where}", { where: esc(d.title) }) :
+          d.kind === "visit"  ? tf("Visit {where}",     { where: esc(d.title) }) :
+          d.kind === "read"   ? tf("Read about {name}", { name: esc(d.title) }) :
+                                t("Where this came from");
+        var sub = d.sub ? '<span class="gf-sub">' + esc(d.sub) + '</span>' : '';
+        links.appendChild(el(
+          '<a class="gf-link" href="' + srcLink0(d.url) + '" target="_blank" rel="noopener">' +
+            '<span class="gf-ico" aria-hidden="true">' + d.icon + '</span>' +
+            '<span class="gf-text">' + label + sub + '</span>' +
+            '<span class="gf-go" aria-hidden="true">↗</span>' +
+          '</a>'
+        ));
+      });
+      wrap.appendChild(links);
+      return wrap;
+    }
+
+    wrong.forEach(function (it) { card.appendChild(row(it, true)); });
+    right.forEach(function (it) { card.appendChild(row(it, false)); });
+
+    card.appendChild(el('<div class="mini gf-note">' +
+      t("Nobody pays to be on this list. These are simply the best places we know of.") +
+      '</div>'));
+    return card;
+  }
+
+  // Same scheme check srcLink() applies, for a bare URL.
+  function srcLink0(u) {
+    if (!/^https?:\/\//i.test(u || "")) return "#";
+    return esc(u);
   }
 
   // ---------- vault session ----------

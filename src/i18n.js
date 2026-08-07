@@ -65,6 +65,20 @@
       // "Train", not "Games": Qpio is not a games app (CEO, 2026-08-06).
       "Main navigation": "Navigation principale",
 
+      // --- Go further (D-061) ---
+      "🕳️ Go further": "🕳️ Aller plus loin",
+      "Start with the ones you missed — that is where the curiosity is.":
+        "Commence par celles que tu as ratées — c’est là qu’est la curiosité.",
+      "Nothing missed today. Here is where these lead anyway.":
+        "Rien de raté aujourd’hui. Voici quand même où tout cela mène.",
+      "See it at {where}": "À voir au {where}",
+      "Visit {where}": "Visiter {where}",
+      "Read about {name}": "Lire sur {name}",
+      "Where this came from": "D’où vient cette information",
+      "Nobody pays to be on this list. These are simply the best places we know of.":
+        "Personne ne paie pour figurer dans cette liste. Ce sont simplement les meilleurs endroits que nous connaissons.",
+
+
       // --- Stats: day-one empty state ---
       "Nothing here yet — and that is the point.": "Rien ici pour l’instant — et c’est voulu.",
       "This page is your record, not a scoreboard. It fills itself in as you play.":
