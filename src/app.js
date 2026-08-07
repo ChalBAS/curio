@@ -597,11 +597,17 @@
     return wrap;
   }
 
+  // Brain Gym stays hidden until the exercises exist. "Coming soon" on a
+  // three-card tab reads as an unfinished app to a first-time user - Kimi
+  // called it vaporware in the 2026-08-04 council review; CEO agreed
+  // 2026-08-07. Flip this to true the day it ships; nothing else changes.
+  var FEAT_BRAIN_GYM = false;
+
   function gamesTabView() { // v23 Games: games only, no Home repeats - Fact-or-Fake · Quick-Fire · Brain Gym (coming)
     var wrap = el('<div class="grid"></div>');
     var mt = modeCardTruth(); if (mt) wrap.appendChild(mt);
     wrap.appendChild(quickfirePicker());
-    wrap.appendChild(el('<div class="card"><div class="emoji">\ud83e\udde0</div><h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3><p class="mini" style="margin:0">' + t("Memory and focus exercises built on real technique — coming soon. We teach methods, we never promise miracles.") + '</p></div>'));
+    if (FEAT_BRAIN_GYM) wrap.appendChild(el('<div class="card"><div class="emoji">\ud83e\udde0</div><h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3><p class="mini" style="margin:0">' + t("Memory and focus exercises built on real technique — coming soon. We teach methods, we never promise miracles.") + '</p></div>'));
     return wrap;
   }
 
@@ -897,6 +903,24 @@
         '</div></div>');
       node.appendChild(fact);
       requestAnimationFrame(function () { fact.classList.add("show"); });
+      // The feedback lands below four option cards, so on a phone the answer,
+      // the source and Next were all below the fold — the user had to hunt for
+      // them (CEO, 2026-08-07). Bring the card into view.
+      // setTimeout, not requestAnimationFrame: rAF does not fire when the page
+      // is not compositing (backgrounded tab, hidden window), which is exactly
+      // when someone returns to a half-finished quiz.
+      setTimeout(function () {
+        try {
+          fact.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "end" });
+        } catch (e) { fact.scrollIntoView(false); }
+        // Smooth scrolling is animation-driven and silently does nothing when
+        // the page is not compositing — a backgrounded tab, a hidden window.
+        // Guarantee the outcome: if it is still out of view, jump.
+        setTimeout(function () {
+          var r = fact.getBoundingClientRect();
+          if (r.bottom > window.innerHeight + 1) { try { fact.scrollIntoView({ behavior: "auto", block: "end" }); } catch (e2) { fact.scrollIntoView(false); } }
+        }, 400);
+      }, 0);
       speak(head + q.fact);
       if (hasDeeper) {
         var dIdx = 0, dBox = fact.querySelector(".deeperbox"), dBtn = fact.querySelector("#deeper");
