@@ -2,22 +2,23 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v39";
+const CACHE = "qpio-v41";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=39",
-  "./brand/qpio-mark-96.png?v=39",
-  "./brand/icons/qpio-icon-96.png?v=39",
-  "./brand/qpio-lockup-header.png?v=39",
-  "./src/i18n.js?v=39",
-  "./src/questions.fr.js?v=39",
-  "./src/truthlab.fr.js?v=39",
-  "./src/app.js?v=39",
-  "./src/questions.js?v=39",
-  "./src/truthlab.js?v=39",
-  "./src/citypacks.js?v=39",
-  "./src/golinks.js?v=39",
+  "./src/styles.css?v=41",
+  "./brand/qpio-mark-96.png?v=41",
+  "./brand/icons/qpio-icon-96.png?v=41",
+  "./brand/qpio-lockup-header.png?v=41",
+  "./src/i18n.js?v=41",
+  "./src/questions.fr.js?v=41",
+  "./src/truthlab.fr.js?v=41",
+  "./src/app.js?v=41",
+  "./src/questions.js?v=41",
+  "./src/truthlab.js?v=41",
+  "./src/citypacks.js?v=41",
+  "./src/entities.fr.js?v=41",
+  "./src/golinks.js?v=41",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",

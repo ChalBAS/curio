@@ -94,6 +94,11 @@
   // destination because it pays independent bookshops rather than a warehouse —
   // that is an editorial choice about who we send readers to, and it is the
   // kind of choice that must stay ours (VAL-12).
+  //
+  // KNOWN GAP: Bookshop.org ships US and UK only, so a reader in Korea is sent
+  // to a shop that cannot serve them. The fix is an international-shipping
+  // default first, geo-aware later (CEO, 2026-08-08). Recorded here because it
+  // is a real defect, not a placeholder.
   function readUrl(title) {
     return "https://bookshop.org/search?keywords=" + encodeURIComponent(title);
   }
@@ -105,7 +110,43 @@
     if (!m) return null;
     try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
   }
-  function titleOf(slug) { return slug ? slug.replace(/_/g, " ") : ""; }
+
+  // The entity's name in the reader's language. Not a translation — a lookup
+  // of the title the French Wikipedia community chose for the same article
+  // ("Great_Wall_of_China" → "Grande Muraille"). Built by
+  // tools/fetch_fr_titles.py and baked in, so nothing is fetched at runtime.
+  // 336 of 347 entities have a French article; the rest keep the English name,
+  // which is correct — not every subject has a French page.
+  function frTitle(slug) {
+    var m = window.CURIO_FR_ENTITIES;
+    return (m && slug && m[slug]) || null;
+  }
+  // Wikipedia appends a disambiguator when two articles share a name —
+  // "Victoria (reine)", "Mercury (planet)", "Abdelkader (émir)". It is
+  // filing metadata, not part of the name: nobody says "tell me about
+  // Victoria bracket queen", and it poisons a bookshop search. Strip it.
+  function cleanName(s) {
+    return s ? s.replace(/\s*\([^)]*\)\s*$/, "").trim() || s : "";
+  }
+  function titleOf(slug) {
+    if (!slug) return "";
+    if (window.QLANG === "fr") {
+      var f = frTitle(slug);
+      if (f) return cleanName(f);
+    }
+    return cleanName(slug.replace(/_/g, " "));
+  }
+
+  // A French reader should land on the French article. Same lookup, and it
+  // closes the long-standing defect of the French bank citing English sources.
+  function sourceUrl(q) {
+    var slug = entityOf(q);
+    if (window.QLANG === "fr" && slug) {
+      var f = frTitle(slug);
+      if (f) return "https://fr.wikipedia.org/wiki/" + encodeURIComponent(f.replace(/ /g, "_"));
+    }
+    return q.src;
+  }
 
   // Returns the destinations for one question, best-for-the-learner first.
   // Order is fixed by usefulness and can never be bought (VAL-12).
@@ -126,9 +167,11 @@
       });
     }
     out.push({ kind: "read", icon: "📚", title: title, sub: "", url: readUrl(title) });
-    if (q.src) out.push({ kind: "source", icon: "📖", title: "", sub: "", url: q.src });
+    if (q.src) out.push({ kind: "source", icon: "📖", title: "", sub: "", url: sourceUrl(q) });
     return out;
   }
 
-  window.CURIO_GO = { places: PLACES, goFor: goFor, entityOf: entityOf, titleOf: titleOf };
+  window.CURIO_GO = {
+    places: PLACES, goFor: goFor, entityOf: entityOf, titleOf: titleOf, sourceUrl: sourceUrl
+  };
 })();

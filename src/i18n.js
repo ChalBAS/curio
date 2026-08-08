@@ -72,11 +72,12 @@
       "🗝️ {n} facts saved": "🗝️ {n} faits mis de côté",
       "Topics you might want to know more about": "Des sujets que tu voudras peut-être creuser",
       "Curiosity doesn’t stop here.": "La curiosité ne s’arrête pas là.",
-      // "Raté" reads as a verdict on the person; "Manqué" is the same fact
-      // without the judgement. The design removes shame visually — the words
-      // must not put it back (Devil's Advocate, 2026-08-08).
-      "Missed": "Manqué",
-      "Correct": "Trouvé",
+      // CEO, 2026-08-08: "in French we don't say 'raté', we say incorrect or
+      // correct — raté has negative connotations, it is something we say to
+      // insult people." Both my earlier attempts ("Raté", then "Manqué") judged
+      // the person. These state the answer.
+      "Missed": "Incorrect",
+      "Correct": "Correct",
       "Visit": "Y aller",
       "Read": "Lire",
       "Sources": "Sources",
