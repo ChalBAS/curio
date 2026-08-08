@@ -121,9 +121,11 @@
     var order = shuffledIndices(p.length, seed);
     return order.slice(0, DAILY_COUNT).map(function (i) { return p[i]; });
   }
-  function quickfireQuestions(cat, region) {
+  function quickfireQuestions(cat, sub) {
     var p = pool().filter(function (x) { return cat === "All" || x.cat === cat; });
-    if (region && region !== "All") p = p.filter(function (x) { return x.region === region; });
+    // One second-level filter, two underlying fields: History slices by region,
+    // Science and Geography by subject. Same control, same code path.
+    if (sub && sub !== "All") p = p.filter(function (x) { return x.region === sub || x.sub === sub; });
     for (var i = p.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = p[i]; p[i] = p[k]; p[k] = tmp; }
     return p.slice(0, Math.min(QUICKFIRE_COUNT, p.length));
   }
@@ -135,12 +137,42 @@
     return order.filter(function (r) { return have[r]; });
   }
 
+  // The second-level filter for a category. History has had one since v1;
+  // Science and Geography got theirs on 2026-08-08 (CEO: split Science by
+  // discipline, and "we need a special category for countries and the flags
+  // and capitals — people who like to travel will love these categories").
+  // Built from the bank, so a subject with no questions never shows a chip.
+  var SUB_ORDER = {
+    Science: ["Life Sciences", "Chemistry", "Physics", "Earth & Space", "Mathematics", "Social Sciences"],
+    Geography: ["Countries & Flags", "Landscapes", "Cities & Places"]
+  };
+  var SUB_EMOJI = {
+    "Life Sciences": "🧬", "Chemistry": "⚗️", "Physics": "⚛️", "Earth & Space": "🪐",
+    "Mathematics": "🔢", "Social Sciences": "👥",
+    "Countries & Flags": "🚩", "Landscapes": "🏔️", "Cities & Places": "🏙️"
+  };
+  function subsFor(cat) {
+    if (cat === "History") return historyRegions();
+    var order = SUB_ORDER[cat];
+    if (!order) return [];
+    var have = {};
+    Q.forEach(function (x) { if (x.cat === cat && x.sub) have[x.sub] = true; });
+    return order.filter(function (s) { return have[s]; });
+  }
+  function subLabel(cat, v) {
+    if (cat === "History") {
+      return (v === "Africa" ? "🌍" : v === "Americas" ? "🌎" : v === "Asia" ? "🌏" :
+              v === "Europe" ? "🏰" : v === "MiddleEast" ? "🕌" : "🗺️") + " " + t(REGION_LABEL[v] || v);
+    }
+    return (SUB_EMOJI[v] || "✨") + " " + t(v);
+  }
+
   // For each question, shuffle the option display order deterministically per session.
   function withShuffledOptions(q, seed) {
     var order = shuffledIndices(q.options.length, seed);
     var opts = order.map(function (i) { return q.options[i]; });
     var ans = order.indexOf(q.answer);
-    return { id: qid(q), q: q.q, cat: q.cat, region: q.region, theme: q.theme, diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, options: opts, answer: ans };
+    return { id: qid(q), q: q.q, cat: q.cat, region: q.region, sub: q.sub, theme: q.theme, diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, options: opts, answer: ans };
   }
   var REGION_LABEL = { Africa: "Africa", Americas: "Americas", Asia: "Asia", Europe: "Europe", MiddleEast: "Middle East", Global: "Global" };
   function srcLink(url) {
@@ -516,31 +548,49 @@
     var cats = picker.querySelector(".cats");
     var regionRow = picker.querySelector(".regionrow");
     var regionCats = picker.querySelector(".regioncats");
+    var hint = picker.querySelector(".regionrow .mini");
     var chosen = LS.get("lastCat", "All");
-    var chosenRegion = "All";
-    function syncRegionRow() { regionRow.classList.toggle("hidden", chosen !== "History" || historyRegions().length === 0); }
+    var chosenSub = "All";
+
+    // The second row is rebuilt for whichever category is selected: regions
+    // under History, disciplines under Science, and Countries & Flags under
+    // Geography. One control, three meanings, no third row to decide about.
+    function buildSubRow() {
+      var subs = subsFor(chosen);
+      regionRow.classList.toggle("hidden", subs.length === 0);
+      if (!subs.length) { chosenSub = "All"; return; }
+      hint.textContent =
+        chosen === "History" ? t("History by region — every part of the world, on its own terms:") :
+        chosen === "Science" ? t("Pick a science:") :
+                               t("Pick what you like to explore:");
+      regionCats.innerHTML = "";
+      chosenSub = "All";
+      ["All"].concat(subs).forEach(function (v) {
+        var label = v === "All"
+          ? (chosen === "History" ? t("🌍 All regions") : t("✨ All"))
+          : subLabel(chosen, v);
+        var b = el('<button class="chip" aria-pressed="' + (v === chosenSub ? "true" : "false") + '">' + label + '</button>');
+        b.addEventListener("click", function () {
+          chosenSub = v;
+          regionCats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+          b.setAttribute("aria-pressed", "true");
+        });
+        regionCats.appendChild(b);
+      });
+    }
+
     ["All"].concat(CATS).forEach(function (c) {
       var b = el('<button class="chip" aria-pressed="' + (c === chosen ? "true" : "false") + '">' + (CAT_EMOJI[c] || "✨") + " " + t(c) + '</button>');
       b.addEventListener("click", function () {
         chosen = c; LS.set("lastCat", c);
         cats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
         b.setAttribute("aria-pressed", "true");
-        syncRegionRow();
+        buildSubRow();
       });
       cats.appendChild(b);
     });
-    ["All"].concat(historyRegions()).forEach(function (rg) {
-      var label = rg === "All" ? t("🌍 All regions") : (rg === "Africa" ? "🌍" : rg === "Americas" ? "🌎" : rg === "Asia" ? "🌏" : rg === "Europe" ? "🏰" : rg === "MiddleEast" ? "🕌" : "🗺️") + " " + t(REGION_LABEL[rg] || rg);
-      var b = el('<button class="chip" aria-pressed="' + (rg === chosenRegion ? "true" : "false") + '">' + label + '</button>');
-      b.addEventListener("click", function () {
-        chosenRegion = rg;
-        regionCats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
-        b.setAttribute("aria-pressed", "true");
-      });
-      regionCats.appendChild(b);
-    });
-    syncRegionRow();
-    picker.querySelector("#startQuick").addEventListener("click", function () { startQuickfire(chosen, chosen === "History" ? chosenRegion : "All"); });
+    buildSubRow();
+    picker.querySelector("#startQuick").addEventListener("click", function () { startQuickfire(chosen, chosenSub); });
     return picker;
   }
 

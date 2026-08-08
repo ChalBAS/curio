@@ -86,6 +86,20 @@
 
       // --- Keep exploring lanes. Passed as t(L.label) from golinks.js, so
       // check_i18n.py cannot see them — they are listed here by hand. ---
+      // --- second-level filters: sciences, and the travel categories ---
+      "✨ All": "✨ Tout",
+      "Pick a science:": "Choisis une science :",
+      "Pick what you like to explore:": "Choisis ce que tu aimes explorer :",
+      "Life Sciences": "Sciences de la vie",
+      "Chemistry": "Chimie",
+      "Physics": "Physique",
+      "Earth & Space": "Terre et espace",
+      "Mathematics": "Mathématiques",
+      "Social Sciences": "Sciences sociales",
+      "Countries & Flags": "Pays et drapeaux",
+      "Landscapes": "Paysages",
+      "Cities & Places": "Villes et lieux",
+
       "Keep exploring": "Continuer à explorer",
       "Follow your curiosity anywhere.": "Suis ta curiosité où elle te mène.",
       "Documentaries": "Documentaires",
