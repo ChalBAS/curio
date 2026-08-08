@@ -104,6 +104,25 @@
 
       "Keep exploring": "Continuer à explorer",
       "Surprise me": "Surprends-moi",
+      "Back": "Retour",
+      "{n} to explore": "{n} à explorer",
+
+      // --- backup code ---
+      "Your progress": "Ta progression",
+      "Everything you have learned is stored on this device only. Copy your backup code before you reinstall or change phone — nothing else can bring it back.":
+        "Tout ce que tu as appris est stocké uniquement sur cet appareil. Copie ton code de sauvegarde avant de réinstaller ou de changer de téléphone — rien d’autre ne pourra le récupérer.",
+      "Copy backup code": "Copier le code de sauvegarde",
+      "Restore from a code": "Restaurer depuis un code",
+      "Paste your backup code:": "Colle ton code de sauvegarde :",
+      "Restored {n} items. Reopening…": "{n} éléments restaurés. Rechargement…",
+      "That code could not be read. Check you copied all of it.":
+        "Ce code n’a pas pu être lu. Vérifie que tu l’as copié en entier.",
+
+      // --- city browser ---
+      "Cities told from their own history. Learn the place, the food, and a few words before you go.":
+        "Des villes racontées depuis leur propre histoire. Découvre le lieu, la cuisine et quelques mots avant d’y aller.",
+      "Search a city or country": "Chercher une ville ou un pays",
+      "No city matches that yet.": "Aucune ville ne correspond pour l’instant.",
       "One thing to be curious about": "Une chose qui mérite ta curiosité",
       // Shelf names — passed as t(S.label) from discovery.js, so the checker
       // cannot see them. Listed by hand.

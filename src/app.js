@@ -531,23 +531,30 @@
     return node;
   }
 
-  // A collection, not a dashboard tile: show three of the cities so the reader
-  // can see what is inside before deciding to open it (CEO, 2026-08-08 §15).
+  // A browsable collection with a search box, not a clipped row of six.
+  // CEO, 2026-08-09: "there will be more than 10 cities in the future... at
+  // some point people need to be able to type the name of the city... but when
+  // we have 200 cities we'll need the user to search."
+  // So: a grid that never cuts a card in half, and a filter that earns its
+  // place the moment the list outgrows the screen.
   function modeCardTravel() {
     var packs = cityPacks();
     if (!packs.length) return null;
     var node = el(
       '<div class="card" id="modeTravel">' +
         '<div class="section-title" style="margin-top:0">🧳 ' + t("Before you travel") + '</div>' +
-        '<p class="mini" style="margin:0 0 12px">' +
-          tf("{n} cities, told from their own history. Learn the place, the food, and a few words before you go.", { n: packs.length }) +
+        '<p class="mini" style="margin:0 0 10px">' +
+          t("Cities told from their own history. Learn the place, the food, and a few words before you go.") +
         '</p>' +
-        '<div class="rack-row" id="cityPeek"></div>' +
+        '<input class="citysearch" id="citySearch" type="search" autocomplete="off" ' +
+          'placeholder="' + esc(t("Search a city or country")) + '" aria-label="' + esc(t("Search a city or country")) + '">' +
+        '<div class="dgrid" id="cityPeek"></div>' +
+        '<p class="mini citynone hidden" id="cityNone">' + t("No city matches that yet.") + '</p>' +
       '</div>'
     );
     var row = node.querySelector("#cityPeek");
     var IM = window.CURIO_IMAGES || {};
-    packs.slice(0, 6).forEach(function (p) {
+    packs.forEach(function (p) {
       // Reuse the city's own question source for a photograph where we have one.
       var slug = null;
       (p.questions || []).some(function (q) {
@@ -576,7 +583,21 @@
       c.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
       });
+      c.setAttribute("data-hay", normText(p.city + " " + (p.country || "")));
       row.appendChild(c);
+    });
+
+    var box = node.querySelector("#citySearch");
+    var none = node.querySelector("#cityNone");
+    box.addEventListener("input", function () {
+      var v = normText(box.value.trim());
+      var shown = 0;
+      [].slice.call(row.children).forEach(function (c) {
+        var hit = !v || (c.getAttribute("data-hay") || "").indexOf(v) !== -1;
+        c.classList.toggle("hidden", !hit);
+        if (hit) shown++;
+      });
+      none.classList.toggle("hidden", shown > 0);
     });
     return node;
   }
@@ -684,7 +705,11 @@
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(heroCard());
     var vc = vaultCard(); if (vc) wrap.appendChild(vc);
-    var oc = oneCuriosityCard(); if (oc) wrap.appendChild(oc);
+    // "One thing to be curious about" moved OFF Home (CEO, 2026-08-09): a
+    // discovery card that leads to paid resources should not greet someone on
+    // the front page — it reads as being sold to before you have asked
+    // anything. It now lives behind Surprise me on the review screen, where
+    // the reader has already shown curiosity.
     var mtr = modeCardTravel(); if (mtr) wrap.appendChild(mtr);
     wrap.appendChild(footerEl());
     return wrap;
@@ -713,9 +738,22 @@
   // 2026-08-07. Flip this to true the day it ships; nothing else changes.
   var FEAT_BRAIN_GYM = false;
 
+  // Illustrations for the Train tab (CEO, 2026-08-09): a real photograph
+  // behind each mode, so the tab reads as a product rather than a settings
+  // page. Slugs come from the bank's own Commons set - no new assets.
+  var MODE_ART = { truth: "Ten_percent_of_the_brain_myth", quick: "Chess" };
+  function dressMode(node, key) {
+    var im = (window.CURIO_IMAGES || {})[MODE_ART[key]];
+    if (!im || !node) return node;
+    node.classList.add("has-art");
+    node.insertBefore(el('<span class="mode-wash" aria-hidden="true"></span>'), node.firstChild);
+    node.insertBefore(el('<img class="mode-art" src="' + esc(im.u) + '" alt="" loading="lazy" decoding="async">'), node.firstChild);
+    return node;
+  }
+
   function gamesTabView() { // v23 Games: games only, no Home repeats - Fact-or-Fake · Quick-Fire · Brain Gym (coming)
     var wrap = el('<div class="grid"></div>');
-    var mt = modeCardTruth(); if (mt) wrap.appendChild(mt);
+    var mt = modeCardTruth(); if (mt) wrap.appendChild(dressMode(mt, "truth"));
     wrap.appendChild(quickfirePicker());
     if (FEAT_BRAIN_GYM) wrap.appendChild(el('<div class="card"><div class="emoji">\ud83e\udde0</div><h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3><p class="mini" style="margin:0">' + t("Memory and focus exercises built on real technique — coming soon. We teach methods, we never promise miracles.") + '</p></div>'));
     return wrap;
@@ -763,8 +801,68 @@
 
   function settingsTabView() { // mobile Settings: comfort content, no back header
     var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(backupCard());
     wrap.appendChild(comfortView(true));
     return wrap;
+  }
+
+  // Your progress lives on this device, and nowhere else. That is the honest
+  // consequence of having no accounts — and it means a reinstall, a cleared
+  // cache, or a different address loses everything (CEO, 2026-08-09: "when I
+  // re-install will I lose my record?"). Until accounts exist, this is the
+  // answer: copy a code out, paste it back in. Cookie Clicker's pattern, which
+  // has worked for a decade.
+  var BACKUP_KEYS = ["curio.vault", "curio.stats", "curio.streak", "curio.settings", "curio.onboarded"];
+  function backupCard() {
+    var node = el(
+      '<div class="card">' +
+        '<div class="section-title" style="margin-top:0">🗝️ ' + t("Your progress") + '</div>' +
+        '<p class="mini" style="margin:0 0 12px">' +
+          t("Everything you have learned is stored on this device only. Copy your backup code before you reinstall or change phone — nothing else can bring it back.") +
+        '</p>' +
+        '<div class="btnrow">' +
+          '<button class="btn" id="bkCopy">' + t("Copy backup code") + '</button>' +
+          '<button class="btn ghost" id="bkRestore">' + t("Restore from a code") + '</button>' +
+        '</div>' +
+        '<div class="mini" id="bkMsg" style="margin-top:10px"></div>' +
+      '</div>'
+    );
+    var msg = node.querySelector("#bkMsg");
+
+    node.querySelector("#bkCopy").addEventListener("click", function () {
+      var bag = { v: 1, at: todayKey(), d: {} };
+      BACKUP_KEYS.forEach(function (k) {
+        try { var v = localStorage.getItem(k); if (v !== null) bag.d[k] = v; } catch (e) {}
+      });
+      try {
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (k && k.indexOf("curio.daily.") === 0) bag.d[k] = localStorage.getItem(k);
+        }
+      } catch (e) {}
+      // base64 so a stray line break in a chat app cannot corrupt it
+      var code = "QPIO1:" + btoa(unescape(encodeURIComponent(JSON.stringify(bag))));
+      shareOrCopy(code, msg);
+    });
+
+    node.querySelector("#bkRestore").addEventListener("click", function () {
+      var input = window.prompt(t("Paste your backup code:"));
+      if (!input) return;
+      try {
+        var raw = input.trim().replace(/^QPIO1:/, "");
+        var bag = JSON.parse(decodeURIComponent(escape(atob(raw))));
+        if (!bag || !bag.d) throw new Error("shape");
+        var n = 0;
+        Object.keys(bag.d).forEach(function (k) {
+          if (k.indexOf("curio.") === 0) { localStorage.setItem(k, bag.d[k]); n++; }
+        });
+        msg.textContent = tf("Restored {n} items. Reopening…", { n: n });
+        setTimeout(function () { location.reload(); }, 900);
+      } catch (e) {
+        msg.textContent = t("That code could not be read. Check you copied all of it.");
+      }
+    });
+    return node;
   }
 
   function brainMapCard() {
@@ -1191,10 +1289,14 @@
   function shelfCard(questions, marks) {
     if (!window.CURIO_GO || !questions || !questions.length) return null;
 
+    // Every question answered gets a card. Previously a question with no
+    // source produced nothing, so a round of five showed four — which reads as
+    // a bug, not as a data gap (CEO, 2026-08-09). All 262 are now sourced, and
+    // this guard means a future unsourced question degrades to a card with a
+    // fact rather than vanishing.
     var wrong = [], right = [];
     questions.forEach(function (q, i) {
-      var dest = window.CURIO_GO.goFor(q);
-      if (!dest.length) return;   // no source → no topic → no card. The 40.
+      var dest = window.CURIO_GO.goFor(q) || [];
       (marks && marks[i] === false ? wrong : right).push({ q: q, dest: dest });
     });
     if (!wrong.length && !right.length) return null;
@@ -1301,6 +1403,12 @@
   // Six shelves of actual things. A shelf shows what is on it; a category
   // button asks you to guess. Horizontal within a shelf, vertical between —
   // so one flick browses a subject and one scroll changes appetite.
+  // Six doors, not six shelves. The CEO, 2026-08-09: "scrolling is more
+  // decision-making intensive than clicking — there is an idea of jumping to
+  // the target; scrolling is running through uninteresting info before getting
+  // to where I want." So the review page shows the doors; the shelf lives
+  // behind the door, where it has a whole screen and does not push the result
+  // off the page.
   function keepExploringEl(racks, seenIds) {
     var wrap = el(
       '<div class="keep">' +
@@ -1311,20 +1419,28 @@
             '<span aria-hidden="true">✨</span> ' + t("Surprise me") + '</button>' +
         '</div>' +
         '<div class="surprise-slot" id="surpriseSlot"></div>' +
+        '<div class="doors"></div>' +
       '</div>'
     );
 
+    var doors = wrap.querySelector(".doors");
     racks.forEach(function (S) {
-      var rack = el(
-        '<div class="rack">' +
-          '<div class="rack-head"><span class="rack-ico" aria-hidden="true">' + S.icon + '</span>' +
-          '<h4>' + t(S.label) + '</h4></div>' +
-          '<div class="rack-row"></div>' +
-        '</div>'
+      // The door wears the first item's photograph — a real thing behind it,
+      // visible before you commit.
+      var art = (S.items[0] && S.items[0].image) || null;
+      var d = el(
+        '<button class="door' + (art ? " has-art" : "") + '">' +
+          (art ? '<img class="door-art" src="' + esc(art) + '" alt="" loading="lazy" decoding="async">' : '') +
+          '<span class="door-wash" aria-hidden="true"></span>' +
+          '<span class="door-body">' +
+            '<span class="door-ico" aria-hidden="true">' + S.icon + '</span>' +
+            '<span class="door-label">' + t(S.label) + '</span>' +
+            '<span class="door-count">' + tf("{n} to explore", { n: S.items.length }) + '</span>' +
+          '</span>' +
+        '</button>'
       );
-      var row = rack.querySelector(".rack-row");
-      S.items.forEach(function (it) { row.appendChild(discoveryCardEl(it, "sm")); });
-      wrap.appendChild(rack);
+      d.addEventListener("click", function () { render(laneView(S)); });
+      doors.appendChild(d);
     });
 
     // Surprise me: one thing, in place, immediately. No menu, no new screen.
@@ -1342,6 +1458,28 @@
       slot.appendChild(card);
       slot.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "nearest" });
     });
+    return wrap;
+  }
+
+  // Behind a door: the whole screen, a back button, and the shelf laid out
+  // where it has room to breathe.
+  function laneView(S) {
+    var wrap = el('<div class="grid"></div>');
+    var head = el(
+      '<div class="card">' +
+        '<div class="btnrow" style="margin:0 0 10px"><button class="btn ghost" id="laneBack">' +
+          '<span aria-hidden="true">←</span> ' + t("Back") + '</button></div>' +
+        '<div class="section-title" style="margin-top:0">' + S.icon + ' ' + t(S.label) + '</div>' +
+        '<p class="mini" style="margin:0">' + tf("{n} to explore", { n: S.items.length }) + '</p>' +
+      '</div>'
+    );
+    head.querySelector("#laneBack").addEventListener("click", goHome);
+    wrap.appendChild(head);
+
+    var grid = el('<div class="card"><div class="dgrid"></div></div>');
+    var g = grid.querySelector(".dgrid");
+    S.items.forEach(function (it) { g.appendChild(discoveryCardEl(it, "sm")); });
+    wrap.appendChild(grid);
     return wrap;
   }
 
