@@ -995,25 +995,43 @@
     var emoji = rec.marks.map(function (m) { return m ? "🟩" : "🟥"; }).join("");
     var s = getStreak();
     var missed = rec.marks.filter(function (m) { return !m; }).length;
+    // The score is the receipt, not the point. It gets one compact band so the
+    // shelf below it starts near the top of the screen (CEO, 2026-08-08:
+    // "a shelf you have to scroll to is a shelf in the stockroom").
+    var pct = rec.total ? Math.round(100 * rec.score / rec.total) : 0;
+    var marks = rec.marks.map(function (m) {
+      return '<span class="rs-mark ' + (m ? "ok" : "no") + '" aria-hidden="true">' + (m ? "✓" : "✗") + '</span>';
+    }).join("");
     var node = el(
-      '<div class="card result">' +
-        '<div class="scorebig">' + rec.score + '/' + rec.total + '</div>' +
-        '<h2>' + (already ? t("Today's challenge") : praise(rec.score, rec.total)) + '</h2>' +
-        '<div class="sub">' + (s.count === 1 ? t("🔥 1-day streak") : tf("🔥 {n}-day streak", { n: s.count })) + (s.count === s.best && s.best > 1 ? t(" — your best ever!") : "") + '</div>' +
-        '<div class="sharebox">' + emoji + '</div>' +
-        '<div class="mini">Qpio Daily · ' + rec.date + '</div>' +
-        (!already && missed ? '<div class="mini" style="margin-top:10px">' + (missed === 1
-          ? t("🗝️ 1 fact added to your Memory Vault — they’ll come back until you own them.")
-          : tf("🗝️ {n} facts added to your Memory Vault — they’ll come back until you own them.", { n: missed })) + '</div>' : '') +
-        '<div class="btnrow center" style="justify-content:center">' +
-          '<button class="btn" id="share">' + t("Share result") + '</button>' +
-          '<button class="btn ghost" id="home">' + t("Home") + '</button>' +
+      '<div class="card result rs">' +
+        '<div class="rs-top">' +
+          '<div class="rs-ring" style="--pct:' + pct + '" role="img" aria-label="' +
+            tf("{score} out of {total}", { score: rec.score, total: rec.total }) + '">' +
+            '<div class="rs-ring-in"><b>' + rec.score + '/' + rec.total + '</b>' +
+            '<span>' + (already ? t("Today") : praise(rec.score, rec.total)) + '</span></div>' +
+          '</div>' +
+          // Share sits beside the marks, not at the end of the row. As a
+          // sibling of .rs-meta it wrapped to a second line on a 375px screen
+          // and cost the band 43px — measured, not guessed.
+          '<div class="rs-meta">' +
+            '<h2>' + t("Today's challenge") + '</h2>' +
+            '<div class="rs-streak">' + (s.count === 1 ? t("🔥 1-day streak") : tf("🔥 {n}-day streak", { n: s.count })) +
+              (s.count === s.best && s.best > 1 ? t(" — your best ever!") : "") + '</div>' +
+            '<div class="rs-row">' +
+              '<div class="rs-marks">' + marks + '</div>' +
+              '<button class="btn ghost rs-share" id="share" aria-label="' + t("Share result") + '">' +
+                '<span aria-hidden="true">⤴ </span>' + t("Share") + '</button>' +
+            '</div>' +
+            '<div class="rs-date">Qpio Daily · ' + rec.date +
+              (!already && missed ? ' · ' + (missed === 1
+                ? t("🗝️ 1 fact saved")
+                : tf("🗝️ {n} facts saved", { n: missed })) : '') + '</div>' +
+          '</div>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
       '</div>'
     );
     render(node);
-    node.querySelector("#home").addEventListener("click", goHome);
     node.querySelector("#share").addEventListener("click", function () {
       var text = "Qpio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total +
         "\n🔥 " + (s.count === 1 ? t("1-day streak") : tf("{n}-day streak", { n: s.count })) +
@@ -1024,73 +1042,107 @@
     // re-derived here and matched to rec.marks by position. Only for today's
     // record — an older one would pair marks with the wrong questions.
     if (rec.date === todayKey()) {
-      var gf = goFurtherCard(dailyQuestions(), rec.marks);
+      var gf = shelfCard(dailyQuestions(), rec.marks);
       if (gf) node.parentNode.appendChild(gf);
     }
+    var foot = el('<div class="btnrow center rs-foot" style="justify-content:center">' +
+      '<button class="btn ghost" id="rsHome">' + t("Home") + '</button></div>');
+    foot.querySelector("#rsHome").addEventListener("click", goHome);
+    node.parentNode.appendChild(foot);
   }
 
-  // ---------- go further ----------
+  // ---------- the shelf ----------
   // The reason the app exists. Someone has just been wrong about something —
   // the strongest moment of curiosity there is — and until now we showed them
-  // a score and stopped. Wrong answers lead, because that is where the pull is.
+  // a score and stopped.
+  //
+  // Designed by the CEO, 2026-08-08. The list became a shelf, and the thing
+  // that made it work was one line nobody else wrote: not the topic's NAME,
+  // but the reason to care. "Bolivian Navy" is a label. "Why does a landlocked
+  // country have a navy?" is a hook. A label needs reading; a hook pulls.
+  //
+  // Three rules, all his:
+  //   · one visual element = one obvious action; tap anywhere on the card
+  //   · only show the ways that actually exist — never empty functionality
+  //   · the shelf is what you already got curious about; "surprise me" is a
+  //     different psychological state and belongs on Home, not here
   //
   // Nothing here is ever sold. See src/golinks.js and Charter VAL-12 (D-061).
-  function goFurtherCard(questions, marks) {
+  var CAT_ART = {
+    History: "🏛️", Science: "🔬", Geography: "🌍", Arts: "🎨", Tech: "💻", Nature: "🌿"
+  };
+
+  function shelfCard(questions, marks) {
     if (!window.CURIO_GO || !questions || !questions.length) return null;
 
     var wrong = [], right = [];
     questions.forEach(function (q, i) {
       var dest = window.CURIO_GO.goFor(q);
-      if (!dest.length) return;
+      if (!dest.length) return;   // no source → no topic → no card. The 40.
       (marks && marks[i] === false ? wrong : right).push({ q: q, dest: dest });
     });
     if (!wrong.length && !right.length) return null;
 
-    var card = el('<div class="card gofurther"></div>');
+    var card = el('<div class="card shelf"></div>');
     card.appendChild(el(
-      '<div class="section-title" style="margin-top:0">' + t("🕳️ Go further") + '</div>' +
-      '<div class="mini" style="margin-bottom:12px">' +
-      (wrong.length
-        ? t("Start with the ones you missed — that is where the curiosity is.")
-        : t("Nothing missed today. Here is where these lead anyway.")) +
+      '<div class="shelf-head">' +
+        '<h3>' + t("Topics you might want to know more about") + '</h3>' +
+        '<p>' + t("Curiosity doesn’t stop here.") + '</p>' +
       '</div>'
     ));
 
-    function row(item, missed) {
-      var slug = window.CURIO_GO.entityOf(item.q);
-      var name = window.CURIO_GO.titleOf(slug);
-      var wrap = el('<div class="gf-item' + (missed ? " gf-missed" : "") + '"></div>');
-      wrap.appendChild(el(
-        '<div class="gf-head">' +
-          (missed ? '<span class="gf-mark">✗</span>' : '') +
-          '<span class="gf-name">' + esc(name) + '</span>' +
+    function topic(item, missed) {
+      var q = item.q;
+      var name = window.CURIO_GO.titleOf(window.CURIO_GO.entityOf(q));
+      var art = CAT_ART[q.cat] || "✨";
+      // The hook. Until hand-written hooks exist, the depth fact is the closest
+      // thing we have to "the reason to care" — it is already the most
+      // interesting sentence attached to the question.
+      var hook = q.fact || "";
+
+      var node = el(
+        '<div class="topic' + (missed ? " is-missed" : "") + '">' +
+          '<div class="topic-art" aria-hidden="true"><span class="topic-emoji">' + art + '</span></div>' +
+          '<div class="topic-body">' +
+            '<span class="topic-badge">' + (missed ? t("Missed") : t("Correct")) + '</span>' +
+            '<h4 class="topic-name">' + esc(name) + '</h4>' +
+            (hook ? '<p class="topic-hook">' + fmt(hook) + '</p>' : '') +
+            '<div class="topic-ways"></div>' +
+          '</div>' +
         '</div>'
-      ));
-      var links = el('<div class="gf-links"></div>');
+      );
+
+      var ways = node.querySelector(".topic-ways");
       item.dest.forEach(function (d) {
         var label =
-          d.kind === "see"    ? tf("See it at {where}", { where: esc(d.title) }) :
-          d.kind === "visit"  ? tf("Visit {where}",     { where: esc(d.title) }) :
-          d.kind === "read"   ? tf("Read about {name}", { name: esc(d.title) }) :
-                                t("Where this came from");
-        var sub = d.sub ? '<span class="gf-sub">' + esc(d.sub) + '</span>' : '';
-        links.appendChild(el(
-          '<a class="gf-link" href="' + srcLink0(d.url) + '" target="_blank" rel="noopener">' +
-            '<span class="gf-ico" aria-hidden="true">' + d.icon + '</span>' +
-            '<span class="gf-text">' + label + sub + '</span>' +
-            '<span class="gf-go" aria-hidden="true">↗</span>' +
+          d.kind === "see"   ? t("Visit") :
+          d.kind === "visit" ? t("Visit") :
+          d.kind === "read"  ? t("Read") :
+                               t("Sources");
+        var a = el(
+          '<a class="way" href="' + srcLink0(d.url) + '" target="_blank" rel="noopener">' +
+            '<span class="way-ico" aria-hidden="true">' + d.icon + '</span>' + label +
           '</a>'
-        ));
+        );
+        // The card is tappable as a whole; a way must not fire it twice.
+        a.addEventListener("click", function (e) { e.stopPropagation(); });
+        ways.appendChild(a);
       });
-      wrap.appendChild(links);
-      return wrap;
+
+      // Tap anywhere → the best destination for this topic. Keyboard users tab
+      // straight to the individual ways, so the card needs no tabindex of its
+      // own — no duplicate stop, no invented widget role.
+      var primary = item.dest[0];
+      if (primary) {
+        node.addEventListener("click", function () {
+          window.open(srcLink0(primary.url), "_blank", "noopener");
+        });
+      }
+      return node;
     }
 
-    wrong.forEach(function (it) { card.appendChild(row(it, true)); });
-    right.forEach(function (it) { card.appendChild(row(it, false)); });
-    // No "nobody pays to be on this list" footer (CEO, 2026-08-08). The rule is
-    // absolute — Charter VAL-12 — but saying it here spent a line of the shelf
-    // to answer a question nobody had asked.
+    wrong.forEach(function (it) { card.appendChild(topic(it, true)); });
+    right.forEach(function (it) { card.appendChild(topic(it, false)); });
     return card;
   }
 

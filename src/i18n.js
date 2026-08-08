@@ -65,6 +65,24 @@
       // "Train", not "Games": Qpio is not a games app (CEO, 2026-08-06).
       "Main navigation": "Navigation principale",
 
+      // --- result screen + the shelf (CEO design, 2026-08-08) ---
+      "{score} out of {total}": "{score} sur {total}",
+      "Today": "Aujourd’hui",
+      "🗝️ 1 fact saved": "🗝️ 1 fait mis de côté",
+      "🗝️ {n} facts saved": "🗝️ {n} faits mis de côté",
+      "Topics you might want to know more about": "Des sujets que tu voudras peut-être creuser",
+      "Curiosity doesn’t stop here.": "La curiosité ne s’arrête pas là.",
+      // "Raté" reads as a verdict on the person; "Manqué" is the same fact
+      // without the judgement. The design removes shame visually — the words
+      // must not put it back (Devil's Advocate, 2026-08-08).
+      "Missed": "Manqué",
+      "Correct": "Trouvé",
+      "Visit": "Y aller",
+      "Read": "Lire",
+      "Sources": "Sources",
+      "Share": "Partager",
+
+
       // --- Go further (D-061) ---
       "🕳️ Go further": "🕳️ Aller plus loin",
       "Start with the ones you missed — that is where the curiosity is.":

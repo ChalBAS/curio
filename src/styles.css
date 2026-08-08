@@ -178,7 +178,102 @@ body {
    the fact, beside Next. Never sold (VAL-12). */
 .gf-inline { margin-top: 12px; }
 
-/* Go further — the destinations after the daily (D-061). Wrong answers lead. */
+/* ============================================================
+   THE RESULT SCREEN — CEO design, 2026-08-08.
+   The score is the receipt; the shelf is the point. Every pixel the
+   score keeps is a pixel of shelf below the fold.
+   ============================================================ */
+
+/* --- the score band --- */
+.card.rs { padding: 12px 14px; }
+.rs-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rs-ring {
+  flex: 0 0 auto; width: 72px; height: 72px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: conic-gradient(var(--brand) calc(var(--pct) * 1%), rgba(255,255,255,.10) 0);
+}
+.rs-ring-in {
+  width: 58px; height: 58px; border-radius: 50%; background: var(--bg2);
+  display: grid; place-items: center; text-align: center; line-height: 1.12;
+}
+.rs-ring-in b { font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+.rs-ring-in span { font-size: 8.5px; color: var(--muted); padding: 0 3px; }
+.rs-meta { flex: 1 1 140px; min-width: 0; }
+.rs-meta h2 { margin: 0 0 2px; font-size: 16.5px; letter-spacing: -.01em; }
+.rs-streak { font-size: 13px; color: var(--muted); font-weight: 700; }
+.rs-row { display: flex; align-items: center; gap: 10px; margin: 6px 0 4px; }
+.rs-marks { display: flex; gap: 4px; }
+.rs-mark {
+  width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center;
+  font-size: 11px; font-weight: 800;
+}
+.rs-mark.ok { background: rgba(79,214,163,.20); color: var(--good); border: 1px solid var(--good); }
+.rs-mark.no { background: rgba(255,107,129,.18); color: var(--bad); border: 1px solid var(--bad); }
+.rs-date { font-size: 11.5px; color: var(--muted); }
+/* Compact, or it wraps to its own row on a 375px screen and the band grows
+   from ~120px to 179px — 59px stolen from the shelf for one button. */
+.rs-share { flex: 0 0 auto; min-height: 44px; padding: 0 12px; font-size: 13px; }
+.rs-foot { margin-top: 14px; }
+
+/* --- the shelf --- */
+.card.shelf { margin-top: 14px; padding: 14px 14px 6px; }
+.shelf-head h3 { margin: 0 0 2px; font-size: 16.5px; letter-spacing: -.01em; }
+.shelf-head p { margin: 0 0 12px; font-size: 13px; color: var(--muted); }
+
+.topic {
+  display: flex; gap: 11px; align-items: flex-start;
+  padding: 10px; margin-bottom: 9px; border-radius: 13px;
+  background: var(--bg2); border: 1px solid var(--line); cursor: pointer;
+}
+.topic:hover { border-color: var(--brand); }
+.topic:focus-within { border-color: var(--brand); }
+/* Art: no photographs. We have none, cannot fetch them offline, and a
+   generated image of a real place on a product built on verified truth is a
+   claim we cannot stand behind. A category tint carries no meaning, so it
+   cannot mislead — and it costs zero bytes. */
+.topic-art {
+  flex: 0 0 54px; width: 54px; height: 54px;   /* fixed: flex-start, never stretched */
+  border-radius: 10px; display: grid; place-items: center;
+  background: linear-gradient(150deg, rgba(38,186,216,.20), rgba(124,108,255,.16));
+}
+.topic-emoji { font-size: 24px; line-height: 1; }
+.topic-body { flex: 1 1 auto; min-width: 0; }
+.topic-badge {
+  display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .04em;
+  text-transform: uppercase; padding: 2px 7px; border-radius: 999px; margin-bottom: 4px;
+  background: rgba(79,214,163,.16); color: var(--good); border: 1px solid rgba(79,214,163,.45);
+}
+.topic.is-missed .topic-badge { background: rgba(255,107,129,.14); color: var(--bad); border-color: rgba(255,107,129,.45); }
+.topic-name { margin: 0 0 2px; font-size: 15.5px; font-weight: 800; letter-spacing: -.01em; }
+.topic.is-missed .topic-name { color: var(--ink); }
+.topic:not(.is-missed) .topic-name { color: var(--muted); }
+/* The hook earns two lines and no more. It exists to pull, not to inform —
+   the whole point is that the reader has to tap to find out. */
+.topic-hook {
+  margin: 0 0 8px; font-size: 13px; line-height: 1.4; color: var(--muted);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; max-height: 2.8em;
+}
+/* One row, always. Measured: three chips wanted 229px in a 214px slot and
+   wrapped, costing 42px per card — 168px across a four-topic shelf, which is
+   a whole extra card's worth of screen. Sized so the longest French labels
+   ("Y aller · Lire · Sources") still fit on one line at 375px. */
+.topic-ways { display: flex; flex-wrap: nowrap; gap: 5px; }
+.way {
+  display: inline-flex; align-items: center; gap: 4px; text-decoration: none;
+  min-height: 36px; padding: 0 8px; border-radius: 9px;
+  background: rgba(38,186,216,.09); border: 1px solid rgba(38,186,216,.28);
+  color: var(--ink); font-size: 12px; font-weight: 700; white-space: nowrap;
+}
+.way:hover { background: rgba(38,186,216,.18); border-color: var(--brand); }
+.way-ico { font-size: 13px; line-height: 1; }
+@media (min-width: 560px) {
+  .topic-art { flex-basis: 96px; width: 96px; height: 96px; }
+  .topic-emoji { font-size: 36px; }
+}
+.hcontrast .topic, .hcontrast .way { border-width: 2px; }
+
+/* Go further — the inline destination beside a fact (D-061). */
 .gofurther { margin-top: 14px; }
 .gf-item { padding: 12px 0; border-top: 1px solid var(--line); }
 .gf-item:first-of-type { border-top: 0; padding-top: 4px; }
