@@ -102,6 +102,15 @@
 
       "Keep exploring": "Continuer à explorer",
       "Surprise me": "Surprends-moi",
+      "One thing to be curious about": "Une chose qui mérite ta curiosité",
+      // Shelf names — passed as t(S.label) from discovery.js, so the checker
+      // cannot see them. Listed by hand.
+      "Meet": "Rencontrer",
+      "Visit": "Visiter",
+      "Go": "Y aller",
+      "Read": "Lire",
+      "Watch": "Regarder",
+      "Dive deeper": "Creuser",
       "Follow your curiosity anywhere.": "Suis ta curiosité où elle te mène.",
       "Documentaries": "Documentaires",
       "Books": "Livres",

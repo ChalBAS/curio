@@ -531,15 +531,53 @@
     return node;
   }
 
+  // A collection, not a dashboard tile: show three of the cities so the reader
+  // can see what is inside before deciding to open it (CEO, 2026-08-08 §15).
   function modeCardTravel() {
-    if (!cityPacks().length) return null;
+    var packs = cityPacks();
+    if (!packs.length) return null;
     var node = el(
-      '<div class="card mode" id="modeTravel">' +
-        '<div class="emoji">🧳</div><h3>' + t("Before you travel") + '</h3>' +
-        '<p>' + tf("{n} cities, told from their own history. Learn the place, the food, and a few words before you go.", { n: cityPacks().length }) + '</p>' +
+      '<div class="card" id="modeTravel">' +
+        '<div class="section-title" style="margin-top:0">🧳 ' + t("Before you travel") + '</div>' +
+        '<p class="mini" style="margin:0 0 12px">' +
+          tf("{n} cities, told from their own history. Learn the place, the food, and a few words before you go.", { n: packs.length }) +
+        '</p>' +
+        '<div class="rack-row" id="cityPeek"></div>' +
       '</div>'
     );
-    node.addEventListener("click", function () { render(cityHomeView()); });
+    var row = node.querySelector("#cityPeek");
+    var IM = window.CURIO_IMAGES || {};
+    packs.slice(0, 6).forEach(function (p) {
+      // Reuse the city's own question source for a photograph where we have one.
+      var slug = null;
+      (p.questions || []).some(function (q) {
+        var s = window.CURIO_GO && window.CURIO_GO.entityOf(q);
+        if (s && IM[s]) { slug = s; return true; }
+        return false;
+      });
+      var img = slug ? IM[slug] : null;
+      var c = el(
+        '<div class="dcard dcard-sm">' +
+          '<div class="dcard-art">' +
+            (img ? '<img src="' + esc(img.u) + '" alt="" loading="lazy" decoding="async">' : '') +
+            '<span class="dcard-wash" aria-hidden="true"></span>' +
+          '</div>' +
+          '<div class="dcard-body">' +
+            '<h5 class="dcard-title">' + (p.emoji || "📍") + ' ' + esc(p.city) + '</h5>' +
+            (p.blurb ? '<p class="dcard-hook">' + esc(p.blurb) + '</p>' : '') +
+          '</div>' +
+        '</div>'
+      );
+      c.setAttribute("role", "link");
+      c.setAttribute("tabindex", "0");
+      c.setAttribute("aria-label", p.city);
+      var open = function () { render(cityPackView(p)); };
+      c.addEventListener("click", open);
+      c.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+      });
+      row.appendChild(c);
+    });
     return node;
   }
 
@@ -642,13 +680,31 @@
     return wrap;
   }
 
-  function homeTabView() { // v23 Home: the daily ritual only - hero · vault · travel · footer (games live in the Games tab)
+  function homeTabView() { // Home: today's quiz first, then one thing to be curious about
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(heroCard());
     var vc = vaultCard(); if (vc) wrap.appendChild(vc);
+    var oc = oneCuriosityCard(); if (oc) wrap.appendChild(oc);
     var mtr = modeCardTravel(); if (mtr) wrap.appendChild(mtr);
     wrap.appendChild(footerEl());
     return wrap;
+  }
+
+  // ONE thing to be curious about. Not "Explore History" — a specific thing
+  // with a specific reason, so the reader knows whether they want it before
+  // they tap (CEO, 2026-08-08). Changes daily rather than on every render, so
+  // Home does not shuffle under the reader between visits.
+  function oneCuriosityCard() {
+    var D = window.CURIO_DISCOVERY;
+    if (!D) return null;
+    var pool = D.all().filter(function (x) { return x.image && x.hook; });
+    if (!pool.length) return null;
+    var pick = pool[Math.floor(mulberry32(dayNumber() + 7717)() * pool.length)];
+
+    var card = el('<div class="card"><div class="section-title" style="margin-top:0">' +
+      t("One thing to be curious about") + '</div></div>');
+    card.appendChild(discoveryCardEl(pick, "lg"));
+    return card;
   }
 
   // Brain Gym stays hidden until the exercises exist. "Coming soon" on a
@@ -1217,41 +1273,98 @@
     // Keep exploring — the same curiosity followed sideways. Bolivia the
     // country rather than its navy; the mathematicians behind prime numbers
     // rather than the definition. Built from today's topics, so never filler.
-    var lanes = window.CURIO_GO.lanesFor(questions);
-    if (lanes.length) {
-      var sp = window.CURIO_GO.surprise();
-      var keep = el(
-        '<div class="keep">' +
-          '<div class="keep-head">' +
-            '<div><h3>' + t("Keep exploring") + '</h3>' +
-            '<p>' + t("Follow your curiosity anywhere.") + '</p></div>' +
-            '<a class="surprise" href="' + srcLink0(sp.url) + '" target="_blank" rel="noopener">' +
-              '<span aria-hidden="true">✨</span> ' + t("Surprise me") +
-              '<span class="surprise-go" aria-hidden="true">›</span></a>' +
-          '</div>' +
-          '<div class="keep-row"></div>' +
-        '</div>'
-      );
-      var row = keep.querySelector(".keep-row");
-      lanes.forEach(function (L) {
-        // Photograph behind, dark wash over, label on top — a shelf of covers
-        // rather than a row of buttons.
-        row.appendChild(el(
-          '<a class="lane' + (L.img ? " has-art" : "") + '" href="' + srcLink0(L.url) + '" ' +
-             'target="_blank" rel="noopener"' +
-             (L.credit ? ' title="' + esc(tf("Photo: {by} · {lic}", { by: L.credit.split(" · ")[0], lic: L.credit.split(" · ")[1] || "" })) + '"' : '') + '>' +
-            (L.img ? '<img class="lane-art" src="' + esc(L.img) + '" alt="" loading="lazy" decoding="async">' : '') +
-            '<span class="lane-wash" aria-hidden="true"></span>' +
-            '<span class="lane-body">' +
-              '<span class="lane-ico" aria-hidden="true">' + L.icon + '</span>' +
-              '<span class="lane-label">' + t(L.label) + '</span>' +
-            '</span>' +
-          '</a>'
-        ));
+    // Keep exploring — real things on shelves, not category doors. The window,
+    // not the shop sign.
+    var D = window.CURIO_DISCOVERY;
+    if (D) {
+      var seen = wrong.concat(right).map(function (it) {
+        return window.CURIO_GO.entityOf(it.q);
       });
-      card.appendChild(keep);
+      var racks = D.shelves(seen.map(function (id) { return { id: id }; }), 8);
+      if (racks.length) card.appendChild(keepExploringEl(racks, seen));
     }
     return card;
+  }
+
+  // ---------- keep exploring ----------
+  // Six shelves of actual things. A shelf shows what is on it; a category
+  // button asks you to guess. Horizontal within a shelf, vertical between —
+  // so one flick browses a subject and one scroll changes appetite.
+  function keepExploringEl(racks, seenIds) {
+    var wrap = el(
+      '<div class="keep">' +
+        '<div class="keep-head">' +
+          '<div><h3>' + t("Keep exploring") + '</h3>' +
+          '<p>' + t("Follow your curiosity anywhere.") + '</p></div>' +
+          '<button class="surprise" id="surpriseBtn">' +
+            '<span aria-hidden="true">✨</span> ' + t("Surprise me") + '</button>' +
+        '</div>' +
+        '<div class="surprise-slot" id="surpriseSlot"></div>' +
+      '</div>'
+    );
+
+    racks.forEach(function (S) {
+      var rack = el(
+        '<div class="rack">' +
+          '<div class="rack-head"><span class="rack-ico" aria-hidden="true">' + S.icon + '</span>' +
+          '<h4>' + t(S.label) + '</h4></div>' +
+          '<div class="rack-row"></div>' +
+        '</div>'
+      );
+      var row = rack.querySelector(".rack-row");
+      S.items.forEach(function (it) { row.appendChild(discoveryCardEl(it, "sm")); });
+      wrap.appendChild(rack);
+    });
+
+    // Surprise me: one thing, in place, immediately. No menu, no new screen.
+    var slot = wrap.querySelector("#surpriseSlot");
+    wrap.querySelector("#surpriseBtn").addEventListener("click", function () {
+      var already = seenIds.slice();
+      [].slice.call(wrap.querySelectorAll(".dcard")).forEach(function (c) {
+        already.push(c.getAttribute("data-id"));
+      });
+      var pick = window.CURIO_DISCOVERY.surpriseOne(already.map(function (id) { return { id: id }; }));
+      if (!pick) return;
+      slot.innerHTML = "";
+      var card = discoveryCardEl(pick, "lg");
+      card.classList.add("is-surprise");
+      slot.appendChild(card);
+      slot.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "nearest" });
+    });
+    return wrap;
+  }
+
+  // One discovery card. The whole card is the tap — no Read/Explore/More trio
+  // all going to the same place (CEO, 2026-08-08). Extra ways appear only when
+  // they are genuinely different destinations.
+  function discoveryCardEl(it, size) {
+    var node = el(
+      '<div class="dcard dcard-' + (size || "sm") + '" data-id="' + esc(it.id) + '">' +
+        '<div class="dcard-art">' +
+          (it.image ? '<img src="' + esc(it.image) + '" alt="" loading="lazy" decoding="async">' : '') +
+          '<span class="dcard-wash" aria-hidden="true"></span>' +
+        '</div>' +
+        '<div class="dcard-body">' +
+          '<h5 class="dcard-title">' + esc(it.title) + '</h5>' +
+          (it.hook ? '<p class="dcard-hook">' + fmt(it.hook) + '</p>' : '') +
+        '</div>' +
+      '</div>'
+    );
+    if (it.credit) {
+      node.querySelector(".dcard-art").setAttribute("title",
+        tf("Photo: {by} · {lic}", { by: it.credit, lic: it.creditLic || "" }));
+    }
+    if (it.url) {
+      node.setAttribute("role", "link");
+      node.setAttribute("tabindex", "0");
+      node.setAttribute("aria-label", it.title + (it.hook ? ". " + it.hook : ""));
+      var open = function () { window.open(srcLink0(it.url), "_blank", "noopener"); };
+      node.addEventListener("click", open);
+      node.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+      });
+    }
+    return node;
   }
 
   // Same scheme check srcLink() applies, for a bare URL.
