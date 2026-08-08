@@ -101,6 +101,7 @@
       "Cities & Places": "Villes et lieux",
 
       "Keep exploring": "Continuer à explorer",
+      "Surprise me": "Surprends-moi",
       "Follow your curiosity anywhere.": "Suis ta curiosité où elle te mène.",
       "Documentaries": "Documentaires",
       "Books": "Livres",

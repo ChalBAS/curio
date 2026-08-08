@@ -1219,19 +1219,33 @@
     // rather than the definition. Built from today's topics, so never filler.
     var lanes = window.CURIO_GO.lanesFor(questions);
     if (lanes.length) {
+      var sp = window.CURIO_GO.surprise();
       var keep = el(
         '<div class="keep">' +
-          '<div class="keep-head"><h3>' + t("Keep exploring") + '</h3>' +
-          '<p>' + t("Follow your curiosity anywhere.") + '</p></div>' +
+          '<div class="keep-head">' +
+            '<div><h3>' + t("Keep exploring") + '</h3>' +
+            '<p>' + t("Follow your curiosity anywhere.") + '</p></div>' +
+            '<a class="surprise" href="' + srcLink0(sp.url) + '" target="_blank" rel="noopener">' +
+              '<span aria-hidden="true">✨</span> ' + t("Surprise me") +
+              '<span class="surprise-go" aria-hidden="true">›</span></a>' +
+          '</div>' +
           '<div class="keep-row"></div>' +
         '</div>'
       );
       var row = keep.querySelector(".keep-row");
       lanes.forEach(function (L) {
+        // Photograph behind, dark wash over, label on top — a shelf of covers
+        // rather than a row of buttons.
         row.appendChild(el(
-          '<a class="lane" href="' + srcLink0(L.url) + '" target="_blank" rel="noopener">' +
-            '<span class="lane-ico" aria-hidden="true">' + L.icon + '</span>' +
-            '<span class="lane-label">' + t(L.label) + '</span>' +
+          '<a class="lane' + (L.img ? " has-art" : "") + '" href="' + srcLink0(L.url) + '" ' +
+             'target="_blank" rel="noopener"' +
+             (L.credit ? ' title="' + esc(tf("Photo: {by} · {lic}", { by: L.credit.split(" · ")[0], lic: L.credit.split(" · ")[1] || "" })) + '"' : '') + '>' +
+            (L.img ? '<img class="lane-art" src="' + esc(L.img) + '" alt="" loading="lazy" decoding="async">' : '') +
+            '<span class="lane-wash" aria-hidden="true"></span>' +
+            '<span class="lane-body">' +
+              '<span class="lane-ico" aria-hidden="true">' + L.icon + '</span>' +
+              '<span class="lane-label">' + t(L.label) + '</span>' +
+            '</span>' +
           '</a>'
         ));
       });

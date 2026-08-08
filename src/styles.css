@@ -290,24 +290,52 @@ body {
 /* Keep exploring — the sideways lanes under the shelf. Scrolls horizontally
    so six lanes never push the shelf off the screen; the partly-visible last
    tile is the signal that there is more, which is cheaper than a button. */
-.keep { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
-.keep-head h3 { margin: 0 0 2px; font-size: 15px; letter-spacing: -.01em; }
-.keep-head p { margin: 0 0 10px; font-size: 12.5px; color: var(--muted); }
+.keep { margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--line); }
+.keep-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.keep-head h3 { margin: 0 0 2px; font-size: 15.5px; letter-spacing: -.01em; }
+.keep-head p { margin: 0 0 12px; font-size: 12.5px; color: var(--muted); }
+.surprise {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 5px;
+  min-height: 36px; padding: 0 4px; text-decoration: none;
+  color: var(--brand2); font-size: 12.5px; font-weight: 700; white-space: nowrap;
+}
+.surprise-go { font-size: 15px; }
 .keep-row {
-  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px;
+  display: flex; gap: 9px; overflow-x: auto; padding-bottom: 8px;
   scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .keep-row::-webkit-scrollbar { display: none; }
+
+/* Covers, not buttons. A photograph under a dark wash, the label sitting on
+   it — the row should read like a shelf you glance along, which is the whole
+   point of the window-shopping idea. */
 .lane {
-  flex: 0 0 auto; width: 92px; min-height: 76px; padding: 10px 8px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-  text-align: center; text-decoration: none; border-radius: 11px;
-  background: var(--bg2); border: 1px solid var(--line); color: var(--ink);
+  position: relative; flex: 0 0 auto; width: 116px; height: 96px;
+  display: block; overflow: hidden; text-decoration: none;
+  border-radius: 12px; background: var(--bg2);
+  border: 1px solid var(--line); color: #fff;
 }
 .lane:hover { border-color: var(--brand); }
-.lane-ico { font-size: 22px; line-height: 1; }
-.lane-label { font-size: 11.5px; font-weight: 700; line-height: 1.25; }
+.lane-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* The wash is what stops it looking like a stock-photo grid: the image is
+   atmosphere, the words are the message. Present even without a photo, so the
+   label contrast is identical either way. */
+.lane-wash {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(8,10,24,.30) 0%, rgba(8,10,24,.62) 52%, rgba(8,10,24,.90) 100%);
+}
+.lane:not(.has-art) .lane-wash {
+  background: linear-gradient(150deg, rgba(38,186,216,.30), rgba(124,108,255,.28)), rgba(8,10,24,.55);
+}
+.lane-body {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 9px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.lane-ico { font-size: 17px; line-height: 1; }
+.lane-label { font-size: 11.5px; font-weight: 800; line-height: 1.2; letter-spacing: .01em; }
 .hcontrast .lane { border-width: 2px; }
+.hcontrast .lane-wash { background: rgba(0,0,0,.82); }
+@media (min-width: 560px) { .lane { width: 140px; height: 112px; } .lane-label { font-size: 12.5px; } }
 
 /* Go further — the inline destination beside a fact (D-061). */
 .gofurther { margin-top: 14px; }

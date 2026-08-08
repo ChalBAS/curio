@@ -180,22 +180,32 @@
   // Every lane is built from TODAY's topics — so it is never generic filler —
   // and a lane with nothing behind it does not render. Same rule as the ways:
   // never show functionality we do not have.
+  // Six lanes, always all six. An earlier build hid a lane when today's five
+  // questions happened not to feed it, and Museums & Exhibitions simply
+  // vanished — but these are not filtered results, they are doors. A door that
+  // disappears when the room behind it is quiet is worse than one that opens
+  // onto a wider view (CEO, 2026-08-08).
+  //
+  // `art` is the slug whose Commons photograph backs the tile — chosen so the
+  // row reads like a shelf of covers rather than a row of buttons.
   var LANES = [
-    { id: "docs",   icon: "🎬", label: "Documentaries",
-      url: function (n) { return "https://www.youtube.com/results?search_query=" + encodeURIComponent(n + " documentary"); } },
-    { id: "books",  icon: "📚", label: "Books",
-      url: function (n) { return readUrl(n); } },
-    { id: "museum", icon: "🏛️", label: "Museums & Exhibitions", needsPlace: true,
-      url: function (n, p) { return p.url; } },
-    { id: "places", icon: "📍", label: "Places", needsPlace: true,
-      url: function (n, p) { return p.url; } },
-    { id: "people", icon: "👤", label: "People",
-      url: function (n) { return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent(n + " people history"); } },
-    { id: "more",   icon: "✨", label: "Collections",
-      url: function (n) { return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent(n); } }
+    { id: "docs",   icon: "🎬", label: "Documentaries",         art: "Great_Barrier_Reef",
+      url: function (n) { return "https://www.youtube.com/results?search_query=" + encodeURIComponent((n || "history") + " documentary"); } },
+    { id: "books",  icon: "📚", label: "Books",                 art: "Timbuktu",
+      url: function (n) { return readUrl(n || "history"); } },
+    { id: "museum", icon: "🏛️", label: "Museums & Exhibitions", art: "Mona_Lisa", prefer: "hold",
+      url: function (n, p) { return p ? p.url : "https://www.museivaticani.va/content/museivaticani/en.html"; } },
+    { id: "places", icon: "📍", label: "Places",                art: "Machu_Picchu", prefer: "site",
+      url: function (n, p) { return p ? p.url : "https://whc.unesco.org/en/list/"; } },
+    { id: "people", icon: "👤", label: "People",                art: "Frida_Kahlo",
+      url: function (n) { return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent((n || "history") + " biography"); } },
+    { id: "more",   icon: "✨", label: "Collections",           art: "The_Starry_Night",
+      url: function (n) { return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent(n || "collections"); } }
   ];
 
-  // Returns [{id, icon, label, url}] for the lanes that actually resolve today.
+  // All six lanes. Each points at today's topics where it can, and at the
+  // wider collection where it cannot — so the row is personal when there is
+  // something to be personal about, and never empty.
   function lanesFor(questions) {
     var names = [], placed = [];
     (questions || []).forEach(function (q) {
@@ -204,25 +214,35 @@
       names.push(titleOf(slug));
       if (PLACES[slug]) placed.push({ name: titleOf(slug), place: PLACES[slug] });
     });
-    if (!names.length) return [];
 
-    var out = [];
-    LANES.forEach(function (L) {
-      if (L.needsPlace) {
-        var hit = placed.filter(function (p) {
-          return L.id === "museum" ? p.place.kind === "hold" : p.place.kind === "site";
-        })[0];
-        if (!hit) return;                          // nothing today → no tile
-        out.push({ id: L.id, icon: L.icon, label: L.label, url: L.url(hit.name, hit.place) });
-      } else {
-        out.push({ id: L.id, icon: L.icon, label: L.label, url: L.url(names[0]) });
+    return LANES.map(function (L) {
+      var p = null;
+      if (L.prefer) {
+        p = (placed.filter(function (x) { return x.place.kind === L.prefer; })[0] || null);
+        if (p) p = p.place;
       }
+      var img = (window.CURIO_IMAGES || {})[L.art] || null;
+      return {
+        id: L.id, icon: L.icon, label: L.label,
+        url: L.url(names[0] || "", p),
+        img: img ? img.u : null,
+        credit: img ? (img.by + " · " + img.lic) : null,
+        creditUrl: img ? img.p : null
+      };
     });
-    return out;
+  }
+
+  // One unexpected thing, chosen from the whole bank. A different appetite
+  // from the shelf: the shelf is what you already got curious about, this is
+  // what you did not know you wanted (CEO's own distinction).
+  function surprise() {
+    var all = Object.keys(PLACES);
+    var slug = all[Math.floor(Math.random() * all.length)];
+    return { name: titleOf(slug), url: PLACES[slug].url };
   }
 
   window.CURIO_GO = {
     places: PLACES, goFor: goFor, entityOf: entityOf, titleOf: titleOf,
-    sourceUrl: sourceUrl, lanesFor: lanesFor
+    sourceUrl: sourceUrl, lanesFor: lanesFor, surprise: surprise
   };
 })();
