@@ -171,7 +171,58 @@
     return out;
   }
 
+  // ---------- Keep exploring ----------
+  // The bottom row of the CEO's design. Not a second copy of the shelf: the
+  // shelf is "the things you just got curious about", this is "the same
+  // curiosity, followed sideways". Bolivia the country rather than its navy;
+  // the mathematicians behind prime numbers rather than the definition.
+  //
+  // Every lane is built from TODAY's topics — so it is never generic filler —
+  // and a lane with nothing behind it does not render. Same rule as the ways:
+  // never show functionality we do not have.
+  var LANES = [
+    { id: "docs",   icon: "🎬", label: "Documentaries",
+      url: function (n) { return "https://www.youtube.com/results?search_query=" + encodeURIComponent(n + " documentary"); } },
+    { id: "books",  icon: "📚", label: "Books",
+      url: function (n) { return readUrl(n); } },
+    { id: "museum", icon: "🏛️", label: "Museums & Exhibitions", needsPlace: true,
+      url: function (n, p) { return p.url; } },
+    { id: "places", icon: "📍", label: "Places", needsPlace: true,
+      url: function (n, p) { return p.url; } },
+    { id: "people", icon: "👤", label: "People",
+      url: function (n) { return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent(n + " people history"); } },
+    { id: "more",   icon: "✨", label: "Collections",
+      url: function (n) { return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent(n); } }
+  ];
+
+  // Returns [{id, icon, label, url}] for the lanes that actually resolve today.
+  function lanesFor(questions) {
+    var names = [], placed = [];
+    (questions || []).forEach(function (q) {
+      var slug = entityOf(q);
+      if (!slug) return;
+      names.push(titleOf(slug));
+      if (PLACES[slug]) placed.push({ name: titleOf(slug), place: PLACES[slug] });
+    });
+    if (!names.length) return [];
+
+    var out = [];
+    LANES.forEach(function (L) {
+      if (L.needsPlace) {
+        var hit = placed.filter(function (p) {
+          return L.id === "museum" ? p.place.kind === "hold" : p.place.kind === "site";
+        })[0];
+        if (!hit) return;                          // nothing today → no tile
+        out.push({ id: L.id, icon: L.icon, label: L.label, url: L.url(hit.name, hit.place) });
+      } else {
+        out.push({ id: L.id, icon: L.icon, label: L.label, url: L.url(names[0]) });
+      }
+    });
+    return out;
+  }
+
   window.CURIO_GO = {
-    places: PLACES, goFor: goFor, entityOf: entityOf, titleOf: titleOf, sourceUrl: sourceUrl
+    places: PLACES, goFor: goFor, entityOf: entityOf, titleOf: titleOf,
+    sourceUrl: sourceUrl, lanesFor: lanesFor
   };
 })();

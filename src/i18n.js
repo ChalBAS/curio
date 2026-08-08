@@ -82,6 +82,18 @@
       "Read": "Lire",
       "Sources": "Sources",
       "Share": "Partager",
+      "Photo: {by} · {lic}": "Photo : {by} · {lic}",
+
+      // --- Keep exploring lanes. Passed as t(L.label) from golinks.js, so
+      // check_i18n.py cannot see them — they are listed here by hand. ---
+      "Keep exploring": "Continuer à explorer",
+      "Follow your curiosity anywhere.": "Suis ta curiosité où elle te mène.",
+      "Documentaries": "Documentaires",
+      "Books": "Livres",
+      "Museums & Exhibitions": "Musées et expositions",
+      "Places": "Lieux",
+      "People": "Personnes",
+      "Collections": "Collections",
 
 
       // --- Go further (D-061) ---

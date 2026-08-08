@@ -235,8 +235,22 @@ body {
   flex: 0 0 54px; width: 54px; height: 54px;   /* fixed: flex-start, never stretched */
   border-radius: 10px; display: grid; place-items: center;
   background: linear-gradient(150deg, rgba(38,186,216,.20), rgba(124,108,255,.16));
+  position: relative; overflow: hidden;
 }
 .topic-emoji { font-size: 24px; line-height: 1; }
+/* The photograph sits on top of the category tile, so a slow network, an
+   offline device or a dead Commons URL all degrade to the tile rather than to
+   a hole. The fallback is underneath, always — never toggled by script. */
+.topic-art.has-pic { display: block; text-decoration: none; }
+.topic-art.has-pic .topic-fallback {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 24px; line-height: 1;
+}
+.topic-art.has-pic img {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.topic-art.has-pic img[alt]:not([src]), .topic-art.has-pic img[src=""] { display: none; }
 .topic-body { flex: 1 1 auto; min-width: 0; }
 .topic-badge {
   display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .04em;
@@ -272,6 +286,28 @@ body {
   .topic-emoji { font-size: 36px; }
 }
 .hcontrast .topic, .hcontrast .way { border-width: 2px; }
+
+/* Keep exploring — the sideways lanes under the shelf. Scrolls horizontally
+   so six lanes never push the shelf off the screen; the partly-visible last
+   tile is the signal that there is more, which is cheaper than a button. */
+.keep { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); }
+.keep-head h3 { margin: 0 0 2px; font-size: 15px; letter-spacing: -.01em; }
+.keep-head p { margin: 0 0 10px; font-size: 12.5px; color: var(--muted); }
+.keep-row {
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.keep-row::-webkit-scrollbar { display: none; }
+.lane {
+  flex: 0 0 auto; width: 92px; min-height: 76px; padding: 10px 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  text-align: center; text-decoration: none; border-radius: 11px;
+  background: var(--bg2); border: 1px solid var(--line); color: var(--ink);
+}
+.lane:hover { border-color: var(--brand); }
+.lane-ico { font-size: 22px; line-height: 1; }
+.lane-label { font-size: 11.5px; font-weight: 700; line-height: 1.25; }
+.hcontrast .lane { border-width: 2px; }
 
 /* Go further — the inline destination beside a fact (D-061). */
 .gofurther { margin-top: 14px; }

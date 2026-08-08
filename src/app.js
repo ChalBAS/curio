@@ -1100,9 +1100,23 @@
       // interesting sentence attached to the question.
       var hook = q.fact || "";
 
+      // A real photograph of the real thing, from Wikimedia Commons, credited
+      // and linked back. Falls back to the category tile when there is no
+      // image or the device is offline — the shelf never breaks, it just gets
+      // quieter. Visual learners are a large share of any audience and
+      // "accessibility is fundamental" is Charter value 5 (CEO, 2026-08-08).
+      var pic = (window.CURIO_IMAGES || {})[window.CURIO_GO.entityOf(q)];
+      var artHtml = pic
+        ? '<a class="topic-art has-pic" href="' + srcLink0(pic.p) + '" target="_blank" rel="noopener" ' +
+            'title="' + esc(tf("Photo: {by} · {lic}", { by: pic.by || "Wikimedia Commons", lic: pic.lic || "" })) + '">' +
+            '<img src="' + esc(pic.u) + '" alt="" loading="lazy" decoding="async">' +
+            '<span class="topic-fallback" aria-hidden="true">' + art + '</span>' +
+          '</a>'
+        : '<div class="topic-art" aria-hidden="true"><span class="topic-emoji">' + art + '</span></div>';
+
       var node = el(
         '<div class="topic' + (missed ? " is-missed" : "") + '">' +
-          '<div class="topic-art" aria-hidden="true"><span class="topic-emoji">' + art + '</span></div>' +
+          artHtml +
           '<div class="topic-body">' +
             '<span class="topic-badge">' + (missed ? t("Missed") : t("Correct")) + '</span>' +
             '<h4 class="topic-name">' + esc(name) + '</h4>' +
@@ -1129,6 +1143,12 @@
         ways.appendChild(a);
       });
 
+      // The image links to its Commons file page, which carries the full
+      // licence and author. Attribution is a condition, not a courtesy — so it
+      // must not be swallowed by the card's own tap.
+      var picLink = node.querySelector("a.topic-art");
+      if (picLink) picLink.addEventListener("click", function (e) { e.stopPropagation(); });
+
       // Tap anywhere → the best destination for this topic. Keyboard users tab
       // straight to the individual ways, so the card needs no tabindex of its
       // own — no duplicate stop, no invented widget role.
@@ -1143,6 +1163,30 @@
 
     wrong.forEach(function (it) { card.appendChild(topic(it, true)); });
     right.forEach(function (it) { card.appendChild(topic(it, false)); });
+
+    // Keep exploring — the same curiosity followed sideways. Bolivia the
+    // country rather than its navy; the mathematicians behind prime numbers
+    // rather than the definition. Built from today's topics, so never filler.
+    var lanes = window.CURIO_GO.lanesFor(questions);
+    if (lanes.length) {
+      var keep = el(
+        '<div class="keep">' +
+          '<div class="keep-head"><h3>' + t("Keep exploring") + '</h3>' +
+          '<p>' + t("Follow your curiosity anywhere.") + '</p></div>' +
+          '<div class="keep-row"></div>' +
+        '</div>'
+      );
+      var row = keep.querySelector(".keep-row");
+      lanes.forEach(function (L) {
+        row.appendChild(el(
+          '<a class="lane" href="' + srcLink0(L.url) + '" target="_blank" rel="noopener">' +
+            '<span class="lane-ico" aria-hidden="true">' + L.icon + '</span>' +
+            '<span class="lane-label">' + t(L.label) + '</span>' +
+          '</a>'
+        ));
+      });
+      card.appendChild(keep);
+    }
     return card;
   }
 
