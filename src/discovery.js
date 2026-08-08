@@ -41,6 +41,15 @@
     { id: "deeper", icon: "✨", label: "Dive deeper" }
   ];
 
+  // The written hook, in the reader's language. Written separately per
+  // language, not translated — a French reader should feel the same pull,
+  // which sometimes needs a different angle.
+  function hookFor(slug) {
+    var h = (window.CURIO_HOOKS || {})[slug];
+    if (!h) return null;
+    return (window.QLANG === "fr" && h.fr) ? h.fr : (h.en || null);
+  }
+
   function slugsFromBank() {
     var seen = {}, out = [];
     (window.CURIO_QUESTIONS || []).forEach(function (q) {
@@ -65,10 +74,11 @@
     return {
       id: slug,
       title: title,
-      // The hook is what makes someone tap. The depth fact beats the
-      // dictionary description every time — "the Bolivian Navy patrols Lake
-      // Titicaca" pulls; "navy of a landlocked country" does not.
-      hook: (q && q.fact) || meta.d || "",
+      // The hook — beat two of the loop (Charter VAL-13). A written hook
+      // first, because it opens the gap; the depth fact only as a fallback,
+      // because it closes it. "Why does a landlocked country have a navy?"
+      // pulls; "the Bolivian Navy patrols Lake Titicaca" informs.
+      hook: hookFor(slug) || (q && q.fact) || meta.d || "",
       desc: meta.d || "",
       type: type,
       shelf: SHELF_OF[type] || "deeper",

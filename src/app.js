@@ -1011,7 +1011,13 @@
       });
       opts.classList.add("answered");
 
-      var head = correct ? t("Correct! ") : (i === -1 ? t("Time! ") : t("Not quite. "));
+      // Charter VAL-13: the verdict must never arrive alone. "Correct!" is
+      // scorekeeping and it closes the gap the surprise needs; the surprise is
+      // the product. So the tick goes to a small mark beside the answer, and
+      // the sentence that leads is the one worth reading — for the reader who
+      // got it right just as much as the one who did not.
+      var verdict = correct ? t("Correct") : (i === -1 ? t("Time") : t("Not quite"));
+      var head = verdict + ". ";   // spoken only — the screen leads with the fact
       var hasDeeper = q.deeper && q.deeper.length > 0;
       // The one destination worth offering at the moment of peak curiosity.
       // Never sold, never ordered by money — Charter VAL-12 / D-061.
@@ -1027,7 +1033,11 @@
         lead.kind === "visit" ? tf("Visit {where}",     { where: esc(lead.title) }) :
                                 tf("Read about {name}", { name: esc(lead.title) });
 
-      var fact = el('<div class="fact"><b>' + head + '</b>' + fmt(q.fact) + srcLink(q.src) +
+      var fact = el('<div class="fact">' +
+        '<span class="verdict ' + (correct ? "ok" : "no") + '">' +
+          '<span aria-hidden="true">' + (correct ? "✓" : "✗") + '</span> ' + verdict +
+        '</span>' +
+        fmt(q.fact) + srcLink(q.src) +
         '<div class="deeperbox"></div>' +
         '<div class="btnrow">' +
           '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? t("Next →") : t("See results →")) + '</button>' +
@@ -1201,10 +1211,11 @@
       var q = item.q;
       var name = window.CURIO_GO.titleOf(window.CURIO_GO.entityOf(q));
       var art = CAT_ART[q.cat] || "✨";
-      // The hook. Until hand-written hooks exist, the depth fact is the closest
-      // thing we have to "the reason to care" — it is already the most
-      // interesting sentence attached to the question.
-      var hook = q.fact || "";
+      // Beat two. The written hook opens the gap; the depth fact closes it, so
+      // it is only the fallback (Charter VAL-13).
+      var slugH = window.CURIO_GO.entityOf(q);
+      var written = slugH && (window.CURIO_HOOKS || {})[slugH];
+      var hook = (written && (window.QLANG === "fr" ? written.fr : written.en)) || q.fact || "";
 
       // A real photograph of the real thing, from Wikimedia Commons, credited
       // and linked back. Falls back to the category tile when there is no

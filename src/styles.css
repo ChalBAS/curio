@@ -117,6 +117,16 @@ body {
 .fact { margin-top: 16px; padding: 15px 16px; border-radius: 12px; background: rgba(124,108,255,.12); border: 1px solid rgba(124,108,255,.35); font-size: 14.5px; line-height: 1.5; opacity: 1; animation: curioReveal .25s ease; }
 .fact.show { opacity: 1; transform: none; }
 .fact b { color: var(--brand); }
+/* The verdict is a small mark, not the headline. Charter VAL-13: "Correct!"
+   in bold at the front of the sentence is scorekeeping, and it closes the gap
+   the surprise needs. The fact leads; the tick sits beside it. */
+.verdict {
+  display: inline-flex; align-items: center; gap: 4px; vertical-align: baseline;
+  margin-right: 8px; padding: 2px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: .03em; text-transform: uppercase;
+}
+.verdict.ok { color: var(--good); background: rgba(79,214,163,.14); border: 1px solid rgba(79,214,163,.42); }
+.verdict.no { color: var(--bad);  background: rgba(255,107,129,.12); border: 1px solid rgba(255,107,129,.42); }
 .timer { font-variant-numeric: tabular-nums; font-weight: 800; }
 .timer.low { color: var(--bad); }
 

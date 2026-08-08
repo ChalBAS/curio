@@ -77,6 +77,8 @@
       // insult people." Both my earlier attempts ("Raté", then "Manqué") judged
       // the person. These state the answer.
       "Missed": "Incorrect",
+      "Not quite": "Incorrect",
+      "Time": "Temps écoulé",
       "Correct": "Correct",
       "Visit": "Y aller",
       "Read": "Lire",
