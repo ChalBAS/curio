@@ -561,7 +561,11 @@
 
   function footerEl() {
     var node = el(
-      '<div class="footer">' + t("Qpio — knowledge is free, forever. We never sell ad space or your data.") + '<br>' +
+      // "We never sell ad space or your data" removed (CEO, 2026-08-08). The
+      // Charter promise stands unchanged; stating it in the footer defended
+      // against an accusation nobody had made, and third-party destinations
+      // now sit one screen away — a claim that invites a lawyer to parse it.
+      '<div class="footer">' + t("Qpio — knowledge is free, forever.") + '<br>' +
       t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a></div>'
     );
     node.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); openSettings(); });
@@ -1084,10 +1088,9 @@
 
     wrong.forEach(function (it) { card.appendChild(row(it, true)); });
     right.forEach(function (it) { card.appendChild(row(it, false)); });
-
-    card.appendChild(el('<div class="mini gf-note">' +
-      t("Nobody pays to be on this list. These are simply the best places we know of.") +
-      '</div>'));
+    // No "nobody pays to be on this list" footer (CEO, 2026-08-08). The rule is
+    // absolute — Charter VAL-12 — but saying it here spent a line of the shelf
+    // to answer a question nobody had asked.
     return card;
   }
 

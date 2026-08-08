@@ -75,8 +75,6 @@
       "Visit {where}": "Visiter {where}",
       "Read about {name}": "Lire sur {name}",
       "Where this came from": "D’où vient cette information",
-      "Nobody pays to be on this list. These are simply the best places we know of.":
-        "Personne ne paie pour figurer dans cette liste. Ce sont simplement les meilleurs endroits que nous connaissons.",
 
 
       // --- Stats: day-one empty state ---
@@ -161,8 +159,7 @@
       "facts mastered": "faits maîtrisés",
 
       // --- footer ---
-      "Qpio — knowledge is free, forever. We never sell ad space or your data.":
-        "Qpio — le savoir est gratuit, pour toujours. Pas de pub, pas de vente de données.",
+      "Qpio — knowledge is free, forever.": "Qpio — le savoir est gratuit, pour toujours.",
       "I am curious to become wise. 🧠": "La curiosité me rend sage. 🧠",
 
       // --- comfort panel ---
