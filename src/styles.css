@@ -40,6 +40,13 @@ body {
 
 /* Home cards */
 .grid { display: grid; gap: 14px; }
+/* Grid and flex children default to min-width:auto, so a child that cannot
+   shrink below its content — a horizontal shelf of eight 190px cards — widens
+   the whole column and every sibling with it. Measured: a 229px column became
+   1019px and the page scrolled sideways. min-width:0 lets the shelf's own
+   overflow-x do its job instead (2026-08-08). */
+.grid > *, .row > * { min-width: 0; }
+.rack-row, .keep-row, .topic-body, .dcard-body { min-width: 0; }
 .card {
   background: linear-gradient(180deg, var(--card), var(--bg2));
   border: 1px solid var(--line);
@@ -328,8 +335,13 @@ body {
 .dcard:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .dcard-sm { width: 156px; }
 .dcard-lg { width: 100%; }
+/* Fixed heights on a full-width card crop the photograph into a letterbox
+   strip — a 150px band across a 684px card is 4.5:1, and reads as stretched
+   even though object-fit is cropping, not distorting (CEO, desktop, 2026-08-08).
+   Aspect ratio instead, so the picture keeps its shape at every width. */
 .dcard-art { position: relative; width: 100%; height: 96px; background: var(--bg2); }
-.dcard-lg .dcard-art { height: 150px; }
+.dcard-lg .dcard-art { height: auto; aspect-ratio: 16 / 9; }
+@supports not (aspect-ratio: 1) { .dcard-lg .dcard-art { height: 200px; } }
 .dcard-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .dcard-wash {
   position: absolute; inset: 0;
@@ -525,8 +537,20 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--brand); outline
 /* room so the fixed bar never covers the last card */
 body:has(.tabbar:not(.hidden)) .wrap { padding-bottom: 120px; }
 @media (min-width: 900px) {
-  /* CEO 2026-08-02: phone and web look the same - the bar stays, centred */
-  .tabbar { left: 50%; right: auto; transform: translateX(-50%); width: min(720px, 100%); border-radius: 16px 16px 0 0; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  /* CEO 2026-08-02: phone and web look the same - the bar stays, centred.
+     The bar must share .wrap's box exactly (720px, 18px side padding) or the
+     four tabs sit on a different grid from the cards above them and the
+     footer pokes out beside it — visible on desktop, 2026-08-08. */
+  .tabbar {
+    left: 50%; right: auto; transform: translateX(-50%);
+    width: min(720px, 100%);
+    padding-left: 18px; padding-right: 18px;
+    justify-content: space-between;
+    border-radius: 16px 16px 0 0; border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+  }
+  .tabbtn { max-width: none; }
+  /* the footer belongs above the bar, not behind it */
+  body:has(.tabbar:not(.hidden)) .wrap { padding-bottom: 140px; }
 }
 
 /* v23: full logo in the header; the wordmark steps back (CEO 2026-08-03) */
