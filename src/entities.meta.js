@@ -377,6 +377,6 @@ window.CURIO_META = {
   "Xochimilco": {d:"Borough in Mexico City, Mexico",t:"go"},
   "Yam_(route)": {d:"Postal service system originating from the Mongol period",t:"event"},
   "Yuan_dynasty": {d:"Mongol-led dynasty of China (1271–1368)",t:"person"},
-  "Zheng_He": {d:"Chinese Admiral and diplomat (1371–1433/1435)",t:"person"},
+  "Zheng_He": {d:"Chinese admiral and diplomat (1371–1433/1435)",t:"person"},
   "Zócalo": {d:"Plaza de la Constitución, Mexico City",t:"go"},
 };

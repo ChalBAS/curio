@@ -1,0 +1,2246 @@
+[
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "South Korea",
+   "Indonesia",
+   "Vietnam",
+   "Japan"
+  ],
+  "answer": 3,
+  "fact": "Japan had no legally defined national flag until 1999 — for 130 years it was simply the one everybody used.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Japan",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/960px-Flag_of_Japan.svg.png",
+   "by": "Various",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Japan.svg",
+   "fit": "contain",
+   "alt": "A white flag with a large red circle in the centre.",
+   "alt_fr": "Un drapeau blanc portant un grand cercle rouge en son centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Corée du Sud",
+   "Indonésie",
+   "Vietnam",
+   "Japon"
+  ],
+  "fact_fr": "Le Japon n'a eu de drapeau national légalement défini qu'en 1999 : pendant 130 ans, c'était simplement celui que tout le monde utilisait."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Nepal",
+   "South Korea",
+   "Mongolia",
+   "Vietnam"
+  ],
+  "answer": 1,
+  "fact": "The four corner symbols are trigrams from the I Ching, and they stand for heaven, earth, fire and water.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_South_Korea",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/960px-Flag_of_South_Korea.svg.png",
+   "by": "Original: Government of the Republic of Korea Vector:  Great Brightsta",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_South_Korea.svg",
+   "fit": "contain",
+   "alt": "A white flag with a red-and-blue circular symbol in the centre and four groups of black bars in the corners.",
+   "alt_fr": "Un drapeau blanc avec un symbole circulaire rouge et bleu au centre et quatre groupes de barres noires aux angles."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Népal",
+   "Corée du Sud",
+   "Mongolie",
+   "Vietnam"
+  ],
+  "fact_fr": "Les quatre symboles des coins sont des trigrammes du Yi King : le ciel, la terre, le feu et l'eau."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "South Korea",
+   "Vietnam",
+   "Bangladesh",
+   "Indonesia"
+  ],
+  "answer": 1,
+  "fact": "The design was first flown in a failed 1940 uprising, five years before the country it now represents existed.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Vietnam",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/960px-Flag_of_Vietnam.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Vietnam.svg",
+   "fit": "contain",
+   "alt": "A red flag with a single large yellow five-pointed star in the centre.",
+   "alt_fr": "Un drapeau rouge portant une seule grande étoile jaune à cinq branches au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Corée du Sud",
+   "Vietnam",
+   "Bangladesh",
+   "Indonésie"
+  ],
+  "fact_fr": "Ce drapeau a d'abord flotté lors d'un soulèvement manqué en 1940, cinq ans avant l'existence du pays qu'il représente."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "India",
+   "Thailand",
+   "Vietnam",
+   "Mongolia"
+  ],
+  "answer": 1,
+  "fact": "The old flag showed a white elephant. It was changed after being flown upside down in front of the king.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Thailand",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/960px-Flag_of_Thailand.svg.png",
+   "by": "Zscout370",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Thailand.svg",
+   "fit": "contain",
+   "alt": "Five horizontal bands: red, white, a thicker blue centre, white, red.",
+   "alt_fr": "Cinq bandes horizontales : rouge, blanc, une bande bleue centrale plus large, blanc, rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Inde",
+   "Thaïlande",
+   "Vietnam",
+   "Mongolie"
+  ],
+  "fact_fr": "L'ancien drapeau portait un éléphant blanc. Il a été changé après avoir été hissé à l'envers devant le roi."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "South Korea",
+   "Nepal",
+   "Thailand",
+   "Kazakhstan"
+  ],
+  "answer": 1,
+  "fact": "It is the only national flag on Earth that is not a rectangle, and its exact shape is defined in the constitution by geometric construction.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Nepal",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Flag_of_Nepal.svg/960px-Flag_of_Nepal.svg.png",
+   "by": "Drawn by Pumbaa80, Achim1999",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Nepal.svg",
+   "fit": "contain",
+   "alt": "The only non-rectangular national flag: two stacked crimson pennants with a blue border, bearing a white moon and a white sun.",
+   "alt_fr": "Le seul drapeau national non rectangulaire : deux fanions cramoisis superposés bordés de bleu, portant une lune et un soleil blancs."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Corée du Sud",
+   "Népal",
+   "Thaïlande",
+   "Kazakhstan"
+  ],
+  "fact_fr": "C'est le seul drapeau national non rectangulaire au monde, et sa forme exacte est définie dans la constitution par une construction géométrique."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Philippines",
+   "Bangladesh",
+   "India",
+   "Mongolia"
+  ],
+  "answer": 2,
+  "fact": "The wheel replaced a spinning wheel at independence — the same object, redrawn as an ancient emperor's symbol of law.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_India",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/960px-Flag_of_India.svg.png",
+   "by": "Government of India",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_India.svg",
+   "fit": "contain",
+   "alt": "Three horizontal bands of saffron, white and green, with a navy-blue 24-spoke wheel in the centre.",
+   "alt_fr": "Trois bandes horizontales safran, blanche et verte, avec une roue bleu marine à 24 rayons au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Philippines",
+   "Bangladesh",
+   "Inde",
+   "Mongolie"
+  ],
+  "fact_fr": "La roue a remplacé un rouet à l'indépendance : le même objet, redessiné en symbole de la loi d'un empereur antique."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "South Korea",
+   "Bhutan",
+   "Japan",
+   "Bangladesh"
+  ],
+  "answer": 3,
+  "fact": "The disc sits left of centre on purpose, so that it looks centred once the flag is flying.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Bangladesh",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/960px-Flag_of_Bangladesh.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Bangladesh.svg",
+   "fit": "contain",
+   "alt": "A dark green flag with a red circle set slightly left of centre.",
+   "alt_fr": "Un drapeau vert foncé avec un cercle rouge légèrement décalé vers la gauche."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Corée du Sud",
+   "Bhoutan",
+   "Japon",
+   "Bangladesh"
+  ],
+  "fact_fr": "Le disque est décalé vers la gauche exprès, pour paraître centré une fois le drapeau au vent."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Philippines",
+   "South Korea",
+   "Indonesia",
+   "Cambodia"
+  ],
+  "answer": 2,
+  "fact": "It is almost identical to Monaco's, which is older — the two countries simply agreed to live with it.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Indonesia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/960px-Flag_of_Indonesia.svg.png",
+   "by": "Jayakatwang",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Indonesia.svg",
+   "fit": "contain",
+   "alt": "Two horizontal bands, red above white.",
+   "alt_fr": "Deux bandes horizontales, rouge au-dessus de blanc."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Philippines",
+   "Corée du Sud",
+   "Indonésie",
+   "Cambodge"
+  ],
+  "fact_fr": "Il est presque identique à celui de Monaco, plus ancien : les deux pays ont simplement choisi de s'en accommoder."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Kazakhstan",
+   "Nepal",
+   "Mongolia",
+   "Philippines"
+  ],
+  "answer": 3,
+  "fact": "It is flown upside down in wartime — the only national flag with a deliberate second, official meaning.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_the_Philippines",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/960px-Flag_of_the_Philippines.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Philippines.svg",
+   "fit": "contain",
+   "alt": "A white triangle at the hoist bearing a golden sun and three stars, beside horizontal blue and red bands.",
+   "alt_fr": "Un triangle blanc au guindant portant un soleil doré et trois étoiles, à côté de bandes horizontales bleue et rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Kazakhstan",
+   "Népal",
+   "Mongolie",
+   "Philippines"
+  ],
+  "fact_fr": "En temps de guerre, il est hissé à l'envers : le seul drapeau national doté d'un second sens officiel."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Japan",
+   "Bhutan",
+   "Mongolia",
+   "Vietnam"
+  ],
+  "answer": 2,
+  "fact": "The golden symbol on the hoist, the Soyombo, is a character from an alphabet invented by a 17th-century monk.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Mongolia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Mongolia.svg/960px-Flag_of_Mongolia.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Mongolia.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands of red, blue, red, with a golden columnar emblem on the hoist band.",
+   "alt_fr": "Trois bandes verticales rouge, bleue, rouge, avec un emblème doré en colonne sur la bande du guindant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Japon",
+   "Bhoutan",
+   "Mongolie",
+   "Vietnam"
+  ],
+  "fact_fr": "Le symbole doré du guindant, le Soyombo, est un caractère d'un alphabet inventé par un moine du XVIIe siècle."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Indonesia",
+   "Bangladesh",
+   "Kazakhstan",
+   "Japan"
+  ],
+  "answer": 2,
+  "fact": "The pattern down the hoist is a national ornament — the flag was designed by an artist who won an open public contest.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Kazakhstan",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Flag_of_Kazakhstan.svg/960px-Flag_of_Kazakhstan.svg.png",
+   "by": "Shaken Niyazbekop",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Kazakhstan.svg",
+   "fit": "contain",
+   "alt": "A sky-blue flag with a golden sun above a soaring eagle, and a vertical golden ornamental pattern at the hoist.",
+   "alt_fr": "Un drapeau bleu ciel avec un soleil doré au-dessus d'un aigle planant, et un motif ornemental doré vertical au guindant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Indonésie",
+   "Bangladesh",
+   "Kazakhstan",
+   "Japon"
+  ],
+  "fact_fr": "Le motif du guindant est un ornement national : le drapeau a été dessiné par un artiste vainqueur d'un concours public."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Bhutan",
+   "India",
+   "Thailand",
+   "Bangladesh"
+  ],
+  "answer": 0,
+  "fact": "The dragon is holding jewels, and it is white to represent purity rather than any of the country's peoples.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Bhutan",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Flag_of_Bhutan.svg/960px-Flag_of_Bhutan.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Bhutan.svg",
+   "fit": "contain",
+   "alt": "Divided diagonally yellow and orange, with a large white dragon clutching jewels across the centre.",
+   "alt_fr": "Divisé en diagonale, jaune et orange, avec un grand dragon blanc tenant des joyaux en travers du centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Bhoutan",
+   "Inde",
+   "Thaïlande",
+   "Bangladesh"
+  ],
+  "fact_fr": "Le dragon tient des joyaux, et il est blanc pour représenter la pureté plutôt qu'un peuple du pays."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Japan",
+   "Sri Lanka",
+   "Thailand",
+   "Kazakhstan"
+  ],
+  "answer": 1,
+  "fact": "The two stripes were added in 1951 to represent minorities the original lion flag had left out.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Sri_Lanka",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Sri_Lanka.svg/960px-Flag_of_Sri_Lanka.svg.png",
+   "by": "Original:  Sri Lanka\nVectorization:  Zscout370, Mike Rohsopht",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Sri_Lanka.svg",
+   "fit": "contain",
+   "alt": "A golden lion holding a sword on a maroon field with four leaves, beside two vertical green and orange stripes.",
+   "alt_fr": "Un lion doré tenant une épée sur fond bordeaux avec quatre feuilles, à côté de deux bandes verticales verte et orange."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Japon",
+   "Sri Lanka",
+   "Thaïlande",
+   "Kazakhstan"
+  ],
+  "fact_fr": "Les deux bandes ont été ajoutées en 1951 pour représenter des minorités que le drapeau au lion avait ignorées."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "India",
+   "Bhutan",
+   "Thailand",
+   "Cambodia"
+  ],
+  "answer": 3,
+  "fact": "It is the only national flag that shows a building — and that building is Angkor Wat.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Cambodia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_Cambodia.svg/960px-Flag_of_Cambodia.svg.png",
+   "by": "Unknown authorUnknown author",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Cambodia.svg",
+   "fit": "contain",
+   "alt": "Blue, red and blue horizontal bands with a white three-towered temple in the centre.",
+   "alt_fr": "Bandes horizontales bleue, rouge et bleue avec un temple blanc à trois tours au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Inde",
+   "Bhoutan",
+   "Thaïlande",
+   "Cambodge"
+  ],
+  "fact_fr": "C'est le seul drapeau national représentant un bâtiment, et ce bâtiment est Angkor Vat."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Argentina",
+   "Brazil",
+   "Colombia",
+   "Canada"
+  ],
+  "answer": 1,
+  "fact": "The stars show the sky over Rio at a precise moment: the morning the republic was proclaimed in 1889.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Brazil",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/960px-Flag_of_Brazil.svg.png",
+   "by": "Raimundo Teixeira Mendes",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Brazil.svg",
+   "fit": "contain",
+   "alt": "A green flag with a yellow diamond and a blue globe crossed by a white banner of stars.",
+   "alt_fr": "Un drapeau vert avec un losange jaune et un globe bleu traversé d'une banderole blanche étoilée."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Argentine",
+   "Brésil",
+   "Colombie",
+   "Canada"
+  ],
+  "fact_fr": "Les étoiles montrent le ciel de Rio à un instant précis : le matin de la proclamation de la république, en 1889."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Jamaica",
+   "Argentina",
+   "Brazil",
+   "Peru"
+  ],
+  "answer": 1,
+  "fact": "The sun face has a name — the Sun of May — and it also appears on Uruguay's flag.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Argentina",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/960px-Flag_of_Argentina.svg.png",
+   "by": "Manuel Belgrano",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Argentina.svg",
+   "fit": "contain",
+   "alt": "Light blue, white and light blue horizontal bands with a golden sun face in the centre.",
+   "alt_fr": "Bandes horizontales bleu clair, blanche et bleu clair avec un visage de soleil doré au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Jamaïque",
+   "Argentine",
+   "Brésil",
+   "Pérou"
+  ],
+  "fact_fr": "Le soleil a un nom, le Soleil de Mai, et il figure aussi sur le drapeau de l'Uruguay."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Peru",
+   "Cuba",
+   "Mexico",
+   "Jamaica"
+  ],
+  "answer": 2,
+  "fact": "The scene is a founding legend: a city was to be built where an eagle was seen on a cactus, eating a snake.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Mexico",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/960px-Flag_of_Mexico.svg.png",
+   "by": "Alex Covarrubias, 9 April 2006. Based on the arms by Juan Manuel Gabin",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Mexico.svg",
+   "fit": "contain",
+   "alt": "Green, white and red vertical bands with an eagle on a cactus in the centre.",
+   "alt_fr": "Bandes verticales verte, blanche et rouge avec un aigle sur un cactus au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Pérou",
+   "Cuba",
+   "Mexique",
+   "Jamaïque"
+  ],
+  "fact_fr": "La scène illustre une légende fondatrice : bâtir la ville là où un aigle serait vu sur un cactus, dévorant un serpent."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Colombia",
+   "Canada",
+   "Jamaica",
+   "Argentina"
+  ],
+  "answer": 1,
+  "fact": "It is only from 1965. Before that the country flew a flag carrying another nation's, after decades of argument.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Canada",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/960px-Flag_of_Canada_%28Pantone%29.svg.png",
+   "by": "Original: George F. G. Stanley\n\nModified by: The original uploader was",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Canada_%28Pantone%29.svg",
+   "fit": "contain",
+   "alt": "A white centre square between two red bands, with a red eleven-pointed leaf in the middle.",
+   "alt_fr": "Un carré blanc central entre deux bandes rouges, avec une feuille rouge à onze pointes au milieu."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Colombie",
+   "Canada",
+   "Jamaïque",
+   "Argentine"
+  ],
+  "fact_fr": "Il ne date que de 1965. Avant cela, le pays arborait un drapeau portant celui d'une autre nation, après des décennies de débats."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Chile",
+   "Peru",
+   "Brazil",
+   "Jamaica"
+  ],
+  "answer": 1,
+  "fact": "Legend says the colours come from flamingos a liberating general saw as he landed on the coast.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Peru",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Peru.svg/960px-Flag_of_Peru.svg.png",
+   "by": "David Benbennick",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Peru.svg",
+   "fit": "contain",
+   "alt": "Red, white and red vertical bands.",
+   "alt_fr": "Bandes verticales rouge, blanche et rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Chili",
+   "Pérou",
+   "Brésil",
+   "Jamaïque"
+  ],
+  "fact_fr": "La légende veut que les couleurs viennent de flamants roses aperçus par un général libérateur en débarquant."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Argentina",
+   "Canada",
+   "Colombia",
+   "Chile"
+  ],
+  "answer": 2,
+  "fact": "Colombia, Ecuador and Venezuela share these colours because they were once a single country.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Colombia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/960px-Flag_of_Colombia.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Colombia.svg",
+   "fit": "contain",
+   "alt": "Three horizontal bands: a double-height yellow band above blue and red.",
+   "alt_fr": "Trois bandes horizontales : une bande jaune de double hauteur au-dessus du bleu et du rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Argentine",
+   "Canada",
+   "Colombie",
+   "Chili"
+  ],
+  "fact_fr": "La Colombie, l'Équateur et le Venezuela partagent ces couleurs : ils ne formaient autrefois qu'un seul pays."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Argentina",
+   "Chile",
+   "Canada",
+   "Colombia"
+  ],
+  "answer": 1,
+  "fact": "Its design predates Texas's very similar flag by nearly twenty years.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Chile",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/960px-Flag_of_Chile.svg.png",
+   "by": "See file history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Chile.svg",
+   "fit": "contain",
+   "alt": "A white band above red, with a blue square at the hoist bearing a single white star.",
+   "alt_fr": "Une bande blanche au-dessus du rouge, avec un carré bleu au guindant portant une étoile blanche."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Argentine",
+   "Chili",
+   "Canada",
+   "Colombie"
+  ],
+  "fact_fr": "Son dessin précède de près de vingt ans celui, très proche, du Texas."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Argentina",
+   "Jamaica",
+   "Uruguay",
+   "Cuba"
+  ],
+  "answer": 2,
+  "fact": "The nine stripes are not decoration — they are the nine original departments of the country.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Uruguay",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/960px-Flag_of_Uruguay.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Uruguay.svg",
+   "fit": "contain",
+   "alt": "Nine alternating white and blue horizontal stripes with a golden sun face in a white canton.",
+   "alt_fr": "Neuf bandes horizontales blanches et bleues alternées avec un visage de soleil doré dans un canton blanc."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Argentine",
+   "Jamaïque",
+   "Uruguay",
+   "Cuba"
+  ],
+  "fact_fr": "Les neuf bandes ne sont pas décoratives : ce sont les neuf départements d'origine du pays."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Cuba",
+   "Argentina",
+   "Jamaica",
+   "Peru"
+  ],
+  "answer": 2,
+  "fact": "It is the only national flag in the world that contains neither red, white nor blue.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Jamaica",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Flag_of_Jamaica.svg/960px-Flag_of_Jamaica.svg.png",
+   "by": "The SVG code is valid. This vector image was created with Inkscape by ",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Jamaica.svg",
+   "fit": "contain",
+   "alt": "A gold diagonal cross dividing green triangles above and below from black triangles at the sides.",
+   "alt_fr": "Une croix diagonale dorée séparant des triangles verts en haut et en bas de triangles noirs sur les côtés."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Cuba",
+   "Argentine",
+   "Jamaïque",
+   "Pérou"
+  ],
+  "fact_fr": "C'est le seul drapeau national au monde ne contenant ni rouge, ni blanc, ni bleu."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Cuba",
+   "Mexico",
+   "Colombia",
+   "Peru"
+  ],
+  "answer": 0,
+  "fact": "It was designed in New York in 1849, by exiles, decades before independence.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Cuba",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Flag_of_Cuba.svg/960px-Flag_of_Cuba.svg.png",
+   "by": "Miguel Teurbe Tolón and Narciso López",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Cuba.svg",
+   "fit": "contain",
+   "alt": "Five blue and white stripes with a red triangle at the hoist bearing a white star.",
+   "alt_fr": "Cinq bandes bleues et blanches avec un triangle rouge au guindant portant une étoile blanche."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Cuba",
+   "Mexique",
+   "Colombie",
+   "Pérou"
+  ],
+  "fact_fr": "Il a été dessiné à New York en 1849 par des exilés, des décennies avant l'indépendance."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Egypt",
+   "Kenya",
+   "Namibia",
+   "Tanzania"
+  ],
+  "answer": 1,
+  "fact": "The shield and spears in the centre are Maasai, and they were added to say the freedom won would be defended.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Kenya",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/960px-Flag_of_Kenya.svg.png",
+   "by": "User:Pumbaa80",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Kenya.svg",
+   "fit": "contain",
+   "alt": "Black, red and green horizontal bands separated by thin white lines, with a Maasai shield and spears in the centre.",
+   "alt_fr": "Bandes horizontales noire, rouge et verte séparées par de fines lignes blanches, avec un bouclier et des lances au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Égypte",
+   "Kenya",
+   "Namibie",
+   "Tanzanie"
+  ],
+  "fact_fr": "Le bouclier et les lances du centre sont massaï : ils signifient que la liberté conquise sera défendue."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Botswana",
+   "Ghana",
+   "Rwanda",
+   "Nigeria"
+  ],
+  "answer": 1,
+  "fact": "Its black star was borrowed by a football team, a shipping line and, later, half a continent's flags.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Ghana",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/960px-Flag_of_Ghana.svg.png",
+   "by": "Theodosia Okoh",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Ghana.svg",
+   "fit": "contain",
+   "alt": "Red, gold and green horizontal bands with a black five-pointed star in the centre.",
+   "alt_fr": "Bandes horizontales rouge, or et verte avec une étoile noire à cinq branches au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Botswana",
+   "Ghana",
+   "Rwanda",
+   "Nigeria"
+  ],
+  "fact_fr": "Son étoile noire a été reprise par une équipe de football, une compagnie maritime et, plus tard, par d'autres drapeaux du continent."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Tanzania",
+   "Nigeria",
+   "Namibia",
+   "Morocco"
+  ],
+  "answer": 1,
+  "fact": "The design was chosen from nearly 3,000 entries in a competition — won by a 23-year-old student.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Nigeria",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/960px-Flag_of_Nigeria.svg.png",
+   "by": "Jon Harald Søby.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Nigeria.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands: green, white, green.",
+   "alt_fr": "Trois bandes verticales : verte, blanche, verte."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Tanzanie",
+   "Nigeria",
+   "Namibie",
+   "Maroc"
+  ],
+  "fact_fr": "Le dessin a été choisi parmi près de 3 000 propositions lors d'un concours, remporté par un étudiant de 23 ans."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Namibia",
+   "Mozambique",
+   "Rwanda",
+   "South Africa"
+  ],
+  "answer": 3,
+  "fact": "Adopted in 1994 as an interim design meant to last five years, it was so well liked it was simply kept.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_South_Africa",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/960px-Flag_of_South_Africa.svg.png",
+   "by": "Flag design by Frederick Brownell, image by Wikimedia Commons users",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_South_Africa.svg",
+   "fit": "contain",
+   "alt": "Six colours in a horizontal Y shape: a green band edged in white and gold separating red above from blue below, with a black triangle at the hoist.",
+   "alt_fr": "Six couleurs en Y horizontal : une bande verte bordée de blanc et d'or séparant le rouge du bleu, avec un triangle noir au guindant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Namibie",
+   "Mozambique",
+   "Rwanda",
+   "Afrique du Sud"
+  ],
+  "fact_fr": "Adopté en 1994 comme dessin provisoire prévu pour cinq ans, il a tant plu qu'il a simplement été conservé."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Morocco",
+   "Kenya",
+   "Ethiopia",
+   "Ghana"
+  ],
+  "answer": 2,
+  "fact": "Its green, yellow and red were adopted across Africa as the pan-African colours — because this country was never colonised.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Ethiopia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Flag_of_Ethiopia.svg/960px-Flag_of_Ethiopia.svg.png",
+   "by": "Drawn by User:SKopp",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Ethiopia.svg",
+   "fit": "contain",
+   "alt": "Green, yellow and red horizontal bands with a blue disc bearing a yellow star in the centre.",
+   "alt_fr": "Bandes horizontales verte, jaune et rouge avec un disque bleu portant une étoile jaune au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Maroc",
+   "Kenya",
+   "Éthiopie",
+   "Ghana"
+  ],
+  "fact_fr": "Son vert, jaune et rouge sont devenus les couleurs panafricaines, parce que ce pays n'a jamais été colonisé."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Namibia",
+   "Morocco",
+   "South Africa",
+   "Egypt"
+  ],
+  "answer": 3,
+  "fact": "The bird in the centre is the Eagle of Saladin, a symbol adopted by several Arab republics.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Egypt",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/960px-Flag_of_Egypt.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Egypt.svg",
+   "fit": "contain",
+   "alt": "Red, white and black horizontal bands with a golden eagle in the centre.",
+   "alt_fr": "Bandes horizontales rouge, blanche et noire avec un aigle doré au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Namibie",
+   "Maroc",
+   "Afrique du Sud",
+   "Égypte"
+  ],
+  "fact_fr": "L'oiseau du centre est l'aigle de Saladin, symbole repris par plusieurs républiques arabes."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Ghana",
+   "Rwanda",
+   "Morocco",
+   "Egypt"
+  ],
+  "answer": 2,
+  "fact": "The star was added in 1915 so the flag could be told apart at sea from other plain red ones.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Morocco",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/960px-Flag_of_Morocco.svg.png",
+   "by": "Denelson83, Zscout370",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Morocco.svg",
+   "fit": "contain",
+   "alt": "A red flag with a green interlaced five-pointed star in the centre.",
+   "alt_fr": "Un drapeau rouge avec une étoile verte à cinq branches entrelacée au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Ghana",
+   "Rwanda",
+   "Maroc",
+   "Égypte"
+  ],
+  "fact_fr": "L'étoile a été ajoutée en 1915 pour distinguer le drapeau en mer d'autres pavillons entièrement rouges."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Mali",
+   "Tanzania",
+   "Senegal",
+   "Namibia"
+  ],
+  "answer": 2,
+  "fact": "It kept the colours of a short-lived federation with a neighbour and swapped the emblem for a star.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Senegal",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Flag_of_Senegal.svg/960px-Flag_of_Senegal.svg.png",
+   "by": "Original upload by Nightstallion",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Senegal.svg",
+   "fit": "contain",
+   "alt": "Green, yellow and red vertical bands with a green five-pointed star on the yellow.",
+   "alt_fr": "Bandes verticales verte, jaune et rouge avec une étoile verte à cinq branches sur le jaune."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Mali",
+   "Tanzanie",
+   "Sénégal",
+   "Namibie"
+  ],
+  "fact_fr": "Il a gardé les couleurs d'une éphémère fédération avec un voisin, en remplaçant l'emblème par une étoile."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Botswana",
+   "Mali",
+   "Namibia",
+   "Tanzania"
+  ],
+  "answer": 3,
+  "fact": "It is a merger of two flags, because the country is a union of a mainland republic and an island one.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Tanzania",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/960px-Flag_of_Tanzania.svg.png",
+   "by": "Wikimedia Commons",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Tanzania.svg",
+   "fit": "contain",
+   "alt": "A green upper triangle and a blue lower triangle divided by a black diagonal edged in yellow.",
+   "alt_fr": "Un triangle supérieur vert et un triangle inférieur bleu séparés par une diagonale noire bordée de jaune."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Botswana",
+   "Mali",
+   "Namibie",
+   "Tanzanie"
+  ],
+  "fact_fr": "C'est la fusion de deux drapeaux, car le pays est l'union d'une république continentale et d'une république insulaire."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Mali",
+   "Morocco",
+   "Namibia",
+   "Senegal"
+  ],
+  "answer": 0,
+  "fact": "A human figure was removed from the centre in 1961, a year after independence.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Mali",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Mali.svg/960px-Flag_of_Mali.svg.png",
+   "by": "SKopp",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Mali.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands: green, yellow, red.",
+   "alt_fr": "Trois bandes verticales : verte, jaune, rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Mali",
+   "Maroc",
+   "Namibie",
+   "Sénégal"
+  ],
+  "fact_fr": "Une figure humaine a été retirée du centre en 1961, un an après l'indépendance."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Nigeria",
+   "Morocco",
+   "Tanzania",
+   "Rwanda"
+  ],
+  "answer": 3,
+  "fact": "The flag was completely redesigned in 2001 to remove colours associated with the 1994 genocide.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Rwanda",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Rwanda.svg/960px-Flag_of_Rwanda.svg.png",
+   "by": "Original: Unknown Vector:  Zscout370",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Rwanda.svg",
+   "fit": "contain",
+   "alt": "Horizontal bands of sky blue, yellow and green, with a golden sun in the upper right.",
+   "alt_fr": "Bandes horizontales bleu ciel, jaune et verte, avec un soleil doré en haut à droite."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Nigeria",
+   "Maroc",
+   "Tanzanie",
+   "Rwanda"
+  ],
+  "fact_fr": "Le drapeau a été entièrement redessiné en 2001 pour retirer les couleurs associées au génocide de 1994."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Botswana",
+   "Senegal",
+   "Namibia",
+   "Ghana"
+  ],
+  "answer": 0,
+  "fact": "The blue stands for water and the national motto is simply the word for rain.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Botswana",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_Botswana.svg/960px-Flag_of_Botswana.svg.png",
+   "by": "SKopp, Gabbe, Madden",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Botswana.svg",
+   "fit": "contain",
+   "alt": "A light blue field crossed by a horizontal black band edged in white.",
+   "alt_fr": "Un fond bleu clair traversé d'une bande horizontale noire bordée de blanc."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Botswana",
+   "Sénégal",
+   "Namibie",
+   "Ghana"
+  ],
+  "fact_fr": "Le bleu représente l'eau, et la devise nationale est simplement le mot qui signifie « pluie »."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Senegal",
+   "Mali",
+   "Egypt",
+   "Namibia"
+  ],
+  "answer": 3,
+  "fact": "The sun has twelve rays, one for each of the country's main communities.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Namibia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Namibia.svg/960px-Flag_of_Namibia.svg.png",
+   "by": "SVG by Vzb83~commonswiki et al.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Namibia.svg",
+   "fit": "contain",
+   "alt": "A red diagonal band edged in white, with a golden sun in the blue upper triangle and a green lower triangle.",
+   "alt_fr": "Une bande diagonale rouge bordée de blanc, avec un soleil doré dans le triangle bleu supérieur et un triangle vert en bas."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Sénégal",
+   "Mali",
+   "Égypte",
+   "Namibie"
+  ],
+  "fact_fr": "Le soleil compte douze rayons, un pour chacune des principales communautés du pays."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Nigeria",
+   "Kenya",
+   "Egypt",
+   "Mozambique"
+  ],
+  "answer": 3,
+  "fact": "It is the only national flag showing a modern rifle, and there are regular parliamentary attempts to remove it.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Mozambique",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Flag_of_Mozambique.svg/960px-Flag_of_Mozambique.svg.png",
+   "by": "FRELIMO",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Mozambique.svg",
+   "fit": "contain",
+   "alt": "Green, black and yellow bands with white edging, and a red hoist triangle bearing a star, a book, a hoe and a rifle.",
+   "alt_fr": "Bandes verte, noire et jaune bordées de blanc, et un triangle rouge au guindant portant une étoile, un livre, une houe et un fusil."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Nigeria",
+   "Kenya",
+   "Égypte",
+   "Mozambique"
+  ],
+  "fact_fr": "C'est le seul drapeau national montrant un fusil moderne, et des députés proposent régulièrement de le retirer."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "France",
+   "Albania",
+   "Ireland",
+   "Switzerland"
+  ],
+  "answer": 0,
+  "fact": "The three bands are not equal in the original design — blue was made narrower so they would look equal at sea.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_France",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/960px-Flag_of_France.svg.png",
+   "by": "Original: Unknown Vector:  SKopp",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands: blue, white, red.",
+   "alt_fr": "Trois bandes verticales : bleue, blanche, rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "France",
+   "Albanie",
+   "Irlande (pays)",
+   "Suisse"
+  ],
+  "fact_fr": "Les trois bandes n'étaient pas égales à l'origine : le bleu était plus étroit pour paraître égal en mer."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "France",
+   "Germany",
+   "Switzerland",
+   "Greece"
+  ],
+  "answer": 1,
+  "fact": "The colours come from the uniforms of volunteer soldiers in the 1810s, not from any royal house.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Germany",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/960px-Flag_of_Germany.svg.png",
+   "by": "User:SKopp, User:Madden, and other users",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Germany.svg",
+   "fit": "contain",
+   "alt": "Three horizontal bands: black, red, gold.",
+   "alt_fr": "Trois bandes horizontales : noire, rouge, or."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "France",
+   "Allemagne",
+   "Suisse",
+   "Grèce"
+  ],
+  "fact_fr": "Les couleurs viennent des uniformes de soldats volontaires des années 1810, et non d'une maison royale."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Ireland",
+   "Albania",
+   "Finland",
+   "Italy"
+  ],
+  "answer": 3,
+  "fact": "Napoleon's arrival is why it exists: the design copies the French tricolour with green in place of blue.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Italy",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/960px-Flag_of_Italy.svg.png",
+   "by": "See below.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Italy.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands: green, white, red.",
+   "alt_fr": "Trois bandes verticales : verte, blanche, rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Irlande (pays)",
+   "Albanie",
+   "Finlande",
+   "Italie"
+  ],
+  "fact_fr": "Il doit son existence à Napoléon : le dessin reprend le tricolore français, le vert remplaçant le bleu."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Spain",
+   "Norway",
+   "Iceland",
+   "France"
+  ],
+  "answer": 0,
+  "fact": "The colours were chosen in 1785 for one reason — to be visible from far away at sea.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Spain",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/960px-Flag_of_Spain.svg.png",
+   "by": "RelShot 263, Echando una mano; earlier version was Pedro A. Gracia Faj",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Spain.svg",
+   "fit": "contain",
+   "alt": "Red, a double-height yellow band, and red, with a coat of arms toward the hoist.",
+   "alt_fr": "Rouge, une bande jaune de double hauteur, et rouge, avec des armoiries vers le guindant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Espagne",
+   "Norvège",
+   "Islande",
+   "France"
+  ],
+  "fact_fr": "Les couleurs ont été choisies en 1785 pour une seule raison : être visibles de loin en mer."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Poland",
+   "Portugal",
+   "Albania",
+   "Italy"
+  ],
+  "answer": 1,
+  "fact": "The sphere in the centre is a navigation instrument, put there to credit the sailors rather than the kings.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Portugal",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/960px-Flag_of_Portugal.svg.png",
+   "by": "Original: Columbano Bordalo Pinheiro (1910; generic design) Vector:  V",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Portugal.svg",
+   "fit": "contain",
+   "alt": "Green at the hoist and red beyond, with an armillary sphere and shield over the join.",
+   "alt_fr": "Vert au guindant et rouge au-delà, avec une sphère armillaire et un écu sur la jonction."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Pologne",
+   "Portugal",
+   "Albanie",
+   "Italie"
+  ],
+  "fact_fr": "La sphère du centre est un instrument de navigation, placé là pour honorer les marins plutôt que les rois."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Ukraine",
+   "Greece",
+   "Iceland",
+   "Norway"
+  ],
+  "answer": 1,
+  "fact": "The nine stripes are widely said to be the nine syllables of a revolutionary war cry.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Greece",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/960px-Flag_of_Greece.svg.png",
+   "by": "Unknown authorUnknown author",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Greece.svg",
+   "fit": "contain",
+   "alt": "Nine blue and white horizontal stripes with a white cross on blue in the canton.",
+   "alt_fr": "Neuf bandes bleues et blanches avec une croix blanche sur fond bleu dans le canton."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Ukraine",
+   "Grèce",
+   "Islande",
+   "Norvège"
+  ],
+  "fact_fr": "Les neuf bandes correspondraient aux neuf syllabes d'un cri de guerre révolutionnaire."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Finland",
+   "Belgium",
+   "Sweden",
+   "Netherlands"
+  ],
+  "answer": 2,
+  "fact": "The off-centre cross is a Nordic pattern: every flag using it points the cross toward the flagpole.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Sweden",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Sweden.svg/960px-Flag_of_Sweden.svg.png",
+   "by": "Jon Harald Søby and others.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Sweden.svg",
+   "fit": "contain",
+   "alt": "A yellow off-centre cross on blue.",
+   "alt_fr": "Une croix jaune décentrée sur fond bleu."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Finlande",
+   "Belgique",
+   "Suède",
+   "Pays-Bas (pays constitutif)"
+  ],
+  "fact_fr": "La croix décentrée est un motif nordique : tous les drapeaux qui l'emploient la décalent vers le mât."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Sweden",
+   "France",
+   "Norway",
+   "Spain"
+  ],
+  "answer": 2,
+  "fact": "It carries two crosses, one inside the other, recording rule by two different neighbours.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Norway",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Norway.svg/960px-Flag_of_Norway.svg.png",
+   "by": "Original: Fredrik Meltzer Vector:  Gutten på Hemsen",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Norway.svg",
+   "fit": "contain",
+   "alt": "A blue off-centre cross outlined in white, on red.",
+   "alt_fr": "Une croix bleue décentrée bordée de blanc, sur fond rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Suède",
+   "France",
+   "Norvège",
+   "Espagne"
+  ],
+  "fact_fr": "Il porte deux croix, l'une dans l'autre, souvenir de la domination de deux voisins différents."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Spain",
+   "Finland",
+   "France",
+   "Belgium"
+  ],
+  "answer": 1,
+  "fact": "The blue is for the country's tens of thousands of lakes, the white for snow.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Finland",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/960px-Flag_of_Finland.svg.png",
+   "by": "Unknown",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Finland.svg",
+   "fit": "contain",
+   "alt": "A blue off-centre cross on white.",
+   "alt_fr": "Une croix bleue décentrée sur fond blanc."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Espagne",
+   "Finlande",
+   "France",
+   "Belgique"
+  ],
+  "fact_fr": "Le bleu évoque les dizaines de milliers de lacs du pays, le blanc la neige."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Iceland",
+   "Poland",
+   "Ukraine",
+   "Italy"
+  ],
+  "answer": 0,
+  "fact": "Its colours are a landscape: red for volcanic fire, white for ice, blue for the ocean around it.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Iceland",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Iceland.svg/960px-Flag_of_Iceland.svg.png",
+   "by": "Original: Matthías Þórðarson Vector:  Árni Dagur and Magasjukur2",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Iceland.svg",
+   "fit": "contain",
+   "alt": "A red off-centre cross outlined in white, on blue.",
+   "alt_fr": "Une croix rouge décentrée bordée de blanc, sur fond bleu."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Islande",
+   "Pologne",
+   "Ukraine",
+   "Italie"
+  ],
+  "fact_fr": "Ses couleurs sont un paysage : le rouge du feu volcanique, le blanc de la glace, le bleu de l'océan."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Greece",
+   "Belgium",
+   "Poland",
+   "Switzerland"
+  ],
+  "answer": 2,
+  "fact": "Hung the other way up it becomes Monaco's and Indonesia's — the order of the two bands is the whole difference.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Poland",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/960px-Flag_of_Poland.svg.png",
+   "by": "See below.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Poland.svg",
+   "fit": "contain",
+   "alt": "Two horizontal bands, white above red.",
+   "alt_fr": "Deux bandes horizontales, blanche au-dessus de rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Grèce",
+   "Belgique",
+   "Pologne",
+   "Suisse"
+  ],
+  "fact_fr": "Inversé, il devient celui de Monaco et de l'Indonésie : l'ordre des deux bandes fait toute la différence."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Switzerland",
+   "Spain",
+   "Finland",
+   "Netherlands"
+  ],
+  "answer": 0,
+  "fact": "It is one of only two square national flags in the world; the other belongs to the Vatican.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Switzerland",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Switzerland.svg/960px-Flag_of_Switzerland.svg.png",
+   "by": "Original: Unknown\nVector:\nUser:Marc Mongenet\nCredits:\n\nUser:-xfi-\nUser",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Switzerland.svg",
+   "fit": "contain",
+   "alt": "A square red flag with a bold white cross in the centre.",
+   "alt_fr": "Un drapeau carré rouge portant une large croix blanche au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Suisse",
+   "Espagne",
+   "Finlande",
+   "Pays-Bas (pays constitutif)"
+  ],
+  "fact_fr": "C'est l'un des deux seuls drapeaux nationaux carrés au monde ; l'autre est celui du Vatican."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Iceland",
+   "Germany",
+   "Netherlands",
+   "Romania"
+  ],
+  "answer": 3,
+  "fact": "It is nearly identical to Chad's, and the two countries have argued about it at the United Nations.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Romania",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Romania.svg/960px-Flag_of_Romania.svg.png",
+   "by": "AdiJapan",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Romania.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands: blue, yellow, red.",
+   "alt_fr": "Trois bandes verticales : bleue, jaune, rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Islande",
+   "Allemagne",
+   "Pays-Bas (pays constitutif)",
+   "Roumanie"
+  ],
+  "fact_fr": "Il est presque identique à celui du Tchad, et les deux pays s'en sont disputés jusqu'à l'ONU."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Sweden",
+   "Italy",
+   "Norway",
+   "Ireland"
+  ],
+  "answer": 3,
+  "fact": "The white band is the point of it: it was designed to stand for peace between the two traditions on either side.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Ireland",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/960px-Flag_of_Ireland.svg.png",
+   "by": "Éire",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Ireland.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands: green, white, orange.",
+   "alt_fr": "Trois bandes verticales : verte, blanche, orange."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Suède",
+   "Italie",
+   "Norvège",
+   "Irlande (pays)"
+  ],
+  "fact_fr": "La bande blanche en est tout le sens : elle a été conçue pour représenter la paix entre les deux traditions qui l'encadrent."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "France",
+   "Romania",
+   "Iceland",
+   "Netherlands"
+  ],
+  "answer": 3,
+  "fact": "The top band used to be orange, and it was changed to red — most likely because orange dye faded at sea.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_the_Netherlands",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_the_Netherlands.svg/960px-Flag_of_the_Netherlands.svg.png",
+   "by": "Zscout370",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Netherlands.svg",
+   "fit": "contain",
+   "alt": "Three horizontal bands: red, white, blue.",
+   "alt_fr": "Trois bandes horizontales : rouge, blanche, bleue."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "France",
+   "Roumanie",
+   "Islande",
+   "Pays-Bas (pays constitutif)"
+  ],
+  "fact_fr": "La bande supérieure était orange ; elle est devenue rouge, très probablement parce que la teinture orange passait en mer."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Albania",
+   "Belgium",
+   "Ukraine",
+   "Iceland"
+  ],
+  "answer": 1,
+  "fact": "Its proportions are unusually tall and narrow, and it is the only national flag whose stripes run this way with these colours.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Belgium",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Belgium.svg/960px-Flag_of_Belgium.svg.png",
+   "by": "Dbenbenn and others",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Belgium.svg",
+   "fit": "contain",
+   "alt": "Three vertical bands: black, yellow, red.",
+   "alt_fr": "Trois bandes verticales : noire, jaune, rouge."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Albanie",
+   "Belgique",
+   "Ukraine",
+   "Islande"
+  ],
+  "fact_fr": "Ses proportions sont inhabituellement hautes et étroites, et c'est le seul drapeau national à disposer ainsi ces couleurs."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Ukraine",
+   "Albania",
+   "Poland",
+   "Portugal"
+  ],
+  "answer": 0,
+  "fact": "The two bands are meant to be read as a picture: sky above, ripe wheat below.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Ukraine",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/960px-Flag_of_Ukraine.svg.png",
+   "by": "Government of Ukraine",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Ukraine.svg",
+   "fit": "contain",
+   "alt": "Two horizontal bands, blue above yellow.",
+   "alt_fr": "Deux bandes horizontales, bleue au-dessus de jaune."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Ukraine",
+   "Albanie",
+   "Pologne",
+   "Portugal"
+  ],
+  "fact_fr": "Les deux bandes se lisent comme une image : le ciel au-dessus, le blé mûr en dessous."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 1,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Ukraine",
+   "Ireland",
+   "Albania",
+   "Greece"
+  ],
+  "answer": 2,
+  "fact": "The two-headed eagle comes from a 15th-century leader's seal, and the country's own name for itself means 'land of the eagles'.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Albania",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Flag_of_Albania.svg/960px-Flag_of_Albania.svg.png",
+   "by": "Sadik Kaceli",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Albania.svg",
+   "fit": "contain",
+   "alt": "A red flag with a black two-headed eagle in the centre.",
+   "alt_fr": "Un drapeau rouge portant un aigle noir à deux têtes au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Ukraine",
+   "Irlande (pays)",
+   "Albanie",
+   "Grèce"
+  ],
+  "fact_fr": "L'aigle bicéphale vient du sceau d'un chef du XVe siècle, et le nom que le pays se donne signifie « pays des aigles »."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "United Arab Emirates",
+   "Jordan",
+   "Turkey",
+   "Qatar"
+  ],
+  "answer": 2,
+  "fact": "The crescent and star were on Ottoman flags long before, and the design was fixed by law in 1936.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Turkey",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/960px-Flag_of_Turkey.svg.png",
+   "by": "David Benbennick (original author)",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Turkey.svg",
+   "fit": "contain",
+   "alt": "A red flag with a white crescent and a white five-pointed star.",
+   "alt_fr": "Un drapeau rouge avec un croissant blanc et une étoile blanche à cinq branches."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Émirats arabes unis",
+   "Jordanie",
+   "Turquie",
+   "Qatar"
+  ],
+  "fact_fr": "Le croissant et l'étoile figuraient déjà sur les drapeaux ottomans ; le dessin a été fixé par la loi en 1936."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Qatar",
+   "Turkey",
+   "Israel",
+   "Jordan"
+  ],
+  "answer": 2,
+  "fact": "The design is taken from a prayer shawl, with the star placed between its two stripes.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Israel",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/960px-Flag_of_Israel.svg.png",
+   "by": "Israel Belkind and Fanny Abramovitch (original)\n“The Provisional Counc",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Israel.svg",
+   "fit": "contain",
+   "alt": "A white flag with two horizontal blue stripes and a blue six-pointed star in the centre.",
+   "alt_fr": "Un drapeau blanc à deux bandes horizontales bleues et une étoile bleue à six branches au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Qatar",
+   "Turquie",
+   "Israël",
+   "Jordanie"
+  ],
+  "fact_fr": "Le dessin reprend un châle de prière, l'étoile placée entre ses deux bandes."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Iran",
+   "United Arab Emirates",
+   "Jordan",
+   "Saudi Arabia"
+  ],
+  "answer": 3,
+  "fact": "Because the script is sacred, the flag is never flown at half-mast and is printed on both sides so it reads correctly either way.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Saudi_Arabia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/960px-Flag_of_Saudi_Arabia.svg.png",
+   "by": "The Shura Council",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Saudi_Arabia.svg",
+   "fit": "contain",
+   "alt": "A green flag with white Arabic script above a horizontal white sword.",
+   "alt_fr": "Un drapeau vert portant une inscription arabe blanche au-dessus d'un sabre blanc horizontal."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Iran",
+   "Émirats arabes unis",
+   "Jordanie",
+   "Arabie saoudite"
+  ],
+  "fact_fr": "L'inscription étant sacrée, ce drapeau n'est jamais mis en berne et il est imprimé des deux côtés pour se lire correctement."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Iran",
+   "Lebanon",
+   "Saudi Arabia",
+   "Turkey"
+  ],
+  "answer": 0,
+  "fact": "The thin decorative borders are not decoration: the same phrase is repeated 22 times, for a date in the revolution.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Iran",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Iran.svg/960px-Flag_of_Iran.svg.png",
+   "by": "SVG file: SiBr4Designer: Hamid NadimiConstruction: ISIRI",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Iran.svg",
+   "fit": "contain",
+   "alt": "Green, white and red horizontal bands with a red emblem in the centre and repeated white script along the band edges.",
+   "alt_fr": "Bandes horizontales verte, blanche et rouge avec un emblème rouge au centre et une inscription blanche répétée le long des bordures."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Iran",
+   "Liban",
+   "Arabie saoudite",
+   "Turquie"
+  ],
+  "fact_fr": "Les fines bordures ne sont pas décoratives : la même phrase y est répétée 22 fois, pour une date de la révolution."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Turkey",
+   "Lebanon",
+   "Iran",
+   "Israel"
+  ],
+  "answer": 1,
+  "fact": "The tree in the centre is a species named after the country, and it is mentioned repeatedly in the Bible.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Lebanon",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Lebanon.svg/960px-Flag_of_Lebanon.svg.png",
+   "by": "Henri Pharaon",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Lebanon.svg",
+   "fit": "contain",
+   "alt": "Red, a double-height white band, and red, with a green cedar tree in the centre.",
+   "alt_fr": "Rouge, une bande blanche de double hauteur, et rouge, avec un cèdre vert au centre."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Turquie",
+   "Liban",
+   "Iran",
+   "Israël"
+  ],
+  "fact_fr": "L'arbre du centre est une espèce qui porte le nom du pays, et il est cité à de nombreuses reprises dans la Bible."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Qatar",
+   "Turkey",
+   "Jordan",
+   "Lebanon"
+  ],
+  "answer": 2,
+  "fact": "The star's seven points stand for the seven verses of the opening chapter of the Quran.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Jordan",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Flag_of_Jordan.svg/960px-Flag_of_Jordan.svg.png",
+   "by": "Unknown",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Jordan.svg",
+   "fit": "contain",
+   "alt": "Black, white and green horizontal bands with a red hoist triangle bearing a white seven-pointed star.",
+   "alt_fr": "Bandes horizontales noire, blanche et verte avec un triangle rouge au guindant portant une étoile blanche à sept branches."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Qatar",
+   "Turquie",
+   "Jordanie",
+   "Liban"
+  ],
+  "fact_fr": "Les sept branches de l'étoile représentent les sept versets de la première sourate du Coran."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Israel",
+   "Qatar",
+   "Saudi Arabia",
+   "Jordan"
+  ],
+  "answer": 1,
+  "fact": "Its colour started as plain red dye that turned purple-brown in the sun — and the country kept the accident.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Qatar",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Qatar.svg/960px-Flag_of_Qatar.svg.png",
+   "by": "See File history below for details.",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Qatar.svg",
+   "fit": "contain",
+   "alt": "A maroon field with a white serrated band at the hoist.",
+   "alt_fr": "Un fond bordeaux avec une bande blanche dentelée au guindant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Israël",
+   "Qatar",
+   "Arabie saoudite",
+   "Jordanie"
+  ],
+  "fact_fr": "Sa couleur vient d'une teinture rouge devenue brun-violet au soleil, et le pays a gardé cet accident."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Israel",
+   "Jordan",
+   "Qatar",
+   "United Arab Emirates"
+  ],
+  "answer": 3,
+  "fact": "Its four colours appear in a 13th-century Arabic poem about the ideal qualities of a people.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_the_United_Arab_Emirates",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_United_Arab_Emirates.svg/960px-Flag_of_the_United_Arab_Emirates.svg.png",
+   "by": "Abdulla Mohammed Al Maainah",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_the_United_Arab_Emirates.svg",
+   "fit": "contain",
+   "alt": "A vertical red band at the hoist beside green, white and black horizontal bands.",
+   "alt_fr": "Une bande verticale rouge au guindant à côté de bandes horizontales verte, blanche et noire."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Israël",
+   "Jordanie",
+   "Qatar",
+   "Émirats arabes unis"
+  ],
+  "fact_fr": "Ses quatre couleurs figurent dans un poème arabe du XIIIe siècle sur les qualités idéales d'un peuple."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Fiji",
+   "Australia",
+   "New Zealand",
+   "Papua New Guinea"
+  ],
+  "answer": 1,
+  "fact": "The design was chosen in 1901 from a competition with over 32,000 entries; five people were judged to have won it jointly.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Australia",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Flag_of_Australia_%28converted%29.svg/960px-Flag_of_Australia_%28converted%29.svg.png",
+   "by": "Unknown  (Vector graphics image by Ian Fieggen) (only minor code chang",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Australia_%28converted%29.svg",
+   "fit": "contain",
+   "alt": "A blue flag with another country's flag in the canton, a large seven-pointed star below it, and five stars of the Southern Cross at the fly.",
+   "alt_fr": "Un drapeau bleu portant le drapeau d'un autre pays dans le canton, une grande étoile à sept branches en dessous, et cinq étoiles de la Croix du Sud au battant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Fidji",
+   "Australie",
+   "Nouvelle-Zélande",
+   "Papouasie-Nouvelle-Guinée"
+  ],
+  "fact_fr": "Le dessin a été choisi en 1901 lors d'un concours de plus de 32 000 propositions ; cinq personnes ont été déclarées gagnantes ensemble."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Fiji",
+   "New Zealand",
+   "Papua New Guinea",
+   "Australia"
+  ],
+  "answer": 1,
+  "fact": "A 2016 referendum asked whether to replace it. The country voted to keep it.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_New_Zealand",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/960px-Flag_of_New_Zealand.svg.png",
+   "by": "Original: Albert Hastings Markham Vector:  Zscout370, Hugh Jass, s. Fi",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_New_Zealand.svg",
+   "fit": "contain",
+   "alt": "A blue flag with another country's flag in the canton and four red stars outlined in white at the fly.",
+   "alt_fr": "Un drapeau bleu portant le drapeau d'un autre pays dans le canton et quatre étoiles rouges bordées de blanc au battant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Fidji",
+   "Nouvelle-Zélande",
+   "Papouasie-Nouvelle-Guinée",
+   "Australie"
+  ],
+  "fact_fr": "Un référendum de 2016 a proposé de le remplacer. Le pays a voté pour le garder."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Australia",
+   "New Zealand",
+   "Papua New Guinea",
+   "Fiji"
+  ],
+  "answer": 3,
+  "fact": "A plan to remove the other country's flag from the corner was announced in 2015 and then quietly dropped.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Fiji",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Fiji.svg/960px-Flag_of_Fiji.svg.png",
+   "by": "Tessa Mackenzie",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Fiji.svg",
+   "fit": "contain",
+   "alt": "A light blue flag with another country's flag in the canton and a shield at the fly.",
+   "alt_fr": "Un drapeau bleu clair portant le drapeau d'un autre pays dans le canton et un écu au battant."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Australie",
+   "Nouvelle-Zélande",
+   "Papouasie-Nouvelle-Guinée",
+   "Fidji"
+  ],
+  "fact_fr": "Un projet de retirer le drapeau étranger du coin a été annoncé en 2015, puis discrètement abandonné."
+ },
+ {
+  "cat": "Geography",
+  "sub": "Countries & Flags",
+  "diff": 2,
+  "kids": true,
+  "q": "Which country's flag is this?",
+  "options": [
+   "Australia",
+   "Papua New Guinea",
+   "New Zealand",
+   "Fiji"
+  ],
+  "answer": 1,
+  "fact": "It was designed by a teenager, whose entry won a national competition in 1971.",
+  "src": "https://en.wikipedia.org/wiki/Flag_of_Papua_New_Guinea",
+  "img": {
+   "u": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Flag_of_Papua_New_Guinea.svg/960px-Flag_of_Papua_New_Guinea.svg.png",
+   "by": "User:Nightstallion",
+   "lic": "Public domain",
+   "p": "https://commons.wikimedia.org/wiki/File:Flag_of_Papua_New_Guinea.svg",
+   "fit": "contain",
+   "alt": "Divided diagonally: a black upper triangle with the Southern Cross in white, and a red lower triangle with a golden bird of paradise.",
+   "alt_fr": "Divisé en diagonale : un triangle noir supérieur avec la Croix du Sud en blanc, et un triangle rouge inférieur avec un oiseau de paradis doré."
+  },
+  "q_fr": "De quel pays est ce drapeau ?",
+  "options_fr": [
+   "Australie",
+   "Papouasie-Nouvelle-Guinée",
+   "Nouvelle-Zélande",
+   "Fidji"
+  ],
+  "fact_fr": "Il a été dessiné par une adolescente, dont la proposition a remporté un concours national en 1971."
+ }
+]

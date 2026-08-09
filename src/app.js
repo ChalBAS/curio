@@ -76,9 +76,20 @@
     set: function (k, v) { try { localStorage.setItem("curio." + k, JSON.stringify(v)); } catch (e) {} }
   };
 
-  // ---------- stable question ids (hash of question text) ----------
+  // ---------- stable question ids ----------
+  // Hashed from the question text — plus the picture, but ONLY when there is
+  // one. All 68 flag questions ask "Which country's flag is this?", so on text
+  // alone they share a single id: one vault entry, one "mastered" flag, and 67
+  // questions the reader could never be shown again after answering any one of
+  // them.
+  //
+  // The `q.img &&` guard is not tidiness. Every existing question's id must not
+  // change, or every existing reader's vault is orphaned and pruneVault() wipes
+  // the facts they have been saving. Text-only questions hash exactly as they
+  // did before; only picture questions get the extra component.
   function qid(q) {
-    var h = 5381, s = q.q;
+    var s = q.q + (q.img && q.img.u ? "|" + q.img.u : "");
+    var h = 5381;
     for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
     return "q" + (h >>> 0).toString(36);
   }
@@ -210,7 +221,12 @@
     var order = shuffledIndices(q.options.length, seed);
     var opts = order.map(function (i) { return q.options[i]; });
     var ans = order.indexOf(q.answer);
-    return { id: qid(q), q: q.q, cat: q.cat, region: q.region, sub: q.sub, theme: q.theme, diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, options: opts, answer: ans };
+    // This rebuilds the question rather than copying it, so any field not named
+    // here is silently dropped on the way to the screen — which is how the flag
+    // pictures vanished the first time they shipped. Keep it exhaustive.
+    return { id: qid(q), q: q.q, cat: q.cat, region: q.region, sub: q.sub, theme: q.theme,
+             diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, img: q.img,
+             options: opts, answer: ans };
   }
   var REGION_LABEL = { Africa: "Africa", Americas: "Americas", Asia: "Asia", Europe: "Europe", MiddleEast: "Middle East", Global: "Global" };
   function srcLink(url) {
@@ -1279,9 +1295,35 @@
       var catLabel = q.theme || q.cat || "";
       var catEmoji = CAT_EMOJI[q.cat] || cfg.emoji || "";
       var regionBit = q.region && REGION_LABEL[q.region] ? ' · ' + t(REGION_LABEL[q.region]) : "";
+      // A question can carry its own picture. Needed the moment "Countries &
+      // Flags" became a real section: "the quiz needs to show a flag and the
+      // user finds the country" (CEO, 2026-08-09) — which is impossible to ask
+      // in words without giving the answer away. The picture sits ABOVE the
+      // question text, because it IS the question.
+      //
+      // Flag emoji cannot do this job: Windows ships no flag glyphs at all, so
+      // a third of readers would see two letters where the flag should be —
+      // and those two letters are the answer. Hence real images.
+      var artHtml = "";
+      if (q.img && q.img.u) {
+        // The alt text is not a label, it is the question restated for someone
+        // who cannot see it — so it has to be in the reader's language like
+        // everything else they read. It shipped in English first and that made
+        // it useless to exactly the French readers it exists for.
+        var alt = (QLANG === "fr" && q.img.alt_fr) || q.img.alt || "";
+        artHtml =
+          '<div class="qart' + (q.img.fit === "contain" ? " is-contain" : "") + '">' +
+            '<img src="' + esc(q.img.u) + '" alt="' + esc(alt) + '" decoding="async">' +
+          '</div>' +
+          (q.img.by ? '<div class="qart-credit">' +
+            (q.img.p ? '<a href="' + srcLink0(q.img.p) + '" target="_blank" rel="noopener">' : '') +
+            esc(q.img.by) + (q.img.lic ? ' · ' + esc(q.img.lic) : '') +
+            (q.img.p ? '</a>' : '') + '</div>' : '');
+      }
       var body = el(
         '<div>' +
           '<span class="qcat">' + catEmoji + " " + esc(t(catLabel)) + regionBit + ' · ' + [t("Easy"), t("Medium"), t("Hard")][q.diff - 1] + (cfg.vault ? ' · 🗝️ ' + t("Vault") : '') + '</span>' +
+          artHtml +
           '<div class="qtext">' + fmt(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read this question aloud") + '">🔊</button>' : '') + '</div>' +
           '<div class="opts"></div>' +
         '</div>'
@@ -1875,7 +1917,7 @@
           '<p>' + esc(p.blurb) + '</p>' +
         '</div>'
       );
-      card.addEventListener("click", function () { cityPackView(p); });
+      card.addEventListener("click", function () { render(cityPackView(p)); });
       container.appendChild(card);
     });
   }
@@ -1889,6 +1931,11 @@
     return wrap;
   }
 
+  // Returns the node; the CALLER renders it — same contract as laneView and
+  // every other view here. It used to call render() itself and return nothing,
+  // so the one call site that wrapped it — the city cards on Home — was doing
+  // render(undefined) and wiping the page to blank. The card looked dead
+  // ("not linked to anything", CEO 2026-08-09); it was worse than dead.
   function cityPackView(pack) {
     var node = el('<div class="grid"></div>');
     node.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Cities") + '</button><h2 style="margin:0 auto">' + (pack.emoji || "🌍") + ' ' + esc(pack.city) + '</h2><span style="width:64px"></span></div>'));
@@ -1922,7 +1969,6 @@
       node.appendChild(tcard);
     }
 
-    render(node);
     node.querySelector("#back").addEventListener("click", function () { render(cityHomeView()); });
     play.querySelector("#playCity").addEventListener("click", function () {
       runQuiz({
@@ -1944,10 +1990,11 @@
           );
           render(res);
           res.querySelector("#again").addEventListener("click", function () { play.querySelector("#playCity").click(); });
-          res.querySelector("#pack").addEventListener("click", function () { cityPackView(pack); });
+          res.querySelector("#pack").addEventListener("click", function () { render(cityPackView(pack)); });
         }
       });
     });
+    return node;
   }
 
   // Speak a phrase in its own language when the browser has a matching voice.

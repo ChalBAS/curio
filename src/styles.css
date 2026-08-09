@@ -343,6 +343,34 @@ body {
 .hcontrast .topic, .hcontrast .way { border-width: 2px; }
 .hcontrast .way.is-off { opacity: .8; }
 
+/* A picture that IS the question — a flag to identify, a diagram to read.
+   `contain` on purpose for flags: a flag cropped to fill is a different flag,
+   and several national flags differ only in their proportions. The checked
+   background is what stops a white flag (Japan) from vanishing into the card. */
+.qart {
+  margin: 10px 0 4px; border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--line); background: var(--bg2);
+  aspect-ratio: 3 / 2; display: grid; place-items: center;
+}
+.qart img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.qart.is-contain {
+  padding: 10px;
+  background-color: #eef1f6;
+  background-image:
+    linear-gradient(45deg, rgba(0,0,0,.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.05) 75%),
+    linear-gradient(45deg, rgba(0,0,0,.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.05) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+.qart.is-contain img {
+  width: auto; height: auto; max-width: 100%; max-height: 100%;
+  object-fit: contain; border-radius: 3px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.28);
+}
+.qart-credit { font-size: 10.5px; color: var(--muted); margin: 0 0 2px; text-align: right; }
+.qart-credit a { color: inherit; }
+@media (min-width: 560px) { .qart { max-height: 260px; aspect-ratio: auto; height: 240px; } }
+
 /* The country select. A native control on purpose — a phone gives it its own
    search, scroll and screen-reader behaviour for free, and 200 options is
    exactly where a custom widget starts costing more than it gives. Sized to
