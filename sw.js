@@ -2,31 +2,31 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v56";
+const CACHE = "qpio-v57";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
 const NUDGE_CACHE = "qpio-nudge";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=56",
-  "./brand/qpio-mark-96.png?v=56",
-  "./brand/icons/qpio-icon-96.png?v=56",
-  "./brand/qpio-lockup-header.png?v=56",
-  "./src/i18n.js?v=56",
-  "./src/questions.fr.js?v=56",
-  "./src/truthlab.fr.js?v=56",
-  "./src/app.js?v=56",
-  "./src/questions.js?v=56",
-  "./src/truthlab.js?v=56",
-  "./src/citypacks.js?v=56",
-  "./src/entities.fr.js?v=56",
-  "./src/entities.img.js?v=56",
-  "./src/entities.meta.js?v=56",
-  "./src/country.js?v=56",
-  "./src/golinks.js?v=56",
-  "./src/hooks.js?v=56",
-  "./src/discovery.js?v=56",
+  "./src/styles.css?v=57",
+  "./brand/qpio-mark-96.png?v=57",
+  "./brand/icons/qpio-icon-96.png?v=57",
+  "./brand/qpio-lockup-header.png?v=57",
+  "./src/i18n.js?v=57",
+  "./src/questions.fr.js?v=57",
+  "./src/truthlab.fr.js?v=57",
+  "./src/app.js?v=57",
+  "./src/questions.js?v=57",
+  "./src/truthlab.js?v=57",
+  "./src/citypacks.js?v=57",
+  "./src/entities.fr.js?v=57",
+  "./src/entities.img.js?v=57",
+  "./src/entities.meta.js?v=57",
+  "./src/country.js?v=57",
+  "./src/golinks.js?v=57",
+  "./src/hooks.js?v=57",
+  "./src/discovery.js?v=57",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",

@@ -23,9 +23,47 @@
   }
 
   // ---------- question banks (per-language; FR falls back to EN while empty) ----------
+  //
+  // ONE SOURCE OF TRUTH FOR EVERYTHING THAT IS NOT WORDS.
+  //
+  // questions.fr.js is a translation: same questions, same order, same correct
+  // answer. Only q / options / fact differ. Everything else — the Wikipedia
+  // source, the category, the sub-category, the region, the difficulty — is
+  // language-independent, and keeping a second copy of it meant a second copy
+  // to forget. It was forgotten three times over (found 2026-08-09):
+  //
+  //   · 40 French questions had NO src. A French reader got a discovery card
+  //     with no title, no picture, no hook and no buttons — a blank box. The
+  //     English half of this exact bug was fixed the day before and the fix
+  //     was never mirrored.
+  //   · `sub` was missing from all 262. Every Science-discipline and
+  //     Geography sub-filter returned nothing at all in French — features the
+  //     CEO had specifically asked for, silently dead in one language.
+  //   · One question was Science in English and Tech in French.
+  //
+  // So the French bank no longer supplies that metadata: it is overlaid from
+  // the English bank by index. The guard is the correct-answer index, which
+  // must match at every position — if it ever does not, the banks are not
+  // aligned, the merge is unsafe, and we use the French bank untouched.
   var Q_EN = window.CURIO_QUESTIONS || [];
   var Q_FR = window.CURIO_QUESTIONS_FR || [];
-  var Q = (QLANG === "fr" && Q_FR.length) ? Q_FR : Q_EN;
+
+  function mergeTranslated(en, fr) {
+    if (!en.length || en.length !== fr.length) return fr;
+    for (var i = 0; i < en.length; i++) {
+      if (en[i].answer !== fr[i].answer) return fr;   // not aligned — do not touch
+    }
+    return fr.map(function (f, i) {
+      var e = en[i], out = {}, k;
+      for (k in e) if (e.hasOwnProperty(k)) out[k] = e[k];       // all metadata
+      for (k in f) if (f.hasOwnProperty(k)) {
+        if (k === "q" || k === "options" || k === "fact") out[k] = f[k];   // the words
+      }
+      return out;
+    });
+  }
+
+  var Q = (QLANG === "fr" && Q_FR.length) ? mergeTranslated(Q_EN, Q_FR) : Q_EN;
   var CATS = ["History", "Science", "Geography", "Arts", "Tech", "Nature"];
   var CAT_EMOJI = { History: "🏛️", Science: "🔬", Geography: "🌍", Arts: "🎨", Tech: "💻", Nature: "🌿" };
   var DAILY_COUNT = 5;
