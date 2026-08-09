@@ -852,13 +852,74 @@
     if (!notifySupported()) return "unsupported";
     return Notification.permission;   // default | granted | denied
   }
+  // WAKING A PHONE WITHOUT A SERVER.
+  //
+  // A page cannot wake itself, and Qpio has no server to push from — so the
+  // 60-second timer below only ever fires while the app is open, which is not
+  // what anyone means by a daily notification. Periodic Background Sync is the
+  // one mechanism that closes that gap with no backend: Chrome on Android wakes
+  // an INSTALLED PWA's service worker on its own schedule (roughly daily, the
+  // browser decides, and it will not do it at all for a site the reader does
+  // not actually use). Unsupported everywhere else, including every iPhone.
+  //
+  // The service worker has no access to the question bank or to localStorage,
+  // so the page leaves it a week of questions in the Cache API — one entry per
+  // date, marked done when that day is played. See sw.js "periodicsync".
+  var NUDGE_CACHE = "qpio-nudge";
+  var NUDGE_URL = "./nudge-queue.json";
+
+  function dailyFirstFor(offset) {
+    var p = pool();
+    if (!p.length) return null;
+    var d = new Date(Date.now() + offset * 86400000);
+    var seed = dayNumber(d) + (settings.ageMode === "kids" ? 51000 : 1);
+    var order = shuffledIndices(p.length, seed);
+    return p[order[0]] || null;
+  }
+
+  function primeNudge() {
+    if (!("caches" in window)) return;
+    var queue = {};
+    for (var i = 0; i < 7; i++) {
+      var key = addDaysKey(i);
+      var q = dailyFirstFor(i);
+      if (!q) continue;
+      queue[key] = {
+        q: q.q,
+        done: !!LS.get("daily." + key + (settings.ageMode === "kids" ? ".kids" : ""), null)
+      };
+    }
+    try {
+      caches.open(NUDGE_CACHE).then(function (c) {
+        c.put(NUDGE_URL, new Response(JSON.stringify({ v: 1, on: !!LS.get("nudge", false), days: queue }),
+          { headers: { "Content-Type": "application/json" } }));
+      });
+    } catch (e) {}
+  }
+
+  function registerPeriodicNudge() {
+    if (!("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.ready.then(function (reg) {
+      if (!reg.periodicSync) return;   // not Chrome/Android, or not installed
+      // The permission is granted by the browser on engagement, not by a
+      // prompt; a refusal here is normal and must stay silent.
+      navigator.permissions.query({ name: "periodic-background-sync" })
+        .then(function (p) {
+          if (p.state !== "granted") return;
+          reg.periodicSync.register("qpio-daily", { minInterval: 12 * 60 * 60 * 1000 }).catch(function () {});
+        })
+        .catch(function () {});
+    }).catch(function () {});
+  }
+
   function scheduleDailyNudge() {
+    primeNudge();
     if (notifyState() !== "granted" || !LS.get("nudge", false)) return;
+    registerPeriodicNudge();
     var q = dailyQuestions()[0];
     if (!q) return;
-    // Fire when the tab is idle-ish rather than at a wall-clock hour we cannot
-    // guarantee: a static page cannot wake itself, so the honest version is a
-    // nudge the next time the app has been open and unplayed for a while.
+    // The in-app fallback, for every platform Periodic Background Sync does not
+    // reach: a nudge once the app has been open and unplayed for a minute.
     if (LS.get(dailyKey(), null)) return;             // already played today
     if (LS.get("nudgeSent." + todayKey(), false)) return;
     setTimeout(function () {
@@ -886,7 +947,11 @@
         '<p class="mini" style="margin:0 0 12px">' +
           (state === "unsupported"
             ? t("Your browser cannot show notifications. On iPhone, add Qpio to your home screen first.")
-            : t("Get today's actual question as a notification — not a reminder to play, the question itself. Turn it off any time.")) +
+            // Says exactly what it does on the reader's own device. Qpio has no
+            // server, so on Android the phone itself wakes the app once a day
+            // — and everywhere else the question can only arrive while Qpio is
+            // open. Promising more than that would be a lie we could not fix.
+            : t("Get today's actual question as a notification — not a reminder to play, the question itself. On Android, install Qpio to your home screen and your phone will deliver it once a day on its own. Elsewhere it arrives while Qpio is open. Turn it off any time.")) +
         '</p>' +
         (state === "unsupported" ? '' :
           '<div class="btnrow"><button class="btn' + (on ? " ghost" : "") + '" id="nudgeBtn">' +
@@ -898,7 +963,17 @@
     var msg = node.querySelector("#nudgeMsg");
     if (state === "denied") msg.textContent = t("Notifications are blocked for this site in your browser settings.");
     if (btn) btn.addEventListener("click", function () {
-      if (on) { LS.set("nudge", false); renderTab("settings"); return; }
+      if (on) {
+        LS.set("nudge", false);
+        primeNudge();   // the service worker reads `on` from the queue, so off means off
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.ready.then(function (reg) {
+            if (reg.periodicSync) reg.periodicSync.unregister("qpio-daily").catch(function () {});
+          }).catch(function () {});
+        }
+        renderTab("settings");
+        return;
+      }
       Notification.requestPermission().then(function (p) {
         if (p === "granted") { LS.set("nudge", true); scheduleDailyNudge(); }
         renderTab("settings");
@@ -907,9 +982,56 @@
     return node;
   }
 
+  // WHO YOU REPRESENT.
+  //
+  // Three uses, in the order they arrive: Read has to send a reader somewhere
+  // that can actually serve them (Bookshop.org ships US and UK only, so
+  // everyone else was being sent to a checkout that would refuse them); Visit
+  // should later prefer the nearest exhibition over the most famous one; and
+  // country leaderboards need a country. The CEO's frame is the CrossFit
+  // Games — you compete for a country you choose to represent, which is why
+  // the question is "represent", not "where are you".
+  //
+  // A native <select> on purpose: 200 options with a phone's own search, its
+  // own scroll and its own accessibility, for no code and no bytes. Nothing
+  // custom could beat it and several things could break it.
+  //
+  // No IP lookup, no Geolocation permission, no transmission — see country.js.
+  function countryCard() {
+    var C = window.CURIO_COUNTRY;
+    if (!C) return el('<div class="hidden"></div>');
+    var cur = C.get();
+    var node = el(
+      '<div class="card">' +
+        '<div class="section-title" style="margin-top:0">' +
+          ((cur && C.flagOf(cur)) || "🌍") + ' ' + t("The country you represent") + '</div>' +
+        '<p class="mini" style="margin:0 0 12px">' +
+          t("Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It stays on this device — Qpio has no server to send it to.") +
+        '</p>' +
+        '<select class="cselect" id="ccSel" aria-label="' + esc(t("The country you represent")) + '">' +
+          '<option value="">' + t("Prefer not to say") + '</option>' +
+        '</select>' +
+      '</div>'
+    );
+    var sel = node.querySelector("#ccSel");
+    C.list().forEach(function (c) {
+      var o = document.createElement("option");
+      o.value = c.code;
+      o.textContent = c.label;
+      if (c.code === cur) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener("change", function () {
+      C.set(sel.value || null);
+      renderTab("settings");   // the flag in the title follows the choice
+    });
+    return node;
+  }
+
   function settingsTabView() { // mobile Settings: comfort content, no back header
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(nudgeCard());
+    wrap.appendChild(countryCard());
     wrap.appendChild(backupCard());
     wrap.appendChild(comfortView(true));
     return wrap;
@@ -1309,6 +1431,7 @@
         var s = bumpStreak();
         var rec = { score: r.correct, total: r.total, marks: r.marks, streak: s.count, date: todayKey() };
         LS.set(dailyKey(), rec);
+        primeNudge();          // today is done — the service worker must not nudge about it
         dailyResultView(rec, false);
       }
     });
@@ -1441,32 +1564,62 @@
           '</a>'
         : '<div class="topic-art" aria-hidden="true"><span class="topic-emoji">' + art + '</span></div>';
 
+      // THE CARD, rebuilt 2026-08-09 from the CEO's phone. Three defects, one
+      // cause: the old card was one horizontal row — thumbnail, then a column
+      // holding badge, name, hook and three buttons side by side. On a 356px
+      // screen that column is ~250px wide, so the buttons ran past the card
+      // edge and the hook was clamped to two lines and cut mid-sentence. A hook
+      // you cannot finish reading cannot pull anyone anywhere.
+      //
+      // Now: picture and words on top, actions on their own full-width row
+      // underneath. The correct/missed word is gone — a ✓ or ✗ on the corner of
+      // the photograph says the same thing in no space at all and needs no
+      // translation. That returned a whole line to the name and the hook, which
+      // is why they now sit higher and the hook runs in full.
       var node = el(
         '<div class="topic' + (missed ? " is-missed" : "") + '">' +
-          artHtml +
-          '<div class="topic-body">' +
-            '<span class="topic-badge">' + (missed ? t("Missed") : t("Correct")) + '</span>' +
-            '<h4 class="topic-name">' + esc(name) + '</h4>' +
-            (hook ? '<p class="topic-hook">' + fmt(hook) + '</p>' : '') +
-            '<div class="topic-ways"></div>' +
+          '<div class="topic-top">' +
+            artHtml +
+            '<div class="topic-body">' +
+              '<h4 class="topic-name">' + esc(name) + '</h4>' +
+              (hook ? '<p class="topic-hook">' + fmt(hook) + '</p>' : '') +
+            '</div>' +
           '</div>' +
+          '<div class="topic-ways"></div>' +
         '</div>'
       );
 
+      // The verdict, as a mark on the picture. Screen readers still get the
+      // word — the mark is decorative, the label carries the meaning.
+      var artNode = node.querySelector(".topic-art");
+      if (artNode) {
+        artNode.appendChild(el(
+          '<span class="topic-mark" role="img" aria-label="' +
+            esc(missed ? t("Missed") : t("Correct")) + '">' +
+            (missed ? "✗" : "✓") + '</span>'
+        ));
+      }
+
+      // Four slots, same four, same order, every card. A slot with no
+      // destination is drawn greyed and is not a link at all — not a link that
+      // does nothing, an element that was never a link. See golinks.js goFor().
       var ways = node.querySelector(".topic-ways");
       item.dest.forEach(function (d) {
-        var label =
-          d.kind === "see"   ? t("Visit") :
-          d.kind === "visit" ? t("Visit") :
-          d.kind === "read"  ? t("Read") :
-                               t("Sources");
-        var a = el(
-          '<a class="way" href="' + srcLink0(d.url) + '" target="_blank" rel="noopener">' +
-            '<span class="way-ico" aria-hidden="true">' + d.icon + '</span>' + label +
-          '</a>'
-        );
-        // The card is tappable as a whole; a way must not fire it twice.
-        a.addEventListener("click", function (e) { e.stopPropagation(); });
+        var label = t(d.label);
+        var inner = '<span class="way-ico" aria-hidden="true">' + d.icon + '</span>' +
+                    '<span class="way-txt">' + label + '</span>';
+        var a;
+        if (d.on) {
+          a = el('<a class="way" href="' + srcLink0(d.url) + '" target="_blank" rel="noopener"' +
+                 (d.title ? ' title="' + esc(d.title + (d.sub ? " · " + d.sub : "")) + '"' : '') +
+                 '>' + inner + '</a>');
+          // The card is tappable as a whole; a way must not fire it twice.
+          a.addEventListener("click", function (e) { e.stopPropagation(); });
+        } else {
+          a = el('<span class="way is-off" aria-disabled="true" title="' +
+                 esc(t("Nothing here yet")) + '">' + inner + '</span>');
+          a.addEventListener("click", function (e) { e.stopPropagation(); });
+        }
         ways.appendChild(a);
       });
 
@@ -1479,7 +1632,7 @@
       // Tap anywhere → the best destination for this topic. Keyboard users tab
       // straight to the individual ways, so the card needs no tabindex of its
       // own — no duplicate stop, no invented widget role.
-      var primary = item.dest[0];
+      var primary = window.CURIO_GO.primaryOf(item.dest);
       if (primary) {
         node.addEventListener("click", function () {
           window.open(srcLink0(primary.url), "_blank", "noopener");
@@ -1930,6 +2083,13 @@
       // screen appeared to name a date nobody could explain (CEO, 2026-08-09).
       { emoji: "🗓️", title: t("Five questions a day."),
         text: t("Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.") },
+      // Asked here rather than buried in Settings, because it changes where
+      // "Read" sends someone from their very first round — and because the
+      // country you represent is part of what Qpio is, not a preference.
+      // Skippable in one tap; everything works without it.
+      { emoji: "🌍", title: t("Which country do you represent?"),
+        text: t("It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It never leaves this device."),
+        pick: "country" },
       { emoji: "⚙️", title: t("Made for the way you learn."),
         text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. An account is optional: you only need one if you want your progress on more than one device.") }
     ];
@@ -1943,6 +2103,8 @@
         '<div class="onb-emoji">' + s.emoji + '</div>' +
         '<h1 class="onb-title">' + s.title + '</h1>' +
         '<p class="onb-text">' + s.text + '</p>' +
+        (s.pick === "country" ? '<select class="cselect" id="onbCC" aria-label="' +
+          esc(t("The country you represent")) + '"></select>' : '') +
         '<div class="onb-dots">' + dots + '</div>' +
         '<div class="btnrow" style="justify-content:center">' +
           // Back from screen two onwards: three screens with no way to reread
@@ -1953,6 +2115,26 @@
         '</div>' +
       '</div>'
     );
+    // The browser's own locale gives a decent first guess ("fr-CH" → 🇨🇭), so
+    // most readers confirm rather than hunt through 200 entries. It is only
+    // ever pre-selected, never stored without the reader leaving it there —
+    // and no lookup, no permission prompt, no network call is involved.
+    var cc = node.querySelector("#onbCC");
+    if (cc && window.CURIO_COUNTRY) {
+      var C = window.CURIO_COUNTRY;
+      var pre = C.get() || C.guess();
+      cc.appendChild(el('<option value="">' + t("Prefer not to say") + '</option>'));
+      C.list().forEach(function (c) {
+        var o = document.createElement("option");
+        o.value = c.code;
+        o.textContent = c.label;
+        if (c.code === pre) o.selected = true;
+        cc.appendChild(o);
+      });
+      cc.addEventListener("change", function () { C.set(cc.value || null); });
+      if (pre) C.set(pre);   // the pre-selection is what the screen shows, so it is what we honour
+    }
+
     render(node);
     function finish(toDaily) {
       LS.set("onboarded", true);

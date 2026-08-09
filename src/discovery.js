@@ -68,7 +68,11 @@
     var go = GO();
     var title = go.titleOf ? go.titleOf(slug) : slug.replace(/_/g, " ");
     var dest = q && go.goFor ? go.goFor(q) : [];
-    var primary = dest.filter(function (d) { return d.kind !== "source"; })[0] || dest[0] || null;
+    // goFor now returns four fixed slots, some with nothing behind them, so
+    // "the first one" is no longer the right answer — the first one that has
+    // somewhere to go is (golinks.js, 2026-08-09).
+    var primary = go.primaryOf ? go.primaryOf(dest)
+      : dest.filter(function (d) { return d.kind !== "source"; })[0] || dest[0] || null;
     var type = meta.t || "idea";
 
     return {
@@ -175,10 +179,15 @@
     var name = item.title;
     var places = GO().places || {};
     if (shelf === "watch") {
-      copy.url = "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " documentary");
+      // One definition of each destination, in golinks.js. Two copies of the
+      // Bookshop URL is how a reader in Seoul kept being sent to a shop that
+      // could not post to them even after that was supposedly fixed.
+      copy.url = GO().watchUrl ? GO().watchUrl(name)
+        : "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " documentary");
       copy.provider = "youtube";
     } else if (shelf === "read") {
-      copy.url = "https://bookshop.org/search?keywords=" + encodeURIComponent(name);
+      copy.url = GO().readUrl ? GO().readUrl(name)
+        : "https://bookshop.org/search?keywords=" + encodeURIComponent(name);
       copy.provider = "bookshop";
     } else if (shelf === "meet" || shelf === "deeper") {
       // Meeting a person means reading about them, not buying a book about

@@ -2,27 +2,31 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v55";
+const CACHE = "qpio-v56";
+// Not a versioned asset: the page's week of daily questions, read by the
+// periodicsync handler at the bottom of this file. Survives every release.
+const NUDGE_CACHE = "qpio-nudge";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=55",
-  "./brand/qpio-mark-96.png?v=55",
-  "./brand/icons/qpio-icon-96.png?v=55",
-  "./brand/qpio-lockup-header.png?v=55",
-  "./src/i18n.js?v=55",
-  "./src/questions.fr.js?v=55",
-  "./src/truthlab.fr.js?v=55",
-  "./src/app.js?v=55",
-  "./src/questions.js?v=55",
-  "./src/truthlab.js?v=55",
-  "./src/citypacks.js?v=55",
-  "./src/entities.fr.js?v=55",
-  "./src/entities.img.js?v=55",
-  "./src/entities.meta.js?v=55",
-  "./src/golinks.js?v=55",
-  "./src/hooks.js?v=55",
-  "./src/discovery.js?v=55",
+  "./src/styles.css?v=56",
+  "./brand/qpio-mark-96.png?v=56",
+  "./brand/icons/qpio-icon-96.png?v=56",
+  "./brand/qpio-lockup-header.png?v=56",
+  "./src/i18n.js?v=56",
+  "./src/questions.fr.js?v=56",
+  "./src/truthlab.fr.js?v=56",
+  "./src/app.js?v=56",
+  "./src/questions.js?v=56",
+  "./src/truthlab.js?v=56",
+  "./src/citypacks.js?v=56",
+  "./src/entities.fr.js?v=56",
+  "./src/entities.img.js?v=56",
+  "./src/entities.meta.js?v=56",
+  "./src/country.js?v=56",
+  "./src/golinks.js?v=56",
+  "./src/hooks.js?v=56",
+  "./src/discovery.js?v=56",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",
@@ -39,10 +43,15 @@ self.addEventListener("install", (e) => {
   );
 });
 
+// Sweep last release's asset caches — but NOT the nudge queue, which is not a
+// versioned asset and would otherwise be wiped on every release, silently
+// killing the daily notification the first time we shipped anything.
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+      Promise.all(keys
+        .filter((k) => k !== CACHE && k !== NUDGE_CACHE)
+        .map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   );
 });
@@ -97,6 +106,53 @@ self.addEventListener("fetch", (e) => {
       return hit || net;
     })
   );
+});
+
+// THE DAILY QUESTION, DELIVERED WITHOUT A SERVER.
+//
+// Chrome on Android wakes an installed PWA's service worker on a schedule it
+// chooses — roughly daily, and only for a site the reader genuinely uses. That
+// is the only way to reach a closed phone with no backend and no push service.
+// It does not exist on iOS or on desktop Safari/Firefox, where the question can
+// only arrive while Qpio is open. See app.js registerPeriodicNudge().
+//
+// The worker has no localStorage and no question bank, so the page leaves it a
+// week of questions in its own cache: { on, days: { "2026-08-10": {q, done} } }.
+// Nothing here decides anything — it reads what the page already knew.
+const NUDGE_URL = "./nudge-queue.json";
+
+async function nudgeToday() {
+  const c = await caches.open(NUDGE_CACHE);
+  const hit = await c.match(NUDGE_URL);
+  if (!hit) return;
+  const data = await hit.json().catch(() => null);
+  if (!data || !data.on || !data.days) return;
+
+  const n = new Date();
+  const key = n.getFullYear() + "-" +
+    String(n.getMonth() + 1).padStart(2, "0") + "-" +
+    String(n.getDate()).padStart(2, "0");
+  const day = data.days[key];
+  if (!day || day.done || day.sent) return;
+
+  await self.registration.showNotification("Qpio", {
+    body: day.q,                                 // the question itself, not a reminder to play
+    tag: "qpio-daily-" + key,
+    badge: "icons/favicon-32.png",
+    icon: "brand/icons/qpio-icon-192.png",
+    data: { url: "./#daily" }
+  });
+
+  // Marked here rather than by the page: the page may not open for days, and
+  // the same question must not arrive twice.
+  day.sent = true;
+  await c.put(NUDGE_URL, new Response(JSON.stringify(data), {
+    headers: { "Content-Type": "application/json" }
+  }));
+}
+
+self.addEventListener("periodicsync", (e) => {
+  if (e.tag === "qpio-daily") e.waitUntil(nudgeToday());
 });
 
 // Tapping the daily question opens the app rather than a blank tab.

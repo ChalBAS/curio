@@ -95,12 +95,28 @@
   // that is an editorial choice about who we send readers to, and it is the
   // kind of choice that must stay ours (VAL-12).
   //
-  // KNOWN GAP: Bookshop.org ships US and UK only, so a reader in Korea is sent
-  // to a shop that cannot serve them. The fix is an international-shipping
-  // default first, geo-aware later (CEO, 2026-08-08). Recorded here because it
-  // is a real defect, not a placeholder.
+  // CLOSED 2026-08-09 — Bookshop.org ships US and UK only, so every reader
+  // outside those two countries was being sent to a checkout that would refuse
+  // them. Now: US and UK readers get their own Bookshop; everyone else — and
+  // anyone who has not said where they are — goes to WorldCat, which finds the
+  // book in a library near them, works in every country, and costs nothing to
+  // borrow. For a product whose first promise is that knowledge is free, the
+  // library is not a fallback. It is arguably the better answer.
   function readUrl(title) {
-    return "https://bookshop.org/search?keywords=" + encodeURIComponent(title);
+    var C = window.CURIO_COUNTRY;
+    var cc = C && C.get ? C.get() : null;
+    if (cc === "US") return "https://bookshop.org/search?keywords=" + encodeURIComponent(title);
+    if (cc === "GB") return "https://uk.bookshop.org/search?keywords=" + encodeURIComponent(title);
+    return "https://search.worldcat.org/search?q=" + encodeURIComponent(title);
+  }
+
+  // Watching. There is no curated video list and there should not be a fake
+  // one: a search on the topic is honest about what it is, and it is the same
+  // thing the Documentaries lane already does. The search term is written in
+  // the reader's own language so a French reader gets French documentaries.
+  function watchUrl(title) {
+    var word = window.QLANG === "fr" ? " documentaire" : " documentary";
+    return "https://www.youtube.com/results?search_query=" + encodeURIComponent(title + word);
   }
 
   // The slug is the entity. "Rock-Hewn_Churches,_Lalibela" → "Rock-Hewn Churches, Lalibela".
@@ -148,27 +164,58 @@
     return q.src;
   }
 
-  // Returns the destinations for one question, best-for-the-learner first.
-  // Order is fixed by usefulness and can never be bought (VAL-12).
-  function goFor(q) {
-    var out = [];
-    var slug = entityOf(q);
-    if (!slug) return out;
-    var title = titleOf(slug);
+  // FOUR SLOTS, ALWAYS THE SAME FOUR, ALWAYS IN THIS ORDER.
+  //
+  // Until 2026-08-09 this returned only the destinations that existed, so the
+  // buttons moved: a topic with a museum showed Visit·Read·Sources, one without
+  // showed Read·Sources, and the same word sat in a different place on every
+  // card. The CEO: "the buttons are in different order depending on the
+  // question, this is confusing for the user."
+  //
+  // So the shape of the card is now fixed and the CONTENT varies. A slot with
+  // nothing behind it is still drawn, greyed and unclickable — which turns the
+  // absence into information: a reader learns at a glance that this topic has
+  // nowhere to visit, and recognises instantly when one appears. Showing the
+  // shape of what we do not have yet is only honest as long as it is visibly
+  // off; it must never look tappable.
+  //
+  // Order is fixed by usefulness and can never be bought (VAL-12). `on:false`
+  // means no destination exists — never that someone declined to pay.
+  var SLOTS = [
+    { kind: "read",   icon: "📚", label: "Read" },
+    { kind: "visit",  icon: "🏛️", label: "Visit" },
+    { kind: "watch",  icon: "🎬", label: "Watch" },
+    { kind: "source", icon: "📖", label: "Sources" }
+  ];
 
+  function goFor(q) {
+    var slug = entityOf(q);
+    if (!slug) return [];
+    var title = titleOf(slug);
     var p = PLACES[slug];
-    if (p) {
-      out.push({
-        kind: p.kind === "hold" ? "see" : "visit",
-        icon: p.kind === "hold" ? "🏛️" : "🗺️",
-        title: p.where,
-        sub: p.city,
-        url: p.url
-      });
-    }
-    out.push({ kind: "read", icon: "📚", title: title, sub: "", url: readUrl(title) });
-    if (q.src) out.push({ kind: "source", icon: "📖", title: "", sub: "", url: sourceUrl(q) });
-    return out;
+    var src = q && q.src ? sourceUrl(q) : null;
+
+    var made = {
+      read:   { title: title, sub: "", url: readUrl(title) },
+      visit:  p ? { title: p.where, sub: p.city, url: p.url } : { title: "", sub: "", url: null },
+      watch:  { title: title, sub: "", url: watchUrl(title) },
+      source: { title: "", sub: "", url: src }
+    };
+
+    return SLOTS.map(function (s) {
+      var d = made[s.kind];
+      return {
+        kind: s.kind, icon: s.icon, label: s.label,
+        title: d.title, sub: d.sub, url: d.url, on: !!d.url
+      };
+    });
+  }
+
+  // The one destination a whole-card tap should open: the first slot that has
+  // somewhere to go and is not just the citation.
+  function primaryOf(dest) {
+    var d = (dest || []).filter(function (x) { return x.on && x.kind !== "source"; })[0];
+    return d || (dest || []).filter(function (x) { return x.on; })[0] || null;
   }
 
   // ---------- Keep exploring ----------
@@ -190,7 +237,7 @@
   // row reads like a shelf of covers rather than a row of buttons.
   var LANES = [
     { id: "docs",   icon: "🎬", label: "Documentaries",         art: "Great_Barrier_Reef",
-      url: function (n) { return "https://www.youtube.com/results?search_query=" + encodeURIComponent((n || "history") + " documentary"); } },
+      url: function (n) { return watchUrl(n || "history"); } },
     { id: "books",  icon: "📚", label: "Books",                 art: "Timbuktu",
       url: function (n) { return readUrl(n || "history"); } },
     { id: "museum", icon: "🏛️", label: "Museums & Exhibitions", art: "Mona_Lisa", prefer: "hold",
@@ -242,7 +289,8 @@
   }
 
   window.CURIO_GO = {
-    places: PLACES, goFor: goFor, entityOf: entityOf, titleOf: titleOf,
-    sourceUrl: sourceUrl, lanesFor: lanesFor, surprise: surprise
+    places: PLACES, goFor: goFor, primaryOf: primaryOf, entityOf: entityOf,
+    titleOf: titleOf, sourceUrl: sourceUrl, readUrl: readUrl, watchUrl: watchUrl,
+    lanesFor: lanesFor, surprise: surprise
   };
 })();

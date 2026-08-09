@@ -109,8 +109,8 @@
 
       // --- daily notification ---
       "A question a day": "Une question par jour",
-      "Get today's actual question as a notification — not a reminder to play, the question itself. Turn it off any time.":
-        "Reçois la vraie question du jour en notification — pas un rappel de jouer, la question elle-même. Désactivable à tout moment.",
+      "Get today's actual question as a notification — not a reminder to play, the question itself. On Android, install Qpio to your home screen and your phone will deliver it once a day on its own. Elsewhere it arrives while Qpio is open. Turn it off any time.":
+        "Reçois la vraie question du jour en notification — pas un rappel de jouer, la question elle-même. Sur Android, installe Qpio sur ton écran d’accueil et ton téléphone te la livrera une fois par jour, tout seul. Ailleurs, elle arrive quand Qpio est ouvert. Désactivable à tout moment.",
       "Your browser cannot show notifications. On iPhone, add Qpio to your home screen first.":
         "Ton navigateur ne peut pas afficher de notifications. Sur iPhone, ajoute d’abord Qpio à l’écran d’accueil.",
       "Notifications are blocked for this site in your browser settings.":
@@ -118,6 +118,16 @@
       "Turn on": "Activer",
       "Turn off": "Désactiver",
       "{n} to explore": "{n} à explorer",
+      "Nothing here yet": "Rien ici pour l’instant",
+
+      // --- the country you represent ---
+      "The country you represent": "Le pays que tu représentes",
+      "Which country do you represent?": "Quel pays représentes-tu ?",
+      "Prefer not to say": "Je préfère ne pas le dire",
+      "Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It stays on this device — Qpio has no server to send it to.":
+        "Sert à t’envoyer vers une librairie ou une bibliothèque qui peut vraiment te servir, et à te placer sur le classement de ton pays quand les concours commenceront. Cela reste sur cet appareil — Qpio n’a aucun serveur où l’envoyer.",
+      "It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It never leaves this device.":
+        "Il détermine vers quelle librairie ou bibliothèque nous t’envoyons, et c’est ainsi que tu apparaîtras sur le classement de ton pays quand les concours commenceront. Il ne quitte jamais cet appareil.",
 
       // --- backup code ---
       "Your progress": "Ta progression",

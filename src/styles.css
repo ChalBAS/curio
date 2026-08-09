@@ -237,23 +237,45 @@ body {
 .shelf-head h3 { margin: 0 0 2px; font-size: 16.5px; letter-spacing: -.01em; }
 .shelf-head p { margin: 0 0 12px; font-size: 13px; color: var(--muted); }
 
+/* TWO ROWS, NOT ONE — rebuilt 2026-08-09 from the CEO's phone.
+   The card used to be a single horizontal row: thumbnail, then a column
+   carrying badge, name, hook and every action button side by side. At 356px
+   that column is ~250px, three buttons wanted more, and they ran straight out
+   of the card. The hook was clamped to two lines to make room and was cut
+   mid-sentence — so the one element whose entire job is to make someone tap
+   could not finish its own thought.
+   Now the picture and the words share the top row, and the actions get a row
+   of their own at full card width. */
 .topic {
-  display: flex; gap: 11px; align-items: flex-start;
+  display: block;
   padding: 10px; margin-bottom: 9px; border-radius: 13px;
   background: var(--bg2); border: 1px solid var(--line); cursor: pointer;
 }
 .topic:hover { border-color: var(--brand); }
 .topic:focus-within { border-color: var(--brand); }
-/* Art: no photographs. We have none, cannot fetch them offline, and a
-   generated image of a real place on a product built on verified truth is a
-   claim we cannot stand behind. A category tint carries no meaning, so it
-   cannot mislead — and it costs zero bytes. */
+.topic-top { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 10px; }
+/* Art: the real photograph of the real thing, from Wikimedia Commons, over a
+   category tint that shows through when the network, the device or the URL
+   fails. The tint carries no meaning, so it cannot mislead. */
 .topic-art {
-  flex: 0 0 54px; width: 54px; height: 54px;   /* fixed: flex-start, never stretched */
+  flex: 0 0 64px; width: 64px; height: 64px;   /* fixed: flex-start, never stretched */
   border-radius: 10px; display: grid; place-items: center;
   background: linear-gradient(150deg, rgba(38,186,216,.20), rgba(124,108,255,.16));
   position: relative; overflow: hidden;
 }
+/* The verdict, as a mark on the corner of the picture. A ✓ and a ✗ are read
+   the same way in every country we will ever ship to, so they need no
+   translation and — the reason they are here — no line of their own. The word
+   "CORRECT" cost a full row on every card (CEO, 2026-08-09). */
+.topic-mark {
+  position: absolute; z-index: 2; left: 0; bottom: 0;
+  min-width: 22px; height: 22px; padding: 0 4px;
+  display: grid; place-items: center;
+  font-size: 13px; font-weight: 900; line-height: 1;
+  border-radius: 0 9px 0 10px;
+  background: var(--good); color: #08131a;
+}
+.topic.is-missed .topic-mark { background: var(--bad); color: #1a0a0d; }
 .topic-emoji { font-size: 24px; line-height: 1; }
 /* The photograph sits on top of the category tile, so a slow network, an
    offline device or a dead Commons URL all degrade to the tile rather than to
@@ -269,40 +291,72 @@ body {
 }
 .topic-art.has-pic img[alt]:not([src]), .topic-art.has-pic img[src=""] { display: none; }
 .topic-body { flex: 1 1 auto; min-width: 0; }
-.topic-badge {
-  display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .04em;
-  text-transform: uppercase; padding: 2px 7px; border-radius: 999px; margin-bottom: 4px;
-  background: rgba(79,214,163,.16); color: var(--good); border: 1px solid rgba(79,214,163,.45);
+/* Name first, hook straight under it, both at the top of the card where the
+   eye already is. The badge that used to push them down is now a mark on the
+   picture. */
+.topic-name { margin: 0 0 3px; font-size: 15.5px; font-weight: 800; letter-spacing: -.01em; color: var(--ink); }
+/* The hook runs in full. It was clamped to two lines to make room for buttons
+   that no longer live beside it — and a hook cut mid-sentence ("about ninety
+   kilos a day. On mil…") cannot pull anyone anywhere. Hooks are written to a
+   100-character cap, so "in full" is three short lines at worst. */
+.topic-hook { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
+
+/* FOUR SLOTS, FIXED. Two by two, equal widths, in the same order on every
+   card in the app: Read · Visit · Watch · Sources. Before this the row held
+   whichever destinations happened to exist, so the same word appeared in a
+   different place on each card and the reader had to re-read the row every
+   time (CEO, 2026-08-09).
+   Equal columns via 1fr, and minmax(0,1fr) so a long French label shrinks its
+   own text instead of widening the grid — the failure that pushed "Sources"
+   past the card edge in the first place. */
+.topic-ways {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px;
 }
-.topic.is-missed .topic-badge { background: rgba(255,107,129,.14); color: var(--bad); border-color: rgba(255,107,129,.45); }
-.topic-name { margin: 0 0 2px; font-size: 15.5px; font-weight: 800; letter-spacing: -.01em; }
-.topic.is-missed .topic-name { color: var(--ink); }
-.topic:not(.is-missed) .topic-name { color: var(--muted); }
-/* The hook earns two lines and no more. It exists to pull, not to inform —
-   the whole point is that the reader has to tap to find out. */
-.topic-hook {
-  margin: 0 0 8px; font-size: 13px; line-height: 1.4; color: var(--muted);
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-  overflow: hidden; max-height: 2.8em;
-}
-/* One row, always. Measured: three chips wanted 229px in a 214px slot and
-   wrapped, costing 42px per card — 168px across a four-topic shelf, which is
-   a whole extra card's worth of screen. Sized so the longest French labels
-   ("Y aller · Lire · Sources") still fit on one line at 375px. */
-.topic-ways { display: flex; flex-wrap: nowrap; gap: 5px; }
 .way {
-  display: inline-flex; align-items: center; gap: 4px; text-decoration: none;
-  min-height: 36px; padding: 0 8px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  text-decoration: none; min-width: 0;
+  min-height: 40px; padding: 0 8px; border-radius: 9px;
   background: rgba(38,186,216,.09); border: 1px solid rgba(38,186,216,.28);
-  color: var(--ink); font-size: 12px; font-weight: 700; white-space: nowrap;
+  color: var(--ink); font-size: 12.5px; font-weight: 700;
 }
+.way-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .way:hover { background: rgba(38,186,216,.18); border-color: var(--brand); }
-.way-ico { font-size: 13px; line-height: 1; }
+.way-ico { flex: 0 0 auto; font-size: 14px; line-height: 1; }
+/* A slot with nothing behind it is still drawn — that is what makes the
+   absence readable, and what makes a new destination noticeable the day it
+   arrives. It must never look tappable: no pointer, no hover, no focus, and
+   flat enough that the difference is obvious at a glance rather than on
+   inspection. */
+.way.is-off {
+  background: transparent; border-style: dashed;
+  border-color: var(--line); color: var(--muted);
+  opacity: .55; cursor: default; pointer-events: none;
+}
+.way.is-off .way-ico { filter: grayscale(1); }
+@media (min-width: 480px) {
+  .topic-ways { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 @media (min-width: 560px) {
   .topic-art { flex-basis: 96px; width: 96px; height: 96px; }
   .topic-emoji { font-size: 36px; }
 }
 .hcontrast .topic, .hcontrast .way { border-width: 2px; }
+.hcontrast .way.is-off { opacity: .8; }
+
+/* The country select. A native control on purpose — a phone gives it its own
+   search, scroll and screen-reader behaviour for free, and 200 options is
+   exactly where a custom widget starts costing more than it gives. Sized to
+   the 44px touch target and stopped from overflowing its card. */
+.cselect {
+  display: block; width: 100%; max-width: 100%; min-width: 0;
+  min-height: 44px; padding: 0 12px; margin: 0 0 4px;
+  border-radius: 11px; border: 1px solid var(--line);
+  background: var(--bg2); color: var(--ink);
+  font: inherit; font-size: 15px;
+}
+.cselect:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+.onb .cselect { margin: 4px 0 14px; text-align: center; text-align-last: center; }
+.hcontrast .cselect { border-width: 2px; }
 
 /* Keep exploring — the sideways lanes under the shelf. Scrolls horizontally
    so six lanes never push the shelf off the screen; the partly-visible last
