@@ -623,26 +623,28 @@
         chosen === "Science" ? t("Pick a science:") :
                                t("Pick what you like to explore:");
       regionCats.innerHTML = "";
+      regionCats.classList.add("ptiles");
       chosenSub = "All";
       ["All"].concat(subs).forEach(function (v) {
         var label = v === "All"
           ? (chosen === "History" ? t("🌍 All regions") : t("✨ All"))
           : subLabel(chosen, v);
-        var b = el('<button class="chip" aria-pressed="' + (v === chosenSub ? "true" : "false") + '">' + label + '</button>');
+        var b = pickTile(v, label, v === chosenSub);
         b.addEventListener("click", function () {
           chosenSub = v;
-          regionCats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+          regionCats.querySelectorAll(".ptile").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
           b.setAttribute("aria-pressed", "true");
         });
         regionCats.appendChild(b);
       });
     }
 
+    cats.classList.add("ptiles");
     ["All"].concat(CATS).forEach(function (c) {
-      var b = el('<button class="chip" aria-pressed="' + (c === chosen ? "true" : "false") + '">' + (CAT_EMOJI[c] || "✨") + " " + t(c) + '</button>');
+      var b = pickTile(c, (CAT_EMOJI[c] || "✨") + " " + t(c), c === chosen);
       b.addEventListener("click", function () {
         chosen = c; LS.set("lastCat", c);
-        cats.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+        cats.querySelectorAll(".ptile").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
         b.setAttribute("aria-pressed", "true");
         buildSubRow();
       });
@@ -741,7 +743,39 @@
   // Illustrations for the Train tab (CEO, 2026-08-09): a real photograph
   // behind each mode, so the tab reads as a product rather than a settings
   // page. Slugs come from the bank's own Commons set - no new assets.
-  var MODE_ART = { truth: "Ten_percent_of_the_brain_myth", quick: "Chess" };
+  var MODE_ART = { truth: "Ten_percent_of_the_brain_myth", quick: "Great_Wall_of_China" };
+
+  // Every category and sub-category gets a face. Pills carried an emoji and a
+  // word; a picture says what is inside before you commit to it, which is the
+  // same window-shopping rule the shelves follow (CEO, 2026-08-09).
+  var PICK_ART = {
+    History: "Rosetta_Stone", Science: "DNA", Geography: "Mount_Everest",
+    Arts: "Mona_Lisa", Tech: "ENIAC", Nature: "Blue_whale",
+    // sciences
+    "Life Sciences": "Mitochondrion", "Chemistry": "Diamond", "Physics": "Atomic_nucleus",
+    "Earth & Space": "Saturn", "Mathematics": "Pi", "Social Sciences": "Athenian_democracy",
+    // travel slices
+    "Countries & Flags": "Flag_of_Nepal", "Landscapes": "Angel_Falls", "Cities & Places": "Tokyo",
+    // history regions
+    Africa: "Great_Zimbabwe", Americas: "Machu_Picchu", Asia: "Terracotta_Army",
+    Europe: "Eiffel_Tower", MiddleEast: "Petra", Global: "Silk_Road"
+  };
+  function pickArt(key) {
+    var im = (window.CURIO_IMAGES || {})[PICK_ART[key]];
+    return im ? im.u : null;
+  }
+  // One selectable tile. Same role and keyboard behaviour a chip had.
+  function pickTile(key, label, pressed) {
+    var u = pickArt(key);
+    var b = el(
+      '<button class="ptile' + (u ? " has-art" : "") + '" aria-pressed="' + (pressed ? "true" : "false") + '">' +
+        (u ? '<img class="ptile-art" src="' + esc(u) + '" alt="" loading="lazy" decoding="async">' : '') +
+        '<span class="ptile-wash" aria-hidden="true"></span>' +
+        '<span class="ptile-label">' + label + '</span>' +
+      '</button>'
+    );
+    return b;
+  }
   function dressMode(node, key) {
     var im = (window.CURIO_IMAGES || {})[MODE_ART[key]];
     if (!im || !node) return node;
@@ -799,8 +833,83 @@
     return node;
   }
 
+  // ---------- daily nudge ----------
+  // CEO, 2026-08-09: "we do not want them to be only reminded of the quiz of
+  // the day, but being hooked by a question they may or may not know the
+  // answer of." So the notification carries the real first question — the gap,
+  // not the chore. "Qpio" plus a nag is a reminder; a question you cannot
+  // answer is a reason to open the app.
+  //
+  // No push server, and there will not be one: this is a local notification
+  // scheduled by the page while it is open, which is what a static app can
+  // honestly do. Android and desktop honour it; iOS Safari does not support
+  // web notifications outside an installed PWA, so the card says so rather
+  // than pretending.
+  function notifySupported() {
+    return typeof Notification !== "undefined" && "serviceWorker" in navigator;
+  }
+  function notifyState() {
+    if (!notifySupported()) return "unsupported";
+    return Notification.permission;   // default | granted | denied
+  }
+  function scheduleDailyNudge() {
+    if (notifyState() !== "granted" || !LS.get("nudge", false)) return;
+    var q = dailyQuestions()[0];
+    if (!q) return;
+    // Fire when the tab is idle-ish rather than at a wall-clock hour we cannot
+    // guarantee: a static page cannot wake itself, so the honest version is a
+    // nudge the next time the app has been open and unplayed for a while.
+    if (LS.get(dailyKey(), null)) return;             // already played today
+    if (LS.get("nudgeSent." + todayKey(), false)) return;
+    setTimeout(function () {
+      if (LS.get(dailyKey(), null)) return;
+      try {
+        navigator.serviceWorker.ready.then(function (reg) {
+          reg.showNotification("Qpio", {
+            body: q.q,                                 // the question itself
+            tag: "qpio-daily-" + todayKey(),
+            badge: "icons/favicon-32.png",
+            icon: "brand/icons/qpio-icon-192.png",
+            data: { url: "./#home" }
+          });
+          LS.set("nudgeSent." + todayKey(), true);
+        });
+      } catch (e) {}
+    }, 60000);
+  }
+  function nudgeCard() {
+    var state = notifyState();
+    var on = LS.get("nudge", false) && state === "granted";
+    var node = el(
+      '<div class="card">' +
+        '<div class="section-title" style="margin-top:0">🔔 ' + t("A question a day") + '</div>' +
+        '<p class="mini" style="margin:0 0 12px">' +
+          (state === "unsupported"
+            ? t("Your browser cannot show notifications. On iPhone, add Qpio to your home screen first.")
+            : t("Get today's actual question as a notification — not a reminder to play, the question itself. Turn it off any time.")) +
+        '</p>' +
+        (state === "unsupported" ? '' :
+          '<div class="btnrow"><button class="btn' + (on ? " ghost" : "") + '" id="nudgeBtn">' +
+            (on ? t("Turn off") : t("Turn on")) + '</button></div>') +
+        '<div class="mini" id="nudgeMsg" style="margin-top:10px"></div>' +
+      '</div>'
+    );
+    var btn = node.querySelector("#nudgeBtn");
+    var msg = node.querySelector("#nudgeMsg");
+    if (state === "denied") msg.textContent = t("Notifications are blocked for this site in your browser settings.");
+    if (btn) btn.addEventListener("click", function () {
+      if (on) { LS.set("nudge", false); renderTab("settings"); return; }
+      Notification.requestPermission().then(function (p) {
+        if (p === "granted") { LS.set("nudge", true); scheduleDailyNudge(); }
+        renderTab("settings");
+      });
+    });
+    return node;
+  }
+
   function settingsTabView() { // mobile Settings: comfort content, no back header
     var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(nudgeCard());
     wrap.appendChild(backupCard());
     wrap.appendChild(comfortView(true));
     return wrap;
@@ -1259,10 +1368,9 @@
       var gf = shelfCard(dailyQuestions(), rec.marks);
       if (gf) node.parentNode.appendChild(gf);
     }
-    var foot = el('<div class="btnrow center rs-foot" style="justify-content:center">' +
-      '<button class="btn ghost" id="rsHome">' + t("Home") + '</button></div>');
-    foot.querySelector("#rsHome").addEventListener("click", goHome);
-    node.parentNode.appendChild(foot);
+    // No Home button at the foot: it now sits in the header beside the logo,
+    // where it is reachable without scrolling past everything (CEO,
+    // 2026-08-09), and it is also a permanent tab.
   }
 
   // ---------- the shelf ----------
@@ -1439,7 +1547,11 @@
           '</span>' +
         '</button>'
       );
-      d.addEventListener("click", function () { render(laneView(S)); });
+      d.addEventListener("click", function () {
+        // Back from a lane returns to this result screen, so the reader can
+        // open another door without replaying the round.
+        render(laneView(S, function () { startDaily(); }));
+      });
       doors.appendChild(d);
     });
 
@@ -1462,8 +1574,11 @@
   }
 
   // Behind a door: the whole screen, a back button, and the shelf laid out
-  // where it has room to breathe.
-  function laneView(S) {
+  // where it has room to breathe. Back returns to the RESULT, not Home — a
+  // reader who opened Visit will often want Read next, and sending them home
+  // makes them replay the round to get there. Home lives in the header
+  // (CEO, 2026-08-09).
+  function laneView(S, back) {
     var wrap = el('<div class="grid"></div>');
     var head = el(
       '<div class="card">' +
@@ -1473,7 +1588,9 @@
         '<p class="mini" style="margin:0">' + tf("{n} to explore", { n: S.items.length }) + '</p>' +
       '</div>'
     );
-    head.querySelector("#laneBack").addEventListener("click", goHome);
+    head.querySelector("#laneBack").addEventListener("click", function () {
+      if (typeof back === "function") back(); else goHome();
+    });
     wrap.appendChild(head);
 
     var grid = el('<div class="card"><div class="dgrid"></div></div>');
@@ -1808,10 +1925,13 @@
     var slides = [
       { emoji: "🧭", title: t("Knowledge should be free."),
         text: t("Qpio (say: cue-pee-oh) is a free knowledge app — no paywalls, nothing sold about you, ever. Every answer teaches you a fact worth keeping, with the source one tap away.") },
-      { emoji: "📅", title: t("Five questions a day."),
+      // 🗓️ replaced 📅 — the calendar emoji renders with "17 JUL" printed on
+      // it on Android and Windows (it is the Unicode sample date), so the
+      // screen appeared to name a date nobody could explain (CEO, 2026-08-09).
+      { emoji: "🗓️", title: t("Five questions a day."),
         text: t("Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.") },
       { emoji: "⚙️", title: t("Made for the way you learn."),
-        text: t("Timers off, dyslexia-friendly reading, read-aloud, high contrast — free in Comfort settings (⚙️). A Kids mode too: no accounts, no tracking.") }
+        text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. An account is optional: you only need one if you want your progress on more than one device.") }
     ];
     var s = slides[step];
     var dots = slides.map(function (_, i) {
@@ -1825,6 +1945,9 @@
         '<p class="onb-text">' + s.text + '</p>' +
         '<div class="onb-dots">' + dots + '</div>' +
         '<div class="btnrow" style="justify-content:center">' +
+          // Back from screen two onwards: three screens with no way to reread
+          // the one before is a dead end (CEO, 2026-08-09).
+          (step > 0 ? '<button class="btn ghost" id="onbBack">' + t("← Back") + '</button>' : '') +
           '<button class="btn" id="onbNext">' + (last ? t("Play today's challenge ▶") : t("Next →")) + '</button>' +
           (last ? '' : '<button class="btn ghost" id="onbSkip">' + t("Skip") + '</button>') +
         '</div>' +
@@ -1839,6 +1962,8 @@
     node.querySelector("#onbNext").addEventListener("click", function () {
       if (last) finish(true); else onboardingView(step + 1);
     });
+    var bk = node.querySelector("#onbBack");
+    if (bk) bk.addEventListener("click", function () { onboardingView(step - 1); });
     var sk = node.querySelector("#onbSkip");
     if (sk) sk.addEventListener("click", function () { finish(false); });
   }
@@ -1847,8 +1972,9 @@
   applySettings();
   pruneVault();
   buildShell();
-  var gear = document.getElementById("gearBtn");
-  if (gear) gear.addEventListener("click", openSettings);
+  var homeBtn = document.getElementById("homeBtn");
+  if (homeBtn) homeBtn.addEventListener("click", goHome);
+  scheduleDailyNudge();
   window.addEventListener("hashchange", route);
   if (mqDesk.addEventListener) mqDesk.addEventListener("change", onViewportChange);
   else if (mqDesk.addListener) mqDesk.addListener(onViewportChange); // older Safari/WebViews

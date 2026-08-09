@@ -105,6 +105,18 @@
       "Keep exploring": "Continuer à explorer",
       "Surprise me": "Surprends-moi",
       "Back": "Retour",
+      "← Back": "← Retour",
+
+      // --- daily notification ---
+      "A question a day": "Une question par jour",
+      "Get today's actual question as a notification — not a reminder to play, the question itself. Turn it off any time.":
+        "Reçois la vraie question du jour en notification — pas un rappel de jouer, la question elle-même. Désactivable à tout moment.",
+      "Your browser cannot show notifications. On iPhone, add Qpio to your home screen first.":
+        "Ton navigateur ne peut pas afficher de notifications. Sur iPhone, ajoute d’abord Qpio à l’écran d’accueil.",
+      "Notifications are blocked for this site in your browser settings.":
+        "Les notifications sont bloquées pour ce site dans les réglages de ton navigateur.",
+      "Turn on": "Activer",
+      "Turn off": "Désactiver",
       "{n} to explore": "{n} à explorer",
 
       // --- backup code ---
@@ -373,8 +385,8 @@
       "Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.":
         "Tout le monde reçoit les cinq mêmes questions chaque jour. Garde ta série en vie — et les faits que tu rates reviennent jusqu’à ce que tu les maîtrises pour de bon.",
       "Made for the way you learn.": "Conçu pour ta façon d’apprendre.",
-      "Timers off, dyslexia-friendly reading, read-aloud, high contrast — free in Comfort settings (⚙️). A Kids mode too: no accounts, no tracking.":
-        "Chrono désactivable, lecture adaptée à la dyslexie, lecture à voix haute, contraste élevé — gratuits dans les réglages Confort (⚙️). Et un mode enfants : pas de compte, pas de traçage.",
+      "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. An account is optional: you only need one if you want your progress on more than one device.":
+        "Désactive le chrono, active le texte adapté à la dyslexie, la lecture à voix haute ou le contraste élevé — tout est gratuit, tout est dans les Réglages. Il y a aussi un mode enfants, qui ne demande jamais rien. Le compte est facultatif : il ne sert que si tu veux retrouver ta progression sur plusieurs appareils.",
       "Play today's challenge ▶": "Jouer au défi du jour ▶",
       "Skip": "Passer"
     }
@@ -399,10 +411,10 @@
     if (iosClose) iosClose.setAttribute("aria-label", window.t("Dismiss"));
     var install = document.getElementById("installBtn");
     if (install) install.textContent = window.t("⬇ Install");
-    var gear = document.getElementById("gearBtn");
-    if (gear) {
-      gear.title = window.t("Comfort & settings");
-      gear.setAttribute("aria-label", window.t("Comfort and settings"));
+    var homeBtn = document.getElementById("homeBtn");
+    if (homeBtn) {
+      homeBtn.title = window.t("Home");
+      homeBtn.setAttribute("aria-label", window.t("Home"));
     }
     var tag = document.querySelector(".top .tag");
     if (tag) tag.textContent = window.t("knowledge · free · forever");
