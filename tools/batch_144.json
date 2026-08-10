@@ -1,0 +1,3800 @@
+[
+ {
+  "stream": "maths",
+  "verdict": "fixed",
+  "why": "Fact overstated: article confirms Egypt and Babylon KNEW the 3-4-5/Pythagorean rule over a thousand years before Pythagoras, but says nothing about builders USING it. Softened fact to knowledge, not use.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "Builders check that a corner is truly square by measuring a triangle with sides of 3, 4 and 5. Which theorem are they using?",
+  "options": [
+   "Pythagoras' theorem",
+   "Thales' theorem",
+   "Euclid's parallel postulate",
+   "Ptolemy's theorem"
+  ],
+  "answer": 0,
+  "fact": "The 3-4-5 triangle was already known in Egypt and Babylon over a thousand years before Pythagoras was born.",
+  "src": "https://en.wikipedia.org/wiki/Pythagorean_theorem",
+  "q_fr": "Les maçons vérifient qu'un angle est bien droit en mesurant un triangle de côtés 3, 4 et 5. Quel théorème utilisent-ils ?",
+  "options_fr": [
+   "Le théorème de Pythagore",
+   "Le théorème de Thalès",
+   "Le postulat des parallèles d'Euclide",
+   "Le théorème de Ptolémée"
+  ],
+  "fact_fr": "Le triangle 3-4-5 était déjà connu en Égypte et à Babylone plus de mille ans avant la naissance de Pythagore."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article verbatim: Glenn 'refused to fly unless Johnson verified the calculations'; she worked at NASA from 1958; Shepard 1961 trajectory confirmed. French idiomatic, order preserved.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "Before his 1962 orbit of Earth, astronaut John Glenn refused to fly until a mathematician had checked the computer's numbers by hand. For which organisation did she work?",
+  "options": [
+   "NASA",
+   "The US Navy",
+   "IBM",
+   "The Smithsonian Institution"
+  ],
+  "answer": 0,
+  "fact": "Katherine Johnson had already worked out the trajectory for Alan Shepard's 1961 flight, the first American in space.",
+  "src": "https://en.wikipedia.org/wiki/Katherine_Johnson",
+  "q_fr": "Avant son orbite autour de la Terre en 1962, l'astronaute John Glenn a refusé de décoller tant qu'une mathématicienne n'aurait pas vérifié à la main les calculs de l'ordinateur. Pour quel organisme travaillait-elle ?",
+  "options_fr": [
+   "La NASA",
+   "La marine américaine",
+   "IBM",
+   "La Smithsonian Institution"
+  ],
+  "fact_fr": "Katherine Johnson avait déjà calculé la trajectoire du vol d'Alan Shepard en 1961, le premier Américain dans l'espace."
+ },
+ {
+  "stream": "maths",
+  "verdict": "fixed",
+  "why": "English fine (article: 'margin of error of less than 1%'; two false assumptions 'fortuitously cancelled each other out'). French fact was a mistranslation: 'tombe à environ 1 % de la circonférence' reads as EQUALS 1% of the circumference. Rewrote fact_fr.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "Around 240 BCE a scholar in Alexandria compared the shadows cast at noon in two Egyptian cities. What did he manage to measure?",
+  "options": [
+   "The size of the whole Earth",
+   "The distance to the Sun",
+   "The height of the Great Pyramid",
+   "The depth of the Nile"
+  ],
+  "answer": 0,
+  "fact": "Eratosthenes' figure was within about 1% of the Earth's true circumference — and two of his mistakes happened to cancel out.",
+  "src": "https://en.wikipedia.org/wiki/Eratosthenes",
+  "q_fr": "Vers 240 av. J.-C., un savant d'Alexandrie compare les ombres de midi dans deux villes d'Égypte. Que parvient-il à mesurer ?",
+  "options_fr": [
+   "La taille de la Terre entière",
+   "La distance jusqu'au Soleil",
+   "La hauteur de la grande pyramide",
+   "La profondeur du Nil"
+  ],
+  "fact_fr": "L'estimation d'Ératosthène s'écartait de moins de 1 % de la circonférence réelle de la Terre — et deux de ses erreurs se compensaient."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article: 'In 1859, Nightingale was elected the first female member of the Royal Statistical Society'; polar-area diagrams for officials confirmed. Distractors clean.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "Florence Nightingale is remembered as a nurse. In which other field was she a pioneer?",
+  "options": [
+   "Statistics",
+   "Chemistry",
+   "Geology",
+   "Architecture"
+  ],
+  "answer": 0,
+  "fact": "She turned death records into diagrams to persuade officials, and in 1859 became the first woman elected to the Royal Statistical Society.",
+  "src": "https://en.wikipedia.org/wiki/Florence_Nightingale",
+  "q_fr": "On se souvient de Florence Nightingale comme infirmière. Dans quel autre domaine fut-elle une pionnière ?",
+  "options_fr": [
+   "La statistique",
+   "La chimie",
+   "La géologie",
+   "L'architecture"
+  ],
+  "fact_fr": "Elle transformait les registres de décès en diagrammes pour convaincre les autorités ; en 1859, elle fut la première femme élue à la Royal Statistical Society."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article confirms every detail: ~20,000 years old, Semliki River, DRC, '168 etchings... ordered in three parallel columns'. Strong Africa-stream item.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "The Ishango bone, one of the oldest known objects covered in tally marks, was found on which continent?",
+  "options": [
+   "Africa",
+   "Europe",
+   "Asia",
+   "South America"
+  ],
+  "answer": 0,
+  "fact": "Carved about 20,000 years ago near the Semliki River in the Democratic Republic of the Congo, its 168 notches run in three columns.",
+  "src": "https://en.wikipedia.org/wiki/Ishango_bone",
+  "q_fr": "L'os d'Ishango, l'un des plus anciens objets couverts d'encoches de comptage, a été trouvé sur quel continent ?",
+  "options_fr": [
+   "L'Afrique",
+   "L'Europe",
+   "L'Asie",
+   "L'Amérique du Sud"
+  ],
+  "fact_fr": "Taillé il y a environ 20 000 ans près de la rivière Semliki, en République démocratique du Congo, il porte 168 encoches réparties en trois colonnes."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Shell-shape zero and vigesimal positional system are core content of the Maya numerals article; 'dot above a shell = 20' is correct positional reading.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "The Maya wrote numbers with dots and bars. Which symbol did they use for zero?",
+  "options": [
+   "A shell",
+   "A star",
+   "A feather",
+   "An open hand"
+  ],
+  "answer": 0,
+  "fact": "Maya counting works in twenties, not tens — so one dot above a shell means twenty, the way '10' means ten to us.",
+  "src": "https://en.wikipedia.org/wiki/Maya_numerals",
+  "q_fr": "Les Mayas écrivaient les nombres avec des points et des barres. Quel symbole utilisaient-ils pour le zéro ?",
+  "options_fr": [
+   "Un coquillage",
+   "Une étoile",
+   "Une plume",
+   "Une main ouverte"
+  ],
+  "fact_fr": "Le comptage maya va de vingt en vingt, pas de dix en dix : un point au-dessus d'un coquillage vaut donc vingt."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Bugia/Béjaïa upbringing and merchant framing match the Fibonacci article; 'sold' is clearly figurative. Not a dup of live Fibonacci-sequence item (line 265, different payoff).",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "Leonardo of Pisa's 1202 book 'Liber Abaci' helped Europe adopt which way of writing numbers?",
+  "options": [
+   "Hindu-Arabic numerals",
+   "Roman numerals",
+   "Greek letter numerals",
+   "Egyptian hieroglyphic numerals"
+  ],
+  "answer": 0,
+  "fact": "He learned the digits as a boy in Bugia (Béjaïa, Algeria), where his father ran a trading post, and sold them to Europe as a merchant's tool.",
+  "src": "https://en.wikipedia.org/wiki/Fibonacci",
+  "q_fr": "Le livre « Liber Abaci » (1202) de Léonard de Pise a aidé l'Europe à adopter quelle façon d'écrire les nombres ?",
+  "options_fr": [
+   "Les chiffres indo-arabes",
+   "Les chiffres romains",
+   "Les chiffres grecs alphabétiques",
+   "Les chiffres hiéroglyphiques égyptiens"
+  ],
+  "fact_fr": "Il a appris ces chiffres enfant à Bugia (Béjaïa, en Algérie), où son père tenait un comptoir, puis les a vendus à l'Europe comme outil de marchands."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Her note that the Engine 'might compose elaborate and scientific pieces of music' is in the article. Live bank has Lovelace as 'first programmer' (line 261) — different angle, not a dup.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "In 1843 Ada Lovelace wrote that a calculating machine might one day do what, besides handle numbers?",
+  "options": [
+   "Compose music",
+   "Cook a meal",
+   "Predict the weather perfectly",
+   "Read a person's thoughts"
+  ],
+  "answer": 0,
+  "fact": "She reasoned that if harmony could be written as symbols, the machine could work on those symbols too — a century before computers existed.",
+  "src": "https://en.wikipedia.org/wiki/Ada_Lovelace",
+  "q_fr": "En 1843, Ada Lovelace écrit qu'une machine à calculer pourrait un jour faire quoi, en plus de manipuler des nombres ?",
+  "options_fr": [
+   "Composer de la musique",
+   "Préparer un repas",
+   "Prévoir parfaitement la météo",
+   "Lire dans les pensées"
+  ],
+  "fact_fr": "Elle raisonnait ainsi : si l'harmonie peut s'écrire en symboles, la machine peut travailler sur ces symboles — un siècle avant les ordinateurs."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article: introduced by Reed and Solomon in 1960; applications list includes CDs and QR codes; RS encoded 'the digital pictures sent back by the Voyager program'. All claims land within the cited article.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "A QR code still scans even when part of it is torn or dirty. What lets it do that?",
+  "options": [
+   "Extra maths built in that repairs missing pieces",
+   "A second copy of the code printed underneath",
+   "The camera guessing the missing squares at random",
+   "A special reflective ink in the black squares"
+  ],
+  "answer": 0,
+  "fact": "The same Reed–Solomon codes, published in 1960, protect CDs from scratches and carried Voyager's photos back from the outer planets.",
+  "src": "https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction",
+  "q_fr": "Un QR code se lit encore même s'il est déchiré ou sali. Qu'est-ce qui rend cela possible ?",
+  "options_fr": [
+   "Des maths intégrées qui réparent les parties manquantes",
+   "Une copie du code imprimée en dessous",
+   "L'appareil photo qui devine les cases manquantes au hasard",
+   "Une encre réfléchissante spéciale dans les carrés noirs"
+  ],
+  "fact_fr": "Les mêmes codes de Reed-Solomon, publiés en 1960, protègent les CD des rayures et ont ramené les photos de Voyager depuis les planètes lointaines."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Rhind article: Ahmes copy c. 1550 BCE, bread-and-beer division problems, circle area via (8/9 d)^2 — error ~0.6%, so 'within 1%' holds.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "The best-known mathematics book from ancient Egypt is packed with problems about sharing out which two things among workers?",
+  "options": [
+   "Bread and beer",
+   "Gold and silver",
+   "Papyrus and ink",
+   "Cattle and horses"
+  ],
+  "answer": 0,
+  "fact": "Copied by the scribe Ahmes around 1550 BCE, it finds a circle's area by squaring eight-ninths of the diameter — within 1% of the truth.",
+  "src": "https://en.wikipedia.org/wiki/Rhind_Mathematical_Papyrus",
+  "q_fr": "Le plus célèbre livre de mathématiques de l'Égypte ancienne regorge de problèmes sur le partage de quelles deux denrées entre ouvriers ?",
+  "options_fr": [
+   "Le pain et la bière",
+   "L'or et l'argent",
+   "Le papyrus et l'encre",
+   "Le bétail et les chevaux"
+  ],
+  "fact_fr": "Recopié par le scribe Ahmès vers 1550 av. J.-C., il calcule l'aire d'un cercle en élevant au carré les huit neuvièmes du diamètre — à moins de 1 % près."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "1736 negative resolution laying foundations of graph theory is the article's core; abstraction-to-connections fact accurate.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "In 1736 Leonhard Euler proved that no walk could cross all seven bridges of Königsberg exactly once. Which branch of maths did his answer create?",
+  "options": [
+   "Graph theory",
+   "Trigonometry",
+   "Calculus",
+   "Algebra"
+  ],
+  "answer": 0,
+  "fact": "Euler's trick was to ignore distance and shape, keeping only what connects to what — the idea behind route planners and social networks.",
+  "src": "https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg",
+  "q_fr": "En 1736, Leonhard Euler démontre qu'aucune promenade ne peut franchir une seule fois chacun des sept ponts de Königsberg. Quelle branche des maths son raisonnement a-t-il fondée ?",
+  "options_fr": [
+   "La théorie des graphes",
+   "La trigonométrie",
+   "Le calcul infinitésimal",
+   "L'algèbre"
+  ],
+  "fact_fr": "L'astuce d'Euler : ignorer distances et formes pour ne garder que les liaisons — l'idée derrière les calculateurs d'itinéraires et les réseaux sociaux."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Aryabhatiya (499 CE) rotation-of-Earth claim and the boat/riverbank analogy are both in the article. Distractors are genuine rival ancient cosmologies — good design.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 1,
+  "kids": true,
+  "q": "Writing around 499 CE, the Indian mathematician Aryabhata explained the nightly march of the stars across the sky by saying what?",
+  "options": [
+   "The Earth turns on its own axis",
+   "The stars ride on a rotating crystal shell",
+   "The Sun drags the stars along behind it",
+   "The sky is a river that slowly flows"
+  ],
+  "answer": 0,
+  "fact": "He compared it to a boat: a passenger moving downstream sees the still riverbank slide backwards.",
+  "src": "https://en.wikipedia.org/wiki/Aryabhata",
+  "q_fr": "Vers 499, le mathématicien indien Aryabhata explique la marche nocturne des étoiles dans le ciel en affirmant quoi ?",
+  "options_fr": [
+   "La Terre tourne sur elle-même",
+   "Les étoiles sont portées par une sphère de cristal en rotation",
+   "Le Soleil traîne les étoiles derrière lui",
+   "Le ciel est un fleuve qui s'écoule lentement"
+  ],
+  "fact_fr": "Il comparait cela à une barque : le passager qui descend le courant voit la rive immobile filer vers l'arrière."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "First woman Fields Medallist (2014) and IMO golds 1994 + 1995 (perfect score 1995) all documented in the article. Distractor prizes are same-kind.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "In 2014 the Iranian mathematician Maryam Mirzakhani became the first woman to win which prize?",
+  "options": [
+   "The Fields Medal",
+   "The Abel Prize",
+   "The Turing Award",
+   "The Wolf Prize"
+  ],
+  "answer": 0,
+  "fact": "She had already won gold at the International Mathematical Olympiad twice as a teenager, with a perfect score in 1995.",
+  "src": "https://en.wikipedia.org/wiki/Maryam_Mirzakhani",
+  "q_fr": "En 2014, la mathématicienne iranienne Maryam Mirzakhani est devenue la première femme à recevoir quel prix ?",
+  "options_fr": [
+   "La médaille Fields",
+   "Le prix Abel",
+   "Le prix Turing",
+   "Le prix Wolf"
+  ],
+  "fact_fr": "Adolescente, elle avait déjà remporté deux fois l'or aux Olympiades internationales de mathématiques, avec un score parfait en 1995."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "1807 Paris memoir on heat propagation in solids confirmed; JPEG's DCT as descendant is fair. Distractors same-kind physical problems.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "Fourier analysis breaks any signal into simple waves — it is how MP3s, JPEGs and MRI scans work. What was Joseph Fourier studying when he devised it?",
+  "options": [
+   "How heat spreads through a solid object",
+   "How planets move around the Sun",
+   "How bridges carry weight",
+   "How gases behave under pressure"
+  ],
+  "answer": 0,
+  "fact": "Fourier presented his heat work in Paris in 1807; a descendant of the same maths now decides which parts of a photo a JPEG can discard.",
+  "src": "https://en.wikipedia.org/wiki/Joseph_Fourier",
+  "q_fr": "L'analyse de Fourier décompose tout signal en ondes simples : c'est ainsi que fonctionnent le MP3, le JPEG et l'IRM. Qu'étudiait Joseph Fourier quand il l'a mise au point ?",
+  "options_fr": [
+   "La façon dont la chaleur se propage dans un solide",
+   "Le mouvement des planètes autour du Soleil",
+   "La façon dont les ponts supportent les charges",
+   "Le comportement des gaz sous pression"
+  ],
+  "fact_fr": "Fourier présente ses travaux sur la chaleur à Paris en 1807 ; une descendante de ces mathématiques décide aujourd'hui ce qu'un JPEG peut jeter dans une photo."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Four satellites (3 position + 1 time) and the net +38 microseconds/day relativistic offset are both in the GPS article. Correct that clocks run faster net.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "How many satellites must a GPS receiver pick up to fix its position in three dimensions?",
+  "options": [
+   "Four",
+   "One",
+   "Two",
+   "Twelve"
+  ],
+  "answer": 0,
+  "fact": "Clocks on GPS satellites run about 38 microseconds a day faster than ours, exactly as relativity predicts — the system corrects for it.",
+  "src": "https://en.wikipedia.org/wiki/Global_Positioning_System",
+  "q_fr": "Combien de satellites un récepteur GPS doit-il capter pour établir sa position en trois dimensions ?",
+  "options_fr": [
+   "Quatre",
+   "Un",
+   "Deux",
+   "Douze"
+  ],
+  "fact_fr": "Les horloges des satellites GPS avancent d'environ 38 microsecondes par jour, exactement comme le prédit la relativité — le système le corrige."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Yoruba_numerals article exists and confirms exactly: 15 = eedogun, 'five from twenty'; 16-19 are four/three/two/one from twenty. Fact and answer verified verbatim.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": true,
+  "q": "In the Yoruba language of West Africa, counting works in twenties and uses subtraction. How is 'fifteen' literally expressed?",
+  "options": [
+   "Five from twenty",
+   "Ten and five",
+   "Three fives",
+   "Half of twenty plus five"
+  ],
+  "answer": 0,
+  "fact": "Sixteen, seventeen, eighteen and nineteen are said the same way — as four, three, two and one taken away from twenty.",
+  "src": "https://en.wikipedia.org/wiki/Yoruba_numerals",
+  "q_fr": "En yoruba, langue d'Afrique de l'Ouest, on compte par vingtaines et l'on utilise la soustraction. Comment dit-on littéralement « quinze » ?",
+  "options_fr": [
+   "Cinq ôté de vingt",
+   "Dix et cinq",
+   "Trois fois cinq",
+   "La moitié de vingt plus cinq"
+  ],
+  "fact_fr": "Seize, dix-sept, dix-huit et dix-neuf se disent de même : quatre, trois, deux et un ôtés de vingt."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Lusona article verbatim: '60% are mono-linear' and mnemonic use for 'proverbs, fables, games, riddles'. Chokwe of eastern Angola confirmed.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": true,
+  "q": "Chokwe elders in Angola trace 'sona' pictures in the sand around a grid of dots. What rule makes them remarkable?",
+  "options": [
+   "Most are drawn with one unbroken line",
+   "They must be drawn with the left hand",
+   "They use exactly seven colours",
+   "They must be finished before sunrise"
+  ],
+  "answer": 0,
+  "fact": "About 60% of recorded sona are monolinear — one continuous line — and the drawings carry proverbs, fables and riddles.",
+  "src": "https://en.wikipedia.org/wiki/Lusona",
+  "q_fr": "Les anciens tchokwés d'Angola tracent des dessins « sona » dans le sable autour d'une grille de points. Quelle règle les rend remarquables ?",
+  "options_fr": [
+   "La plupart se tracent d'un seul trait continu",
+   "Ils doivent être tracés de la main gauche",
+   "Ils utilisent exactement sept couleurs",
+   "Ils doivent être achevés avant le lever du soleil"
+  ],
+  "fact_fr": "Environ 60 % des sona recensés sont monolinéaires — un seul trait continu — et ces dessins servent à retenir proverbes, fables et devinettes."
+ },
+ {
+  "stream": "maths",
+  "verdict": "fixed",
+  "why": "Fact error: the 1976 paper was by Diffie and Hellman alone; Merkle invented his technique in 1974 but published in 1978 (article verbatim). Ellis/GCHQ 1970 confirmed. Rewrote fact to credit Merkle correctly.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "The padlock in your browser's address bar relies on public-key cryptography. What is its central idea?",
+  "options": [
+   "Two different keys: one to lock, another to unlock",
+   "One key that both people memorise in advance",
+   "A single key that changes every second",
+   "A key hidden inside the message itself"
+  ],
+  "answer": 0,
+  "fact": "Diffie and Hellman published it in 1976, building on Ralph Merkle's ideas — unaware that James Ellis had conceived it secretly at GCHQ in 1970.",
+  "src": "https://en.wikipedia.org/wiki/Public-key_cryptography",
+  "q_fr": "Le cadenas affiché dans la barre d'adresse de votre navigateur repose sur la cryptographie à clé publique. Quelle en est l'idée centrale ?",
+  "options_fr": [
+   "Deux clés différentes : une pour fermer, une autre pour ouvrir",
+   "Une seule clé que les deux personnes mémorisent à l'avance",
+   "Une clé unique qui change chaque seconde",
+   "Une clé cachée à l'intérieur du message"
+  ],
+  "fact_fr": "Diffie et Hellman l'ont publiée en 1976, à partir des idées de Ralph Merkle — sans savoir que James Ellis l'avait conçue en secret au GCHQ dès 1970."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Factoring hardness correct; RSA publicly described 1977; Cocks's 1973 GCHQ equivalent declassified 1997 — all in the article. Distractors (multiplying, primality testing, adding) are all genuinely fast, so unambiguously wrong.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "The RSA system that guards online payments is safe because one task stays extremely slow, even for computers. Which?",
+  "options": [
+   "Splitting a huge number into the two primes that made it",
+   "Multiplying two huge prime numbers together",
+   "Testing whether a large number is prime at all",
+   "Adding a long list of prime numbers together"
+  ],
+  "answer": 0,
+  "fact": "Rivest, Shamir and Adleman published RSA in 1977; Clifford Cocks had found the same scheme at GCHQ in 1973, kept secret until 1997.",
+  "src": "https://en.wikipedia.org/wiki/RSA_cryptosystem",
+  "q_fr": "Le système RSA qui protège les paiements en ligne est sûr parce qu'une tâche reste très lente, même pour un ordinateur. Laquelle ?",
+  "options_fr": [
+   "Retrouver les deux nombres premiers qui composent un grand nombre",
+   "Multiplier entre eux deux très grands nombres premiers",
+   "Vérifier si un grand nombre est premier ou non",
+   "Additionner une longue liste de nombres premiers"
+  ],
+  "fact_fr": "Rivest, Shamir et Adleman ont publié RSA en 1977 ; Clifford Cocks avait trouvé le même schéma au GCHQ en 1973, gardé secret jusqu'en 1997."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article verbatim: round table as globe, crystal lamp hung from ceiling as sun, round mirror as moon; simplified 'The Musts of Calculation' for beginners; died at 29. All confirmed.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": true,
+  "q": "To show how a lunar eclipse works, the Qing-dynasty astronomer Wang Zhenyi built a model in a garden pavilion out of which everyday objects?",
+  "options": [
+   "A round table, a hanging lamp and a mirror",
+   "A drum, a candle and a folding fan",
+   "A bucket of water, a rope and a stone",
+   "A kite, a lantern and a bamboo pole"
+  ],
+  "answer": 0,
+  "fact": "She also rewrote a difficult maths textbook in plainer language so beginners could learn multiplication and division; she died at 29.",
+  "src": "https://en.wikipedia.org/wiki/Wang_Zhenyi_(astronomer)",
+  "q_fr": "Pour montrer comment se produit une éclipse de Lune, l'astronome Wang Zhenyi, sous la dynastie Qing, a bâti une maquette dans un pavillon de jardin avec quels objets du quotidien ?",
+  "options_fr": [
+   "Une table ronde, une lampe suspendue et un miroir",
+   "Un tambour, une bougie et un éventail",
+   "Un seau d'eau, une corde et une pierre",
+   "Un cerf-volant, une lanterne et une perche de bambou"
+  ],
+  "fact_fr": "Elle a aussi réécrit en langage simple un manuel ardu de mathématiques pour les débutants ; elle est morte à 29 ans."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article verbatim: bounds 3.1415926-3.1415927, milü 355/113, 'a record in precision which would not be surpassed for nearly 900 years' — question wording matches the source exactly.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": true,
+  "q": "In the 5th century the Chinese mathematician Zu Chongzhi pinned down the value of which number more precisely than anyone would manage for nearly 900 years?",
+  "options": [
+   "Pi",
+   "The square root of two",
+   "The golden ratio",
+   "The speed of sound"
+  ],
+  "answer": 0,
+  "fact": "He fixed π between 3.1415926 and 3.1415927, and offered the handy fraction 355/113 — accurate enough for almost any everyday job.",
+  "src": "https://en.wikipedia.org/wiki/Zu_Chongzhi",
+  "q_fr": "Au Ve siècle, le mathématicien chinois Zu Chongzhi a déterminé la valeur de quel nombre avec une précision inégalée pendant près de 900 ans ?",
+  "options_fr": [
+   "Pi",
+   "La racine carrée de deux",
+   "Le nombre d'or",
+   "La vitesse du son"
+  ],
+  "fact_fr": "Il a encadré π entre 3,1415926 et 3,1415927 et proposé la fraction commode 355/113 — assez précise pour presque tous les usages."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Geometric solution of cubics by intersecting conics and the 1079 Jalali calendar with 33-year cycle beating the Gregorian are both in the article. Khayyam appears in live bank only as a distractor — no dup.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "Besides his famous poetry, the Persian scholar Omar Khayyam solved cubic equations using which geometric shapes?",
+  "options": [
+   "Conic sections such as parabolas and circles",
+   "Regular polygons",
+   "Spirals",
+   "Grids of triangles"
+  ],
+  "answer": 0,
+  "fact": "He also helped reform the Persian calendar in 1079; its 33-year cycle tracks the year even better than the Gregorian calendar we use.",
+  "src": "https://en.wikipedia.org/wiki/Omar_Khayyam",
+  "q_fr": "Outre sa poésie célèbre, le savant persan Omar Khayyam résolvait les équations du troisième degré à l'aide de quelles figures géométriques ?",
+  "options_fr": [
+   "Des coniques comme la parabole et le cercle",
+   "Des polygones réguliers",
+   "Des spirales",
+   "Des grilles de triangles"
+  ],
+  "fact_fr": "Il a aussi participé à la réforme du calendrier persan en 1079 ; son cycle de 33 ans suit l'année encore mieux que notre calendrier grégorien."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Etymology chain jya (bow-string) -> Arabic jb -> misread jayb -> Latin sinus matches the article's etymology section. Beautiful decolonial payoff.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "The word 'sine' reached Europe through a mistranslation. What did the original Sanskrit word mean?",
+  "options": [
+   "Bow-string",
+   "Shadow",
+   "Mountain",
+   "Wheel"
+  ],
+  "answer": 0,
+  "fact": "Sanskrit jya, 'bow-string', was copied into Arabic as jb, misread as jayb ('fold'), then rendered in Latin as sinus — our 'sine'.",
+  "src": "https://en.wikipedia.org/wiki/Sine_and_cosine",
+  "q_fr": "Le mot « sinus » est arrivé en Europe à la suite d'une erreur de traduction. Que signifiait le mot sanskrit d'origine ?",
+  "options_fr": [
+   "Corde d'arc",
+   "Ombre",
+   "Montagne",
+   "Roue"
+  ],
+  "fact_fr": "Le sanskrit jya, « corde d'arc », est passé en arabe sous la forme jb, relu jayb (« pli »), puis rendu en latin par sinus — notre « sinus »."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Chapter 8's fangcheng procedure is standardly identified with Gaussian elimination; counting-rod layout and ~1,700-year gap to Gauss (compiled by 1st c. CE, Gauss b. 1777) check out.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "The Chinese classic 'The Nine Chapters on the Mathematical Art' solves systems of equations by a method Europe would later name after which mathematician?",
+  "options": [
+   "Gauss",
+   "Newton",
+   "Descartes",
+   "Euler"
+  ],
+  "answer": 0,
+  "fact": "Chinese scribes solved them by laying out counting rods in columns, some 1,700 years before Gauss was born.",
+  "src": "https://en.wikipedia.org/wiki/The_Nine_Chapters_on_the_Mathematical_Art",
+  "q_fr": "Le classique chinois « Les Neuf Chapitres sur l'art mathématique » résout des systèmes d'équations par une méthode que l'Europe nommera plus tard d'après quel mathématicien ?",
+  "options_fr": [
+   "Gauss",
+   "Newton",
+   "Descartes",
+   "Euler"
+  ],
+  "fact_fr": "Les scribes chinois les résolvaient en disposant des baguettes à calculer en colonnes, quelque 1 700 ans avant la naissance de Gauss."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Six-year almanac series 1792-1797, Rittenhouse's 'a very extraordinary performance', and the 1792 ephemeris manuscript sent to Jefferson all confirmed verbatim in the article.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "Benjamin Banneker, born free in 1730s Maryland, taught himself astronomy and then published six years of what?",
+  "options": [
+   "Almanacs, whose star tables he calculated himself",
+   "Newspapers reporting on the tobacco trade",
+   "Sea charts of the Atlantic coastline",
+   "Dictionaries of the English language"
+  ],
+  "answer": 0,
+  "fact": "The astronomer David Rittenhouse called his ephemeris 'a very extraordinary performance'; Banneker sent a copy to Thomas Jefferson.",
+  "src": "https://en.wikipedia.org/wiki/Benjamin_Banneker",
+  "q_fr": "Benjamin Banneker, né libre dans le Maryland des années 1730, apprend seul l'astronomie puis publie six années de quoi ?",
+  "options_fr": [
+   "Des almanachs dont il calculait lui-même les tables du ciel",
+   "Des journaux consacrés au commerce du tabac",
+   "Des cartes marines de la côte atlantique",
+   "Des dictionnaires de la langue anglaise"
+  ],
+  "fact_fr": "L'astronome David Rittenhouse a jugé ses éphémérides « très remarquables » ; Banneker en a envoyé un exemplaire à Thomas Jefferson."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article lead: first female mathematician whose life is reasonably well recorded; edited Almagest Book III, taught astrolabe construction, murdered by a mob in March 415. All supported.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "Hypatia, the earliest woman mathematician whose life is well recorded, taught in which city?",
+  "options": [
+   "Alexandria",
+   "Athens",
+   "Rome",
+   "Antioch"
+  ],
+  "answer": 0,
+  "fact": "She edited Book III of Ptolemy's Almagest and taught pupils to build astrolabes; in 415 a mob in the city murdered her.",
+  "src": "https://en.wikipedia.org/wiki/Hypatia",
+  "q_fr": "Hypatie, la plus ancienne mathématicienne dont la vie soit bien documentée, enseignait dans quelle ville ?",
+  "options_fr": [
+   "Alexandrie",
+   "Athènes",
+   "Rome",
+   "Antioche"
+  ],
+  "fact_fr": "Elle a révisé le livre III de l'Almageste de Ptolémée et enseignait à construire des astrolabes ; en 415, une foule de la ville l'a assassinée."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article: determinants in 1683, 'as early as Leibniz's first commentary on the subject', independent of Europe; pi to 10 decimals via what is now Aitken's delta-squared process confirmed verbatim.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 2,
+  "kids": false,
+  "q": "Seki Takakazu was the leading figure of wasan, the mathematics developed in Edo-period Japan. What did he set out in 1683, almost exactly when Leibniz did in Europe?",
+  "options": [
+   "Determinants, for solving systems of equations",
+   "The law of gravity",
+   "Logarithms",
+   "The pendulum clock"
+  ],
+  "answer": 0,
+  "fact": "He also pinned π to ten decimal places using an acceleration trick only rediscovered in the 20th century, now named after Aitken.",
+  "src": "https://en.wikipedia.org/wiki/Seki_Takakazu",
+  "q_fr": "Seki Takakazu fut la grande figure du wasan, les mathématiques développées au Japon de l'époque d'Edo. Qu'a-t-il élaboré en 1683, presque en même temps que Leibniz en Europe ?",
+  "options_fr": [
+   "Les déterminants, pour résoudre des systèmes d'équations",
+   "La loi de la gravitation",
+   "Les logarithmes",
+   "L'horloge à pendule"
+  ],
+  "fact_fr": "Il a aussi calculé π avec dix décimales exactes grâce à une astuce d'accélération redécouverte seulement au XXe siècle, dite procédé d'Aitken."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Plimpton 322 (c. 1800 BCE) contains Pythagorean triples; scholarship in the article supports systematic generation, not chance. Predates Pythagoras (b. c. 570 BCE) by over a millennium.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 3,
+  "kids": false,
+  "q": "A Babylonian clay tablet written around 1800 BCE lists column after column of what?",
+  "options": [
+   "Whole-number triples that fit right-angled triangles",
+   "The names of the Babylonian kings",
+   "Rainfall records for the Euphrates",
+   "Recipes for glazing pottery"
+  ],
+  "answer": 0,
+  "fact": "Plimpton 322 predates Pythagoras by well over a thousand years, and its triples are far too large to have been stumbled upon.",
+  "src": "https://en.wikipedia.org/wiki/Plimpton_322",
+  "q_fr": "Une tablette d'argile babylonienne écrite vers 1800 av. J.-C. aligne colonne après colonne quoi ?",
+  "options_fr": [
+   "Des triplets d'entiers formant des triangles rectangles",
+   "Les noms des rois de Babylone",
+   "Des relevés de pluie sur l'Euphrate",
+   "Des recettes d'émaillage de poterie"
+  ],
+  "fact_fr": "Plimpton 322 précède Pythagore de bien plus de mille ans, et ses triplets sont bien trop grands pour avoir été trouvés par hasard."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article credits Madhava (c. 1340-1425) with sine/cosine/arctangent series and the 'Madhava-Leibniz series' for pi. Gap to Gregory/Leibniz (c. 1671) is ~250-270 years, so 'about 250 years earlier' is conservative and safe.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 3,
+  "kids": false,
+  "q": "Around 1400, Madhava of Sangamagrama and the Kerala school in India worked out infinite series for pi and for the sine — ideas Europe would only reach with what?",
+  "options": [
+   "Calculus",
+   "Logarithms",
+   "Analytic geometry",
+   "The abacus"
+  ],
+  "answer": 0,
+  "fact": "The series π/4 = 1 − 1/3 + 1/5 − 1/7 … is often credited to Leibniz and Gregory; Madhava had it about 250 years earlier.",
+  "src": "https://en.wikipedia.org/wiki/Madhava_of_Sangamagrama",
+  "q_fr": "Vers 1400, Madhava de Sangamagrama et l'école du Kerala, en Inde, établissent des séries infinies pour pi et pour le sinus — des idées que l'Europe n'atteindra qu'avec quoi ?",
+  "options_fr": [
+   "Le calcul infinitésimal",
+   "Les logarithmes",
+   "La géométrie analytique",
+   "L'abaque"
+  ],
+  "fact_fr": "La série π/4 = 1 − 1/3 + 1/5 − 1/7 … est souvent attribuée à Leibniz et Gregory ; Madhava l'avait environ 250 ans plus tôt."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article confirms: frequency analysis introduced by al-Kindi, described as 'the earliest known use of statistical inference'; House of Wisdom, Baghdad, 9th century. Note: not a dup of the dropped Al-Khwarizmi item — different scholar and payoff.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 3,
+  "kids": false,
+  "q": "In 9th-century Baghdad, al-Kindi worked out how to break a secret code without the key. What did he count?",
+  "options": [
+   "How often each letter appears",
+   "How many words the message has",
+   "The gaps between the lines",
+   "The number of pages"
+  ],
+  "answer": 0,
+  "fact": "Counting letter frequencies is now regarded as the earliest known use of statistical inference — and the birth of codebreaking.",
+  "src": "https://en.wikipedia.org/wiki/Al-Kindi",
+  "q_fr": "Dans le Bagdad du IXe siècle, al-Kindî découvre comment casser un code secret sans la clé. Que comptait-il ?",
+  "options_fr": [
+   "La fréquence de chaque lettre",
+   "Le nombre de mots du message",
+   "Les espaces entre les lignes",
+   "Le nombre de pages"
+  ],
+  "fact_fr": "Ce comptage des fréquences de lettres est considéré comme le premier usage connu de l'inférence statistique — et la naissance de la cryptanalyse."
+ },
+ {
+  "stream": "maths",
+  "verdict": "fixed",
+  "why": "Answer correct, but fact was wrong: the four-year fight (1915-1919) was over her RIGHT TO TEACH (habilitation, lecturing under Hilbert's name) — she stayed unpaid until 1923, not four years. Rewrote fact to match the article; soldiers quote is in the article.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 3,
+  "kids": false,
+  "q": "Emmy Noether's most famous theorem links conservation laws — of energy, of momentum — to what?",
+  "options": [
+   "Symmetries of a physical system",
+   "The mass of the particles involved",
+   "The temperature of the system",
+   "The distance between the objects"
+  ],
+  "answer": 0,
+  "fact": "Göttingen let her lecture only under Hilbert's name for four years — one professor asked what soldiers would think of learning at a woman's feet.",
+  "src": "https://en.wikipedia.org/wiki/Emmy_Noether",
+  "q_fr": "Le théorème le plus célèbre d'Emmy Noether relie les lois de conservation — de l'énergie, de la quantité de mouvement — à quoi ?",
+  "options_fr": [
+   "Aux symétries d'un système physique",
+   "À la masse des particules en jeu",
+   "À la température du système",
+   "À la distance entre les objets"
+  ],
+  "fact_fr": "Quatre ans durant, Göttingen ne l'a laissée enseigner que sous le nom de Hilbert — un professeur demandait ce que penseraient les soldats d'apprendre aux pieds d'une femme."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "MIT 1951 term-paper story with Fano setting the problem and Huffman's method proving optimal is the article's origin account. DEFLATE (ZIP) and JPEG both use Huffman coding.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 3,
+  "kids": false,
+  "q": "The compression at the heart of ZIP files and JPEGs was devised in 1951 by David Huffman in what circumstances?",
+  "options": [
+   "As a student, doing a class term paper",
+   "In a wartime codebreaking unit",
+   "While working for a telephone company",
+   "During a NASA mission"
+  ],
+  "answer": 0,
+  "fact": "His professor Robert Fano had set the problem and had his own solution; the student's method turned out to be provably better.",
+  "src": "https://en.wikipedia.org/wiki/Huffman_coding",
+  "q_fr": "La compression au cœur des fichiers ZIP et des JPEG a été mise au point en 1951 par David Huffman dans quelles circonstances ?",
+  "options_fr": [
+   "Étudiant, en rédigeant un devoir de cours",
+   "Dans une unité de décryptage en temps de guerre",
+   "En travaillant pour une compagnie de téléphone",
+   "Au cours d'une mission de la NASA"
+  ],
+  "fact_fr": "Son professeur Robert Fano avait posé le problème et avait sa propre solution ; la méthode de l'étudiant s'est révélée démontrablement meilleure."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Problem of points: de Méré's 1654 question on dividing stakes of an interrupted game, resolved by Pascal-Fermat via future outcomes, founding expected value. Article on-subject. Live 'Pascal' hit is only the SI-unit distractor.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 3,
+  "kids": false,
+  "q": "Probability theory began in 1654 with a gambler's question put to Blaise Pascal. What did he want to know?",
+  "options": [
+   "How to split the pot if a game is stopped early",
+   "How to spot a loaded pair of dice",
+   "How many cards make a fair deck",
+   "Why the house always wins in the end"
+  ],
+  "answer": 0,
+  "fact": "Pascal and Fermat's answer — judge it by what could still happen, not what already had — gave us expected value, the basis of insurance.",
+  "src": "https://en.wikipedia.org/wiki/Problem_of_points",
+  "q_fr": "La théorie des probabilités naît en 1654 d'une question de joueur posée à Blaise Pascal. Que voulait-il savoir ?",
+  "options_fr": [
+   "Comment partager la mise si la partie s'arrête avant la fin",
+   "Comment reconnaître des dés pipés",
+   "Combien de cartes font un jeu équitable",
+   "Pourquoi la maison finit toujours par gagner"
+  ],
+  "fact_fr": "La réponse de Pascal et Fermat — juger d'après ce qui peut encore arriver, non d'après le passé — a donné l'espérance, base de l'assurance."
+ },
+ {
+  "stream": "maths",
+  "verdict": "ok",
+  "why": "Article verbatim: Brahmasphutasiddhanta is 'the first book that provides rules... for zero and negative numbers', and on a/0 'he did not commit himself'. Adjacent to live q19 (zero, History cat) but the negative-numbers question and division-by-zero payoff are distinct.",
+  "cat": "Science",
+  "sub": "Mathematics",
+  "diff": 3,
+  "kids": false,
+  "q": "In 628 CE the Indian mathematician Brahmagupta set out the first known rules for calculating with what?",
+  "options": [
+   "Negative numbers",
+   "Prime numbers",
+   "Imaginary numbers",
+   "Decimal fractions"
+  ],
+  "answer": 0,
+  "fact": "He also tackled zero — but on dividing an ordinary number by zero he would not commit, and maths still leaves it undefined.",
+  "src": "https://en.wikipedia.org/wiki/Brahmagupta",
+  "q_fr": "En 628, le mathématicien indien Brahmagupta énonce les premières règles connues de calcul avec quoi ?",
+  "options_fr": [
+   "Les nombres négatifs",
+   "Les nombres premiers",
+   "Les nombres imaginaires",
+   "Les fractions décimales"
+  ],
+  "fact_fr": "Il s'attaque aussi au zéro — mais sur la division d'un nombre ordinaire par zéro, il ne tranche pas, et les maths la laissent encore indéfinie."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Stapes confirmed smallest bone; article states 'roughly 2 to 3 mm' and oval-window membrane transmission. Distractors unambiguous. French idiomatic.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which is the smallest bone in the human body?",
+  "options": [
+   "The stapes, in the middle ear",
+   "The smallest finger bone",
+   "The tailbone",
+   "The kneecap"
+  ],
+  "answer": 0,
+  "fact": "The stapes is only about 2–3 mm long, and it rocks against a membrane to pass sound into the inner ear.",
+  "src": "https://en.wikipedia.org/wiki/Stapes",
+  "q_fr": "Quel est le plus petit os du corps humain ?",
+  "options_fr": [
+   "L'étrier, dans l'oreille moyenne",
+   "Le plus petit os du doigt",
+   "Le coccyx",
+   "La rotule"
+  ],
+  "fact_fr": "L'étrier ne mesure que 2 à 3 mm ; il bascule contre une membrane pour transmettre le son à l'oreille interne."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article states verbatim 'the single largest muscle in the human body' and that its most powerful action is regaining the erect position after stooping.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which is the single largest muscle in the human body?",
+  "options": [
+   "The gluteus maximus, in the buttock",
+   "The heart",
+   "The muscle of the calf",
+   "The muscle of the upper arm"
+  ],
+  "answer": 0,
+  "fact": "It is the muscle that straightens your hip — the one that pulls you upright again every time you stand up from a stoop.",
+  "src": "https://en.wikipedia.org/wiki/Gluteus_maximus",
+  "q_fr": "Quel est le plus gros muscle du corps humain ?",
+  "options_fr": [
+   "Le grand fessier, dans la fesse",
+   "Le cœur",
+   "Le muscle du mollet",
+   "Le muscle du bras"
+  ],
+  "fact_fr": "C'est le muscle qui redresse la hanche : celui qui vous remet debout chaque fois que vous vous relevez d'une flexion."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms attachment of gastrocnemius/soleus to calcaneus and 'thickest tendon in the human body'. Plantar flexion = lifting heel in gait; fair simplification.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "The Achilles tendon joins your calf muscles to which bone?",
+  "options": [
+   "The heel bone",
+   "The kneecap",
+   "The shin bone",
+   "The big toe"
+  ],
+  "answer": 0,
+  "fact": "It is the thickest tendon in the body — every step you take pulls on it to lift your heel off the ground.",
+  "src": "https://en.wikipedia.org/wiki/Achilles_tendon",
+  "q_fr": "Le tendon d'Achille relie les muscles du mollet à quel os ?",
+  "options_fr": [
+   "L'os du talon",
+   "La rotule",
+   "Le tibia",
+   "Le gros orteil"
+  ],
+  "fact_fr": "C'est le tendon le plus épais du corps : chaque pas tire dessus pour décoller le talon du sol."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article: 'the main muscle of respiration', dome-shaped, contracts/flattens drawing air in. All confirmed.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which muscle does most of the work when you breathe in?",
+  "options": [
+   "The diaphragm",
+   "The muscles of the tongue",
+   "The muscles of the abdomen",
+   "The muscles of the throat"
+  ],
+  "answer": 0,
+  "fact": "The diaphragm is a curved sheet of muscle under the lungs; when it pulls flat, air rushes in to fill the extra space.",
+  "src": "https://en.wikipedia.org/wiki/Thoracic_diaphragm",
+  "q_fr": "Quel muscle fait l'essentiel du travail quand vous inspirez ?",
+  "options_fr": [
+   "Le diaphragme",
+   "Les muscles de la langue",
+   "Les muscles de l'abdomen",
+   "Les muscles de la gorge"
+  ],
+  "fact_fr": "Le diaphragme est une nappe musculaire bombée sous les poumons : quand elle s'aplatit, l'air s'engouffre dans la place gagnée."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Iron in heme confirmed; one O2 per iron/heme, picked up in lungs, released in tissues — all in article.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which metal sits at the centre of haemoglobin, the molecule that carries oxygen in your blood?",
+  "options": [
+   "Iron",
+   "Copper",
+   "Zinc",
+   "Magnesium"
+  ],
+  "answer": 0,
+  "fact": "Each iron atom picks up one oxygen molecule in the lungs and lets it go again in the tissues that need it.",
+  "src": "https://en.wikipedia.org/wiki/Hemoglobin",
+  "q_fr": "Quel métal se trouve au cœur de l'hémoglobine, la molécule qui transporte l'oxygène dans le sang ?",
+  "options_fr": [
+   "Le fer",
+   "Le cuivre",
+   "Le zinc",
+   "Le magnésium"
+  ],
+  "fact_fr": "Chaque atome de fer capte une molécule d'oxygène dans les poumons et la relâche dans les tissus qui en ont besoin."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article states verbatim: most nutrients absorbed there, length 3–5 m in a living person, mucosal surface averages 30 square metres.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which part of the digestive tract absorbs most of the nutrients from your food?",
+  "options": [
+   "The small intestine",
+   "The stomach",
+   "The large intestine",
+   "The oesophagus"
+  ],
+  "answer": 0,
+  "fact": "Folds and finger-like villi pack about 30 square metres of absorbing surface into a tube only 3–5 m long.",
+  "src": "https://en.wikipedia.org/wiki/Small_intestine",
+  "q_fr": "Quelle partie du tube digestif absorbe la plupart des nutriments de vos aliments ?",
+  "options_fr": [
+   "L'intestin grêle",
+   "L'estomac",
+   "Le gros intestin",
+   "L'œsophage"
+  ],
+  "fact_fr": "Replis et villosités entassent environ 30 mètres carrés de surface d'absorption dans un tube de 3 à 5 m seulement."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Water/salt absorption, 1.5 m, one-fifth of GI tract — all stated verbatim in article. Distractors are stomach/pancreas/liver functions, cleanly wrong.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "What is the large intestine's main job?",
+  "options": [
+   "Absorbing water and salts from what is left of food",
+   "Breaking down fats with bile",
+   "Making digestive enzymes",
+   "Adding acid to kill bacteria"
+  ],
+  "answer": 0,
+  "fact": "It is only about 1.5 m long — a fifth of the gut — yet it is where what you could not digest gives up its water.",
+  "src": "https://en.wikipedia.org/wiki/Large_intestine",
+  "q_fr": "Quel est le rôle principal du gros intestin ?",
+  "options_fr": [
+   "Absorber l'eau et les sels de ce qui reste des aliments",
+   "Digérer les graisses grâce à la bile",
+   "Fabriquer les enzymes digestives",
+   "Ajouter de l'acide pour tuer les bactéries"
+  ],
+  "fact_fr": "Long d'environ 1,5 m — un cinquième du tube digestif — c'est là que les restes non digérés cèdent leur eau."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms HCl from parietal cells, pH 'between one and three', and verbatim 'much lower than most other animals'. Cross-species claim fully sourced.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which acid does your stomach produce to help break down food?",
+  "options": [
+   "Hydrochloric acid",
+   "Sulfuric acid",
+   "Citric acid",
+   "Carbonic acid"
+  ],
+  "answer": 0,
+  "fact": "Stomach acid runs at a pH of 1 to 3 — far more acidic than in most animals — and comes from parietal cells in the lining.",
+  "src": "https://en.wikipedia.org/wiki/Gastric_acid",
+  "q_fr": "Quel acide votre estomac fabrique-t-il pour aider à décomposer les aliments ?",
+  "options_fr": [
+   "L'acide chlorhydrique",
+   "L'acide sulfurique",
+   "L'acide citrique",
+   "L'acide carbonique"
+  ],
+  "fact_fr": "Son pH de 1 à 3 est bien plus acide que chez la plupart des animaux ; il vient des cellules pariétales de la paroi."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: 'as little as 25% of a liver can regenerate into a whole liver', ~1.5 kg, right upper quadrant under the ribs.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which human organ can grow back after a large part of it is removed?",
+  "options": [
+   "The liver",
+   "The heart",
+   "The kidney",
+   "The brain"
+  ],
+  "answer": 0,
+  "fact": "As little as a quarter of a liver can regrow into a whole one; it weighs about 1.5 kg and sits under your right ribs.",
+  "src": "https://en.wikipedia.org/wiki/Liver",
+  "q_fr": "Quel organe humain peut repousser après qu'on en a retiré une grande partie ?",
+  "options_fr": [
+   "Le foie",
+   "Le cœur",
+   "Le rein",
+   "Le cerveau"
+  ],
+  "fact_fr": "Un quart de foie suffit à en reformer un entier ; il pèse environ 1,5 kg et se loge sous les côtes droites."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Melanocytes and the 'dissipate over 99.9% of absorbed UV radiation' figure are both stated verbatim in the article.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which pigment gives human skin, hair and eyes their colour?",
+  "options": [
+   "Melanin",
+   "Keratin",
+   "Collagen",
+   "Elastin"
+  ],
+  "answer": 0,
+  "fact": "Made by cells called melanocytes, melanin absorbs ultraviolet light and safely disperses over 99.9% of that energy.",
+  "src": "https://en.wikipedia.org/wiki/Melanin",
+  "q_fr": "Quel pigment donne leur couleur à la peau, aux cheveux et aux yeux ?",
+  "options_fr": [
+   "La mélanine",
+   "La kératine",
+   "Le collagène",
+   "L'élastine"
+  ],
+  "fact_fr": "Fabriquée par des cellules appelées mélanocytes, la mélanine absorbe les ultraviolets et en dissipe plus de 99,9 % de l'énergie."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms Latin snail-shell etymology, exactly 2.75 turns in humans, and hair cells converting motion to electrical signals.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Which snail-shaped part of the inner ear turns sound vibrations into nerve signals?",
+  "options": [
+   "The cochlea",
+   "The eardrum",
+   "The ear canal",
+   "The earlobe"
+  ],
+  "answer": 0,
+  "fact": "'Cochlea' is Latin for snail shell — the human one coils 2.75 turns, and tiny hairs inside it convert the vibrations.",
+  "src": "https://en.wikipedia.org/wiki/Cochlea",
+  "q_fr": "Quelle partie de l'oreille interne, en forme d'escargot, transforme les vibrations sonores en signaux nerveux ?",
+  "options_fr": [
+   "La cochlée",
+   "Le tympan",
+   "Le conduit auditif",
+   "Le lobe de l'oreille"
+  ],
+  "fact_fr": "« Cochlea » veut dire coquille d'escargot en latin : la nôtre fait 2,75 tours et de minuscules cils y convertissent les vibrations."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article exists, confirms three canals at right angles to each other sensing rotation in different planes. Balance is the correct sense.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "Three fluid-filled loops in each inner ear give you which sense?",
+  "options": [
+   "Balance",
+   "Smell",
+   "Taste",
+   "Touch"
+  ],
+  "answer": 0,
+  "fact": "The three canals sit at right angles to one another, so between them they register a head turn in any direction.",
+  "src": "https://en.wikipedia.org/wiki/Semicircular_canals",
+  "q_fr": "Trois boucles remplies de liquide, dans chaque oreille interne, vous donnent quel sens ?",
+  "options_fr": [
+   "L'équilibre",
+   "L'odorat",
+   "Le goût",
+   "Le toucher"
+  ],
+  "fact_fr": "Les trois canaux sont perpendiculaires entre eux : ensemble, ils détectent un mouvement de tête dans n'importe quelle direction."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms location above kidneys, production of adrenaline and cortisol, and aldosterone's role in blood-pressure regulation. French 'surrénales' etymology adaptation is sound.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "The glands that release adrenaline sit directly on top of which organs?",
+  "options": [
+   "The kidneys",
+   "The lungs",
+   "The liver",
+   "The intestines"
+  ],
+  "answer": 0,
+  "fact": "Their name says where they are: 'ad-renal' means 'on the kidney'. They also make cortisol and help set blood pressure.",
+  "src": "https://en.wikipedia.org/wiki/Adrenal_gland",
+  "q_fr": "Les glandes qui libèrent l'adrénaline sont posées directement sur quels organes ?",
+  "options_fr": [
+   "Les reins",
+   "Les poumons",
+   "Le foie",
+   "Les intestins"
+  ],
+  "fact_fr": "Leur nom dit où elles sont : « surrénales », au-dessus des reins. Elles produisent aussi le cortisol et règlent la tension."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms 8 Nov 1895 discovery and radiograph of wife Anna Bertha's hand about six weeks later (22 Dec 1895). Standard attribution as first human radiograph; Kölliker's came Jan 1896.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 1,
+  "kids": true,
+  "q": "The first X-ray picture of a human body part, taken in 1895, showed whose hand?",
+  "options": [
+   "The hand of the discoverer's wife",
+   "The hand of a patient in a Vienna hospital",
+   "The hand of the young Marie Curie",
+   "The hand of the German emperor"
+  ],
+  "answer": 0,
+  "fact": "Wilhelm Röntgen noticed the strange rays on 8 November 1895 and photographed his wife Anna Bertha's hand bones six weeks later.",
+  "src": "https://en.wikipedia.org/wiki/Wilhelm_R%C3%B6ntgen",
+  "q_fr": "La première radiographie d'une partie du corps humain, en 1895, montrait la main de qui ?",
+  "options_fr": [
+   "La main de l'épouse du découvreur",
+   "La main d'une patiente d'un hôpital de Vienne",
+   "La main de la jeune Marie Curie",
+   "La main de l'empereur d'Allemagne"
+  ],
+  "fact_fr": "Wilhelm Röntgen repère ces rayons le 8 novembre 1895 et photographie les os de la main de sa femme Anna Bertha six semaines plus tard."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Seven confirmed; article and image caption explicitly confirm giraffes share the seven-vertebrae count.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "How many vertebrae are in the human neck?",
+  "options": [
+   "Seven",
+   "Three",
+   "Twelve",
+   "Twenty-four"
+  ],
+  "answer": 0,
+  "fact": "A giraffe's neck contains the same seven vertebrae as yours — each one is simply enormous.",
+  "src": "https://en.wikipedia.org/wiki/Cervical_vertebrae",
+  "q_fr": "Combien de vertèbres compte le cou humain ?",
+  "options_fr": [
+   "Sept",
+   "Trois",
+   "Douze",
+   "Vingt-quatre"
+  ],
+  "fact_fr": "Le cou de la girafe compte les mêmes sept vertèbres que le vôtre : elles sont simplement gigantesques."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: ~500 billion blood cells per day; adult marrow in ribs, vertebrae, sternum and pelvis. All supported.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": true,
+  "q": "Where are new blood cells made in an adult human?",
+  "options": [
+   "In the bone marrow",
+   "In the lining of the stomach",
+   "In the liver",
+   "In the lymph nodes"
+  ],
+  "answer": 0,
+  "fact": "Marrow in the pelvis, ribs, breastbone and spine turns out roughly 500 billion blood cells every day.",
+  "src": "https://en.wikipedia.org/wiki/Bone_marrow",
+  "q_fr": "Où les nouvelles cellules sanguines sont-elles fabriquées chez l'adulte ?",
+  "options_fr": [
+   "Dans la moelle osseuse",
+   "Dans la paroi de l'estomac",
+   "Dans le foie",
+   "Dans les ganglions lymphatiques"
+  ],
+  "fact_fr": "La moelle du bassin, des côtes, du sternum et des vertèbres produit environ 500 milliards de cellules sanguines par jour."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: about 480 million alveoli, gas-exchange surface between 70 and 80 square metres. Distractors are same-kind micro-structures from other organs.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "Oxygen crosses from your lungs into your blood at millions of tiny air sacs. What are they called?",
+  "options": [
+   "Alveoli",
+   "Villi",
+   "Nephrons",
+   "Follicles"
+  ],
+  "answer": 0,
+  "fact": "A pair of lungs holds about 480 million alveoli — 70 to 80 square metres of surface, folded up inside your chest.",
+  "src": "https://en.wikipedia.org/wiki/Pulmonary_alveolus",
+  "q_fr": "L'oxygène passe de vos poumons à votre sang dans des millions de minuscules sacs d'air. Comment s'appellent-ils ?",
+  "options_fr": [
+   "Les alvéoles",
+   "Les villosités",
+   "Les néphrons",
+   "Les follicules"
+  ],
+  "fact_fr": "Une paire de poumons compte environ 480 millions d'alvéoles : 70 à 80 mètres carrés de surface, repliés dans la poitrine."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: 5 to 10 micrometres diameter, wall of simple squamous endothelial cells (one cell thick), site of substance exchange.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": true,
+  "q": "Which blood vessels are thin enough for oxygen to pass straight through their walls?",
+  "options": [
+   "Capillaries",
+   "Arteries",
+   "Veins",
+   "Lymph vessels"
+  ],
+  "answer": 0,
+  "fact": "A capillary is 5 to 10 micrometres across — thinner than a hair — with a wall just one flat cell thick.",
+  "src": "https://en.wikipedia.org/wiki/Capillary",
+  "q_fr": "Quels vaisseaux sanguins sont assez fins pour que l'oxygène traverse directement leur paroi ?",
+  "options_fr": [
+   "Les capillaires",
+   "Les artères",
+   "Les veines",
+   "Les vaisseaux lymphatiques"
+  ],
+  "fact_fr": "Un capillaire mesure 5 à 10 micromètres de diamètre — plus fin qu'un cheveu — avec une paroi d'une seule cellule plate."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "fixed",
+  "why": "Facts all confirmed (no nucleus, 100–120 days, 2.4 million/second). Fixed French only: 'globules rouges mûrs' is off-register ('matures' is the biological term) and 'en possèdent' dangled without antecedent completion; rephrased cleanly.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "What do mature human red blood cells lack that nearly every other cell in the body has?",
+  "options": [
+   "A nucleus",
+   "A cell membrane",
+   "Proteins",
+   "Water"
+  ],
+  "answer": 0,
+  "fact": "They survive about 120 days in circulation, and your bone marrow replaces them at some 2.4 million every second.",
+  "src": "https://en.wikipedia.org/wiki/Red_blood_cell",
+  "q_fr": "Que n'ont pas les globules rouges humains matures, contrairement à presque toutes les autres cellules du corps ?",
+  "options_fr": [
+   "Un noyau",
+   "Une membrane cellulaire",
+   "Des protéines",
+   "De l'eau"
+  ],
+  "fact_fr": "Ils vivent environ 120 jours dans le sang, et la moelle osseuse en remplace près de 2,4 millions chaque seconde."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms De Motu Cordis 1628 and the quantitative argument (liver would need to make 498 lb of blood a day — impossible, so blood recirculates).",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "In 1628 William Harvey published a book showing that blood does what?",
+  "options": [
+   "Circulates in a loop, pumped by the heart",
+   "Is made fresh in the liver each day",
+   "Flows outward once and is then used up",
+   "Moves because the lungs squeeze it along"
+  ],
+  "answer": 0,
+  "fact": "Harvey worked out how much blood the heart pushes out in an hour and showed no body could make that much — it must be recycled.",
+  "src": "https://en.wikipedia.org/wiki/William_Harvey",
+  "q_fr": "En 1628, William Harvey publie un livre démontrant quoi au sujet du sang ?",
+  "options_fr": [
+   "Qu'il circule en boucle, poussé par le cœur",
+   "Qu'il est fabriqué chaque jour par le foie",
+   "Qu'il part vers les membres puis est consommé",
+   "Qu'il avance parce que les poumons le compriment"
+  ],
+  "fact_fr": "Harvey calcule le volume expulsé par le cœur en une heure : aucun corps ne peut en fabriquer autant, donc le sang tourne en boucle."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: 'Latin for little brain', 'contains more neurons than the total from the rest of the brain, but takes up only 10% of the total brain volume'. Fully supported.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "Which part of the brain, tucked under the back of the skull, fine-tunes balance and precise movement?",
+  "options": [
+   "The cerebellum",
+   "The hippocampus",
+   "The frontal lobe",
+   "The thalamus"
+  ],
+  "answer": 0,
+  "fact": "Its name means 'little brain': it fills a tenth of the brain's volume yet holds more neurons than all the rest combined.",
+  "src": "https://en.wikipedia.org/wiki/Cerebellum",
+  "q_fr": "Quelle partie du cerveau, nichée sous l'arrière du crâne, affine l'équilibre et la précision des gestes ?",
+  "options_fr": [
+   "Le cervelet",
+   "L'hippocampe",
+   "Le lobe frontal",
+   "Le thalamus"
+  ],
+  "fact_fr": "Son nom signifie « petit cerveau » : un dixième du volume cérébral, mais plus de neurones que tout le reste réuni."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: 'the longest and widest single nerve in the human body'; course down posterior thigh, branching to leg and foot confirmed.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "Which is the longest and widest single nerve in the human body?",
+  "options": [
+   "The sciatic nerve, in the back of the leg",
+   "The optic nerve, behind the eye",
+   "The vagus nerve, in the chest",
+   "The median nerve, in the arm"
+  ],
+  "answer": 0,
+  "fact": "It leaves the lower back, passes the hip and runs down the back of the thigh before branching out to the lower leg and foot.",
+  "src": "https://en.wikipedia.org/wiki/Sciatic_nerve",
+  "q_fr": "Quel est le nerf le plus long et le plus large du corps humain ?",
+  "options_fr": [
+   "Le nerf sciatique, à l'arrière de la jambe",
+   "Le nerf optique, derrière l'œil",
+   "Le nerf vague, dans le thorax",
+   "Le nerf médian, dans le bras"
+  ],
+  "fact_fr": "Il part du bas du dos, longe la hanche et descend à l'arrière de la cuisse avant de se ramifier vers la jambe et le pied."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "fixed",
+  "why": "Answer and etymology correct, but fact overstated: Aranzi likened it FIRST to a silkworm, then a seahorse — 'looked exactly like one' is not supported. Softened both languages.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "Which part of the brain is essential for turning experiences into long-term memories?",
+  "options": [
+   "The hippocampus",
+   "The cerebellum",
+   "The thalamus",
+   "The brainstem"
+  ],
+  "answer": 0,
+  "fact": "Its name is Greek for 'seahorse' — the anatomist who named it likened its curled shape to the sea creature.",
+  "src": "https://en.wikipedia.org/wiki/Hippocampus",
+  "q_fr": "Quelle partie du cerveau est essentielle pour transformer les expériences en souvenirs durables ?",
+  "options_fr": [
+   "L'hippocampe",
+   "Le cervelet",
+   "Le thalamus",
+   "Le tronc cérébral"
+  ],
+  "fact_fr": "Son nom signifie « hippocampe » en grec : l'anatomiste qui l'a baptisée comparait sa forme enroulée à l'animal marin."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Behind the stomach, insulin from islets of Langerhans, digestive enzymes into duodenum — all confirmed in article.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "Which organ, tucked behind the stomach, makes the insulin that controls blood sugar?",
+  "options": [
+   "The pancreas",
+   "The spleen",
+   "The gallbladder",
+   "The liver"
+  ],
+  "answer": 0,
+  "fact": "Insulin comes from cell clusters called the islets of Langerhans, inside a gland that also pours enzymes into the gut.",
+  "src": "https://en.wikipedia.org/wiki/Pancreas",
+  "q_fr": "Quel organe, logé derrière l'estomac, fabrique l'insuline qui règle le taux de sucre dans le sang ?",
+  "options_fr": [
+   "Le pancréas",
+   "La rate",
+   "La vésicule biliaire",
+   "Le foie"
+  ],
+  "fact_fr": "L'insuline vient d'amas de cellules, les îlots de Langerhans, dans une glande qui déverse aussi des enzymes dans l'intestin."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: ~38 trillion bacteria vs ~30–40 trillion human cells, roughly 1:1. 'Most in the gut' is accurate (Sender et al. — nearly all in the colon) though the article states it less explicitly; core payoff fully sourced.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "How does the number of bacterial cells in and on your body compare with the number of your own cells?",
+  "options": [
+   "About the same",
+   "About a hundredth as many",
+   "About a thousand times more",
+   "Almost none in a healthy person"
+  ],
+  "answer": 0,
+  "fact": "Roughly 38 trillion bacteria live in you, most of them in the gut, against about 30 to 40 trillion human cells.",
+  "src": "https://en.wikipedia.org/wiki/Human_microbiome",
+  "q_fr": "Comment le nombre de bactéries dans et sur votre corps se compare-t-il à celui de vos propres cellules ?",
+  "options_fr": [
+   "À peu près le même",
+   "Environ cent fois moins",
+   "Environ mille fois plus",
+   "Presque aucune chez une personne en bonne santé"
+  ],
+  "fact_fr": "Environ 38 000 milliards de bactéries vivent en vous, surtout dans l'intestin, contre 30 000 à 40 000 milliards de cellules humaines."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: no blood supply, nourished almost exclusively by diffused oxygen from surrounding air, replaced over about 48 days. All three claims sourced.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "What is the name of the outermost layer of human skin?",
+  "options": [
+   "The epidermis",
+   "The dermis",
+   "The cortex",
+   "The pleura"
+  ],
+  "answer": 0,
+  "fact": "It contains no blood vessels at all — it takes oxygen straight from the air — and renews itself about every 48 days.",
+  "src": "https://en.wikipedia.org/wiki/Epidermis",
+  "q_fr": "Comment s'appelle la couche la plus externe de la peau humaine ?",
+  "options_fr": [
+   "L'épiderme",
+   "Le derme",
+   "Le cortex",
+   "La plèvre"
+  ],
+  "fact_fr": "Il ne contient aucun vaisseau sanguin — il prend son oxygène dans l'air — et se renouvelle entièrement en 48 jours environ."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: cornea accounts for approximately two-thirds of the eye's optical power; avascular; oxygen dissolves in tears and diffuses through it.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": true,
+  "q": "The clear dome at the front of the eye does most of its focusing. What is it called?",
+  "options": [
+   "The cornea",
+   "The retina",
+   "The iris",
+   "The pupil"
+  ],
+  "answer": 0,
+  "fact": "The cornea bends about two-thirds of the light entering your eye, and has no blood vessels — it takes oxygen from your tears.",
+  "src": "https://en.wikipedia.org/wiki/Cornea",
+  "q_fr": "Le dôme transparent à l'avant de l'œil assure l'essentiel de la mise au point. Comment s'appelle-t-il ?",
+  "options_fr": [
+   "La cornée",
+   "La rétine",
+   "L'iris",
+   "La pupille"
+  ],
+  "fact_fr": "La cornée dévie environ deux tiers de la lumière entrante et n'a aucun vaisseau sanguin : elle puise l'oxygène dans les larmes."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Left upper quadrant, blood filter, removes old red cells, holds blood reserve, immune role — all confirmed in article.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "Which organ in the upper left of the abdomen filters blood and clears out worn-out red cells?",
+  "options": [
+   "The spleen",
+   "The liver",
+   "The gallbladder",
+   "The left kidney"
+  ],
+  "answer": 0,
+  "fact": "The spleen also holds a reserve of blood and helps launch immune responses against invaders in the bloodstream.",
+  "src": "https://en.wikipedia.org/wiki/Spleen",
+  "q_fr": "Quel organe, en haut à gauche de l'abdomen, filtre le sang et élimine les globules rouges usés ?",
+  "options_fr": [
+   "La rate",
+   "Le foie",
+   "La vésicule biliaire",
+   "Le rein gauche"
+  ],
+  "fact_fr": "La rate garde aussi une réserve de sang et déclenche des réponses immunitaires contre les intrus présents dans la circulation."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: butterfly-shaped, below the Adam's apple; hormones made from iodine; iodised salt discussed. Distractors same-kind glands, all elsewhere.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 2,
+  "kids": false,
+  "q": "Which butterfly-shaped gland sits in the neck, just below the Adam's apple?",
+  "options": [
+   "The thyroid",
+   "The pancreas",
+   "The thymus",
+   "The pituitary"
+  ],
+  "answer": 0,
+  "fact": "The thyroid needs iodine to build its hormones — which is why table salt in many countries has iodine added to it.",
+  "src": "https://en.wikipedia.org/wiki/Thyroid",
+  "q_fr": "Quelle glande en forme de papillon se trouve dans le cou, juste sous la pomme d'Adam ?",
+  "options_fr": [
+   "La thyroïde",
+   "Le pancréas",
+   "Le thymus",
+   "L'hypophyse"
+  ],
+  "fact_fr": "La thyroïde a besoin d'iode pour fabriquer ses hormones : c'est pourquoi le sel de table est iodé dans de nombreux pays."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms SA node is the natural pacemaker, cells depolarise automatically without nervous input, and nerves only speed/slow the rate.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 3,
+  "kids": false,
+  "q": "What sets the rhythm of your heartbeat?",
+  "options": [
+   "The sinoatrial node, a patch of cells in the heart",
+   "A steady signal sent down from the brain",
+   "The rhythm of the lungs filling and emptying",
+   "The snapping shut of the heart's four valves"
+  ],
+  "answer": 0,
+  "fact": "The node's cells re-fire all by themselves, without any nerve telling them to; nerves only speed the beat up or slow it down.",
+  "src": "https://en.wikipedia.org/wiki/Sinoatrial_node",
+  "q_fr": "Qu'est-ce qui fixe le rythme de vos battements de cœur ?",
+  "options_fr": [
+   "Le nœud sinusal, un amas de cellules du cœur",
+   "Un signal régulier envoyé par le cerveau",
+   "Le rythme des poumons qui se remplissent et se vident",
+   "La fermeture brusque des quatre valves cardiaques"
+  ],
+  "fact_fr": "Ces cellules se réamorcent toutes seules, sans ordre nerveux ; les nerfs ne font qu'accélérer ou ralentir la cadence."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "fixed",
+  "why": "Answer, Damascus origin, no-septal-pores argument all confirmed; article dates the work via age 29 (born 1210–13), consistent with 'around 1242'. But 1242→1628 is 386 years: '400 years before Harvey' overstates. Fixed to 'nearly 400 years' in both languages.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 3,
+  "kids": false,
+  "q": "Around 1242, the Damascus physician Ibn al-Nafis was the first to describe blood taking which route?",
+  "options": [
+   "From the heart through the lungs and back",
+   "From the liver straight to the brain",
+   "From the stomach into the kidneys",
+   "From the spine out to the fingertips"
+  ],
+  "answer": 0,
+  "fact": "He argued there is no opening between the heart's two sides, so blood must take the long way round — nearly 400 years before Harvey.",
+  "src": "https://en.wikipedia.org/wiki/Ibn_al-Nafis",
+  "q_fr": "Vers 1242, le médecin damascène Ibn al-Nafis fut le premier à décrire quel trajet du sang ?",
+  "options_fr": [
+   "Du cœur vers les poumons, puis retour",
+   "Du foie directement au cerveau",
+   "De l'estomac vers les reins",
+   "De la colonne vertébrale aux doigts"
+  ],
+  "fact_fr": "Il affirme qu'aucun passage ne relie les deux moitiés du cœur : le sang doit faire le grand tour — près de 400 ans avant Harvey."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article: 'vagus' = wandering; supplies organs from neck down to the second segment of the transverse colon — 'all the way down to the colon' is supported; heart/lungs/digestive tract confirmed.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 3,
+  "kids": false,
+  "q": "The vagus nerve takes its name from the Latin for 'wandering'. How far does it wander from the brain?",
+  "options": [
+   "All the way down to the colon",
+   "Only as far as the ears",
+   "Only as far as the shoulders",
+   "All the way down to the feet"
+  ],
+  "answer": 0,
+  "fact": "It leaves the brainstem, runs down the neck and chest and supplies the heart, lungs and most of the digestive tract.",
+  "src": "https://en.wikipedia.org/wiki/Vagus_nerve",
+  "q_fr": "Le nerf vague tire son nom du latin « errant ». Jusqu'où erre-t-il depuis le cerveau ?",
+  "options_fr": [
+   "Jusqu'au côlon",
+   "Seulement jusqu'aux oreilles",
+   "Seulement jusqu'aux épaules",
+   "Jusqu'aux pieds"
+  ],
+  "fact_fr": "Il quitte le tronc cérébral, descend par le cou et le thorax et innerve le cœur, les poumons et presque tout le tube digestif."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: 'A healthy adult has 1 to 1.5 million nephrons in each kidney'; filtration then reabsorption of water and solutes confirmed.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 3,
+  "kids": false,
+  "q": "Each kidney contains over a million tiny filtering units. What are they called?",
+  "options": [
+   "Nephrons",
+   "Alveoli",
+   "Neurons",
+   "Villi"
+  ],
+  "answer": 0,
+  "fact": "A healthy adult has 1 to 1.5 million nephrons per kidney; each filters blood, then takes back the water and salts you still need.",
+  "src": "https://en.wikipedia.org/wiki/Nephron",
+  "q_fr": "Chaque rein contient plus d'un million de minuscules unités filtrantes. Comment s'appellent-elles ?",
+  "options_fr": [
+   "Les néphrons",
+   "Les alvéoles",
+   "Les neurones",
+   "Les villosités"
+  ],
+  "fact_fr": "Un adulte sain en compte 1 à 1,5 million par rein ; chacun filtre le sang, puis récupère l'eau et les sels encore utiles."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article confirms optic disc lacks photoreceptors causing the blind spot, and verbatim '~7 million cones and 75 to 150 million rods'.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 3,
+  "kids": false,
+  "q": "Why does each of your eyes have a small blind spot?",
+  "options": [
+   "No light-sensing cells sit where the optic nerve leaves the eye",
+   "The eyelid casts a shadow across the retina",
+   "The lens is thinner at one of its edges",
+   "Blood vessels cover the centre of the pupil"
+  ],
+  "answer": 0,
+  "fact": "The retina carries about 7 million cones for colour and 75 to 150 million rods for dim light — but none on the optic disc.",
+  "src": "https://en.wikipedia.org/wiki/Retina",
+  "q_fr": "Pourquoi chacun de vos yeux a-t-il une petite tache aveugle ?",
+  "options_fr": [
+   "Aucune cellule photosensible là où le nerf optique quitte l'œil",
+   "La paupière projette une ombre sur la rétine",
+   "Le cristallin est plus mince sur l'un de ses bords",
+   "Des vaisseaux sanguins couvrent le centre de la pupille"
+  ],
+  "fact_fr": "La rétine porte environ 7 millions de cônes pour la couleur et 75 à 150 millions de bâtonnets — mais aucun sur le disque optique."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "ok",
+  "why": "Article verbatim: T cells mature in thymus; behind the sternum; by the early teens it shrinks and is gradually replaced by fatty tissue.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 3,
+  "kids": false,
+  "q": "In which organ, sitting behind the breastbone, do the immune system's T cells mature?",
+  "options": [
+   "The thymus",
+   "The spleen",
+   "The liver",
+   "The pancreas"
+  ],
+  "answer": 0,
+  "fact": "The thymus is busiest in childhood; from the early teens it shrinks and is slowly replaced by fatty tissue.",
+  "src": "https://en.wikipedia.org/wiki/Thymus",
+  "q_fr": "Dans quel organe, situé derrière le sternum, les lymphocytes T du système immunitaire arrivent-ils à maturité ?",
+  "options_fr": [
+   "Le thymus",
+   "La rate",
+   "Le foie",
+   "Le pancréas"
+  ],
+  "fact_fr": "Le thymus est le plus actif dans l'enfance ; dès le début de l'adolescence il rétrécit et se remplit peu à peu de graisse."
+ },
+ {
+  "stream": "anatomy",
+  "verdict": "fixed",
+  "why": "Facts all confirmed (1543 Fabrica, own dissections, Galen's animal-based anatomy, mandible one bone not two). Fixed French only: 'la mâchoire humaine est d'un seul os' is ungrammatical — now 'est faite d'un seul os'.",
+  "cat": "Science",
+  "sub": "Life Sciences",
+  "diff": 3,
+  "kids": false,
+  "q": "Andreas Vesalius's 1543 anatomy book overturned centuries of teaching because he based it on what?",
+  "options": [
+   "His own dissections of human bodies",
+   "Newly translated Greek manuscripts",
+   "Drawings brought back from Egypt",
+   "Measurements taken on living volunteers"
+  ],
+  "answer": 0,
+  "fact": "The old authority was Galen, who had dissected animals; Vesalius showed the human lower jaw is one bone, not two.",
+  "src": "https://en.wikipedia.org/wiki/Andreas_Vesalius",
+  "q_fr": "Le traité d'anatomie d'André Vésale, en 1543, renversa des siècles d'enseignement parce qu'il reposait sur quoi ?",
+  "options_fr": [
+   "Ses propres dissections de corps humains",
+   "Des manuscrits grecs fraîchement traduits",
+   "Des dessins rapportés d'Égypte",
+   "Des mesures prises sur des volontaires vivants"
+  ],
+  "fact_fr": "L'autorité d'alors était Galien, qui avait disséqué des animaux : Vésale montra que la mâchoire humaine est faite d'un seul os."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Answer correct; 1989 CERN proposal accurate; src loads and is on-subject; French idiomatic, order preserved.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "The internet and the World Wide Web are not the same thing. What is the Web?",
+  "options": [
+   "The physical network of cables and computers",
+   "A collection of linked pages that runs on top of that network",
+   "Another name for the search engines people use",
+   "The system that delivers email around the world"
+  ],
+  "answer": 1,
+  "fact": "Berners-Lee proposed the Web in 1989 at CERN, on an internet that had been carrying other kinds of traffic for years.",
+  "src": "https://en.wikipedia.org/wiki/World_Wide_Web",
+  "q_fr": "Internet et le World Wide Web ne sont pas la même chose. Qu'est-ce que le Web ?",
+  "options_fr": [
+   "Le réseau physique de câbles et d'ordinateurs",
+   "Un ensemble de pages reliées entre elles qui circule sur ce réseau",
+   "Un autre nom pour les moteurs de recherche",
+   "Le système qui achemine les courriels dans le monde"
+  ],
+  "fact_fr": "Berners-Lee a proposé le Web en 1989 au CERN, sur un Internet qui transportait déjà d'autres types de trafic depuis des années."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Packet switching correctly described; reassembly-by-sequence-number accurate for TCP; src loads; French clean.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "When you send a photo over the internet, how does it actually travel?",
+  "options": [
+   "In one unbroken stream along a single wire",
+   "Cut into small pieces that travel separately and are put back together",
+   "As sound waves through the phone's speaker",
+   "Copied onto every computer on the network"
+  ],
+  "answer": 1,
+  "fact": "Those pieces are called packets, they can take different routes, and they are put back in order at the far end using their numbers.",
+  "src": "https://en.wikipedia.org/wiki/Packet_switching",
+  "q_fr": "Quand vous envoyez une photo sur Internet, comment voyage-t-elle réellement ?",
+  "options_fr": [
+   "En un flux continu le long d'un seul fil",
+   "Découpée en petits morceaux qui voyagent séparément puis sont réassemblés",
+   "Sous forme d'ondes sonores par le haut-parleur du téléphone",
+   "Copiée sur tous les ordinateurs du réseau"
+  ],
+  "fact_fr": "Ces morceaux s'appellent des paquets : ils peuvent emprunter des routes différentes et sont remis dans l'ordre à l'arrivée grâce à leur numéro."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched Donald Davies article: independent invention and linguist/packet anecdote both verbatim-supported. Distractors same-kind, wrong.",
+  "cat": "Tech",
+  "diff": 3,
+  "kids": false,
+  "q": "Cutting messages into packets was worked out in the 1960s by Paul Baran in the United States and, independently, by which British scientist?",
+  "options": [
+   "Donald Davies",
+   "Alan Turing",
+   "Charles Babbage",
+   "Michael Faraday"
+  ],
+  "answer": 0,
+  "fact": "Davies chose the word 'packet' after consulting a linguist, wanting a term that would translate well into other languages.",
+  "src": "https://en.wikipedia.org/wiki/Donald_Davies",
+  "q_fr": "Le découpage des messages en paquets a été mis au point dans les années 1960 par Paul Baran aux États-Unis et, indépendamment, par quel scientifique britannique ?",
+  "options_fr": [
+   "Donald Davies",
+   "Alan Turing",
+   "Charles Babbage",
+   "Michael Faraday"
+  ],
+  "fact_fr": "Davies a choisi le mot « packet » après avoir consulté un linguiste, voulant un terme qui se traduise bien dans d'autres langues."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched Cerf article: hard of hearing, accessibility advocacy, and NASA/JPL Interplanetary Internet all confirmed. Answer trivially correct by design.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": false,
+  "q": "Vint Cerf and Robert Kahn wrote the rules that let separate networks pass messages to one another — the Transmission Control Protocol and Internet Protocol. What are those rules called?",
+  "options": [
+   "TCP/IP",
+   "Bluetooth",
+   "Ethernet",
+   "Wi-Fi"
+  ],
+  "answer": 0,
+  "fact": "Cerf is hard of hearing and has long campaigned for accessible technology; he now works with NASA on an internet for spacecraft.",
+  "src": "https://en.wikipedia.org/wiki/Vint_Cerf",
+  "q_fr": "Vint Cerf et Robert Kahn ont écrit les règles qui permettent à des réseaux distincts d'échanger des messages : le Transmission Control Protocol et l'Internet Protocol. Comment les appelle-t-on ?",
+  "options_fr": [
+   "TCP/IP",
+   "Bluetooth",
+   "Ethernet",
+   "Wi-Fi"
+  ],
+  "fact_fr": "Vint Cerf est malentendant et milite de longue date pour des technologies accessibles ; il travaille aujourd'hui avec la NASA à un Internet interplanétaire."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "IPv4 ~4.3bn addresses correct; IPv6 first specified in RFC 1883, December 1995 — 'designed in 1995' holds; src on-subject.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "Every device on the internet is given an IP address — an Internet Protocol address. What is it for?",
+  "options": [
+   "It says where the device is on the network, so replies can find it",
+   "It stores the files and photos on the device",
+   "It is the password for your Wi-Fi network",
+   "It measures how fast the connection is running"
+  ],
+  "answer": 0,
+  "fact": "The older scheme allows about 4.3 billion addresses — fewer than there are people — so a far larger one, IPv6, was designed in 1995.",
+  "src": "https://en.wikipedia.org/wiki/IP_address",
+  "q_fr": "Chaque appareil connecté à Internet reçoit une adresse IP, pour Internet Protocol. À quoi sert-elle ?",
+  "options_fr": [
+   "Elle indique où se trouve l'appareil sur le réseau, pour que les réponses lui parviennent",
+   "Elle stocke les fichiers et les photos de l'appareil",
+   "C'est le mot de passe de votre réseau Wi-Fi",
+   "Elle mesure la vitesse de la connexion"
+  ],
+  "fact_fr": "L'ancien système offre environ 4,3 milliards d'adresses, moins qu'il n'y a d'humains : d'où la conception d'IPv6, bien plus vaste, en 1995."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Answer correct; right-to-left hierarchy fact accurate; French localises the example to fr.wikipedia.org, which is a legitimate adaptation, not an error.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": false,
+  "q": "What does the Domain Name System do each time you type a website's name?",
+  "options": [
+   "It turns the name into the number address of a computer",
+   "It checks that your password is correct",
+   "It shrinks the images so the page loads faster",
+   "It decides which browser you will use"
+  ],
+  "answer": 0,
+  "fact": "Domain names are read right to left: in en.wikipedia.org, .org is the top level and 'en' is a sub-domain inside wikipedia.",
+  "src": "https://en.wikipedia.org/wiki/Domain_Name_System",
+  "q_fr": "Que fait le système de noms de domaine (DNS) chaque fois que vous tapez le nom d'un site ?",
+  "options_fr": [
+   "Il transforme le nom en adresse numérique d'un ordinateur",
+   "Il vérifie que votre mot de passe est correct",
+   "Il compresse les images pour accélérer l'affichage",
+   "Il choisit le navigateur que vous utiliserez"
+  ],
+  "fact_fr": "Un nom de domaine se lit de droite à gauche : dans fr.wikipedia.org, .org est le domaine de premier niveau et « fr » un sous-domaine de wikipedia."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched Feinler article: ran the NIC at SRI; article says TLD categories 'were suggestions of the NIC team' — fact's 'suggested' is exactly right.",
+  "cat": "Tech",
+  "diff": 3,
+  "kids": false,
+  "q": "Before it was automated, the master list of every computer name on the early internet was kept by hand. Who ran the team that kept it?",
+  "options": [
+   "Elizabeth Feinler",
+   "Grace Hopper",
+   "Katherine Johnson",
+   "Hedy Lamarr"
+  ],
+  "answer": 0,
+  "fact": "Feinler's group at SRI International became the internet's naming authority and suggested the categories .com, .gov, .edu and .org.",
+  "src": "https://en.wikipedia.org/wiki/Elizabeth_J._Feinler",
+  "q_fr": "Avant son automatisation, la liste de tous les noms d'ordinateurs des débuts d'Internet était tenue à la main. Qui dirigeait l'équipe qui s'en chargeait ?",
+  "options_fr": [
+   "Elizabeth Feinler",
+   "Grace Hopper",
+   "Katherine Johnson",
+   "Hedy Lamarr"
+  ],
+  "fact_fr": "L'équipe de Feinler, au SRI International, est devenue l'autorité de nommage d'Internet et a proposé les catégories .com, .gov, .edu et .org."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched Perlman article: STP invention, Algorhyme poem, and dislike of the nickname all confirmed. Distractors are real protocols, unambiguously wrong.",
+  "cat": "Tech",
+  "diff": 3,
+  "kids": false,
+  "q": "Radia Perlman invented the protocol that stops data circling forever between the switches of a network. What is it called?",
+  "options": [
+   "The Spanning Tree Protocol",
+   "The Simple Mail Transfer Protocol",
+   "The Domain Name System",
+   "The File Transfer Protocol"
+  ],
+  "answer": 0,
+  "fact": "Perlman also wrote a poem about her algorithm, 'Algorhyme' — and she dislikes the nickname 'Mother of the Internet'.",
+  "src": "https://en.wikipedia.org/wiki/Radia_Perlman",
+  "q_fr": "Radia Perlman a inventé le protocole qui empêche les données de tourner en rond indéfiniment entre les commutateurs d'un réseau. Comment s'appelle-t-il ?",
+  "options_fr": [
+   "Le Spanning Tree Protocol",
+   "Le Simple Mail Transfer Protocol",
+   "Le Domain Name System",
+   "Le File Transfer Protocol"
+  ],
+  "fact_fr": "Perlman a aussi écrit un poème sur son algorithme, « Algorhyme » — et elle n'aime pas le surnom de « mère d'Internet »."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: Ghanaian, established some of Africa's first connections, founding chairman of AFRINIC — all verbatim-supported. Good African-subject fit.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "Nii Quaynor set up some of Africa's first internet connections and helped many countries on the continent get online. Where is he from?",
+  "options": [
+   "Ghana",
+   "Kenya",
+   "Senegal",
+   "Egypt"
+  ],
+  "answer": 0,
+  "fact": "Quaynor was the founding chairman of AFRINIC, the body that hands out internet addresses across the African continent.",
+  "src": "https://en.wikipedia.org/wiki/Nii_Quaynor",
+  "q_fr": "Nii Quaynor a mis en place certaines des premières connexions Internet d'Afrique et aidé de nombreux pays du continent à se connecter. De quel pays vient-il ?",
+  "options_fr": [
+   "Le Ghana",
+   "Le Kenya",
+   "Le Sénégal",
+   "L'Égypte"
+  ],
+  "fact_fr": "Quaynor a été le premier président d'AFRINIC, l'organisme qui attribue les adresses Internet sur tout le continent africain."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: '99% of the data traffic across the oceans' and 'more than 50 repairs a year in the Atlantic Ocean alone' both present verbatim.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "Most of the data travelling between continents goes through what?",
+  "options": [
+   "Satellites in orbit",
+   "Cables lying on the sea floor",
+   "Radio masts on mountain tops",
+   "Aircraft carrying hard drives"
+  ],
+  "answer": 1,
+  "fact": "These cables carry 99% of the data crossing the oceans, and the Atlantic alone needs more than 50 repairs a year.",
+  "src": "https://en.wikipedia.org/wiki/Submarine_communications_cable",
+  "q_fr": "Par où passe l'essentiel des données échangées entre les continents ?",
+  "options_fr": [
+   "Des satellites en orbite",
+   "Des câbles posés au fond des océans",
+   "Des antennes radio sur les sommets",
+   "Des avions transportant des disques durs"
+  ],
+  "fact_fr": "Ces câbles transportent 99 % des données qui traversent les océans, et l'Atlantique à lui seul exige plus de 50 réparations par an."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Total internal reflection and ~8-10 micron single-mode core both accurate; src loads with diagrams; French clean.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "Inside a fibre-optic cable, what actually carries your data?",
+  "options": [
+   "Pulses of light",
+   "Compressed air",
+   "Warm water",
+   "Magnets"
+  ],
+  "answer": 0,
+  "fact": "The light reflects off the boundary inside the glass and cannot escape; in long-distance fibre the core is about 10 micrometres wide.",
+  "src": "https://en.wikipedia.org/wiki/Optical_fiber",
+  "q_fr": "À l'intérieur d'un câble en fibre optique, qu'est-ce qui transporte réellement vos données ?",
+  "options_fr": [
+   "Des impulsions de lumière",
+   "De l'air comprimé",
+   "De l'eau chaude",
+   "Des aimants"
+  ],
+  "fact_fr": "La lumière se réfléchit sur la paroi interne du verre et ne peut s'échapper ; dans la fibre longue distance, le cœur mesure environ 10 micromètres."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Definition correct; headless rack-mounted operation accurate; src is the canonical article with photos.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "In computing, what is a server?",
+  "options": [
+   "A computer that answers requests from other computers",
+   "A person who repairs broken laptops",
+   "A kind of cable used in offices",
+   "A screen that displays adverts in shops"
+  ],
+  "answer": 0,
+  "fact": "Most servers run with no monitor and no keyboard at all, bolted flat into racks and managed from somewhere else entirely.",
+  "src": "https://en.wikipedia.org/wiki/Server_(computing)",
+  "q_fr": "En informatique, qu'est-ce qu'un serveur ?",
+  "options_fr": [
+   "Un ordinateur qui répond aux demandes d'autres ordinateurs",
+   "Une personne qui répare les ordinateurs en panne",
+   "Un type de câble utilisé dans les bureaux",
+   "Un écran qui affiche des publicités en magasin"
+  ],
+  "fact_fr": "La plupart des serveurs fonctionnent sans écran ni clavier, montés à plat dans des baies et pilotés entièrement à distance."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Encryption-only meaning is correct and the fact usefully corrects the common 'safe site' misreading; genuinely useful knowledge; src loads.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "Your browser shows a padlock and the address begins with https. What does that actually tell you?",
+  "options": [
+   "The connection is encrypted, so others along the way cannot read it",
+   "The website has been checked and is safe to trust",
+   "The page will load more quickly than usual",
+   "The site carries no advertising at all"
+  ],
+  "answer": 0,
+  "fact": "Many people read the padlock as 'this site is safe'. It only means the journey is private — not that the destination is honest.",
+  "src": "https://en.wikipedia.org/wiki/HTTPS",
+  "q_fr": "Votre navigateur affiche un cadenas et l'adresse commence par https. Que cela signifie-t-il vraiment ?",
+  "options_fr": [
+   "La connexion est chiffrée : personne sur le trajet ne peut la lire",
+   "Le site a été vérifié et mérite votre confiance",
+   "La page se chargera plus vite que d'habitude",
+   "Le site ne contient aucune publicité"
+  ],
+  "fact_fr": "Beaucoup lisent le cadenas comme « ce site est sûr ». Il ne garantit que la confidentialité du trajet, pas l'honnêteté de la destination."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched Wi-Fi article: Interbrand coined the name in 1999, hired to be 'a little catchier than IEEE 802.11b Direct Sequence' — both verbatim. French 'la box' is idiomatic.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "Your Wi-Fi symbol is showing, but no website will load. What does that suggest?",
+  "options": [
+   "Your device reached the router, but the router's link to the internet is down",
+   "Wi-Fi and the internet are the same thing, so both have failed at once",
+   "Your screen has broken and needs replacing",
+   "Every website in the world has shut down"
+  ],
+  "answer": 0,
+  "fact": "The name Wi-Fi was invented by a branding firm in 1999, to be catchier than the standard's real name: IEEE 802.11b Direct Sequence.",
+  "src": "https://en.wikipedia.org/wiki/Wi-Fi",
+  "q_fr": "Le symbole Wi-Fi est allumé, mais aucun site ne s'affiche. Qu'est-ce que cela indique ?",
+  "options_fr": [
+   "Votre appareil atteint la box, mais la liaison de la box vers Internet est coupée",
+   "Le Wi-Fi et Internet sont la même chose : les deux sont tombés en panne",
+   "Votre écran est cassé et doit être remplacé",
+   "Tous les sites du monde se sont arrêtés"
+  ],
+  "fact_fr": "Le nom « Wi-Fi » a été inventé par une agence de marque en 1999, pour être plus accrocheur que le vrai nom de la norme : IEEE 802.11b Direct Sequence."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Answer and rendering-differences fact both correct; src on-subject; French idiomatic.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "What is a web browser's main job?",
+  "options": [
+   "To fetch the files that make up a page and draw them on your screen",
+   "To store every website in the world on your device",
+   "To create the internet connection your home uses",
+   "To write the websites that you visit"
+  ],
+  "answer": 0,
+  "fact": "A page arrives as instructions, not as a picture — which is why the same site can look different in two different browsers.",
+  "src": "https://en.wikipedia.org/wiki/Web_browser",
+  "q_fr": "Quel est le rôle principal d'un navigateur web ?",
+  "options_fr": [
+   "Récupérer les fichiers d'une page et les afficher à l'écran",
+   "Stocker tous les sites du monde sur votre appareil",
+   "Créer la connexion à Internet de votre domicile",
+   "Écrire les sites que vous visitez"
+  ],
+  "fact_fr": "Une page arrive sous forme d'instructions, pas d'image : c'est pourquoi un même site peut s'afficher différemment selon le navigateur."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Next-hop forwarding correctly described; fact accurate and teaches the hop model; src loads.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": false,
+  "q": "Data crossing the internet passes through machines called routers. What does a router decide?",
+  "options": [
+   "Which network to hand each packet to next",
+   "What the message inside actually says",
+   "Who owns the website being visited",
+   "How much the connection will cost"
+  ],
+  "answer": 0,
+  "fact": "A router reads only the destination written on a packet, then passes it to the next network — the packet crosses the world in hops.",
+  "src": "https://en.wikipedia.org/wiki/Router_(computing)",
+  "q_fr": "Les données qui traversent Internet passent par des machines appelées routeurs. Que décide un routeur ?",
+  "options_fr": [
+   "À quel réseau confier chaque paquet ensuite",
+   "Ce que dit réellement le message transporté",
+   "À qui appartient le site visité",
+   "Combien coûtera la connexion"
+  ],
+  "fact_fr": "Un routeur ne lit que la destination inscrite sur le paquet, puis le confie au réseau suivant : le paquet traverse le monde de bond en bond."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Berners-Lee correct; CERN released the Web royalty-free in 1993, so the no-patent framing is accurate; distractors same-kind and wrong.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "Who invented the World Wide Web, and gave it away rather than patenting it?",
+  "options": [
+   "Tim Berners-Lee",
+   "Bill Gates",
+   "Steve Jobs",
+   "Mark Zuckerberg"
+  ],
+  "answer": 0,
+  "fact": "He built it at CERN, a physics laboratory, so scientists could share documents — and released it with no patent and no royalties.",
+  "src": "https://en.wikipedia.org/wiki/Tim_Berners-Lee",
+  "q_fr": "Qui a inventé le World Wide Web et l'a offert au monde plutôt que de le breveter ?",
+  "options_fr": [
+   "Tim Berners-Lee",
+   "Bill Gates",
+   "Steve Jobs",
+   "Mark Zuckerberg"
+  ],
+  "fact_fr": "Il l'a conçu au CERN, un laboratoire de physique, pour que les chercheurs partagent leurs documents, et l'a diffusé sans brevet ni redevance."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Crawling/indexing correct; robots.txt fact accurate (it is advisory, and 'asks' phrases that correctly); src on-subject.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": false,
+  "q": "How does a search engine already know what is on a page before you search for it?",
+  "options": [
+   "Programs called crawlers visit pages in advance and index them",
+   "It searches the whole internet the moment you press enter",
+   "Website owners must submit every page to it by hand",
+   "Your browser quietly sends it your browsing history"
+  ],
+  "answer": 0,
+  "fact": "A crawler hops from link to link; a small file named robots.txt asks it which parts of a site to leave alone.",
+  "src": "https://en.wikipedia.org/wiki/Web_crawler",
+  "q_fr": "Comment un moteur de recherche sait-il déjà ce que contient une page avant même votre recherche ?",
+  "options_fr": [
+   "Des programmes appelés robots d'indexation visitent les pages à l'avance",
+   "Il parcourt tout Internet au moment où vous appuyez sur Entrée",
+   "Les propriétaires de sites doivent lui soumettre chaque page à la main",
+   "Votre navigateur lui transmet discrètement votre historique"
+  ],
+  "fact_fr": "Un robot d'indexation saute de lien en lien ; un petit fichier nommé robots.txt lui indique les parties du site à laisser de côté."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Definition correct in plain words; src Machine_learning is the right article for the concept (no standalone 'model' article); French clean.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "In artificial intelligence, what is a 'model'?",
+  "options": [
+   "A program that has worked out patterns from many examples",
+   "A small physical replica of a computer system",
+   "A person who tests new apps before release",
+   "A type of screen used in laboratories"
+  ],
+  "answer": 0,
+  "fact": "Nobody writes the rules by hand: the program is shown examples, finds the pattern itself, then applies it to things it has never seen.",
+  "src": "https://en.wikipedia.org/wiki/Machine_learning",
+  "q_fr": "En intelligence artificielle, qu'est-ce qu'un « modèle » ?",
+  "options_fr": [
+   "Un programme qui a dégagé des régularités à partir de nombreux exemples",
+   "Une petite maquette physique d'un ordinateur",
+   "Une personne qui teste les applications avant leur sortie",
+   "Un type d'écran utilisé en laboratoire"
+  ],
+  "fact_fr": "Personne n'écrit les règles à la main : on montre des exemples au programme, il en tire lui-même le motif et l'applique à des cas inédits."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Test-set purpose and overfitting logic both correct; src is the real article 'Training, validation, and test data sets'; French accurate.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": false,
+  "q": "When an AI model is trained, why is part of the data deliberately kept back?",
+  "options": [
+   "To test the model on examples it has never seen",
+   "To save space on the storage system",
+   "To sell that part of the data later on",
+   "To make the training run finish faster"
+  ],
+  "answer": 0,
+  "fact": "That held-back portion is called the test set; without it, a model that had simply memorised its examples would look perfect.",
+  "src": "https://en.wikipedia.org/wiki/Training,_validation,_and_test_data_sets",
+  "q_fr": "Lors de l'entraînement d'un modèle, pourquoi met-on volontairement une partie des données de côté ?",
+  "options_fr": [
+   "Pour tester le modèle sur des exemples qu'il n'a jamais vus",
+   "Pour économiser de l'espace de stockage",
+   "Pour revendre cette partie des données plus tard",
+   "Pour que l'entraînement se termine plus vite"
+  ],
+  "fact_fr": "Cette part réservée s'appelle le jeu de test : sans elle, un modèle qui aurait simplement mémorisé ses exemples paraîtrait parfait."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Next-token generation correct and phrased without jargon; training-by-masking fact accurate; src loads.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "A large language model — an LLM — is doing what when it writes you an answer?",
+  "options": [
+   "Choosing the next piece of text, again and again",
+   "Looking the answer up in a database of facts",
+   "Asking a human being on the other end",
+   "Copying the nearest matching web page"
+  ],
+  "answer": 0,
+  "fact": "These models are trained by hiding the next word in vast amounts of text and making the system guess it, over and over.",
+  "src": "https://en.wikipedia.org/wiki/Large_language_model",
+  "q_fr": "Que fait un grand modèle de langage (LLM) lorsqu'il rédige une réponse ?",
+  "options_fr": [
+   "Il choisit le morceau de texte suivant, encore et encore",
+   "Il consulte une base de données de faits",
+   "Il interroge un humain à l'autre bout",
+   "Il recopie la page web la plus proche"
+  ],
+  "fact_fr": "Ces modèles sont entraînés en masquant le mot suivant dans d'immenses quantités de texte et en leur demandant de le deviner, encore et encore."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched BPE article: 1994 Philip Gage origin and GPT-4 vocabulary of ~100 000 BPE tokens (100 258 with specials) both confirmed; hyphenated slug is the live title.",
+  "cat": "Tech",
+  "diff": 3,
+  "kids": false,
+  "q": "Before a language model reads your sentence, the text is chopped into pieces called tokens. What does that mean in practice?",
+  "options": [
+   "One long word may become two or three tokens",
+   "Every single letter becomes its own token",
+   "Each whole sentence becomes one token",
+   "Only the nouns are turned into tokens"
+  ],
+  "answer": 0,
+  "fact": "The usual method, byte-pair encoding, began in 1994 as a file-compression trick; the version behind GPT-4 knows about 100 000 tokens.",
+  "src": "https://en.wikipedia.org/wiki/Byte-pair_encoding",
+  "q_fr": "Avant qu'un modèle de langage ne lise votre phrase, le texte est découpé en morceaux appelés « tokens ». Qu'est-ce que cela implique ?",
+  "options_fr": [
+   "Un mot long peut donner deux ou trois tokens",
+   "Chaque lettre devient un token à elle seule",
+   "Chaque phrase entière devient un seul token",
+   "Seuls les noms sont transformés en tokens"
+  ],
+  "fact_fr": "La méthode courante, le codage par paires d'octets, est née en 1994 comme astuce de compression ; la version de GPT-4 connaît environ 100 000 tokens."
+ },
+ {
+  "stream": "ai",
+  "verdict": "fixed",
+  "why": "Fact imprecise: the lawyer cited six fake decisions in one brief (did not 'file six court cases'), the $5,000 fine fell on the lawyers jointly, and the judge called one fake opinion gibberish, not 'the filing'. Reworded EN and FR; all per the cited article.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "Why can a chatbot state something completely false with total confidence?",
+  "options": [
+   "It produces plausible-sounding text and has no built-in check on truth",
+   "It is deliberately lying to the person asking",
+   "It has run out of memory while answering",
+   "Someone typed the wrong answer into it"
+  ],
+  "answer": 0,
+  "fact": "In 2023 a New York lawyer cited six court decisions invented by a chatbot; the judge called one 'gibberish' and fined the lawyers 5 000 dollars.",
+  "src": "https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)",
+  "q_fr": "Pourquoi un agent conversationnel peut-il affirmer une chose totalement fausse avec un aplomb total ?",
+  "options_fr": [
+   "Il produit un texte vraisemblable et n'a aucun contrôle interne de la vérité",
+   "Il ment délibérément à la personne qui l'interroge",
+   "Il a épuisé sa mémoire en répondant",
+   "Quelqu'un y a saisi la mauvaise réponse"
+  ],
+  "fact_fr": "En 2023, un avocat new-yorkais a cité six décisions de justice inventées par un agent conversationnel ; le juge a infligé aux avocats 5 000 dollars d'amende."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Definition and contract framing both accurate; src is the canonical API article; French idiomatic.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": false,
+  "q": "An API — an application programming interface — is best described as what?",
+  "options": [
+   "An agreed way for one program to ask another for something",
+   "A type of computer chip used inside phones",
+   "A program that stores all of your passwords",
+   "The home page of a company's website"
+  ],
+  "answer": 0,
+  "fact": "It is often called a contract: it hides how a system works inside and exposes only the parts another program actually needs.",
+  "src": "https://en.wikipedia.org/wiki/API",
+  "q_fr": "Comment décrire au mieux une API, ou interface de programmation applicative ?",
+  "options_fr": [
+   "Une manière convenue pour qu'un programme en sollicite un autre",
+   "Un type de puce électronique présent dans les téléphones",
+   "Un programme qui conserve tous vos mots de passe",
+   "La page d'accueil du site d'une entreprise"
+  ],
+  "fact_fr": "On la compare souvent à un contrat : elle masque le fonctionnement interne d'un système et n'expose que ce dont un autre programme a besoin."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: Anthropic, November 2024, open standard, N-by-M custom-connector problem — all confirmed verbatim.",
+  "cat": "Tech",
+  "diff": 3,
+  "kids": false,
+  "q": "The Model Context Protocol, published in 2024, was created to solve which problem?",
+  "options": [
+   "Every AI tool needed its own custom connector to each data source",
+   "Screens were too small to display long AI answers",
+   "Models could not be trained on photographs at all",
+   "Web pages were loading far too slowly for users"
+  ],
+  "answer": 0,
+  "fact": "Anthropic released it as an open standard, so any company can implement it — one shared connector instead of one built per tool.",
+  "src": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+  "q_fr": "Le Model Context Protocol, publié en 2024, a été créé pour résoudre quel problème ?",
+  "options_fr": [
+   "Chaque outil d'IA exigeait son propre connecteur vers chaque source de données",
+   "Les écrans étaient trop petits pour de longues réponses d'IA",
+   "Les modèles ne pouvaient pas être entraînés sur des photographies",
+   "Les pages web se chargeaient beaucoup trop lentement"
+  ],
+  "fact_fr": "Anthropic l'a publié comme norme ouverte, adoptable par n'importe quelle entreprise : un connecteur commun au lieu d'un connecteur par outil."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: Karpathy coined it February 2025; Collins English Dictionary Word of the Year 2025 — both confirmed verbatim.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": false,
+  "q": "'Vibe coding' describes which practice?",
+  "options": [
+   "Describing what you want in ordinary language and letting an AI write the code",
+   "Programming while listening to music",
+   "Choosing a website's colours by feel",
+   "Writing code with pen and paper"
+  ],
+  "answer": 0,
+  "fact": "Andrej Karpathy coined the phrase in February 2025; by the end of that year the Collins dictionary had made it its word of the year.",
+  "src": "https://en.wikipedia.org/wiki/Vibe_coding",
+  "q_fr": "Que désigne le « vibe coding » ?",
+  "options_fr": [
+   "Décrire ce que l'on veut en langage courant et laisser une IA écrire le code",
+   "Programmer en écoutant de la musique",
+   "Choisir les couleurs d'un site au feeling",
+   "Écrire du code avec un papier et un crayon"
+  ],
+  "fact_fr": "Andrej Karpathy a lancé l'expression en février 2025 ; la même année, le dictionnaire Collins en faisait son mot de l'année."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Answer correct; fact's freedom-not-price point directly defuses distractor B and is accurate (open-source software can be sold; Linux ships preinstalled).",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": false,
+  "q": "What does it mean when software is called 'open source'?",
+  "options": [
+   "Its source code can be read, changed and shared by anyone",
+   "It is always free of charge to everyone",
+   "It only works while you are connected",
+   "It belongs to nobody and carries no licence"
+  ],
+  "answer": 0,
+  "fact": "'Free' here means freedom, not price — open-source software can be sold, and computers ship with Linux already installed.",
+  "src": "https://en.wikipedia.org/wiki/Open-source_software",
+  "q_fr": "Que signifie qu'un logiciel soit « open source » ?",
+  "options_fr": [
+   "Son code source peut être lu, modifié et partagé par tous",
+   "Il est toujours gratuit pour tout le monde",
+   "Il ne fonctionne que si vous êtes connecté",
+   "Il n'appartient à personne et n'a aucune licence"
+  ],
+  "fact_fr": "Le « libre » désigne ici une liberté, pas un prix : un logiciel open source peut être vendu, et des ordinateurs sont livrés avec Linux préinstallé."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: 14M+ hand-annotated images, '49K workers from 167 countries' — both confirmed verbatim; Fei-Fei Li's leadership confirmed.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "Fei-Fei Li's team built ImageNet, a huge collection of labelled photographs. Why did it change artificial intelligence?",
+  "options": [
+   "It gave image-recognition systems enough examples to learn from",
+   "It made digital cameras far cheaper to produce",
+   "It was the first website ever to show photographs",
+   "It removed the need for any training at all"
+  ],
+  "answer": 0,
+  "fact": "More than 14 million photographs were labelled by hand — 49 000 people in 167 countries did the sorting.",
+  "src": "https://en.wikipedia.org/wiki/ImageNet",
+  "q_fr": "L'équipe de Fei-Fei Li a constitué ImageNet, une immense collection de photographies étiquetées. Pourquoi cela a-t-il changé l'intelligence artificielle ?",
+  "options_fr": [
+   "Cela a donné aux systèmes de reconnaissance d'images assez d'exemples pour apprendre",
+   "Cela a rendu les appareils photo numériques bien moins chers",
+   "C'était le tout premier site à afficher des photographies",
+   "Cela a supprimé tout besoin d'entraînement"
+  ],
+  "fact_fr": "Plus de 14 millions de photographies ont été étiquetées à la main, par 49 000 personnes réparties dans 167 pays."
+ },
+ {
+  "stream": "ai",
+  "verdict": "fixed",
+  "why": "English fact verified verbatim (34.7% vs under 1%), but the French fact dropped 'pour les femmes à la peau foncée', leaving 34,7 % with no referent. Restored the group in fact_fr; rest unchanged.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "Joy Buolamwini tested commercial face-recognition systems. Whose faces did they get wrong most often?",
+  "options": [
+   "Darker-skinned women",
+   "Older men",
+   "People wearing glasses",
+   "Young children"
+  ],
+  "answer": 0,
+  "fact": "In the 2018 Gender Shades study with Timnit Gebru, errors reached 34.7% for darker-skinned women and under 1% for lighter-skinned men.",
+  "src": "https://en.wikipedia.org/wiki/Joy_Buolamwini",
+  "q_fr": "Joy Buolamwini a testé des systèmes commerciaux de reconnaissance faciale. Quels visages étaient le plus souvent mal identifiés ?",
+  "options_fr": [
+   "Les femmes à la peau foncée",
+   "Les hommes âgés",
+   "Les personnes portant des lunettes",
+   "Les jeunes enfants"
+  ],
+  "fact_fr": "Dans l'étude Gender Shades de 2018, avec Timnit Gebru, l'erreur atteignait 34,7 % pour les femmes à la peau foncée et moins de 1 % pour les hommes à la peau claire."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: IEA figures confirmed verbatim — ~560 billion litres in 2023, about two thirds tied to energy generation, one quarter cooling. Answer and fact both supported.",
+  "cat": "Tech",
+  "diff": 3,
+  "kids": false,
+  "q": "Data centres running AI use a great deal of water. Where does most of it actually go?",
+  "options": [
+   "Into generating the electricity they consume",
+   "Into the chips themselves as they are made",
+   "Into washing and cleaning the servers",
+   "Into moulding the plastic casings"
+  ],
+  "answer": 0,
+  "fact": "Data centres used roughly 560 billion litres of water in 2023 — about two thirds tied to power generation, a quarter to cooling.",
+  "src": "https://en.wikipedia.org/wiki/Environmental_impact_of_AI",
+  "q_fr": "Les centres de données qui font tourner l'IA consomment beaucoup d'eau. Où part-elle principalement ?",
+  "options_fr": [
+   "Dans la production de l'électricité qu'ils consomment",
+   "Dans la fabrication des puces elles-mêmes",
+   "Dans le lavage et le nettoyage des serveurs",
+   "Dans le moulage des boîtiers en plastique"
+  ],
+  "fact_fr": "Les centres de données ont consommé environ 560 milliards de litres d'eau en 2023 : deux tiers liés à la production d'électricité, un quart au refroidissement."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "GPU origin in graphics rendering and massively parallel design both accurate; src is the canonical article; French clean.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "Most AI training runs on graphics processing units — chips originally built to do what?",
+  "options": [
+   "Draw the images in video games",
+   "Store files safely for years",
+   "Print photographs on paper",
+   "Play music through speakers"
+  ],
+  "answer": 0,
+  "fact": "A modern one packs thousands of small calculation units working at once; built for pixels, they turned out to suit training AI models.",
+  "src": "https://en.wikipedia.org/wiki/Graphics_processing_unit",
+  "q_fr": "L'essentiel de l'entraînement des IA tourne sur des processeurs graphiques, des puces conçues à l'origine pour quoi ?",
+  "options_fr": [
+   "Dessiner les images des jeux vidéo",
+   "Conserver les fichiers pendant des années",
+   "Imprimer des photographies sur papier",
+   "Diffuser de la musique dans des enceintes"
+  ],
+  "fact_fr": "Une puce récente aligne des milliers de petites unités de calcul en parallèle : conçues pour les pixels, elles se sont révélées idéales pour l'IA."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "DOCTOR script's Rogerian-therapist reflection correct; the secretary anecdote is documented in the ELIZA article; src loads.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "In the 1960s Joseph Weizenbaum wrote ELIZA, one of the first chatbots. What did its best-known script do?",
+  "options": [
+   "Turned what you typed back into a question, like a therapist",
+   "Solved long arithmetic problems",
+   "Translated Russian into English",
+   "Played games of chess"
+  ],
+  "answer": 0,
+  "fact": "Weizenbaum's own secretary asked him to leave the room so she could talk to ELIZA privately, though the program understood nothing.",
+  "src": "https://en.wikipedia.org/wiki/ELIZA",
+  "q_fr": "Dans les années 1960, Joseph Weizenbaum a écrit ELIZA, l'un des premiers agents conversationnels. Que faisait son script le plus célèbre ?",
+  "options_fr": [
+   "Il renvoyait vos phrases sous forme de questions, comme un thérapeute",
+   "Il résolvait de longs calculs",
+   "Il traduisait le russe en anglais",
+   "Il jouait des parties d'échecs"
+  ],
+  "fact_fr": "La secrétaire de Weizenbaum lui a demandé de quitter la pièce pour parler seule à ELIZA, alors que le programme ne comprenait rien."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: 200 million positions per second, Kasparov demanded a rematch, IBM had dismantled Deep Blue and refused — all confirmed verbatim.",
+  "cat": "Tech",
+  "diff": 1,
+  "kids": true,
+  "q": "In 1997 the world chess champion Garry Kasparov lost a match to which machine?",
+  "options": [
+   "Deep Blue",
+   "Watson",
+   "AlphaGo",
+   "ENIAC"
+  ],
+  "answer": 0,
+  "fact": "It examined 200 million positions a second — power, not understanding. IBM dismantled it afterwards and refused Kasparov a rematch.",
+  "src": "https://en.wikipedia.org/wiki/Deep_Blue_(chess_computer)",
+  "q_fr": "En 1997, le champion du monde d'échecs Garry Kasparov a perdu un match contre quelle machine ?",
+  "options_fr": [
+   "Deep Blue",
+   "Watson",
+   "AlphaGo",
+   "ENIAC"
+  ],
+  "fact_fr": "Elle examinait 200 millions de positions par seconde : de la puissance, pas de la compréhension. IBM l'a ensuite démontée et a refusé la revanche."
+ },
+ {
+  "stream": "ai",
+  "verdict": "fixed",
+  "why": "Fact overstated: Fan Hui beat AlphaGo twice in informal games in October 2015, so game 4 was not 'the only game a human has won'. Wikipedia itself qualifies: only human to beat AlphaGo in its 74 OFFICIAL games. Added 'official' in EN and FR; 'divine move' confirmed.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "In 2016 the program AlphaGo played five games of Go against Lee Sedol, one of the world's best players. What was the result?",
+  "options": [
+   "AlphaGo won four games to one",
+   "Lee Sedol won four games to one",
+   "AlphaGo won all five games",
+   "Lee Sedol won three games to two"
+  ],
+  "answer": 0,
+  "fact": "Lee Sedol's game-four win — via move 78, dubbed the 'divine move' — remains the only official game AlphaGo ever lost to a human.",
+  "src": "https://en.wikipedia.org/wiki/AlphaGo",
+  "q_fr": "En 2016, le programme AlphaGo a disputé cinq parties de go contre Lee Sedol, l'un des meilleurs joueurs du monde. Quel fut le résultat ?",
+  "options_fr": [
+   "AlphaGo a gagné quatre parties à une",
+   "Lee Sedol a gagné quatre parties à une",
+   "AlphaGo a gagné les cinq parties",
+   "Lee Sedol a gagné trois parties à deux"
+  ],
+  "fact_fr": "La victoire de Lee Sedol dans la quatrième partie, grâce au coup 78 dit « divin », reste la seule partie officielle jamais perdue par AlphaGo."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched src: resolves to the transformer article, 2017 'Attention Is All You Need' confirmed; given slug is the live title. French 'transformeur' matches fr-wiki usage.",
+  "cat": "Tech",
+  "diff": 3,
+  "kids": false,
+  "q": "Nearly every modern language model is built on one design published in 2017. What is it called?",
+  "options": [
+   "The transformer",
+   "The perceptron",
+   "The compiler",
+   "The spreadsheet"
+  ],
+  "answer": 0,
+  "fact": "The paper introducing it was titled 'Attention Is All You Need' — its attention step weighs which earlier words matter most.",
+  "src": "https://en.wikipedia.org/wiki/Transformer_(deep_learning)",
+  "q_fr": "Presque tous les modèles de langage actuels reposent sur une architecture publiée en 2017. Comment s'appelle-t-elle ?",
+  "options_fr": [
+   "Le transformeur",
+   "Le perceptron",
+   "Le compilateur",
+   "Le tableur"
+  ],
+  "fact_fr": "L'article qui l'a introduite s'intitulait « Attention Is All You Need » : le mécanisme d'attention pèse quels mots précédents comptent le plus."
+ },
+ {
+  "stream": "ai",
+  "verdict": "ok",
+  "why": "Fetched article: 'Let's think step-by-step' zero-shot CoT improvement confirmed; answer correct; distractors clearly wrong; French clean.",
+  "cat": "Tech",
+  "diff": 2,
+  "kids": true,
+  "q": "Why does rewording your request often change what an AI gives back?",
+  "options": [
+   "The wording is part of the input, so it shifts what the model produces",
+   "The model has moods and sometimes gets bored",
+   "A completely different model answers each time",
+   "The internet itself changed in between"
+  ],
+  "answer": 0,
+  "fact": "Simply adding 'let's think step by step' was found to improve a model's answers on reasoning problems, with nothing else changed.",
+  "src": "https://en.wikipedia.org/wiki/Prompt_engineering",
+  "q_fr": "Pourquoi reformuler une demande change-t-il souvent la réponse d'une IA ?",
+  "options_fr": [
+   "La formulation fait partie de l'entrée : elle modifie ce que le modèle produit",
+   "Le modèle a des humeurs et s'ennuie parfois",
+   "Un modèle entièrement différent répond à chaque fois",
+   "Internet lui-même a changé entre-temps"
+  ],
+  "fact_fr": "Ajouter simplement « réfléchissons étape par étape » suffit à améliorer les réponses d'un modèle sur des problèmes de raisonnement."
+ },
+ {
+  "stream": "africa",
+  "verdict": "fixed",
+  "why": "Fact overstated certainty: article says iron metallurgy 'may have developed' 750-550 BCE. Hedge added; everything else verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "The oldest known large terracotta sculptures in West Africa are named after the village of Nok, in which country?",
+  "options": [
+   "Senegal",
+   "Nigeria",
+   "Kenya",
+   "Morocco"
+  ],
+  "answer": 1,
+  "fact": "The Nok culture began around 1500 BCE, and iron-working may have developed there between roughly 750 and 550 BCE.",
+  "src": "https://en.wikipedia.org/wiki/Nok_culture",
+  "q_fr": "Les plus anciennes grandes sculptures en terre cuite d'Afrique de l'Ouest portent le nom du village de Nok, situé dans quel pays ?",
+  "options_fr": [
+   "Le Sénégal",
+   "Le Nigeria",
+   "Le Kenya",
+   "Le Maroc"
+  ],
+  "fact_fr": "La culture nok débute vers 1500 av. J.-C., et la métallurgie du fer s'y serait développée entre 750 et 550 av. J.-C. environ."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Answer, sky legend, never-touches-ground and king-lowered-over-it all verified against article.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "Which West African kingdom's most sacred object is a golden stool that, by tradition, came down from the sky?",
+  "options": [
+   "The Zulu kingdom",
+   "Buganda",
+   "The Asante (Ashanti) kingdom",
+   "The Kingdom of Kongo"
+  ],
+  "answer": 2,
+  "fact": "The Golden Stool must never touch bare ground and nobody sits on it — a new Asante king is only lowered over it.",
+  "src": "https://en.wikipedia.org/wiki/Golden_Stool",
+  "q_fr": "Quel royaume ouest-africain a pour objet le plus sacré un tabouret d'or qui, selon la tradition, est descendu du ciel ?",
+  "options_fr": [
+   "Le royaume zoulou",
+   "Le Buganda",
+   "Le royaume asante (ashanti)",
+   "Le royaume du Kongo"
+  ],
+  "fact_fr": "Le Tabouret d'or ne doit jamais toucher le sol nu et nul ne s'y assoit : le nouveau roi asante est seulement abaissé au-dessus."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "13 months (12x30 + 5/6 epagomenal days) and 7-8 year offset verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "How many months does the Ethiopian calendar, still in everyday use in Ethiopia, have?",
+  "options": [
+   "10",
+   "12",
+   "13",
+   "14"
+  ],
+  "answer": 2,
+  "fact": "Twelve months of exactly 30 days plus a short 13th month of five or six days; the Ethiopian year runs 7 to 8 years behind ours.",
+  "src": "https://en.wikipedia.org/wiki/Ethiopian_calendar",
+  "q_fr": "Combien de mois compte le calendrier éthiopien, encore utilisé au quotidien en Éthiopie ?",
+  "options_fr": [
+   "10",
+   "12",
+   "13",
+   "14"
+  ],
+  "fact_fr": "Douze mois de 30 jours exactement, plus un 13e mois de cinq ou six jours ; l'année éthiopienne a 7 à 8 ans de retard sur la nôtre."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Soapstone, eight known, four returned by South Africa in 1981, flag/coins — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "The carved birds found at Great Zimbabwe are now the national emblem of Zimbabwe. What stone are they carved from?",
+  "options": [
+   "Marble",
+   "Soapstone",
+   "Obsidian",
+   "Granite"
+  ],
+  "answer": 1,
+  "fact": "Eight of the birds are known; four were returned to Zimbabwe in 1981, and the bird now appears on the country's flag and coins.",
+  "src": "https://en.wikipedia.org/wiki/Zimbabwe_Bird",
+  "q_fr": "Les oiseaux sculptés retrouvés à Great Zimbabwe sont l'emblème national du Zimbabwe. Dans quelle pierre sont-ils taillés ?",
+  "options_fr": [
+   "Le marbre",
+   "La stéatite",
+   "L'obsidienne",
+   "Le granit"
+  ],
+  "fact_fr": "On connaît huit de ces oiseaux ; quatre sont revenus au Zimbabwe en 1981, et l'oiseau figure sur le drapeau et les pièces du pays."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Uganda, Kabaka, 12th-14th c. founding, and Nalubaale 'Mother of the gods' all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "The kingdom of Buganda, led by a king called the Kabaka, lies inside which modern country?",
+  "options": [
+   "Kenya",
+   "Zambia",
+   "Senegal",
+   "Uganda"
+  ],
+  "answer": 3,
+  "fact": "Buganda was founded between the 1100s and the 1300s, and its people call Lake Victoria Nalubaale, 'mother of the gods'.",
+  "src": "https://en.wikipedia.org/wiki/Buganda",
+  "q_fr": "Le royaume du Buganda, dirigé par un roi appelé le kabaka, se trouve dans quel pays actuel ?",
+  "options_fr": [
+   "Le Kenya",
+   "La Zambie",
+   "Le Sénégal",
+   "L'Ouganda"
+  ],
+  "fact_fr": "Le Buganda est né entre le XIIe et le XIVe siècle ; ses habitants appellent le lac Victoria Nalubaale, « mère des dieux »."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "South Africa, wood-covered-in-gold-foil rhino from royal burial, 1220-1300 flourishing, Shashe-Limpopo confluence — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "A small rhinoceros covered in gold foil was buried with a ruler at Mapungubwe, a kingdom in which country today?",
+  "options": [
+   "South Africa",
+   "Egypt",
+   "Ghana",
+   "Somalia"
+  ],
+  "answer": 0,
+  "fact": "The rhino is carved wood wrapped in gold; Mapungubwe flourished about 1220–1300 where the Shashe and Limpopo rivers meet.",
+  "src": "https://en.wikipedia.org/wiki/Mapungubwe",
+  "q_fr": "Un petit rhinocéros recouvert de feuille d'or a été enterré avec un souverain à Mapungubwe, royaume situé dans quel pays actuel ?",
+  "options_fr": [
+   "L'Afrique du Sud",
+   "L'Égypte",
+   "Le Ghana",
+   "La Somalie"
+  ],
+  "fact_fr": "Le rhinocéros est en bois plaqué d'or ; Mapungubwe prospéra vers 1220-1300 au confluent du Shashe et du Limpopo."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Zulu, age-grade regiments, horns=young/fast and chest=veterans all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "Shaka, famous for reorganising his army into regiments by age group, was king of which southern African kingdom?",
+  "options": [
+   "The Asante kingdom",
+   "The Zulu kingdom",
+   "Buganda",
+   "The Mutapa kingdom"
+  ],
+  "answer": 1,
+  "fact": "His 'bull horn' formation sent fast young regiments round both flanks while veterans in the 'chest' pinned the enemy in place.",
+  "src": "https://en.wikipedia.org/wiki/Shaka",
+  "q_fr": "Shaka, célèbre pour avoir réorganisé son armée en régiments par classes d'âge, était roi de quel royaume d'Afrique australe ?",
+  "options_fr": [
+   "Le royaume asante",
+   "Le royaume zoulou",
+   "Le Buganda",
+   "Le royaume du Mutapa"
+  ],
+  "fact_fr": "Sa formation « en cornes de taureau » lançait les jeunes régiments sur les deux flancs pendant que les vétérans fixaient l'ennemi au centre."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Zazzau=Zaria in Nigeria; ganuwar Amina walls, many surviving — verified nearly word for word.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "Queen Amina, who led armies and ringed her towns with earth walls, ruled the Hausa state of Zazzau in what is now which country?",
+  "options": [
+   "Sudan",
+   "Angola",
+   "Tunisia",
+   "Nigeria"
+  ],
+  "answer": 3,
+  "fact": "Many of those ramparts are still called ganuwar Amina — 'Amina's walls' — and some of them survive today.",
+  "src": "https://en.wikipedia.org/wiki/Amina_of_Zazzau",
+  "q_fr": "La reine Amina, qui menait les armées et entourait ses villes de murailles de terre, régnait sur l'État haoussa du Zazzau, dans quel pays actuel ?",
+  "options_fr": [
+   "Le Soudan",
+   "L'Angola",
+   "La Tunisie",
+   "Le Nigeria"
+  ],
+  "fact_fr": "Beaucoup de ces remparts s'appellent encore ganuwar Amina, « les murs d'Amina », et certains subsistent aujourd'hui."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Madagascar; Antananarivo political capital and Ambohimanga spiritual capital both verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "The Merina kingdom, ruled from Antananarivo, came to dominate which large island off Africa's south-east coast?",
+  "options": [
+   "Zanzibar",
+   "Mauritius",
+   "The Comoros",
+   "Madagascar"
+  ],
+  "answer": 3,
+  "fact": "Merina rulers kept two capitals: Antananarivo for government, and the hilltop town of Ambohimanga as their sacred royal seat.",
+  "src": "https://en.wikipedia.org/wiki/Merina_Kingdom",
+  "q_fr": "Le royaume merina, gouverné depuis Antananarivo, a fini par dominer quelle grande île au large du sud-est de l'Afrique ?",
+  "options_fr": [
+   "Zanzibar",
+   "Maurice",
+   "Les Comores",
+   "Madagascar"
+  ],
+  "fact_fr": "Les souverains merina avaient deux capitales : Antananarivo pour gouverner, et la colline d'Ambohimanga comme siège royal sacré."
+ },
+ {
+  "stream": "africa",
+  "verdict": "fixed",
+  "why": "Article dates the end to 1902, not 1900 (infobox 'c. 700-1902'). 'Seven countries' verified: Nigeria, Niger, Cameroon, Libya, Algeria, Sudan, Chad.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "The Kanem-Bornu empire, which lasted around a thousand years, grew up around which African lake?",
+  "options": [
+   "Lake Chad",
+   "Lake Victoria",
+   "Lake Tanganyika",
+   "Lake Malawi"
+  ],
+  "answer": 0,
+  "fact": "It ran from about 700 CE to 1902 — among the longest-lived states in world history — and its lands lie in seven countries today.",
+  "src": "https://en.wikipedia.org/wiki/Kanem%E2%80%93Bornu_Empire",
+  "q_fr": "L'empire du Kanem-Bornou, qui dura près de mille ans, s'est développé autour de quel lac africain ?",
+  "options_fr": [
+   "Le lac Tchad",
+   "Le lac Victoria",
+   "Le lac Tanganyika",
+   "Le lac Malawi"
+  ],
+  "fact_fr": "Il a duré d'environ 700 à 1902, l'un des États les plus durables de l'histoire, et son territoire s'étend aujourd'hui sur sept pays."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Tanzania; Ibn Battuta 1331 'one of the most beautiful cities in the world' quoted verbatim in article.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "Kilwa Kisiwani, a wealthy Swahili trading city of coral-stone palaces, lies off the coast of which country today?",
+  "options": [
+   "Ghana",
+   "Namibia",
+   "Tanzania",
+   "Egypt"
+  ],
+  "answer": 2,
+  "fact": "Passing through in 1331, the traveller Ibn Battuta called Kilwa one of the most beautiful cities in the world.",
+  "src": "https://en.wikipedia.org/wiki/Kilwa_Kisiwani",
+  "q_fr": "Kilwa Kisiwani, riche cité marchande swahilie aux palais de pierre de corail, se trouve au large de quel pays actuel ?",
+  "options_fr": [
+   "Le Ghana",
+   "La Namibie",
+   "La Tanzanie",
+   "L'Égypte"
+  ],
+  "fact_fr": "De passage en 1331, le voyageur Ibn Battuta a décrit Kilwa comme l'une des plus belles villes du monde."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "'Our Mothers', 1,000-6,000 at mid-1800s peak, about a third of the army — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 1,
+  "kids": true,
+  "q": "The kingdom of Dahomey had an army regiment made up entirely of women. Its Fon name, Mino, means what?",
+  "options": [
+   "Our mothers",
+   "The lionesses",
+   "The king's shield",
+   "Daughters of iron"
+  ],
+  "answer": 0,
+  "fact": "At their height in the 1800s they numbered between 1,000 and 6,000 — about a third of Dahomey's whole army.",
+  "src": "https://en.wikipedia.org/wiki/Dahomey_Amazons",
+  "q_fr": "Le royaume du Dahomey avait un régiment entièrement féminin. Que signifie son nom fon, mino ?",
+  "options_fr": [
+   "Nos mères",
+   "Les lionnes",
+   "Le bouclier du roi",
+   "Les filles du fer"
+  ],
+  "fact_fr": "À leur apogée au XIXe siècle, elles étaient entre 1 000 et 6 000, soit environ un tiers de toute l'armée du Dahomey."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Mid-4th-century official Christianity under Ezana verified; Mani four-great-powers quote verified nearly verbatim.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": true,
+  "q": "In the 300s CE the kingdom of Aksum became one of the first states anywhere to adopt which religion officially?",
+  "options": [
+   "Buddhism",
+   "Christianity",
+   "Islam",
+   "Zoroastrianism"
+  ],
+  "answer": 1,
+  "fact": "The 3rd-century teacher Mani ranked Aksum among the world's four great powers, alongside Rome, Persia and China.",
+  "src": "https://en.wikipedia.org/wiki/Kingdom_of_Aksum",
+  "q_fr": "Au IVe siècle, le royaume d'Aksoum est devenu l'un des tout premiers États au monde à adopter officiellement quelle religion ?",
+  "options_fr": [
+   "Le bouddhisme",
+   "Le christianisme",
+   "L'islam",
+   "Le zoroastrisme"
+  ],
+  "fact_fr": "Au IIIe siècle, le maître Mani rangeait Aksoum parmi les quatre grandes puissances du monde, avec Rome, la Perse et la Chine."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Gold-weighing use, ~4 million cast 1400-1900, proverb/story symbolism all verified in article.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": true,
+  "q": "Akan craftworkers in West Africa cast tiny brass figures of animals, people and scenes. What were they used for?",
+  "options": [
+   "Weighing gold dust",
+   "Playing a board game",
+   "Fastening cloaks",
+   "Marking graves"
+  ],
+  "answer": 0,
+  "fact": "Around four million were cast between about 1400 and 1900, many shaped as symbols and scenes that stand for Akan proverbs.",
+  "src": "https://en.wikipedia.org/wiki/Akan_goldweights",
+  "q_fr": "Les artisans akan d'Afrique de l'Ouest coulaient de minuscules figurines de laiton représentant animaux, personnages et scènes. À quoi servaient-elles ?",
+  "options_fr": [
+   "À peser la poudre d'or",
+   "À jouer à un jeu de plateau",
+   "À agrafer les manteaux",
+   "À marquer les tombes"
+  ],
+  "fact_fr": "Environ quatre millions ont été coulées entre 1400 et 1900, beaucoup en forme de symboles et de scènes évoquant des proverbes akan."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Yoruba city, sculpture peak 1200-1400 CE, and ase-in-the-head/oversized-heads claim all verified in the Ife article.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "The strikingly lifelike royal heads made at Ile-Ife between about 1200 and 1400 were the work of which people?",
+  "options": [
+   "The Zulu",
+   "The Amhara",
+   "The Wolof",
+   "The Yoruba"
+  ],
+  "answer": 3,
+  "fact": "Ife artists often gave rulers and gods oversized heads, holding that a person's ase — life force and authority — sits in the head.",
+  "src": "https://en.wikipedia.org/wiki/Ife",
+  "q_fr": "Les têtes royales d'un réalisme saisissant réalisées à Ilé-Ifè entre 1200 et 1400 environ sont l'œuvre de quel peuple ?",
+  "options_fr": [
+   "Les Zoulous",
+   "Les Amharas",
+   "Les Wolofs",
+   "Les Yoruba"
+  ],
+  "fact_fr": "Les artistes d'Ifè donnaient souvent aux rois et aux dieux une tête surdimensionnée : pour eux, l'ase, force vitale et autorité, y réside."
+ },
+ {
+  "stream": "africa",
+  "verdict": "fixed",
+  "why": "Article attributes only the 'longest earthworks of the pre-mechanical era' description to Guinness; the ~16,000 km figure is the article's own. Fact reworded; FR 'du Bénin' was ambiguous with the country Benin. URL redirects to 'Benin Moat' but loads and is on-subject.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "Around Benin City the Edo dug vast ditch-and-rampart earthworks called iya. What record do they hold?",
+  "options": [
+   "Oldest stone bridge in Africa",
+   "Longest earthworks of the pre-machine era",
+   "Tallest earthen tower on Earth",
+   "Widest medieval canal"
+  ],
+  "answer": 1,
+  "fact": "The earthworks total roughly 16,000 km — Guinness calls them the longest of the pre-mechanical era; the inner-city moat alone runs 12 km.",
+  "src": "https://en.wikipedia.org/wiki/Walls_of_Benin",
+  "q_fr": "Autour de Benin City, les Edo ont creusé d'immenses fossés et talus appelés iya. Quel record détiennent-ils ?",
+  "options_fr": [
+   "Le plus vieux pont de pierre d'Afrique",
+   "Les plus longs terrassements d'avant les machines",
+   "La plus haute tour de terre du monde",
+   "Le plus large canal médiéval"
+  ],
+  "fact_fr": "Ces terrassements totalisent environ 16 000 km — les plus longs de l'ère prémécanique selon le Guinness ; le fossé intérieur seul fait 12 km."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Hodgson's demand for the Golden Stool, Queen Mother of Ejisu, only woman to lead the Asante army, 5,000 fighters — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "Yaa Asantewaa led the Asante to war in 1900 after a British governor demanded what?",
+  "options": [
+   "The kingdom's gold mines",
+   "The royal palace at Kumasi",
+   "The Golden Stool",
+   "The Asante crown jewels"
+  ],
+  "answer": 2,
+  "fact": "Queen Mother of Ejisu, she is the only woman ever chosen to command an Asante army, leading some 5,000 fighters.",
+  "src": "https://en.wikipedia.org/wiki/Yaa_Asantewaa",
+  "q_fr": "Yaa Asantewaa a mené les Asante à la guerre en 1900 après qu'un gouverneur britannique eut exigé quoi ?",
+  "options_fr": [
+   "Les mines d'or du royaume",
+   "Le palais royal de Kumasi",
+   "Le Tabouret d'or",
+   "Les joyaux de la couronne asante"
+  ],
+  "fact_fr": "Reine mère d'Ejisu, elle est la seule femme jamais choisie pour commander une armée asante, à la tête d'environ 5 000 combattants."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "First to adopt 'Mansa', Kirina c. 1235, epic transmitted orally by griots — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "Sundiata Keita, who founded the Mali Empire after winning the Battle of Kirina, was the first ruler to take which title?",
+  "options": [
+   "Oba",
+   "Askia",
+   "Kabaka",
+   "Mansa"
+  ],
+  "answer": 3,
+  "fact": "His story is still performed by griots as the Epic of Sundiata, carried by word of mouth for nearly eight centuries.",
+  "src": "https://en.wikipedia.org/wiki/Sundiata_Keita",
+  "q_fr": "Soundiata Keïta, fondateur de l'empire du Mali après sa victoire à Kirina, fut le premier souverain à porter quel titre ?",
+  "options_fr": [
+   "Oba",
+   "Askia",
+   "Kabaka",
+   "Mansa"
+  ],
+  "fact_fr": "Son histoire est encore chantée par les griots sous le nom d'Épopée de Soundiata, transmise oralement depuis près de huit siècles."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Predominantly Arabic script; Ajami in Songhay/Fula/Tamasheq explicitly named; astronomy, medicine and law covered; ~350,000 evacuated supports 'hundreds of thousands'.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": true,
+  "q": "The Timbuktu Manuscripts, hundreds of thousands of documents kept in Malian family libraries, are mostly written in which script?",
+  "options": [
+   "Arabic script",
+   "Latin script",
+   "Greek script",
+   "Chinese characters"
+  ],
+  "answer": 0,
+  "fact": "Some are in Ajami — Songhay, Fula or Tamasheq written with Arabic letters — and they cover astronomy, medicine and law.",
+  "src": "https://en.wikipedia.org/wiki/Timbuktu_Manuscripts",
+  "q_fr": "Les manuscrits de Tombouctou, ces centaines de milliers de documents conservés dans des bibliothèques familiales maliennes, sont surtout écrits dans quelle écriture ?",
+  "options_fr": [
+   "L'écriture arabe",
+   "L'alphabet latin",
+   "L'alphabet grec",
+   "Les caractères chinois"
+  ],
+  "fact_fr": "Certains sont en ajami — songhaï, peul ou tamasheq notés en lettres arabes — et traitent d'astronomie, de médecine et de droit."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Napata in modern Sudan; Victory Stela at Gebel Barkal (Napata) and successors ruling as pharaohs verified. Conquest date within the article's 744-714 reign window.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": true,
+  "q": "Around 730 BCE, kings from the Kushite city of Napata conquered Egypt and ruled it as its 25th Dynasty. Where was Napata?",
+  "options": [
+   "In present-day Libya",
+   "In present-day Sudan",
+   "In present-day Israel",
+   "In present-day Chad"
+  ],
+  "answer": 1,
+  "fact": "Piye had his victory carved on a great stela set up at Napata, and his family went on to rule Egypt as pharaohs.",
+  "src": "https://en.wikipedia.org/wiki/Piye",
+  "q_fr": "Vers 730 av. J.-C., des rois venus de la cité koushite de Napata ont conquis l'Égypte et l'ont gouvernée comme 25e dynastie. Où se trouvait Napata ?",
+  "options_fr": [
+   "En Libye actuelle",
+   "Au Soudan actuel",
+   "En Israël actuel",
+   "Au Tchad actuel"
+  ],
+  "fact_fr": "Piye fit graver sa victoire sur une grande stèle dressée à Napata, et sa famille régna ensuite sur l'Égypte comme pharaons."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Ethiopia; UNESCO's 82 mosques and 102 shrines quoted in article; 16th-century walls with five gates verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": true,
+  "q": "Harar, a walled city of narrow lanes packed with mosques and shrines, is in which country?",
+  "options": [
+   "Mali",
+   "Mozambique",
+   "Ethiopia",
+   "Algeria"
+  ],
+  "answer": 2,
+  "fact": "UNESCO counts 82 mosques and 102 shrines behind Harar's 16th-century walls, which are pierced by five ancient gates.",
+  "src": "https://en.wikipedia.org/wiki/Harar",
+  "q_fr": "Harar, ville fortifiée aux ruelles étroites remplies de mosquées et de sanctuaires, se trouve dans quel pays ?",
+  "options_fr": [
+   "Le Mali",
+   "Le Mozambique",
+   "L'Éthiopie",
+   "L'Algérie"
+  ],
+  "fact_fr": "L'UNESCO recense 82 mosquées et 102 sanctuaires derrière les murailles du XVIe siècle de Harar, percées de cinq portes anciennes."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Gondar, Ethiopia; founded by Fasilides 1645; later emperors added their own structures; three churches inside — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": true,
+  "q": "Emperor Fasilides built a walled compound of stone castles and palaces at Gondar in the 1600s. Gondar is in which country?",
+  "options": [
+   "Egypt",
+   "Namibia",
+   "Senegal",
+   "Ethiopia"
+  ],
+  "answer": 3,
+  "fact": "Each later emperor added his own castle inside the same walls, so Fasil Ghebbi grew into a royal city of towers and churches.",
+  "src": "https://en.wikipedia.org/wiki/Fasil_Ghebbi",
+  "q_fr": "L'empereur Fasilidas a fait bâtir au XVIIe siècle un ensemble fortifié de châteaux et de palais de pierre à Gondar. Gondar est dans quel pays ?",
+  "options_fr": [
+   "L'Égypte",
+   "La Namibie",
+   "Le Sénégal",
+   "L'Éthiopie"
+  ],
+  "fact_fr": "Chaque empereur suivant a ajouté son propre château dans la même enceinte : Fasil Ghebbi est devenu une cité royale de tours et d'églises."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Election by electors verified; Mwene Kongo 'lord or ruler of the Kongo kingdom' verified; 'four countries' supported by the lead (Angola, DRC, Republic of the Congo, southern Gabon).",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "The Kingdom of Kongo, whose capital was Mbanza Kongo, chose its kings in which way?",
+  "options": [
+   "By the eldest son only",
+   "By a council of electors",
+   "By lottery",
+   "By single combat"
+  ],
+  "answer": 1,
+  "fact": "The royal title manikongo comes from Mwene Kongo, 'lord of Kongo'; the kingdom's lands are now split between four countries.",
+  "src": "https://en.wikipedia.org/wiki/Kingdom_of_Kongo",
+  "q_fr": "Le royaume du Kongo, dont la capitale était Mbanza Kongo, choisissait ses rois de quelle manière ?",
+  "options_fr": [
+   "Par le fils aîné uniquement",
+   "Par un conseil d'électeurs",
+   "Par tirage au sort",
+   "Par combat singulier"
+  ],
+  "fact_fr": "Le titre royal manikongo vient de Mwene Kongo, « seigneur du Kongo » ; les terres du royaume se partagent aujourd'hui entre quatre pays."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Northern Angola; article confirms she urged plantation slaves to flee to her and granted freedom, land and titles.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "Nzinga Mbande ruled the kingdoms of Ndongo and Matamba, in what is now which country?",
+  "options": [
+   "Kenya",
+   "Morocco",
+   "Angola",
+   "Niger"
+  ],
+  "answer": 2,
+  "fact": "She urged people held on Portuguese plantations to escape to her lands, where she granted them land and titles.",
+  "src": "https://en.wikipedia.org/wiki/Nzinga_of_Ndongo_and_Matamba",
+  "q_fr": "Nzinga Mbande a régné sur les royaumes du Ndongo et du Matamba, dans quel pays actuel ?",
+  "options_fr": [
+   "Le Kenya",
+   "Le Maroc",
+   "L'Angola",
+   "Le Niger"
+  ],
+  "fact_fr": "Elle incitait les captifs des plantations portugaises à fuir vers ses terres, où elle leur accordait terres et titres."
+ },
+ {
+  "stream": "africa",
+  "verdict": "fixed",
+  "why": "FR grammar error: 'Que transitait par Sofala ?' — que cannot be subject; changed to 'Qu'est-ce qui transitait'. 'For centuries' not supported by the article; Wessel Islands coin find verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "The Kilwa Sultanate grew immensely rich after taking control of Sofala around 1178. What flowed through Sofala?",
+  "options": [
+   "Silk from China",
+   "Amber from the Baltic",
+   "Tin from Britain",
+   "Gold from the Zimbabwe plateau"
+  ],
+  "answer": 3,
+  "fact": "Kilwa minted its own coins — some have turned up as far away as the Wessel Islands off northern Australia.",
+  "src": "https://en.wikipedia.org/wiki/Kilwa_Sultanate",
+  "q_fr": "Le sultanat de Kilwa s'est immensément enrichi après avoir pris le contrôle de Sofala vers 1178. Qu'est-ce qui transitait par Sofala ?",
+  "options_fr": [
+   "La soie de Chine",
+   "L'ambre de la Baltique",
+   "L'étain de Grande-Bretagne",
+   "L'or du plateau du Zimbabwe"
+  ],
+  "fact_fr": "Kilwa frappait sa propre monnaie : certaines pièces ont été retrouvées jusqu'aux îles Wessel, au nord de l'Australie."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Article: Mwene = 'Lord', Mutapa = 'conquered land'; Shona empire; 1400s rise as Great Zimbabwe declined and gold-route control verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "The Shona rulers of the Mutapa empire held the title Mwene Mutapa. What does it mean?",
+  "options": [
+   "Keeper of the cattle",
+   "Son of the river",
+   "Lord of the conquered lands",
+   "Voice of the ancestors"
+  ],
+  "answer": 2,
+  "fact": "Mutapa rose in the 1400s as Great Zimbabwe declined, and controlled the gold reaching the Indian Ocean ports.",
+  "src": "https://en.wikipedia.org/wiki/Kingdom_of_Mutapa",
+  "q_fr": "Les souverains shona de l'empire du Mutapa portaient le titre de Mwene Mutapa. Que signifie-t-il ?",
+  "options_fr": [
+   "Gardien des troupeaux",
+   "Fils du fleuve",
+   "Seigneur des terres conquises",
+   "Voix des ancêtres"
+  ],
+  "fact_fr": "Le Mutapa s'élève au XVe siècle, alors que Great Zimbabwe décline, et contrôle l'or qui gagne les ports de l'océan Indien."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Empire spanned western Maghreb and al-Andalus; Zaragoza taken 1110; funded by Ghana gold and controlled trans-Saharan routes — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": false,
+  "q": "At its height the Almoravid empire reached from the Sahara across the strait into which part of Europe?",
+  "options": [
+   "Sicily",
+   "Greece",
+   "Provence",
+   "Iberia (Spain and Portugal)"
+  ],
+  "answer": 3,
+  "fact": "Almoravid rule stretched from the Sahara to Zaragoza, tying West African gold routes and Iberian cities under one government.",
+  "src": "https://en.wikipedia.org/wiki/Almoravid_dynasty",
+  "q_fr": "À son apogée, l'empire almoravide s'étendait du Sahara jusqu'à quelle partie de l'Europe, de l'autre côté du détroit ?",
+  "options_fr": [
+   "La Sicile",
+   "La Grèce",
+   "La Provence",
+   "La péninsule Ibérique (Espagne et Portugal)"
+  ],
+  "fact_fr": "Le pouvoir almoravide allait du Sahara à Saragosse, reliant sous une même autorité les routes de l'or ouest-africain et les villes ibériques."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Nigeria (Anambra State); radiocarbon 850 AD; lost-wax casting; glass beads and long-distance trade evidence — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 2,
+  "kids": true,
+  "q": "Bronze vessels and ornaments of astonishing delicacy, cast around 850 CE, were excavated at Igbo-Ukwu in which country?",
+  "options": [
+   "Ghana",
+   "Cameroon",
+   "Mali",
+   "Nigeria"
+  ],
+  "answer": 3,
+  "fact": "Its smiths used the lost-wax method, and the burials held glass beads brought in from far away by long-distance trade.",
+  "src": "https://en.wikipedia.org/wiki/Igbo-Ukwu",
+  "q_fr": "Des vases et parures de bronze d'une finesse stupéfiante, coulés vers 850, ont été mis au jour à Igbo-Ukwu, dans quel pays ?",
+  "options_fr": [
+   "Le Ghana",
+   "Le Cameroun",
+   "Le Mali",
+   "Le Nigeria"
+  ],
+  "fact_fr": "Ses fondeurs employaient la cire perdue, et les sépultures renfermaient des perles de verre venues de très loin par le grand commerce."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Article states both nicknames mean 'the left-handed'; 1529-1543 war against Ethiopia verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "Imam Ahmad ibn Ibrahim al-Ghazi, who led the Adal Sultanate's armies in the 1500s, was nicknamed Gragn and Gurey. What do those names mean?",
+  "options": [
+   "The left-handed",
+   "The lion",
+   "The wanderer",
+   "The young one"
+  ],
+  "answer": 0,
+  "fact": "His war with the Ethiopian empire ran from 1529 to 1543 and reshaped the Horn of Africa; Ethiopians and Somalis still recall it.",
+  "src": "https://en.wikipedia.org/wiki/Ahmad_ibn_Ibrahim_al-Ghazi",
+  "q_fr": "L'imam Ahmad ibn Ibrahim al-Ghazi, chef des armées du sultanat d'Adal au XVIe siècle, était surnommé Gragn et Gurey. Que signifient ces noms ?",
+  "options_fr": [
+   "Le gaucher",
+   "Le lion",
+   "Le voyageur",
+   "Le cadet"
+  ],
+  "fact_fr": "Sa guerre contre l'empire éthiopien, de 1529 à 1543, a redessiné la Corne de l'Afrique ; Éthiopiens et Somaliens s'en souviennent encore."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "URL resolves to a dedicated article on the Luba memory board; beaded wooden board, 'men of memory' running fingertips over beads/shells — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "Court historians of the Luba empire recited kings, migrations and laws while reading a lukasa. What is a lukasa?",
+  "options": [
+   "A carved drum",
+   "A knotted cord",
+   "A beaded wooden board",
+   "A painted clay tablet"
+  ],
+  "answer": 2,
+  "fact": "Luba 'men of memory' ran their fingers over its beads and shells; each colour and pattern cued a part of the story.",
+  "src": "https://en.wikipedia.org/wiki/Lukasa",
+  "q_fr": "Les historiens de cour de l'empire luba récitaient rois, migrations et lois en lisant un lukasa. Qu'est-ce qu'un lukasa ?",
+  "options_fr": [
+   "Un tambour sculpté",
+   "Une cordelette à nœuds",
+   "Une planchette de bois perlée",
+   "Une tablette d'argile peinte"
+  ],
+  "fact_fr": "Les « hommes de mémoire » luba parcouraient du doigt perles et coquillages : chaque couleur, chaque motif rappelait un épisode du récit."
+ },
+ {
+  "stream": "africa",
+  "verdict": "fixed",
+  "why": "Article lead says 'among the oldest urbanized centers... in West Africa', not sub-Saharan Africa; stem aligned to source. Iron, rice and pre-Arab trade all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "Which town on the Niger River in Mali, first settled around 250 BCE, is among the oldest known cities in West Africa?",
+  "options": [
+   "Gao",
+   "Kano",
+   "Djenné-Djenno",
+   "Ouagadougou"
+  ],
+  "answer": 2,
+  "fact": "Its people smelted iron, grew rice and traded far afield centuries before any Arab contact, showing West African cities grew locally.",
+  "src": "https://en.wikipedia.org/wiki/Djenn%C3%A9-Djenno",
+  "q_fr": "Quelle ville du fleuve Niger, au Mali, occupée dès 250 av. J.-C. environ, compte parmi les plus anciennes cités connues d'Afrique de l'Ouest ?",
+  "options_fr": [
+   "Gao",
+   "Kano",
+   "Djenné-Djeno",
+   "Ouagadougou"
+  ],
+  "fact_fr": "Ses habitants fondaient le fer, cultivaient le riz et commerçaient au loin bien avant tout contact arabe : ces villes sont nées sur place."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Compelled suicide, seven councillors, empty calabash or parrot's eggs — all verified nearly verbatim.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "In the Yoruba empire of Oyo, the council known as the Oyo Mesi could force the ruler, the Alaafin, to do what?",
+  "options": [
+   "Take his own life",
+   "Marry abroad",
+   "Lead every battle",
+   "Move the capital"
+  ],
+  "answer": 0,
+  "fact": "The seven councillors sent him an empty calabash or a dish of parrot's eggs — a silent verdict that his reign was over.",
+  "src": "https://en.wikipedia.org/wiki/Oyo_Empire",
+  "q_fr": "Dans l'empire yoruba d'Oyo, le conseil appelé Oyo Mesi pouvait contraindre le souverain, l'alaafin, à quoi ?",
+  "options_fr": [
+   "Se donner la mort",
+   "Se marier à l'étranger",
+   "Mener chaque bataille",
+   "Déplacer la capitale"
+  ],
+  "fact_fr": "Les sept conseillers lui envoyaient une calebasse vide ou un plat d'œufs de perroquet : verdict silencieux annonçant la fin de son règne."
+ },
+ {
+  "stream": "africa",
+  "verdict": "fixed",
+  "why": "Article: the travelling teachers were the jajis; yan-taru is the sisterhood/network of learners — stem conflated the two. Works attested in Arabic, Fula and Hausa; Tamacheq was a language she knew, not one her works are stated to be written in.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "Nana Asma'u organised a women's education network known as the yan-taru across which West African state?",
+  "options": [
+   "The Asante kingdom",
+   "The Sokoto Caliphate",
+   "The Kingdom of Kongo",
+   "The Adal Sultanate"
+  ],
+  "answer": 1,
+  "fact": "She wrote more than sixty works in Arabic, Fula and Hausa, and her travelling teachers, the jajis, carried lessons village to village.",
+  "src": "https://en.wikipedia.org/wiki/Nana_Asma%27u",
+  "q_fr": "Nana Asma'u a organisé un réseau d'éducation des femmes appelé yan-taru dans quel État ouest-africain ?",
+  "options_fr": [
+   "Le royaume asante",
+   "Le califat de Sokoto",
+   "Le royaume du Kongo",
+   "Le sultanat d'Adal"
+  ],
+  "fact_fr": "Elle a écrit plus de soixante ouvrages en arabe, peul et haoussa ; ses jajis, enseignantes itinérantes, allaient de village en village."
+ },
+ {
+  "stream": "africa",
+  "verdict": "fixed",
+  "why": "Three-year war (25-22 BC) verified. But 'trodden on daily' is not in the cited article; replaced with the article-supported detail (head buried beneath temple steps, uniquely preserved).",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "Which ruling queen of Kush fought a three-year war against Roman Egypt in the 20s BCE?",
+  "options": [
+   "Hatshepsut",
+   "Nefertiti",
+   "Amanirenas",
+   "Dido"
+  ],
+  "answer": 2,
+  "fact": "Her soldiers cut the head from a bronze statue of Augustus and buried it beneath a temple's steps at Meroë, preserving it intact.",
+  "src": "https://en.wikipedia.org/wiki/Amanirenas",
+  "q_fr": "Quelle reine régnante de Koush a mené une guerre de trois ans contre l'Égypte romaine dans les années 20 av. J.-C. ?",
+  "options_fr": [
+   "Hatchepsout",
+   "Néfertiti",
+   "Amanirenas",
+   "Didon"
+  ],
+  "fact_fr": "Ses soldats ont décapité une statue de bronze d'Auguste et enterré la tête sous les marches d'un temple à Méroé, la préservant intacte."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Deciphered 1909 by Griffith via Meroitic spellings of Egyptian names; language remains poorly understood — verified nearly verbatim.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "The Kingdom of Kush set aside Egyptian hieroglyphs and wrote its own language in its own alphabet. What is that script called?",
+  "options": [
+   "Meroitic",
+   "Ge'ez",
+   "Tifinagh",
+   "Nsibidi"
+  ],
+  "answer": 0,
+  "fact": "It was cracked in 1909 using Egyptian names, so the words can be sounded out — yet the language itself is still barely understood.",
+  "src": "https://en.wikipedia.org/wiki/Meroitic_script",
+  "q_fr": "Le royaume de Koush a délaissé les hiéroglyphes égyptiens pour écrire sa propre langue dans son propre alphabet. Comment s'appelle cette écriture ?",
+  "options_fr": [
+   "Le méroïtique",
+   "Le guèze",
+   "Le tifinagh",
+   "Le nsibidi"
+  ],
+  "fact_fr": "Déchiffrée en 1909 grâce à des noms égyptiens, elle se lit à voix haute, mais la langue elle-même reste très mal comprise."
+ },
+ {
+  "stream": "africa",
+  "verdict": "ok",
+  "why": "Makuria, 7th century, 'lasting almost seven hundred years... longest-lasting treaty in history', 360 slaves annually for wheat and lentils — all verified.",
+  "cat": "History",
+  "region": "Africa",
+  "diff": 3,
+  "kids": false,
+  "q": "The Baqt, one of the longest-lasting treaties in history, was agreed around 652 between Egypt's new Muslim rulers and which Nubian kingdom?",
+  "options": [
+   "Aksum",
+   "Kanem",
+   "Makuria",
+   "Mutapa"
+  ],
+  "answer": 2,
+  "fact": "It held for roughly 700 years: each year Nubia sent 360 enslaved people to Egypt, and Egypt sent back wheat and lentils.",
+  "src": "https://en.wikipedia.org/wiki/Baqt",
+  "q_fr": "Le baqt, l'un des traités les plus durables de l'histoire, fut conclu vers 652 entre les nouveaux maîtres musulmans de l'Égypte et quel royaume nubien ?",
+  "options_fr": [
+   "Aksoum",
+   "Le Kanem",
+   "La Makurie",
+   "Le Mutapa"
+  ],
+  "fact_fr": "Il a tenu près de 700 ans : chaque année, la Nubie livrait 360 personnes réduites en esclavage et l'Égypte renvoyait blé et lentilles."
+ }
+]

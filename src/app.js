@@ -1903,7 +1903,42 @@
   }
 
   // ---------- City packs ("Before you travel") ----------
-  function cityPacks() { return window.CURIO_CITYPACKS || []; }
+  // Same overlay contract as the question banks: citypacks.fr.js carries only
+  // words, aligned by index, and everything structural comes from the English
+  // file. Counts are the guard here (there is no answer index on a blurb) —
+  // any mismatch and the packs stay English rather than half-translated.
+  var _packsMerged = null;
+  function cityPacks() {
+    if (_packsMerged) return _packsMerged;
+    var en = window.CURIO_CITYPACKS || [];
+    var fr = window.CURIO_CITYPACKS_FR || [];
+    if (QLANG !== "fr" || fr.length !== en.length) return (_packsMerged = en);
+    _packsMerged = en.map(function (e, i) {
+      var f = fr[i];
+      if (!f || !f.questions || f.questions.length !== e.questions.length ||
+          !f.phrases || f.phrases.length !== e.phrases.length) return e;
+      var out = {}, k;
+      for (k in e) if (e.hasOwnProperty(k)) out[k] = e[k];
+      out.city = f.city || e.city;
+      out.country = f.country || e.country;
+      out.blurb = f.blurb || e.blurb;
+      out.questions = e.questions.map(function (q, qi) {
+        var t = f.questions[qi], o = {};
+        for (k in q) if (q.hasOwnProperty(k)) o[k] = q[k];
+        o.q = t.q; o.options = t.options; o.fact = t.fact;
+        return o;
+      });
+      // phrase/pron stay local-language from EN; only meaning and the
+      // respelling a French reader sounds out come from FR.
+      out.phrases = e.phrases.map(function (ph, pi) {
+        var t = f.phrases[pi];
+        return { phrase: ph.phrase, meaning: t.meaning, pron: t.pron };
+      });
+      out.tips = (f.tips && f.tips.length === e.tips.length) ? f.tips : e.tips;
+      return out;
+    });
+    return _packsMerged;
+  }
 
   // One card per city pack, appended into container. Shared by the overlay
   // city browser (cityHomeView) and the mobile Games tab (FEAT-027) — same
