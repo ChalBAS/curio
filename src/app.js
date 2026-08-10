@@ -164,31 +164,76 @@
     var easy = Q.filter(function (x) { return !x.kids && x.diff === 1; });
     return kids.concat(easy);
   }
+  // THE DAILY WALK. The old daily reshuffled the whole bank every day with the
+  // day as the seed — five random cards daily, which can lawfully deal you the
+  // same card two days running. CEO 2026-08-10: a daily question must not
+  // repeat within a year.
+  //
+  // So the daily no longer draws — it WALKS. One deterministic shuffle of the
+  // entire bank per epoch (identical on every device: the seed is the epoch
+  // number and the bank size, nothing local), and each day takes the next five
+  // cards off that deck. Within an epoch a repeat is impossible, not unlikely.
+  // An epoch ends only when the whole bank has been dealt: at 472 questions
+  // that is 94 days of guaranteed-unique dailies, and every batch of new
+  // questions extends it — the year-long guarantee arrives with the 1,825th
+  // question, which the content plan reaches on the road to 10,000.
+  // (When the bank grows the deck re-cuts; that boundary is the one place a
+  // near-term repeat is theoretically possible, noted and accepted.)
   function dailyQuestions() {
     var p = pool();
-    var seed = dayNumber() + (settings.ageMode === "kids" ? 51000 : 1);
+    if (!p.length) return [];
+    var epochLen = Math.max(1, Math.floor(p.length / DAILY_COUNT));  // days per full deck
+    var d = dayNumber();
+    var epoch = Math.floor(d / epochLen), day = d % epochLen;
+    var seed = epoch * 7919 + p.length * 131 + (settings.ageMode === "kids" ? 51000 : 1);
     var order = shuffledIndices(p.length, seed);
-    return order.slice(0, DAILY_COUNT).map(function (i) { return p[i]; });
+    var out = [];
+    for (var i = 0; i < DAILY_COUNT; i++) out.push(p[order[(day * DAILY_COUNT + i) % p.length]]);
+    return out;
   }
   // NO REPEATS. "Play again" used to reshuffle the whole pool, so a 91-question
   // topic could deal you the same flag twice in two rounds — and a quick-fire
   // could deal a question the daily challenge was about to ask. The CEO,
   // 2026-08-10: "redundancy is a reputation killer."
   //
-  // A rolling window of recently-served ids (per device, capped) is excluded
-  // first; today's daily five are always excluded. If the topic is too small to
-  // fill a round without repeats, the OLDEST seen come back first — never a
-  // short round, never a same-session repeat.
-  var QF_SEEN_MAX = 120;
-  function qfSeen() { return LS.get("qfseen", []); }
-  function qfMarkSeen(qs) {
-    var seen = qfSeen();
+  // THE NO-REPEAT CONTRACT (CEO, 2026-08-10): a question served anywhere —
+  // daily or quick-fire — must not reappear for FOURTEEN DAYS, unless the
+  // Vault brings it back on purpose (revision is the Vault's whole job).
+  //
+  // The first version of this was a ring of the last 120 ids. A ring has no
+  // clock: a heavy player pushes a question out of the window in a couple of
+  // days and it can lawfully return — which is exactly the repeat that reads
+  // as carelessness. So the ledger is DATED: {i: id, d: dayNumber}, excluded
+  // while (today − d) < 14, pruned after 30 days. The whole bank is ~6KB of
+  // ids, so there is no size pressure and no cap to slide out of.
+  //
+  // If a topic is too small to fill a round with unseen questions, the OLDEST
+  // seen come back first — never a short round, never a same-round repeat.
+  // 30 days, not 14 — CEO 2026-08-10: "the probability of repeating questions
+  // within 1 month must be 0, to be conservative". And it is a probability of
+  // ZERO, not "low": when a topic has no unseen questions left this month, the
+  // round is short or the topic is declared cleared — we never quietly refill
+  // with something the player just saw.
+  var QF_EXCLUDE_DAYS = 30, QF_PRUNE_DAYS = 45;
+  function seenLedger() {
+    var v = LS.get("qseen2", null);
+    if (v) return v;
+    // Migrate the v60 ring: no dates existed, so stamp them "yesterday" —
+    // safely inside the exclusion window without pretending precision.
+    var old = LS.get("qfseen", []);
+    return old.map(function (id) { return { i: id, d: dayNumber() - 1 }; });
+  }
+  function markSeen(qs) {
+    var today = dayNumber();
+    var led = seenLedger().filter(function (e) { return today - e.d < QF_PRUNE_DAYS; });
+    var by = {};
+    led.forEach(function (e, idx) { by[e.i] = idx; });
     qs.forEach(function (q) {
-      var id = qid(q), i = seen.indexOf(id);
-      if (i !== -1) seen.splice(i, 1);
-      seen.push(id);
+      var id = qid(q);
+      if (by[id] !== undefined) led[by[id]].d = today;
+      else { by[id] = led.length; led.push({ i: id, d: today }); }
     });
-    LS.set("qfseen", seen.slice(-QF_SEEN_MAX));
+    LS.set("qseen2", led);
   }
   function quickfireQuestions(cat, sub) {
     var p = pool().filter(function (x) { return cat === "All" || x.cat === cat; });
@@ -196,19 +241,25 @@
     // Science and Geography by subject. Same control, same code path.
     if (sub && sub !== "All") p = p.filter(function (x) { return x.region === sub || x.sub === sub; });
 
+    // Today's daily five are excluded outright — even if 14 days somehow lapsed.
     var daily = {};
     dailyQuestions().forEach(function (q) { daily[qid(q)] = true; });
     p = p.filter(function (x) { return !daily[qid(x)]; });
 
-    var seen = qfSeen(), rank = {};
-    seen.forEach(function (id, i) { rank[id] = i + 1; });   // higher = more recent
-    var fresh = p.filter(function (x) { return !rank[qid(x)]; });
-    var stale = p.filter(function (x) { return rank[qid(x)]; })
-                 .sort(function (a, b) { return rank[qid(a)] - rank[qid(b)]; }); // oldest first
+    var today = dayNumber(), lastSeen = {};
+    seenLedger().forEach(function (e) { lastSeen[e.i] = e.d; });
+    var fresh = p.filter(function (x) {
+      var d = lastSeen[qid(x)];
+      return d === undefined || today - d >= QF_EXCLUDE_DAYS;
+    });
 
+    // ONLY unseen questions are served. A round can be shorter than ten; a
+    // topic with nothing unseen left this month returns [] and the caller
+    // says so honestly. That is what makes the repeat probability zero
+    // rather than merely small.
     for (var i = fresh.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = fresh[i]; fresh[i] = fresh[k]; fresh[k] = tmp; }
-    var out = fresh.concat(stale).slice(0, Math.min(QUICKFIRE_COUNT, p.length));
-    qfMarkSeen(out);
+    var out = fresh.slice(0, Math.min(QUICKFIRE_COUNT, fresh.length));
+    markSeen(out);
     return out;
   }
   // Regions present among History questions (for the region sub-filter), in a stable order.
@@ -1386,6 +1437,7 @@
 
     function show() {
       answered = false;
+      node._qShownAt = Date.now();   // stopwatch for the ⚡ speed chip
       var raw = cfg.questions[idx];
       var q = withShuffledOptions(raw, seedBase + idx * 7 + (cfg.timed ? 1 : 0));
       node.innerHTML = "";
@@ -1426,7 +1478,11 @@
       }
       var body = el(
         '<div>' +
-          '<span class="qcat">' + catEmoji + " " + esc(t(catLabel)) + regionBit + ' · ' + [t("Easy"), t("Medium"), t("Hard")][q.diff - 1] + (cfg.vault ? ' · 🗝️ ' + t("Vault") : '') + '</span>' +
+          // No Easy/Medium/Hard on screen (CEO, 2026-08-10): the label judges
+          // the player, not the question — what is easy is whatever you happen
+          // to know. `diff` stays internal (kids-mode fallback uses it). The
+          // fair metric is speed, shown after each answer below.
+          '<span class="qcat">' + catEmoji + " " + esc(t(catLabel)) + regionBit + (cfg.vault ? ' · 🗝️ ' + t("Vault") : '') + '</span>' +
           artHtml +
           '<div class="qtext">' + fmt(q.q) + (canSpeak() ? ' <button class="speakbtn" id="speakBtn" aria-label="' + t("Read this question aloud") + '">🔊</button>' : '') + '</div>' +
           '<div class="opts"></div>' +
@@ -1546,9 +1602,18 @@
         lead.kind === "visit" ? tf("Visit {where}",     { where: esc(lead.title) }) :
                                 tf("Read about {name}", { name: esc(lead.title) });
 
+      // Speed, not difficulty (CEO, 2026-08-10): "how fast you answer" is
+      // factual and non-judgemental — the same number for the professor and
+      // the beginner. Peer percentiles need a backend; until then the number
+      // stands alone and the speed bonus already prices it into the score.
+      // Measured by stopwatch, not by the countdown — the countdown ticks in
+      // whole seconds, and a chip that says "0s" reads as a bug.
+      var elapsed = (correct && i !== -1 && node._qShownAt)
+        ? Math.max(0.1, (Date.now() - node._qShownAt) / 1000).toFixed(1) : null;
       var fact = el('<div class="fact">' +
         '<span class="verdict ' + (correct ? "ok" : "no") + '">' +
           '<span aria-hidden="true">' + (correct ? "✓" : "✗") + '</span> ' + verdict +
+          (elapsed !== null ? ' <span class="speedchip">⚡ ' + elapsed + 's</span>' : '') +
         '</span>' +
         fmt(q.fact) + srcLink(q.src) +
         '<div class="deeperbox"></div>' +
@@ -1608,8 +1673,13 @@
   function startDaily() {
     var existing = LS.get(dailyKey(), null);
     if (existing) { return dailyResultView(existing, true); }
+    var dq = dailyQuestions();
+    // The daily five enter the same 14-day ledger quick-fire reads — a
+    // question answered in this morning's daily must not turn up in this
+    // afternoon's quick-fire wearing a different hat.
+    markSeen(dq);
     runQuiz({
-      questions: dailyQuestions(),
+      questions: dq,
       timed: false,
       onDone: function (r) {
         var s = bumpStreak();
@@ -2248,7 +2318,26 @@
   // ---------- quickfire ----------
   function startQuickfire(cat, region) {
     var qs = quickfireQuestions(cat, region);
-    if (!qs.length) { goHome(); return; }
+    if (!qs.length) {
+      // Cleared, not broken. The player who has seen every question in a topic
+      // this month is the app's best player — tell them that, tell them when
+      // it restocks, and point them somewhere fresh. Never repeat instead.
+      var node = el(
+        '<div class="card result">' +
+          '<div class="scorebig">🏅</div>' +
+          '<h2>' + t("You’ve cleared this topic — for now.") + '</h2>' +
+          '<div class="sub">' + t("You’ve answered every question here in the last month. New questions arrive every week, and missed ones return through the Vault.") + '</div>' +
+          '<div class="btnrow" style="justify-content:center">' +
+            '<button class="btn" id="clearedOther">' + t("Try another topic") + '</button>' +
+            '<button class="btn ghost" id="clearedHome">🏠 ' + t("Home") + '</button>' +
+          '</div>' +
+        '</div>'
+      );
+      render(node);
+      node.querySelector("#clearedOther").addEventListener("click", function () { renderTab("train"); });
+      node.querySelector("#clearedHome").addEventListener("click", goHome);
+      return;
+    }
     var label = t(cat) + (region && region !== "All" ? " · " + t(REGION_LABEL[region] || region) : "");
     runQuiz({
       questions: qs,

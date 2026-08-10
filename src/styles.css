@@ -127,6 +127,8 @@ body {
 }
 .verdict.ok { color: var(--good); background: rgba(79,214,163,.14); border: 1px solid rgba(79,214,163,.42); }
 .verdict.no { color: var(--bad);  background: rgba(255,107,129,.12); border: 1px solid rgba(255,107,129,.42); }
+/* The answer clock — the metric that replaced Easy/Medium/Hard. Quiet, factual. */
+.speedchip { font-size: 11px; font-weight: 700; opacity: .75; margin-left: 6px; }
 .timer { font-variant-numeric: tabular-nums; font-weight: 800; }
 .timer.low { color: var(--bad); }
 

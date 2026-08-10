@@ -381,6 +381,10 @@
       "🧭 Know before you go": "🧭 À savoir avant de partir",
       "ready for your trip 🧳": "le voyage peut commencer 🧳",
       "Play again": "Rejouer",
+      "You’ve cleared this topic — for now.": "Tu as fait le tour de ce thème — pour l’instant.",
+      "You’ve answered every question here in the last month. New questions arrive every week, and missed ones return through the Vault.":
+        "Tu as répondu à toutes les questions de ce thème ce mois-ci. De nouvelles questions arrivent chaque semaine, et celles que tu as manquées reviennent par le Coffre.",
+      "Try another topic": "Essayer un autre thème",
       "Back to {city}": "Retour à {city}",
 
       // --- Fact or Fake ---
