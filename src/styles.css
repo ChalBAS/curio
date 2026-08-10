@@ -344,32 +344,37 @@ body {
 .hcontrast .way.is-off { opacity: .8; }
 
 /* A picture that IS the question — a flag to identify, a diagram to read.
-   `contain` on purpose for flags: a flag cropped to fill is a different flag,
-   and several national flags differ only in their proportions. The checked
-   background is what stops a white flag (Japan) from vanishing into the card. */
+   REBUILT 2026-08-10. The first version put every image inside a fixed 3:2 box
+   with checkered padding, and rounded the BOX with overflow:hidden — which
+   clipped the flag's own corners and left grey board visible around any flag
+   that was not exactly 3:2. On a flag question a shaved corner or a hidden
+   stripe can change the answer (CEO: "can lead to wrong answers if all colors
+   are not visible").
+   Now the frame adapts to the image: the container is invisible, the image
+   sets its own height from its true aspect ratio, nothing is clipped, and the
+   only chrome is a hairline border ON the image — which is also what keeps a
+   white flag (Japan, Poland) visible against the dark card. */
 .qart {
-  margin: 10px 0 4px; border-radius: 12px; overflow: hidden;
-  border: 1px solid var(--line); background: var(--bg2);
-  aspect-ratio: 3 / 2; display: grid; place-items: center;
+  margin: 10px 0 4px;
+  display: flex; justify-content: center;
+  background: none; border: none;
 }
-.qart img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.qart.is-contain {
-  padding: 10px;
-  background-color: #eef1f6;
-  background-image:
-    linear-gradient(45deg, rgba(0,0,0,.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.05) 75%),
-    linear-gradient(45deg, rgba(0,0,0,.05) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.05) 75%);
-  background-size: 16px 16px;
-  background-position: 0 0, 8px 8px;
+.qart img {
+  display: block;
+  width: 100%; height: auto;          /* the image decides its height */
+  max-height: 42vh;                    /* one phone-screen budget, never more */
+  max-width: 100%;
+  object-fit: contain;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
-.qart.is-contain img {
-  width: auto; height: auto; max-width: 100%; max-height: 100%;
-  object-fit: contain; border-radius: 3px;
-  box-shadow: 0 1px 6px rgba(0,0,0,.28);
-}
+/* Portrait or square images (Nepal, Switzerland): height caps first, width
+   follows — width:auto stops the border stretching past the visible image. */
+.qart.is-contain img { width: auto; max-width: 100%; }
 .qart-credit { font-size: 10.5px; color: var(--muted); margin: 0 0 2px; text-align: right; }
 .qart-credit a { color: inherit; }
-@media (min-width: 560px) { .qart { max-height: 260px; aspect-ratio: auto; height: 240px; } }
+@media (min-width: 560px) { .qart img { max-height: 300px; } }
 
 /* The country select. A native control on purpose — a phone gives it its own
    search, scroll and screen-reader behaviour for free, and 200 options is

@@ -170,13 +170,46 @@
     var order = shuffledIndices(p.length, seed);
     return order.slice(0, DAILY_COUNT).map(function (i) { return p[i]; });
   }
+  // NO REPEATS. "Play again" used to reshuffle the whole pool, so a 91-question
+  // topic could deal you the same flag twice in two rounds — and a quick-fire
+  // could deal a question the daily challenge was about to ask. The CEO,
+  // 2026-08-10: "redundancy is a reputation killer."
+  //
+  // A rolling window of recently-served ids (per device, capped) is excluded
+  // first; today's daily five are always excluded. If the topic is too small to
+  // fill a round without repeats, the OLDEST seen come back first — never a
+  // short round, never a same-session repeat.
+  var QF_SEEN_MAX = 120;
+  function qfSeen() { return LS.get("qfseen", []); }
+  function qfMarkSeen(qs) {
+    var seen = qfSeen();
+    qs.forEach(function (q) {
+      var id = qid(q), i = seen.indexOf(id);
+      if (i !== -1) seen.splice(i, 1);
+      seen.push(id);
+    });
+    LS.set("qfseen", seen.slice(-QF_SEEN_MAX));
+  }
   function quickfireQuestions(cat, sub) {
     var p = pool().filter(function (x) { return cat === "All" || x.cat === cat; });
     // One second-level filter, two underlying fields: History slices by region,
     // Science and Geography by subject. Same control, same code path.
     if (sub && sub !== "All") p = p.filter(function (x) { return x.region === sub || x.sub === sub; });
-    for (var i = p.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = p[i]; p[i] = p[k]; p[k] = tmp; }
-    return p.slice(0, Math.min(QUICKFIRE_COUNT, p.length));
+
+    var daily = {};
+    dailyQuestions().forEach(function (q) { daily[qid(q)] = true; });
+    p = p.filter(function (x) { return !daily[qid(x)]; });
+
+    var seen = qfSeen(), rank = {};
+    seen.forEach(function (id, i) { rank[id] = i + 1; });   // higher = more recent
+    var fresh = p.filter(function (x) { return !rank[qid(x)]; });
+    var stale = p.filter(function (x) { return rank[qid(x)]; })
+                 .sort(function (a, b) { return rank[qid(a)] - rank[qid(b)]; }); // oldest first
+
+    for (var i = fresh.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = fresh[i]; fresh[i] = fresh[k]; fresh[k] = tmp; }
+    var out = fresh.concat(stale).slice(0, Math.min(QUICKFIRE_COUNT, p.length));
+    qfMarkSeen(out);
+    return out;
   }
   // Regions present among History questions (for the region sub-filter), in a stable order.
   function historyRegions() {
@@ -384,6 +417,13 @@
     if (!playShown) { hushed(); window.scrollTo(0, 0); }
   }
   function route() {
+    // #daily is a COMMAND, not a tab: the notification tap must land inside
+    // today's challenge whether the app was closed (boot handles it) or open
+    // in a background tab (hashchange lands here without a reload).
+    if ((location.hash || "").replace(/^#/, "") === "daily") {
+      startDaily();
+      return;
+    }
     var tab = currentTab();
     tabBar.querySelectorAll(".tabbtn").forEach(function (b) {
       if (b.getAttribute("data-tab") === tab) b.setAttribute("aria-current", "page");
@@ -945,8 +985,15 @@
     }
     try {
       caches.open(NUDGE_CACHE).then(function (c) {
-        c.put(NUDGE_URL, new Response(JSON.stringify({ v: 1, on: !!LS.get("nudge", false), days: queue }),
-          { headers: { "Content-Type": "application/json" } }));
+        c.put(NUDGE_URL, new Response(JSON.stringify({
+          v: 2,
+          on: !!LS.get("nudge", false),
+          // The reader's chosen delivery hour. The phone wakes the worker on
+          // its own schedule, so this is "from HH:00", not "at HH:00" — the
+          // Settings copy says so honestly.
+          hour: LS.get("nudgeHour", 8),
+          days: queue
+        }), { headers: { "Content-Type": "application/json" } }));
       });
     } catch (e) {}
   }
@@ -995,6 +1042,12 @@
   function nudgeCard() {
     var state = notifyState();
     var on = LS.get("nudge", false) && state === "granted";
+    var hour = LS.get("nudgeHour", 8);
+    var hourOpts = "";
+    for (var h = 5; h <= 22; h++) {
+      hourOpts += '<option value="' + h + '"' + (h === hour ? ' selected' : '') + '>' +
+        (h < 10 ? "0" : "") + h + ':00</option>';
+    }
     var node = el(
       '<div class="card">' +
         '<div class="section-title" style="margin-top:0">🔔 ' + t("A question a day") + '</div>' +
@@ -1005,17 +1058,68 @@
             // server, so on Android the phone itself wakes the app once a day
             // — and everywhere else the question can only arrive while Qpio is
             // open. Promising more than that would be a lie we could not fix.
-            : t("Get today's actual question as a notification — not a reminder to play, the question itself. On Android, install Qpio to your home screen and your phone will deliver it once a day on its own. Elsewhere it arrives while Qpio is open. Turn it off any time.")) +
+            : t("Get today's actual question as a notification — the question itself, and tapping it opens Qpio straight into the daily challenge. On Android, install Qpio to your home screen and your phone delivers it on its own. Turn it off any time.")) +
         '</p>' +
         (state === "unsupported" ? '' :
-          '<div class="btnrow"><button class="btn' + (on ? " ghost" : "") + '" id="nudgeBtn">' +
-            (on ? t("Turn off") : t("Turn on")) + '</button></div>') +
-        '<div class="mini" id="nudgeMsg" style="margin-top:10px"></div>' +
+          '<div class="btnrow" style="align-items:center;flex-wrap:wrap">' +
+            '<button class="btn' + (on ? " ghost" : "") + '" id="nudgeBtn">' + (on ? t("Turn off") : t("Turn on")) + '</button>' +
+            (on ? '<label class="mini" style="display:inline-flex;align-items:center;gap:6px">' + t("from") +
+              ' <select class="cselect" id="nudgeHour" style="width:auto;min-height:38px;margin:0">' + hourOpts + '</select></label>' : '') +
+            (on ? '<button class="btn ghost" id="nudgeTest">' + t("Send a test now") + '</button>' : '') +
+          '</div>') +
+        '<div class="mini" id="nudgeStatus" style="margin-top:10px"></div>' +
+        '<div class="mini" id="nudgeMsg" style="margin-top:4px"></div>' +
       '</div>'
     );
     var btn = node.querySelector("#nudgeBtn");
     var msg = node.querySelector("#nudgeMsg");
     if (state === "denied") msg.textContent = t("Notifications are blocked for this site in your browser settings.");
+
+    // The status line answers "why is it not working?" without a support desk:
+    // each prerequisite is checked on THIS device and reported in one line.
+    var st = node.querySelector("#nudgeStatus");
+    if (st && state !== "unsupported") {
+      var bits = [];
+      bits.push((state === "granted" ? "✅ " : "⚠️ ") + t("Permission") + ": " + t(state));
+      var standalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches;
+      bits.push((standalone ? "✅ " : "⚠️ ") + t("Installed as an app") + ": " + (standalone ? t("yes") : t("no — needed for automatic delivery")));
+      var sent = LS.get("nudgeSent." + todayKey(), false);
+      if (on) bits.push(sent ? "✅ " + t("Sent today") : "⏳ " + tf("Waiting — delivers from {h}:00 once your phone wakes the app", { h: (hour < 10 ? "0" : "") + hour }));
+      st.innerHTML = bits.join(" · ");
+      if (on && "serviceWorker" in navigator) {
+        navigator.serviceWorker.ready.then(function (reg) {
+          if (!reg.periodicSync) { st.innerHTML += " · ⚠️ " + t("This browser cannot wake Qpio on its own (needs Chrome on Android); the question arrives when you open Qpio."); return; }
+          reg.periodicSync.getTags().then(function (tags) {
+            st.innerHTML += tags.indexOf("qpio-daily") !== -1
+              ? " · ✅ " + t("Automatic delivery armed")
+              : " · ⚠️ " + t("Automatic delivery not armed yet — open Qpio a few times so the phone trusts it, then toggle off and on.");
+          }).catch(function () {});
+        }).catch(function () {});
+      }
+    }
+
+    var hourSel = node.querySelector("#nudgeHour");
+    if (hourSel) hourSel.addEventListener("change", function () {
+      LS.set("nudgeHour", parseInt(hourSel.value, 10) || 8);
+      primeNudge();
+      renderTab("settings");
+    });
+    var testBtn = node.querySelector("#nudgeTest");
+    if (testBtn) testBtn.addEventListener("click", function () {
+      // End-to-end proof on the reader's own device: same payload, same tap
+      // behaviour as the real daily delivery, fired immediately.
+      var q = dailyQuestions()[0];
+      navigator.serviceWorker.ready.then(function (reg) {
+        reg.showNotification("Qpio", {
+          body: q ? q.q : t("A question a day"),
+          tag: "qpio-test",
+          icon: "brand/icons/qpio-icon-192.png",
+          badge: "icons/favicon-32.png",
+          data: { url: "./#daily" }
+        });
+        msg.textContent = t("Test sent — check your notification shade. Tapping it opens today's challenge.");
+      }).catch(function () { msg.textContent = t("Could not reach the service worker — reload once and try again."); });
+    });
     if (btn) btn.addEventListener("click", function () {
       if (on) {
         LS.set("nudge", false);
@@ -2165,11 +2269,13 @@
         '<div class="btnrow" style="justify-content:center">' +
           '<button class="btn" id="save">' + t("Save to leaderboard") + '</button>' +
           '<button class="btn ghost" id="again">' + t("Play again") + '</button>' +
+          '<button class="btn ghost" id="qrHome">🏠 ' + t("Home") + '</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
       '</div>'
     );
     render(node);
+    node.querySelector("#qrHome").addEventListener("click", goHome);
     node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
     node.querySelector("#save").addEventListener("click", function () {
       var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Curious")) || "").trim().slice(0, 16) || "Curious";

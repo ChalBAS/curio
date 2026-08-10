@@ -2,32 +2,32 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v59";
+const CACHE = "qpio-v60";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
 const NUDGE_CACHE = "qpio-nudge";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=59",
-  "./brand/qpio-mark-96.png?v=59",
-  "./brand/icons/qpio-icon-96.png?v=59",
-  "./brand/qpio-lockup-header.png?v=59",
-  "./src/i18n.js?v=59",
-  "./src/questions.fr.js?v=59",
-  "./src/truthlab.fr.js?v=59",
-  "./src/app.js?v=59",
-  "./src/questions.js?v=59",
-  "./src/truthlab.js?v=59",
-  "./src/citypacks.js?v=59",
-  "./src/citypacks.fr.js?v=59",
-  "./src/entities.fr.js?v=59",
-  "./src/entities.img.js?v=59",
-  "./src/entities.meta.js?v=59",
-  "./src/country.js?v=59",
-  "./src/golinks.js?v=59",
-  "./src/hooks.js?v=59",
-  "./src/discovery.js?v=59",
+  "./src/styles.css?v=60",
+  "./brand/qpio-mark-96.png?v=60",
+  "./brand/icons/qpio-icon-96.png?v=60",
+  "./brand/qpio-lockup-header.png?v=60",
+  "./src/i18n.js?v=60",
+  "./src/questions.fr.js?v=60",
+  "./src/truthlab.fr.js?v=60",
+  "./src/app.js?v=60",
+  "./src/questions.js?v=60",
+  "./src/truthlab.js?v=60",
+  "./src/citypacks.js?v=60",
+  "./src/citypacks.fr.js?v=60",
+  "./src/entities.fr.js?v=60",
+  "./src/entities.img.js?v=60",
+  "./src/entities.meta.js?v=60",
+  "./src/country.js?v=60",
+  "./src/golinks.js?v=60",
+  "./src/hooks.js?v=60",
+  "./src/discovery.js?v=60",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",
@@ -130,6 +130,10 @@ async function nudgeToday() {
   if (!data || !data.on || !data.days) return;
 
   const n = new Date();
+  // The reader picked a delivery hour. The browser wakes this worker on its
+  // own schedule, so the contract is "from HH:00", never "at HH:00" — before
+  // the chosen hour we simply decline and wait for the next wake.
+  if (typeof data.hour === "number" && n.getHours() < data.hour) return;
   const key = n.getFullYear() + "-" +
     String(n.getMonth() + 1).padStart(2, "0") + "-" +
     String(n.getDate()).padStart(2, "0");
@@ -156,13 +160,19 @@ self.addEventListener("periodicsync", (e) => {
   if (e.tag === "qpio-daily") e.waitUntil(nudgeToday());
 });
 
-// Tapping the daily question opens the app rather than a blank tab.
+// Tapping the question lands the reader INSIDE the daily challenge — the Hanzi
+// pattern the CEO asked for: the notification is the first question, the tap
+// is the way to answer it. An already-open tab is navigated to #daily, not
+// merely focused — focusing alone left the reader wherever they last were.
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
-  const target = (e.notification.data && e.notification.data.url) || "./";
+  const target = (e.notification.data && e.notification.data.url) || "./#daily";
   e.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
       for (const c of list) {
+        if ("navigate" in c && "focus" in c) {
+          return c.navigate(target).then((cl) => (cl || c).focus()).catch(() => c.focus());
+        }
         if ("focus" in c) return c.focus();
       }
       return self.clients.openWindow(target);
