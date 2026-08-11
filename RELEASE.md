@@ -124,11 +124,30 @@ testable here.*
 
 ---
 
-## What this does not cover yet, honestly
+## The scripted run — `tests/uat.html`
 
-- **No automated browser test.** The acceptance criteria above are run by a human. A
-  scripted smoke test through the daily five is worth building when a release goes out
-  weekly rather than several times a day.
+Open it on the device that matters: `uat.qpio.app/tests/uat.html` (or `qpio.app/tests/uat.html`
+to check what readers actually have). One button. It loads the real app in a frame and drives it.
+
+**36 checks, ~60 seconds**, and the number grows on its own: every journey runs **once per
+language × once per screen size**. Adding Spanish is one line in `tests/suite.js` and every
+journey re-runs in Spanish forever. Adding a tablet is one line. That is the mutualisation —
+authoring cost is paid once, coverage multiplies.
+
+It covers criteria 1–5 and 8: the daily five completes, Next is reachable without scrolling on
+every answered question, the destination sits above Next, no question repeats across three
+rounds, pictures load and carry alt text in the reader's language, no English prose survives on
+a French screen, and nothing throws.
+
+**Storage is snapshotted and restored**, so running it never costs the tester their streak.
+
+**It was proven against a deliberately broken build.** The layout fix was removed from `app.js`
+and the suite caught it on both screens — *"5 of 5 questions hid Next behind the tab bar"*.
+An earlier version of the suite had **passed** that same broken build, because it only tested
+one screen size; that is why sizes are now a dimension. A test that has never failed has never
+been tested.
+
+## What this does not cover yet, honestly
 - **No analytics on UAT** — deliberately. UAT traffic must never contaminate real numbers.
 - **No staged rollout.** Everyone gets a release at once. Fine at this scale; revisit past
   a few thousand readers.

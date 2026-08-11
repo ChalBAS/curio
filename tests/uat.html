@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--
+  QPIO UAT RUNNER — open this on the device that matters.
+
+  CEO, 2026-08-11: script the browser tests, "especially when we are going to add
+  more languages or more features. It will be critical to mutualize the effort."
+
+  So this page runs the acceptance criteria against the REAL app, in an iframe,
+  in every language, on whatever device you open it on. On uat.qpio.app it tests
+  the build waiting for your sign-off; on qpio.app it tests what readers have.
+
+  Not shipped to readers: nothing in the app links here. It is a tool, at a URL
+  you have to know.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Qpio · UAT</title>
+<style>
+  :root{
+    --bg:#071722;--bg2:#0B2233;--card:#0F2C3F;--ink:#EAF4F8;--muted:#8FB0C0;
+    --line:#1E4A63;--brand:#26BAD8;--good:#3FBF9A;--bad:#E4695F;--warn:#E0A93B;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
+  .wrap{max-width:760px;margin:0 auto;padding:18px 16px 60px}
+  h1{font-size:20px;margin:0 0 2px;letter-spacing:-.02em}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+  button{appearance:none;border:none;cursor:pointer;font:inherit;font-weight:800;font-size:15px;
+         color:#08131a;background:var(--brand);padding:13px 22px;border-radius:12px}
+  button:disabled{opacity:.5;cursor:default}
+  .banner{border-radius:14px;padding:16px 18px;margin:16px 0;font-weight:800;font-size:17px;
+          border:1px solid var(--line);background:var(--card)}
+  .banner.pass{background:rgba(63,191,154,.14);border-color:var(--good);color:var(--good)}
+  .banner.fail{background:rgba(228,105,95,.14);border-color:var(--bad);color:var(--bad)}
+  .banner .small{display:block;font-weight:600;font-size:13.5px;color:var(--muted);margin-top:5px}
+  .lang{margin:20px 0 8px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .row{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);
+       border-radius:10px;background:var(--card);margin-bottom:7px}
+  .mark{flex:0 0 auto;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;
+        font-size:12px;font-weight:900;margin-top:1px}
+  .ok .mark{background:var(--good);color:#08131a}
+  .no .mark{background:var(--bad);color:#1a0a0d}
+  .soft .mark{background:var(--warn);color:#1a1405}
+  .row .t{flex:1 1 auto;min-width:0}
+  .row .d{color:var(--muted);font-size:12.5px;margin-top:2px;word-break:break-word}
+  /* Sized by the suite, per journey — see SIZES in suite.js. Off-screen rather
+     than hidden: display:none would stop layout being computed, which is the
+     thing being measured. */
+  iframe{position:fixed;left:-9999px;top:0;width:390px;height:780px;border:0}
+  .note{color:var(--muted);font-size:12.5px;margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+  code{background:var(--bg2);padding:1px 5px;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Qpio · acceptance run</h1>
+  <p class="sub">Runs every journey in every language against <b id="origin"></b>. Your saved progress is snapshotted and restored — testing costs you nothing.</p>
+
+  <button id="go">Run the suite</button>
+  <div id="banner"></div>
+  <div id="out"></div>
+
+  <p class="note">
+    <b>What this cannot check.</b> Offline behaviour, installing to the home screen, and how it
+    <i>feels</i> — those three stay human, and they are in <code>RELEASE.md</code>.
+    A green run means nothing is structurally broken; it does not mean the build is good.
+    <br><br>
+    Adding a language: one line in <code>tests/suite.js</code> → every journey re-runs in it.
+  </p>
+</div>
+
+<iframe id="app" title="app under test"></iframe>
+<!-- Cache-busted on every load. A test harness that runs a stale copy of itself
+     reports failures that no longer exist — which happened on this file's first
+     run and cost ten minutes chasing a bug in the app that was in the test. -->
+<script>
+  (function () {
+    var s = document.createElement("script");
+    s.src = "suite.js?t=" + Date.now();
+    s.onload = function () { document.dispatchEvent(new Event("suite-ready")); };
+    document.head.appendChild(s);
+  })();
+</script>
+<script>
+(function () {
+  var out = document.getElementById("out"),
+      banner = document.getElementById("banner"),
+      go = document.getElementById("go"),
+      frame = document.getElementById("app");
+  document.getElementById("origin").textContent = location.origin;
+
+  var lastLang = null;
+  window.onResult = function (r) {
+    if (r.lang !== lastLang) {
+      lastLang = r.lang;
+      var h = document.createElement("div");
+      h.className = "lang";
+      var L = (window.QpioUAT.LANGS.filter(function (x) { return x.code === r.lang; })[0] || {});
+      h.textContent = (L.name || r.lang) + " — " + r.lang;
+      out.appendChild(h);
+    }
+    // Built with DOM methods, never innerHTML: `detail` carries text taken
+    // straight out of the app under test — question text, error messages — and
+    // a test harness that can be scripted by its own fixture is a bad harness.
+    var d = document.createElement("div");
+    d.className = "row " + (r.ok ? "ok" : (r.soft ? "soft" : "no"));
+    var mark = document.createElement("span");
+    mark.className = "mark"; mark.textContent = r.ok ? "✓" : (r.soft ? "!" : "✗");
+    var t = document.createElement("span");
+    t.className = "t"; t.textContent = r.name;
+    if (r.detail) {
+      var dd = document.createElement("span");
+      dd.className = "d"; dd.textContent = String(r.detail);
+      t.appendChild(dd);
+    }
+    d.appendChild(mark); d.appendChild(t);
+    out.appendChild(d);
+    d.scrollIntoView({ block: "nearest" });
+  };
+
+  // The suite loads asynchronously (cache-busted), so the button waits for it
+  // rather than throwing on a fast click.
+  go.disabled = true;
+  go.textContent = "Loading…";
+  var ready = function () { go.disabled = false; go.textContent = "Run the suite"; };
+  if (window.QpioUAT) ready(); else document.addEventListener("suite-ready", ready);
+
+  go.addEventListener("click", function () {
+    if (!window.QpioUAT) return;
+    go.disabled = true; out.innerHTML = ""; lastLang = null;
+    banner.className = "banner"; banner.textContent = "Running… this takes a couple of minutes.";
+    var t0 = Date.now();
+    new window.QpioUAT.Suite().run(frame).then(function (res) {
+      var hard = res.filter(function (r) { return !r.ok && !r.soft; });
+      var soft = res.filter(function (r) { return !r.ok && r.soft; });
+      var secs = Math.round((Date.now() - t0) / 1000);
+      banner.className = "banner " + (hard.length ? "fail" : "pass");
+      banner.textContent = hard.length
+          ? hard.length + " blocking failure" + (hard.length > 1 ? "s" : "") + " — do not promote"
+          : "All " + res.length + " checks passed";
+      var small = document.createElement("span");
+      small.className = "small";
+      small.textContent = res.length + " checks · " + window.QpioUAT.LANGS.length + " languages · " + secs + "s" +
+        (soft.length ? " · " + soft.length + " warning" + (soft.length > 1 ? "s" : "") : "");
+      banner.appendChild(small);
+      go.disabled = false; go.textContent = "Run again";
+    });
+  });
+})();
+</script>
+</body>
+</html>
