@@ -59,3 +59,4 @@ On the last 144-question batch that pipeline corrected 18 and dropped 2.
 | Date | Category | Written | Kept | Dropped | Bank after |
 |---|---|---:|---:|---:|---:|
 | 10 Aug | *(baseline)* | — | — | — | 472 |
+| 11 Aug | Nature · Arts · Tech · Physics · Earth&Space | 160 | 159 | 1 | **631** |
