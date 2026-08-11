@@ -63,6 +63,14 @@
 
   <button id="go">Run the suite</button>
   <div id="banner"></div>
+  <div id="actions" style="display:none;margin:14px 0">
+    <button id="report" style="background:var(--good)">Report the result →</button>
+    <button id="copy" style="background:transparent;color:var(--ink);border:1px solid var(--line)">Copy as text</button>
+    <p style="color:var(--muted);font-size:12.5px;margin:9px 0 0">
+      Opens a pre-filled release issue on GitHub. Add <b>Accepted for production</b> or
+      <b>Rejected — reason</b>, and post. That sentence is the sign-off.
+    </p>
+  </div>
   <div id="out"></div>
 
   <p class="note">
@@ -149,8 +157,61 @@
         (soft.length ? " · " + soft.length + " warning" + (soft.length > 1 ? "s" : "") : "");
       banner.appendChild(small);
       go.disabled = false; go.textContent = "Run again";
+      buildReport(res, hard, soft, secs);
     });
   });
+
+  // ---- reporting: one tap from a phone to a signed-off release issue ----
+  var reportText = "";
+  function buildReport(res, hard, soft, secs) {
+    var ver = "unknown";
+    try { ver = (frame.contentDocument.querySelector('script[src*="app.js"]') || {}).getAttribute("src").split("v=")[1]; } catch (e) {}
+    var when = new Date().toISOString().slice(0, 16).replace("T", " ");
+    var lines = [];
+    lines.push("## Acceptance run — v" + ver);
+    lines.push("");
+    lines.push("**" + (hard.length ? hard.length + " BLOCKING FAILURE" + (hard.length > 1 ? "S" : "") : "PASSED") + "** · " +
+               res.length + " checks · " + window.QpioUAT.LANGS.length + " languages · " +
+               window.QpioUAT.SIZES.length + " screen sizes · " + secs + "s");
+    lines.push("");
+    lines.push("- Run at: " + when + " UTC");
+    lines.push("- Against: " + location.origin);
+    lines.push("- Device: " + (navigator.userAgent.match(/\((.*?)\)/) || [, "unknown"])[1]);
+    lines.push("");
+    if (hard.length) {
+      lines.push("### Failures");
+      hard.forEach(function (r) { lines.push("- **" + r.lang + "** · " + r.name + (r.detail ? " — " + r.detail : "")); });
+      lines.push("");
+    }
+    if (soft.length) {
+      lines.push("### Warnings");
+      soft.forEach(function (r) { lines.push("- " + r.lang + " · " + r.name + (r.detail ? " — " + r.detail : "")); });
+      lines.push("");
+    }
+    lines.push("### Human criteria — the three the script cannot do");
+    lines.push("- [ ] **Offline** — aeroplane mode mid-session, the app keeps working");
+    lines.push("- [ ] **Install and reopen** — progress intact, version is the new one");
+    lines.push("- [ ] **It feels right** — nothing awkward, nothing confusing");
+    lines.push("");
+    lines.push("### Sign-off");
+    lines.push("> _Replace this line with_ **Accepted for production** _or_ **Rejected — <reason>**");
+    reportText = lines.join("\n");
+
+    document.getElementById("actions").style.display = "block";
+    document.getElementById("report").onclick = function () {
+      var title = "Release v" + ver + " — " + (hard.length ? "FAILED acceptance" : "acceptance run");
+      var url = "https://github.com/ChalBAS/curio-hq/issues/new?labels=release&title=" +
+                encodeURIComponent(title) + "&body=" + encodeURIComponent(reportText);
+      window.open(url, "_blank", "noopener");
+    };
+    document.getElementById("copy").onclick = function (e) {
+      var btn = e.target;
+      var done = function () { btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = "Copy as text"; }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(reportText).then(done, done);
+      else { var t = document.createElement("textarea"); t.value = reportText; document.body.appendChild(t);
+             t.select(); try { document.execCommand("copy"); } catch (err) {} t.remove(); done(); }
+    };
+  }
 })();
 </script>
 </body>

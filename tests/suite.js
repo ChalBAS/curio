@@ -301,5 +301,5 @@
     });
   };
 
-  root.QpioUAT = { Suite: Suite, LANGS: LANGS, JOURNEYS: JOURNEYS };
+  root.QpioUAT = { Suite: Suite, LANGS: LANGS, SIZES: SIZES, JOURNEYS: JOURNEYS };
 })(window);
