@@ -345,6 +345,82 @@ body {
 .hcontrast .topic, .hcontrast .way { border-width: 2px; }
 .hcontrast .way.is-off { opacity: .8; }
 
+/* ============================================================
+   THE ANSWERED CARD MUST FIT ON ONE SCREEN (CEO, 2026-08-11)
+   "Everything should fit vertically on the screen without scrolling."
+   Before: a flag question answered on a phone ran ~1,100px tall against a
+   ~700px viewport — the fact, the source and Next were all below the fold and
+   the reader had to hunt for them. Nothing here hides information; it takes
+   space back from elements that have already done their job.
+   ============================================================ */
+/* During a live question the masthead becomes a strip. On a 360x640 phone the
+   logo block alone was 70px of a 579px usable column (the tab bar takes the
+   rest), which is what pushed Next underneath the tab bar. */
+/* The answered card is a column sized to the screen. The fact — the one element
+   whose length varies with the content — takes the leftover space and scrolls
+   inside itself if it must; the destination and Next are pinned below it and
+   are therefore ALWAYS visible. 100dvh, not vh: on a phone the address bar
+   changes the viewport and vh lies about it. */
+.answered-view {
+  display: flex; flex-direction: column;
+  /* max-height is set in JS from a real measurement — see choose() in app.js */
+}
+.answered-view .answerblock {
+  display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto;
+}
+.answered-view .answerblock .fact {
+  overflow-y: auto; min-height: 0; flex: 0 1 auto;
+  -webkit-overflow-scrolling: touch;
+}
+.answered-view .answerfoot { flex: 0 0 auto; }
+.answered-view .answerfoot .btnrow { margin-top: 10px; margin-bottom: 0; }
+.answered-view .qart, .answered-view .qtext, .answered-view .opts { flex: 0 0 auto; }
+
+.quiz-live .top { margin: 0 0 8px; }
+.quiz-live .logo .markfull { height: 26px; }
+.quiz-live .logo .namesub, .quiz-live .tag, .quiz-live .installbtn { display: none; }
+.quiz-live .wrap { padding-top: 10px; }
+
+/* The picture has served its purpose the moment the answer is in. A flag you
+   have just identified does not need a quarter of the screen. */
+.answered-view .qart { aspect-ratio: auto; height: 84px; margin: 6px 0 2px; }
+.answered-view .qart-credit { display: none; }        /* credit stays on the file page, one tap away */
+.answered-view .qtext { font-size: 17px; margin: 2px 0 10px; }
+.answered-view .qcat { margin-bottom: 3px; }
+/* Spent options collapse to nothing — the ones you did not pick carry no
+   information once the answer is known. Only the right answer and, if you were
+   wrong, your own pick survive. */
+.answered-view .opts.answered { gap: 7px; }
+.answered-view .opts.answered .opt { padding: 11px 13px; font-size: 15px; }
+.answered-view .opts.answered .opt.spent { display: none; }
+.answered-view .fact { margin-top: 11px; padding: 12px 13px; }
+.answered-view .fact .btnrow { margin-top: 11px; }
+/* Next is the last thing on the card and the widest — the thumb lands there
+   without aiming, after the destination has had its chance to be seen. */
+.answered-view .fact .btnrow #next { flex: 1 1 auto; }
+@media (max-height: 780px) {
+  .answered-view .qart { height: 64px; }
+  .answered-view .qtext { font-size: 16px; margin: 2px 0 8px; }
+  .answered-view .opts.answered .opt { padding: 9px 12px; font-size: 14.5px; }
+  .answered-view .fact { font-size: 13.5px; padding: 11px 12px; }
+}
+/* Small phones (360x640 and the like) — measured: without this tier Next sat
+   21px underneath the tab bar. Every value here was taken from that measurement,
+   not guessed. */
+@media (max-height: 700px) {
+  .quiz-live .wrap { padding-top: 6px; }
+  .quiz-live .top { margin-bottom: 6px; }
+  .quiz-live .card { padding: 13px; }
+  .answered-view .qart { height: 44px; margin: 4px 0 2px; }
+  .answered-view .fact { margin-top: 9px; padding: 10px 11px; }
+  .answered-view .fact .btnrow { margin-top: 9px; }
+  .answered-view .fact .btn { padding: 11px 16px; }
+  .answered-view .srclink { margin-top: 6px; }
+  .answered-view .qtext { font-size: 15.5px; margin: 2px 0 7px; }
+  .answered-view .opts.answered .opt { padding: 8px 11px; }
+  .answered-view .gf-link { margin-top: 8px; padding: 9px 11px; }
+}
+
 /* A picture that IS the question — a flag to identify, a diagram to read.
    REBUILT 2026-08-10. The first version put every image inside a fixed 3:2 box
    with checkered padding, and rounded the BOX with overflow:hidden — which

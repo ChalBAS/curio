@@ -406,6 +406,12 @@
     hushed();
     playLayer.innerHTML = "";
     playLayer.appendChild(node);
+    // A live question gets the whole screen: the masthead shrinks to a strip so
+    // the card fits above the tab bar on a 640px-tall phone without scrolling
+    // (CEO, 2026-08-11). Every other view restores it. The logo is decoration
+    // during a quiz; Quit and the progress bar are the navigation that matters.
+    document.body.classList.toggle("quiz-live",
+      !node.classList.contains("result") && !!node.querySelector(".quizhead"));
     // A result card means the quiz is over. Keeping playActive true here left a
     // "▶ Resume" pill offering to reopen a finished quiz (CEO first-run review,
     // 2026-08-06). Every result view — daily, vault, city, quick-fire, truthlab
@@ -1438,6 +1444,9 @@
     function show() {
       answered = false;
       node._qShownAt = Date.now();   // stopwatch for the ⚡ speed chip
+      if (node._fit) { window.removeEventListener("resize", node._fit); node._fit = null; }
+      node.classList.remove("answered-view");
+      node.style.maxHeight = "";
       var raw = cfg.questions[idx];
       var q = withShuffledOptions(raw, seedBase + idx * 7 + (cfg.timed ? 1 : 0));
       node.innerHTML = "";
@@ -1610,41 +1619,90 @@
       // whole seconds, and a chip that says "0s" reads as a bug.
       var elapsed = (correct && i !== -1 && node._qShownAt)
         ? Math.max(0.1, (Date.now() - node._qShownAt) / 1000).toFixed(1) : null;
-      var fact = el('<div class="fact">' +
+      var fact = el('<div class="answerblock">' +
+        '<div class="fact">' +
         '<span class="verdict ' + (correct ? "ok" : "no") + '">' +
           '<span aria-hidden="true">' + (correct ? "✓" : "✗") + '</span> ' + verdict +
           (elapsed !== null ? ' <span class="speedchip">⚡ ' + elapsed + 's</span>' : '') +
         '</span>' +
+        // ORDER, fixed 2026-08-11 (CEO): read the fact, check the source, see
+        // where it leads — and Next LAST, at the bottom. Next used to sit above
+        // the go-further link, so the one thing the whole product exists for
+        // was below the button that skips past it.
         fmt(q.fact) + srcLink(q.src) +
         '<div class="deeperbox"></div>' +
-        '<div class="btnrow">' +
-          '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? t("Next →") : t("See results →")) + '</button>' +
-          (hasDeeper ? '<button class="btn ghost" id="deeper">' + t("🕳️ Go deeper") + '</button>' : '') +
         '</div>' +
+        // Outside the fact box on purpose. The fact is the only part whose
+        // length we cannot control — a long one on a small phone has to be
+        // allowed to scroll inside its own box. The destination and Next sit
+        // BELOW it as pinned siblings, so they are always on screen whatever
+        // the fact does. That is what makes "no scrolling" a guarantee rather
+        // than a hope (CEO, 2026-08-11).
+        '<div class="answerfoot">' +
         (lead ? '<a class="gf-link gf-inline" href="' + srcLink0(lead.url) + '" target="_blank" rel="noopener">' +
                   '<span class="gf-ico" aria-hidden="true">' + lead.icon + '</span>' +
                   '<span class="gf-text">' + leadLabel +
                     (lead.sub ? '<span class="gf-sub">' + esc(lead.sub) + '</span>' : '') +
                   '</span><span class="gf-go" aria-hidden="true">↗</span></a>' : '') +
+        '<div class="btnrow">' +
+          (hasDeeper ? '<button class="btn ghost" id="deeper">' + t("🕳️ Go deeper") + '</button>' : '') +
+          '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? t("Next →") : t("See results →")) + '</button>' +
+        '</div>' +
         '</div>');
+      // NO SCROLLING (CEO, 2026-08-11): "everything should fit vertically on
+      // the screen". The picture has done its job the moment the answer is in —
+      // a flag you have already identified does not need 250px. Shrinking it
+      // is what buys the fact, the source, the destination and Next their room.
+      node.classList.add("answered-view");
       node.appendChild(fact);
-      requestAnimationFrame(function () { fact.classList.add("show"); });
+      requestAnimationFrame(function () { fact.querySelector(".fact").classList.add("show"); });
+
+      // The card's ceiling is measured, not guessed. A CSS calc() cannot know
+      // where the card starts on the page (the masthead and the quiz header
+      // vary), and getting it wrong by 40px is what pushed Next under the tab
+      // bar. So: fill exactly from the card's own top to just above the tab
+      // bar, and let the fact box absorb whatever is left over.
+      var fitCard = function () {
+        node.style.maxHeight = "";
+        var bar = document.querySelector(".tabbar");
+        var floor = bar && getComputedStyle(bar).display !== "none"
+          ? bar.getBoundingClientRect().top : window.innerHeight;
+        var top = node.getBoundingClientRect().top + window.scrollY;
+        var room = Math.round(floor + window.scrollY - top - 10);
+        if (room > 220) node.style.maxHeight = room + "px";   // never squeeze past readable
+      };
+      // Measure more than once: the first call can land before the picture has
+      // laid out, and a card measured against the wrong height is exactly the
+      // bug this is here to prevent. Re-fit on the next frame, once images
+      // finish, and whenever the viewport changes.
+      fitCard();
+      requestAnimationFrame(fitCard);
+      setTimeout(fitCard, 60);
+      setTimeout(fitCard, 250);
+      [].slice.call(node.querySelectorAll("img")).forEach(function (im) {
+        if (!im.complete) im.addEventListener("load", fitCard, { once: true });
+      });
+      node._fit = fitCard;
+      window.addEventListener("resize", fitCard);
       // The feedback lands below four option cards, so on a phone the answer,
       // the source and Next were all below the fold — the user had to hunt for
       // them (CEO, 2026-08-07). Bring the card into view.
       // setTimeout, not requestAnimationFrame: rAF does not fire when the page
       // is not compositing (backgrounded tab, hidden window), which is exactly
       // when someone returns to a half-finished quiz.
+      // The answered card is now built to fit, so scrolling is a fallback, not
+      // the plan: only scroll if the fact genuinely still runs off the screen
+      // (a very long fact on a very short phone). Scrolling on every answer was
+      // itself the complaint.
       setTimeout(function () {
+        var r = fact.getBoundingClientRect();
+        if (r.bottom <= window.innerHeight - 4) return;         // already fits — leave the page alone
         try {
           fact.scrollIntoView({ behavior: settings.motion === "reduced" ? "auto" : "smooth", block: "end" });
         } catch (e) { fact.scrollIntoView(false); }
-        // Smooth scrolling is animation-driven and silently does nothing when
-        // the page is not compositing — a backgrounded tab, a hidden window.
-        // Guarantee the outcome: if it is still out of view, jump.
         setTimeout(function () {
-          var r = fact.getBoundingClientRect();
-          if (r.bottom > window.innerHeight + 1) { try { fact.scrollIntoView({ behavior: "auto", block: "end" }); } catch (e2) { fact.scrollIntoView(false); } }
+          var r2 = fact.getBoundingClientRect();
+          if (r2.bottom > window.innerHeight + 1) { try { fact.scrollIntoView({ behavior: "auto", block: "end" }); } catch (e2) { fact.scrollIntoView(false); } }
         }, 400);
       }, 0);
       speak(head + q.fact);
