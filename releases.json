@@ -1,0 +1,1071 @@
+{
+ "generated": "2026-08-12",
+ "live": {
+  "production": 64,
+  "uat": 65,
+  "main": 64
+ },
+ "drift": null,
+ "awaiting": [
+  65
+ ],
+ "breaches": [],
+ "releases": [
+  {
+   "version": 65,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-12",
+   "to": "2026-08-12",
+   "questions": 651,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 45
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "b332613",
+     "date": "2026-08-12",
+     "subject": "Human body: 20 questions, and the first real exercise of the UAT route"
+    }
+   ]
+  },
+  {
+   "version": 64,
+   "state": "LIVE",
+   "branch": "main",
+   "from": "2026-08-11",
+   "to": "2026-08-12",
+   "questions": 631,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "fe94bc4",
+     "date": "2026-08-11",
+     "subject": "v64 — daily batch 1: 472 to 631 questions, and the thin categories stop being thin"
+    },
+    {
+     "sha": "72d8cc7",
+     "date": "2026-08-11",
+     "subject": "Log batch 1 in the factory run book: 631 questions, 1,369 to the gate"
+    },
+    {
+     "sha": "6b4b8b5",
+     "date": "2026-08-11",
+     "subject": "Release methodology: a preflight gate and a UAT environment"
+    },
+    {
+     "sha": "aac9dc3",
+     "date": "2026-08-11",
+     "subject": "Scripted UAT suite: 36 checks, every journey x every language x every screen"
+    },
+    {
+     "sha": "875ba59",
+     "date": "2026-08-11",
+     "subject": "Test runner reports itself: one tap from a phone to a signed-off release issue"
+    },
+    {
+     "sha": "9fba4aa",
+     "date": "2026-08-12",
+     "subject": "UAT deploy config — and it cannot touch production"
+    },
+    {
+     "sha": "09e34ae",
+     "date": "2026-08-12",
+     "subject": "Exclude .wrangler from the UAT deployment — it leaked the account id"
+    },
+    {
+     "sha": "358a875",
+     "date": "2026-08-12",
+     "subject": "Production hosting on Cloudflare: worker deployed and verified, awaiting the DNS toggle"
+    },
+    {
+     "sha": "509033f",
+     "date": "2026-08-12",
+     "subject": "Bot gate: the pages stay open, the question bank is not training data"
+    },
+    {
+     "sha": "f89f6e0",
+     "date": "2026-08-12",
+     "subject": "Add /api/stats: the company sites read three facts, not the whole bank"
+    }
+   ]
+  },
+  {
+   "version": 63,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-11",
+   "to": "2026-08-11",
+   "questions": 472,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "367c5f3",
+     "date": "2026-08-11",
+     "subject": "v63 — the answered question fits on one screen, and Next comes last"
+    }
+   ]
+  },
+  {
+   "version": 62,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-10",
+   "to": "2026-08-10",
+   "questions": 472,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "fa72211",
+     "date": "2026-08-10",
+     "subject": "v62 — repeats become impossible, not unlikely; difficulty labels give way to the clock"
+    },
+    {
+     "sha": "a522c68",
+     "date": "2026-08-10",
+     "subject": "Release test protocol + question factory run book"
+    }
+   ]
+  },
+  {
+   "version": 60,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-10",
+   "to": "2026-08-10",
+   "questions": 472,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "d1c7167",
+     "date": "2026-08-10",
+     "subject": "v60 — no repeated questions, flags shown whole, the notification becomes deliverable and diagnosable"
+    }
+   ]
+  },
+  {
+   "version": 59,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-10",
+   "to": "2026-08-10",
+   "questions": 472,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "41584ed",
+     "date": "2026-08-10",
+     "subject": "v59 — 142 new questions in four commissioned subjects; the city packs speak French"
+    }
+   ]
+  },
+  {
+   "version": 58,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-10",
+   "to": "2026-08-10",
+   "questions": 330,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "a02b0a3",
+     "date": "2026-08-10",
+     "subject": "v58 — flag questions with real flags; the city card that blanked the page; picture questions"
+    }
+   ]
+  },
+  {
+   "version": 57,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-09",
+   "to": "2026-08-09",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "b3303d8",
+     "date": "2026-08-09",
+     "subject": "v57 — 261 hooks audited and adversarially checked; three French-only breakages fixed"
+    }
+   ]
+  },
+  {
+   "version": 56,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-09",
+   "to": "2026-08-09",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "9bacfb4",
+     "date": "2026-08-09",
+     "subject": "v56 — discovery card rebuilt: fixed four slots, marks not words, hooks in full, country"
+    }
+   ]
+  },
+  {
+   "version": 55,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-09",
+   "to": "2026-08-09",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "cb68d2d",
+     "date": "2026-08-09",
+     "subject": "v55 — punch list of 7: lane Back, header Home, picture tiles, daily notification, onboarding, stale-version fix"
+    }
+   ]
+  },
+  {
+   "version": 54,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-09",
+   "to": "2026-08-09",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "600038e",
+     "date": "2026-08-09",
+     "subject": "v54 — the six defects, fixed"
+    }
+   ]
+  },
+  {
+   "version": 53,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "a075bc6"
+   ],
+   "commits": [
+    {
+     "sha": "a075bc6",
+     "date": "2026-08-08",
+     "subject": "v52-v53 — the hooks, and the verdict stops arriving alone"
+    }
+   ]
+  },
+  {
+   "version": 51,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "0bc8946"
+   ],
+   "commits": [
+    {
+     "sha": "0bc8946",
+     "date": "2026-08-08",
+     "subject": "v50-v51 - fix sideways scroll, tab bar alignment, stretched hero image"
+    }
+   ]
+  },
+  {
+   "version": 49,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "c0397c6"
+   ],
+   "commits": [
+    {
+     "sha": "c0397c6",
+     "date": "2026-08-08",
+     "subject": "v46-v49 — discovery becomes data; shelves show things, not category names"
+    }
+   ]
+  },
+  {
+   "version": 45,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "3deaec3",
+     "date": "2026-08-08",
+     "subject": "v45 — Keep exploring rebuilt to the CEO's mock-up: covers, not buttons"
+    }
+   ]
+  },
+  {
+   "version": 44,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "5bd0b6a",
+     "date": "2026-08-08",
+     "subject": "v44 — Science split by discipline; Countries & Flags for travellers"
+    }
+   ]
+  },
+  {
+   "version": 43,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "e78e1db"
+   ],
+   "commits": [
+    {
+     "sha": "e78e1db",
+     "date": "2026-08-08",
+     "subject": "v42-v43 — photographs on every card, and the Keep exploring lanes"
+    }
+   ]
+  },
+  {
+   "version": 41,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "6fc71fc"
+   ],
+   "commits": [
+    {
+     "sha": "6fc71fc",
+     "date": "2026-08-08",
+     "subject": "v40-v41 — French entity names, from Wikipedia's own interlanguage links"
+    }
+   ]
+  },
+  {
+   "version": 39,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "213639a"
+   ],
+   "commits": [
+    {
+     "sha": "213639a",
+     "date": "2026-08-08",
+     "subject": "v35-v39 — the result page becomes a shelf (CEO design)"
+    }
+   ]
+  },
+  {
+   "version": 34,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "4c577cf",
+     "date": "2026-08-08",
+     "subject": "v34 — remove two defensive lines the reader never asked for"
+    }
+   ]
+  },
+  {
+   "version": 33,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "c434352",
+     "date": "2026-08-08",
+     "subject": "v33 — the answer owns the screen; Home back on the results card"
+    }
+   ]
+  },
+  {
+   "version": 32,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-08",
+   "to": "2026-08-08",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "afec86a",
+     "date": "2026-08-08",
+     "subject": "v32 — Go further: the app finally has somewhere to send a curious reader"
+    }
+   ]
+  },
+  {
+   "version": 31,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-07",
+   "to": "2026-08-07",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "d2a1700",
+     "date": "2026-08-07",
+     "subject": "v31 — no scrolling to reach the answer; hide Brain Gym"
+    },
+    {
+     "sha": "2047ee9",
+     "date": "2026-08-07",
+     "subject": "Create CNAME"
+    }
+   ]
+  },
+  {
+   "version": 27,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-06",
+   "to": "2026-08-06",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "e477623",
+     "date": "2026-08-06",
+     "subject": "v27 — Stats empty state, drop the duplicate Home, motto on its own line"
+    }
+   ]
+  },
+  {
+   "version": 26,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-06",
+   "to": "2026-08-06",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "4689547",
+     "date": "2026-08-06",
+     "subject": "v26 — first-run review: fix the phantom Resume, add a translation gate"
+    }
+   ]
+  },
+  {
+   "version": 25,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-06",
+   "to": "2026-08-06",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "82e2e8c",
+     "date": "2026-08-06",
+     "subject": "v25 — \"Train\", not \"Games\"; fix three untranslated tab labels"
+    }
+   ]
+  },
+  {
+   "version": 24,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-04",
+   "to": "2026-08-06",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "8c93fa5",
+     "date": "2026-08-04",
+     "subject": "v24 - motto stays on one line on phones (header subline clamps 10-13px, nowrap). Release recipe: ?v=24, CACHE qpio-v24."
+    },
+    {
+     "sha": "133b8bc",
+     "date": "2026-08-05",
+     "subject": "security: remove the ruflo MCP server (S-11 remediation)"
+    },
+    {
+     "sha": "16f6491",
+     "date": "2026-08-06",
+     "subject": "Publish the copyright position: MIT for code, rights reserved for content"
+    }
+   ]
+  },
+  {
+   "version": 23,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-04",
+   "to": "2026-08-04",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "38c8223",
+     "date": "2026-08-04",
+     "subject": "v23 - CEO fixes: full logo header, Games tab de-duplicated, ad-claim copy"
+    }
+   ]
+  },
+  {
+   "version": 22,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-02",
+   "to": "2026-08-02",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "6167265",
+     "date": "2026-08-02",
+     "subject": "v22 - one layout everywhere + the responsive icon in the header"
+    }
+   ]
+  },
+  {
+   "version": 21,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-02",
+   "to": "2026-08-02",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "8485f2b",
+     "date": "2026-08-02",
+     "subject": "v21 - FEAT-027: mobile tab navigation (Home / Games / Stats / Settings)"
+    }
+   ]
+  },
+  {
+   "version": 20,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-30",
+   "to": "2026-08-02",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "be52819",
+     "date": "2026-07-30",
+     "subject": "v20 — app palette rebuilt from the founder's mark (D-057)"
+    },
+    {
+     "sha": "de8c75c",
+     "date": "2026-07-30",
+     "subject": "brand: square avatars + social share assets from the locked mark"
+    },
+    {
+     "sha": "d87283c",
+     "date": "2026-07-31",
+     "subject": "brand: HD masters via Real-ESRGAN 4x; gold avatar set (D-056)"
+    },
+    {
+     "sha": "ce79127",
+     "date": "2026-07-31",
+     "subject": "brand: final avatar - circular badge crop centred on the compass, gold HD"
+    },
+    {
+     "sha": "4116843",
+     "date": "2026-07-31",
+     "subject": "brand: despeckle HD masters - white residue at stroke edges removed"
+    },
+    {
+     "sha": "3b974fb",
+     "date": "2026-07-31",
+     "subject": "brand: composed banners with the motto, gold + teal sets, clean small marks"
+    },
+    {
+     "sha": "5c7571b",
+     "date": "2026-07-31",
+     "subject": "brand: teal needle de-whitened; social folder pruned to the 8 shipping files"
+    },
+    {
+     "sha": "4f4bb2c",
+     "date": "2026-08-02",
+     "subject": "brand: the CEO's responsive icon becomes the avatar and app icon"
+    }
+   ]
+  },
+  {
+   "version": 19,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-30",
+   "to": "2026-07-30",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "74e403b",
+     "date": "2026-07-30",
+     "subject": "v19 — context-adaptive mark colour: gold in the dark header (harmonises with the wordmark), true teal on the light icon plate. Shape unchanged (D-056)"
+    }
+   ]
+  },
+  {
+   "version": 18,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-30",
+   "to": "2026-07-30",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "80489bc",
+     "date": "2026-07-30",
+     "subject": "v18 — the founder's Brain-Infinity Catalyst mark replaces the owl (D-055)"
+    }
+   ]
+  },
+  {
+   "version": 17,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-29",
+   "to": "2026-07-29",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "c240d34",
+     "date": "2026-07-29",
+     "subject": "v17 — Focus anchors hardened per legal clearance (BIONIC-READING-IP.md)"
+    }
+   ]
+  },
+  {
+   "version": 16,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-29",
+   "to": "2026-07-29",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "5fa8040",
+     "date": "2026-07-29",
+     "subject": "v16 — Focus anchors (FEAT-025): opt-in word-initial bolding as eye fixation points"
+    }
+   ]
+  },
+  {
+   "version": 15,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-29",
+   "to": "2026-07-29",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "ce38009",
+     "date": "2026-07-29",
+     "subject": "v15 — fix CEO-reported bug: 'See results' dead in Vault sessions (and, undiscovered, ALL of Fact-or-Fake)"
+    }
+   ]
+  },
+  {
+   "version": 14,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-18",
+   "to": "2026-07-18",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "8756af0",
+     "date": "2026-07-18",
+     "subject": "v14 — retire 'Make being a nerd sexy again' (CEO: kid-friendly, no MAGA echo); motto is the credo"
+    }
+   ]
+  },
+  {
+   "version": 13,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-18",
+   "to": "2026-07-18",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "4903de2",
+     "date": "2026-07-18",
+     "subject": "v13 — QPIO: the rename + French (D-035/D-036)"
+    }
+   ]
+  },
+  {
+   "version": 12,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-16",
+   "to": "2026-07-16",
+   "questions": 262,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "8321ef2",
+     "date": "2026-07-16",
+     "subject": "refactor: hierarchical repo layout + build/test gate; fit ruflo config to Curio"
+    },
+    {
+     "sha": "a20ba63",
+     "date": "2026-07-16",
+     "subject": "chore: resolve ruflo config conflicts — enable commit attribution, move docs to docs/"
+    }
+   ]
+  },
+  {
+   "version": 11,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-15",
+   "to": "2026-07-16",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "463cdf0",
+    "3b4595c"
+   ],
+   "commits": [
+    {
+     "sha": "463cdf0",
+     "date": "2026-07-15",
+     "subject": "v1.7: source citations made prominent (D-028) — 12.5px inline link becomes a bordered 39px 'Check the source' chip. CEO missed it while testing (issue #8); if the founder misses the citation, users will"
+    },
+    {
+     "sha": "3b4595c",
+     "date": "2026-07-16",
+     "subject": "chore: add ruflo (claude-flow v3) multi-agent orchestration scaffold"
+    }
+   ]
+  },
+  {
+   "version": 10,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-15",
+   "to": "2026-07-15",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "9cee029"
+   ],
+   "commits": [
+    {
+     "sha": "9cee029",
+     "date": "2026-07-15",
+     "subject": "v1.6: first-visit onboarding (FEAT-011/US-008) — 3 skippable cards ending on the Daily Challenge, once-only flag, replay from Comfort; fixes self-render double-wrap at boot"
+    }
+   ]
+  },
+  {
+   "version": 9,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-14",
+   "to": "2026-07-14",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "56f1535"
+   ],
+   "commits": [
+    {
+     "sha": "56f1535",
+     "date": "2026-07-14",
+     "subject": "v1.5: held content fully cleared — History +21 (decolonial fixes: Patuxet/Wampanoag on Mayflower, Taino on Columbus), Geography +29; 5 new city packs (Bangkok, Cusco, Marrakech, Athens, Samarkand). Bank 212->262 (222 cited), 10 cities. Duplicates auto-dropped; 2 unverified held"
+    }
+   ]
+  },
+  {
+   "version": 8,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-14",
+   "to": "2026-07-14",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "6b9104c"
+   ],
+   "commits": [
+    {
+     "sha": "6b9104c",
+     "date": "2026-07-14",
+     "subject": "v1.4: verified held content merged — Science bank 20->50, Africa-North history (12, country-tagged), Fact-or-Fake 16->32, Arts citations; bank 170->212 (172 cited). History/Geography/cities still held (limits), resuming"
+    }
+   ]
+  },
+  {
+   "version": 7,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-12",
+   "to": "2026-07-12",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "7b592e7",
+    "33620fe"
+   ],
+   "commits": [
+    {
+     "sha": "7b592e7",
+     "date": "2026-07-12",
+     "subject": "v1.3: decolonized region-tagged history (70 Qs, region-balanced) + History region filter; 5 fact-checked pre-travel city packs (Rome/Kyoto/Cairo/Mexico City/Istanbul) with quiz, local phrases (native TTS), etiquette tips"
+    },
+    {
+     "sha": "33620fe",
+     "date": "2026-07-12",
+     "subject": "Docs: STATUS reflects v1.3 (regional history + city packs) live"
+    }
+   ]
+  },
+  {
+   "version": 6,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-12",
+   "to": "2026-07-12",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "beaaf97",
+    "97443be"
+   ],
+   "commits": [
+    {
+     "sha": "beaaf97",
+     "date": "2026-07-12",
+     "subject": "v1.2: Fact or Fake? (media-literacy mode, editor-verified bank), source citations on 60 facts, Rabbit Holes, explain-it-back recall; robust reveal animation (opacity never gated on rAF/hidden-tab)"
+    },
+    {
+     "sha": "97443be",
+     "date": "2026-07-12",
+     "subject": "Docs: STATUS.md — v1.2 shipped, regional-history + city-packs generating, unverified content held"
+    }
+   ]
+  },
+  {
+   "version": 2,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-12",
+   "to": "2026-07-12",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "2a33489",
+    "b3f519a"
+   ],
+   "commits": [
+    {
+     "sha": "2a33489",
+     "date": "2026-07-12",
+     "subject": "v1.1: Comfort panel (no-timer, dyslexia, text size, read-aloud, reduced motion, high contrast), Memory Vault (spaced repetition), Brain Map, Kids mode, 120-question fact-checked bank, versioned assets"
+    },
+    {
+     "sha": "b3f519a",
+     "date": "2026-07-12",
+     "subject": "Docs: morning report + plan update for v1.1"
+    }
+   ]
+  },
+  {
+   "version": null,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-07-12",
+   "to": "2026-07-12",
+   "questions": null,
+   "signoff": {
+    "status": "PRE-PROCESS"
+   },
+   "messageClash": [
+    "f6e4124"
+   ],
+   "commits": [
+    {
+     "sha": "f6e4124",
+     "date": "2026-07-12",
+     "subject": "Curio v1: MVP + PWA (daily challenge, quick-fire, streaks, offline)"
+    },
+    {
+     "sha": "cc6bac2",
+     "date": "2026-07-12",
+     "subject": "Plan: fix question count (48), add inclusivity track (age bands, learning-disability support, i18n)"
+    }
+   ]
+  }
+ ]
+}

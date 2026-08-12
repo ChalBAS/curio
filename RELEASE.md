@@ -86,8 +86,65 @@ A build is accepted when all of these are true on a real phone, not a simulator:
 10. Sub-topics have enough questions to fill a round.
 11. The app is usable one-handed on a 360px-wide phone.
 
-**Sign-off is a sentence in the release issue:** *"Accepted for production"* or *"Rejected —
-<reason>"*. No merge to `main` without it, once beta testers exist.
+---
+
+## Sign-off — how the CEO releases a build
+
+**CEO, 2026-08-13:** *"how do i communicate with you that if we release the uat? and the
+release notes and version number? we need an audit tracker of the app i can review."*
+
+**One sentence, in one place.** When a build goes to UAT I open **one release issue** in
+`curio-hq` labelled `release`, titled `Release v<N> — sign-off`, pre-filled with the
+version, what changed, what the suite covers and the three checks a script cannot do.
+
+You reply to that issue with **`Accepted for production`** — or **`Rejected — <reason>`**.
+
+That sentence is the whole authorisation. Nothing else is needed and **nothing else
+counts**: not a message in chat, not a thumbs-up. This is deliberate — the audit record is
+built by reading those issues, so a decision made anywhere else would be invisible to it.
+
+**The reading is defensive**, because a misread verdict either ships an unapproved build
+or hides one:
+
+| Rule | Why |
+|---|---|
+| Only **comments** are read, never the issue body | The body is the instruction sheet I write and it contains the words *"Accepted for production — or Rejected"*. The first version of the tool read it and reported v65 as rejected, quoting my own instructions back as your decision |
+| Quoted and code-formatted text is stripped first | Replying by quoting the instruction — the natural thing on a phone — must not be read as a verdict |
+| Only the CEO's GitHub login can authorise | Otherwise any account with comment access could ship |
+| The **latest** verdict wins, both ways | Rejected → fixed → accepted in one thread reads as accepted; an acceptance later withdrawn reads as rejected |
+
+`tools/releases.test.js` holds 21 cases covering each of those, and **preflight runs it**.
+
+### The version number
+
+**There is one number: the `?v=N` in `index.html`.** It is already load-bearing — the
+service worker's cache name must match it, and a mismatch is the stale-asset bug. A second
+marketing-style version would be a number that can disagree with reality, so there isn't
+one. v65 is the sixty-fifth release, full stop.
+
+### The audit tracker
+
+```bash
+node tools/releases.js
+```
+
+Regenerates **`RELEASES.md`** (in this repo, git-diffable) and **`releases.json`** (read by
+the HQ page at `hq.qpioapp.com`, behind your login). Every version ever shipped: date,
+question count, the commits that made it, and who signed it off.
+
+**Nothing in it is typed by hand.** The previous log was, and it rotted fifty-five versions
+out of date. The version for each commit is read from `index.html` *as it was at that
+commit* — so a mistyped commit message cannot falsify the record, and a clash between the
+two is reported rather than resolved silently. It also reports **drift** (`main` says v65
+but production serves v64) and any release that reached readers without a recorded yes.
+
+Sign-off starts at **v65**. Everything before it shipped under the founder-only regime with
+no second party to sign, and is marked *pre-process* — unsigned by design, not by omission.
+
+```bash
+node tools/release_issue.js        # open the sign-off ticket for whatever is on UAT
+node tools/releases.js --check     # exits 1 if production is unsigned or drifted
+```
 
 ---
 

@@ -128,6 +128,15 @@ try {
   fail('untranslated UI strings', (miss || '?') + ' missing — see py tools/check_i18n.py');
 }
 
+/* ---------- 4b. the sign-off reader ---------- */
+head('4b · Release audit');
+try {
+  cp.execFileSync(process.execPath, [path.join(ROOT, 'tools', 'releases.test.js')], { stdio: 'pipe' });
+  pass('sign-off verdict reader', '21 cases — an audit record that cannot be falsified is part of the gate');
+} catch (e) {
+  fail('sign-off verdict reader', 'tools/releases.test.js failed — run it to see which case');
+}
+
 /* ---------- 5. sources (network, --full only) ---------- */
 head('5 · Sources' + (FULL ? '' : '  (skipped — run with --full)'));
 if (FULL) {
