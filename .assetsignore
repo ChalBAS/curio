@@ -10,6 +10,7 @@
 .gitignore
 .assetsignore
 wrangler.jsonc
+wrangler.prod.jsonc
 .claude
 tools
 RELEASE.md

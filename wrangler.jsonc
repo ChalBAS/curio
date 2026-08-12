@@ -15,6 +15,13 @@
   "name": "qpio-uat",
   "compatibility_date": "2026-08-01",
 
+  // uat.qpio.app. custom_domain lets wrangler create the DNS record and the
+  // certificate itself, so the address exists the moment the deploy finishes
+  // rather than after a dashboard visit.
+  "routes": [
+    { "pattern": "uat.qpio.app", "custom_domain": true }
+  ],
+
   "assets": {
     "directory": "./",
     // A missing path serves index.html — the app is a single-page shell and its

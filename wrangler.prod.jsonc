@@ -1,0 +1,42 @@
+{
+  // QPIO PRODUCTION — qpio.app.
+  //
+  // Separate file from wrangler.jsonc (which is UAT) so the two can never be
+  // confused: a plain `wrangler deploy` in this directory publishes UAT and
+  // cannot touch production. Production requires naming this file explicitly:
+  //
+  //   wrangler deploy -c wrangler.prod.jsonc      (run from main, after
+  //                                                preflight --full passes)
+  //
+  // WHY PRODUCTION MOVED OFF GITHUB PAGES (2026-08-12, CEO): the repository is
+  // going private to control and count installs and to raise the cost of
+  // copying the project before the company and trade mark exist. GitHub Pages
+  // does not serve private repositories without an Enterprise plan, so hosting
+  // had to move first or the app would have gone dark the moment the setting
+  // flipped. Cloudflare also removes the 100 GB/month soft bandwidth ceiling
+  // that an image-heavy app was going to meet.
+  //
+  // Rollback is a DNS change: point qpio.app back at GitHub Pages. Keep that in
+  // mind before deleting anything on the Pages side.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "qpio-prod",
+  "compatibility_date": "2026-08-01",
+
+  // A ROUTE, not a custom domain. A custom domain demands that the existing
+  // GitHub Pages A records be deleted first, which means an outage window and
+  // a DNS permission wrangler's token does not hold. A route intercepts the
+  // request at Cloudflare's edge BEFORE it ever reaches the Pages origin, so
+  // DNS does not move at all. Zero downtime, and rollback is deleting the
+  // route — after which Pages serves again, untouched.
+  "routes": [
+    { "pattern": "qpio.app/*", "zone_name": "qpio.app" },
+    { "pattern": "www.qpio.app/*", "zone_name": "qpio.app" }
+  ],
+
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "single-page-application"
+  },
+
+  "observability": { "enabled": true }
+}
