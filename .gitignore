@@ -2,3 +2,5 @@
 .claude-flow/
 .swarm/
 ruvector.db
+
+.wrangler/

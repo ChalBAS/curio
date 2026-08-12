@@ -1,4 +1,11 @@
 # Not uploaded to the edge. Keeps the UAT deployment to what a reader loads.
+#
+# .wrangler FIRST. Wrangler writes its own working files there during the
+# deploy itself — including .wrangler/cache/wrangler-account.json, which holds
+# the Cloudflare account id and name. It leaked to a public URL on the first
+# deploy of both projects because this list did not name it.
+.wrangler
+
 .git
 .gitignore
 .assetsignore
