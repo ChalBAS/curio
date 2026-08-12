@@ -6,6 +6,12 @@
       "runtimeExecutable": "py",
       "runtimeArgs": ["-m", "http.server", "8123", "--directory", "C:\\Users\\ukbch\\curio"],
       "port": 8123
+    },
+    {
+      "name": "qpio-site",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8125", "--directory", "C:\\Users\\ukbch\\qpio-site"],
+      "port": 8125
     }
   ]
 }

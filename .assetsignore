@@ -1,0 +1,12 @@
+# Not uploaded to the edge. Keeps the UAT deployment to what a reader loads.
+.git
+.gitignore
+.assetsignore
+wrangler.jsonc
+.claude
+tools
+RELEASE.md
+README.md
+MORNING.md
+RESEARCH.md
+node_modules
