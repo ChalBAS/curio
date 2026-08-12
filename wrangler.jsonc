@@ -26,7 +26,7 @@
     // why the first version of the bot gate did nothing at all. Scoped to the
     // protected paths and /robots.txt so every other request keeps the fast
     // path straight to the edge cache.
-    "run_worker_first": ["/src/*", "/robots.txt"],
+    "run_worker_first": ["/src/*", "/robots.txt", "/api/*"],
     // A missing path serves index.html — the app is a single-page shell and its
     // routes are hashes, so a deep link must not 404.
     "not_found_handling": "single-page-application"

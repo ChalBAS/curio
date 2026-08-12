@@ -60,10 +60,81 @@ function classify(ua) {
   return "human";
 }
 
+// Our own sites, and only ours. GitHub Pages used to send
+// `access-control-allow-origin: *` on everything, which is how the company
+// pages read the live figures. Moving to Workers removed that — correctly, it
+// was far too broad — and broke them. This is the narrow replacement.
+const ALLOWED_ORIGINS = new Set([
+  "https://qpioapp.com",
+  "https://www.qpioapp.com",
+  "https://hq.qpioapp.com",
+  "http://localhost:8125"          // local preview of the company sites
+]);
+
+// One small JSON endpoint instead of letting other sites read the bank.
+//
+// The company pages need three facts: which version is live, how many verified
+// questions exist, and one real question to show. They used to get these by
+// downloading questions.js (300 KB) and parsing it with a regex — fragile, and
+// it meant opening the bank cross-origin, which is exactly what the bot gate
+// above exists to prevent. This serves the three facts directly: ~1 KB, no
+// parsing, and the bank itself stays closed.
+async function stats(request, env, url) {
+  const origin = request.headers.get("origin") || "";
+  const cors = {
+    "access-control-allow-origin": ALLOWED_ORIGINS.has(origin) ? origin : "https://qpioapp.com",
+    "vary": "origin",
+    "cache-control": "public, max-age=300",
+    "content-type": "application/json; charset=utf-8"
+  };
+  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
+
+  const shell = await env.ASSETS.fetch(new Request(url.origin + "/index.html"));
+  const html = await shell.text();
+  const version = (html.match(/\?v=(\d+)/) || [])[1] || null;
+
+  const bankRes = await env.ASSETS.fetch(new Request(url.origin + "/src/questions.js?v=" + version));
+  const js = await bankRes.text();
+
+  // Count by the answer field — one per question, and it cannot drift from a
+  // number written down anywhere.
+  const count = (js.match(/\banswer:\s*\d/g) || []).length;
+
+  // One real question to show, chosen for readability rather than at random:
+  // a genuine payoff fact, short options, no picture needed.
+  const picks = [];
+  const re = /\{\s*cat:\s*"((?:[^"\\]|\\.)*)"[\s\S]*?\n/g;
+  let m;
+  while ((m = re.exec(js)) !== null && picks.length < 400) {
+    const blk = m[0];
+    if (/\bimg:\s*\{/.test(blk)) continue;
+    const q = (blk.match(/\bq:\s*"((?:[^"\\]|\\.)*)"/) || [])[1];
+    const fact = (blk.match(/\bfact:\s*"((?:[^"\\]|\\.)*)"/) || [])[1];
+    const src = (blk.match(/\bsrc:\s*"([^"]*)"/) || [])[1];
+    const optsRaw = (blk.match(/\boptions:\s*(\[[^\]]*\])/) || [])[1];
+    const ans = (blk.match(/\banswer:\s*(\d)/) || [])[1];
+    if (!q || !fact || !optsRaw || ans == null) continue;
+    let options;
+    try { options = JSON.parse(optsRaw); } catch { continue; }
+    if (q.length > 110 || fact.length < 45 || fact.length > 155) continue;
+    if (!options.every((o) => String(o).length < 30)) continue;
+    let text;
+    try { text = JSON.parse('"' + q + '"'); } catch { continue; }
+    let factText;
+    try { factText = JSON.parse('"' + fact + '"'); } catch { continue; }
+    picks.push({ cat: m[1], q: text, options, answer: +ans, fact: factText, src });
+  }
+  const sample = picks.length ? picks[Math.floor(Math.random() * picks.length)] : null;
+
+  return new Response(JSON.stringify({ version, questions: count, languages: 2, sample }), { headers: cors });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const kind = classify(request.headers.get("user-agent"));
+
+    if (url.pathname === "/api/stats") return stats(request, env, url);
 
     // robots.txt is generated here rather than shipped as a file, so the
     // disallow list and the block list can never drift apart — they are the
