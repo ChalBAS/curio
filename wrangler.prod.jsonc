@@ -22,6 +22,10 @@
   "name": "qpio-prod",
   "compatibility_date": "2026-08-01",
 
+  // The edge script gates the question bank against AI training crawlers.
+  // Everything it does not block falls through to ASSETS unchanged.
+  "main": "worker/index.js",
+
   // A ROUTE, not a custom domain. A custom domain demands that the existing
   // GitHub Pages A records be deleted first, which means an outage window and
   // a DNS permission wrangler's token does not hold. A route intercepts the
@@ -35,6 +39,12 @@
 
   "assets": {
     "directory": "./",
+    "binding": "ASSETS",
+    // Assets are served BEFORE the worker unless this says otherwise, which is
+    // why the first version of the bot gate did nothing at all. Scoped to the
+    // protected paths and /robots.txt so every other request keeps the fast
+    // path straight to the edge cache.
+    "run_worker_first": ["/src/*", "/robots.txt"],
     "not_found_handling": "single-page-application"
   },
 

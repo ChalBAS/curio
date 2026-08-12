@@ -1,13 +1,9 @@
 {
   // QPIO app — UAT only.
   //
-  // PRODUCTION IS NOT DEPLOYED FROM HERE. qpio.app stays on GitHub Pages,
-  // served from `main`. This config exists so the `uat` branch can be published
-  // to uat.qpio.app for sign-off, and nothing in it can move production.
-  //
-  // Deployed as a Worker with static assets rather than Pages: Cloudflare now
-  // routes new static projects here and Pages is in maintenance. No build step,
-  // no dependency — the app is a zero-build static site and stays one.
+  // PRODUCTION IS NOT DEPLOYED FROM HERE. qpio.app is served by wrangler.prod.jsonc.
+  // A bare `wrangler deploy` in this directory publishes UAT and cannot touch
+  // production — that separation is the point of two files.
   //
   //   wrangler deploy            (run from the uat branch)
   //
@@ -15,15 +11,22 @@
   "name": "qpio-uat",
   "compatibility_date": "2026-08-01",
 
-  // uat.qpio.app. custom_domain lets wrangler create the DNS record and the
-  // certificate itself, so the address exists the moment the deploy finishes
-  // rather than after a dashboard visit.
+  // The edge script gates the question bank against AI training crawlers.
+  // Anything it does not block falls through to ASSETS unchanged.
+  "main": "worker/index.js",
+
   "routes": [
     { "pattern": "uat.qpio.app", "custom_domain": true }
   ],
 
   "assets": {
     "directory": "./",
+    "binding": "ASSETS",
+    // Assets are served BEFORE the worker unless this says otherwise, which is
+    // why the first version of the bot gate did nothing at all. Scoped to the
+    // protected paths and /robots.txt so every other request keeps the fast
+    // path straight to the edge cache.
+    "run_worker_first": ["/src/*", "/robots.txt"],
     // A missing path serves index.html — the app is a single-page shell and its
     // routes are hashes, so a deep link must not 404.
     "not_found_handling": "single-page-application"

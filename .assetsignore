@@ -13,6 +13,7 @@ wrangler.jsonc
 wrangler.prod.jsonc
 .claude
 tools
+worker
 RELEASE.md
 README.md
 MORNING.md
