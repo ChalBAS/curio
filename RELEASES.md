@@ -8,9 +8,12 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v64** at qpio.app |
-| On UAT | **v65** at uat.qpio.app |
+| On UAT | **v66** at uat.qpio.app |
 | Tip of `main` | v64 |
 | Generated | 2026-08-13 |
+
+> ⏳ **Awaiting your sign-off:** v66. Write **Accepted for production**
+> — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v65 was rejected** on 2026-08-13 ([#46](https://github.com/ChalBAS/curio-hq/issues/46)). It stays on UAT until the
 > reported defects are fixed and a new build is put up for sign-off.
@@ -21,6 +24,13 @@ not by omission.*
 
 ---
 
+## v66 — ⏳ on UAT
+
+2026-08-13 · 651 questions · sign-off: **no release issue**
+
+- `3e1d8aa` v66 - resume where you stopped, the button row stops wrapping, and the fact gets its space back
+- `bc37ca8` Smallest phones too: 320x568 was broken on all five questions and nobody knew
+
 ## v65 — ⏳ on UAT
 
 2026-08-12 → 2026-08-13 · 651 questions · sign-off: **rejected**, [#46](https://github.com/ChalBAS/curio-hq/issues/46)
@@ -28,6 +38,7 @@ not by omission.*
 - `b332613` Human body: 20 questions, and the first real exercise of the UAT route
 - `a4ff267` Release sign-off and the audit trail, generated from git
 - `63ad9d3` Keep the audit record off the public edge
+- `8f1c715` The audit reader missed a real rejection - fixed, and tested both ways
 
 ## v64 — 🟢 live
 

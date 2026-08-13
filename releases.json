@@ -2,11 +2,13 @@
  "generated": "2026-08-13",
  "live": {
   "production": 64,
-  "uat": 65,
+  "uat": 66,
   "main": 64
  },
  "drift": null,
- "awaiting": [],
+ "awaiting": [
+  66
+ ],
  "rejected": [
   {
    "version": 65,
@@ -16,6 +18,30 @@
  ],
  "breaches": [],
  "releases": [
+  {
+   "version": 66,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-13",
+   "to": "2026-08-13",
+   "questions": 651,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "3e1d8aa",
+     "date": "2026-08-13",
+     "subject": "v66 - resume where you stopped, the button row stops wrapping, and the fact gets its space back"
+    },
+    {
+     "sha": "bc37ca8",
+     "date": "2026-08-13",
+     "subject": "Smallest phones too: 320x568 was broken on all five questions and nobody knew"
+    }
+   ]
+  },
   {
    "version": 65,
    "state": "ON UAT",
@@ -46,6 +72,11 @@
      "sha": "63ad9d3",
      "date": "2026-08-13",
      "subject": "Keep the audit record off the public edge"
+    },
+    {
+     "sha": "8f1c715",
+     "date": "2026-08-13",
+     "subject": "The audit reader missed a real rejection - fixed, and tested both ways"
     }
    ]
   },
