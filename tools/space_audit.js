@@ -50,10 +50,17 @@ const SCRIPT = `(async () => {
   const $ = s => document.querySelector(s);
   const box = el => { if (!el) return null; const r = el.getBoundingClientRect();
     return { h: Math.round(r.height), top: Math.round(r.top), bottom: Math.round(r.bottom) }; };
+  // Wait for a CONDITION, never for a duration. Fixed sleeps made this tool
+  // report "no question rendered" on two of four screen sizes purely by racing
+  // the boot — a measuring instrument that is flaky is worse than none.
+  const until = async (fn, ms) => { const end = Date.now() + (ms || 8000);
+    while (Date.now() < end) { if (fn()) return true; await sleep(80); } return false; };
 
+  if (!await until(() => window.CURIO_QUESTIONS && document.querySelector('.tabbar')))
+    return { error: 'app never booted' };
   location.hash = 'daily';
-  await sleep(900);
-  if (!$('.opt')) { const b = document.querySelector('#startDaily'); if (b) b.click(); await sleep(900); }
+  await until(() => $('.opt'), 2500);
+  if (!$('.opt')) { const b = document.querySelector('#startDaily'); if (b) b.click(); await until(() => $('.opt'), 2500); }
   if (!$('.opt')) return { error: 'no question rendered' };
 
   const bar = $('.tabbar');
@@ -64,7 +71,10 @@ const SCRIPT = `(async () => {
   for (let n = 0; n < 5; n++) {
     if (!$('.opt')) break;
     $('.opt').click();                     // right or wrong, the layout is identical
-    await sleep(1100);
+    // The card re-fits itself several times as images land; measure only once
+    // it has settled, or the numbers describe a layout no reader ever saw.
+    await until(() => $('#next'), 3000);
+    await sleep(450);
     const card = $('.card.answered-view') || $('.card');
     const next = $('#next');
     const fact = $('.answerblock .fact');
@@ -92,7 +102,7 @@ const SCRIPT = `(async () => {
         return kids.length > 1 && Math.abs(kids[0].top - kids[1].top) > 4; })(),
       rows
     });
-    if (next) { next.click(); await sleep(900); }
+    if (next) { next.click(); await until(() => $('.opt') || $('.card.result'), 3000); }
   }
   return { lang: window.QLANG, vw: window.innerWidth, vh: window.innerHeight, barTop, barHidden, shots };
 })()`;

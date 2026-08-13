@@ -408,11 +408,16 @@ body {
   flex: 0 1 auto; min-width: 92px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-/* The fact is the payoff — it is the reason the question was asked. Measured
-   on the live build: it was rendering at 22px with 150px clipped, so the reader
-   got ONE LINE of it and had to scroll a box the size of a button. It gets a
-   readable floor. On a card where the floor cannot be met the fact still
-   scrolls, but it starts from something worth reading rather than a sliver. */
+/* The fact is the payoff — it is the reason the question was asked, and it was
+   rendering at 22px with 150px clipped: one line, in a box the size of a button.
+   A hard min-height is the WRONG fix and was measured proving it — it pushed
+   Next 14px back under the tab bar, trading the one guarantee the card makes
+   for a taller fact. Nothing may do that.
+   So the space is TAKEN rather than demanded, from the two elements that have
+   already done their job by the time the fact appears: the question (answered)
+   and the options (spent). Reference material gets reference-sized type; the
+   payoff gets the room that frees. The fact keeps `flex: 0 1 auto` and still
+   yields last, so the guarantee holds whatever the content does. */
 .answered-view .answerblock .fact { min-height: 76px; }
 @media (max-height: 780px) {
   .answered-view .qart { height: 64px; }
@@ -435,13 +440,42 @@ body {
      card was restructured. Corrected rather than deleted: the intent was right. */
   .answered-view .answerfoot .btnrow { margin-top: 9px; }
   .answered-view .answerfoot .btn { padding: 11px 16px; }
-  /* A shorter phone cannot afford the full floor; a smaller one is still far
-     better than the 22px sliver this replaces. */
-  .answered-view .answerblock .fact { min-height: 64px; }
   .answered-view .srclink { margin-top: 6px; }
-  .answered-view .qtext { font-size: 15.5px; margin: 2px 0 7px; }
-  .answered-view .opts.answered .opt { padding: 8px 11px; }
+  /* Measured at 360x640, French, on the card that failed: the question held
+     105px and the two surviving options 95px, while the fact — the payoff —
+     had 22px. Both of those have done their job by now: the question has been
+     answered and the options are showing a result, not offering a choice. They
+     become reference type, and the ~40px that frees goes to the fact, which is
+     the only element on the card the reader has not yet read. */
+  .answered-view .qtext { font-size: 14.5px; line-height: 1.35; margin: 2px 0 6px; }
+  .answered-view .opts.answered { gap: 5px; }
+  .answered-view .opts.answered .opt { padding: 7px 10px; font-size: 13.5px; }
   .answered-view .gf-link { margin-top: 8px; padding: 9px 11px; }
+  /* No floor at this height. There is not always room for one, and Next staying
+     visible outranks the fact being tall — see the note on .fact above. */
+  .answered-view .answerblock .fact { min-height: 0; }
+}
+/* The smallest phones still in real use — 320x568 is an iPhone SE. Measured on
+   production v64: Next sat under the tab bar on FIVE of five questions in both
+   languages, and nobody had noticed because the acceptance suite tests 390 and
+   360 only. This tier is what makes the "no scrolling" promise true there too.
+   Same principle as the tier above, pushed further: by the time the fact is on
+   screen the question has been answered and the options are a result, not a
+   choice — so they carry reference type and the payoff keeps the room. */
+@media (max-height: 600px) {
+  .quiz-live .wrap { padding-top: 4px; }
+  .quiz-live .top { margin-bottom: 4px; }
+  .quiz-live .card { padding: 11px; }
+  .answered-view .qcat { font-size: 11px; margin-bottom: 2px; }
+  .answered-view .qart { height: 36px; margin: 3px 0 2px; }
+  .answered-view .qtext { font-size: 13.5px; line-height: 1.3; margin: 2px 0 5px; }
+  .answered-view .opts.answered { gap: 4px; }
+  .answered-view .opts.answered .opt { padding: 6px 9px; font-size: 13px; }
+  .answered-view .fact { margin-top: 7px; padding: 9px 10px; font-size: 13px; }
+  .answered-view .gf-link { margin-top: 6px; padding: 7px 10px; }
+  .answered-view .answerfoot .btnrow { margin-top: 7px; }
+  .answered-view .answerfoot .btn { padding: 10px 14px; }
+  .answered-view .srclink { margin-top: 5px; }
 }
 
 /* A picture that IS the question — a flag to identify, a diagram to read.
