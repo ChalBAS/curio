@@ -42,12 +42,18 @@
 
       // --- home: hero ---
       "Free forever": "Gratuit pour toujours",
+      // "Free to play" replaces "Free forever" on the hero (CEO, 2026-08-13:
+      // "this is more accurate"). The old key stays until every surface moves.
+      "Free to play": "Gratuit",
       "Kids mode": "Mode enfants",
       "Feed your brain today.": "Nourris ton cerveau aujourd’hui.",
       "Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.":
         "Cinq questions. Les mêmes pour tout le monde, partout. Chaque réponse t’apprend quelque chose qui vaut la peine d’être su. Garde ta série en vie.",
       "Review today's ✓": "Revoir le défi du jour ✓",
       "Play daily challenge": "Jouer au défi du jour",
+      "▶ Resume — question {n} of {total}": "▶ Reprendre — question {n} sur {total}",
+      "You left today’s challenge part-finished. Pick it up where you stopped — it waits until tomorrow’s five arrive.":
+        "Tu as laissé le défi du jour en cours. Reprends là où tu t’es arrêté — il t’attend jusqu’aux cinq questions de demain.",
       "🔥 1 day": "🔥 1 jour",
       "🔥 {n} days": "🔥 {n} jours",
 
@@ -217,7 +223,12 @@
       "Quick-Fire": "Quiz éclair",
       "Ten questions, {s}s each. Chase your high score.": "Dix questions, {s} s chacune. Bats ton record.",
       "Ten questions, no timer. Chase your high score.": "Dix questions, sans chrono. Bats ton record.",
+      "Ten questions, {s}s each. Run out and the answer is revealed — you still choose when to move on.":
+        "Dix questions, {s} s chacune. Si le temps s’écoule, la réponse est dévoilée — tu passes à la suite quand tu veux.",
       "Daily Challenge": "Défi du jour",
+      "Resume today's challenge": "Reprendre le défi du jour",
+      "Part-finished — question {n} of {total}. Your answers are kept until tomorrow.":
+        "En cours — question {n} sur {total}. Tes réponses sont gardées jusqu’à demain.",
       "Done today — {score}/{total}. Come back tomorrow.": "Fait pour aujourd’hui — {score}/{total}. Reviens demain.",
       "Today's five. Shareable score. The daily ritual.": "Les cinq du jour. Un score à partager. Le rituel quotidien.",
       "Fact or Fake?": "Vrai ou Faux ?",
@@ -284,6 +295,8 @@
       "⏱️ Quick-Fire timer": "⏱️ Chrono du Quiz éclair",
       "Timers measure speed, not knowledge. Turn them off if they get in the way — scoring adapts fairly.":
         "Un chrono mesure la vitesse, pas le savoir. Désactive-le s’il te gêne — le score s’adapte équitablement.",
+      "Quick-Fire only — the Daily Challenge is never timed. If the clock runs out the answer is revealed and the question counts as missed; you always move on in your own time. Turn it off if it gets in the way — scoring adapts fairly.":
+        "Quiz éclair uniquement — le défi du jour n’est jamais chronométré. Si le temps s’écoule, la réponse est dévoilée et la question compte comme manquée ; c’est toujours toi qui décides quand passer à la suite. Désactive-le s’il te gêne — le score s’adapte équitablement.",
       "Normal (15s)": "Normal (15 s)",
       "Relaxed (30s)": "Détendu (30 s)",
       "Off": "Désactivé",
