@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v64** at qpio.app |
 | On UAT | **v65** at uat.qpio.app |
 | Tip of `main` | v64 |
-| Generated | 2026-08-12 |
+| Generated | 2026-08-13 |
 
 > ⏳ **Awaiting your sign-off:** v65. Reply **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -23,9 +23,10 @@ not by omission.*
 
 ## v65 — ⏳ on UAT
 
-2026-08-12 · 651 questions · sign-off: awaiting you, [#45](https://github.com/ChalBAS/curio-hq/issues/45)
+2026-08-12 → 2026-08-13 · 651 questions · sign-off: awaiting you, [#45](https://github.com/ChalBAS/curio-hq/issues/45)
 
 - `b332613` Human body: 20 questions, and the first real exercise of the UAT route
+- `a4ff267` Release sign-off and the audit trail, generated from git
 
 ## v64 — 🟢 live
 

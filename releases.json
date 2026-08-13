@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-12",
+ "generated": "2026-08-13",
  "live": {
   "production": 64,
   "uat": 65,
@@ -16,7 +16,7 @@
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-08-12",
-   "to": "2026-08-12",
+   "to": "2026-08-13",
    "questions": 651,
    "signoff": {
     "status": "AWAITING",
@@ -28,6 +28,11 @@
      "sha": "b332613",
      "date": "2026-08-12",
      "subject": "Human body: 20 questions, and the first real exercise of the UAT route"
+    },
+    {
+     "sha": "a4ff267",
+     "date": "2026-08-13",
+     "subject": "Release sign-off and the audit trail, generated from git"
     }
    ]
   },
