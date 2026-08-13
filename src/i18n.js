@@ -41,6 +41,25 @@
       "Dismiss": "Fermer",
 
       // --- home: hero ---
+      // --- leaderboard identity + how the score works (2026-08-13) ---
+      "You": "Toi",
+      "🏷️ Your name on the leaderboard": "🏷️ Ton nom au classement",
+      "Your name on the leaderboard": "Ton nom au classement",
+      "Your name on the board (optional)": "Ton nom au classement (facultatif)",
+      "Shown only on this device. Leave it blank and the board simply says “You”.":
+        "Visible uniquement sur cet appareil. Laisse-le vide et le classement affichera simplement « Toi ».",
+      "How these points are worked out": "Comment ces points sont calculés",
+      "<b>100</b> for every right answer.": "<b>100</b> pour chaque bonne réponse.",
+      "<b>up to +150</b> for speed — 10 points for each second still on the clock, capped at 15 seconds, so Relaxed can never out-score Normal.":
+        "<b>jusqu’à +150</b> pour la vitesse — 10 points par seconde restant au chrono, plafonnés à 15 secondes, pour que le mode Détendu ne puisse jamais dépasser le mode Normal.",
+      "<b>+25 or +50</b> when the question is a harder one.": "<b>+25 ou +50</b> quand la question est plus difficile.",
+      "<b>+25</b> when you recall a Vault answer from memory before seeing the options.":
+        "<b>+25</b> quand tu retrouves de mémoire une réponse du Coffre avant de voir les options.",
+      "A wrong answer scores nothing — it never takes points away.":
+        "Une mauvaise réponse ne rapporte rien — elle n’enlève jamais de points.",
+      "Saved as your best — {pts} points. ⭐": "Enregistré comme ton meilleur score — {pts} points. ⭐",
+      "Your best is still {pts} points.": "Ton meilleur score reste {pts} points.",
+
       "Free forever": "Gratuit pour toujours",
       // "Free to play" replaces "Free forever" on the hero (CEO, 2026-08-13:
       // "this is more accurate"). The old key stays until every surface moves.

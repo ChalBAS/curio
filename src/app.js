@@ -462,6 +462,20 @@
     resumeBar = el('<button class="resumebar hidden">' + t("▶ Resume") + '</button>');
     resumeBar.addEventListener("click", showPlay);
     document.body.appendChild(resumeBar);
+
+    // UAT badge (CEO, 2026-08-13: "it would be good to add uat in the Qpio app
+    // UAT testing so i can distinguish vs the live version"). Driven by the
+    // HOSTNAME, never by a build flag — a flag can be shipped to production by
+    // mistake, a hostname cannot. Readers on qpio.app can never see this.
+    if (/^uat\./i.test(location.hostname) || location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+      var ver = "";
+      var vs = document.querySelector('script[src*="app.js"]');
+      if (vs) { var m = /[?&]v=(\d+)/.exec(vs.getAttribute("src") || ""); if (m) ver = " v" + m[1]; }
+      document.body.classList.add("is-uat");
+      document.body.appendChild(el('<div class="uatflag" role="status">' +
+        (location.hostname === "localhost" || location.hostname === "127.0.0.1" ? "LOCAL" : "UAT") +
+        esc(ver) + '</div>'));
+    }
   }
 
   function currentTab() {
@@ -1392,6 +1406,21 @@
     node.appendChild(segRow(t("⏱️ Quick-Fire timer"), t("Quick-Fire only — the Daily Challenge is never timed. If the clock runs out the answer is revealed and the question counts as missed; you always move on in your own time. Turn it off if it gets in the way — scoring adapts fairly."), [
       { label: t("Normal (15s)"), value: "normal" }, { label: t("Relaxed (30s)"), value: "relaxed" }, { label: t("Off"), value: "off" }
     ], settings.timer, function (v) { settings.timer = v; saveSettings(); }));
+
+    // Editable afterwards, as asked. One name per device: the board keeps a
+    // single row per player, so renaming moves your row rather than adding one.
+    var nameRow = el('<div class="cf-group"><div class="cf-title">' + t("🏷️ Your name on the leaderboard") + '</div>' +
+      '<div class="mini" style="margin:2px 0 8px">' + t("Shown only on this device. Leave it blank and the board simply says “You”.") + '</div>' +
+      '<input class="cselect" id="setName" type="text" maxlength="16" autocomplete="off" style="max-width:280px" ' +
+      'value="' + esc(LS.get("playerName", "")) + '" placeholder="' + esc(t("You")) + '"></div>');
+    nameRow.querySelector("#setName").addEventListener("change", function () {
+      var was = playerName(), now = (this.value || "").trim().slice(0, 16);
+      LS.set("playerName", now);
+      // Carry the existing row across rather than orphaning it under the old name.
+      var board = LS.get("leaderboard", []).map(function (r) { return r.name === was ? { name: playerName(), pts: r.pts, date: r.date } : r; });
+      LS.set("leaderboard", board);
+    });
+    node.appendChild(nameRow);
 
     node.appendChild(segRow(t("🔤 Dyslexia-friendly reading"), t("Wider spacing, taller lines, a rounder font."), [
       { label: t("Off"), value: false }, { label: t("On"), value: true }
@@ -2496,8 +2525,18 @@
         '<div class="scorebig">' + r.score + '</div>' +
         '<h2>' + (isHi ? t("🏆 New high score!") : praise(r.correct, r.total)) + '</h2>' +
         '<div class="sub">' + tf("{c}/{t} correct", { c: r.correct, t: r.total }) + ' · ' + esc(label) + '</div>' +
+        // How the number was reached, next to the number. A score nobody can
+        // explain is a score nobody trusts (CEO, 2026-08-13: "We need to
+        // explain how the points are calculated in the dashboard to the user").
+        '<details class="howscore"><summary>' + t("How these points are worked out") + '</summary>' +
+          '<ul>' +
+            '<li>' + t("<b>100</b> for every right answer.") + '</li>' +
+            '<li>' + t("<b>up to +150</b> for speed — 10 points for each second still on the clock, capped at 15 seconds, so Relaxed can never out-score Normal.") + '</li>' +
+            '<li>' + t("<b>+25 or +50</b> when the question is a harder one.") + '</li>' +
+            '<li>' + t("<b>+25</b> when you recall a Vault answer from memory before seeing the options.") + '</li>' +
+            '<li>' + t("A wrong answer scores nothing — it never takes points away.") + '</li>' +
+          '</ul></details>' +
         '<div class="btnrow" style="justify-content:center">' +
-          '<button class="btn" id="save">' + t("Save to leaderboard") + '</button>' +
           '<button class="btn ghost" id="again">' + t("Play again") + '</button>' +
           '<button class="btn ghost" id="qrHome">🏠 ' + t("Home") + '</button>' +
         '</div>' +
@@ -2507,16 +2546,37 @@
     render(node);
     node.querySelector("#qrHome").addEventListener("click", goHome);
     node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
-    node.querySelector("#save").addEventListener("click", function () {
-      var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Curious")) || "").trim().slice(0, 16) || "Curious";
-      LS.set("playerName", name);
-      var board = LS.get("leaderboard", []);
-      board.push({ name: name, pts: r.score, date: todayKey() });
-      board.sort(function (a, b) { return b.pts - a.pts; });
-      LS.set("leaderboard", board.slice(0, 20));
-      node.querySelector("#save").disabled = true;
-      node.querySelector("#msg").textContent = t("Saved! ⭐");
-    });
+
+    // Saved automatically, and only ever ONE row per player (CEO, 2026-08-13:
+    // "each time it asked me to save to the leader board, which lead to
+    // duplicate name on the board... the saving to dashboard should be
+    // automatic as soon as there is a Name saved").
+    // The old flow prompted after every round and PUSHED a new row each time,
+    // so two runs by the same person produced two entries with the same name —
+    // a board that rewards playing twice rather than playing well.
+    var saved = recordScore(r.score);
+    var msg = node.querySelector("#msg");
+    if (saved.best) msg.textContent = tf("Saved as your best — {pts} points. ⭐", { pts: saved.pts });
+    else msg.textContent = tf("Your best is still {pts} points.", { pts: saved.pts });
+  }
+
+  // One device, one player, one row. A device is a person here: the daily five
+  // are the same for everyone, so a shared device cannot produce a fair second
+  // player anyway. Laptops with several genuine users are tracked separately —
+  // see the roadmap issue on multiple instances.
+  function recordScore(pts) {
+    var name = playerName();
+    var board = LS.get("leaderboard", []).filter(function (row) { return row.name !== name; });
+    var mine = LS.get("leaderboard", []).filter(function (row) { return row.name === name; })[0];
+    var best = !mine || pts > mine.pts;
+    board.push({ name: name, pts: best ? pts : mine.pts, date: best ? todayKey() : mine.date });
+    board.sort(function (a, b) { return b.pts - a.pts; });
+    LS.set("leaderboard", board.slice(0, 20));
+    return { best: best, pts: best ? pts : mine.pts };
+  }
+  function playerName() {
+    var n = (LS.get("playerName", "") || "").trim();
+    return n || t("You");
   }
 
   function praise(c, t_) {
@@ -2560,7 +2620,15 @@
         '<h1 class="onb-title">' + s.title + '</h1>' +
         '<p class="onb-text">' + s.text + '</p>' +
         (s.pick === "country" ? '<select class="cselect" id="onbCC" aria-label="' +
-          esc(t("The country you represent")) + '"></select>' : '') +
+          esc(t("The country you represent")) + '"></select>' +
+          // Asked once, here, so no round ever has to interrupt itself to ask
+          // (CEO, 2026-08-13: "we can even ask for the name at the initial set
+          // up, modify the existing one in the settings later"). Optional —
+          // leaving it blank simply shows "You" on the board.
+          '<input class="cselect" id="onbName" type="text" maxlength="16" autocomplete="off" ' +
+            'placeholder="' + esc(t("Your name on the board (optional)")) + '" ' +
+            'aria-label="' + esc(t("Your name on the leaderboard")) + '" ' +
+            'value="' + esc(LS.get("playerName", "")) + '">' : '') +
         '<div class="onb-dots">' + dots + '</div>' +
         '<div class="btnrow" style="justify-content:center">' +
           // Back from screen two onwards: three screens with no way to reread
@@ -2593,6 +2661,8 @@
 
     render(node);
     function finish(toDaily) {
+      var nm = node.querySelector("#onbName");
+      if (nm) LS.set("playerName", (nm.value || "").trim().slice(0, 16));
       LS.set("onboarded", true);
       tabBar.classList.remove("hidden");   // first run: bar was hidden until onboarded
       if (toDaily) startDaily(); else goHome();

@@ -153,6 +153,31 @@ body {
 .footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 34px; line-height: 1.7; }
 .footer a { color: var(--brand2); text-decoration: none; }
 .hidden { display: none !important; }
+
+/* UAT/local badge. Fixed to the top-left, above everything, deliberately
+   unmissable — its whole job is to stop a test build being mistaken for the
+   live one. Never rendered on qpio.app: the check is the hostname, not a flag,
+   so it cannot be shipped on by accident. Non-interactive, so it can never sit
+   between a thumb and a button. */
+.uatflag {
+  position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none;
+  background: var(--warn, #E0A93B); color: #10222E;
+  font-size: 10px; font-weight: 800; letter-spacing: .1em;
+  padding: 3px 9px 4px; border-bottom-right-radius: 8px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 1px 6px rgba(0,0,0,.35);
+}
+@media (min-width: 900px) { .uatflag { font-size: 11px; padding: 4px 12px 5px; } }
+
+/* How the score is worked out, folded away until asked for. */
+.howscore { margin: 12px auto 4px; max-width: 420px; text-align: left; }
+.howscore > summary {
+  cursor: pointer; list-style: none; font-size: 13px; color: var(--muted);
+  text-decoration: underline; text-underline-offset: 3px; text-align: center;
+}
+.howscore > summary::-webkit-details-marker { display: none; }
+.howscore ul { margin: 9px 0 0; padding-left: 20px; font-size: 13.5px; color: var(--ink); }
+.howscore li { margin: 4px 0; }
 .center { text-align: center; }
 
 /* Memory Vault */
