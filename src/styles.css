@@ -153,6 +153,31 @@ body {
 .footer { text-align: center; color: var(--muted); font-size: 12px; margin-top: 34px; line-height: 1.7; }
 .footer a { color: var(--brand2); text-decoration: none; }
 .hidden { display: none !important; }
+
+/* UAT/local badge. Fixed to the top-left, above everything, deliberately
+   unmissable — its whole job is to stop a test build being mistaken for the
+   live one. Never rendered on qpio.app: the check is the hostname, not a flag,
+   so it cannot be shipped on by accident. Non-interactive, so it can never sit
+   between a thumb and a button. */
+.uatflag {
+  position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none;
+  background: var(--warn, #E0A93B); color: #10222E;
+  font-size: 10px; font-weight: 800; letter-spacing: .1em;
+  padding: 3px 9px 4px; border-bottom-right-radius: 8px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 1px 6px rgba(0,0,0,.35);
+}
+@media (min-width: 900px) { .uatflag { font-size: 11px; padding: 4px 12px 5px; } }
+
+/* How the score is worked out, folded away until asked for. */
+.howscore { margin: 12px auto 4px; max-width: 420px; text-align: left; }
+.howscore > summary {
+  cursor: pointer; list-style: none; font-size: 13px; color: var(--muted);
+  text-decoration: underline; text-underline-offset: 3px; text-align: center;
+}
+.howscore > summary::-webkit-details-marker { display: none; }
+.howscore ul { margin: 9px 0 0; padding-left: 20px; font-size: 13.5px; color: var(--ink); }
+.howscore li { margin: 4px 0; }
 .center { text-align: center; }
 
 /* Memory Vault */
@@ -394,10 +419,31 @@ body {
 .answered-view .opts.answered .opt { padding: 11px 13px; font-size: 15px; }
 .answered-view .opts.answered .opt.spent { display: none; }
 .answered-view .fact { margin-top: 11px; padding: 12px 13px; }
-.answered-view .fact .btnrow { margin-top: 11px; }
-/* Next is the last thing on the card and the widest — the thumb lands there
-   without aiming, after the destination has had its chance to be seen. */
-.answered-view .fact .btnrow #next { flex: 1 1 auto; }
+/* THE BUTTON ROW MUST NEVER WRAP. Measured 2026-08-13 at 360x640 in French:
+   "🕳️ Creuser plus loin" is 184px and "Suivant →" 110px — 294px of buttons in a
+   286px row. They wrapped onto two lines, the row grew from 46px to 104px, and
+   Next went 33px underneath the tab bar. English fits at 140+91 and passed,
+   which is why this survived every English test.
+   Next grows when it is alone and holds its width when it is not; the "go
+   deeper" label is the one that gives, down to a floor that is still a thumb
+   target, then ellipsises. Language-agnostic: nothing here is tuned to French. */
+.answered-view .answerfoot .btnrow { margin-top: 11px; flex-wrap: nowrap; }
+.answered-view .answerfoot .btnrow #next { flex: 1 1 auto; white-space: nowrap; }
+.answered-view .answerfoot .btnrow #deeper {
+  flex: 0 1 auto; min-width: 92px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* The fact is the payoff — it is the reason the question was asked, and it was
+   rendering at 22px with 150px clipped: one line, in a box the size of a button.
+   A hard min-height is the WRONG fix and was measured proving it — it pushed
+   Next 14px back under the tab bar, trading the one guarantee the card makes
+   for a taller fact. Nothing may do that.
+   So the space is TAKEN rather than demanded, from the two elements that have
+   already done their job by the time the fact appears: the question (answered)
+   and the options (spent). Reference material gets reference-sized type; the
+   payoff gets the room that frees. The fact keeps `flex: 0 1 auto` and still
+   yields last, so the guarantee holds whatever the content does. */
+.answered-view .answerblock .fact { min-height: 76px; }
 @media (max-height: 780px) {
   .answered-view .qart { height: 64px; }
   .answered-view .qtext { font-size: 16px; margin: 2px 0 8px; }
@@ -413,12 +459,48 @@ body {
   .quiz-live .card { padding: 13px; }
   .answered-view .qart { height: 44px; margin: 4px 0 2px; }
   .answered-view .fact { margin-top: 9px; padding: 10px 11px; }
-  .answered-view .fact .btnrow { margin-top: 9px; }
-  .answered-view .fact .btn { padding: 11px 16px; }
+  /* These two were written as `.fact .btnrow` and `.fact .btn`, but the button
+     row lives in `.answerfoot` — a SIBLING of `.fact`, not a child (see the
+     markup in choose()). They have never matched anything since the answered
+     card was restructured. Corrected rather than deleted: the intent was right. */
+  .answered-view .answerfoot .btnrow { margin-top: 9px; }
+  .answered-view .answerfoot .btn { padding: 11px 16px; }
   .answered-view .srclink { margin-top: 6px; }
-  .answered-view .qtext { font-size: 15.5px; margin: 2px 0 7px; }
-  .answered-view .opts.answered .opt { padding: 8px 11px; }
+  /* Measured at 360x640, French, on the card that failed: the question held
+     105px and the two surviving options 95px, while the fact — the payoff —
+     had 22px. Both of those have done their job by now: the question has been
+     answered and the options are showing a result, not offering a choice. They
+     become reference type, and the ~40px that frees goes to the fact, which is
+     the only element on the card the reader has not yet read. */
+  .answered-view .qtext { font-size: 14.5px; line-height: 1.35; margin: 2px 0 6px; }
+  .answered-view .opts.answered { gap: 5px; }
+  .answered-view .opts.answered .opt { padding: 7px 10px; font-size: 13.5px; }
   .answered-view .gf-link { margin-top: 8px; padding: 9px 11px; }
+  /* No floor at this height. There is not always room for one, and Next staying
+     visible outranks the fact being tall — see the note on .fact above. */
+  .answered-view .answerblock .fact { min-height: 0; }
+}
+/* The smallest phones still in real use — 320x568 is an iPhone SE. Measured on
+   production v64: Next sat under the tab bar on FIVE of five questions in both
+   languages, and nobody had noticed because the acceptance suite tests 390 and
+   360 only. This tier is what makes the "no scrolling" promise true there too.
+   Same principle as the tier above, pushed further: by the time the fact is on
+   screen the question has been answered and the options are a result, not a
+   choice — so they carry reference type and the payoff keeps the room. */
+@media (max-height: 600px) {
+  .quiz-live .wrap { padding-top: 4px; }
+  .quiz-live .top { margin-bottom: 4px; }
+  .quiz-live .card { padding: 11px; }
+  .answered-view .qcat { font-size: 11px; margin-bottom: 2px; }
+  .answered-view .qart { height: 36px; margin: 3px 0 2px; }
+  .answered-view .qtext { font-size: 13.5px; line-height: 1.3; margin: 2px 0 5px; }
+  .answered-view .opts.answered { gap: 4px; }
+  .answered-view .opts.answered .opt { padding: 6px 9px; font-size: 13px; }
+  .answered-view .fact { margin-top: 7px; padding: 9px 10px; font-size: 13px; }
+  .answered-view .gf-link { margin-top: 6px; padding: 7px 10px; }
+  .answered-view .answerfoot .btnrow { margin-top: 7px; }
+  .answered-view .answerfoot .btn { padding: 10px 14px; }
+  .answered-view .srclink { margin-top: 5px; }
 }
 
 /* A picture that IS the question — a flag to identify, a diagram to read.

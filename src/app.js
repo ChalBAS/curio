@@ -410,8 +410,13 @@
     // the card fits above the tab bar on a 640px-tall phone without scrolling
     // (CEO, 2026-08-11). Every other view restores it. The logo is decoration
     // during a quiz; Quit and the progress bar are the navigation that matters.
+    // The test is `.quizhead .progress`, not `.quizhead`. `.quizhead` alone is
+    // NOT quiz-only — the city pack pages build one too (cityHomeView,
+    // cityPackView) — so the old test compacted the masthead and HID THE
+    // INSTALL BUTTON on every city page. Measured on a live page, 2026-08-13,
+    // not inferred. Only a running question has a progress bar in its header.
     document.body.classList.toggle("quiz-live",
-      !node.classList.contains("result") && !!node.querySelector(".quizhead"));
+      !node.classList.contains("result") && !!node.querySelector(".quizhead .progress"));
     // A result card means the quiz is over. Keeping playActive true here left a
     // "▶ Resume" pill offering to reopen a finished quiz (CEO first-run review,
     // 2026-08-06). Every result view — daily, vault, city, quick-fire, truthlab
@@ -457,6 +462,20 @@
     resumeBar = el('<button class="resumebar hidden">' + t("▶ Resume") + '</button>');
     resumeBar.addEventListener("click", showPlay);
     document.body.appendChild(resumeBar);
+
+    // UAT badge (CEO, 2026-08-13: "it would be good to add uat in the Qpio app
+    // UAT testing so i can distinguish vs the live version"). Driven by the
+    // HOSTNAME, never by a build flag — a flag can be shipped to production by
+    // mistake, a hostname cannot. Readers on qpio.app can never see this.
+    if (/^uat\./i.test(location.hostname) || location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+      var ver = "";
+      var vs = document.querySelector('script[src*="app.js"]');
+      if (vs) { var m = /[?&]v=(\d+)/.exec(vs.getAttribute("src") || ""); if (m) ver = " v" + m[1]; }
+      document.body.classList.add("is-uat");
+      document.body.appendChild(el('<div class="uatflag" role="status">' +
+        (location.hostname === "localhost" || location.hostname === "127.0.0.1" ? "LOCAL" : "UAT") +
+        esc(ver) + '</div>'));
+    }
   }
 
   function currentTab() {
@@ -598,14 +617,25 @@
   function heroCard() {
     var s = getStreak();
     var daily = LS.get(dailyKey(), null);
+    // Three states, not two. A round left open mid-way must not be offered as
+    // "Play daily challenge" — the button would start nothing and resume
+    // instead, which is a button that lies about what it does. CEO,
+    // 2026-08-13: "once the quiz starts on a device the daily challenge button
+    // needs to stop functioning until the reset."
+    var prog = daily ? null : dailyProgress();
+    var label = daily ? t("Review today's ✓")
+              : prog  ? tf("▶ Resume — question {n} of {total}", { n: prog.idx + 1, total: DAILY_COUNT })
+                      : t("Play daily challenge");
     var node = el(
       '<div class="card hero">' +
-        '<span class="pill free">' + t("Free forever") + '</span>' +
+        '<span class="pill free">' + t("Free to play") + '</span>' +
         (settings.ageMode === "kids" ? '<span class="pill kids">' + t("Kids mode") + '</span>' : '') +
         '<h1>' + t("Feed your brain today.") + '</h1>' +
-        '<p>' + t("Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.") + '</p>' +
+        '<p>' + (prog
+          ? t("You left today’s challenge part-finished. Pick it up where you stopped — it waits until tomorrow’s five arrive.")
+          : t("Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.")) + '</p>' +
         '<div class="btnrow">' +
-          '<button class="btn" id="startDaily">' + (daily ? t("Review today's ✓") : t("Play daily challenge")) + '</button>' +
+          '<button class="btn' + (prog ? " resume" : "") + '" id="startDaily">' + label + '</button>' +
           (s.count > 0 ? '<span class="streakchip">' + (s.count === 1 ? t("🔥 1 day") : tf("🔥 {n} days", { n: s.count })) + '</span>' : '') +
         '</div>' +
       '</div>'
@@ -648,7 +678,7 @@
       '<div class="card mode" id="modeQuick">' +
         '<div class="emoji">⚡</div><h3>' + t("Quick-Fire") + '</h3>' +
         '<p>' + (timerSecs()
-          ? tf("Ten questions, {s}s each. Chase your high score.", { s: timerSecs() })
+          ? tf("Ten questions, {s}s each. Run out and the answer is revealed — you still choose when to move on.", { s: timerSecs() })
           : t("Ten questions, no timer. Chase your high score.")) + '</p>' +
       '</div>'
     );
@@ -660,10 +690,13 @@
 
   function modeCardDaily() {
     var daily = LS.get(dailyKey(), null);
+    var prog = daily ? null : dailyProgress();
     var node = el(
-      '<div class="card mode" id="modeDaily">' +
-        '<div class="emoji">📅</div><h3>' + t("Daily Challenge") + '</h3>' +
-        '<p>' + (daily ? '<span class="done-badge">' + tf("Done today — {score}/{total}. Come back tomorrow.", { score: daily.score, total: DAILY_COUNT }) + '</span>' : t("Today's five. Shareable score. The daily ritual.")) + '</p>' +
+      '<div class="card mode' + (prog ? " resuming" : "") + '" id="modeDaily">' +
+        '<div class="emoji">' + (prog ? "▶" : "📅") + '</div><h3>' + (prog ? t("Resume today's challenge") : t("Daily Challenge")) + '</h3>' +
+        '<p>' + (daily ? '<span class="done-badge">' + tf("Done today — {score}/{total}. Come back tomorrow.", { score: daily.score, total: DAILY_COUNT }) + '</span>'
+               : prog  ? tf("Part-finished — question {n} of {total}. Your answers are kept until tomorrow.", { n: prog.idx + 1, total: DAILY_COUNT })
+                       : t("Today's five. Shareable score. The daily ritual.")) + '</p>' +
       '</div>'
     );
     node.addEventListener("click", startDaily);
@@ -1367,9 +1400,27 @@
     }
     node.appendChild(el('<p class="mini" style="margin:0 0 14px">' + t("Knowledge is for everyone. Tune Qpio to the way <b>you</b> read, hear and think — nothing here is ever paywalled.") + '</p>'));
 
-    node.appendChild(segRow(t("⏱️ Quick-Fire timer"), t("Timers measure speed, not knowledge. Turn them off if they get in the way — scoring adapts fairly."), [
+    // The copy now says what the clock actually DOES. It has never skipped you
+    // on to the next question and the CEO expected it to (2026-08-13); his
+    // ruling was to keep the behaviour and stop the copy implying otherwise.
+    node.appendChild(segRow(t("⏱️ Quick-Fire timer"), t("Quick-Fire only — the Daily Challenge is never timed. If the clock runs out the answer is revealed and the question counts as missed; you always move on in your own time. Turn it off if it gets in the way — scoring adapts fairly."), [
       { label: t("Normal (15s)"), value: "normal" }, { label: t("Relaxed (30s)"), value: "relaxed" }, { label: t("Off"), value: "off" }
     ], settings.timer, function (v) { settings.timer = v; saveSettings(); }));
+
+    // Editable afterwards, as asked. One name per device: the board keeps a
+    // single row per player, so renaming moves your row rather than adding one.
+    var nameRow = el('<div class="cf-group"><div class="cf-title">' + t("🏷️ Your name on the leaderboard") + '</div>' +
+      '<div class="mini" style="margin:2px 0 8px">' + t("Shown only on this device. Leave it blank and the board simply says “You”.") + '</div>' +
+      '<input class="cselect" id="setName" type="text" maxlength="16" autocomplete="off" style="max-width:280px" ' +
+      'value="' + esc(LS.get("playerName", "")) + '" placeholder="' + esc(t("You")) + '"></div>');
+    nameRow.querySelector("#setName").addEventListener("change", function () {
+      var was = playerName(), now = (this.value || "").trim().slice(0, 16);
+      LS.set("playerName", now);
+      // Carry the existing row across rather than orphaning it under the old name.
+      var board = LS.get("leaderboard", []).map(function (r) { return r.name === was ? { name: playerName(), pts: r.pts, date: r.date } : r; });
+      LS.set("leaderboard", board);
+    });
+    node.appendChild(nameRow);
 
     node.appendChild(segRow(t("🔤 Dyslexia-friendly reading"), t("Wider spacing, taller lines, a rounder font."), [
       { label: t("Off"), value: false }, { label: t("On"), value: true }
@@ -1431,11 +1482,39 @@
   }
 
   // ---------- quiz engine ----------
-  // cfg: { questions:[...], timed:bool, vault:bool, onDone(result) }
+  // cfg: { questions:[...], timed:bool, vault:bool, resumeKey:string, onDone(result) }
+  //
+  // resumeKey turns a round into something that survives the device (CEO,
+  // 2026-08-13: "if the user starts the quiz and stops in the middle or
+  // receiving a call or the device restarts… they can pick up where they left
+  // off at any time during the day"). Without it the round lives only in this
+  // closure and dies with the page.
   function runQuiz(cfg) {
-    var idx = 0, score = 0, correctCount = 0, marks = [], answered = false, timer = null, timeLeft = 0;
+    // A checkpoint is only trusted if it describes THIS deck. A content release
+    // mid-day changes the bank size, which reseeds dailyQuestions() and deals a
+    // different five — and the saved marks would then describe questions the
+    // reader never saw. Comparing ids is what makes that impossible.
+    var deckIds = cfg.questions.map(qid).join(",");
+    var saved = cfg.resumeKey ? LS.get(cfg.resumeKey, null) : null;
+    if (saved && (saved.ids !== deckIds || !Array.isArray(saved.marks) ||
+                  typeof saved.idx !== "number" || saved.idx < 1 ||
+                  saved.idx >= cfg.questions.length || saved.marks.length !== saved.idx)) {
+      saved = null;                                   // stale or malformed — start clean
+      LS.set(cfg.resumeKey, null);
+    }
+    var idx = saved ? saved.idx : 0,
+        score = saved ? saved.score : 0,
+        correctCount = saved ? saved.correct : 0,
+        marks = saved ? saved.marks.slice() : [],
+        answered = false, timer = null, timeLeft = 0;
     var seedBase = dayNumber() * 100;
     var secs = cfg.timed ? timerSecs() : null;
+
+    function checkpoint() {
+      if (!cfg.resumeKey) return;
+      LS.set(cfg.resumeKey, { idx: idx, score: score, correct: correctCount,
+                              marks: marks, ids: deckIds, at: todayKey() });
+    }
 
     var node = el('<div class="card"></div>');
     render(node);
@@ -1720,6 +1799,12 @@
       }
       fact.querySelector("#next").addEventListener("click", function () {
         idx++;
+        // Written BEFORE the next question renders, so a crash or a call taken
+        // between the two lands on a checkpoint that is already correct.
+        // Checkpointing here rather than at answer time means a reader who
+        // quits between answering and tapping Next replays that one question —
+        // no score is lost and no half-answered state has to be rebuilt.
+        checkpoint();
         if (idx < cfg.questions.length) show();
         else cfg.onDone({ score: score, correct: correctCount, total: cfg.questions.length, marks: marks });
       });
@@ -1728,7 +1813,29 @@
 
   // ---------- daily ----------
   function dailyKey() { return "daily." + todayKey() + (settings.ageMode === "kids" ? ".kids" : ""); }
+  // A SEPARATE key, and deliberately not prefixed "daily." — the backup export
+  // scans for "curio.daily." and a half-finished round is not something anyone
+  // wants restored onto another device. Date-stamped, which is what delivers
+  // the CEO's "reset happens on the next day release" for nothing: tomorrow's
+  // key simply does not exist yet.
+  function dailyProgKey() { return "dailyProg." + todayKey() + (settings.ageMode === "kids" ? ".kids" : ""); }
+  function dailyProgress() {
+    var p = LS.get(dailyProgKey(), null);
+    return (p && typeof p.idx === "number" && p.idx > 0 && p.idx < DAILY_COUNT) ? p : null;
+  }
+  // Yesterday's unfinished round is dead weight. Collect first, then remove:
+  // removing while iterating localStorage by index re-indexes it and skips keys.
+  function pruneDailyProgress() {
+    var keep = "curio." + dailyProgKey(), doomed = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf("curio.dailyProg.") === 0 && k !== keep) doomed.push(k);
+    }
+    doomed.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+  }
+
   function startDaily() {
+    pruneDailyProgress();
     var existing = LS.get(dailyKey(), null);
     if (existing) { return dailyResultView(existing, true); }
     var dq = dailyQuestions();
@@ -1739,10 +1846,15 @@
     runQuiz({
       questions: dq,
       timed: false,
+      // Every entry point routes through here — hero button, Train card, the
+      // #daily notification link, a cold boot, the Stats Play button and the
+      // end of onboarding — so resuming by default is one change, not six.
+      resumeKey: dailyProgKey(),
       onDone: function (r) {
         var s = bumpStreak();
         var rec = { score: r.correct, total: r.total, marks: r.marks, streak: s.count, date: todayKey() };
         LS.set(dailyKey(), rec);
+        LS.set(dailyProgKey(), null);   // finished: the completed record owns the day now
         primeNudge();          // today is done — the service worker must not nudge about it
         dailyResultView(rec, false);
       }
@@ -2413,8 +2525,18 @@
         '<div class="scorebig">' + r.score + '</div>' +
         '<h2>' + (isHi ? t("🏆 New high score!") : praise(r.correct, r.total)) + '</h2>' +
         '<div class="sub">' + tf("{c}/{t} correct", { c: r.correct, t: r.total }) + ' · ' + esc(label) + '</div>' +
+        // How the number was reached, next to the number. A score nobody can
+        // explain is a score nobody trusts (CEO, 2026-08-13: "We need to
+        // explain how the points are calculated in the dashboard to the user").
+        '<details class="howscore"><summary>' + t("How these points are worked out") + '</summary>' +
+          '<ul>' +
+            '<li>' + t("<b>100</b> for every right answer.") + '</li>' +
+            '<li>' + t("<b>up to +150</b> for speed — 10 points for each second still on the clock, capped at 15 seconds, so Relaxed can never out-score Normal.") + '</li>' +
+            '<li>' + t("<b>+25 or +50</b> when the question is a harder one.") + '</li>' +
+            '<li>' + t("<b>+25</b> when you recall a Vault answer from memory before seeing the options.") + '</li>' +
+            '<li>' + t("A wrong answer scores nothing — it never takes points away.") + '</li>' +
+          '</ul></details>' +
         '<div class="btnrow" style="justify-content:center">' +
-          '<button class="btn" id="save">' + t("Save to leaderboard") + '</button>' +
           '<button class="btn ghost" id="again">' + t("Play again") + '</button>' +
           '<button class="btn ghost" id="qrHome">🏠 ' + t("Home") + '</button>' +
         '</div>' +
@@ -2424,16 +2546,37 @@
     render(node);
     node.querySelector("#qrHome").addEventListener("click", goHome);
     node.querySelector("#again").addEventListener("click", function () { startQuickfire(cat, region); });
-    node.querySelector("#save").addEventListener("click", function () {
-      var name = (prompt(t("Name for the leaderboard:"), LS.get("playerName", "Curious")) || "").trim().slice(0, 16) || "Curious";
-      LS.set("playerName", name);
-      var board = LS.get("leaderboard", []);
-      board.push({ name: name, pts: r.score, date: todayKey() });
-      board.sort(function (a, b) { return b.pts - a.pts; });
-      LS.set("leaderboard", board.slice(0, 20));
-      node.querySelector("#save").disabled = true;
-      node.querySelector("#msg").textContent = t("Saved! ⭐");
-    });
+
+    // Saved automatically, and only ever ONE row per player (CEO, 2026-08-13:
+    // "each time it asked me to save to the leader board, which lead to
+    // duplicate name on the board... the saving to dashboard should be
+    // automatic as soon as there is a Name saved").
+    // The old flow prompted after every round and PUSHED a new row each time,
+    // so two runs by the same person produced two entries with the same name —
+    // a board that rewards playing twice rather than playing well.
+    var saved = recordScore(r.score);
+    var msg = node.querySelector("#msg");
+    if (saved.best) msg.textContent = tf("Saved as your best — {pts} points. ⭐", { pts: saved.pts });
+    else msg.textContent = tf("Your best is still {pts} points.", { pts: saved.pts });
+  }
+
+  // One device, one player, one row. A device is a person here: the daily five
+  // are the same for everyone, so a shared device cannot produce a fair second
+  // player anyway. Laptops with several genuine users are tracked separately —
+  // see the roadmap issue on multiple instances.
+  function recordScore(pts) {
+    var name = playerName();
+    var board = LS.get("leaderboard", []).filter(function (row) { return row.name !== name; });
+    var mine = LS.get("leaderboard", []).filter(function (row) { return row.name === name; })[0];
+    var best = !mine || pts > mine.pts;
+    board.push({ name: name, pts: best ? pts : mine.pts, date: best ? todayKey() : mine.date });
+    board.sort(function (a, b) { return b.pts - a.pts; });
+    LS.set("leaderboard", board.slice(0, 20));
+    return { best: best, pts: best ? pts : mine.pts };
+  }
+  function playerName() {
+    var n = (LS.get("playerName", "") || "").trim();
+    return n || t("You");
   }
 
   function praise(c, t_) {
@@ -2477,7 +2620,15 @@
         '<h1 class="onb-title">' + s.title + '</h1>' +
         '<p class="onb-text">' + s.text + '</p>' +
         (s.pick === "country" ? '<select class="cselect" id="onbCC" aria-label="' +
-          esc(t("The country you represent")) + '"></select>' : '') +
+          esc(t("The country you represent")) + '"></select>' +
+          // Asked once, here, so no round ever has to interrupt itself to ask
+          // (CEO, 2026-08-13: "we can even ask for the name at the initial set
+          // up, modify the existing one in the settings later"). Optional —
+          // leaving it blank simply shows "You" on the board.
+          '<input class="cselect" id="onbName" type="text" maxlength="16" autocomplete="off" ' +
+            'placeholder="' + esc(t("Your name on the board (optional)")) + '" ' +
+            'aria-label="' + esc(t("Your name on the leaderboard")) + '" ' +
+            'value="' + esc(LS.get("playerName", "")) + '">' : '') +
         '<div class="onb-dots">' + dots + '</div>' +
         '<div class="btnrow" style="justify-content:center">' +
           // Back from screen two onwards: three screens with no way to reread
@@ -2508,13 +2659,27 @@
       if (pre) C.set(pre);   // the pre-selection is what the screen shows, so it is what we honour
     }
 
+    // Persist as it is typed, NOT at finish(). Each onboarding step renders a
+    // fresh node, so by the time finish() runs on the last slide the field from
+    // the country slide is long gone and the name was silently discarded —
+    // measured on a real first run before this line existed.
+    var nmField = node.querySelector("#onbName");
+    if (nmField) {
+      var saveName = function () { LS.set("playerName", (nmField.value || "").trim().slice(0, 16)); };
+      nmField.addEventListener("input", saveName);
+      nmField.addEventListener("change", saveName);
+    }
+
     render(node);
     function finish(toDaily) {
+      var nm = node.querySelector("#onbName");
+      if (nm) LS.set("playerName", (nm.value || "").trim().slice(0, 16));
       LS.set("onboarded", true);
       tabBar.classList.remove("hidden");   // first run: bar was hidden until onboarded
       if (toDaily) startDaily(); else goHome();
     }
     node.querySelector("#onbNext").addEventListener("click", function () {
+      if (nmField) LS.set("playerName", (nmField.value || "").trim().slice(0, 16));
       if (last) finish(true); else onboardingView(step + 1);
     });
     var bk = node.querySelector("#onbBack");

@@ -15,6 +15,13 @@ wrangler.prod.jsonc
 tools
 worker
 RELEASE.md
+# The audit record. Generated into the repo root, which IS the assets directory,
+# so without these two lines the next deploy would publish the company's entire
+# release history — every version, every commit subject, question counts over
+# time — at qpio.app/RELEASES.md. It reaches the CEO through hq.qpioapp.com,
+# behind Cloudflare Access, and must not have a second public door.
+RELEASES.md
+releases.json
 README.md
 MORNING.md
 RESEARCH.md

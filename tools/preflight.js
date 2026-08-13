@@ -64,6 +64,35 @@ else if (htmlV[0] && (cacheM[1] !== htmlV[0] || swV[0] !== htmlV[0]))
   fail('CACHE name does not match assets', `cache v${cacheM[1]} vs assets v${htmlV[0]}`);
 else pass('cache name matches assets', 'qpio-v' + (cacheM && cacheM[1]));
 
+/* A version number must identify ONE content set. On 2026-08-13 v67 was
+ * deployed twice — 719 questions, then 749 — without a bump. The edge served
+ * the new file, but every service worker that had already precached
+ * questions.js?v=67 kept the old one and would never ask again: a reader in
+ * that window would have been frozen at 719 silently, forever.
+ *
+ * The checks above could not see it. They verify index.html, sw.js and the
+ * cache name AGREE, and they did. What was missing is memory of what was last
+ * shipped under that number. This records a fingerprint of the content each
+ * version carries and refuses a version whose content has moved since. */
+const FP = path.join(ROOT, 'tools', '.version-fingerprints.json');
+try {
+  const crypto = require('crypto');
+  const v = htmlV[0];
+  const stamp = crypto.createHash('sha256').update(
+    ['src/questions.js', 'src/questions.fr.js', 'src/app.js', 'src/styles.css', 'src/i18n.js']
+      .map(f => fs.existsSync(path.join(ROOT, f)) ? read(path.join(ROOT, f)) : '').join('\x1f')
+  ).digest('hex').slice(0, 16);
+  const seen = fs.existsSync(FP) ? JSON.parse(read(FP)) : {};
+  if (seen[v] && seen[v] !== stamp) {
+    fail('version already used for different content',
+      `v${v} was previously built from ${seen[v]}, now ${stamp} — bump the version or a cached reader never gets this build`);
+  } else {
+    pass('version fingerprint', `v${v} → ${stamp}${seen[v] ? ' (unchanged)' : ' (new)'}`);
+    seen[v] = stamp;
+    fs.writeFileSync(FP, JSON.stringify(seen, null, 1) + '\n', 'utf8');
+  }
+} catch (e) { warn('version fingerprint', e.message); }
+
 /* every script/style index.html loads must be precached by the worker */
 const htmlAssets = [...html.matchAll(/(?:src|href)="(src\/[^"?]+)\?v=/g)].map(m => m[1]);
 const missing = htmlAssets.filter(a => !sw.includes('./' + a + '?v='));
@@ -126,6 +155,15 @@ try {
   const out = String(e.stdout || '') + String(e.stderr || '');
   const miss = (out.match(/(\d+) missing/) || [])[1];
   fail('untranslated UI strings', (miss || '?') + ' missing — see py tools/check_i18n.py');
+}
+
+/* ---------- 4b. the sign-off reader ---------- */
+head('4b · Release audit');
+try {
+  cp.execFileSync(process.execPath, [path.join(ROOT, 'tools', 'releases.test.js')], { stdio: 'pipe' });
+  pass('sign-off verdict reader', '21 cases — an audit record that cannot be falsified is part of the gate');
+} catch (e) {
+  fail('sign-off verdict reader', 'tools/releases.test.js failed — run it to see which case');
 }
 
 /* ---------- 5. sources (network, --full only) ---------- */
