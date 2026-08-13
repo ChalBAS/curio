@@ -2659,6 +2659,17 @@
       if (pre) C.set(pre);   // the pre-selection is what the screen shows, so it is what we honour
     }
 
+    // Persist as it is typed, NOT at finish(). Each onboarding step renders a
+    // fresh node, so by the time finish() runs on the last slide the field from
+    // the country slide is long gone and the name was silently discarded —
+    // measured on a real first run before this line existed.
+    var nmField = node.querySelector("#onbName");
+    if (nmField) {
+      var saveName = function () { LS.set("playerName", (nmField.value || "").trim().slice(0, 16)); };
+      nmField.addEventListener("input", saveName);
+      nmField.addEventListener("change", saveName);
+    }
+
     render(node);
     function finish(toDaily) {
       var nm = node.querySelector("#onbName");
@@ -2668,6 +2679,7 @@
       if (toDaily) startDaily(); else goHome();
     }
     node.querySelector("#onbNext").addEventListener("click", function () {
+      if (nmField) LS.set("playerName", (nmField.value || "").trim().slice(0, 16));
       if (last) finish(true); else onboardingView(step + 1);
     });
     var bk = node.querySelector("#onbBack");
