@@ -83,6 +83,111 @@ def lead_images(batch):
     return out
 
 
+# Icons, badges and maintenance graphics that appear on thousands of articles.
+# Any of these as "the picture of the topic" would be worse than the emoji tile.
+_JUNK = re.compile(
+    r"(commons-logo|wiki(pedia|media|source|quote|books|versity|data)|"
+    r"question_book|ambox|edit-clear|folder|padlock|lock-|disambig|"
+    r"portal|symbol_|nuvola|crystal_|text_document|magnify-clip|"
+    r"red_pog|blue_pog|green_pog|location_dot|increase2?\.svg|decrease2?\.svg|"
+    r"flag_of|coat_of_arms|loudspeaker|speakerlink|sound-icon|"
+    r"office-book|open_access|closed_access|free-to-read|"
+    r"gnome-|oojs|vector_|cscr-|star_full|monogram)", re.I)
+
+
+def _pick(title_slug, candidates):
+    """Choose the image most likely to BE the topic, not merely near it.
+
+    Alphabetical order is what the API gives back, and alphabetical order put a
+    photograph of salami first on the Collagen article. So: prefer a file whose
+    own name shares a significant word with the topic, and only fall back to
+    first-alphabetical when nothing matches.
+    """
+    words = [w.lower() for w in re.split(r"[_\s\-(),.]+", title_slug)
+             if len(w) > 3 and w.lower() not in
+             ("anatomy", "computer", "scientist", "system", "number", "theory", "human")]
+    if not words:
+        return candidates[0] if candidates else None
+
+    def name_of(c):
+        return re.sub(r"^File:", "", c).rsplit(".", 1)[0].lower()
+
+    # A filename that merely CONTAINS the topic is not about the topic: the
+    # Collagen article's alphabetically-first image is "Beretta Salami and
+    # Collagen Casing", and a photograph of salami for the body's most abundant
+    # protein is worse than no picture at all. So the topic word has to lead the
+    # filename, not merely appear somewhere in it.
+    for c in candidates:
+        first = re.split(r"[_\s\-(),.]+", name_of(c))[0]
+        if any(first == w or first.startswith(w) for w in words):
+            return c
+    for c in candidates:                      # then: appears anywhere
+        if any(w in name_of(c) for w in words):
+            return c
+    return candidates[0] if candidates else None
+
+
+def page_images(batch):
+    """Fallback: the first REAL image on the article, for pages with no lead image.
+
+    CEO, 2026-08-13: "all anatomy question need to be illustrated… wiki must
+    have many… there is no excuse not to have pictures." He is right, and
+    `pageimages` was the wrong question to ask: it returns only the lead image,
+    so an article whose diagram sits in the body — which is most abstract topics
+    and many anatomy pages — came back empty and fell to a category emoji.
+
+    This still takes an image the ARTICLE ITSELF uses, which keeps the guarantee
+    that the picture is of the thing. A blind Commons search would not.
+    """
+    # ONE TITLE PER REQUEST. `prop=images` with `imlimit` and several titles
+    # returns a complete list only for the first page — MediaWiki says so and
+    # this code ignored it, so batches of 20 silently recovered almost nothing
+    # while looking like they had worked. Fifty extra requests is the price of
+    # an answer that is actually true.
+    out = {}
+    for slug in batch:
+        try:
+            data = get(API, {
+                "action": "query", "format": "json", "formatversion": "2",
+                "prop": "images", "imlimit": "60", "redirects": "1",
+                "titles": slug.replace("_", " "),
+            })
+        except Exception:
+            continue
+        pages = data.get("query", {}).get("pages", []) or []
+        if not pages:
+            continue
+        cands = []
+        for im in pages[0].get("images", []) or []:
+            title = im.get("title", "")
+            if not re.search(r"\.(jpe?g|png|svg|gif)$", title, re.I):
+                continue
+            if _JUNK.search(title):
+                continue
+            cands.append(title)
+        chosen = _pick(slug, cands)
+        if chosen:
+            out[slug] = chosen
+        time.sleep(0.12)
+    return out
+
+
+def thumbs_for(files):
+    """{'File:X': thumb_url} at THUMB width, straight from Commons."""
+    out = {}
+    data = get(COMMONS, {
+        "action": "query", "format": "json", "formatversion": "2",
+        "prop": "imageinfo", "iiprop": "url", "iiurlwidth": str(THUMB),
+        "titles": "|".join(files),
+    })
+    for page in data.get("query", {}).get("pages", []) or []:
+        info = (page.get("imageinfo") or [{}])[0]
+        url = info.get("thumburl") or info.get("url")
+        if url:
+            out[page.get("title", "").replace(" ", "_")] = url.split("?")[0]
+    return out
+
+
 def credits(files):
     """{'File:X': {author, licence, page}} — everything attribution needs."""
     data = get(COMMONS, {
@@ -129,6 +234,28 @@ def main():
             files[s] = fn
         print("  images %d/%d" % (min(i + 50, len(slugs)), len(slugs)))
         time.sleep(0.4)
+
+    # Second pass for whatever the lead-image query could not answer.
+    gap = [s for s in slugs if s not in imgs]
+    if gap:
+        print("\nno lead image for %d — trying the article's own body images" % len(gap))
+        body = page_images(gap)                 # one request per title, by necessity
+        wanted = sorted(set(body.values()))
+        turls = {}
+        for i in range(0, len(wanted), 50):
+            try:
+                turls.update(thumbs_for(wanted[i:i + 50]))
+            except Exception as e:
+                print("  thumb batch %d failed: %s" % (i // 50 + 1, e))
+            time.sleep(0.4)
+        gained = 0
+        for s, fn in body.items():
+            u = turls.get(fn.replace(" ", "_"))
+            if u:
+                imgs[s] = u
+                files[s] = fn.replace(" ", "_")
+                gained += 1
+        print("  recovered %d" % gained)
 
     uniq = sorted(set(files.values()))
     cred = {}
