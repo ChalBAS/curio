@@ -6,8 +6,13 @@
   "main": 64
  },
  "drift": null,
- "awaiting": [
-  65
+ "awaiting": [],
+ "rejected": [
+  {
+   "version": 65,
+   "issue": 46,
+   "at": "2026-08-13T01:45:59Z"
+  }
  ],
  "breaches": [],
  "releases": [
@@ -19,8 +24,11 @@
    "to": "2026-08-13",
    "questions": 651,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 45
+    "status": "REJECTED",
+    "at": "2026-08-13T01:45:59Z",
+    "who": "ChalBAS",
+    "issue": 46,
+    "where": "body"
    },
    "messageClash": [],
    "commits": [
@@ -33,6 +41,11 @@
      "sha": "a4ff267",
      "date": "2026-08-13",
      "subject": "Release sign-off and the audit trail, generated from git"
+    },
+    {
+     "sha": "63ad9d3",
+     "date": "2026-08-13",
+     "subject": "Keep the audit record off the public edge"
     }
    ]
   },

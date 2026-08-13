@@ -12,8 +12,8 @@ commit, not from the commit message.*
 | Tip of `main` | v64 |
 | Generated | 2026-08-13 |
 
-> ⏳ **Awaiting your sign-off:** v65. Reply **Accepted for production**
-> — or **Rejected — <reason>** — in that version's release issue.
+> 🔴 **v65 was rejected** on 2026-08-13 ([#46](https://github.com/ChalBAS/curio-hq/issues/46)). It stays on UAT until the
+> reported defects are fixed and a new build is put up for sign-off.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
 regime with no second party to sign, and is marked **pre-process** — unsigned by design,
@@ -23,10 +23,11 @@ not by omission.*
 
 ## v65 — ⏳ on UAT
 
-2026-08-12 → 2026-08-13 · 651 questions · sign-off: awaiting you, [#45](https://github.com/ChalBAS/curio-hq/issues/45)
+2026-08-12 → 2026-08-13 · 651 questions · sign-off: **rejected**, [#46](https://github.com/ChalBAS/curio-hq/issues/46)
 
 - `b332613` Human body: 20 questions, and the first real exercise of the UAT route
 - `a4ff267` Release sign-off and the audit trail, generated from git
+- `63ad9d3` Keep the audit record off the public edge
 
 ## v64 — 🟢 live
 

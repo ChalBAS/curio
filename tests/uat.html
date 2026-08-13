@@ -194,7 +194,13 @@
     lines.push("- [ ] **It feels right** — nothing awkward, nothing confusing");
     lines.push("");
     lines.push("### Sign-off");
-    lines.push("> _Replace this line with_ **Accepted for production** _or_ **Rejected — <reason>**");
+    // The example verdicts are in `code spans` on purpose: the audit reader
+    // strips code before matching, so an UNEDITED template can never be read as
+    // a decision. Whatever is typed in plain text below it is the decision.
+    lines.push("_Write your verdict on the next line — either_ `Accepted for production` _or_ `Rejected — <reason>`.");
+    lines.push("");
+    lines.push("<!-- your verdict below this line -->");
+    lines.push("");
     reportText = lines.join("\n");
 
     document.getElementById("actions").style.display = "block";

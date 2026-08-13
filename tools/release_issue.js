@@ -49,7 +49,12 @@ const delta = (live && live.questions !== null && rel.questions !== null)
   ? `${live.questions.toLocaleString()} → **${rel.questions.toLocaleString()}**`
   : (rel.questions === null ? 'unknown' : rel.questions.toLocaleString());
 
+const { MARKER } = require('./signoff');
+
 const body = [
+  // Marks this body as tooling-written so the audit reader never mistakes the
+  // instruction below for the CEO's decision. Invisible when rendered.
+  MARKER,
   `**To ship this, reply with one sentence: \`Accepted for production\` — or \`Rejected — <reason>\`.**`,
   '',
   `Nothing reaches qpio.app until you do. Readers are on **v${live ? live.version : '?'}** right now.`,

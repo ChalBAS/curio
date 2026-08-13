@@ -100,7 +100,7 @@ let issues = [];
 try {
   issues = JSON.parse(cp.execFileSync('gh',
     ['issue', 'list', '--repo', 'ChalBAS/curio-hq', '--label', 'release', '--state', 'all',
-     '--limit', '200', '--json', 'number,title,state,createdAt,closedAt,body,comments'],
+     '--limit', '200', '--json', 'number,title,state,createdAt,closedAt,body,comments,author'],
     { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 }));
 } catch {
   issues = null;                       // gh unavailable — say so rather than imply "none"
@@ -109,11 +109,13 @@ try {
 function signoffFor(version) {
   if (version === null || version < PROCESS_FROM) return { status: 'PRE-PROCESS' };
   if (!issues) return { status: 'UNKNOWN', note: 'GitHub unreachable when this was generated' };
-  const hit = issues.find(i => new RegExp('\\bv' + version + '\\b').test(i.title));
-  if (!hit) return { status: 'NO ISSUE' };
-  // Deliberately NOT hit.body — see the note on `strip`.
-  const v = verdictOf(hit.comments);
-  return v ? { ...v, issue: hit.number } : { status: 'AWAITING', issue: hit.number };
+  // ALL issues for this version, not the first found. v65 has two: the sign-off
+  // ticket the tooling opened (#45) and the failed acceptance report the suite
+  // posted (#46). Taking only one of them is how a real rejection goes unseen.
+  const hits = issues.filter(i => new RegExp('\\bv' + version + '\\b').test(i.title));
+  if (!hits.length) return { status: 'NO ISSUE' };
+  const v = verdictOf(hits);
+  return v ? v : { status: 'AWAITING', issue: hits[hits.length - 1].number, issues: hits.map(h => h.number) };
 }
 
 /* ---------- 5. what is actually being served right now ---------- */
@@ -173,7 +175,12 @@ async function liveVersion(url) {
     drift: prodLive !== headVersion
       ? `main is v${headVersion} but production serves v${prodLive}`
       : null,
-    awaiting: releases.filter(r => r.state === 'ON UAT').map(r => r.version),
+    // "On UAT" and "waiting for a decision" are different states and conflating
+    // them told the CEO v65 was awaiting him for hours after he had rejected it.
+    awaiting: releases.filter(r => r.state === 'ON UAT' &&
+      (r.signoff.status === 'AWAITING' || r.signoff.status === 'NO ISSUE')).map(r => r.version),
+    rejected: releases.filter(r => r.state === 'ON UAT' && r.signoff.status === 'REJECTED')
+      .map(r => ({ version: r.version, issue: r.signoff.issue, at: r.signoff.at })),
     breaches,
     releases
   };
@@ -203,10 +210,16 @@ async function liveVersion(url) {
   A('');
   if (data.drift) A(`> ⚠️ **Drift:** ${data.drift}.`), A('');
   if (data.awaiting.length) {
-    A(`> ⏳ **Awaiting your sign-off:** v${data.awaiting.join(', v')}. Reply **Accepted for production**`);
+    A(`> ⏳ **Awaiting your sign-off:** v${data.awaiting.join(', v')}. Write **Accepted for production**`);
     A('> — or **Rejected — <reason>** — in that version\'s release issue.');
     A('');
   }
+  data.rejected.forEach(r => {
+    A(`> 🔴 **v${r.version} was rejected** on ${String(r.at).slice(0, 10)} ` +
+      `([#${r.issue}](https://github.com/ChalBAS/curio-hq/issues/${r.issue})). It stays on UAT until the`);
+    A('> reported defects are fixed and a new build is put up for sign-off.');
+    A('');
+  });
   if (breaches.length) {
     A('> 🔴 **Reached readers without a recorded sign-off:** ' +
       breaches.map(b => `v${b.version} (${b.status})`).join(', ') + '.');
