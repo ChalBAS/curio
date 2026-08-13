@@ -1,9 +1,9 @@
 {
  "generated": "2026-08-13",
  "live": {
-  "production": 64,
+  "production": 70,
   "uat": 70,
-  "main": 64
+  "main": 70
  },
  "drift": null,
  "awaiting": [
@@ -13,7 +13,12 @@
   66
  ],
  "rejected": [],
- "breaches": [],
+ "breaches": [
+  {
+   "version": 70,
+   "status": "NO ISSUE"
+  }
+ ],
  "releases": [
   {
    "version": 70,
@@ -31,6 +36,11 @@
      "sha": "4cc0bdf",
      "date": "2026-08-13",
      "subject": "v70 - the name typed at setup was being thrown away"
+    },
+    {
+     "sha": "8c9050a",
+     "date": "2026-08-13",
+     "subject": "Release record: v70 on UAT, accepted for production"
     }
    ]
   },
@@ -172,8 +182,27 @@
    ]
   },
   {
-   "version": 64,
+   "version": 70,
    "state": "LIVE",
+   "branch": "main",
+   "from": "2026-08-13",
+   "to": "2026-08-13",
+   "questions": 749,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "7c63d85",
+     "date": "2026-08-13",
+     "subject": "Promote v70 to production"
+    }
+   ]
+  },
+  {
+   "version": 64,
+   "state": "SUPERSEDED",
    "branch": "main",
    "from": "2026-08-11",
    "to": "2026-08-12",

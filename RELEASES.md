@@ -7,13 +7,16 @@ commit, not from the commit message.*
 
 | | |
 |---|---|
-| Live to readers | **v64** at qpio.app |
+| Live to readers | **v70** at qpio.app |
 | On UAT | **v70** at uat.qpio.app |
-| Tip of `main` | v64 |
+| Tip of `main` | v70 |
 | Generated | 2026-08-13 |
 
 > ⏳ **Awaiting your sign-off:** v70, v69, v67, v66. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
+
+> 🔴 **Reached readers without a recorded sign-off:** v70 (NO ISSUE).
+> This is a process breach and is recorded rather than hidden.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
 regime with no second party to sign, and is marked **pre-process** — unsigned by design,
@@ -26,6 +29,7 @@ not by omission.*
 2026-08-13 · 749 questions · sign-off: **no release issue**
 
 - `4cc0bdf` v70 - the name typed at setup was being thrown away
+- `8c9050a` Release record: v70 on UAT, accepted for production
 
 ## v69 — ⏳ on UAT
 
@@ -63,7 +67,13 @@ not by omission.*
 - `63ad9d3` Keep the audit record off the public edge
 - `8f1c715` The audit reader missed a real rejection - fixed, and tested both ways
 
-## v64 — 🟢 live
+## v70 — 🟢 live
+
+2026-08-13 · 749 questions · sign-off: **no release issue**
+
+- `7c63d85` Promote v70 to production
+
+## v64 — · shipped
 
 2026-08-11 → 2026-08-12 · 631 questions · sign-off: pre-process
 
