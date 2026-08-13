@@ -6,12 +6,7 @@
   "main": 70
  },
  "drift": null,
- "awaiting": [
-  70,
-  69,
-  67,
-  66
- ],
+ "awaiting": [],
  "rejected": [],
  "breaches": [
   {
@@ -20,167 +15,6 @@
   }
  ],
  "releases": [
-  {
-   "version": 70,
-   "state": "ON UAT",
-   "branch": "uat",
-   "from": "2026-08-13",
-   "to": "2026-08-13",
-   "questions": 749,
-   "signoff": {
-    "status": "NO ISSUE"
-   },
-   "messageClash": [],
-   "commits": [
-    {
-     "sha": "4cc0bdf",
-     "date": "2026-08-13",
-     "subject": "v70 - the name typed at setup was being thrown away"
-    },
-    {
-     "sha": "8c9050a",
-     "date": "2026-08-13",
-     "subject": "Release record: v70 on UAT, accepted for production"
-    }
-   ]
-  },
-  {
-   "version": 69,
-   "state": "ON UAT",
-   "branch": "uat",
-   "from": "2026-08-13",
-   "to": "2026-08-13",
-   "questions": 749,
-   "signoff": {
-    "status": "NO ISSUE"
-   },
-   "messageClash": [],
-   "commits": [
-    {
-     "sha": "bd248a1",
-     "date": "2026-08-13",
-     "subject": "v69 - the five items from the v68 sign-off, and a UAT badge"
-    }
-   ]
-  },
-  {
-   "version": 68,
-   "state": "ON UAT",
-   "branch": "uat",
-   "from": "2026-08-13",
-   "to": "2026-08-13",
-   "questions": 749,
-   "signoff": {
-    "status": "ACCEPTED",
-    "at": "2026-08-13T14:51:02Z",
-    "who": "ChalBAS",
-    "issue": 51,
-    "where": "body"
-   },
-   "messageClash": [],
-   "commits": [
-    {
-     "sha": "01393d2",
-     "date": "2026-08-13",
-     "subject": "v68 - one version must mean one content set, and preflight now enforces it"
-    }
-   ]
-  },
-  {
-   "version": 67,
-   "state": "ON UAT",
-   "branch": "uat",
-   "from": "2026-08-13",
-   "to": "2026-08-13",
-   "questions": 749,
-   "signoff": {
-    "status": "NO ISSUE"
-   },
-   "messageClash": [],
-   "commits": [
-    {
-     "sha": "0bc459e",
-     "date": "2026-08-13",
-     "subject": "v67 continued - the top-up, and four questions rescued rather than binned"
-    }
-   ]
-  },
-  {
-   "version": 66,
-   "state": "ON UAT",
-   "branch": "uat",
-   "from": "2026-08-13",
-   "to": "2026-08-13",
-   "questions": 651,
-   "signoff": {
-    "status": "AWAITING",
-    "issue": 48,
-    "issues": [
-     48
-    ]
-   },
-   "messageClash": [],
-   "commits": [
-    {
-     "sha": "3e1d8aa",
-     "date": "2026-08-13",
-     "subject": "v66 - resume where you stopped, the button row stops wrapping, and the fact gets its space back"
-    },
-    {
-     "sha": "bc37ca8",
-     "date": "2026-08-13",
-     "subject": "Smallest phones too: 320x568 was broken on all five questions and nobody knew"
-    },
-    {
-     "sha": "c3409de",
-     "date": "2026-08-13",
-     "subject": "Release record: v66 up for sign-off"
-    },
-    {
-     "sha": "e204113",
-     "date": "2026-08-13",
-     "subject": "Pictures: 78 entities had none, now 10 - and the fetcher was asking the wrong question"
-    }
-   ]
-  },
-  {
-   "version": 65,
-   "state": "ON UAT",
-   "branch": "uat",
-   "from": "2026-08-12",
-   "to": "2026-08-13",
-   "questions": 651,
-   "signoff": {
-    "status": "ACCEPTED",
-    "at": "2026-08-13T08:12:09Z",
-    "who": "ChalBAS",
-    "issue": 49,
-    "where": "body"
-   },
-   "messageClash": [],
-   "commits": [
-    {
-     "sha": "b332613",
-     "date": "2026-08-12",
-     "subject": "Human body: 20 questions, and the first real exercise of the UAT route"
-    },
-    {
-     "sha": "a4ff267",
-     "date": "2026-08-13",
-     "subject": "Release sign-off and the audit trail, generated from git"
-    },
-    {
-     "sha": "63ad9d3",
-     "date": "2026-08-13",
-     "subject": "Keep the audit record off the public edge"
-    },
-    {
-     "sha": "8f1c715",
-     "date": "2026-08-13",
-     "subject": "The audit reader missed a real rejection - fixed, and tested both ways"
-    }
-   ]
-  },
   {
    "version": 70,
    "state": "LIVE",
@@ -197,6 +31,11 @@
      "sha": "7c63d85",
      "date": "2026-08-13",
      "subject": "Promote v70 to production"
+    },
+    {
+     "sha": "ac4ecf5",
+     "date": "2026-08-13",
+     "subject": "Release record: v70 live in production"
     }
    ]
   },

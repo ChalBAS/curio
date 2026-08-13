@@ -12,9 +12,6 @@ commit, not from the commit message.*
 | Tip of `main` | v70 |
 | Generated | 2026-08-13 |
 
-> ⏳ **Awaiting your sign-off:** v70, v69, v67, v66. Write **Accepted for production**
-> — or **Rejected — <reason>** — in that version's release issue.
-
 > 🔴 **Reached readers without a recorded sign-off:** v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
 
@@ -24,54 +21,12 @@ not by omission.*
 
 ---
 
-## v70 — ⏳ on UAT
-
-2026-08-13 · 749 questions · sign-off: **no release issue**
-
-- `4cc0bdf` v70 - the name typed at setup was being thrown away
-- `8c9050a` Release record: v70 on UAT, accepted for production
-
-## v69 — ⏳ on UAT
-
-2026-08-13 · 749 questions · sign-off: **no release issue**
-
-- `bd248a1` v69 - the five items from the v68 sign-off, and a UAT badge
-
-## v68 — ⏳ on UAT
-
-2026-08-13 · 749 questions · sign-off: accepted, [#51](https://github.com/ChalBAS/curio-hq/issues/51)
-
-- `01393d2` v68 - one version must mean one content set, and preflight now enforces it
-
-## v67 — ⏳ on UAT
-
-2026-08-13 · 749 questions · sign-off: **no release issue**
-
-- `0bc459e` v67 continued - the top-up, and four questions rescued rather than binned
-
-## v66 — ⏳ on UAT
-
-2026-08-13 · 651 questions · sign-off: awaiting you, [#48](https://github.com/ChalBAS/curio-hq/issues/48)
-
-- `3e1d8aa` v66 - resume where you stopped, the button row stops wrapping, and the fact gets its space back
-- `bc37ca8` Smallest phones too: 320x568 was broken on all five questions and nobody knew
-- `c3409de` Release record: v66 up for sign-off
-- `e204113` Pictures: 78 entities had none, now 10 - and the fetcher was asking the wrong question
-
-## v65 — ⏳ on UAT
-
-2026-08-12 → 2026-08-13 · 651 questions · sign-off: accepted, [#49](https://github.com/ChalBAS/curio-hq/issues/49)
-
-- `b332613` Human body: 20 questions, and the first real exercise of the UAT route
-- `a4ff267` Release sign-off and the audit trail, generated from git
-- `63ad9d3` Keep the audit record off the public edge
-- `8f1c715` The audit reader missed a real rejection - fixed, and tested both ways
-
 ## v70 — 🟢 live
 
 2026-08-13 · 749 questions · sign-off: **no release issue**
 
 - `7c63d85` Promote v70 to production
+- `ac4ecf5` Release record: v70 live in production
 
 ## v64 — · shipped
 

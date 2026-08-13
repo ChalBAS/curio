@@ -58,9 +58,17 @@ function commitsOn(ref) {
 
 const mainCommits = commitsOn('main');
 const uatCommits = commitsOn('uat');
-const mainShas = new Set(mainCommits.map(c => c.sha));
-// On uat but not yet merged to main: the queue awaiting sign-off.
-const pending = uatCommits.filter(c => !mainShas.has(c.sha)).reverse();
+// Commits on uat that main cannot reach — i.e. genuinely not yet promoted.
+// `git log main..uat` is the only correct test. The first version compared SHA
+// lists built with --first-parent, and a --no-ff merge hangs the merged commits
+// off the SECOND parent, so main's first-parent walk never contains them. Every
+// promoted version therefore looked unmerged forever: the HQ page was still
+// telling the CEO that v70 was "on UAT and waiting for you" minutes after it
+// had gone live to readers.
+const pendingShas = new Set(
+  gitQuiet('log', '--pretty=format:%H', 'main..uat').split('\n').filter(Boolean)
+);
+const pending = uatCommits.filter(c => pendingShas.has(c.sha)).reverse();
 
 /* ---------- 2. the version each commit actually shipped ---------- */
 const verCache = new Map();
