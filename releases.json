@@ -2,22 +2,99 @@
  "generated": "2026-08-13",
  "live": {
   "production": 64,
-  "uat": 66,
+  "uat": 70,
   "main": 64
  },
  "drift": null,
  "awaiting": [
+  70,
+  69,
+  67,
   66
  ],
- "rejected": [
-  {
-   "version": 65,
-   "issue": 46,
-   "at": "2026-08-13T01:45:59Z"
-  }
- ],
+ "rejected": [],
  "breaches": [],
  "releases": [
+  {
+   "version": 70,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-13",
+   "to": "2026-08-13",
+   "questions": 749,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "4cc0bdf",
+     "date": "2026-08-13",
+     "subject": "v70 - the name typed at setup was being thrown away"
+    }
+   ]
+  },
+  {
+   "version": 69,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-13",
+   "to": "2026-08-13",
+   "questions": 749,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "bd248a1",
+     "date": "2026-08-13",
+     "subject": "v69 - the five items from the v68 sign-off, and a UAT badge"
+    }
+   ]
+  },
+  {
+   "version": 68,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-13",
+   "to": "2026-08-13",
+   "questions": 749,
+   "signoff": {
+    "status": "ACCEPTED",
+    "at": "2026-08-13T14:51:02Z",
+    "who": "ChalBAS",
+    "issue": 51,
+    "where": "body"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "01393d2",
+     "date": "2026-08-13",
+     "subject": "v68 - one version must mean one content set, and preflight now enforces it"
+    }
+   ]
+  },
+  {
+   "version": 67,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-13",
+   "to": "2026-08-13",
+   "questions": 749,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "0bc459e",
+     "date": "2026-08-13",
+     "subject": "v67 continued - the top-up, and four questions rescued rather than binned"
+    }
+   ]
+  },
   {
    "version": 66,
    "state": "ON UAT",
@@ -26,7 +103,11 @@
    "to": "2026-08-13",
    "questions": 651,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 48,
+    "issues": [
+     48
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -39,6 +120,16 @@
      "sha": "bc37ca8",
      "date": "2026-08-13",
      "subject": "Smallest phones too: 320x568 was broken on all five questions and nobody knew"
+    },
+    {
+     "sha": "c3409de",
+     "date": "2026-08-13",
+     "subject": "Release record: v66 up for sign-off"
+    },
+    {
+     "sha": "e204113",
+     "date": "2026-08-13",
+     "subject": "Pictures: 78 entities had none, now 10 - and the fetcher was asking the wrong question"
     }
    ]
   },
@@ -50,10 +141,10 @@
    "to": "2026-08-13",
    "questions": 651,
    "signoff": {
-    "status": "REJECTED",
-    "at": "2026-08-13T01:45:59Z",
+    "status": "ACCEPTED",
+    "at": "2026-08-13T08:12:09Z",
     "who": "ChalBAS",
-    "issue": 46,
+    "issue": 49,
     "where": "body"
    },
    "messageClash": [],

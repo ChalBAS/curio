@@ -8,15 +8,12 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v64** at qpio.app |
-| On UAT | **v66** at uat.qpio.app |
+| On UAT | **v70** at uat.qpio.app |
 | Tip of `main` | v64 |
 | Generated | 2026-08-13 |
 
-> ⏳ **Awaiting your sign-off:** v66. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v70, v69, v67, v66. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
-
-> 🔴 **v65 was rejected** on 2026-08-13 ([#46](https://github.com/ChalBAS/curio-hq/issues/46)). It stays on UAT until the
-> reported defects are fixed and a new build is put up for sign-off.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
 regime with no second party to sign, and is marked **pre-process** — unsigned by design,
@@ -24,16 +21,42 @@ not by omission.*
 
 ---
 
+## v70 — ⏳ on UAT
+
+2026-08-13 · 749 questions · sign-off: **no release issue**
+
+- `4cc0bdf` v70 - the name typed at setup was being thrown away
+
+## v69 — ⏳ on UAT
+
+2026-08-13 · 749 questions · sign-off: **no release issue**
+
+- `bd248a1` v69 - the five items from the v68 sign-off, and a UAT badge
+
+## v68 — ⏳ on UAT
+
+2026-08-13 · 749 questions · sign-off: accepted, [#51](https://github.com/ChalBAS/curio-hq/issues/51)
+
+- `01393d2` v68 - one version must mean one content set, and preflight now enforces it
+
+## v67 — ⏳ on UAT
+
+2026-08-13 · 749 questions · sign-off: **no release issue**
+
+- `0bc459e` v67 continued - the top-up, and four questions rescued rather than binned
+
 ## v66 — ⏳ on UAT
 
-2026-08-13 · 651 questions · sign-off: **no release issue**
+2026-08-13 · 651 questions · sign-off: awaiting you, [#48](https://github.com/ChalBAS/curio-hq/issues/48)
 
 - `3e1d8aa` v66 - resume where you stopped, the button row stops wrapping, and the fact gets its space back
 - `bc37ca8` Smallest phones too: 320x568 was broken on all five questions and nobody knew
+- `c3409de` Release record: v66 up for sign-off
+- `e204113` Pictures: 78 entities had none, now 10 - and the fetcher was asking the wrong question
 
 ## v65 — ⏳ on UAT
 
-2026-08-12 → 2026-08-13 · 651 questions · sign-off: **rejected**, [#46](https://github.com/ChalBAS/curio-hq/issues/46)
+2026-08-12 → 2026-08-13 · 651 questions · sign-off: accepted, [#49](https://github.com/ChalBAS/curio-hq/issues/49)
 
 - `b332613` Human body: 20 questions, and the first real exercise of the UAT route
 - `a4ff267` Release sign-off and the audit trail, generated from git
