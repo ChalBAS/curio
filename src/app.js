@@ -1297,7 +1297,7 @@
       '<div class="card">' +
         '<div class="section-title" style="margin-top:0">🗝️ ' + t("Your progress") + '</div>' +
         '<p class="mini" style="margin:0 0 12px">' +
-          t("Everything you have learned is stored on this device only. Copy your backup code before you reinstall or change phone — nothing else can bring it back.") +
+          t("Your progress is currently stored on this device. Copy your backup code before you reinstall or change phone — nothing else can bring it back.") +
         '</p>' +
         '<div class="btnrow">' +
           '<button class="btn" id="bkCopy">' + t("Copy backup code") + '</button>' +
@@ -2598,21 +2598,21 @@
     step = step || 0;
     var slides = [
       { emoji: "🧭", title: t("Knowledge should be free."),
-        text: t("Qpio (say: cue-pee-oh) is a free knowledge app — no paywalls, nothing sold about you, ever. Every answer teaches you a fact worth keeping, with the source one tap away.") },
+        text: t("Qpio (say: cue-pee-oh) is free to use. There are no paywalls. Qpio doesn't interrupt your learning with ads. When you want to go further, you may find links to relevant books, museums, exhibitions and other resources.") },
       // 🗓️ replaced 📅 — the calendar emoji renders with "17 JUL" printed on
       // it on Android and Windows (it is the Unicode sample date), so the
       // screen appeared to name a date nobody could explain (CEO, 2026-08-09).
-      { emoji: "🗓️", title: t("Five questions a day."),
-        text: t("Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.") },
+      { emoji: "🗓️", title: t("Five questions."),
+        text: t("The same five for everyone, everywhere. Every answer teaches you something worth knowing. Questions you miss can come back later so you have another chance to learn them.") },
       // Asked here rather than buried in Settings, because it changes where
       // "Read" sends someone from their very first round — and because the
       // country you represent is part of what Qpio is, not a preference.
       // Skippable in one tap; everything works without it.
       { emoji: "🌍", title: t("Which country do you represent?"),
-        text: t("It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It never leaves this device."),
+        text: t("It decides which bookshop or library we send you to."),
         pick: "country" },
       { emoji: "⚙️", title: t("Made for the way you learn."),
-        text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. An account is optional: you only need one if you want your progress on more than one device.") }
+        text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device.") }
     ];
     var s = slides[step];
     var dots = slides.map(function (_, i) {

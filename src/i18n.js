@@ -168,12 +168,12 @@
       "Prefer not to say": "Je préfère ne pas le dire",
       "Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It stays on this device — Qpio has no server to send it to.":
         "Sert à t’envoyer vers une librairie ou une bibliothèque qui peut vraiment te servir, et à te placer sur le classement de ton pays quand les concours commenceront. Cela reste sur cet appareil — Qpio n’a aucun serveur où l’envoyer.",
-      "It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It never leaves this device.":
+      "It decides which bookshop or library we send you to.":
         "Il détermine vers quelle librairie ou bibliothèque nous t’envoyons, et c’est ainsi que tu apparaîtras sur le classement de ton pays quand les concours commenceront. Il ne quitte jamais cet appareil.",
 
       // --- backup code ---
       "Your progress": "Ta progression",
-      "Everything you have learned is stored on this device only. Copy your backup code before you reinstall or change phone — nothing else can bring it back.":
+      "Your progress is currently stored on this device. Copy your backup code before you reinstall or change phone — nothing else can bring it back.":
         "Tout ce que tu as appris est stocké uniquement sur cet appareil. Copie ton code de sauvegarde avant de réinstaller ou de changer de téléphone — rien d’autre ne pourra le récupérer.",
       "Copy backup code": "Copier le code de sauvegarde",
       "Restore from a code": "Restaurer depuis un code",
@@ -341,8 +341,6 @@
       "👶 Age mode": "👶 Tranche d’âge",
       "Kids mode uses kid-friendly questions only (ages ~8–12). No account is offered in Kids mode, and nothing personal is ever collected.":
         "Le mode enfants ne propose que des questions adaptées (8–12 ans environ). Aucun compte n’y est proposé, et rien de personnel n’est jamais collecté.",
-      "Kids mode uses kid-friendly questions only (ages ~8–12). No account, no tracking — ever.":
-        "Le mode enfants n’utilise que des questions adaptées aux enfants (environ 8–12 ans). Pas de compte, pas de traçage — jamais.",
       "Everyone": "Tout le monde",
       "Kids (8–12)": "Enfants (8–12 ans)",
       "Auto follows your device language. Changing this reloads the app.":
@@ -444,13 +442,13 @@
 
       // --- onboarding ---
       "Knowledge should be free.": "Le savoir devrait être gratuit.",
-      "Qpio (say: cue-pee-oh) is a free knowledge app — no paywalls, nothing sold about you, ever. Every answer teaches you a fact worth keeping, with the source one tap away.":
+      "Qpio (say: cue-pee-oh) is free to use. There are no paywalls. Qpio doesn't interrupt your learning with ads. When you want to go further, you may find links to relevant books, museums, exhibitions and other resources.":
         "Qpio (prononce : « ku-pio ») est une appli de savoir gratuite — sans pub, sans paywall, pour toujours. Chaque réponse t’apprend un fait qui vaut la peine d’être retenu, avec la source à portée de doigt.",
-      "Five questions a day.": "Cinq questions par jour.",
-      "Everyone in the world gets the same daily five. Keep your streak alive — and facts you miss come back until you own them for good.":
+      "Five questions.": "Cinq questions.",
+      "The same five for everyone, everywhere. Every answer teaches you something worth knowing. Questions you miss can come back later so you have another chance to learn them.":
         "Tout le monde reçoit les cinq mêmes questions chaque jour. Garde ta série en vie — et les faits que tu rates reviennent jusqu’à ce que tu les maîtrises pour de bon.",
       "Made for the way you learn.": "Conçu pour ta façon d’apprendre.",
-      "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. An account is optional: you only need one if you want your progress on more than one device.":
+      "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device.":
         "Désactive le chrono, active le texte adapté à la dyslexie, la lecture à voix haute ou le contraste élevé — tout est gratuit, tout est dans les Réglages. Il y a aussi un mode enfants, qui ne demande jamais rien. Le compte est facultatif : il ne sert que si tu veux retrouver ta progression sur plusieurs appareils.",
       "Play today's challenge ▶": "Jouer au défi du jour ▶",
       "Skip": "Passer"
