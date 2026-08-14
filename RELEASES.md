@@ -7,12 +7,12 @@ commit, not from the commit message.*
 
 | | |
 |---|---|
-| Live to readers | **v70** at qpio.app |
-| On UAT | **v70** at uat.qpio.app |
-| Tip of `main` | v70 |
+| Live to readers | **v71** at qpio.app |
+| On UAT | **v71** at uat.qpio.app |
+| Tip of `main` | v71 |
 | Generated | 2026-08-14 |
 
-> 🔴 **Reached readers without a recorded sign-off:** v70 (NO ISSUE).
+> 🔴 **Reached readers without a recorded sign-off:** v71 (NO ISSUE), v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
@@ -21,7 +21,13 @@ not by omission.*
 
 ---
 
-## v70 — 🟢 live
+## v71 — 🟢 live
+
+2026-08-14 · 749 questions · sign-off: **no release issue**
+
+- `70f6b92` v71 - every question illustrated, and generation is now step 3 of the rule
+
+## v70 — · shipped
 
 2026-08-13 · 749 questions · sign-off: **no release issue**
 

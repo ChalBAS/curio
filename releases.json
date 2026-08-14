@@ -1,14 +1,18 @@
 {
  "generated": "2026-08-14",
  "live": {
-  "production": 70,
-  "uat": 70,
-  "main": 70
+  "production": 71,
+  "uat": 71,
+  "main": 71
  },
  "drift": null,
  "awaiting": [],
  "rejected": [],
  "breaches": [
+  {
+   "version": 71,
+   "status": "NO ISSUE"
+  },
   {
    "version": 70,
    "status": "NO ISSUE"
@@ -16,8 +20,27 @@
  ],
  "releases": [
   {
-   "version": 70,
+   "version": 71,
    "state": "LIVE",
+   "branch": "main",
+   "from": "2026-08-14",
+   "to": "2026-08-14",
+   "questions": 749,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "70f6b92",
+     "date": "2026-08-14",
+     "subject": "v71 - every question illustrated, and generation is now step 3 of the rule"
+    }
+   ]
+  },
+  {
+   "version": 70,
+   "state": "SUPERSEDED",
    "branch": "main",
    "from": "2026-08-13",
    "to": "2026-08-13",
