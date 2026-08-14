@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v70** at qpio.app |
 | On UAT | **v70** at uat.qpio.app |
 | Tip of `main` | v70 |
-| Generated | 2026-08-13 |
+| Generated | 2026-08-14 |
 
 > 🔴 **Reached readers without a recorded sign-off:** v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
@@ -27,6 +27,7 @@ not by omission.*
 
 - `7c63d85` Promote v70 to production
 - `ac4ecf5` Release record: v70 live in production
+- `bae66a8` The tracker called a live release 'awaiting you' minutes after it shipped
 
 ## v64 — · shipped
 

@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-13",
+ "generated": "2026-08-14",
  "live": {
   "production": 70,
   "uat": 70,
@@ -36,6 +36,11 @@
      "sha": "ac4ecf5",
      "date": "2026-08-13",
      "subject": "Release record: v70 live in production"
+    },
+    {
+     "sha": "bae66a8",
+     "date": "2026-08-13",
+     "subject": "The tracker called a live release 'awaiting you' minutes after it shipped"
     }
    ]
   },

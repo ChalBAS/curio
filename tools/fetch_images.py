@@ -257,6 +257,42 @@ def main():
                 gained += 1
         print("  recovered %d" % gained)
 
+    # STEP 3 of the picture rule (CEO, 2026-08-08: "free source first, then AI
+    # generated images, we are not paying for images"; restated 2026-08-14 when
+    # eleven entities still had none: "didn't i say to use image generator
+    # Higgsfield? why have you not included this yet as a standard process
+    # rule?"). Wikipedia lead image, then the article's own body image, then a
+    # commissioned illustration.
+    #
+    # These are generated OUT OF BAND — an image model is not something a build
+    # script should call on every run — and recorded in tools/gen_images.json,
+    # which this step reads. To add one: generate it, put the file in img/gen/,
+    # add its entry, re-run. Anything still missing after this is reported, and
+    # a release with a gap is a release that needs a new illustration.
+    #
+    # THEY ARE CREDITED AS ILLUSTRATIONS AND NEVER AS PHOTOGRAPHS. And there are
+    # three things the rule forbids generating outright, because on a product
+    # whose proposition is verified truth they would be lies: a likeness of a
+    # real person, a copy of a real artwork, and an imitation of a living
+    # cultural tradition. Where the subject is one of those, the illustration
+    # shows the SUBJECT MATTER instead and its alt text says so.
+    genp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen_images.json")
+    if os.path.exists(genp):
+        gen = json.load(open(genp, encoding="utf-8")).get("entities", {})
+        added = 0
+        for slug, meta in gen.items():
+            if slug in imgs:
+                continue                      # a real photograph always wins
+            for ext in (".jpg", ".png"):
+                rel = "img/gen/" + meta.get("file", slug.lower().replace("(", "").replace(")", "")) + ext
+                if os.path.exists(os.path.join(ROOT, rel)):
+                    imgs[slug] = rel
+                    files[slug] = "GENERATED:" + slug
+                    added += 1
+                    break
+        if added:
+            print("\ngenerated illustrations used: %d" % added)
+
     uniq = sorted(set(files.values()))
     cred = {}
     for i in range(0, len(uniq), 50):
@@ -299,7 +335,22 @@ def main():
         "",
         "window.CURIO_IMAGES = {",
     ]
+    genmeta = {}
+    if os.path.exists(genp):
+        genmeta = json.load(open(genp, encoding="utf-8")).get("entities", {})
     for s in sorted(imgs):
+        if files.get(s, "").startswith("GENERATED:"):
+            # Credited honestly: an illustration commissioned for Qpio, not a
+            # photograph of the thing and not claimed to be one.
+            m = genmeta.get(s, {})
+            lines.append("  %s: {u:%s,by:%s,lic:%s,p:%s,gen:true,alt:%s,alt_fr:%s}," % (
+                json.dumps(s, ensure_ascii=False), json.dumps(imgs[s], ensure_ascii=False),
+                json.dumps("Illustration for Qpio", ensure_ascii=False),
+                json.dumps("Generated illustration — not a photograph", ensure_ascii=False),
+                json.dumps("", ensure_ascii=False),
+                json.dumps(m.get("alt", ""), ensure_ascii=False),
+                json.dumps(m.get("alt_fr", ""), ensure_ascii=False)))
+            continue
         c = cred.get(files.get(s, ""), {})
         lines.append("  %s: {u:%s,by:%s,lic:%s,p:%s}," % (
             json.dumps(s, ensure_ascii=False),

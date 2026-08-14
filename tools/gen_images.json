@@ -1,0 +1,62 @@
+{
+  "_readme": "GENERATED ILLUSTRATIONS — step 3 of the picture rule (CEO, 2026-08-08: 'free source first, then AI generated images, we are not paying for images'). Wikipedia lead image, then the article's own body image, then this. Every entry is credited as an illustration and never presented as a photograph of the real thing.",
+  "_rule": "NEVER generate a likeness of a real person, a copy of a real artwork, or an imitation of a living cultural tradition. A fabricated portrait of Maryam Mirzakhani would be misinformation on a product whose whole proposition is verified truth; an imitation Papunya Tula dot painting would appropriate art that is owned. Where the subject is a person, a work or a tradition, the illustration shows the SUBJECT MATTER instead and the alt text says so.",
+  "_generated": "2026-08-14 via Higgsfield nano_banana, 2 credits each on the existing plan. Downloaded, resized to 480px and stored in img/gen/ so no card depends on an external CDN staying up.",
+  "entities": {
+    "Things_Fall_Apart": {
+      "file": "things-fall-apart",
+      "alt": "Illustration: a kola nut, a carved ceremonial mask and yams on woven raffia — the Igbo world the novel is set in",
+      "alt_fr": "Illustration : une noix de kola, un masque cérémoniel sculpté et des ignames sur une natte de raphia — le monde igbo où se déroule le roman"
+    },
+    "Maryam_Mirzakhani": {
+      "file": "mirzakhani",
+      "alt": "Illustration: a hyperbolic saddle surface crossed by looping geodesic curves — the geometry she worked on",
+      "alt_fr": "Illustration : une surface hyperbolique en selle parcourue de géodésiques — la géométrie sur laquelle elle travaillait"
+    },
+    "Wang_Zhenyi_(astronomer)": {
+      "file": "wang-zhenyi",
+      "alt": "Illustration: a garden pavilion at night with a lamp, a round mirror and a sphere arranged to model a lunar eclipse",
+      "alt_fr": "Illustration : un pavillon de jardin la nuit, avec une lampe, un miroir rond et une sphère disposés pour modéliser une éclipse de Lune"
+    },
+    "Problem_of_points": {
+      "file": "problem-of-points",
+      "alt": "Illustration: two unequal stacks of gaming counters beside interrupted dice, under a branching probability tree",
+      "alt_fr": "Illustration : deux piles inégales de jetons près de dés interrompus, sous un arbre de probabilités"
+    },
+    "Donald_Davies": {
+      "file": "packet-switching",
+      "alt": "Illustration: one message split into numbered packets taking separate routes through a network and reassembling",
+      "alt_fr": "Illustration : un message découpé en paquets numérotés empruntant des routes différentes puis réassemblé"
+    },
+    "Byte-pair_encoding": {
+      "file": "byte-pair-encoding",
+      "alt": "Illustration: a row of blocks where adjacent pairs merge into single larger blocks, the row shortening at each stage",
+      "alt_fr": "Illustration : une rangée de blocs où les paires voisines fusionnent, la rangée raccourcissant à chaque étape"
+    },
+    "Papunya_Tula": {
+      "file": "papunya-country",
+      "alt": "Illustration: the Central Australian desert at golden hour — the country the Papunya Tula painters depict",
+      "alt_fr": "Illustration : le désert d'Australie centrale à l'heure dorée — le pays que peignent les artistes de Papunya Tula"
+    },
+    "Kind_of_Blue": {
+      "file": "kind-of-blue",
+      "alt": "Illustration: a trumpet and a studio microphone against sparse modal scale bars in blue",
+      "alt_fr": "Illustration : une trompette et un micro de studio devant de rares barres d'échelles modales, en bleu"
+    },
+    "Guernica_(Picasso)": {
+      "file": "guernica-theme",
+      "alt": "Illustration: a cracked bell among broken roof tiles before a Basque hill town — the bombing the painting is about",
+      "alt_fr": "Illustration : une cloche fêlée parmi des tuiles brisées devant un village basque — le bombardement que le tableau évoque"
+    },
+    "Mark_Dean_(computer_scientist)": {
+      "file": "expansion-card",
+      "alt": "Illustration: an exploded diagram of an expansion card sliding into a motherboard slot",
+      "alt_fr": "Illustration : schéma éclaté d'une carte d'extension s'insérant dans un connecteur de carte mère"
+    },
+    "Credential_stuffing": {
+      "file": "credential-stuffing",
+      "alt": "Illustration: a stack of identical key-cards fed into a row of padlocks, one springing open",
+      "alt_fr": "Illustration : une pile de cartes-clés identiques passées dans une rangée de cadenas, dont un s'ouvre"
+    }
+  }
+}
