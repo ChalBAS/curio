@@ -1449,7 +1449,12 @@
       { label: t("Normal"), value: "normal" }, { label: t("High"), value: "high" }
     ], settings.contrast, function (v) { settings.contrast = v; saveSettings(); }));
 
-    node.appendChild(segRow(t("👶 Age mode"), t("Kids mode uses kid-friendly questions only (ages ~8–12). No account, no tracking — ever."), [
+    // "No account, no tracking — ever" was not true and the CEO ruled it out
+    // (D-064, 2026-08-14): registration is voluntary and offered, and the app
+    // does need to see how its readers get on. The honest version keeps the
+    // part that IS true and load-bearing — kids get no account interface at
+    // all, which is what makes Kids mode COPPA-clean by construction.
+    node.appendChild(segRow(t("👶 Age mode"), t("Kids mode uses kid-friendly questions only (ages ~8–12). No account is offered in Kids mode, and nothing personal is ever collected."), [
       { label: t("Everyone"), value: "all" }, { label: t("Kids (8–12)"), value: "kids" }
     ], settings.ageMode, function (v) { settings.ageMode = v; saveSettings(); }));
 

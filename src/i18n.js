@@ -339,6 +339,8 @@
       "🌓 Contrast": "🌓 Contraste",
       "High": "Élevé",
       "👶 Age mode": "👶 Tranche d’âge",
+      "Kids mode uses kid-friendly questions only (ages ~8–12). No account is offered in Kids mode, and nothing personal is ever collected.":
+        "Le mode enfants ne propose que des questions adaptées (8–12 ans environ). Aucun compte n’y est proposé, et rien de personnel n’est jamais collecté.",
       "Kids mode uses kid-friendly questions only (ages ~8–12). No account, no tracking — ever.":
         "Le mode enfants n’utilise que des questions adaptées aux enfants (environ 8–12 ans). Pas de compte, pas de traçage — jamais.",
       "Everyone": "Tout le monde",

@@ -26,6 +26,7 @@ not by omission.*
 2026-08-14 · 749 questions · sign-off: **no release issue**
 
 - `70f6b92` v71 - every question illustrated, and generation is now step 3 of the rule
+- `437f884` Release record: v71 live
 
 ## v70 — · shipped
 
