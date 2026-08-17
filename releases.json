@@ -1,34 +1,58 @@
 {
  "generated": "2026-08-17",
  "live": {
-  "production": null,
-  "uat": null,
-  "main": 72
+  "production": 72,
+  "uat": 73,
+  "main": 73
  },
- "drift": "main is v72 but production serves vnull",
- "awaiting": [],
+ "drift": "main is v73 but production serves v72",
+ "awaiting": [
+  73
+ ],
  "rejected": [],
  "breaches": [
   {
+   "version": 72,
+   "status": "NO ISSUE"
+  },
+  {
    "version": 71,
-   "status": "UNKNOWN"
+   "status": "NO ISSUE"
   },
   {
    "version": 70,
-   "status": "UNKNOWN"
+   "status": "NO ISSUE"
   }
  ],
  "releases": [
   {
-   "version": 72,
-   "state": "MERGED, NOT DEPLOYED",
+   "version": 73,
+   "state": "ON UAT",
    "branch": "main",
-   "from": "2026-08-14",
-   "to": "2026-08-14",
+   "from": "2026-08-17",
+   "to": "2026-08-17",
    "questions": 749,
    "signoff": {
-    "status": "UNKNOWN",
-    "note": "GitHub unreachable when this was generated"
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "79da924",
+     "date": "2026-08-17",
+     "subject": "﻿v73 - the bot gate stops being an outage, and both languages tell the truth"
+    }
+   ]
+  },
+  {
+   "version": 72,
+   "state": "LIVE",
+   "branch": "main",
+   "from": "2026-08-14",
+   "to": "2026-08-17",
+   "questions": 749,
+   "signoff": {
+    "status": "NO ISSUE"
    },
    "messageClash": [],
    "commits": [
@@ -41,6 +65,11 @@
      "sha": "a964e8b",
      "date": "2026-08-14",
      "subject": "chore: align product claims to updated Charter and architecture decisions"
+    },
+    {
+     "sha": "56de4eb",
+     "date": "2026-08-17",
+     "subject": "App copy: the country value is counted as a country, never as a person"
     }
    ]
   },
@@ -52,8 +81,7 @@
    "to": "2026-08-14",
    "questions": 749,
    "signoff": {
-    "status": "UNKNOWN",
-    "note": "GitHub unreachable when this was generated"
+    "status": "NO ISSUE"
    },
    "messageClash": [],
    "commits": [
@@ -77,8 +105,7 @@
    "to": "2026-08-13",
    "questions": 749,
    "signoff": {
-    "status": "UNKNOWN",
-    "note": "GitHub unreachable when this was generated"
+    "status": "NO ISSUE"
    },
    "messageClash": [],
    "commits": [
@@ -1111,7 +1138,7 @@
   },
   {
    "version": null,
-   "state": "LIVE",
+   "state": "SUPERSEDED",
    "branch": "main",
    "from": "2026-07-12",
    "to": "2026-07-12",

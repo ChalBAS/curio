@@ -146,9 +146,23 @@ async function liveVersion(url) {
   [...released, ...queued].forEach(r => {
     const first = r.commits[0], last = r.commits[r.commits.length - 1];
     const signoff = signoffFor(r.version);
+    // WHAT IS DEPLOYED IS THE AUTHORITY, not which branch a commit sits on.
+    //
+    // The branch test (`git log main..uat`) is correct for the branch model and
+    // wrong whenever the branch model is not followed. On 2026-08-17 v73 was
+    // committed to main and uat was fast-forwarded to match, so `main..uat` was
+    // empty and the tracker reported nothing awaiting sign-off — while UAT was
+    // serving v73 and readers were on v72. The CEO would have been told there
+    // was nothing to test, which is the same class of failure as telling him a
+    // live release was still waiting for him.
+    //
+    // A build is awaiting him when UAT is serving it and production is not.
+    // That is observable from outside and no amount of branch bookkeeping can
+    // make it lie.
     let state;
-    if (r.branch === 'uat') state = 'ON UAT';
+    if (uatLive !== null && r.version === uatLive && r.version !== prodLive) state = 'ON UAT';
     else if (r.version === prodLive) state = 'LIVE';
+    else if (r.branch === 'uat') state = 'ON UAT';
     else if (headVersion !== null && r.version === headVersion && r.version !== prodLive) state = 'MERGED, NOT DEPLOYED';
     else state = 'SUPERSEDED';
     releases.push({

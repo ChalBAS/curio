@@ -7,14 +7,17 @@ commit, not from the commit message.*
 
 | | |
 |---|---|
-| Live to readers | **unreachable** at qpio.app |
-| On UAT | **unreachable** at uat.qpio.app |
-| Tip of `main` | v72 |
+| Live to readers | **v72** at qpio.app |
+| On UAT | **v73** at uat.qpio.app |
+| Tip of `main` | v73 |
 | Generated | 2026-08-17 |
 
-> ⚠️ **Drift:** main is v72 but production serves vnull.
+> ⚠️ **Drift:** main is v73 but production serves v72.
 
-> 🔴 **Reached readers without a recorded sign-off:** v71 (UNKNOWN), v70 (UNKNOWN).
+> ⏳ **Awaiting your sign-off:** v73. Write **Accepted for production**
+> — or **Rejected — <reason>** — in that version's release issue.
+
+> 🔴 **Reached readers without a recorded sign-off:** v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
@@ -23,23 +26,30 @@ not by omission.*
 
 ---
 
-## v72 — ⚠️ merged, not deployed
+## v73 — ⏳ on UAT
 
-2026-08-14 · 749 questions · sign-off: unknown
+2026-08-17 · 749 questions · sign-off: **no release issue**
+
+- `79da924` ﻿v73 - the bot gate stops being an outage, and both languages tell the truth
+
+## v72 — 🟢 live
+
+2026-08-14 → 2026-08-17 · 749 questions · sign-off: **no release issue**
 
 - `8432670` v72 - the app stops claiming something that was never true
 - `a964e8b` chore: align product claims to updated Charter and architecture decisions
+- `56de4eb` App copy: the country value is counted as a country, never as a person
 
 ## v71 — · shipped
 
-2026-08-14 · 749 questions · sign-off: unknown
+2026-08-14 · 749 questions · sign-off: **no release issue**
 
 - `70f6b92` v71 - every question illustrated, and generation is now step 3 of the rule
 - `437f884` Release record: v71 live
 
 ## v70 — · shipped
 
-2026-08-13 · 749 questions · sign-off: unknown
+2026-08-13 · 749 questions · sign-off: **no release issue**
 
 - `7c63d85` Promote v70 to production
 - `ac4ecf5` Release record: v70 live in production
@@ -353,7 +363,7 @@ not by omission.*
 - `b3f519a` Docs: morning report + plan update for v1.1
 - ⚠️ commit message names a different version: 2a33489, b3f519a
 
-## unversioned (pre-v2) — 🟢 live
+## unversioned (pre-v2) — · shipped
 
 2026-07-12 · ? questions · sign-off: pre-process
 
