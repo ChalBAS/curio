@@ -106,11 +106,16 @@ const queued = pending.length ? group(pending.slice().reverse(), 'uat') : [];
 /* ---------- 4. sign-off, from the release issues ---------- */
 let issues = [];
 try {
-  issues = JSON.parse(cp.execFileSync('gh',
+  // strip the BOM gh emits on Windows consoles — JSON.parse rejects it, and the
+  // failure then masquerades as "GitHub unreachable", which quietly removes a
+  // build from the awaiting list. That is how v75 sat on UAT invisible.
+  const raw = cp.execFileSync('gh',
     ['issue', 'list', '--repo', 'ChalBAS/curio-hq', '--label', 'release', '--state', 'all',
      '--limit', '200', '--json', 'number,title,state,createdAt,closedAt,body,comments,author'],
-    { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 }));
-} catch {
+    { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  issues = JSON.parse(raw.replace(/^﻿/, ''));
+} catch (e) {
+  console.error('gh issue list failed: ' + String(e.message || e).split('\n')[0]);
   issues = null;                       // gh unavailable — say so rather than imply "none"
 }
 

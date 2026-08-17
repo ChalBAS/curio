@@ -2,15 +2,23 @@
  "generated": "2026-08-17",
  "live": {
   "production": 72,
-  "uat": 73,
-  "main": 73
+  "uat": 75,
+  "main": 75
  },
- "drift": "main is v73 but production serves v72",
+ "drift": "main is v75 but production serves v72",
  "awaiting": [
-  73
+  75
  ],
  "rejected": [],
  "breaches": [
+  {
+   "version": 74,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 73,
+   "status": "REJECTED"
+  },
   {
    "version": 72,
    "status": "NO ISSUE"
@@ -26,7 +34,7 @@
  ],
  "releases": [
   {
-   "version": 73,
+   "version": 75,
    "state": "ON UAT",
    "branch": "main",
    "from": "2026-08-17",
@@ -38,9 +46,61 @@
    "messageClash": [],
    "commits": [
     {
+     "sha": "9673a60",
+     "date": "2026-08-17",
+     "subject": "﻿v75 - Next can no longer sink under the tab bar, and the app stops multiplying"
+    }
+   ]
+  },
+  {
+   "version": 74,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-17",
+   "to": "2026-08-17",
+   "questions": 749,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "c772f89",
+     "date": "2026-08-17",
+     "subject": "﻿v74 - the 214 questions that were on no shelf at all"
+    },
+    {
+     "sha": "b902056",
+     "date": "2026-08-17",
+     "subject": "﻿The watch shelf stops sending readers to an unvetted ranked list"
+    }
+   ]
+  },
+  {
+   "version": 73,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-17",
+   "to": "2026-08-17",
+   "questions": 749,
+   "signoff": {
+    "status": "REJECTED",
+    "at": "2026-08-17T11:43:26Z",
+    "who": "ChalBAS",
+    "issue": 57,
+    "where": "body"
+   },
+   "messageClash": [],
+   "commits": [
+    {
      "sha": "79da924",
      "date": "2026-08-17",
      "subject": "﻿v73 - the bot gate stops being an outage, and both languages tell the truth"
+    },
+    {
+     "sha": "821f57b",
+     "date": "2026-08-17",
+     "subject": "Release tracker: what is DEPLOYED decides, not which branch a commit sits on"
     }
    ]
   },

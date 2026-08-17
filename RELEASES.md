@@ -8,16 +8,16 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v72** at qpio.app |
-| On UAT | **v73** at uat.qpio.app |
-| Tip of `main` | v73 |
+| On UAT | **v75** at uat.qpio.app |
+| Tip of `main` | v75 |
 | Generated | 2026-08-17 |
 
-> ⚠️ **Drift:** main is v73 but production serves v72.
+> ⚠️ **Drift:** main is v75 but production serves v72.
 
-> ⏳ **Awaiting your sign-off:** v73. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v75. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
-> 🔴 **Reached readers without a recorded sign-off:** v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
+> 🔴 **Reached readers without a recorded sign-off:** v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
@@ -26,11 +26,25 @@ not by omission.*
 
 ---
 
-## v73 — ⏳ on UAT
+## v75 — ⏳ on UAT
 
 2026-08-17 · 749 questions · sign-off: **no release issue**
 
+- `9673a60` ﻿v75 - Next can no longer sink under the tab bar, and the app stops multiplying
+
+## v74 — · shipped
+
+2026-08-17 · 749 questions · sign-off: **no release issue**
+
+- `c772f89` ﻿v74 - the 214 questions that were on no shelf at all
+- `b902056` ﻿The watch shelf stops sending readers to an unvetted ranked list
+
+## v73 — · shipped
+
+2026-08-17 · 749 questions · sign-off: **rejected**, [#57](https://github.com/ChalBAS/curio-hq/issues/57)
+
 - `79da924` ﻿v73 - the bot gate stops being an outage, and both languages tell the truth
+- `821f57b` Release tracker: what is DEPLOYED decides, not which branch a commit sits on
 
 ## v72 — 🟢 live
 
