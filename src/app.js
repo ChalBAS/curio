@@ -1530,6 +1530,7 @@
       node._qShownAt = Date.now();   // stopwatch for the ⚡ speed chip
       if (node._fit) { window.removeEventListener("resize", node._fit); node._fit = null; }
       node.classList.remove("answered-view");
+      node.classList.remove("cramped");
       node.style.maxHeight = "";
       var raw = cfg.questions[idx];
       var q = withShuffledOptions(raw, seedBase + idx * 7 + (cfg.timed ? 1 : 0));
@@ -1754,6 +1755,26 @@
         var top = node.getBoundingClientRect().top + window.scrollY;
         var room = Math.round(floor + window.scrollY - top - 10);
         if (room > 220) node.style.maxHeight = room + "px";   // never squeeze past readable
+
+        // THE CAP IS NOT A GUARANTEE, and v73 failed acceptance proving it
+        // (2026-08-17, #57: "1 of 5 questions hid Next behind the tab bar").
+        // max-height only helps while the card's FLEXIBLE part — the fact —
+        // still has something to give. On a 320x568 phone, a five-line
+        // question plus four options plus the footer exceeded the cap all by
+        // themselves with the fact already at zero, and the column simply
+        // overflowed past the cap. So: measure the thing the acceptance test
+        // measures — Next itself — and escalate until it is above the bar.
+        var nx = node.querySelector("#next");
+        if (!nx) return;
+        var over = function () { return nx.getBoundingClientRect().bottom - floor; };
+        // Stage 2: compress the already-answered question and options harder.
+        if (over() > 0) node.classList.add("cramped");
+        // Stage 3: content can always be longer than any screen is tall —
+        // scroll the spent question text off the top rather than let Next
+        // sink under the bar. The reader has answered; the fact, the
+        // destination and Next are what the moment is for.
+        var o = over();
+        if (o > 0) window.scrollBy(0, o);
       };
       // Measure more than once: the first call can land before the picture has
       // laid out, and a card measured against the wrong height is exactly the
