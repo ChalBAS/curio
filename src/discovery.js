@@ -160,15 +160,19 @@
     [["read", 0], ["watch", 1], ["deeper", 2]].forEach(function (pair) {
       var S = SHELVES.filter(function (x) { return x.id === pair[0]; })[0];
       var rest = pool.filter(function (x) { return !used[x.id] && x.hook; });
+      // filter(Boolean): shelfUrl returns null when there is no destination it
+      // is willing to send a reader to — currently only the "watch" shelf, when
+      // no vetted channel covers the subject. The count check must happen AFTER
+      // the drop or a shelf of three could render with a hole in it.
       var items = take(diversify(rest, perShelf, pair[1]), perShelf).map(function (x) {
         return shelfUrl(x, S.id);
-      });
+      }).filter(Boolean);
       if (items.length >= 3) out.push({ id: S.id, icon: S.icon, label: S.label, items: items });
     });
     return out.map(function (S) {
-      S.items = S.items.map(function (x) { return shelfUrl(x, S.id); });
+      S.items = S.items.map(function (x) { return shelfUrl(x, S.id); }).filter(Boolean);
       return S;
-    });
+    }).filter(function (S) { return S.items.length >= 3; });
   }
 
   // The destination has to match the verb. "Watch" that opens a bookshop is
@@ -182,9 +186,14 @@
       // One definition of each destination, in golinks.js. Two copies of the
       // Bookshop URL is how a reader in Seoul kept being sent to a shop that
       // could not post to them even after that was supposedly fixed.
-      copy.url = GO().watchUrl ? GO().watchUrl(name)
-        : "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " documentary");
+      // watchUrl returns null when no VETTED channel covers this subject. The
+      // old fallback here was an open YouTube search, which is precisely the
+      // thing the CEO ruled out on 2026-08-16 — an unvetted ranked list is
+      // where antivax and extremist material sits next to the documentary.
+      // A shelf with no safe destination is dropped, not filled.
+      copy.url = GO().watchUrl ? GO().watchUrl(name, item.cat) : null;
       copy.provider = "youtube";
+      if (!copy.url) return null;
     } else if (shelf === "read") {
       copy.url = GO().readUrl ? GO().readUrl(name)
         : "https://bookshop.org/search?keywords=" + encodeURIComponent(name);

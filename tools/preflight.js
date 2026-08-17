@@ -78,9 +78,15 @@ const FP = path.join(ROOT, 'tools', '.version-fingerprints.json');
 try {
   const crypto = require('crypto');
   const v = htmlV[0];
+  // EVERY precached file, not a hand-picked five. The original list named
+  // questions, app, styles and i18n — so a change to golinks.js or discovery.js,
+  // which decide where a reader is actually SENT, was invisible to this gate and
+  // could have shipped under an already-served version. The list is now derived
+  // from what the service worker precaches, which is by definition everything a
+  // reader receives, and it cannot fall out of date when a file is added.
+  const precached = [...sw.matchAll(/"\.\/(src\/[^"?]+)\?v=/g)].map(m => m[1]).sort();
   const stamp = crypto.createHash('sha256').update(
-    ['src/questions.js', 'src/questions.fr.js', 'src/app.js', 'src/styles.css', 'src/i18n.js']
-      .map(f => fs.existsSync(path.join(ROOT, f)) ? read(path.join(ROOT, f)) : '').join('\x1f')
+    precached.map(f => fs.existsSync(path.join(ROOT, f)) ? read(path.join(ROOT, f)) : '').join('\x1f')
   ).digest('hex').slice(0, 16);
   const seen = fs.existsSync(FP) ? JSON.parse(read(FP)) : {};
   const rec = seen[v];

@@ -110,13 +110,69 @@
     return "https://search.worldcat.org/search?q=" + encodeURIComponent(title);
   }
 
-  // Watching. There is no curated video list and there should not be a fake
-  // one: a search on the topic is honest about what it is, and it is the same
-  // thing the Documentaries lane already does. The search term is written in
-  // the reader's own language so a French reader gets French documentaries.
-  function watchUrl(title) {
-    var word = window.QLANG === "fr" ? " documentaire" : " documentary";
-    return "https://www.youtube.com/results?search_query=" + encodeURIComponent(title + word);
+  /* Watching.
+   *
+   * CEO, 2026-08-16: "We need to link the youtube sources to reliable ones, we
+   * cannot [have] a user being redirected to antivaxx, masculinists' or other
+   * content creators [who] sell dangerous contents that will be reputational
+   * risk."
+   *
+   * He is right and the previous comment here was wrong. It argued that an open
+   * search is "honest about what it is" — but the reader does not experience a
+   * URL, they experience where they land, and where they land is a ranked list
+   * nobody has vetted. On any topic that touches health, history or identity,
+   * that list reliably contains material Qpio would never publish. An app whose
+   * entire proposition is that every claim is sourced cannot end its sentence by
+   * handing the reader to an algorithm.
+   *
+   * So the search is scoped to CHANNELS, not to the whole platform. Every
+   * channel below is a public broadcaster, a museum, a university or a
+   * long-established science publisher — organisations with an editorial
+   * standard and something to lose. `/@handle/search?query=` searches inside one
+   * channel, so nothing outside the list can surface.
+   *
+   * The trade is real and worth stating: one channel at a time means fewer
+   * results, and sometimes none. Fewer good answers beats more unvetted ones,
+   * and the reader can always search for themselves — we simply will not be the
+   * one who sent them.
+   */
+  var WATCH_CHANNELS = {
+    // handle, and the categories it is a credible source for. Order matters:
+    // the first match wins, so the most topic-appropriate is listed first.
+    en: [
+      { at: "TED-Ed",            cats: ["Science", "History", "Arts", "Nature", "Tech"] },
+      { at: "smithsonianchannel", cats: ["History", "Nature", "Arts"] },
+      { at: "bbcearth",          cats: ["Nature"] },
+      { at: "NationalGeographic", cats: ["Nature", "Geography"] },
+      { at: "veritasium",        cats: ["Science", "Tech"] },
+      { at: "TheRoyalInstitution", cats: ["Science"] },
+      { at: "britishmuseum",     cats: ["History", "Arts"] }
+    ],
+    fr: [
+      { at: "lesciencecvous",    cats: ["Science", "Tech", "Nature"] },
+      { at: "arte",              cats: ["History", "Arts", "Nature", "Geography"] },
+      { at: "cnrs",              cats: ["Science", "Nature"] }
+    ]
+  };
+
+  function watchUrl(title, cat) {
+    var lang = window.QLANG === "fr" ? "fr" : "en";
+    var list = WATCH_CHANNELS[lang] || WATCH_CHANNELS.en;
+
+    // MOST SPECIALIST WINS, not first-in-list. Picking by list order sent every
+    // English subject to TED-Ed, because TED-Ed covers everything — so a reader
+    // on a wildlife question got a lesson channel instead of BBC Earth. Ranking
+    // by how FEW categories a channel claims makes the specialist win, and it
+    // stays correct as channels are added without anyone re-sorting the list.
+    var best = null, bestSpan = 99, i;
+    for (i = 0; i < list.length; i++) {
+      if (cat && list[i].cats.indexOf(cat) === -1) continue;
+      if (list[i].cats.length < bestSpan) { best = list[i]; bestSpan = list[i].cats.length; }
+    }
+    // No vetted channel covers this subject. Send nobody anywhere rather than
+    // falling back to an open search — the fallback IS the risk.
+    if (!best) return null;
+    return "https://www.youtube.com/@" + best.at + "/search?query=" + encodeURIComponent(title);
   }
 
   // The slug is the entity. "Rock-Hewn_Churches,_Lalibela" → "Rock-Hewn Churches, Lalibela".
