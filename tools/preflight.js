@@ -83,12 +83,25 @@ try {
       .map(f => fs.existsSync(path.join(ROOT, f)) ? read(path.join(ROOT, f)) : '').join('\x1f')
   ).digest('hex').slice(0, 16);
   const seen = fs.existsSync(FP) ? JSON.parse(read(FP)) : {};
-  if (seen[v] && seen[v] !== stamp) {
-    fail('version already used for different content',
-      `v${v} was previously built from ${seen[v]}, now ${stamp} — bump the version or a cached reader never gets this build`);
+  const rec = seen[v];
+  // A version is only DANGEROUS once it has been served: the harm is a reader's
+  // service worker holding v73's files and never asking again. Iterating on a
+  // version that has never left this machine is not that, and the first version
+  // of this gate stamped on every preflight RUN — so fixing a fault preflight
+  // itself had just reported burned the version number and demanded another
+  // bump. That trains people to bump blindly, which is the habit the gate exists
+  // to prevent. The stamp is therefore recorded here and SEALED at deploy, by
+  // tools/seal_version.js.
+  const sealed = rec && typeof rec === 'object' ? rec.sealed : false;
+  const was = rec && typeof rec === 'object' ? rec.stamp : rec;
+
+  if (was && was !== stamp && sealed) {
+    fail('version already deployed with different content',
+      `v${v} was served from ${was}, now ${stamp} — bump the version or a cached reader never gets this build`);
   } else {
-    pass('version fingerprint', `v${v} → ${stamp}${seen[v] ? ' (unchanged)' : ' (new)'}`);
-    seen[v] = stamp;
+    pass('version fingerprint',
+      `v${v} → ${stamp}${!was ? ' (new)' : was === stamp ? ' (unchanged)' : ' (moved, not yet served — allowed)'}`);
+    seen[v] = { stamp, sealed: !!sealed };
     fs.writeFileSync(FP, JSON.stringify(seen, null, 1) + '\n', 'utf8');
   }
 } catch (e) { warn('version fingerprint', e.message); }

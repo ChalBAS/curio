@@ -1,7 +1,31 @@
 {
- "68": "ed8e3c4973bb7b52",
- "69": "0bacfe7b4b472bc7",
- "70": "e49578761aff8acc",
- "71": "bc1672094180b1ca",
- "72": "3e240b175f0f714c"
+ "68": {
+  "stamp": "ed8e3c4973bb7b52",
+  "sealed": true,
+  "servedTo": "historic"
+ },
+ "69": {
+  "stamp": "0bacfe7b4b472bc7",
+  "sealed": true,
+  "servedTo": "historic"
+ },
+ "70": {
+  "stamp": "e49578761aff8acc",
+  "sealed": true,
+  "servedTo": "historic"
+ },
+ "71": {
+  "stamp": "bc1672094180b1ca",
+  "sealed": true,
+  "servedTo": "historic"
+ },
+ "72": {
+  "stamp": "3e240b175f0f714c",
+  "sealed": true,
+  "servedTo": "historic"
+ },
+ "73": {
+  "stamp": "f375d7cf816f77fb",
+  "sealed": false
+ }
 }

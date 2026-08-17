@@ -2609,7 +2609,13 @@
       // country you represent is part of what Qpio is, not a preference.
       // Skippable in one tap; everything works without it.
       { emoji: "🌍", title: t("Which country do you represent?"),
-        text: t("It decides which bookshop or library we send you to."),
+        // The English said only "it decides which bookshop we send you to" while
+        // the French already promised the leaderboard AND that the value never
+        // leaves the device — two languages telling a reader different things
+        // about their own data, one of them untrue. Both now say the same, and
+        // it is the sentence that survives Charter §8: counted as a country,
+        // never as a person.
+        text: t("It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It is counted as a country, never as a person — no name is ever attached to it."),
         pick: "country" },
       { emoji: "⚙️", title: t("Made for the way you learn."),
         text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device.") }

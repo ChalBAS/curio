@@ -41,12 +41,41 @@
     "directory": "./",
     "binding": "ASSETS",
     // Assets are served BEFORE the worker unless this says otherwise, which is
-    // why the first version of the bot gate did nothing at all. Scoped to the
-    // protected paths and /robots.txt so every other request keeps the fast
-    // path straight to the edge cache.
-    "run_worker_first": ["/src/*", "/robots.txt", "/api/*"],
+    // why the first version of the bot gate did nothing at all.
+    //
+    // NARROWED 2026-08-17, and this was an outage waiting to happen rather than
+    // a tidiness fix. "/src/*" routed all FIFTEEN scripts index.html loads
+    // through the Worker, so one uncached page load cost sixteen invocations.
+    // The free allowance is 100,000 requests a day, which that arithmetic
+    // exhausts at roughly 6,250 cold loads — about 9,400 monthly readers on a
+    // normal peak day. Past the ceiling requests do not get billed, they FAIL,
+    // and the failure lands on the question bank itself: the app stops loading.
+    //
+    // The gate exists to keep the verified bank out of training corpora, so it
+    // now runs on the content and not on the code. app.js, i18n.js, hooks.js,
+    // discovery.js, golinks.js, country.js and the image-URL map are either
+    // machinery or public Wikimedia links — nothing a crawler wants and nothing
+    // worth spending an invocation to protect. That is fifteen down to eight,
+    // and the ceiling roughly doubles.
+    //
+    // Worth saying plainly: worker/index.js gates on User-Agent, so a spoofed
+    // header walks through. This is a speed bump against bulk scraping, not a
+    // lock, and it should not be priced or described as one.
+    "run_worker_first": [
+      "/src/questions*.js",
+      "/src/citypacks*.js",
+      "/src/truthlab*.js",
+      "/src/entities.meta.js",
+      "/src/entities.fr.js",
+      "/robots.txt",
+      "/api/*"
+    ],
     "not_found_handling": "single-page-application"
   },
 
-  "observability": { "enabled": true }
+  // head_sampling_rate defaults to 1.0 — one log line per invocation, 20 million
+  // included per month. Left at the default alongside the broad glob above it
+  // was the same multiplier applied twice. One per cent is plenty to spot a
+  // pattern and cannot become a bill.
+  "observability": { "enabled": true, "head_sampling_rate": 0.01 }
 }
