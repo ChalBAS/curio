@@ -1254,7 +1254,7 @@
         '<div class="section-title" style="margin-top:0">' +
           ((cur && C.flagOf(cur)) || "🌍") + ' ' + t("The country you represent") + '</div>' +
         '<p class="mini" style="margin:0 0 12px">' +
-          t("Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It stays on this device — Qpio has no server to send it to.") +
+          t("Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It is kept on this device, and counted only as a country — never as a person.") +
         '</p>' +
         '<select class="cselect" id="ccSel" aria-label="' + esc(t("The country you represent")) + '">' +
           '<option value="">' + t("Prefer not to say") + '</option>' +

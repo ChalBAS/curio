@@ -7,12 +7,14 @@ commit, not from the commit message.*
 
 | | |
 |---|---|
-| Live to readers | **v71** at qpio.app |
-| On UAT | **v71** at uat.qpio.app |
-| Tip of `main` | v71 |
-| Generated | 2026-08-14 |
+| Live to readers | **unreachable** at qpio.app |
+| On UAT | **unreachable** at uat.qpio.app |
+| Tip of `main` | v72 |
+| Generated | 2026-08-17 |
 
-> 🔴 **Reached readers without a recorded sign-off:** v71 (NO ISSUE), v70 (NO ISSUE).
+> ⚠️ **Drift:** main is v72 but production serves vnull.
+
+> 🔴 **Reached readers without a recorded sign-off:** v71 (UNKNOWN), v70 (UNKNOWN).
 > This is a process breach and is recorded rather than hidden.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
@@ -21,16 +23,23 @@ not by omission.*
 
 ---
 
-## v71 — 🟢 live
+## v72 — ⚠️ merged, not deployed
 
-2026-08-14 · 749 questions · sign-off: **no release issue**
+2026-08-14 · 749 questions · sign-off: unknown
+
+- `8432670` v72 - the app stops claiming something that was never true
+- `a964e8b` chore: align product claims to updated Charter and architecture decisions
+
+## v71 — · shipped
+
+2026-08-14 · 749 questions · sign-off: unknown
 
 - `70f6b92` v71 - every question illustrated, and generation is now step 3 of the rule
 - `437f884` Release record: v71 live
 
 ## v70 — · shipped
 
-2026-08-13 · 749 questions · sign-off: **no release issue**
+2026-08-13 · 749 questions · sign-off: unknown
 
 - `7c63d85` Promote v70 to production
 - `ac4ecf5` Release record: v70 live in production
@@ -344,7 +353,7 @@ not by omission.*
 - `b3f519a` Docs: morning report + plan update for v1.1
 - ⚠️ commit message names a different version: 2a33489, b3f519a
 
-## unversioned (pre-v2) — · shipped
+## unversioned (pre-v2) — 🟢 live
 
 2026-07-12 · ? questions · sign-off: pre-process
 

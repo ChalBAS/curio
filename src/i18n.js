@@ -166,10 +166,10 @@
       "The country you represent": "Le pays que tu représentes",
       "Which country do you represent?": "Quel pays représentes-tu ?",
       "Prefer not to say": "Je préfère ne pas le dire",
-      "Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It stays on this device — Qpio has no server to send it to.":
-        "Sert à t’envoyer vers une librairie ou une bibliothèque qui peut vraiment te servir, et à te placer sur le classement de ton pays quand les concours commenceront. Cela reste sur cet appareil — Qpio n’a aucun serveur où l’envoyer.",
-      "It decides which bookshop or library we send you to.":
-        "Il détermine vers quelle librairie ou bibliothèque nous t’envoyons, et c’est ainsi que tu apparaîtras sur le classement de ton pays quand les concours commenceront. Il ne quitte jamais cet appareil.",
+      "Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It is kept on this device, and counted only as a country — never as a person.":
+        "Sert à t’envoyer vers une librairie ou une bibliothèque qui peut vraiment te servir, et à te placer sur le classement de ton pays quand les concours commenceront. Il est conservé sur cet appareil, et n’est compté que comme un pays — jamais comme une personne.",
+      "It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It is counted as a country, never as a person — no name is ever attached to it.":
+        "Il détermine vers quelle librairie ou bibliothèque nous t’envoyons, et c’est ainsi que tu apparaîtras sur le classement de ton pays quand les concours commenceront. Il est compté comme un pays, jamais comme une personne — aucun nom n’y est jamais attaché.",
 
       // --- backup code ---
       "Your progress": "Ta progression",

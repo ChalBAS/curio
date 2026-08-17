@@ -97,36 +97,62 @@ async function stats(request, env, url) {
   const js = await bankRes.text();
 
   // Count by the answer field — one per question, and it cannot drift from a
-  // number written down anywhere.
+  // number written down anywhere. Always the English bank: French mirrors it by
+  // index, so counting the requested language would report the same figure while
+  // creating a second place for it to be wrong.
   const count = (js.match(/\banswer:\s*\d/g) || []).length;
 
-  // One real question to show, chosen for readability rather than at random:
-  // a genuine payoff fact, short options, no picture needed.
+  // ?lang=fr — the French public page must show a FRENCH question. Serving it an
+  // English one would undercut the only claim that card exists to make, which is
+  // that everything on the page is real.
+  const lang = (url.searchParams.get("lang") || "en").toLowerCase() === "fr" ? "fr" : "en";
+
+  // One real question to show, chosen for readability rather than at random: a
+  // genuine payoff fact, short options, no picture needed.
+  const readable = (q) =>
+    q && q.q && q.fact && Array.isArray(q.options) && q.answer != null &&
+    q.q.length <= 110 && q.fact.length >= 45 && q.fact.length <= 155 &&
+    q.options.every((o) => String(o).length < 30);
+
   const picks = [];
-  const re = /\{\s*cat:\s*"((?:[^"\\]|\\.)*)"[\s\S]*?\n/g;
-  let m;
-  while ((m = re.exec(js)) !== null && picks.length < 400) {
-    const blk = m[0];
-    if (/\bimg:\s*\{/.test(blk)) continue;
-    const q = (blk.match(/\bq:\s*"((?:[^"\\]|\\.)*)"/) || [])[1];
-    const fact = (blk.match(/\bfact:\s*"((?:[^"\\]|\\.)*)"/) || [])[1];
-    const src = (blk.match(/\bsrc:\s*"([^"]*)"/) || [])[1];
-    const optsRaw = (blk.match(/\boptions:\s*(\[[^\]]*\])/) || [])[1];
-    const ans = (blk.match(/\banswer:\s*(\d)/) || [])[1];
-    if (!q || !fact || !optsRaw || ans == null) continue;
-    let options;
-    try { options = JSON.parse(optsRaw); } catch { continue; }
-    if (q.length > 110 || fact.length < 45 || fact.length > 155) continue;
-    if (!options.every((o) => String(o).length < 30)) continue;
-    let text;
-    try { text = JSON.parse('"' + q + '"'); } catch { continue; }
-    let factText;
-    try { factText = JSON.parse('"' + fact + '"'); } catch { continue; }
-    picks.push({ cat: m[1], q: text, options, answer: +ans, fact: factText, src });
+  if (lang === "fr") {
+    // The French bank is written as one JSON object per line, so it parses
+    // directly — no regex needed, and no chance of a half-matched record.
+    const frRes = await env.ASSETS.fetch(new Request(url.origin + "/src/questions.fr.js?v=" + version));
+    const fr = await frRes.text();
+    for (const line of fr.split("\n")) {
+      if (picks.length >= 400) break;
+      const t = line.trim().replace(/,$/, "");
+      if (!t.startsWith("{")) continue;
+      let o;
+      try { o = JSON.parse(t); } catch { continue; }
+      if (o.img || !readable(o)) continue;
+      picks.push({ cat: o.cat, q: o.q, options: o.options, answer: o.answer, fact: o.fact, src: o.src });
+    }
+  } else {
+    const re = /\{\s*cat:\s*"((?:[^"\\]|\\.)*)"[\s\S]*?\n/g;
+    let m;
+    while ((m = re.exec(js)) !== null && picks.length < 400) {
+      const blk = m[0];
+      if (/\bimg:\s*\{/.test(blk)) continue;
+      const q = (blk.match(/\bq:\s*"((?:[^"\\]|\\.)*)"/) || [])[1];
+      const fact = (blk.match(/\bfact:\s*"((?:[^"\\]|\\.)*)"/) || [])[1];
+      const src = (blk.match(/\bsrc:\s*"([^"]*)"/) || [])[1];
+      const optsRaw = (blk.match(/\boptions:\s*(\[[^\]]*\])/) || [])[1];
+      const ans = (blk.match(/\banswer:\s*(\d)/) || [])[1];
+      if (!q || !fact || !optsRaw || ans == null) continue;
+      let options;
+      try { options = JSON.parse(optsRaw); } catch { continue; }
+      let text, factText;
+      try { text = JSON.parse('"' + q + '"'); factText = JSON.parse('"' + fact + '"'); } catch { continue; }
+      const cand = { cat: m[1], q: text, options, answer: +ans, fact: factText, src };
+      if (!readable(cand)) continue;
+      picks.push(cand);
+    }
   }
   const sample = picks.length ? picks[Math.floor(Math.random() * picks.length)] : null;
 
-  return new Response(JSON.stringify({ version, questions: count, languages: 2, sample }), { headers: cors });
+  return new Response(JSON.stringify({ version, questions: count, languages: 2, lang, sample }), { headers: cors });
 }
 
 export default {

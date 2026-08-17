@@ -1,33 +1,59 @@
 {
- "generated": "2026-08-14",
+ "generated": "2026-08-17",
  "live": {
-  "production": 71,
-  "uat": 71,
-  "main": 71
+  "production": null,
+  "uat": null,
+  "main": 72
  },
- "drift": null,
+ "drift": "main is v72 but production serves vnull",
  "awaiting": [],
  "rejected": [],
  "breaches": [
   {
    "version": 71,
-   "status": "NO ISSUE"
+   "status": "UNKNOWN"
   },
   {
    "version": 70,
-   "status": "NO ISSUE"
+   "status": "UNKNOWN"
   }
  ],
  "releases": [
   {
-   "version": 71,
-   "state": "LIVE",
+   "version": 72,
+   "state": "MERGED, NOT DEPLOYED",
    "branch": "main",
    "from": "2026-08-14",
    "to": "2026-08-14",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "8432670",
+     "date": "2026-08-14",
+     "subject": "v72 - the app stops claiming something that was never true"
+    },
+    {
+     "sha": "a964e8b",
+     "date": "2026-08-14",
+     "subject": "chore: align product claims to updated Charter and architecture decisions"
+    }
+   ]
+  },
+  {
+   "version": 71,
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-14",
+   "to": "2026-08-14",
+   "questions": 749,
+   "signoff": {
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -51,7 +77,8 @@
    "to": "2026-08-13",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1084,7 +1111,7 @@
   },
   {
    "version": null,
-   "state": "SUPERSEDED",
+   "state": "LIVE",
    "branch": "main",
    "from": "2026-07-12",
    "to": "2026-07-12",
