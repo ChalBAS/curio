@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v72** at qpio.app |
 | On UAT | **v75** at uat.qpio.app |
 | Tip of `main` | v75 |
-| Generated | 2026-08-17 |
+| Generated | 2026-08-18 |
 
 > ⚠️ **Drift:** main is v75 but production serves v72.
 
@@ -28,9 +28,10 @@ not by omission.*
 
 ## v75 — ⏳ on UAT
 
-2026-08-17 · 749 questions · sign-off: **no release issue**
+2026-08-17 · 749 questions · sign-off: awaiting you, [#58](https://github.com/ChalBAS/curio-hq/issues/58)
 
 - `9673a60` ﻿v75 - Next can no longer sink under the tab bar, and the app stops multiplying
+- `32a6452` Release tooling: strip the BOM gh emits so a build on UAT can never vanish from the awaiting list
 
 ## v74 — · shipped
 

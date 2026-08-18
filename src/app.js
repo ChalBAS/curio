@@ -2496,11 +2496,16 @@
           '<div class="sub">' + t("Every claim you just checked had a source. Real life should be so kind — so ask for one.") + '</div>' +
           '<div class="btnrow" style="justify-content:center">' +
             '<button class="btn" id="again">' + t("Play again") + '</button>' +
+            // Every other results screen offers a way home beside the redo;
+            // this one stranded the reader on the tab bar (CEO, 2026-08-17:
+            // "we need a return home button next to button to redo a test").
+            '<button class="btn ghost" id="tlHome">🏠 ' + t("Home") + '</button>' +
           '</div>' +
         '</div>'
       );
       render(res);
       res.querySelector("#again").addEventListener("click", startTruthLab);
+      res.querySelector("#tlHome").addEventListener("click", goHome);
     }
   }
   function truthPraise(c, t_) {

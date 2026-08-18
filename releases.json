@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-17",
+ "generated": "2026-08-18",
  "live": {
   "production": 72,
   "uat": 75,
@@ -41,7 +41,11 @@
    "to": "2026-08-17",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 58,
+    "issues": [
+     58
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -49,6 +53,11 @@
      "sha": "9673a60",
      "date": "2026-08-17",
      "subject": "﻿v75 - Next can no longer sink under the tab bar, and the app stops multiplying"
+    },
+    {
+     "sha": "32a6452",
+     "date": "2026-08-17",
+     "subject": "Release tooling: strip the BOM gh emits so a build on UAT can never vanish from the awaiting list"
     }
    ]
   },
