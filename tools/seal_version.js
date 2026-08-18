@@ -30,8 +30,12 @@ if (!['uat', 'prod'].includes(where)) {
   process.exit(1);
 }
 
-const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-const v = (html.match(/\?v=(\d+)/) || [])[1];
+// The version can be given explicitly: `seal_version.js prod 75`. Without it
+// the tool reads index.html from the CURRENT CHECKOUT — which mis-stamped the
+// record the first time production was deployed from a worktree while main had
+// already moved on to the next version. When sealing a different commit than
+// the one checked out here, pass the number.
+const v = process.argv[3] || (fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8').match(/\?v=(\d+)/) || [])[1];
 if (!v) { console.error('no version found in index.html'); process.exit(1); }
 
 const seen = fs.existsSync(FP) ? JSON.parse(fs.readFileSync(FP, 'utf8')) : {};

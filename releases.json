@@ -1,13 +1,13 @@
 {
  "generated": "2026-08-18",
  "live": {
-  "production": 72,
-  "uat": 75,
-  "main": 75
+  "production": 75,
+  "uat": 76,
+  "main": 76
  },
- "drift": "main is v75 but production serves v72",
+ "drift": "main is v76 but production serves v75",
  "awaiting": [
-  75
+  76
  ],
  "rejected": [],
  "breaches": [
@@ -34,20 +34,41 @@
  ],
  "releases": [
   {
-   "version": 75,
+   "version": 76,
    "state": "ON UAT",
    "branch": "main",
-   "from": "2026-08-17",
-   "to": "2026-08-17",
+   "from": "2026-08-18",
+   "to": "2026-08-18",
    "questions": 749,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 58,
-    "issues": [
-     58
-    ]
+    "status": "NO ISSUE"
    },
    "messageClash": [],
+   "commits": [
+    {
+     "sha": "6a4dc78",
+     "date": "2026-08-18",
+     "subject": "Bump to v76 — the seal gate refused new content under served v75, which is the point"
+    }
+   ]
+  },
+  {
+   "version": 75,
+   "state": "LIVE",
+   "branch": "main",
+   "from": "2026-08-17",
+   "to": "2026-08-18",
+   "questions": 749,
+   "signoff": {
+    "status": "ACCEPTED",
+    "at": "2026-08-18T14:44:06Z",
+    "who": "ChalBAS",
+    "issue": 58,
+    "where": "comment"
+   },
+   "messageClash": [
+    "35f373f"
+   ],
    "commits": [
     {
      "sha": "9673a60",
@@ -58,6 +79,11 @@
      "sha": "32a6452",
      "date": "2026-08-17",
      "subject": "Release tooling: strip the BOM gh emits so a build on UAT can never vanish from the awaiting list"
+    },
+    {
+     "sha": "35f373f",
+     "date": "2026-08-18",
+     "subject": "v76 (queued): Fact or Fake results get a Home button beside Play again"
     }
    ]
   },
@@ -115,7 +141,7 @@
   },
   {
    "version": 72,
-   "state": "LIVE",
+   "state": "SUPERSEDED",
    "branch": "main",
    "from": "2026-08-14",
    "to": "2026-08-17",

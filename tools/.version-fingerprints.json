@@ -37,11 +37,13 @@
  "75": {
   "stamp": "db92c9401310a375",
   "sealed": true,
-  "servedTo": "uat",
+  "servedTo": "prod",
   "at": "2026-08-17"
  },
  "76": {
   "stamp": "a194c06395439dc1",
-  "sealed": false
+  "sealed": true,
+  "servedTo": "uat",
+  "at": "2026-08-17"
  }
 }

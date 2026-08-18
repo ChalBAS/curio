@@ -7,14 +7,14 @@ commit, not from the commit message.*
 
 | | |
 |---|---|
-| Live to readers | **v72** at qpio.app |
-| On UAT | **v75** at uat.qpio.app |
-| Tip of `main` | v75 |
+| Live to readers | **v75** at qpio.app |
+| On UAT | **v76** at uat.qpio.app |
+| Tip of `main` | v76 |
 | Generated | 2026-08-18 |
 
-> ⚠️ **Drift:** main is v75 but production serves v72.
+> ⚠️ **Drift:** main is v76 but production serves v75.
 
-> ⏳ **Awaiting your sign-off:** v75. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v76. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
@@ -26,12 +26,20 @@ not by omission.*
 
 ---
 
-## v75 — ⏳ on UAT
+## v76 — ⏳ on UAT
 
-2026-08-17 · 749 questions · sign-off: awaiting you, [#58](https://github.com/ChalBAS/curio-hq/issues/58)
+2026-08-18 · 749 questions · sign-off: **no release issue**
+
+- `6a4dc78` Bump to v76 — the seal gate refused new content under served v75, which is the point
+
+## v75 — 🟢 live
+
+2026-08-17 → 2026-08-18 · 749 questions · sign-off: accepted, [#58](https://github.com/ChalBAS/curio-hq/issues/58)
 
 - `9673a60` ﻿v75 - Next can no longer sink under the tab bar, and the app stops multiplying
 - `32a6452` Release tooling: strip the BOM gh emits so a build on UAT can never vanish from the awaiting list
+- `35f373f` v76 (queued): Fact or Fake results get a Home button beside Play again
+- ⚠️ commit message names a different version: 35f373f
 
 ## v74 — · shipped
 
@@ -47,7 +55,7 @@ not by omission.*
 - `79da924` ﻿v73 - the bot gate stops being an outage, and both languages tell the truth
 - `821f57b` Release tracker: what is DEPLOYED decides, not which branch a commit sits on
 
-## v72 — 🟢 live
+## v72 — · shipped
 
 2026-08-14 → 2026-08-17 · 749 questions · sign-off: **no release issue**
 
