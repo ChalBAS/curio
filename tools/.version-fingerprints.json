@@ -43,7 +43,7 @@
  "76": {
   "stamp": "a194c06395439dc1",
   "sealed": true,
-  "servedTo": "uat",
-  "at": "2026-08-17"
+  "servedTo": "prod",
+  "at": "2026-08-18"
  }
 }

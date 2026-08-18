@@ -1,14 +1,12 @@
 {
  "generated": "2026-08-18",
  "live": {
-  "production": 75,
+  "production": 76,
   "uat": 76,
   "main": 76
  },
- "drift": "main is v76 but production serves v75",
- "awaiting": [
-  76
- ],
+ "drift": null,
+ "awaiting": [],
  "rejected": [],
  "breaches": [
   {
@@ -35,33 +33,44 @@
  "releases": [
   {
    "version": 76,
-   "state": "ON UAT",
+   "state": "LIVE",
    "branch": "main",
    "from": "2026-08-18",
    "to": "2026-08-18",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "ACCEPTED",
+    "at": "2026-08-18T18:12:23Z",
+    "who": "ChalBAS",
+    "issue": 60,
+    "where": "comment"
    },
-   "messageClash": [],
+   "messageClash": [
+    "c22795c"
+   ],
    "commits": [
     {
      "sha": "6a4dc78",
      "date": "2026-08-18",
      "subject": "Bump to v76 — the seal gate refused new content under served v75, which is the point"
+    },
+    {
+     "sha": "c22795c",
+     "date": "2026-08-18",
+     "subject": "v75 live: release record, corrected seal provenance, seal takes an explicit version"
     }
    ]
   },
   {
    "version": 75,
-   "state": "LIVE",
+   "state": "SUPERSEDED",
    "branch": "main",
    "from": "2026-08-17",
    "to": "2026-08-18",
    "questions": 749,
    "signoff": {
     "status": "ACCEPTED",
-    "at": "2026-08-18T14:44:06Z",
+    "at": "2026-08-18T15:21:52Z",
     "who": "ChalBAS",
     "issue": 58,
     "where": "comment"
