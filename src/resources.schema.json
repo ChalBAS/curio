@@ -94,6 +94,9 @@
     "source_id": {
       "type": "string"
     },
+    "external_source_id": {
+      "type": "string"
+    },
     "source_url": {
       "type": "string",
       "format": "uri"
