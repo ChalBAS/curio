@@ -92,7 +92,7 @@
     // — v77 curiosity package destinations —
     "Complaint_tablet_to_Ea-nassir": { kind: "hold", where: "The British Museum", city: "London", url: "https://www.britishmuseum.org/collection/object/W_1953-0411-71" },
     "Hatshepsut":                   { kind: "hold", where: "The Metropolitan Museum of Art", city: "New York", url: "https://www.metmuseum.org/art/collection/search?q=Hatshepsut" },
-    "Armour":                       { kind: "hold", where: "The Met — Arms and Armor", city: "New York", url: "https://www.metmuseum.org/about-the-met/collection-areas/arms-and-armor" },
+    "Armour":                       { kind: "hold", where: "The Met — Arms and Armor", city: "New York", url: "https://www.metmuseum.org/departments/arms-and-armor" },
     "Nazca_lines":                  { kind: "site", where: "The Lines and Geoglyphs of Nasca and Palpa", city: "Peru", url: "https://whc.unesco.org/en/list/700/" },
     "Thermopolium":                 { kind: "site", where: "Pompeii Archaeological Park", city: "Pompeii, Italy", url: "https://pompeiisites.org/en/" }
   };
