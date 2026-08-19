@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://qpioapp.com/schemas/resource-schema.json",
+  "title": "QPIOResource",
+  "description": "Core Schema for the QPIO Cultural Resource Network",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "country",
+    "language",
+    "topics",
+    "source_id",
+    "source_url",
+    "source_type",
+    "source_authority",
+    "temporal_status",
+    "status",
+    "last_verified_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^res_[a-z0-9_\\-]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "institution",
+        "collection",
+        "permanent_exhibition",
+        "temporary_exhibition",
+        "event",
+        "book",
+        "audiobook",
+        "article",
+        "research_paper",
+        "digital_archive",
+        "digital_collection",
+        "documentary",
+        "podcast",
+        "course",
+        "lecture",
+        "person",
+        "place"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "institution_id": {
+      "type": "string"
+    },
+    "person_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "place_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_resource_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "official_api",
+        "structured_feed",
+        "rss_atom",
+        "structured_webpage",
+        "webpage_extraction",
+        "aggregator",
+        "manual_verification"
+      ]
+    },
+    "source_authority": {
+      "type": "string",
+      "enum": [
+        "tier1_primary_institutional",
+        "tier2_established_aggregator",
+        "tier3_reputable_secondary",
+        "tier4_discovery_community"
+      ]
+    },
+    "temporal_status": {
+      "type": "string",
+      "enum": [
+        "PERMANENT",
+        "UPCOMING",
+        "ACTIVE",
+        "ENDED",
+        "CANCELLED",
+        "POSTPONED",
+        "UNKNOWN"
+      ]
+    },
+    "start_date": {
+      "type": "string"
+    },
+    "end_date": {
+      "type": "string"
+    },
+    "publication_date": {
+      "type": "string"
+    },
+    "retrieved_at": {
+      "type": "string"
+    },
+    "last_verified_at": {
+      "type": "string"
+    },
+    "next_verification_at": {
+      "type": "string"
+    },
+    "verification_method": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "pending_verification",
+        "archived",
+        "flagged_stale"
+      ]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
