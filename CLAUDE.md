@@ -1,5 +1,14 @@
 # Ruflo — Claude Code Configuration
 
+## Shared Repository Agent Contract
+
+For repository-based work, before substantive execution:
+
+1. Read `.ai/AGENT_CONTRACT.md`.
+2. Read `.ai/project-state.json`.
+
+After every major completed task, follow the repository synchronization procedure defined by the shared contract (update state via `python scripts/ai_state.py`, regenerate `PROJECT_STATUS.md`, validate, commit). This applies even when the current prompt does not explicitly request documentation or repository-state updates.
+
 ## Rules
 
 - Do what has been asked; nothing more, nothing less
