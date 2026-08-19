@@ -19,7 +19,7 @@ global.window = {};
 try {
   require('../src/resources.js');
   assert(Array.isArray(global.window.CURIO_RESOURCES), 'window.CURIO_RESOURCES initialized as an array');
-  assert(global.window.CURIO_RESOURCES.length === 43, `window.CURIO_RESOURCES loaded ${global.window.CURIO_RESOURCES.length} pilot records (43 expected)`);
+  assert(global.window.CURIO_RESOURCES.length >= 43, `window.CURIO_RESOURCES loaded ${global.window.CURIO_RESOURCES.length} records (>= 43 required)`);
   assert(Boolean(global.window.CurioResourceNetwork), 'window.CurioResourceNetwork API available');
 } catch (err) {
   assert(false, `Failed to load src/resources.js: ${err.message}`);

@@ -97,6 +97,18 @@
     "external_source_id": {
       "type": "string"
     },
+    "original_title": {
+      "type": "string"
+    },
+    "display_title": {
+      "type": "string"
+    },
+    "isbn": {
+      "type": "string"
+    },
+    "freshness_class": {
+      "type": "string"
+    },
     "source_url": {
       "type": "string",
       "format": "uri"
