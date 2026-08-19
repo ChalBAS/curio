@@ -19,7 +19,7 @@ global.window = {};
 try {
   require('../src/resources.js');
   assert(Array.isArray(global.window.CURIO_RESOURCES), 'window.CURIO_RESOURCES initialized as an array');
-  assert(global.window.CURIO_RESOURCES.length === 20, `window.CURIO_RESOURCES loaded ${global.window.CURIO_RESOURCES.length} pilot records (20 expected)`);
+  assert(global.window.CURIO_RESOURCES.length === 43, `window.CURIO_RESOURCES loaded ${global.window.CURIO_RESOURCES.length} pilot records (43 expected)`);
   assert(Boolean(global.window.CurioResourceNetwork), 'window.CurioResourceNetwork API available');
 } catch (err) {
   assert(false, `Failed to load src/resources.js: ${err.message}`);
@@ -130,7 +130,7 @@ CRN.resources.forEach((r, idx) => {
     allUrlsValid = false;
   }
 });
-assert(allUrlsValid, 'All 20 pilot resources carry valid HTTP/HTTPS source_urls');
+assert(allUrlsValid, 'All pilot resources carry valid HTTP/HTTPS source_urls');
 
 // ---------------------------------------------------------------------------
 // TEST G: Tolerance for Missing Optional Fields
