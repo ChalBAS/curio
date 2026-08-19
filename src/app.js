@@ -339,13 +339,21 @@
       var srcName = window.CurioResourceNetwork.getHumanSource(r.source_id);
       var typeName = window.CurioResourceNetwork.getHumanType(r.type);
       var authName = window.CurioResourceNetwork.getHumanAuthority(r.source_authority);
+      var urgency = (r.end_date && window.CurioResourceNetwork.getFactualUrgencyString)
+        ? window.CurioResourceNetwork.getFactualUrgencyString(r.end_date)
+        : null;
 
       html += '<a class="crn-card" href="' + srcLink0(r.source_url) + '" target="_blank" rel="noopener">' +
-        '<div class="crn-card-type">' + esc(typeName) + ' · ' + esc(srcName) + '</div>' +
+        '<div class="crn-card-type">' + esc(typeName) + ' · ' + esc(srcName) +
+          (urgency ? ' <span class="crn-urgency">⏱️ ' + esc(urgency) + '</span>' : '') +
+        '</div>' +
         '<div class="crn-card-title">' + esc(r.title) + '</div>' +
         (r.description ? '<div class="crn-card-desc">' + esc(r.description) + '</div>' : '') +
         '<div class="crn-card-footer">' +
-          '<span class="crn-provenance">✓ ' + esc(authName) + (r.publication_date ? ' (' + esc(r.publication_date) + ')' : '') + '</span>' +
+          '<span class="crn-provenance">✓ ' + esc(authName) +
+            (r.publication_date ? ' (' + esc(r.publication_date) + ')' : '') +
+            (r.city ? ' · ' + esc(r.city) : '') +
+          '</span>' +
           '<span class="crn-ext">' + t("Explore ↗") + '</span>' +
         '</div>' +
       '</a>';

@@ -522,11 +522,32 @@
     return types[type] || "Cultural Resource";
   }
 
+  function getFactualUrgencyString(endDateStr) {
+    if (!endDateStr) return null;
+    var end = new Date(endDateStr);
+    if (isNaN(end.getTime())) return null;
+
+    var diffMs = end.getTime() - Date.now();
+    var diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffDays <= 0) return "Ended";
+    if (diffDays === 1) return "Ends today";
+    if (diffDays <= 30) return "Ends in " + diffDays + " days";
+
+    var mNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return "Until " + end.getDate() + " " + mNames[end.getMonth()] + " " + end.getFullYear();
+  }
+
   // 3. Deterministic Matching & Scoring Engine
   // S(Q, R) = Sum of (Topic match +3, Subtopic/Category match +2, Region/Country match +1)
   // Threshold = 3 points. Maximum 3 resources returned per question.
   function scoreResourceForQuestion(question, res) {
     if (!question || !res) return 0;
+
+    // EXCLUDE ENDED or CANCELLED exhibitions from active recommendations (Expiry Restraint Rule)
+    if (res.temporal_status === "ENDED" || res.temporal_status === "CANCELLED" || res.status === "archived") {
+      return 0;
+    }
 
     var score = 0;
     var qCat = (question.cat || "").toLowerCase();
@@ -598,6 +619,7 @@
     getHumanSource: getHumanSource,
     getHumanAuthority: getHumanAuthority,
     getHumanType: getHumanType,
+    getFactualUrgencyString: getFactualUrgencyString,
     scoreResourceForQuestion: scoreResourceForQuestion,
     findResourcesForQuestion: findResourcesForQuestion
   };

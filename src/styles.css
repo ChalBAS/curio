@@ -979,6 +979,17 @@ body:has(.tabbar:not(.hidden)) .wrap { padding-bottom: 120px; }
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin-bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.crn-urgency {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--brand);
+  background: rgba(38, 186, 216, 0.12);
+  padding: 1px 5px;
+  border-radius: 4px;
 }
 .crn-card-title {
   font-size: 13px;
