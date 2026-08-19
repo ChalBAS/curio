@@ -87,7 +87,14 @@
     "Inca_road_system":             { kind: "site", where: "Qhapaq Ñan, the Andean road system", city: "Six countries, 30,000 km", url: "https://whc.unesco.org/en/list/1459/" },
     "Silk_Road":                    { kind: "site", where: "The Silk Roads: Chang'an–Tianshan corridor", city: "China · Kazakhstan · Kyrgyzstan", url: "https://whc.unesco.org/en/list/1442/" },
     "Stockholm_archipelago":        { kind: "site", where: "The Stockholm archipelago", city: "Sweden", url: "https://www.visitstockholm.com/" },
-    "Washington_Monument":          { kind: "site", where: "The Washington Monument", city: "Washington, D.C.", url: "https://www.nps.gov/wamo/index.htm" }
+    "Washington_Monument":          { kind: "site", where: "The Washington Monument", city: "Washington, D.C.", url: "https://www.nps.gov/wamo/index.htm" },
+
+    // — v77 curiosity package destinations —
+    "Complaint_tablet_to_Ea-nassir": { kind: "hold", where: "The British Museum", city: "London", url: "https://www.britishmuseum.org/collection/object/W_1953-0411-71" },
+    "Hatshepsut":                   { kind: "hold", where: "The Metropolitan Museum of Art", city: "New York", url: "https://www.metmuseum.org/art/collection/search?q=Hatshepsut" },
+    "Armour":                       { kind: "hold", where: "The Met — Arms and Armor", city: "New York", url: "https://www.metmuseum.org/about-the-met/collection-areas/arms-and-armor" },
+    "Nazca_lines":                  { kind: "site", where: "The Lines and Geoglyphs of Nasca and Palpa", city: "Peru", url: "https://whc.unesco.org/en/list/700/" },
+    "Thermopolium":                 { kind: "site", where: "Pompeii Archaeological Park", city: "Pompeii, Italy", url: "https://pompeiisites.org/en/" }
   };
 
   // Reading works for every entity without curation. Bookshop.org is the

@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v76** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-08-18 |
+| Generated | 2026-08-19 |
 
 > 🔴 **Reached readers without a recorded sign-off:** v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
@@ -23,10 +23,11 @@ not by omission.*
 
 ## v76 — 🟢 live
 
-2026-08-18 · 749 questions · sign-off: accepted, [#60](https://github.com/ChalBAS/curio-hq/issues/60)
+2026-08-18 → 2026-08-19 · 749 questions · sign-off: accepted, [#60](https://github.com/ChalBAS/curio-hq/issues/60)
 
 - `6a4dc78` Bump to v76 — the seal gate refused new content under served v75, which is the point
 - `c22795c` v75 live: release record, corrected seal provenance, seal takes an explicit version
+- `8a05999` v76 live
 - ⚠️ commit message names a different version: c22795c
 
 ## v75 — · shipped

@@ -372,6 +372,11 @@
       "🕳️ Go deeper": "🕳️ Creuser plus loin",
       "🕳️ Bottom reached": "🕳️ Fond atteint",
 
+      // --- cultural resource network (CRN cards) ---
+      "Go Further — Cultural Resources": "Aller plus loin — Ressources culturelles",
+      "Verified": "Vérifié",
+      "Explore ↗": "Explorer ↗",
+
       // --- daily result ---
       "Today's challenge": "Le défi du jour",
       "🔥 1-day streak": "🔥 Série de 1 jour",

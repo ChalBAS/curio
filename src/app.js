@@ -64,6 +64,37 @@
   }
 
   var Q = (QLANG === "fr" && Q_FR.length) ? mergeTranslated(Q_EN, Q_FR) : Q_EN;
+
+  // ---------- Question Intelligence (v77) ----------
+  // One packed row per bank question, aligned by index — and the EN/FR banks
+  // are index-aligned, so one corpus serves both languages. Additive: a
+  // missing row leaves the question neutral rather than breaking anything.
+  var QI = window.CURIO_QI || null;
+  var QI_ROWS = (window.CURIO_QI_CORPUS && window.CURIO_QI_CORPUS.rows) || null;
+  if (QI && QI_ROWS) Q.forEach(function (x, i) { var r = QI_ROWS[i]; if (r) x.intelligence = QI.decodeRow(r); });
+
+  // ---------- UAT curiosity diagnostic (never normal UX) ----------
+  // ?qidiag=1 turns it on for the session, ?qidiag=0 turns it off. It shows
+  // WHY a daily was paced the way it was — role, archetypes and the three
+  // stage means per question, plus the role/novelty sequences at round end.
+  // English-only on purpose: a founder's tool, not a feature — and therefore
+  // deliberately NOT routed through the i18n dictionary.
+  var QI_DIAG = false;
+  try {
+    if (/[?&]qidiag=1/.test(location.search)) sessionStorage.setItem("curio.qidiag", "1");
+    if (/[?&]qidiag=0/.test(location.search)) sessionStorage.removeItem("curio.qidiag");
+    QI_DIAG = sessionStorage.getItem("curio.qidiag") === "1";
+  } catch (e) {}
+  function qiDiagChip(q) {
+    if (!QI_DIAG || !QI || !q.intelligence) return "";
+    var i = q.intelligence;
+    var f = function (x) { return (Math.round(x * 10) / 10).toFixed(1); };
+    return '<div class="qidiag">⚙ role ' + esc(i.role) +
+      ' · ' + i.archetypes.map(esc).join("+") +
+      ' · entry ' + f(QI.entryMean(i)) +
+      ' · spark ' + f(QI.sparkMean(i)) +
+      ' · portal ' + f(QI.portalMean(i)) + '</div>';
+  }
   var CATS = ["History", "Science", "Geography", "Arts", "Tech", "Nature"];
   var CAT_EMOJI = { History: "🏛️", Science: "🔬", Geography: "🌍", Arts: "🎨", Tech: "💻", Nature: "🌿" };
   var DAILY_COUNT = 5;
@@ -179,17 +210,29 @@
   // question, which the content plan reaches on the road to 10,000.
   // (When the bank grows the deck re-cuts; that boundary is the one place a
   // near-term repeat is theoretically possible, noted and accepted.)
+  //
+  // CURIOSITY PACING (v77): the walk now deals EIGHT cards a day and the
+  // pacer serves five — broadly one accessible foothold, one curiosity, one
+  // stronger surprise or contradiction, one discovery and one strong portal,
+  // in that psychological order where the window allows it. Uniqueness is
+  // untouched: windows are disjoint slices of the same deterministic deck,
+  // so a repeat inside an epoch remains impossible, and paceDaily is a pure
+  // function of (window, day) — identical on every device, like the walk.
+  var DAILY_WINDOW = 8;
   function dailyQuestions() {
     var p = pool();
     if (!p.length) return [];
-    var epochLen = Math.max(1, Math.floor(p.length / DAILY_COUNT));  // days per full deck
+    var W = p.length >= DAILY_WINDOW ? DAILY_WINDOW : DAILY_COUNT;
+    var epochLen = Math.max(1, Math.floor(p.length / W));  // days per full deck
     var d = dayNumber();
     var epoch = Math.floor(d / epochLen), day = d % epochLen;
     var seed = epoch * 7919 + p.length * 131 + (settings.ageMode === "kids" ? 51000 : 1);
     var order = shuffledIndices(p.length, seed);
-    var out = [];
-    for (var i = 0; i < DAILY_COUNT; i++) out.push(p[order[(day * DAILY_COUNT + i) % p.length]]);
-    return out;
+    var win = [];
+    for (var i = 0; i < W; i++) win.push(p[order[(day * W + i) % p.length]]);
+    if (window.CURIO_QI && window.CURIO_QI.paceDaily && p.length >= DAILY_WINDOW)
+      return window.CURIO_QI.paceDaily(win, DAILY_COUNT, d);
+    return win.slice(0, DAILY_COUNT);
   }
   // NO REPEATS. "Play again" used to reshuffle the whole pool, so a 91-question
   // topic could deal you the same flag twice in two rounds — and a quick-fire
@@ -258,7 +301,13 @@
     // says so honestly. That is what makes the repeat probability zero
     // rather than merely small.
     for (var i = fresh.length - 1; i > 0; i--) { var k = Math.floor(Math.random() * (i + 1)); var tmp = fresh[i]; fresh[i] = fresh[k]; fresh[k] = tmp; }
-    var out = fresh.slice(0, Math.min(QUICKFIRE_COUNT, fresh.length));
+    // Light curiosity balancing (v77): topic relevance was fixed by the
+    // filter above and is never traded against a curiosity quota — the pacer
+    // only re-orders the random walk to avoid long flat-recall or long
+    // obscure runs, and a thin topic still deals a full round.
+    var out = (window.CURIO_QI && window.CURIO_QI.balanceQuickfire)
+      ? window.CURIO_QI.balanceQuickfire(fresh, Math.min(QUICKFIRE_COUNT, fresh.length))
+      : fresh.slice(0, Math.min(QUICKFIRE_COUNT, fresh.length));
     markSeen(out);
     return out;
   }
@@ -310,6 +359,7 @@
     // pictures vanished the first time they shipped. Keep it exhaustive.
     return { id: qid(q), q: q.q, cat: q.cat, region: q.region, sub: q.sub, theme: q.theme,
              diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, img: q.img,
+             intelligence: q.intelligence,
              options: opts, answer: ans };
   }
   var REGION_LABEL = { Africa: "Africa", Americas: "Americas", Asia: "Asia", Europe: "Europe", MiddleEast: "Middle East", Global: "Global" };
@@ -1583,7 +1633,7 @@
           '<button class="btn ghost" id="quit" style="padding:8px 12px;font-size:13px">' + t("← Quit") + '</button>' +
           '<div class="progress"><i style="width:' + Math.round((idx) / cfg.questions.length * 100) + '%"></i></div>' +
           '<div class="qmeta">' + (idx + 1) + '/' + cfg.questions.length + (secs ? ' · <span class="timer" id="timer">' + secs + 's</span>' : '') + '</div>' +
-        '</div>'
+        '</div>' + qiDiagChip(q)
       ));
       var catLabel = q.theme || q.cat || "";
       var catEmoji = CAT_EMOJI[q.cat] || cfg.emoji || "";
@@ -1983,6 +2033,13 @@
     if (rec.date === todayKey()) {
       var gf = shelfCard(dailyQuestions(), rec.marks);
       if (gf) node.parentNode.appendChild(gf);
+      // UAT curiosity diagnostic: why the daily was paced the way it was.
+      if (QI_DIAG && QI) {
+        var dqs = dailyQuestions();
+        var roles = dqs.map(function (q) { return q.intelligence ? q.intelligence.role : "?"; });
+        var novs = dqs.map(function (q) { return q.intelligence ? String(q.intelligence.entry_pull.novelty) : "?"; });
+        node.parentNode.appendChild(el('<div class="qidiag qidiag-round">⚙ roles: ' + esc(roles.join(" → ")) + '<br>⚙ novelty: ' + esc(novs.join(" ")) + '</div>'));
+      }
     }
     // No Home button at the foot: it now sits in the header beside the logo,
     // where it is reachable without scrolling past everything (CEO,

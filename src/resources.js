@@ -27,7 +27,9 @@
     "source_authority": "tier1_primary_institutional",
     "start_date": "2026-10-15",
     "end_date": "2027-02-15",
-    "temporal_status": "UPCOMING"
+    "temporal_status": "UPCOMING",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_exh_smithsonian_bronzes_2026",
@@ -51,7 +53,9 @@
     "source_authority": "tier1_primary_institutional",
     "start_date": "2026-06-01",
     "end_date": "2026-11-30",
-    "temporal_status": "ACTIVE"
+    "temporal_status": "ACTIVE",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_exh_bnf_maps_2026",
@@ -75,7 +79,9 @@
     "source_authority": "tier1_primary_institutional",
     "start_date": "2026-07-01",
     "end_date": "2026-08-31",
-    "temporal_status": "ACTIVE"
+    "temporal_status": "ACTIVE",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_exh_grandpalais_nubia_2025",
@@ -99,7 +105,9 @@
     "source_authority": "tier1_primary_institutional",
     "start_date": "2025-09-01",
     "end_date": "2026-01-15",
-    "temporal_status": "ENDED"
+    "temporal_status": "ENDED",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_exh_smithsonian_timbuktu_2026",
@@ -124,7 +132,9 @@
     "start_date": "2026-11-01",
     "end_date": "2027-03-31",
     "status_override": "POSTPONED",
-    "temporal_status": "POSTPONED"
+    "temporal_status": "POSTPONED",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_exh_grandpalais_salon_2026",
@@ -148,7 +158,9 @@
     "start_date": "2026-08-01",
     "end_date": "2026-08-15",
     "status_override": "CANCELLED",
-    "temporal_status": "CANCELLED"
+    "temporal_status": "CANCELLED",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_exh_bnf_textiles_2026",
@@ -169,7 +181,9 @@
     "source_url": "https://gallica.bnf.fr/expositions/textiles-afrique-2026",
     "source_type": "official_api",
     "source_authority": "tier1_primary_institutional",
-    "temporal_status": "UNKNOWN"
+    "temporal_status": "UNKNOWN",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_exh_louvre_permanent_africa",
@@ -191,7 +205,9 @@
     "source_type": "official_api",
     "source_authority": "tier1_primary_institutional",
     "status_override": "PERMANENT",
-    "temporal_status": "PERMANENT"
+    "temporal_status": "PERMANENT",
+    "status": "active",
+    "last_verified_at": "2026-08-19T10:15:57.170Z"
   },
   {
     "id": "res_smithsonian_ld1_1646149545906_1646149799927_0",
@@ -848,7 +864,7 @@
     ],
     "source_id": "src_europeana",
     "external_source_id": "/2059218/data_sounds_IT_DDS0000006600000300",
-    "source_url": "http://www.internetculturale.it/opencms/opencms/it/viewItemMag.jsp?id=oai%3A192.168.10.31%3A22%3ARM0200%3AIT-DDS0000006600000300&teca=ICBSA",
+    "source_url": "https://www.internetculturale.it/opencms/opencms/it/viewItemMag.jsp?id=oai%3A192.168.10.31%3A22%3ARM0200%3AIT-DDS0000006600000300&teca=ICBSA",
     "source_type": "official_api",
     "source_authority": "tier2_established_aggregator",
     "temporal_status": "PERMANENT",
@@ -972,7 +988,7 @@
     ],
     "source_id": "src_europeana",
     "external_source_id": "/2022362/_Royal_Museums_Greenwich__http___collections_rmg_co_uk_collections_objects_541144",
-    "source_url": "http://collections.rmg.co.uk/mediaLib/410/media-410166/large.jpg",
+    "source_url": "https://collections.rmg.co.uk/mediaLib/410/media-410166/large.jpg",
     "source_type": "official_api",
     "source_authority": "tier2_established_aggregator",
     "temporal_status": "PERMANENT",
@@ -1151,8 +1167,8 @@
       "african_history"
     ],
     "source_id": "src_loc",
-    "external_source_id": "http://www.loc.gov/item/2021688764/",
-    "source_url": "http://www.loc.gov/item/2021688764/",
+    "external_source_id": "https://www.loc.gov/item/2021688764/",
+    "source_url": "https://www.loc.gov/item/2021688764/",
     "source_type": "official_api",
     "source_authority": "tier1_primary_institutional",
     "temporal_status": "PERMANENT",
@@ -1254,8 +1270,8 @@
       "religion"
     ],
     "source_id": "src_loc",
-    "external_source_id": "http://lccn.loc.gov/2017950403",
-    "source_url": "http://lccn.loc.gov/2017950403",
+    "external_source_id": "https://lccn.loc.gov/2017950403",
+    "source_url": "https://lccn.loc.gov/2017950403",
     "source_type": "official_api",
     "source_authority": "tier1_primary_institutional",
     "temporal_status": "PERMANENT",
@@ -1404,6 +1420,23 @@
     // 3. Country / Region match (+1 point)
     if (qRegion === "africa" && (res.country === "US" || res.country === "FR" || res.country === "GH" || res.country === "TG" || res.country === "GLOBAL") && (resTopics.has("african_history") || resTopics.has("histoire_afrique"))) {
       score += 1;
+    }
+
+    // 4. Question Intelligence resonance (v77). Rabbit-hole branches and
+    // entities sharpen RESONANCE — a resource only gains here when it speaks
+    // to the curiosity THIS question creates, which is the mandate's rule
+    // that resonance outranks raw abundance. Commercial fields
+    // (partner/affiliate/commercial) are never read: Charter VAL-12.
+    var qi = question.intelligence;
+    if (qi && qi.rabbit_hole) {
+      (qi.rabbit_hole.branches || []).forEach(function (b) {
+        if (resTopics.has(String(b).toLowerCase())) score += 2;
+      });
+      var rText = ((res.title || "") + " " + (res.description || "")).toLowerCase();
+      (qi.rabbit_hole.entities || []).forEach(function (e) {
+        var name = String(e).replace(/_/g, " ").toLowerCase();
+        if (name.length > 3 && rText.indexOf(name) !== -1) score += 2;
+      });
     }
 
     return score;

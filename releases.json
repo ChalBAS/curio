@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-18",
+ "generated": "2026-08-19",
  "live": {
   "production": 76,
   "uat": 76,
@@ -36,11 +36,11 @@
    "state": "LIVE",
    "branch": "main",
    "from": "2026-08-18",
-   "to": "2026-08-18",
+   "to": "2026-08-19",
    "questions": 749,
    "signoff": {
     "status": "ACCEPTED",
-    "at": "2026-08-18T18:12:23Z",
+    "at": "2026-08-18T18:16:00Z",
     "who": "ChalBAS",
     "issue": 60,
     "where": "comment"
@@ -58,6 +58,11 @@
      "sha": "c22795c",
      "date": "2026-08-18",
      "subject": "v75 live: release record, corrected seal provenance, seal takes an explicit version"
+    },
+    {
+     "sha": "8a05999",
+     "date": "2026-08-19",
+     "subject": "v76 live"
     }
    ]
   },

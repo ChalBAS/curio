@@ -1024,3 +1024,7 @@ body:has(.tabbar:not(.hidden)) .wrap { padding-bottom: 120px; }
   font-weight: 700;
 }
 
+
+/* UAT curiosity diagnostic (?qidiag=1) — a founder's tool, never normal UX */
+.qidiag { font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: #9aa0c0; background: rgba(154,160,192,.08); border: 1px dashed rgba(154,160,192,.35); border-radius: 8px; padding: 4px 8px; margin: 2px 0 8px; }
+.qidiag-round { margin: 10px auto; max-width: 520px; text-align: center; }

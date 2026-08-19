@@ -29,6 +29,8 @@ const ASSETS = [
   "./src/hooks.js?v=76",
   "./src/discovery.js?v=76",
   "./src/resources.js?v=76",
+  "./src/intelligence.js?v=76",
+  "./src/intelligence.corpus.js?v=76",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",

@@ -187,12 +187,16 @@ try {
 
 /* ---------- 4c. question intelligence ---------- */
 head('4c · Question intelligence');
-try {
-  cp.execFileSync(process.execPath, [path.join(ROOT, 'tools', 'intelligence.test.js')], { stdio: 'pipe' });
-  pass('question intelligence v1', 'validator, calibration echo vs bank, discovery/resource non-regression');
-} catch (e) {
-  fail('question intelligence v1', 'tools/intelligence.test.js failed — run it to see which case');
-}
+[['tools/intelligence.test.js', 'model + corpus'],
+ ['tools/selection.test.js', 'daily/quick-fire pacing'],
+ ['tools/resources.test.js', 'resources, links, licences']].forEach(function (pair) {
+  try {
+    cp.execFileSync(process.execPath, [path.join(ROOT, pair[0])], { stdio: 'pipe' });
+    pass('question intelligence: ' + pair[1], path.basename(pair[0]));
+  } catch (e) {
+    fail('question intelligence: ' + pair[1], pair[0] + ' failed — run it to see which case');
+  }
+});
 
 /* ---------- 5. sources (network, --full only) ---------- */
 head('5 · Sources' + (FULL ? '' : '  (skipped — run with --full)'));

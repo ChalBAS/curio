@@ -1,5 +1,7 @@
 # QI Calibration V1 — Sample Report
 
+> **Historical record.** The calibration review informed the final model; the A–E tiers here were replaced by session-function **roles** (anchor/curiosity/discovery/portal/deep/trivia) in v77. Current truth: `docs/CURIOSITY_ENGINE_V77.md`.
+
 **Companion to `docs/QUESTION_INTELLIGENCE_V1.md`.** This report is what the human review calibrates against. Per-question scores and their internal rationale (`note`) live with the data in `src/intelligence.data.js`; this report covers composition, distributions, boundary cases and findings.
 
 **Reminder: these scores are editorial intelligence metadata, not scientifically validated measurements.**

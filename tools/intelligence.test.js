@@ -1,8 +1,9 @@
-/* Tests for Question Intelligence V1. Zero dependencies — node runs it.
+/* Tests for Question Intelligence — final three-stage model (v77).
+ * Zero dependencies — node runs it.
  *
  *   node tools/intelligence.test.js
  *
- * Covers the mandate's acceptance cases (§16):
+ * Covers the mandate's acceptance cases for the FINAL model:
  *   A  legacy question with no intelligence       → valid
  *   B  fully enriched question                    → valid
  *   C  score = 0                                  → valid
@@ -14,9 +15,8 @@
  *   I  multiple archetypes                        → valid
  *   J  empty rabbit-hole arrays                   → valid
  *   K  existing question bank loading             → unchanged
- *   L  existing discovery / resource behaviour    → not broken
- * plus calibration-sample integrity: the echo stays verbatim against the live
- * bank, every entry validates, and the provisional tier interface behaves.
+ * plus corpus integrity: every shipped row decodes and validates, editor rows
+ * dominate their bank slots, and the editor echo stays verbatim vs the bank.
  */
 'use strict';
 const path = require('path');
@@ -30,113 +30,130 @@ function is(name, actual, expected) {
 }
 function ok(name, cond, detail) { is(name, !!cond, true); if (!cond && detail) console.log('        ' + detail); }
 
-/* Load the app data files the way preflight does: a window shim, then require. */
 global.window = {};
-['questions', 'intelligence', 'intelligence.data', 'entities.meta', 'entities.img',
- 'entities.fr', 'golinks', 'hooks', 'discovery', 'resources'].forEach(n => {
-  require(path.join(SRC, n + '.js'));
-});
+['questions', 'intelligence', 'intelligence.data', 'intelligence.corpus'].forEach(n => require(path.join(SRC, n + '.js')));
 const W = global.window;
 const QI = W.CURIO_QI;
 const BANK = W.CURIO_QUESTIONS || [];
 const CAL = W.CURIO_QI_CALIBRATION || [];
+const CORPUS = (W.CURIO_QI_CORPUS || {}).rows || [];
 
-/* A minimal valid intelligence object; tests clone and mutate it. */
 function base() {
   return {
-    archetypes: ['anchor'],
-    curiosity: { curiosity_gap: 0, surprise: 0, familiarity_anchor: 5, human_pull: 0, connection: 0, discovery: 0, perspective_shift: 0 },
-    tension: { familiarity: 5, novelty: 0, optimality: 1 },
-    resource_depth: { depth: 0, density: 0, diversity: 0, resonance: 0, experiential: 0, next_step: 0 },
-    closure: { risk: 5 },
-    rabbit_hole: { depth: 0, branches: [], entities: [] }
+    archetypes: ['anchor'], role: 'anchor',
+    entry_pull: { curiosity_gap: 0, familiarity: 5, novelty: 0, tension: 1, intrigue: 0 },
+    spark: { surprise: 0, discovery: 0, human_pull: 0, perspective_shift: 0, closure_risk: 5 },
+    portal: { connection: 0, rabbit_hole_depth: 0, resource_depth: 0, resource_density: 0, resource_diversity: 0, resource_resonance: 0, experiential: 0, next_step: 0 },
+    rabbit_hole: { branches: [], entities: [] },
+    diagnosis: 'keep', provenance: 'heuristic-v77'
   };
 }
-function broke(intel, path, value) {
+function broke(intel, pathStr, value) {
   const c = JSON.parse(JSON.stringify(intel));
-  const keys = path.split('.');
+  const keys = pathStr.split('.');
   let o = c;
   while (keys.length > 1) o = o[keys.shift()];
   o[keys[0]] = value;
   return c;
 }
 
-console.log('\n\x1b[1mA–J · the validator contract\x1b[0m');
-
-// A — a legacy question with no intelligence is valid (backward compatibility)
+console.log('\n\x1b[1mA–J · the validator contract, final model\x1b[0m');
 is('A · question without intelligence is valid', QI.validateQuestion({ q: 'x', options: [1, 2, 3, 4], answer: 0 }).ok, true);
 is('A · intelligence explicitly null is valid', QI.validateQuestion({ q: 'x', intelligence: null }).ok, true);
-
-// B — fully enriched question is valid
 is('B · fully enriched question is valid', QI.validateQuestion({ q: 'x', intelligence: base() }).ok, true);
-
-// C / D — boundary scores are valid
-is('C · every score 0 is valid', QI.validate(broke(broke(broke(broke(base(),
-  'curiosity.curiosity_gap', 0), 'tension.familiarity', 0), 'closure.risk', 0), 'rabbit_hole.depth', 0)).ok, true);
+is('C · every score 0 is valid', QI.validate(base()).ok, true);
 is('D · every score 5 is valid', QI.validate((function () {
-  let c = base();
-  ['curiosity', 'tension', 'resource_depth', 'closure', 'rabbit_hole'].forEach(g =>
-    QI.DIMENSIONS[g].forEach(d => { c[g][d] = 5; }));
+  const c = base();
+  ['entry_pull', 'spark', 'portal'].forEach(g => QI.DIMENSIONS[g].forEach(d => { c[g][d] = 5; }));
   return c;
 })()).ok, true);
-
-// E / F / G — out-of-range and non-integer scores are rejected
-is('E · score -1 rejected', QI.validate(broke(base(), 'curiosity.surprise', -1)).ok, false);
-is('F · score 6 rejected', QI.validate(broke(base(), 'resource_depth.depth', 6)).ok, false);
-is('G · score 2.5 rejected', QI.validate(broke(base(), 'tension.novelty', 2.5)).ok, false);
-is('G · string score rejected', QI.validate(broke(base(), 'closure.risk', '5')).ok, false);
-is('G · NaN score rejected', QI.validate(broke(base(), 'rabbit_hole.depth', NaN)).ok, false);
-
-// H / I — archetypes
+is('E · score -1 rejected', QI.validate(broke(base(), 'spark.surprise', -1)).ok, false);
+is('F · score 6 rejected', QI.validate(broke(base(), 'portal.resource_depth', 6)).ok, false);
+is('G · score 2.5 rejected', QI.validate(broke(base(), 'entry_pull.tension', 2.5)).ok, false);
+is('G · string score rejected', QI.validate(broke(base(), 'spark.closure_risk', '5')).ok, false);
 is('H · unknown archetype rejected', QI.validate(broke(base(), 'archetypes', ['portal', 'mind_blowing'])).ok, false);
 is('I · multiple archetypes valid', QI.validate(broke(base(), 'archetypes', ['surprise', 'reveal', 'perspective_shift'])).ok, true);
 is('I · empty archetypes rejected', QI.validate(broke(base(), 'archetypes', [])).ok, false);
-
-// J — rabbit-hole arrays
-is('J · empty branches and entities valid', QI.validate(broke(broke(base(), 'rabbit_hole.branches', []), 'rabbit_hole.entities', [])).ok, true);
+is('J · empty branches and entities valid', QI.validate(base()).ok, true);
 is('J · entity with a space rejected (use slugs)', QI.validate(broke(base(), 'rabbit_hole.entities', ['Menelik II'])).ok, false);
-is('J · slug entities valid', QI.validate(broke(base(), 'rabbit_hole.entities', ['Menelik_II', 'Battle_of_Adwa'])).ok, true);
-is('J · non-string branch rejected', QI.validate(broke(base(), 'rabbit_hole.branches', [42])).ok, false);
 
-console.log('\n\x1b[1mStrictness — half-finished enrichment must fail, not lie\x1b[0m');
-is('missing group rejected', QI.validate((function () { const c = base(); delete c.tension; return c; })()).ok, false);
-is('missing dimension rejected', QI.validate((function () { const c = base(); delete c.curiosity.surprise; return c; })()).ok, false);
-is('typo dimension rejected (curousity)', QI.validate((function () { const c = base(); c.curousity = c.curiosity; delete c.curiosity; return c; })()).ok, false);
-is('typo inside a group rejected', QI.validate((function () { const c = base(); c.closure.risq = 5; return c; })()).ok, false);
+console.log('\n\x1b[1mModel extras\x1b[0m');
+is('unknown role rejected', QI.validate(broke(base(), 'role', 'amazing')).ok, false);
+is('unknown diagnosis rejected', QI.validate(broke(base(), 'diagnosis', 'maybe')).ok, false);
+is('missing stage rejected', QI.validate((function () { const c = base(); delete c.spark; return c; })()).ok, false);
+is('typo dimension rejected', QI.validate((function () { const c = base(); c.spark.suprise = 5; return c; })()).ok, false);
 is('off-vocabulary branch warns, not fails', (function () {
   const r = QI.validate(broke(base(), 'rabbit_hole.branches', ['linguistics']));
   return r.ok && r.warnings.length === 1;
 })(), true);
+is('neutral fallback is structurally complete', (function () {
+  const n = QI.neutral();
+  return n.role === 'curiosity' &&
+    QI.DIMENSIONS.entry_pull.every(d => typeof n.entry_pull[d] === 'number') &&
+    QI.DIMENSIONS.spark.every(d => typeof n.spark[d] === 'number') &&
+    QI.DIMENSIONS.portal.every(d => typeof n.portal[d] === 'number');
+})(), true);
+is('neutral is the ABSENCE profile — validateQuestion still ok without intelligence',
+  QI.validateQuestion({ q: 'x' }).ok, true);
+
+console.log('\n\x1b[1mCodec — packed rows round-trip\x1b[0m');
+const roundtrip = (function () {
+  const full = base();
+  full.rabbit_hole.branches = ['history', 'place'];
+  full.rabbit_hole.entities = ['Menelik_II'];
+  const row = { a: full.archetypes, r: full.role,
+    e: QI.DIMENSIONS.entry_pull.map(d => full.entry_pull[d]),
+    s: QI.DIMENSIONS.spark.map(d => full.spark[d]),
+    p: QI.DIMENSIONS.portal.map(d => full.portal[d]),
+    d: full.diagnosis, v: 'e', b: full.rabbit_hole.branches, n: full.rabbit_hole.entities };
+  const dec = QI.decodeRow(row);
+  return JSON.stringify(dec.entry_pull) === JSON.stringify(full.entry_pull) &&
+         JSON.stringify(dec.spark) === JSON.stringify(full.spark) &&
+         JSON.stringify(dec.portal) === JSON.stringify(full.portal) &&
+         dec.rabbit_hole.entities[0] === 'Menelik_II' && dec.provenance === 'editor';
+})();
+is('decodeRow preserves all three stages + rabbit hole', roundtrip, true);
+is('decodeRow(null) is null', QI.decodeRow(null), null);
+
+console.log('\n\x1b[1mderiveRole + diagnose — declared heuristics\x1b[0m');
+is('portal-grade + familiar → portal', QI.deriveRole((function () {
+  const c = base(); QI.DIMENSIONS.portal.forEach(d => { c.portal[d] = 4; });
+  c.portal.rabbit_hole_depth = 4; c.entry_pull.familiarity = 4; return c;
+})()), 'portal');
+is('portal-grade + unfamiliar → deep', QI.deriveRole((function () {
+  const c = base(); QI.DIMENSIONS.portal.forEach(d => { c.portal[d] = 4; });
+  c.portal.rabbit_hole_depth = 4; c.entry_pull.familiarity = 1; return c;
+})()), 'deep');
+is('flat recall → trivia', QI.deriveRole(base()), 'trivia');
+is('LOW/HIGH/HIGH → enhance_question', QI.diagnose((function () {
+  const c = base(); QI.DIMENSIONS.spark.forEach(d => { c.spark[d] = 4; }); QI.DIMENSIONS.portal.forEach(d => { c.portal[d] = 4; });
+  QI.DIMENSIONS.entry_pull.forEach(d => { c.entry_pull[d] = 1; }); return c;
+})()), 'enhance_question');
+is('LOW/LOW/LOW → reframe', QI.diagnose((function () {
+  const c = base(); ['entry_pull', 'spark', 'portal'].forEach(g => QI.DIMENSIONS[g].forEach(d => { c[g][d] = 1; })); return c;
+})()), 'reframe');
 
 console.log('\n\x1b[1mK · the existing bank, unchanged\x1b[0m');
-is('bank still loads', BANK.length, 749);
+is('bank still loads', BANK.length, 760);
 ok('every legacy question validates as-is (intelligence optional)',
   BANK.every(q => QI.validateQuestion(q).ok),
   BANK.filter(q => !QI.validateQuestion(q).ok).length + ' invalid');
 ok('bank rows untouched by the layer (no intelligence key leaked in)',
   BANK.every(q => q.intelligence === undefined));
-is('qid matches the app algorithm on a known question', QI.qid(BANK[0]), 'q1ree1ha');
 
-console.log('\n\x1b[1mL · discovery and resources, not broken\x1b[0m');
-const DISCO = W.CURIO_DISCOVERY, GO = W.CURIO_GO, CRN = W.CurioResourceNetwork;
-ok('discovery catalogue builds over the full bank', DISCO && DISCO.all().length > 700, DISCO ? DISCO.all().length + ' items' : 'no CURIO_DISCOVERY');
-const mono = BANK.filter(q => /Mona_Lisa/.test(q.src || ''))[0];
-ok('entity extraction still works (Mona Lisa)', mono && GO.entityOf(mono), 'Mona_Lisa');
-ok('goFor still returns the four fixed slots', (function () {
-  const d = GO.goFor(mono); return d.length === 4 && d.every(x => 'on' in x && 'url' in x);
-})(), true);
-ok('shelves still build with >= 3 items each', (function () {
-  const s = DISCO.shelves([], 4); return s.length >= 3 && s.every(x => x.items.length >= 3);
-})(), true);
-ok('resource network loads (fixture records present)', CRN && W.CURIO_RESOURCES.length === 20, W.CURIO_RESOURCES ? W.CURIO_RESOURCES.length + ' records' : 'missing');
-ok('resource matcher still scores against a question', (function () {
-  const hits = CRN.findResourcesForQuestion(BANK.filter(q => /Benin_Bronzes/.test(q.src || ''))[0], 3);
-  return Array.isArray(hits);
-})(), true);
+console.log('\n\x1b[1mCorpus — one row per question, all valid\x1b[0m');
+is('corpus rows align 1:1 with the bank', CORPUS.length, BANK.length);
+const badRows = [];
+CORPUS.forEach((r, i) => { const v = QI.validate(QI.decodeRow(r)); if (!v.ok) badRows.push(i); });
+is('every corpus row decodes and validates', badRows, []);
+const prov = { e: 0, h: 0 };
+CORPUS.forEach(r => { prov[r.v === 'e' ? 'e' : 'h']++; });
+is('editor rows are 41 (calibration 30 + package 11)', prov.e, 41);
+console.log('  \x1b[90m     heuristic rows: ' + prov.h + '\x1b[0m');
 
-console.log('\n\x1b[1mCalibration sample — integrity against the live bank\x1b[0m');
-is('sample size is 30', CAL.length, 30);
-const ECHO_FIELDS = ['cat', 'region', 'country', 'sub', 'diff', 'kids', 'q', 'options', 'answer', 'fact', 'src', 'deeper', 'img'];
+console.log('\n\x1b[1mEditor set — integrity against the live bank\x1b[0m');
+is('editor entries present', CAL.length, 41);
+const ECHO_FIELDS = ['cat', 'region', 'sub', 'diff', 'kids', 'q', 'options', 'answer', 'fact', 'src', 'deeper', 'img'];
 const mismatches = [];
 CAL.forEach(e => {
   const live = BANK[e.bank_index];
@@ -146,27 +163,28 @@ CAL.forEach(e => {
   });
   if (e.id !== QI.qid(live)) mismatches.push(e.bank_index + ':qid');
 });
-is('echo is verbatim against the bank (all fields, all rows)', mismatches, []);
-is('every calibration entry validates', CAL.map(e => QI.validateQuestion(e).ok), CAL.map(() => true));
-is('sample covers all six categories', [...new Set(CAL.map(e => e.cat))].sort(), ['Arts', 'Geography', 'History', 'Nature', 'Science', 'Tech']);
-ok('sample has both deeper and non-deeper questions',
-  CAL.some(e => e.deeper && e.deeper.length) && CAL.some(e => !e.deeper));
-ok('sample has both kids and non-kids questions', CAL.some(e => e.kids) && CAL.some(e => !e.kids));
-ok('sample spans all three difficulties', [1, 2, 3].every(d => CAL.some(e => e.diff === d)));
+is('editor echo is verbatim against the bank', mismatches, []);
+is('every editor entry validates', CAL.map(e => QI.validateQuestion(e).ok), CAL.map(() => true));
+// the corpus must carry the editor scores at editor positions, not heuristic ones
+is('corpus carries editor scores at editor slots',
+  CAL.map(e => {
+    const row = CORPUS[e.bank_index];
+    if (!row) return false;
+    if (row.v !== 'e') return false;
+    const dec = QI.decodeRow(row);
+    return JSON.stringify(dec.entry_pull) === JSON.stringify(e.intelligence.entry_pull) &&
+           JSON.stringify(dec.spark) === JSON.stringify(e.intelligence.spark) &&
+           JSON.stringify(dec.portal) === JSON.stringify(e.intelligence.portal) &&
+           dec.role === e.intelligence.role;
+  }),
+  CAL.map(() => true));
 
-console.log('\n\x1b[1mTiers — the provisional interface\x1b[0m');
-const tiers = CAL.map(e => QI.deriveTier(e.intelligence));
-ok('every entry derives a labelled tier', tiers.every(t => ['A', 'B', 'C', 'D', 'E'].indexOf(t.tier) !== -1));
-ok('every derivation is flagged provisional', tiers.every(t => t.provisional === true));
-const dist = {};
-tiers.forEach(t => { dist[t.tier] = (dist[t.tier] || 0) + 1; });
-console.log('  \x1b[90m     tier distribution (provisional): ' +
-  ['A', 'B', 'C', 'D', 'E'].map(k => k + '=' + (dist[k] || 0)).join(' ') + '\x1b[0m');
-// sanity anchors the review can hold the interface to: the trivia floor and
-// the two clearest portals must not swap places
-is('photosynthesis lands on the trivia floor (E)', QI.deriveTier(CAL.filter(e => /photosynthesis/i.test(e.q))[0].intelligence).tier, 'E');
-is('Benin Bronzes lands portal-grade (A)', QI.deriveTier(CAL.filter(e => /Benin Bronzes/.test(e.q))[0].intelligence).tier, 'A');
+console.log('\n\x1b[1mRole vocabulary on the corpus\x1b[0m');
+const roleDist = {};
+CORPUS.forEach(r => { roleDist[r.r] = (roleDist[r.r] || 0) + 1; });
+ok('all roles are known', Object.keys(roleDist).every(r => QI.ROLES.indexOf(r) !== -1));
+console.log('  \x1b[90m     roles: ' + JSON.stringify(roleDist) + '\x1b[0m');
 
 console.log('');
 if (failed) { console.log(`\x1b[31m\x1b[1mQI TESTS FAILED\x1b[0m  ${failed} failing`); process.exit(1); }
-console.log('\x1b[32m\x1b[1mQI TESTS PASSED\x1b[0m  validator, bank, discovery, resources, calibration.');
+console.log('\x1b[32m\x1b[1mQI TESTS PASSED\x1b[0m  final model, codec, corpus, editor set.');

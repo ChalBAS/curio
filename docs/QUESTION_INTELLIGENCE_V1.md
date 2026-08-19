@@ -1,5 +1,7 @@
 # Question Intelligence V1
 
+> **Historical record — the calibration phase.** V1's three-groups schema was superseded by the final three-stage model (entry_pull / spark / portal) shipped in v77. Current truth: `docs/CURIOSITY_ENGINE_V77.md`. The 30 calibration scores below were mapped into the final model and remain editor-provenance rows in `src/intelligence.data.js`.
+
 **Status:** infrastructure + calibration · awaiting human review of the calibration sample
 **Scope:** additive metadata layer for questions. No product redesign, no mass enrichment, no selection-engine work.
 
