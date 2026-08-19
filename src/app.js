@@ -320,6 +320,41 @@
     return '<a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">' + t("📖 Check the source ↗") + '</a>';
   }
 
+  // ---------- QPIO Cultural Resource Network (P1 UI Integration) ----------
+  function renderQuestionResourcesHtml(q) {
+    if (!window.CurioResourceNetwork || !window.CurioResourceNetwork.findResourcesForQuestion) return "";
+    var matches = window.CurioResourceNetwork.findResourcesForQuestion(q, 3);
+    if (!matches || !matches.length) return ""; // Restraint: hide section when no relevant matches exist
+
+    var html = '<div class="crn-section">' +
+      '<div class="crn-header">' +
+        '<span class="crn-icon" aria-hidden="true">🏛️</span>' +
+        '<span class="crn-title">' + t("Go Further — Cultural Resources") + '</span>' +
+        '<span class="crn-badge">' + t("Verified") + '</span>' +
+      '</div>' +
+      '<div class="crn-list">';
+
+    for (var i = 0; i < matches.length; i++) {
+      var r = matches[i];
+      var srcName = window.CurioResourceNetwork.getHumanSource(r.source_id);
+      var typeName = window.CurioResourceNetwork.getHumanType(r.type);
+      var authName = window.CurioResourceNetwork.getHumanAuthority(r.source_authority);
+
+      html += '<a class="crn-card" href="' + srcLink0(r.source_url) + '" target="_blank" rel="noopener">' +
+        '<div class="crn-card-type">' + esc(typeName) + ' · ' + esc(srcName) + '</div>' +
+        '<div class="crn-card-title">' + esc(r.title) + '</div>' +
+        (r.description ? '<div class="crn-card-desc">' + esc(r.description) + '</div>' : '') +
+        '<div class="crn-card-footer">' +
+          '<span class="crn-provenance">✓ ' + esc(authName) + (r.publication_date ? ' (' + esc(r.publication_date) + ')' : '') + '</span>' +
+          '<span class="crn-ext">' + t("Explore ↗") + '</span>' +
+        '</div>' +
+      '</a>';
+    }
+
+    html += '</div></div>';
+    return html;
+  }
+
   // ---------- stats (Brain Map) ----------
   function getStats() {
     var s = LS.get("stats", null);
@@ -1714,7 +1749,7 @@
         // where it leads — and Next LAST, at the bottom. Next used to sit above
         // the go-further link, so the one thing the whole product exists for
         // was below the button that skips past it.
-        fmt(q.fact) + srcLink(q.src) +
+        fmt(q.fact) + srcLink(q.src) + renderQuestionResourcesHtml(q) +
         '<div class="deeperbox"></div>' +
         '</div>' +
         // Outside the fact box on purpose. The fact is the only part whose
