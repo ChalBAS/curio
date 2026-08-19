@@ -4,7 +4,7 @@
   "private": true,
   "description": "Curio — free general-knowledge PWA. Vanilla JS, no bundler, offline-first.",
   "scripts": {
-    "test": "node --check src/app.js && node --check src/questions.js && node --check src/truthlab.js && node --check src/citypacks.js && node --check sw.js && node tools/validate_resource_network.js && node tools/test_app_resource_integration.js",
+    "test": "node --check src/app.js && node --check src/questions.js && node --check src/truthlab.js && node --check src/citypacks.js && node --check sw.js && node tools/validate_resource_network.js && node tools/test_app_resource_integration.js && node tools/test_matching_quality.js",
     "build": "npm test",
     "serve": "py -m http.server 8123 --directory ."
   },
