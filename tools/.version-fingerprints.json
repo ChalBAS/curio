@@ -47,7 +47,9 @@
   "at": "2026-08-18"
  },
  "77": {
-  "stamp": "b7938c9465529242",
-  "sealed": false
+  "stamp": "ee8b6ffb51d065c5",
+  "sealed": true,
+  "servedTo": "uat",
+  "at": "2026-08-19"
  }
 }

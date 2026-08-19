@@ -8,9 +8,12 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v76** at uat.qpio.app |
+| On UAT | **v77** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-08-19 |
+
+> ⏳ **Awaiting your sign-off:** v77. Write **Accepted for production**
+> — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
@@ -21,6 +24,22 @@ not by omission.*
 
 ---
 
+## v77 — ⏳ on UAT
+
+2026-08-19 · 760 questions · sign-off: **no release issue**
+
+- `2774a3d` fix(links): canonical Met Arms and Armor URL (verified live)
+
+## v76 — 🟢 live
+
+2026-08-19 · 760 questions · sign-off: accepted, [#60](https://github.com/ChalBAS/curio-hq/issues/60)
+
+- `0108e73` feat(qi): Question Intelligence V1 — validator, calibration sample, tests, docs
+- `ebb1bb9` feat(crn): merge expanded global resources into app resources catalog and update integration tests
+- `298cef2` feat(qi): Curiosity Engine v77 — final three-stage model, paced Daily, enriched corpus
+- `df55649` chore: drop pycache, ignore it going forward
+- ⚠️ commit message names a different version: 298cef2
+
 ## v76 — 🟢 live
 
 2026-08-18 → 2026-08-19 · 749 questions · sign-off: accepted, [#60](https://github.com/ChalBAS/curio-hq/issues/60)
@@ -28,7 +47,12 @@ not by omission.*
 - `6a4dc78` Bump to v76 — the seal gate refused new content under served v75, which is the point
 - `c22795c` v75 live: release record, corrected seal provenance, seal takes an explicit version
 - `8a05999` v76 live
-- ⚠️ commit message names a different version: c22795c
+- `7bd5bf9` feat(crn): add resource schema and verification script to curio app
+- `9091adf` feat(crn): add external_source_id property to resource schema
+- `5afa12a` feat(crn): implement P1 Cultural Resource Network app integration, matching engine and UI
+- `8e40e3d` feat(crn): implement P1.5 temporary exhibition expiration filtering and factual urgency UI
+- `151a92b` feat: adopt AI OS project-state protocol v1
+- ⚠️ commit message names a different version: c22795c, 151a92b
 
 ## v75 — · shipped
 

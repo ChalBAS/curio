@@ -2,11 +2,13 @@
  "generated": "2026-08-19",
  "live": {
   "production": 76,
-  "uat": 76,
+  "uat": 77,
   "main": 76
  },
  "drift": null,
- "awaiting": [],
+ "awaiting": [
+  77
+ ],
  "rejected": [],
  "breaches": [
   {
@@ -32,6 +34,65 @@
  ],
  "releases": [
   {
+   "version": 77,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-19",
+   "to": "2026-08-19",
+   "questions": 760,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "2774a3d",
+     "date": "2026-08-19",
+     "subject": "fix(links): canonical Met Arms and Armor URL (verified live)"
+    }
+   ]
+  },
+  {
+   "version": 76,
+   "state": "LIVE",
+   "branch": "uat",
+   "from": "2026-08-19",
+   "to": "2026-08-19",
+   "questions": 760,
+   "signoff": {
+    "status": "ACCEPTED",
+    "at": "2026-08-18T18:16:00Z",
+    "who": "ChalBAS",
+    "issue": 60,
+    "where": "comment"
+   },
+   "messageClash": [
+    "298cef2"
+   ],
+   "commits": [
+    {
+     "sha": "0108e73",
+     "date": "2026-08-19",
+     "subject": "feat(qi): Question Intelligence V1 — validator, calibration sample, tests, docs"
+    },
+    {
+     "sha": "ebb1bb9",
+     "date": "2026-08-19",
+     "subject": "feat(crn): merge expanded global resources into app resources catalog and update integration tests"
+    },
+    {
+     "sha": "298cef2",
+     "date": "2026-08-19",
+     "subject": "feat(qi): Curiosity Engine v77 — final three-stage model, paced Daily, enriched corpus"
+    },
+    {
+     "sha": "df55649",
+     "date": "2026-08-19",
+     "subject": "chore: drop pycache, ignore it going forward"
+    }
+   ]
+  },
+  {
    "version": 76,
    "state": "LIVE",
    "branch": "main",
@@ -46,7 +107,8 @@
     "where": "comment"
    },
    "messageClash": [
-    "c22795c"
+    "c22795c",
+    "151a92b"
    ],
    "commits": [
     {
@@ -63,6 +125,31 @@
      "sha": "8a05999",
      "date": "2026-08-19",
      "subject": "v76 live"
+    },
+    {
+     "sha": "7bd5bf9",
+     "date": "2026-08-19",
+     "subject": "feat(crn): add resource schema and verification script to curio app"
+    },
+    {
+     "sha": "9091adf",
+     "date": "2026-08-19",
+     "subject": "feat(crn): add external_source_id property to resource schema"
+    },
+    {
+     "sha": "5afa12a",
+     "date": "2026-08-19",
+     "subject": "feat(crn): implement P1 Cultural Resource Network app integration, matching engine and UI"
+    },
+    {
+     "sha": "8e40e3d",
+     "date": "2026-08-19",
+     "subject": "feat(crn): implement P1.5 temporary exhibition expiration filtering and factual urgency UI"
+    },
+    {
+     "sha": "151a92b",
+     "date": "2026-08-19",
+     "subject": "feat: adopt AI OS project-state protocol v1"
     }
    ]
   },
