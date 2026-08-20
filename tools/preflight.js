@@ -189,7 +189,8 @@ try {
 head('4c · Question intelligence');
 [['tools/intelligence.test.js', 'model + corpus'],
  ['tools/selection.test.js', 'daily/quick-fire pacing'],
- ['tools/resources.test.js', 'resources, links, licences']].forEach(function (pair) {
+ ['tools/resources.test.js', 'resources, links, licences'],
+ ['tools/sensitivity.test.js', 'editorial sensitivity rules']].forEach(function (pair) {
   try {
     cp.execFileSync(process.execPath, [path.join(ROOT, pair[0])], { stdio: 'pipe' });
     pass('question intelligence: ' + pair[1], path.basename(pair[0]));
@@ -197,6 +198,15 @@ head('4c · Question intelligence');
     fail('question intelligence: ' + pair[1], pair[0] + ' failed — run it to see which case');
   }
 });
+
+/* ---------- 4d. editorial sensitivity gate (Rule 12) ---------- */
+head('4d · Editorial sensitivity');
+try {
+  cp.execFileSync(process.execPath, [path.join(ROOT, 'tools', 'check_sensitivity.js'), '--gate'], { stdio: 'pipe' });
+  pass('editorial sensitivity gate', 'no CONTESTED+ question is LIVE without a passed review');
+} catch (e) {
+  fail('editorial sensitivity gate', 'node tools/check_sensitivity.js — a CONTESTED/HIGHLY_CONTESTED question is LIVE without Perspective_Check=PASSED');
+}
 
 /* ---------- 5. sources (network, --full only) ---------- */
 head('5 · Sources' + (FULL ? '' : '  (skipped — run with --full)'));

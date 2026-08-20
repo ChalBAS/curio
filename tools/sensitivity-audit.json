@@ -1,0 +1,199 @@
+{
+  "generated_at": "2026-08-20T03:08:30.815Z",
+  "totals": {
+    "questions": 760
+  },
+  "by_level": {
+    "NONE": 747,
+    "SENSITIVE": 13,
+    "CONTESTED": 0,
+    "HIGHLY_CONTESTED": 0
+  },
+  "by_type": {
+    "COLONIAL": 6,
+    "GEOPOLITICAL": 1,
+    "RELIGIOUS": 0,
+    "ETHNIC": 0,
+    "RACIAL": 0,
+    "INDIGENOUS": 5,
+    "WAR_ATROCITY": 2,
+    "CURRENT_POLITICS": 0,
+    "DISPUTED_TERRITORY": 2,
+    "OTHER": 0
+  },
+  "flagged": [
+    {
+      "index": 26,
+      "q": "In 1896 Ethiopia defeated an invading European army at the Battle of Adwa, keeping its ind",
+      "src": "https://en.wikipedia.org/wiki/Battle_of_Adwa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 27,
+      "q": "The celebrated 'Benin Bronzes' — intricate cast plaques and heads — were made by the Kingd",
+      "src": "https://en.wikipedia.org/wiki/Benin_Bronzes",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 31,
+      "q": "Many Indigenous peoples of the Americas grew three crops together as the 'Three Sisters': ",
+      "src": "https://en.wikipedia.org/wiki/Three_Sisters_(agriculture)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 73,
+      "q": "Emir Abdelkader, honoured as a founding hero of modern Algeria, led a 16-year resistance f",
+      "src": "https://en.wikipedia.org/wiki/Abdelkader_ibn_Muhieddine",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL",
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 79,
+      "q": "Tuareg communities of the Sahara — in Niger, Mali and beyond — still write with the tifina",
+      "src": "https://en.wikipedia.org/wiki/Tifinagh",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 87,
+      "q": "In 1492, Christopher Columbus crossed which ocean hoping to find a westward route to Asia?",
+      "src": "https://en.wikipedia.org/wiki/Christopher_Columbus",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL",
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 97,
+      "q": "About how long ago did the ancestors of Aboriginal Australians first arrive on their conti",
+      "src": "https://en.wikipedia.org/wiki/Aboriginal_Australians",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 290,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Ethiopia",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 296,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Rwanda",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 319,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Israel",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 626,
+      "q": "Many Aboriginal Australian peoples see an emu in the night sky. What is that constellation",
+      "src": "https://en.wikipedia.org/wiki/Australian_Aboriginal_astronomy",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 653,
+      "q": "Carmine, the deep red used in food colouring and lipstick, is extracted from what?",
+      "src": "https://en.wikipedia.org/wiki/Cochineal",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 678,
+      "q": "Socotra, an island famous for its umbrella-shaped dragon's blood trees, belongs to which c",
+      "src": "https://en.wikipedia.org/wiki/Socotra",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "DISPUTED_TERRITORY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": true
+    }
+  ],
+  "hook_flags": [],
+  "gate_violations": []
+}
