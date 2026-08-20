@@ -1,0 +1,4 @@
+{
+  "type": "module",
+  "//": "Marks worker/*.js as ES modules so Node can import them directly — worker/index.js already uses `export default` and tools/doors.test.js imports worker/doors.js. Wrangler bundles the same files regardless. This directory is in .assetsignore and never reaches the edge as an asset."
+}

@@ -7,7 +7,8 @@ Curio is a zero-dependency progressive web app: pure HTML/CSS/JS, no build
 step, no backend. Your streaks and scores live in your own browser
 (localStorage), and nothing here ever asks for a name or an email — Qpio
 measures the pool, never the person (Charter §8). Install it from your
-phone's browser — it works offline.
+phone's browser — the questions, answers and sources stay on your device;
+the doors out to the real world need a connection.
 
 ## Principles
 

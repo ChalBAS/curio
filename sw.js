@@ -2,35 +2,37 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v80";
+const CACHE = "qpio-v81";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
 const NUDGE_CACHE = "qpio-nudge";
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=80",
-  "./brand/qpio-mark-96.png?v=80",
-  "./brand/icons/qpio-icon-96.png?v=80",
-  "./brand/qpio-lockup-header.png?v=80",
-  "./src/i18n.js?v=80",
-  "./src/questions.fr.js?v=80",
-  "./src/truthlab.fr.js?v=80",
-  "./src/app.js?v=80",
-  "./src/questions.js?v=80",
-  "./src/truthlab.js?v=80",
-  "./src/citypacks.js?v=80",
-  "./src/citypacks.fr.js?v=80",
-  "./src/entities.fr.js?v=80",
-  "./src/entities.img.js?v=80",
-  "./src/entities.meta.js?v=80",
-  "./src/country.js?v=80",
-  "./src/golinks.js?v=80",
-  "./src/hooks.js?v=80",
-  "./src/discovery.js?v=80",
-  "./src/resources.js?v=80",
-  "./src/intelligence.js?v=80",
-  "./src/intelligence.corpus.js?v=80",
+  "./src/styles.css?v=81",
+  "./brand/qpio-mark-96.png?v=81",
+  "./brand/icons/qpio-icon-96.png?v=81",
+  "./brand/qpio-lockup-header.png?v=81",
+  "./src/i18n.js?v=81",
+  "./src/questions.fr.js?v=81",
+  "./src/truthlab.fr.js?v=81",
+  "./src/app.js?v=81",
+  "./src/questions.js?v=81",
+  "./src/truthlab.js?v=81",
+  "./src/citypacks.js?v=81",
+  "./src/citypacks.fr.js?v=81",
+  "./src/entities.fr.js?v=81",
+  "./src/entities.img.js?v=81",
+  "./src/entities.meta.js?v=81",
+  "./src/country.js?v=81",
+  "./src/golinks.js?v=81",
+  "./src/doors.js?v=81",
+  "./src/hooks.js?v=81",
+  "./src/discovery.js?v=81",
+  "./src/resources.js?v=81",
+  "./src/intelligence.js?v=81",
+  "./src/intelligence.corpus.js?v=81",
+  "./src/preload.js?v=81",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",
@@ -80,6 +82,17 @@ function isShell(req) {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
+
+  // Gate 5 door instrument: never intercept, never cache, never fall back.
+  // Two defects this guard closes (GATE-5-DOOR-INSTRUMENT.md §2.5): the
+  // generic handler below caches AND re-fetches — caches.put() ignores
+  // Cache-Control: no-store, and the re-fetch would count the denominator
+  // once per RENDER instead of once per device-day — and a /go/ tap is a
+  // navigation, so isShell() would answer a failed tap with index.html.
+  // Returning without respondWith lets the browser make the request itself.
+  // (/doors/ and /go/ must also stay absent from the ASSETS precache above.)
+  const p = new URL(req.url).pathname;
+  if (p.startsWith("/go/") || p.startsWith("/doors/")) return;
 
   if (isShell(req)) {
     e.respondWith(

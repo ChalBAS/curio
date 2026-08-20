@@ -11,9 +11,10 @@
   "name": "qpio-uat",
   "compatibility_date": "2026-08-01",
 
-  // The edge script gates the question bank against AI training crawlers.
-  // Anything it does not block falls through to ASSETS unchanged.
-  "main": "worker/index.js",
+  // The UAT entry wraps the production worker (worker/index.js, untouched)
+  // with the Gate 5 door instrument (worker/doors.js). UAT ONLY — the prod
+  // config keeps main: worker/index.js and never routes the instrument paths.
+  "main": "worker/uat.js",
 
   "routes": [
     { "pattern": "uat.qpio.app", "custom_domain": true }
@@ -26,11 +27,33 @@
     // why the first version of the bot gate did nothing at all. Scoped to the
     // protected paths and /robots.txt so every other request keeps the fast
     // path straight to the edge cache.
-    "run_worker_first": ["/src/*", "/robots.txt", "/api/*"],
+    //
+    // "/doors/*" and "/go/*" are the Gate 5 door instrument (denominator and
+    // numerator). BOTH ARE MANDATORY for the instrument: not_found_handling is
+    // "single-page-application", so without them /go/… returns index.html with
+    // a 200 and never redirects — a silent failure that looks like a zero tap
+    // rate. Removing these two entries and deploying is the server-side KILL
+    // SWITCH: the counter dies, the product does not.
+    "run_worker_first": ["/src/*", "/robots.txt", "/api/*", "/doors/*", "/go/*"],
     // A missing path serves index.html — the app is a single-page shell and its
     // routes are hashes, so a deep link must not 404.
     "not_found_handling": "single-page-application"
   },
+
+  // Gate 5 aggregate-on-write counter. One table (door_counts), hundreds of
+  // rows, no raw lines, no identifier. Created 2026-08-21 via the Cloudflare
+  // MCP; schema in worker/doors.js §"aggregate-on-write". UAT only.
+  "d1_databases": [
+    {
+      "binding": "DOOR_DB",
+      "database_name": "qpio-doors-uat",
+      "database_id": "db67241f-f0d9-4afb-b0d8-c24bba94286b"
+    }
+  ],
+
+  // Nightly retention prune — aggregate rows older than 13 months. One
+  // invocation per day. There is no nightly aggregation job.
+  "triggers": { "crons": ["10 3 * * *"] },
 
   "observability": { "enabled": true }
 }

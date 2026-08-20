@@ -1,5 +1,18 @@
 # Ruflo — Claude Code Configuration
 
+## Before you write a sentence a reader will see
+
+1. Read `C:/Users/ukbch/curio-hq/QPIO.md` — §F is mandatory for any change to
+   product, content, copy, monetisation, growth or UX.
+2. Check `C:/Users/ukbch/curio-hq/01-Charter/RETIRED-CLAIMS.json`, then run
+   `node tools/claims.js` from `C:/Users/ukbch/curio-hq`. A retired claim is a
+   build failure, not a style note. A clean run is not proof — read the file.
+3. EN and FR must say the same thing. A French string that promises more than
+   its English source is a defect (see `src/app.js:2738-2743`).
+4. Never say: quiz · trivia · streak-as-a-reason-to-return · smarter · IQ ·
+   memory · focus · any absolute "free forever / no subscription" over the
+   product rather than over knowledge.
+
 ## Rules
 
 - Do what has been asked; nothing more, nothing less

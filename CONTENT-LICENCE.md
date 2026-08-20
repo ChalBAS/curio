@@ -12,7 +12,8 @@ The source code is separate and is MIT-licensed — see [LICENSE](LICENSE).
 
 ## What you may do, without asking
 
-- **Play.** Use the app, free, forever. No account, no payment, no limits.
+- **Play.** Use Qpio free. The questions, the answers, the explanations and the
+  sources are free, forever, and never behind a paywall.
 - **Learn from it.** Quote a question or a fact in a lesson, a post, a video or
   an article, with credit to Qpio and a link back.
 - **Teach with it.** Use Qpio in a classroom, a library, a museum or a club.

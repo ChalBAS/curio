@@ -556,6 +556,38 @@ body {
 .qart-credit a { color: inherit; }
 @media (min-width: 560px) { .qart img { max-height: 300px; } }
 
+/* Issue #1 — the image slot never sits blank and never shows a broken glyph.
+   While the picture resolves, a sand-timer holds a reserved height, so the
+   card barely moves when the image lands (minimal layout shift) and the
+   half-painted frame of a slow fetch is never shown. On failure the timer
+   stays — still, not spinning: an animation would claim work that has already
+   lost. .rmotion's global animation kill switch covers the flip. */
+.qart .qart-wait { display: none; }
+.qart.is-loading, .qart.is-failed {
+  min-height: 110px; align-items: center; position: relative;
+}
+.qart.is-loading .qart-wait, .qart.is-failed .qart-wait {
+  display: block; font-size: 32px; line-height: 1; opacity: .65;
+}
+.qart.is-loading .qart-wait { animation: qpioTurn 1.6s ease-in-out infinite; }
+.qart.is-failed .qart-wait { opacity: .4; }
+.qart.is-loading img { position: absolute; opacity: 0; }
+.qart.is-failed img { display: none; }
+/* The answered card shrinks the slot hard (84px → 32px cramped); a reserved
+   height taller than the slot would undo that fit. */
+.answered-view .qart.is-loading, .answered-view .qart.is-failed { min-height: 0; }
+@keyframes qpioTurn { 0%, 55% { transform: none; } 75%, 100% { transform: rotate(180deg); } }
+
+/* Issue #1 — the capped transition between the last answer and the results.
+   Reached only when the silent preload has not finished (slow connection,
+   cold cache); rendered for at most RESULTS_GATE_CAP_MS. Skipped offline. */
+.gate { padding-top: 40px; padding-bottom: 40px; }
+.gate .gate-timer {
+  font-size: 44px; line-height: 1;
+  display: inline-block;
+  animation: qpioTurn 1.2s ease-in-out infinite;
+}
+
 /* The country select. A native control on purpose — a phone gives it its own
    search, scroll and screen-reader behaviour for free, and 200 options is
    exactly where a custom widget starts costing more than it gives. Sized to

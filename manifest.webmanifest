@@ -1,7 +1,7 @@
 {
   "name": "Qpio — knowledge, free forever",
   "short_name": "Qpio",
-  "description": "Qpio (say: cue-pee-oh) — daily general-knowledge challenges, quick-fire quizzes and streaks. Free forever. I am curious to become wise — Quaero, ergo Sapio.",
+  "description": "Qpio (say: cue-pee-oh) — five questions a day, every answer sourced, and a door out to the real world. Knowledge is free, forever. I am curious to become wise — Quaero, ergo Sapio.",
   "id": "qpio-app",
   "start_url": "./index.html?source=pwa",
   "scope": "./",
@@ -9,7 +9,7 @@
   "orientation": "portrait",
   "background_color": "#071722",
   "theme_color": "#071722",
-  "categories": ["education", "games", "trivia"],
+  "categories": ["education", "books", "lifestyle"],
   "lang": "en",
   "icons": [
     { "src": "brand/icons/qpio-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

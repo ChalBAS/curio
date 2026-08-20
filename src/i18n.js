@@ -97,6 +97,7 @@
       "🗝️ {n} facts saved": "🗝️ {n} faits mis de côté",
       "Topics you might want to know more about": "Des sujets que tu voudras peut-être creuser",
       "Curiosity doesn’t stop here.": "La curiosité ne s’arrête pas là.",
+      "Gathering your discoveries…": "On rassemble tes découvertes…",
       // CEO, 2026-08-08: "in French we don't say 'raté', we say incorrect or
       // correct — raté has negative connotations, it is something we say to
       // insult people." Both my earlier attempts ("Raté", then "Manqué") judged
@@ -235,8 +236,8 @@
       "Stats": "Progrès",
       "Settings": "Réglages",
       "Brain Gym": "Gym du cerveau",
-      "Memory and focus exercises built on real technique — coming soon. We teach methods, we never promise miracles.":
-        "Des exercices de mémoire et de concentration fondés sur de vraies techniques — bientôt disponibles. Nous enseignons des méthodes, nous ne promettons jamais de miracles.",
+      "Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.":
+        "Des casse-têtes, pas des questions. Rien à savoir d’avance. Certains sont amusants. Certains sont vraiment difficiles. Tu t’y amélioreras avec le temps — comme tout le monde. Ce que ça change ailleurs, c’est à toi de le découvrir.",
 
       // --- home: mode cards ---
       "Quick-Fire": "Quiz éclair",
@@ -378,6 +379,7 @@
       "Explore ↗": "Explorer ↗",
 
       // --- daily result ---
+      "Gathering your discoveries…": "On rassemble tes découvertes…",
       "Today's challenge": "Le défi du jour",
       "🔥 1-day streak": "🔥 Série de 1 jour",
       "🔥 {n}-day streak": "🔥 Série de {n} jours",
@@ -448,13 +450,13 @@
       // --- onboarding ---
       "Knowledge should be free.": "Le savoir devrait être gratuit.",
       "Qpio (say: cue-pee-oh) is free to use. There are no paywalls. Qpio doesn't interrupt your learning with ads. When you want to go further, you may find links to relevant books, museums, exhibitions and other resources.":
-        "Qpio (prononce : « ku-pio ») est une appli de savoir gratuite — sans pub, sans paywall, pour toujours. Chaque réponse t’apprend un fait qui vaut la peine d’être retenu, avec la source à portée de doigt.",
+        "Qpio (prononce : « ku-pio ») est gratuit. Le savoir n’est jamais derrière un paywall. Qpio n’interrompt pas ton apprentissage avec de la publicité. Quand tu veux aller plus loin, tu peux trouver des liens vers des livres, des musées, des expositions et d’autres ressources.",
       "Five questions.": "Cinq questions.",
       "The same five for everyone, everywhere. Every answer teaches you something worth knowing. Questions you miss can come back later so you have another chance to learn them.":
         "Tout le monde reçoit les cinq mêmes questions chaque jour. Garde ta série en vie — et les faits que tu rates reviennent jusqu’à ce que tu les maîtrises pour de bon.",
       "Made for the way you learn.": "Conçu pour ta façon d’apprendre.",
       "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device.":
-        "Désactive le chrono, active le texte adapté à la dyslexie, la lecture à voix haute ou le contraste élevé — tout est gratuit, tout est dans les Réglages. Il y a aussi un mode enfants, qui ne demande jamais rien. Le compte est facultatif : il ne sert que si tu veux retrouver ta progression sur plusieurs appareils.",
+        "Désactive le chrono, active le texte adapté à la dyslexie, la lecture à voix haute ou le contraste élevé — tout est gratuit, tout est dans les Réglages. Il y a aussi un mode enfants, qui ne demande jamais rien. Ta progression est pour l’instant conservée sur cet appareil — copie ton code de sauvegarde avant de changer de téléphone.",
       "Play today's challenge ▶": "Jouer au défi du jour ▶",
       "Skip": "Passer"
     }

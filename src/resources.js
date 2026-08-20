@@ -366,8 +366,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:12:34.589Z",
-    "updated_at": "2026-08-19T14:12:34.589Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780719557576",
+    "isbn13_edition": "/books/OL22391719M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol4653465w",
@@ -395,8 +400,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:12:35.706Z",
-    "updated_at": "2026-08-19T14:12:35.706Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780600348542",
+    "isbn13_edition": "/books/OL5123230M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol18201181w",
@@ -1676,8 +1686,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.427Z",
-    "updated_at": "2026-08-19T14:14:16.427Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781135910082",
+    "isbn13_edition": "/books/OL33637568M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol19665952w",
@@ -1706,8 +1721,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780367516468",
+    "isbn13_edition": "/books/OL51622840M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3918944w",
@@ -1736,8 +1756,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780813343747",
+    "isbn13_edition": "/books/OL17103504M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2991124w",
@@ -1766,8 +1791,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780141988467",
+    "isbn13_edition": "/books/OL28703402M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1804381w",
@@ -1795,8 +1825,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780195327588",
+    "isbn13_edition": "/books/OL17565626M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol13190322w",
@@ -1854,8 +1889,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780429975042",
+    "isbn13_edition": "/books/OL36237540M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol28033256w",
@@ -1884,8 +1924,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781423217718",
+    "isbn13_edition": "/books/OL38354824M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol6239365w",
@@ -1913,8 +1958,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780857733665",
+    "isbn13_edition": "/books/OL60819360M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol8497869w",
@@ -1943,8 +1993,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781040108802",
+    "isbn13_edition": "/books/OL53270023M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol12415392w",
@@ -1972,8 +2027,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780870656354",
+    "isbn13_edition": "/books/OL18441387M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2741413w",
@@ -2001,8 +2061,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:16.428Z",
-    "updated_at": "2026-08-19T14:14:16.428Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780813343990",
+    "isbn13_edition": "/books/OL11349441M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol114575w",
@@ -2030,8 +2095,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.917Z",
-    "updated_at": "2026-08-19T14:14:17.917Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780006387848",
+    "isbn13_edition": "/books/OL7258964M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol88809w",
@@ -2088,8 +2158,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.917Z",
-    "updated_at": "2026-08-19T14:14:17.917Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780330396110",
+    "isbn13_edition": "/books/OL23109154M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol360027w",
@@ -2118,8 +2193,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.917Z",
-    "updated_at": "2026-08-19T14:14:17.917Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780140138351",
+    "isbn13_edition": "/books/OL21599249M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol68023w",
@@ -2237,8 +2317,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.918Z",
-    "updated_at": "2026-08-19T14:14:17.918Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780195337563",
+    "isbn13_edition": "/books/OL16637756M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol296280w",
@@ -2266,8 +2351,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.918Z",
-    "updated_at": "2026-08-19T14:14:17.918Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9788174962010",
+    "isbn13_edition": "/books/OL170331M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol24354935w",
@@ -2296,8 +2386,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.918Z",
-    "updated_at": "2026-08-19T14:14:17.918Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9788179308622",
+    "isbn13_edition": "/books/OL51172532M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol17868613w",
@@ -2325,8 +2420,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.918Z",
-    "updated_at": "2026-08-19T14:14:17.918Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9788123020778",
+    "isbn13_edition": "/books/OL26450730M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol23611963w",
@@ -2354,8 +2454,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:17.918Z",
-    "updated_at": "2026-08-19T14:14:17.918Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781647483814",
+    "isbn13_edition": "/books/OL31417611M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2918756w",
@@ -2413,8 +2518,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.358Z",
-    "updated_at": "2026-08-19T14:14:20.358Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780140135121",
+    "isbn13_edition": "/books/OL7348379M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol5913947w",
@@ -2443,8 +2553,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.358Z",
-    "updated_at": "2026-08-19T14:14:20.358Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780393041569",
+    "isbn13_edition": "/books/OL17039318M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol4321533w",
@@ -2472,8 +2587,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.358Z",
-    "updated_at": "2026-08-19T14:14:20.358Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9785550601068",
+    "isbn13_edition": "/books/OL12552334M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol756188w",
@@ -2501,8 +2621,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.358Z",
-    "updated_at": "2026-08-19T14:14:20.358Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781842120408",
+    "isbn13_edition": "/books/OL19463937M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol15360407m",
@@ -2559,8 +2684,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.358Z",
-    "updated_at": "2026-08-19T14:14:20.358Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781579701901",
+    "isbn13_edition": "/books/OL12273464M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3602742w",
@@ -2588,8 +2718,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.359Z",
-    "updated_at": "2026-08-19T14:14:20.359Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780804709521",
+    "isbn13_edition": "/books/OL4755895M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2675182w",
@@ -2617,8 +2752,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.359Z",
-    "updated_at": "2026-08-19T14:14:20.359Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780385032407",
+    "isbn13_edition": "/books/OL18399871M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol7720478w",
@@ -2647,8 +2787,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:20.359Z",
-    "updated_at": "2026-08-19T14:14:20.359Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781376745634",
+    "isbn13_edition": "/books/OL39085509M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3361920w",
@@ -2736,8 +2881,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781410905192",
+    "isbn13_edition": "/books/OL8428091M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2938248w",
@@ -2765,8 +2915,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780881257915",
+    "isbn13_edition": "/books/OL17614083M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1355284w",
@@ -2794,8 +2949,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780674018280",
+    "isbn13_edition": "/books/OL7671383M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol14990804w",
@@ -2852,8 +3012,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780465025183",
+    "isbn13_edition": "/books/OL27648721M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol5065292w",
@@ -2912,8 +3077,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780330370875",
+    "isbn13_edition": "/books/OL10491133M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2755322w",
@@ -2941,8 +3111,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781306143295",
+    "isbn13_edition": "/books/OL46047977M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol4933101w",
@@ -2970,8 +3145,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780091687519",
+    "isbn13_edition": "/books/OL20986469M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol13537580w",
@@ -2999,8 +3179,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:14:21.764Z",
-    "updated_at": "2026-08-19T14:14:21.764Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780521669917",
+    "isbn13_edition": "/books/OL22128473M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1246125w",
@@ -8012,8 +8197,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:31.528Z",
-    "updated_at": "2026-08-19T14:15:31.528Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780744039634",
+    "isbn13_edition": "/books/OL32600844M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol20156281w",
@@ -8099,8 +8289,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:31.529Z",
-    "updated_at": "2026-08-19T14:15:31.529Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780147519177",
+    "isbn13_edition": "/books/OL27050872M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2673706w",
@@ -8128,8 +8323,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:31.529Z",
-    "updated_at": "2026-08-19T14:15:31.529Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780674030657",
+    "isbn13_edition": "/books/OL16475080M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1201756w",
@@ -8157,8 +8357,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:31.529Z",
-    "updated_at": "2026-08-19T14:15:31.529Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9798495778443",
+    "isbn13_edition": "/books/OL38427216M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol37104w",
@@ -8215,8 +8420,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:31.529Z",
-    "updated_at": "2026-08-19T14:15:31.529Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780312945992",
+    "isbn13_edition": "/books/OL10417924M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol26518337w",
@@ -8244,8 +8454,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:31.529Z",
-    "updated_at": "2026-08-19T14:15:31.529Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9798546135546",
+    "isbn13_edition": "/books/OL36898374M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2041772w",
@@ -8332,8 +8547,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:31.529Z",
-    "updated_at": "2026-08-19T14:15:31.529Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781725742611",
+    "isbn13_edition": "/books/OL33889167M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol19666939w",
@@ -8361,8 +8581,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781526645807",
+    "isbn13_edition": "/books/OL62207651M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol18203067w",
@@ -8390,8 +8615,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780143129028",
+    "isbn13_edition": "/books/OL26679779M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol5330545w",
@@ -8419,8 +8649,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9789622177215",
+    "isbn13_edition": "/books/OL9160285M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2625965w",
@@ -8477,8 +8712,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780520243408",
+    "isbn13_edition": "/books/OL7711985M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2870754w",
@@ -8506,8 +8746,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780061461217",
+    "isbn13_edition": "/books/OL24257846M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol20161642w",
@@ -8535,8 +8780,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780525656401",
+    "isbn13_edition": "/books/OL27343282M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2948948w",
@@ -8564,8 +8814,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781841488042",
+    "isbn13_edition": "/books/OL3297533M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3273642w",
@@ -8593,8 +8848,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781440138881",
+    "isbn13_edition": "/books/OL34429743M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol5715375w",
@@ -8622,8 +8882,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781782853442",
+    "isbn13_edition": "/books/OL37275470M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol19551994w",
@@ -8651,8 +8916,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781980297147",
+    "isbn13_edition": "/books/OL31999471M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3288155w",
@@ -8680,8 +8950,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:32.560Z",
-    "updated_at": "2026-08-19T14:15:32.560Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781850432098",
+    "isbn13_edition": "/books/OL22308979M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol6714783w",
@@ -8738,8 +9013,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.581Z",
-    "updated_at": "2026-08-19T14:15:35.581Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780903880350",
+    "isbn13_edition": "/books/OL9426762M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1686837w",
@@ -8767,8 +9047,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.581Z",
-    "updated_at": "2026-08-19T14:15:35.581Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780714831763",
+    "isbn13_edition": "/books/OL296425M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2757138w",
@@ -8796,8 +9081,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780500204559",
+    "isbn13_edition": "/books/OL29498453M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2490703w",
@@ -8825,8 +9115,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780300039696",
+    "isbn13_edition": "/books/OL2379664M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol18537047w",
@@ -8854,8 +9149,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9783848008384",
+    "isbn13_edition": "/books/OL36806818M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1576323w",
@@ -8883,8 +9183,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780873956024",
+    "isbn13_edition": "/books/OL3782911M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol6930102w",
@@ -8941,8 +9246,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780300088670",
+    "isbn13_edition": "/books/OL9384774M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3630445w",
@@ -8970,8 +9280,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780905906652",
+    "isbn13_edition": "/books/OL9686877M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3630446w",
@@ -8999,8 +9314,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781873938454",
+    "isbn13_edition": "/books/OL8654534M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol24598020w",
@@ -9028,8 +9348,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:35.582Z",
-    "updated_at": "2026-08-19T14:15:35.582Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781676539353",
+    "isbn13_edition": "/books/OL32626126M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2632395w",
@@ -9086,8 +9411,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781107589094",
+    "isbn13_edition": "/books/OL34557701M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol39981w",
@@ -9115,8 +9445,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781101065129",
+    "isbn13_edition": "/books/OL24269266M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3915966w",
@@ -9173,8 +9508,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780765317513",
+    "isbn13_edition": "/books/OL8053715M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol16471482w",
@@ -9202,8 +9542,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780571368877",
+    "isbn13_edition": "/books/OL35564643M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol526669w",
@@ -9231,8 +9576,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780500287910",
+    "isbn13_edition": "/books/OL26916017M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2869947w",
@@ -9260,8 +9610,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780439050128",
+    "isbn13_edition": "/books/OL7509744M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol263731w",
@@ -9289,8 +9644,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781911242420",
+    "isbn13_edition": "/books/OL29323981M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol20872735w",
@@ -9318,8 +9678,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780197577660",
+    "isbn13_edition": "/books/OL32470027M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol51654w",
@@ -9376,8 +9741,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T14:15:38.102Z",
-    "updated_at": "2026-08-19T14:15:38.102Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780812590982",
+    "isbn13_edition": "/books/OL9810541M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_loc_http___www_loc_gov_item_2006690445",
@@ -20800,8 +21170,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:12.305Z",
-    "updated_at": "2026-08-19T16:13:12.305Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780600300830",
+    "isbn13_edition": "/books/OL5319771M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2701044w",
@@ -20832,8 +21207,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:12.305Z",
-    "updated_at": "2026-08-19T16:13:12.305Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781137504036",
+    "isbn13_edition": "/books/OL27965699M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol18916147w",
@@ -20896,8 +21276,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:12.305Z",
-    "updated_at": "2026-08-19T16:13:12.305Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780810934481",
+    "isbn13_edition": "/books/OL6778986M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1087724w",
@@ -20958,8 +21343,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:12.305Z",
-    "updated_at": "2026-08-19T16:13:12.305Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781014363008",
+    "isbn13_edition": "/books/OL46159284M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol4415958w",
@@ -21021,8 +21411,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:12.305Z",
-    "updated_at": "2026-08-19T16:13:12.305Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780816050659",
+    "isbn13_edition": "/books/OL3564569M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2747616w",
@@ -21053,8 +21448,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:12.305Z",
-    "updated_at": "2026-08-19T16:13:12.305Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781842122464",
+    "isbn13_edition": "/books/OL8924097M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol5829121w",
@@ -21085,8 +21485,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:12.305Z",
-    "updated_at": "2026-08-19T16:13:12.305Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780136154389",
+    "isbn13_edition": "/books/OL17973359M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol6595432w",
@@ -21178,8 +21583,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780415779401",
+    "isbn13_edition": "/books/OL34594126M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol15142065w",
@@ -21209,8 +21619,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781351231886",
+    "isbn13_edition": "/books/OL29421012M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol141741w",
@@ -21239,8 +21654,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780870656439",
+    "isbn13_edition": "/books/OL18441416M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol20182587w",
@@ -21269,8 +21689,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780141982632",
+    "isbn13_edition": "/books/OL28055730M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol20348190w",
@@ -21299,8 +21724,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781138379480",
+    "isbn13_edition": "/books/OL33705127M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1301900w",
@@ -21330,8 +21760,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780312386412",
+    "isbn13_edition": "/books/OL4726220M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol25751023w",
@@ -21360,8 +21795,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781138923973",
+    "isbn13_edition": "/books/OL34652817M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1737716w",
@@ -21390,8 +21830,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.189Z",
-    "updated_at": "2026-08-19T16:13:14.189Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781741144482",
+    "isbn13_edition": "/books/OL18433268M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1629183w",
@@ -21421,8 +21866,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.190Z",
-    "updated_at": "2026-08-19T16:13:14.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9789711024154",
+    "isbn13_edition": "/books/OL17627815M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol21330253w",
@@ -21451,8 +21901,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:14.190Z",
-    "updated_at": "2026-08-19T16:13:14.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780367530594",
+    "isbn13_edition": "/books/OL33790589M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol698173w",
@@ -21511,8 +21966,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780870656392",
+    "isbn13_edition": "/books/OL11063780M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3483104w",
@@ -21541,8 +22001,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780393927696",
+    "isbn13_edition": "/books/OL3425039M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol8626575w",
@@ -21571,8 +22036,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780842029971",
+    "isbn13_edition": "/books/OL28352127M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol15074364w",
@@ -21601,8 +22071,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780841912762",
+    "isbn13_edition": "/books/OL1871740M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1345973w",
@@ -21632,8 +22107,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780786108923",
+    "isbn13_edition": "/books/OL8105503M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol530892w",
@@ -21663,8 +22143,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780618318513",
+    "isbn13_edition": "/books/OL3574150M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1898163w",
@@ -21693,8 +22178,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780195375701",
+    "isbn13_edition": "/books/OL23736481M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol26690985w",
@@ -21723,8 +22213,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781683403258",
+    "isbn13_edition": "/books/OL36137714M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol3930190w",
@@ -21753,8 +22248,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781138675827",
+    "isbn13_edition": "/books/OL28917152M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol16510121w",
@@ -21783,8 +22283,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780393929652",
+    "isbn13_edition": "/books/OL25206579M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1007783w",
@@ -21813,8 +22318,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:23.190Z",
-    "updated_at": "2026-08-19T16:13:23.190Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780520932036",
+    "isbn13_edition": "/books/OL29708121M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol37610w",
@@ -21843,8 +22353,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780241964217",
+    "isbn13_edition": "/books/OL38807802M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol54531w",
@@ -21873,8 +22388,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780910240192",
+    "isbn13_edition": "/books/OL4592113M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol37908989w",
@@ -21933,8 +22453,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781134928491",
+    "isbn13_edition": "/books/OL33613178M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol15834654w",
@@ -21963,8 +22488,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780739832431",
+    "isbn13_edition": "/books/OL24744867M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol17763403w",
@@ -21994,8 +22524,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780137562305",
+    "isbn13_edition": "/books/OL1563582M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol1986787w",
@@ -22024,8 +22559,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9781136639722",
+    "isbn13_edition": "/books/OL38288632M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol8302713w",
@@ -22054,8 +22594,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9780520049000",
+    "isbn13_edition": "/books/OL7708841M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_openlib_works_ol2521101w",
@@ -22174,8 +22719,13 @@
     "confidence": 1,
     "status": "active",
     "created_at": "2026-08-19T16:13:26.714Z",
-    "updated_at": "2026-08-19T16:13:26.714Z",
-    "freshness_class": "permanent_resources"
+    "updated_at": "2026-08-20T22:43:23.675Z",
+    "freshness_class": "permanent_resources",
+    "isbn13": "9786027354326",
+    "isbn13_edition": "/books/OL48107735M",
+    "isbn13_method": "openlibrary_works_editions_hop",
+    "isbn13_note": "Mechanical backfill (Gate 5). Edition choice pending US-055 editorial confirmation.",
+    "isbn13_retrieved_at": "2026-08-20T22:43:23.675Z"
   },
   {
     "id": "res_loc_http___www_loc_gov_item_2021688764",

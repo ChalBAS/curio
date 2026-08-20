@@ -1,0 +1,368 @@
+{
+  "slice": "S3-HIST-MEAST",
+  "records": [
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": false,
+        "q": "The world's oldest known surviving law code predates Hammurabi's famous laws by three centuries. How did it usually punish bodily injury?",
+        "options": ["An eye for an eye", "Public flogging", "Monetary fines", "Forced labour"],
+        "answer": 2,
+        "fact": "Written in Sumerian around 2100 BC, the Code of Ur-Nammu is the oldest known surviving law code — three centuries older than the Code of Hammurabi, and gentler: it institutes fines of monetary compensation for bodily damage, unlike the later 'eye for an eye' principle of Babylonian law. Murder and robbery, though, were capital offenses.",
+        "src": "https://en.wikipedia.org/wiki/Code_of_Ur-Nammu",
+        "country": "Iraq",
+        "deeper": ["The preface credits King Ur-Nammu of Ur, but some scholars attribute the laws to his son Shulgi."]
+      },
+      "fr": {
+        "q": "Le plus ancien code de lois connu qui nous soit parvenu précède de trois siècles les fameuses lois de Hammurabi. Comment punissait-il le plus souvent les atteintes corporelles ?",
+        "options": ["Par la loi du talion — œil pour œil", "Par la flagellation publique", "Par des amendes en compensation", "Par les travaux forcés"],
+        "answer": 2,
+        "fact": "Rédigé en sumérien vers 2100 av. J.-C., le Code d'Ur-Nammu est le plus ancien code de lois connu qui ait survécu — trois siècles avant celui de Hammurabi, et plus doux : il instaure des compensations financières pour les dommages corporels, à l'inverse du principe « œil pour œil » du droit babylonien ultérieur. Le meurtre et le vol, eux, restaient passibles de mort."
+      },
+      "hook_en": "Three centuries before Hammurabi, a king already had a gentler idea of justice.",
+      "hook_fr": "Trois siècles avant Hammurabi, un roi avait déjà une idée plus douce de la justice.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 1, "culturalQuality": 2, "discoveryPotential": 1, "replayShareValue": 2, "total": 14 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Code_of_Ur-Nammu"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "A copy of a treaty concluded around 1259 BC between Ramesses II and the Hittite king Hattusili III hangs on a wall at United Nations headquarters. What makes the document a landmark?",
+        "options": ["It founded history's first empire", "It fixed the world's first national borders", "It created the first written alphabet", "It is the oldest known surviving peace treaty"],
+        "answer": 3,
+        "fact": "It is also the only ancient Near Eastern treaty for which the versions of both sides have survived — Egyptian hieroglyphs on temple walls, Hittite cuneiform on clay tablets — which enables the two to be compared directly.",
+        "src": "https://en.wikipedia.org/wiki/Egyptian%E2%80%93Hittite_peace_treaty"
+      },
+      "fr": {
+        "q": "Une copie d'un traité conclu vers 1259 av. J.-C. entre Ramsès II et le roi hittite Hattusili III est affichée sur un mur du siège des Nations unies. Qu'est-ce qui en fait un document historique ?",
+        "options": ["Il a fondé le premier empire de l'histoire", "Il a fixé les premières frontières nationales du monde", "Il a créé le premier alphabet écrit", "C'est le plus ancien traité de paix connu qui ait survécu"],
+        "answer": 3,
+        "fact": "C'est aussi le seul traité du Proche-Orient ancien dont les versions des deux camps ont survécu — hiéroglyphes égyptiens sur des murs de temple, cunéiforme hittite sur tablettes d'argile — ce qui permet de les comparer directement."
+      },
+      "hook_en": "The UN keeps a Bronze Age document on its wall — and it is not decoration.",
+      "hook_fr": "L'ONU garde sur un mur un document de l'âge du bronze — et ce n'est pas une décoration.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 1, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Egyptian%E2%80%93Hittite_peace_treaty"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "Persia's Royal Road ran about 2,699 km from Susa to Sardis — a ninety-day journey on foot. How long were the empire's mounted relay couriers supposed to take?",
+        "options": ["About sixty days", "About thirty days", "About nine days", "Under two days"],
+        "answer": 2,
+        "fact": "Herodotus wrote that there is nothing in the world that travels faster than these Persian couriers; fresh horses waited at 111 posting stations along the road. His praise — neither snow nor rain nor heat nor gloom of night — was later inscribed on the James Farley Post Office in New York.",
+        "src": "https://en.wikipedia.org/wiki/Royal_Road",
+        "country": "Iran"
+      },
+      "fr": {
+        "q": "La Voie royale perse courait sur environ 2 699 km de Suse à Sardes — quatre-vingt-dix jours de marche à pied. Combien de temps les courriers montés de l'empire, avec relais, étaient-ils censés mettre ?",
+        "options": ["Environ soixante jours", "Environ trente jours", "Environ neuf jours", "Moins de deux jours"],
+        "answer": 2,
+        "fact": "Hérodote écrivait que rien au monde ne voyage plus vite que ces courriers perses ; des chevaux frais attendaient dans 111 relais le long de la route. Son éloge — ni la neige, ni la pluie, ni la chaleur, ni l'obscurité de la nuit — fut plus tard gravé sur le bureau de poste James Farley de New York."
+      },
+      "hook_en": "The unofficial motto of the US mail was written about Persian riders 2,500 years ago.",
+      "hook_fr": "La devise officieuse de la poste américaine a été écrite il y a 2 500 ans — à propos de cavaliers perses.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 1, "curiosityPotential": 2, "culturalQuality": 1, "discoveryPotential": 2, "replayShareValue": 2, "total": 14 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Royal_Road"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 3,
+        "kids": false,
+        "q": "Around 570 CE, a slow-motion engineering failure in Yemen helped set off migrations across the Arabian Peninsula. What happened?",
+        "options": ["The incense harbours silted up", "A mountain aqueduct serving Sanaa collapsed", "The spice roads' wells ran dry", "The Great Dam of Marib finally breached"],
+        "answer": 3,
+        "fact": "From about the 8th century BC, the Sabaeans caught monsoon rains behind the Great Dam of Marib — counted by some as one of the most impressive feats of engineering in the ancient world, eventually allowing the irrigation of some 100 km². Overtopped in 570 or 575 and left unrepaired, its failure provoked the migration of up to 50,000 people from Yemen.",
+        "src": "https://en.wikipedia.org/wiki/Marib_Dam",
+        "country": "Yemen",
+        "deeper": ["The Quran recalls the disaster as the Flood of the 'Arim.", "Tentative archaeological findings suggest simple earth dams stood on the site as far back as around 1750 BC."]
+      },
+      "fr": {
+        "q": "Vers 570 de notre ère, une lente défaillance d'ingénierie au Yémen contribue à déclencher des migrations à travers la péninsule Arabique. Que s'est-il passé ?",
+        "options": ["Les ports de l'encens se sont envasés", "Un aqueduc de montagne desservant Sanaa s'est effondré", "Les puits des routes des épices se sont taris", "Le grand barrage de Marib a fini par céder"],
+        "answer": 3,
+        "fact": "Depuis environ le VIIIe siècle av. J.-C., les Sabéens retenaient les pluies de mousson derrière le grand barrage de Marib — compté par certains parmi les ouvrages d'ingénierie les plus impressionnants du monde antique, permettant à terme l'irrigation de quelque 100 km². Submergé en 570 ou 575 puis laissé sans réparation, sa ruine provoqua la migration de jusqu'à 50 000 personnes hors du Yémen."
+      },
+      "hook_en": "One wall held up a kingdom for more than a thousand years.",
+      "hook_fr": "Un seul mur a porté un royaume pendant plus de mille ans.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 1, "explanatoryValue": 2, "curiosityPotential": 2, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 1, "total": 14 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Marib_Dam"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": false,
+        "q": "In 9th-century Baghdad, and later Damascus and Cairo, the bimaristan was an institution whose founding documents stated that nobody should be turned away. What was it?",
+        "options": ["A public bathhouse", "A caravanserai for travellers", "A hospital treating anyone free of charge", "A pilgrims' soup kitchen"],
+        "answer": 2,
+        "fact": "In the Islamic world's bimaristans, all costs were borne by the hospital itself, patients stayed until full recovery, and students trained under the supervision of a practicing physician — a system comparable to a medical residency today. From 931, Baghdad's doctors had to pass an examination before they could practice.",
+        "src": "https://en.wikipedia.org/wiki/Bimaristan",
+        "country": "Iraq"
+      },
+      "fr": {
+        "q": "À Bagdad au IXe siècle, puis à Damas et au Caire, le bimaristan était une institution dont les actes de fondation exigeaient que personne ne soit refoulé. Qu'était-ce ?",
+        "options": ["Un bain public", "Un caravansérail pour voyageurs", "Un hôpital soignant chacun gratuitement", "Une soupe populaire pour pèlerins"],
+        "answer": 2,
+        "fact": "Dans les bimaristans du monde islamique, tous les coûts étaient à la charge de l'hôpital lui-même, les patients restaient jusqu'à guérison complète, et les étudiants se formaient sous la supervision d'un médecin praticien — un système comparable à l'internat de médecine actuel. À partir de 931, les médecins de Bagdad durent passer un examen avant d'exercer."
+      },
+      "hook_en": "A hospital where the bill did not exist — in the year 805.",
+      "hook_fr": "Un hôpital où la facture n'existait pas — en l'an 805.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 1, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Bimaristan"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "On a hilltop in southeastern Turkey, people raised the world's oldest known megaliths around 9500 BCE. Who were the builders?",
+        "options": ["Early farmers celebrating their first harvests", "Bronze Age traders", "A forgotten Egyptian expedition", "Hunter-gatherers"],
+        "answer": 3,
+        "fact": "Evidence indicates the inhabitants of Göbekli Tepe — 'Potbelly Hill' in Turkish — were hunter-gatherers who supplemented their diet with early forms of domesticated cereal. Its T-shaped limestone pillars are the oldest known megaliths in the world, and UNESCO lists the site as one of the first manifestations of human-made monumental architecture.",
+        "src": "https://en.wikipedia.org/wiki/G%C3%B6bekli_Tepe",
+        "country": "Turkey"
+      },
+      "fr": {
+        "q": "Sur une colline du sud-est de la Turquie, on a dressé vers 9500 av. J.-C. les plus anciens mégalithes connus au monde. Qui étaient les bâtisseurs ?",
+        "options": ["Les premiers fermiers fêtant leurs récoltes", "Des marchands de l'âge du bronze", "Une expédition égyptienne oubliée", "Des chasseurs-cueilleurs"],
+        "answer": 3,
+        "fact": "Tout indique que les habitants de Göbekli Tepe — « colline ventrue » en turc — étaient des chasseurs-cueilleurs qui complétaient leur alimentation par des formes précoces de céréales domestiquées. Ses piliers de calcaire en forme de T sont les plus anciens mégalithes connus au monde, et l'UNESCO voit dans le site l'une des premières manifestations d'architecture monumentale humaine."
+      },
+      "hook_en": "The oldest megaliths on Earth stand on a hill called Potbelly.",
+      "hook_fr": "Les plus vieux mégalithes du monde se dressent sur une colline dite « ventrue ».",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 1, "curiosityPotential": 2, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/G%C3%B6bekli_Tepe"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "When the Assyrian palace at Nineveh burned, what happened to the royal library's thousands of clay tablets?",
+        "options": ["They were looted and scattered", "They crumbled back into dust", "The fire partially baked them — and preserved them", "Scribes had carried them to safety"],
+        "answer": 2,
+        "fact": "The library King Ashurbanipal assembled in the 7th century BC held more than 30,000 clay tablets and fragments, among them the famous Epic of Gilgamesh. It is believed the great fire caused the cuneiform tablets to become partially baked — a potentially destructive event that helped preserve them. Most are now in the British Museum.",
+        "src": "https://en.wikipedia.org/wiki/Library_of_Ashurbanipal",
+        "country": "Iraq"
+      },
+      "fr": {
+        "q": "Quand le palais assyrien de Ninive partit en flammes, qu'est-il arrivé aux milliers de tablettes d'argile de la bibliothèque royale ?",
+        "options": ["Elles furent pillées et dispersées", "Elles retombèrent en poussière", "Le feu les a en partie cuites — et préservées", "Des scribes les avaient mises à l'abri"],
+        "answer": 2,
+        "fact": "La bibliothèque réunie par le roi Assurbanipal au VIIe siècle av. J.-C. comptait plus de 30 000 tablettes et fragments d'argile, dont la célèbre Épopée de Gilgamesh. On pense que le grand incendie a partiellement cuit les tablettes cunéiformes — un événement potentiellement destructeur qui a contribué à les préserver. La plupart sont aujourd'hui au British Museum."
+      },
+      "hook_en": "The best thing that ever happened to a king's library was the fire that destroyed his palace.",
+      "hook_fr": "La meilleure chose qui soit arrivée à la bibliothèque d'un roi ? L'incendie de son palais.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 2, "culturalQuality": 1, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Library_of_Ashurbanipal"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": false,
+        "q": "In ancient Mesopotamia, a hymn honours the goddess Ninkasi, whose name means 'mistress of beer'. What is the hymn assumed to describe?",
+        "options": ["The goddess's descent to the underworld", "The blessing of a new tavern", "The process of brewing beer", "The sowing of the first barley"],
+        "answer": 2,
+        "fact": "The Hymn to Ninkasi, from the Old Babylonian period, is assumed to be a poetic description of the brewing process and is commonly quoted in professional literature. Yet recent scholarship notes that the usual translation does not fully align with what is known of Mesopotamian beer-making — even its key ingredient, bappir, is assumed to be a dry bread, though it may refer to sourdough instead.",
+        "src": "https://en.wikipedia.org/wiki/Ninkasi",
+        "country": "Iraq"
+      },
+      "fr": {
+        "q": "En Mésopotamie ancienne, un hymne honore la déesse Ninkasi, dont le nom signifie « maîtresse de la bière ». Que cet hymne est-il supposé décrire ?",
+        "options": ["La descente de la déesse aux enfers", "La bénédiction d'une nouvelle taverne", "Le processus de brassage de la bière", "Les premières semailles d'orge"],
+        "answer": 2,
+        "fact": "L'Hymne à Ninkasi, de l'époque paléo-babylonienne, est supposé être une description poétique du brassage, et il est couramment cité dans la littérature professionnelle. Mais des travaux récents notent que la traduction habituelle ne cadre pas entièrement avec ce que l'on sait de la bière mésopotamienne — même son ingrédient clé, le bappir, supposé être un pain sec, pourrait en réalité désigner un levain."
+      },
+      "hook_en": "Some prayers ask for rain. This one may be a recipe.",
+      "hook_fr": "Certaines prières demandent la pluie. Celle-ci serait une recette.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 1, "clarity": 1, "explanatoryValue": 2, "curiosityPotential": 2, "culturalQuality": 2, "discoveryPotential": 1, "replayShareValue": 2, "total": 13 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Ninkasi"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "Around 3100 BC, when most Mesopotamian settlements covered about 10 hectares, one city may have held up to 50,000 residents. Which one?",
+        "options": ["Babylon", "Nineveh", "Ur", "Uruk"],
+        "answer": 3,
+        "fact": "At its peak, Uruk was the largest urban area in the world, with 80,000–90,000 people living in its environs. Both writing and monumental public architecture emerged in its Eanna district; the Sumerian King List has Gilgamesh ruling here; and many linguists state that the name Iraq derived from Uruk.",
+        "src": "https://en.wikipedia.org/wiki/Uruk",
+        "country": "Iraq"
+      },
+      "fr": {
+        "q": "Vers 3100 av. J.-C., quand la plupart des cités mésopotamiennes couvraient une dizaine d'hectares, une ville comptait peut-être jusqu'à 50 000 habitants. Laquelle ?",
+        "options": ["Babylone", "Ninive", "Ur", "Uruk"],
+        "answer": 3,
+        "fact": "À son apogée, Uruk était la plus grande agglomération urbaine du monde, avec 80 000 à 90 000 personnes dans ses environs. L'écriture comme l'architecture monumentale publique émergent dans son district de l'Eanna ; la Liste royale sumérienne y fait régner Gilgamesh ; et beaucoup de linguistes affirment que le nom de l'Irak dérive de celui d'Uruk."
+      },
+      "hook_en": "The biggest city on Earth in 3100 BC may still be on the map — as a country.",
+      "hook_fr": "La plus grande ville du monde en 3100 av. J.-C. serait encore sur la carte — devenue un pays.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 1, "curiosityPotential": 2, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Uruk"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 1,
+        "kids": true,
+        "q": "The 'mocha' on your café menu is named after a real place. What is it?",
+        "options": ["A volcano in Ethiopia", "A Red Sea port in Yemen", "A district of Istanbul", "An oasis on the Silk Road"],
+        "answer": 1,
+        "fact": "Mokha, on Yemen's Red Sea coast, was long known for its coffee trade, reaching its zenith in the first quarter of the 18th century. The coffee itself did not grow in Mokha — it was transported from Ethiopia and inland Yemen to be shipped abroad — and the port's name lives on in Mocha coffee, the mocha latte and the Moka pot.",
+        "src": "https://en.wikipedia.org/wiki/Mocha,_Yemen",
+        "country": "Yemen"
+      },
+      "fr": {
+        "q": "Le « moka » de la carte de votre café porte le nom d'un lieu bien réel. Lequel ?",
+        "options": ["Un volcan d'Éthiopie", "Un port du Yémen sur la mer Rouge", "Un quartier d'Istanbul", "Une oasis de la route de la soie"],
+        "answer": 1,
+        "fact": "Mokha, sur la côte yéménite de la mer Rouge, fut longtemps réputée pour son commerce de café, atteignant son apogée au premier quart du XVIIIe siècle. Le café n'y poussait pas — il était transporté d'Éthiopie et de l'intérieur du Yémen pour être expédié au loin — et le nom du port survit dans le café moka, le mocha latte et la cafetière Moka."
+      },
+      "hook_en": "Your coffee order is a dot on the map of Yemen.",
+      "hook_fr": "Votre commande de café est un point sur la carte du Yémen.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 1, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Mocha,_Yemen"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "A roughly 4,500-year-old Mesopotamian board game can be played again today. How were its rules recovered?",
+        "options": ["Archaeologists guessed them from the board's layout", "A medieval chess manual described them", "A curator translated a Babylonian clay tablet of rules", "Complete rules were buried alongside the boards"],
+        "answer": 2,
+        "fact": "The British Museum's board of the Royal Game of Ur dates to c. 2600–2400 BC, making it one of the oldest game boards in the world. Curator Irving Finkel translated a clay tablet written about 177 BC by the Babylonian scribe Itti-Marduk-balatu describing how the game was played in that period — and a recognizable form of the game, called aasha, was still played by the Jewish community of Kochi, India, into the 1950s.",
+        "src": "https://en.wikipedia.org/wiki/Royal_Game_of_Ur",
+        "country": "Iraq"
+      },
+      "fr": {
+        "q": "Un jeu de plateau mésopotamien vieux d'environ 4 500 ans se joue à nouveau aujourd'hui. Comment ses règles ont-elles été retrouvées ?",
+        "options": ["Des archéologues les ont devinées d'après le plateau", "Un manuel d'échecs médiéval les décrivait", "Un conservateur a traduit une tablette d'argile babylonienne des règles", "Les règles complètes étaient enterrées avec les plateaux"],
+        "answer": 2,
+        "fact": "Le plateau du Jeu royal d'Ur conservé au British Museum date d'environ 2600-2400 av. J.-C. — l'un des plus anciens plateaux de jeu au monde. Le conservateur Irving Finkel a traduit une tablette d'argile écrite vers 177 av. J.-C. par le scribe babylonien Itti-Marduk-balatu, décrivant comment on y jouait à cette époque — et une forme reconnaissable du jeu, appelée aasha, se jouait encore dans la communauté juive de Kochi, en Inde, dans les années 1950."
+      },
+      "hook_en": "A board game outlived every empire that ever played it.",
+      "hook_fr": "Un jeu de société a survécu à tous les empires qui y ont joué.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 2, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 16 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Royal_Game_of_Ur"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "In 1206, the engineer Ismail al-Jazari completed a book at the Artuqid court describing 50 machines. Which of these was among them?",
+        "options": ["A printing press", "A telescope", "A gunpowder rocket", "A boat carrying four automatic musicians"],
+        "answer": 3,
+        "fact": "Al-Jazari's Book of Knowledge of Ingenious Mechanical Devices described 50 mechanical devices along with instructions on how to construct them — among them an elephant clock, a hand-washing automaton, and a floating boat of four automatic musicians that entertained palace guests. He invented an early crankshaft and has been described as the 'father of robotics'.",
+        "src": "https://en.wikipedia.org/wiki/Ismail_al-Jazari",
+        "country": "Turkey"
+      },
+      "fr": {
+        "q": "En 1206, l'ingénieur Ismail al-Jazari achève à la cour artuqide un livre décrivant 50 machines. Laquelle de celles-ci en faisait partie ?",
+        "options": ["Une presse à imprimer", "Un télescope", "Une fusée à poudre", "Un bateau portant quatre musiciens automates"],
+        "answer": 3,
+        "fact": "Le Livre de la connaissance des procédés mécaniques ingénieux d'al-Jazari décrit 50 dispositifs mécaniques avec leurs instructions de construction — dont une horloge à éléphant, un automate laveur de mains et un bateau flottant à quatre musiciens automates qui divertissait les invités du palais. Il a inventé un vilebrequin précoce et a été décrit comme le « père de la robotique »."
+      },
+      "hook_en": "Eight hundred years before Silicon Valley, someone was already building robots.",
+      "hook_fr": "Huit cents ans avant la Silicon Valley, quelqu'un construisait déjà des robots.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 1, "curiosityPotential": 2, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Ismail_al-Jazari"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "For some 3,000 years, Iranians have moved water across deserts without pumps or open canals. How?",
+        "options": ["Wind-driven waterwheels", "Camel caravans hauling cisterns", "Roman-style aqueduct bridges", "Gently sloping underground tunnels"],
+        "answer": 3,
+        "fact": "A qanat taps groundwater through a gently sloping tunnel accessed by well-like vertical shafts, delivering water by gravity while preventing much loss to evaporation. Some 37,000 remained in use in Iran as of 2015 — and the Gonabad qanat, after 2,700 years, still provides drinking and agricultural water to nearly 40,000 people.",
+        "src": "https://en.wikipedia.org/wiki/Qanat",
+        "country": "Iran",
+        "deeper": ["UNESCO inscribed the Persian Qanat as a World Heritage Site in 2016, listing eleven Iranian qanats.", "The Gonabad qanat's main well is more than 360 metres deep, and the system runs 45 kilometres."]
+      },
+      "fr": {
+        "q": "Depuis quelque 3 000 ans, les Iraniens font traverser les déserts à l'eau sans pompes ni canaux à ciel ouvert. Comment ?",
+        "options": ["Des roues à eau mues par le vent", "Des caravanes de chameaux portant des citernes", "Des ponts-aqueducs à la romaine", "Des tunnels souterrains en pente douce"],
+        "answer": 3,
+        "fact": "Un qanat capte l'eau souterraine par un tunnel en pente douce, ponctué de puits verticaux, et la livre par simple gravité en évitant une grande partie des pertes par évaporation. Quelque 37 000 restaient en service en Iran en 2015 — et le qanat de Gonabad, après 2 700 ans, fournit toujours eau potable et eau agricole à près de 40 000 personnes."
+      },
+      "hook_en": "How do you move water across a desert without losing it to the sun?",
+      "hook_fr": "Comment faire traverser un désert à l'eau sans la perdre au soleil ?",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 1, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 1, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 1, "total": 13 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Qanat"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 2,
+        "kids": true,
+        "q": "In 1929, during the conversion of Istanbul's Topkapi Palace into a museum, scholars unearthed a fragment of a 1513 map by the Ottoman admiral Piri Reis. Why did it cause a sensation?",
+        "options": ["It proved Ottoman ships had reached the Americas first", "It preserved the only known copy of Christopher Columbus's lost chart", "It pinpointed the then-unknown sources of the Nile", "It was the first map ever to name America"],
+        "answer": 1,
+        "fact": "Piri Reis compiled his world map from some twenty charts and mappae mundi, Portuguese and Arabic maps — and a map by Christopher Columbus of the West Indies. Approximately one third of the map survives, housed in Topkapi Palace, and it remains the only known partial copy of Columbus's lost chart.",
+        "src": "https://en.wikipedia.org/wiki/Piri_Reis_map",
+        "country": "Turkey"
+      },
+      "fr": {
+        "q": "En 1929, lors de la transformation du palais de Topkapi d'Istanbul en musée, des chercheurs exhument le fragment d'une carte de 1513 due à l'amiral ottoman Piri Reis. Pourquoi fit-elle sensation ?",
+        "options": ["Elle prouvait que des navires ottomans avaient atteint les Amériques les premiers", "Elle conservait la seule copie connue de la carte perdue de Christophe Colomb", "Elle situait les sources du Nil, alors inconnues", "Elle était la première carte à nommer l'Amérique"],
+        "answer": 1,
+        "fact": "Piri Reis a compilé sa carte du monde à partir d'une vingtaine de cartes et mappemondes, de cartes portugaises et arabes — et d'une carte des Antilles de Christophe Colomb. Environ un tiers de la carte survit, conservé au palais de Topkapi, et elle demeure la seule copie partielle connue de la carte perdue de Colomb."
+      },
+      "hook_en": "The best surviving trace of Columbus's own charts is not in Spain.",
+      "hook_fr": "La meilleure trace des cartes de Colomb lui-même n'est pas en Espagne.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 2, "curiosityPotential": 2, "culturalQuality": 1, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Piri_Reis_map"
+    },
+    {
+      "en": {
+        "cat": "History",
+        "region": "MiddleEast",
+        "diff": 3,
+        "kids": false,
+        "q": "The oldest surviving substantially complete work of notated music dates to about 1400 BCE. Where was it found?",
+        "options": ["In a Bronze Age palace in Syria", "In a Greek temple archive", "In an Egyptian tomb", "In a Chinese imperial library"],
+        "answer": 0,
+        "fact": "The Hurrian songs, written in cuneiform on clay tablets around 1400 BCE, were excavated from the Royal Palace of Ugarit, present-day Ras Shamra, Syria. The most complete tablet carries instructions for a singer accompanied by a nine-stringed instrument — and there are at least five rival decipherments of the notation, each yielding entirely different results.",
+        "src": "https://en.wikipedia.org/wiki/Hurrian_songs",
+        "country": "Syria",
+        "deeper": ["The tablets were excavated from Ugarit's Royal Palace in the 1950s.", "The most complete tablet is held in the National Museum of Damascus."]
+      },
+      "fr": {
+        "q": "La plus ancienne œuvre de musique notée qui nous soit parvenue à peu près complète date d'environ 1400 av. J.-C. Où a-t-elle été trouvée ?",
+        "options": ["Dans un palais de l'âge du bronze en Syrie", "Dans les archives d'un temple grec", "Dans une tombe égyptienne", "Dans une bibliothèque impériale chinoise"],
+        "answer": 0,
+        "fact": "Les chants hourrites, écrits en cunéiforme sur des tablettes d'argile vers 1400 av. J.-C., ont été exhumés du palais royal d'Ougarit, l'actuelle Ras Shamra, en Syrie. La tablette la plus complète porte des instructions pour un chanteur accompagné d'un instrument à neuf cordes — et il existe au moins cinq déchiffrements rivaux de la notation, chacun donnant un résultat entièrement différent."
+      },
+      "hook_en": "Humanity's oldest surviving sheet music plays five different ways — depending on the scholar.",
+      "hook_fr": "La plus vieille partition de l'humanité se joue de cinq façons — selon le savant.",
+      "rubricScore": { "factualIntegrity": 2, "surprise": 2, "clarity": 2, "explanatoryValue": 1, "curiosityPotential": 2, "culturalQuality": 2, "discoveryPotential": 2, "replayShareValue": 2, "total": 15 },
+      "verifiedAgainst": "https://en.wikipedia.org/wiki/Hurrian_songs"
+    }
+  ]
+}

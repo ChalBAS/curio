@@ -1066,7 +1066,7 @@
     var wrap = el('<div class="grid"></div>');
     var mt = modeCardTruth(); if (mt) wrap.appendChild(dressMode(mt, "truth"));
     wrap.appendChild(quickfirePicker());
-    if (FEAT_BRAIN_GYM) wrap.appendChild(el('<div class="card"><div class="emoji">\ud83e\udde0</div><h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3><p class="mini" style="margin:0">' + t("Memory and focus exercises built on real technique — coming soon. We teach methods, we never promise miracles.") + '</p></div>'));
+    if (FEAT_BRAIN_GYM) wrap.appendChild(el('<div class="card"><div class="emoji">\ud83e\udde0</div><h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3><p class="mini" style="margin:0">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p></div>'));
     return wrap;
   }
 
@@ -1579,6 +1579,84 @@
     return node;
   }
 
+  // ---------- image preload (issue #1) ----------
+  // "The refreshing speed for the images in the app is a bit slow" (CEO,
+  // 2026-08-17). The fix is to spend time the reader was already spending:
+  // pictures a screen is GOING to show are fetched silently while the reader
+  // is still on the screen before it. The machine lives in src/preload.js so
+  // it can be unit-tested in Node; this section owns only the wiring.
+  var _warmer = null;
+  function imageWarmer() {
+    // null when preload.js failed to load — every caller guards, and the app
+    // then simply behaves exactly as it did before the fix.
+    if (!_warmer && window.CURIO_PRELOAD) _warmer = window.CURIO_PRELOAD.create();
+    return _warmer;
+  }
+
+  // The exact pictures today's results screen will render: the five topic
+  // photographs on the shelf, plus the photograph on each Keep-exploring
+  // door. Both are deterministic for the day (dailyQuestions() is seeded,
+  // discovery shelves are a pure function of the deck), which is what makes
+  // preloading them "feasible" — the surprise-me card is random and is
+  // deliberately not here.
+  function dailyResultImageUrls() {
+    var urls = [];
+    var GOL = window.CURIO_GO, IM = window.CURIO_IMAGES || {};
+    if (!GOL) return urls;
+    var dq = dailyQuestions();
+    dq.forEach(function (q) {
+      var pic = IM[GOL.entityOf(q)];
+      if (pic && pic.u) urls.push(pic.u);
+    });
+    var D = window.CURIO_DISCOVERY;
+    if (D) {
+      var seen = dq.map(function (q) { return { id: GOL.entityOf(q) }; });
+      D.shelves(seen, 8).forEach(function (S) {
+        var art = S.items[0] && S.items[0].image;
+        if (art) urls.push(art);
+      });
+    }
+    return urls;
+  }
+
+  function warmDailyResults() {
+    // Aeroplane mode is an acceptance criterion: offline, these fetches can
+    // only fail — skip them and let the shelf degrade to its category tiles.
+    if (navigator.onLine === false) return;
+    var W = imageWarmer();
+    if (W) W.start(dailyResultImageUrls());
+  }
+
+  // The moment between the last answer and the results (issue #1, the CEO's
+  // sand-timer proposal, 2026-08-17 — adopted as the capped FALLBACK, not the
+  // plan). In the common case the silent preload has already finished and the
+  // results render instantly, complete. Only when fetches are still in flight
+  // does the reader see the ⏳ transition — capped, then render regardless,
+  // images arriving progressively. An uncapped wait would hang the results.
+  var RESULTS_GATE_CAP_MS = 1200;
+  function resultsGate(showResults) {
+    var W = _warmer;
+    // Straight through when there is nothing to wait for: no preloader,
+    // everything settled, or offline — where images may NEVER arrive and a
+    // gated results screen would break the offline promise outright.
+    if (!W || W.idle() || navigator.onLine === false) { showResults(); return; }
+    var gate = el(
+      '<div class="card result gate">' +
+        '<div class="gate-timer" aria-hidden="true">⏳</div>' +
+        '<div class="sub" role="status">' + t("Gathering your discoveries…") + '</div>' +
+      '</div>');
+    // render() replaces the answered question card at once — the previous
+    // question's picture is never left on screen looking frozen.
+    render(gate);
+    W.whenSettled(RESULTS_GATE_CAP_MS, function () {
+      // The reader may have tabbed away during the wait; yanking them back
+      // to a screen they left is worse than standing down. The finished
+      // record is already saved — Play shows these results on next entry.
+      if (!gate.parentNode || !playShown) return;
+      showResults();
+    });
+  }
+
   // ---------- quiz engine ----------
   // cfg: { questions:[...], timed:bool, vault:bool, resumeKey:string, onDone(result) }
   //
@@ -1604,7 +1682,8 @@
         score = saved ? saved.score : 0,
         correctCount = saved ? saved.correct : 0,
         marks = saved ? saved.marks.slice() : [],
-        answered = false, timer = null, timeLeft = 0;
+        answered = false, timer = null, timeLeft = 0,
+        warmed = false;   // issue #1: the round's results warm-up runs once
     var seedBase = dayNumber() * 100;
     var secs = cfg.timed ? timerSecs() : null;
 
@@ -1627,6 +1706,17 @@
       node.style.maxHeight = "";
       var raw = cfg.questions[idx];
       var q = withShuffledOptions(raw, seedBase + idx * 7 + (cfg.timed ? 1 : 0));
+      // Issue #1: the results screen's images are knowable before the last
+      // answer, so they are fetched SILENTLY while the reader is still on
+      // questions 4–5 — spending time they were already spending instead of
+      // making them wait at the end. cfg.warm is the round's own knowledge of
+      // what its results will show; the engine only knows when the moment is.
+      // idx-based, not answer-based, so a resumed round landing on question 5
+      // still warms.
+      if (cfg.warm && !warmed && idx >= cfg.questions.length - 2) {
+        warmed = true;
+        try { cfg.warm(); } catch (e) {}
+      }
       node.innerHTML = "";
       node.appendChild(el(
         '<div class="quizhead">' +
@@ -1654,8 +1744,15 @@
         // everything else they read. It shipped in English first and that made
         // it useless to exactly the French readers it exists for.
         var alt = (QLANG === "fr" && q.img.alt_fr) || q.img.alt || "";
+        // Issue #1: the slot never sits blank and never shows a broken glyph.
+        // A sand-timer holds the space while the picture resolves (so the
+        // card barely moves when it lands), and stays — still, not spinning —
+        // if the fetch fails. Each show() rebuilds this DOM from scratch,
+        // which is the structural guarantee that the PREVIOUS question's
+        // picture can never linger into this one.
         artHtml =
-          '<div class="qart' + (q.img.fit === "contain" ? " is-contain" : "") + '">' +
+          '<div class="qart' + (q.img.fit === "contain" ? " is-contain" : "") + ' is-loading">' +
+            '<span class="qart-wait" aria-hidden="true">⏳</span>' +
             '<img src="' + esc(q.img.u) + '" alt="' + esc(alt) + '" decoding="async">' +
           '</div>' +
           (q.img.by ? '<div class="qart-credit">' +
@@ -1682,6 +1779,27 @@
         opts.appendChild(b);
       });
       node.appendChild(body);
+
+      // The sand-timer's exit (issue #1). A cache hit — the preloaded common
+      // case — settles synchronously here, so the timer never even flashes.
+      var qa = body.querySelector(".qart");
+      if (qa) {
+        var qim = qa.querySelector("img");
+        var qaDone = function () { qa.classList.remove("is-loading"); };
+        var qaFail = function () {
+          qa.classList.remove("is-loading");
+          qa.classList.add("is-failed");          // quiet placeholder, no broken glyph
+        };
+        // complete=true means the fetch already SETTLED (memory cache) — and a
+        // settled image fires no further events, so deciding from the flags
+        // here is the only correct path. naturalWidth tells success from
+        // failure: a cached failure must not leave the timer spinning forever.
+        if (qim.complete) { if (qim.naturalWidth) qaDone(); else qaFail(); }
+        else {
+          qim.addEventListener("load", qaDone, { once: true });
+          qim.addEventListener("error", qaFail, { once: true });
+        }
+      }
 
       // Explain it back: on repeat vault visits, recall from memory before seeing options.
       var vItem = cfg.vault ? getVault()[q.id] : null;
@@ -1739,6 +1857,17 @@
     function choose(i, q, opts, tLeft, recalled) {
       if (answered) return;
       answered = true; stopTimer();
+      // Issue #1: the reader is about to spend seconds READING the fact —
+      // the network is idle at exactly the moment the next question's picture
+      // is knowable. Warm it now and the next card paints from cache. The
+      // warmer dedupes, so rapid Next-Next-Next never refetches anything.
+      if (idx + 1 < cfg.questions.length && navigator.onLine !== false) {
+        var nq = cfg.questions[idx + 1];
+        if (nq.img && nq.img.u) {
+          var W = imageWarmer();
+          if (W) W.start([nq.img.u]);
+        }
+      }
       var correct = i === q.answer;
       if (correct) {
         correctCount++;
@@ -1817,7 +1946,7 @@
         // the fact does. That is what makes "no scrolling" a guarantee rather
         // than a hope (CEO, 2026-08-11).
         '<div class="answerfoot">' +
-        (lead ? '<a class="gf-link gf-inline" href="' + srcLink0(lead.url) + '" target="_blank" rel="noopener">' +
+        (lead ? '<a class="gf-link gf-inline" href="' + doorHref(lead.kind, "lead", lead.url) + '" target="_blank" rel="noopener">' +
                   '<span class="gf-ico" aria-hidden="true">' + lead.icon + '</span>' +
                   '<span class="gf-text">' + leadLabel +
                     (lead.sub ? '<span class="gf-sub">' + esc(lead.sub) + '</span>' : '') +
@@ -1962,6 +2091,10 @@
     // question answered in this morning's daily must not turn up in this
     // afternoon's quick-fire wearing a different hat.
     markSeen(dq);
+    // Gate 5 served-round denominator: at most one request per device-day,
+    // and a NO-OP today — the kill switch in src/doors.js is off pending
+    // founder ruling R1. Failure of any kind degrades to v80 exactly.
+    if (window.QPIO_DOORS) window.QPIO_DOORS.roundStart();
     runQuiz({
       questions: dq,
       timed: false,
@@ -1969,13 +2102,19 @@
       // #daily notification link, a cold boot, the Stats Play button and the
       // end of onboarding — so resuming by default is one change, not six.
       resumeKey: dailyProgKey(),
+      // Issue #1: fetch the results screen's pictures while the reader is
+      // still on questions 4–5, so the shelf appears instantly and complete.
+      warm: warmDailyResults,
       onDone: function (r) {
         var s = bumpStreak();
         var rec = { score: r.correct, total: r.total, marks: r.marks, streak: s.count, date: todayKey() };
         LS.set(dailyKey(), rec);
         LS.set(dailyProgKey(), null);   // finished: the completed record owns the day now
         primeNudge();          // today is done — the service worker must not nudge about it
-        dailyResultView(rec, false);
+        // Issue #1: the capped ⏳ transition — only when fetches are still in
+        // flight, never offline. The record is saved above FIRST, so nothing
+        // is lost whatever happens during the wait.
+        resultsGate(function () { dailyResultView(rec, false); });
       }
     });
   }
@@ -2090,8 +2229,12 @@
       '</div>'
     ));
 
-    function topic(item, missed) {
+    // `pos` is the card's 1-based shelf position — the Gate 5 slot (s1..s5)
+    // a routed door tap reports. Position > 5 falls back to plain links: the
+    // instrument's slot key covers the daily round of five, nothing more.
+    function topic(item, missed, pos) {
       var q = item.q;
+      var slotName = "s" + pos;
       var name = window.CURIO_GO.titleOf(window.CURIO_GO.entityOf(q));
       var art = CAT_ART[q.cat] || "✨";
       // Beat two. The written hook opens the gap; the depth fact closes it, so
@@ -2160,7 +2303,7 @@
                     '<span class="way-txt">' + label + '</span>';
         var a;
         if (d.on) {
-          a = el('<a class="way" href="' + srcLink0(d.url) + '" target="_blank" rel="noopener"' +
+          a = el('<a class="way" href="' + doorHref(d.kind, slotName, d.url) + '" target="_blank" rel="noopener"' +
                  (d.title ? ' title="' + esc(d.title + (d.sub ? " · " + d.sub : "")) + '"' : '') +
                  '>' + inner + '</a>');
           // The card is tappable as a whole; a way must not fire it twice.
@@ -2185,14 +2328,18 @@
       var primary = window.CURIO_GO.primaryOf(item.dest);
       if (primary) {
         node.addEventListener("click", function () {
-          window.open(srcLink0(primary.url), "_blank", "noopener");
+          // Raw URL, not the attribute-escaped one — window.open is not HTML.
+          var D = window.QPIO_DOORS;
+          var via = D && D.href ? D.href(primary.kind, slotName, primary.url) : null;
+          window.open(via || srcLink0(primary.url), "_blank", "noopener");
         });
       }
       return node;
     }
 
-    wrong.forEach(function (it) { card.appendChild(topic(it, true)); });
-    right.forEach(function (it) { card.appendChild(topic(it, false)); });
+    var shelfPos = 0;
+    wrong.forEach(function (it) { shelfPos++; card.appendChild(topic(it, true, shelfPos)); });
+    right.forEach(function (it) { shelfPos++; card.appendChild(topic(it, false, shelfPos)); });
 
     // Keep exploring — the same curiosity followed sideways. Bolivia the
     // country rather than its navy; the mathematicians behind prime numbers
@@ -2340,6 +2487,18 @@
   function srcLink0(u) {
     if (!/^https?:\/\//i.test(u || "")) return "#";
     return esc(u);
+  }
+
+  // Gate 5 door instrument: a door tap routes via /go/<class>/<slot> when the
+  // instrument is live. It is OFF today — src/doors.js holds the kill switch,
+  // defaulted off pending founder ruling R1 — and in that state this returns
+  // the plain destination and the app behaves exactly as v80. The `source`
+  // slot is never routed (VAL-12 / NN-3): doors.js refuses it and the plain
+  // Wikipedia link is used.
+  function doorHref(kind, slot, url) {
+    var D = window.QPIO_DOORS;
+    var via = D && D.href ? D.href(kind, slot, url) : null;
+    return via ? esc(via) : srcLink0(url);
   }
 
   // ---------- vault session ----------
