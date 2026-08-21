@@ -230,6 +230,17 @@
     var order = shuffledIndices(p.length, seed);
     var win = [];
     for (var i = 0; i < W; i++) win.push(p[order[(day * W + i) % p.length]]);
+    // RELEASE CONTROL (2026-08-21): a CEO-approved replacement for a specific
+    // date is served instead of the pacer's default — drawn ONLY from this
+    // day's own window, so the walk's no-repeat guarantee is untouched.
+    // resolve() returns null on any mismatch (kids pool, re-cut deck, stale
+    // index) and the walk proceeds exactly as before.
+    var OV = window.CURIO_DAILY_OVERRIDES;
+    if (OV && OV.resolve && settings.ageMode !== "kids") {
+      var ovKey = new Date(d * 86400000).toISOString().slice(0, 10);
+      var ovFive = OV.resolve(ovKey, win, function (c) { return p.indexOf(c) + 1; }, DAILY_COUNT);
+      if (ovFive) return ovFive;
+    }
     if (window.CURIO_QI && window.CURIO_QI.paceDaily && p.length >= DAILY_WINDOW)
       return window.CURIO_QI.paceDaily(win, DAILY_COUNT, d);
     return win.slice(0, DAILY_COUNT);
