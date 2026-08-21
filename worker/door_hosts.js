@@ -9,21 +9,24 @@
 // reads nothing about the reader. It needs no privacy ruling
 // (GATE-5-DOOR-INSTRUMENT.md Part 4 draws that distinction).
 export const DOOR_HOSTS = [
-  "bookshop.org",
+  "egymonuments.gov.eg",
   "en.wikipedia.org",
   "hokusai-museum.jp",
+  "openlibrary.org",
   "pancanal.com",
   "pompeiisites.org",
-  "search.worldcat.org",
   "titanicbelfast.com",
-  "uk.bookshop.org",
   "visit-gem.com",
   "whc.unesco.org",
+  "www.angkorenterprise.gov.kh",
   "www.bl.uk",
   "www.britishmuseum.org",
+  "www.conaf.cl",
+  "www.fujisan-climb.jp",
   "www.guggenheim.org",
   "www.kws.go.ke",
   "www.louvre.fr",
+  "www.machupicchu.gob.pe",
   "www.metmuseum.org",
   "www.moma.org",
   "www.munchmuseet.no",
@@ -33,6 +36,10 @@ export const DOOR_HOSTS = [
   "www.slub-dresden.de",
   "www.sydneyoperahouse.com",
   "www.toureiffel.paris",
+  "www.visitmorocco.com",
+  "www.visitpetra.jo",
   "www.visitstockholm.com",
-  "www.youtube.com"
+  "www.youtube.com",
+  "www.zambiatourism.com",
+  "zimbabwetourism.net"
 ];

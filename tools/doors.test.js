@@ -82,7 +82,7 @@ function req(u, headers, cf) {
   is('lookalike host bookshop.org.evil.com → 400',
     go('/go/read/lead?u=' + encodeURIComponent('https://bookshop.org.evil.com/x')).res.status, 400);
   is('subdomain of a listed host is allowed',
-    go('/go/read/lead?u=' + encodeURIComponent('https://shop.bookshop.org/x')).res.status, 302);
+    go('/go/read/lead?u=' + encodeURIComponent('https://covers.openlibrary.org/x')).res.status, 302);
   is('source is never a door (VAL-12 / NN-3) → 400', go('/go/source/lead?u=' + encodeURIComponent(dest)).res.status, 400);
   is('unknown slot s9 → 400', go('/go/read/s9?u=' + encodeURIComponent(dest)).res.status, 400);
   is('missing u → 400', go('/go/read/lead').res.status, 400);

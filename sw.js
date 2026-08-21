@@ -2,37 +2,48 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v81";
+const CACHE = "qpio-v82";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
 const NUDGE_CACHE = "qpio-nudge";
+// Cross-origin photographs (upload.wikimedia.org thumbnails from the app's own
+// curated maps). The CEO, 2026-08-17: "the refreshing speed for the images in
+// the app is a bit slow" — and again rejecting v81: "too slow on the before
+// you travel section". The root cause: every photo was a cold third-party
+// fetch on every view — the generic handler below only caches `basic`
+// (same-origin) responses, so these were never cached at all. Cache-first
+// here, in its own bounded store: URLs are immutable thumbnails, so a hit is
+// always the right bytes, and the cap keeps storage honest on a phone.
+const IMG_CACHE = "qpio-img-v1";
+const IMG_CACHE_MAX = 160;
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=81",
-  "./brand/qpio-mark-96.png?v=81",
-  "./brand/icons/qpio-icon-96.png?v=81",
-  "./brand/qpio-lockup-header.png?v=81",
-  "./src/i18n.js?v=81",
-  "./src/questions.fr.js?v=81",
-  "./src/truthlab.fr.js?v=81",
-  "./src/app.js?v=81",
-  "./src/questions.js?v=81",
-  "./src/truthlab.js?v=81",
-  "./src/citypacks.js?v=81",
-  "./src/citypacks.fr.js?v=81",
-  "./src/entities.fr.js?v=81",
-  "./src/entities.img.js?v=81",
-  "./src/entities.meta.js?v=81",
-  "./src/country.js?v=81",
-  "./src/golinks.js?v=81",
-  "./src/doors.js?v=81",
-  "./src/hooks.js?v=81",
-  "./src/discovery.js?v=81",
-  "./src/resources.js?v=81",
-  "./src/intelligence.js?v=81",
-  "./src/intelligence.corpus.js?v=81",
-  "./src/preload.js?v=81",
+  "./src/styles.css?v=82",
+  "./brand/qpio-mark-96.png?v=82",
+  "./brand/icons/qpio-icon-96.png?v=82",
+  "./brand/qpio-lockup-header.png?v=82",
+  "./src/i18n.js?v=82",
+  "./src/questions.fr.js?v=82",
+  "./src/truthlab.fr.js?v=82",
+  "./src/app.js?v=82",
+  "./src/questions.js?v=82",
+  "./src/truthlab.js?v=82",
+  "./src/citypacks.js?v=82",
+  "./src/citypacks.fr.js?v=82",
+  "./src/entities.fr.js?v=82",
+  "./src/entities.img.js?v=82",
+  "./src/entities.meta.js?v=82",
+  "./src/country.js?v=82",
+  "./src/golinks.js?v=82",
+  "./src/doors.js?v=82",
+  "./src/hooks.js?v=82",
+  "./src/discovery.js?v=82",
+  "./src/daily.overrides.js?v=82",
+  "./src/resources.js?v=82",
+  "./src/intelligence.js?v=82",
+  "./src/intelligence.corpus.js?v=82",
+  "./src/preload.js?v=82",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",
@@ -51,12 +62,13 @@ self.addEventListener("install", (e) => {
 
 // Sweep last release's asset caches — but NOT the nudge queue, which is not a
 // versioned asset and would otherwise be wiped on every release, silently
-// killing the daily notification the first time we shipped anything.
+// killing the daily notification the first time we shipped anything. The
+// image cache survives too: it is content-keyed, not version-keyed.
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(keys
-        .filter((k) => k !== CACHE && k !== NUDGE_CACHE)
+        .filter((k) => k !== CACHE && k !== NUDGE_CACHE && k !== IMG_CACHE)
         .map((k) => caches.delete(k)))
     ).then(() => self.clients.claim())
   );
@@ -93,6 +105,29 @@ self.addEventListener("fetch", (e) => {
   // (/doors/ and /go/ must also stay absent from the ASSETS precache above.)
   const p = new URL(req.url).pathname;
   if (p.startsWith("/go/") || p.startsWith("/doors/")) return;
+
+  // The photograph store (issue #1). A plain <img> fetch is no-cors, so most
+  // of these arrive as opaque responses — expected and cacheable here; a
+  // network failure rejects and simply renders no image, exactly as before.
+  if (new URL(req.url).host === "upload.wikimedia.org") {
+    e.respondWith((async () => {
+      const c = await caches.open(IMG_CACHE);
+      const hit = await c.match(req);
+      if (hit) return hit;
+      const res = await fetch(req);
+      if (res && (res.status === 200 || res.type === "opaque")) {
+        const copy = res.clone();
+        c.put(req, copy).then(() => {
+          // Bounded: past the cap, the oldest entries go first.
+          c.keys().then((keys) => {
+            for (let i = 0; i < keys.length - IMG_CACHE_MAX; i++) c.delete(keys[i]);
+          });
+        });
+      }
+      return res;
+    })());
+    return;
+  }
 
   if (isShell(req)) {
     e.respondWith(

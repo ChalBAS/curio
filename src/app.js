@@ -175,6 +175,12 @@
 
   // ---------- read aloud ----------
   function canSpeak() { return settings.readAloud && "speechSynthesis" in window; }
+  // A deliberate tap-to-hear-it button is not the read-aloud feature: it never
+  // speaks unasked, so it does not wait on the Comfort setting — only on the
+  // browser actually having speech. (v81 review, CEO: "add a button to say the
+  // word in the language out loud" — the button existed but was hidden whenever
+  // read-aloud was off, which is why he never saw it.)
+  function canTapSpeak() { return "speechSynthesis" in window; }
   function speak(text) {
     if (!canSpeak()) return;
     try {
@@ -842,6 +848,7 @@
     );
     var row = node.querySelector("#cityPeek");
     var IM = window.CURIO_IMAGES || {};
+    var peekImgs = [];
     packs.forEach(function (p) {
       // Reuse the city's own question source for a photograph where we have one.
       var slug = null;
@@ -851,6 +858,7 @@
         return false;
       });
       var img = slug ? IM[slug] : null;
+      if (img) peekImgs.push(img.u);
       var c = el(
         '<div class="dcard dcard-sm">' +
           '<div class="dcard-art">' +
@@ -877,6 +885,14 @@
 
     var box = node.querySelector("#citySearch");
     var none = node.querySelector("#cityNone");
+    // issue #1: this grid was the slow one ("too slow on the before you travel
+    // section", v81 review). Fetch its photographs the moment Home renders —
+    // while the reader is still at the top of the screen — so the scroll down
+    // lands on warm images. The preloader never double-fetches a URL.
+    if (navigator.onLine !== false) {
+      var WP = imageWarmer();
+      if (WP) WP.start(peekImgs);
+    }
     box.addEventListener("input", function () {
       var v = normText(box.value.trim());
       var shown = 0;
@@ -2624,7 +2640,7 @@
       pack.phrases.forEach(function (ph) {
         var row = el(
           '<div class="phrase">' +
-            '<div class="phrase-main"><b>' + esc(ph.phrase) + '</b>' + (canSpeak() ? ' <button class="speakbtn phrase-speak" aria-label="' + t("Say it") + '">🔊</button>' : '') + '</div>' +
+            '<div class="phrase-main"><b>' + esc(ph.phrase) + '</b>' + (canTapSpeak() ? ' <button class="speakbtn phrase-speak" aria-label="' + t("Say it") + '">🔊</button>' : '') + '</div>' +
             '<div class="mini">' + esc(ph.meaning) + ' · <i>' + esc(ph.pron) + '</i></div>' +
           '</div>'
         );
@@ -2675,7 +2691,7 @@
   // Speak a phrase in its own language when the browser has a matching voice.
   var LANG_CODE = { Italian: "it-IT", Japanese: "ja-JP", "Egyptian Arabic": "ar-EG", Arabic: "ar", Spanish: "es-ES", Turkish: "tr-TR" };
   function speakLang(text, lang) {
-    if (!canSpeak()) return;
+    if (!canTapSpeak()) return;
     try {
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);

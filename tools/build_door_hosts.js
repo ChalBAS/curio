@@ -13,7 +13,7 @@
  * Sources of truth read out of golinks.js by executing it under a window shim
  * (the same technique tools/resources.test.js uses):
  *   - every curated PLACES url            → the visit door's destinations
- *   - readUrl() for US / GB / unset       → bookshop.org, uk.bookshop.org, worldcat
+ *   - readUrl() (any route)                  → openlibrary.org (public, no login — #70)
  *   - watchUrl() for every category       → www.youtube.com (vetted channel searches)
  */
 'use strict';
@@ -33,10 +33,13 @@ function collectHosts() {
   if (!GO) throw new Error('golinks.js did not register window.CURIO_GO');
 
   Object.keys(GO.places).forEach((k) => {
-    hosts.add(new URL(GO.places[k].url).hostname.toLowerCase());
+    const p = GO.places[k];
+    hosts.add(new URL(p.url).hostname.toLowerCase());
+    if (p.tour) hosts.add(new URL(p.tour).hostname.toLowerCase());   // verified official visitor page
   });
 
-  // readUrl consults window.CURIO_COUNTRY.get(); walk the three routes.
+  // readUrl: one public destination (openlibrary.org) since 2026-08-22 (#70) —
+  // the country-walk stays, so a future route change can never drift the list.
   ['US', 'GB', null].forEach((cc) => {
     global.window.CURIO_COUNTRY = { get: () => cc };
     hosts.add(new URL(GO.readUrl('probe')).hostname.toLowerCase());

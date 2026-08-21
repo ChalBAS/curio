@@ -53,13 +53,13 @@
     "Solomon_R._Guggenheim_Museum": { kind: "hold", where: "The Guggenheim", city: "New York", url: "https://www.guggenheim.org/" },
 
     // — places you travel to —
-    "Great_Pyramid_of_Giza":        { kind: "site", where: "The Giza pyramid complex", city: "Egypt", url: "https://whc.unesco.org/en/list/86/" },
-    "Machu_Picchu":                 { kind: "site", where: "Machu Picchu", city: "Peru", url: "https://whc.unesco.org/en/list/274/" },
-    "Angkor_Wat":                   { kind: "site", where: "Angkor", city: "Cambodia", url: "https://whc.unesco.org/en/list/668/" },
-    "Petra":                        { kind: "site", where: "Petra", city: "Jordan", url: "https://whc.unesco.org/en/list/326/" },
-    "Pompeii":                      { kind: "site", where: "Pompeii", city: "Italy", url: "https://whc.unesco.org/en/list/829/" },
+    "Great_Pyramid_of_Giza":        { kind: "site", where: "The Giza pyramid complex", city: "Egypt", url: "https://whc.unesco.org/en/list/86/", tour: "https://egymonuments.gov.eg/" },
+    "Machu_Picchu":                 { kind: "site", where: "Machu Picchu", city: "Peru", url: "https://whc.unesco.org/en/list/274/", tour: "https://www.machupicchu.gob.pe/" },
+    "Angkor_Wat":                   { kind: "site", where: "Angkor", city: "Cambodia", url: "https://whc.unesco.org/en/list/668/", tour: "https://www.angkorenterprise.gov.kh/" },
+    "Petra":                        { kind: "site", where: "Petra", city: "Jordan", url: "https://whc.unesco.org/en/list/326/", tour: "https://www.visitpetra.jo/" },
+    "Pompeii":                      { kind: "site", where: "Pompeii", city: "Italy", url: "https://whc.unesco.org/en/list/829/", tour: "https://pompeiisites.org/en/" },
     "Great_Wall_of_China":          { kind: "site", where: "The Great Wall", city: "China", url: "https://whc.unesco.org/en/list/438/" },
-    "Great_Zimbabwe":               { kind: "site", where: "Great Zimbabwe National Monument", city: "Zimbabwe", url: "https://whc.unesco.org/en/list/364/" },
+    "Great_Zimbabwe":               { kind: "site", where: "Great Zimbabwe National Monument", city: "Zimbabwe", url: "https://whc.unesco.org/en/list/364/", tour: "https://zimbabwetourism.net/en/" },
     "Great_Mosque_of_Djenné":       { kind: "site", where: "The Old Towns of Djenné", city: "Mali", url: "https://whc.unesco.org/en/list/116/" },
     "Rock-Hewn_Churches,_Lalibela": { kind: "site", where: "The rock-hewn churches", city: "Lalibela, Ethiopia", url: "https://whc.unesco.org/en/list/18/" },
     "Nubian_pyramids":              { kind: "site", where: "The pyramids of Meroë", city: "Sudan", url: "https://whc.unesco.org/en/list/1336/" },
@@ -68,19 +68,19 @@
     "Kairouan":                     { kind: "site", where: "Kairouan", city: "Tunisia", url: "https://whc.unesco.org/en/list/499/" },
     "Leptis_Magna":                 { kind: "site", where: "The archaeological site of Leptis Magna", city: "Libya", url: "https://whc.unesco.org/en/list/183/" },
     "Persepolis":                   { kind: "site", where: "Persepolis", city: "Iran", url: "https://whc.unesco.org/en/list/114/" },
-    "Marrakesh":                    { kind: "site", where: "The medina of Marrakesh", city: "Morocco", url: "https://whc.unesco.org/en/list/331/" },
+    "Marrakesh":                    { kind: "site", where: "The medina of Marrakesh", city: "Morocco", url: "https://whc.unesco.org/en/list/331/", tour: "https://www.visitmorocco.com/en" },
     "University_of_al-Qarawiyyin":  { kind: "site", where: "Al-Qarawiyyin — the oldest continually operating university in the world", city: "Fez, Morocco", url: "https://whc.unesco.org/en/list/170/" },
     "Cahokia":                      { kind: "site", where: "Cahokia Mounds", city: "Illinois, USA", url: "https://whc.unesco.org/en/list/198/" },
     "Pueblo_Bonito":                { kind: "site", where: "Chaco Culture National Historical Park", city: "New Mexico, USA", url: "https://whc.unesco.org/en/list/353/" },
     "L'Anse_aux_Meadows":           { kind: "site", where: "L'Anse aux Meadows — the Norse site in North America", city: "Newfoundland, Canada", url: "https://whc.unesco.org/en/list/4/" },
-    "Moai":                         { kind: "site", where: "Rapa Nui National Park", city: "Easter Island, Chile", url: "https://whc.unesco.org/en/list/715/" },
+    "Moai":                         { kind: "site", where: "Rapa Nui National Park", city: "Easter Island, Chile", url: "https://whc.unesco.org/en/list/715/", tour: "https://www.conaf.cl/parque_nacionales/parque-nacional-rapa-nui/" },
     "Sydney_Opera_House":           { kind: "site", where: "Sydney Opera House", city: "Australia", url: "https://www.sydneyoperahouse.com/" },
     "Eiffel_Tower":                 { kind: "site", where: "The Eiffel Tower", city: "Paris", url: "https://www.toureiffel.paris/en" },
     "Vatican_City":                 { kind: "site", where: "Vatican City", city: "Rome", url: "https://www.museivaticani.va/content/museivaticani/en.html" },
     "Wreck_of_the_Titanic":         { kind: "hold", where: "Titanic Belfast", city: "Northern Ireland", url: "https://titanicbelfast.com/" },
-    "Victoria_Falls":               { kind: "site", where: "Mosi-oa-Tunya / Victoria Falls", city: "Zambia · Zimbabwe", url: "https://whc.unesco.org/en/list/509/" },
+    "Victoria_Falls":               { kind: "site", where: "Mosi-oa-Tunya / Victoria Falls", city: "Zambia · Zimbabwe", url: "https://whc.unesco.org/en/list/509/", tour: "https://www.zambiatourism.com/" },
     "Great_Barrier_Reef":           { kind: "site", where: "The Great Barrier Reef", city: "Australia", url: "https://whc.unesco.org/en/list/154/" },
-    "Mount_Fuji":                   { kind: "site", where: "Fujisan", city: "Japan", url: "https://whc.unesco.org/en/list/1418/" },
+    "Mount_Fuji":                   { kind: "site", where: "Fujisan", city: "Japan", url: "https://whc.unesco.org/en/list/1418/", tour: "https://www.fujisan-climb.jp/" },
     "Nairobi_National_Park":        { kind: "site", where: "Nairobi National Park", city: "Kenya", url: "https://www.kws.go.ke/parks/nairobi-national-park" },
     "Rideau_Canal":                 { kind: "site", where: "The Rideau Canal", city: "Ottawa, Canada", url: "https://whc.unesco.org/en/list/1221/" },
     "Panama_Canal":                 { kind: "site", where: "The Panama Canal", city: "Panama", url: "https://pancanal.com/en/" },
@@ -97,24 +97,29 @@
     "Thermopolium":                 { kind: "site", where: "Pompeii Archaeological Park", city: "Pompeii, Italy", url: "https://pompeiisites.org/en/" }
   };
 
-  // Reading works for every entity without curation. Bookshop.org is the
-  // destination because it pays independent bookshops rather than a warehouse —
-  // that is an editorial choice about who we send readers to, and it is the
-  // kind of choice that must stay ours (VAL-12).
+  // Reading works for every entity without curation.
   //
-  // CLOSED 2026-08-09 — Bookshop.org ships US and UK only, so every reader
-  // outside those two countries was being sent to a checkout that would refuse
-  // them. Now: US and UK readers get their own Bookshop; everyone else — and
-  // anyone who has not said where they are — goes to WorldCat, which finds the
-  // book in a library near them, works in every country, and costs nothing to
-  // borrow. For a product whose first promise is that knowledge is free, the
-  // library is not a fallback. It is arguably the better answer.
+  // THE DESTINATION, 2026-08-22 (issue curio-hq #70, from the v81 rejection —
+  // CEO: "The link to the book store requires the user to login before he /
+  // she can see the books"). Verified tonight, anonymously:
+  //   · WorldCat search (the old everyone-else target) now REDIRECTS TO A
+  //     LOGIN WALL (search.worldcat.org → login-search.worldcat.org).
+  //   · Bookshop.org search (the old US/GB target) sits behind a Cloudflare
+  //     challenge that does not clear in a plain browser — the reader watches
+  //     a "Performing security verification" spinner instead of books.
+  // Both are walls between the reader and the book, which is the one thing a
+  // door may never be. So there is one destination now: **Open Library** —
+  // public results, no account, no challenge, and the reader can often read
+  // or borrow the book there. It is the Internet Archive's library, which is
+  // who a citations-first product should send readers to anyway.
+  //
+  // The commercial note, honestly: Bookshop.org's affiliate upside (chosen
+  // 2026-08-09 because it pays independent bookshops) is theoretical until a
+  // reader can reach a page at all. A door behind a wall earns nothing and
+  // costs trust. If Bookshop.org ever serves anonymous search reliably, the
+  // US/GB affiliate routing can return — one line, with the evidence.
   function readUrl(title) {
-    var C = window.CURIO_COUNTRY;
-    var cc = C && C.get ? C.get() : null;
-    if (cc === "US") return "https://bookshop.org/search?keywords=" + encodeURIComponent(title);
-    if (cc === "GB") return "https://uk.bookshop.org/search?keywords=" + encodeURIComponent(title);
-    return "https://search.worldcat.org/search?q=" + encodeURIComponent(title);
+    return "https://openlibrary.org/search?q=" + encodeURIComponent(title);
   }
 
   /* Watching.
@@ -251,6 +256,14 @@
     { kind: "source", icon: "📖", label: "Sources" }
   ];
 
+  // The visit door prefers the OFFICIAL VISITOR / TOURISM page when one has
+  // been verified (v81 review, CEO, curio-hq #71: "for the visits I am
+  // expecting links to a tourism website or an expo" — a UNESCO listing is a
+  // source-class reference, not what a traveller acts on). `tour` entries are
+  // added only after the destination is fetched and checked live; the UNESCO
+  // url stays as the reference link either way.
+  function destUrl(p) { return (p && p.tour) || (p && p.url) || null; }
+
   function goFor(q) {
     var slug = entityOf(q);
     if (!slug) return [];
@@ -260,7 +273,7 @@
 
     var made = {
       read:   { title: title, sub: "", url: readUrl(title) },
-      visit:  p ? { title: p.where, sub: p.city, url: p.url } : { title: "", sub: "", url: null },
+      visit:  p ? { title: p.where, sub: p.city, url: destUrl(p) } : { title: "", sub: "", url: null },
       watch:  { title: title, sub: "", url: watchUrl(title) },
       source: { title: "", sub: "", url: src }
     };
@@ -306,7 +319,7 @@
     { id: "museum", icon: "🏛️", label: "Museums & Exhibitions", art: "Mona_Lisa", prefer: "hold",
       url: function (n, p) { return p ? p.url : "https://www.museivaticani.va/content/museivaticani/en.html"; } },
     { id: "places", icon: "📍", label: "Places",                art: "Machu_Picchu", prefer: "site",
-      url: function (n, p) { return p ? p.url : "https://whc.unesco.org/en/list/"; } },
+      url: function (n, p) { return p ? destUrl(p) : "https://whc.unesco.org/en/list/"; } },
     { id: "people", icon: "👤", label: "People",                art: "Frida_Kahlo",
       url: function (n) { return "https://en.wikipedia.org/w/index.php?search=" + encodeURIComponent((n || "history") + " biography"); } },
     { id: "more",   icon: "✨", label: "Collections",           art: "The_Starry_Night",

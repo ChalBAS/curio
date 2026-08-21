@@ -283,6 +283,42 @@ async function liveVersion(url) {
   if (breaches.length) console.log('unsigned in production: ' + breaches.map(b => 'v' + b.version).join(', '));
   console.log('wrote RELEASES.md, releases.json' + (fs.existsSync(HQ_COPY) ? ', ../qpio-site/hq/releases.json' : ''));
 
+  /* --sync: commit and push the regenerated register, deterministically.
+   *
+   * Added after the 2026-08-21 drift (curio-hq #72): the CEO's v81 rejection
+   * sat on issue #64 for over a day while HQ still said "waiting for you" —
+   * the parser read the verdict correctly the whole time; nobody had re-run
+   * the generator. This flag closes that gap with one command an agent can
+   * run the moment a verdict exists:
+   *
+   *   node tools/releases.js --sync
+   *
+   * Only the register files are ever staged — never unrelated working-tree
+   * state. The commit message carries the verdict evidence, so the audit
+   * trail says WHICH decision changed the record, not merely that it changed.
+   * The remaining automation gap (a GitHub event firing this command) needs a
+   * cross-repo credential, which is a governance decision — tracked on #72.
+   */
+  if (process.argv.includes('--sync')) {
+    const FILES_CURIO = ['RELEASES.md', 'releases.json'];
+    const FILES_HQ = ['hq/releases.json'];
+    const HQ_ROOT = path.join(ROOT, '..', 'qpio-site');
+    const verdicts = [];
+    if (data.rejected.length) verdicts.push('rejected: ' + data.rejected.map(r => `v${r.version} (#${r.issue})`).join(', '));
+    if (data.awaiting.length) verdicts.push('awaiting: v' + data.awaiting.join(', v'));
+    const msg = `chore(release): register sync ${data.generated} — ` + (verdicts.join('; ') || 'no pending verdicts');
+    const syncOne = (repo, files) => {
+      const dirty = cp.spawnSync('git', ['diff', '--quiet', 'HEAD', '--'].concat(files), { cwd: repo }).status !== 0;
+      if (!dirty) { console.log(`sync: ${path.basename(repo)} register already current`); return; }
+      cp.execFileSync('git', ['add', '--'].concat(files), { cwd: repo, stdio: 'inherit' });
+      cp.execFileSync('git', ['commit', '-m', msg], { cwd: repo, stdio: 'inherit' });
+      cp.execFileSync('git', ['push'], { cwd: repo, stdio: 'inherit' });
+      console.log(`sync: ${path.basename(repo)} committed and pushed — ${msg}`);
+    };
+    syncOne(ROOT, FILES_CURIO);
+    if (fs.existsSync(HQ_COPY)) syncOne(HQ_ROOT, FILES_HQ);
+  }
+
   if (CHECK) {
     const bad = data.drift || breaches.some(b => b.version === prodLive);
     if (bad) { console.error('CHECK FAILED'); process.exit(1); }
