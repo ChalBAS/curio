@@ -1,15 +1,24 @@
 {
- "generated": "2026-08-19",
+ "generated": "2026-08-21",
  "live": {
   "production": 76,
-  "uat": 77,
+  "uat": 82,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  82,
+  80,
+  78,
   77
  ],
- "rejected": [],
+ "rejected": [
+  {
+   "version": 81,
+   "issue": 64,
+   "at": "2026-08-21T13:30:20Z"
+  }
+ ],
  "breaches": [
   {
    "version": 74,
@@ -34,7 +43,78 @@
  ],
  "releases": [
   {
-   "version": 77,
+   "version": 82,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-22",
+   "to": "2026-08-22",
+   "questions": 760,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "29ca1f8",
+     "date": "2026-08-22",
+     "subject": "v82 — the v81 review fix batch: warm images, open doors, spoken phrases"
+    }
+   ]
+  },
+  {
+   "version": 81,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-21",
+   "to": "2026-08-21",
+   "questions": 760,
+   "signoff": {
+    "status": "REJECTED",
+    "at": "2026-08-21T13:30:20Z",
+    "who": "ChalBAS",
+    "issue": 64,
+    "where": "body"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "f13eb29",
+     "date": "2026-08-21",
+     "subject": "v81 on UAT: Golden Source governance release — copy alignment, image preload, door instrument (OFF), ISBN backfill"
+    },
+    {
+     "sha": "278249c",
+     "date": "2026-08-21",
+     "subject": "feat(release-control): CEO daily-override mechanism — window-constrained, fail-safe"
+    }
+   ]
+  },
+  {
+   "version": 80,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-20",
+   "to": "2026-08-20",
+   "questions": 760,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "0a27993",
+     "date": "2026-08-20",
+     "subject": "feat(editorial): sensitivity field model, scanner + release gate 4d, 14 reviewed classifications, v80 bump"
+    },
+    {
+     "sha": "0299433",
+     "date": "2026-08-20",
+     "subject": "chore(release): record v80 content fingerprint"
+    }
+   ]
+  },
+  {
+   "version": 78,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-08-19",
@@ -46,9 +126,52 @@
    "messageClash": [],
    "commits": [
     {
+     "sha": "fa9c943",
+     "date": "2026-08-19",
+     "subject": "v78: remove 8 fabricated exhibitions from the shipped resource bank"
+    },
+    {
+     "sha": "9a6c7e5",
+     "date": "2026-08-19",
+     "subject": "v78 on UAT: seal"
+    },
+    {
+     "sha": "4280e59",
+     "date": "2026-08-19",
+     "subject": "feat(crn): P4 app contract — 1088 validated global resources, source diversity cap, matching quality suite"
+    }
+   ]
+  },
+  {
+   "version": 77,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-19",
+   "to": "2026-08-19",
+   "questions": 760,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 61,
+    "issues": [
+     61
+    ]
+   },
+   "messageClash": [],
+   "commits": [
+    {
      "sha": "2774a3d",
      "date": "2026-08-19",
      "subject": "fix(links): canonical Met Arms and Armor URL (verified live)"
+    },
+    {
+     "sha": "c52de4c",
+     "date": "2026-08-19",
+     "subject": "v77 on UAT: seal + release record"
+    },
+    {
+     "sha": "6ed85ed",
+     "date": "2026-08-19",
+     "subject": "feat(crn): P3 app contract — 451 validated global resources, multilingual schema fields, updated integration tests"
     }
    ]
   },

@@ -8,12 +8,15 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v77** at uat.qpio.app |
+| On UAT | **v82** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-08-19 |
+| Generated | 2026-08-21 |
 
-> ⏳ **Awaiting your sign-off:** v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v82, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
+
+> 🔴 **v81 was rejected** on 2026-08-21 ([#64](https://github.com/ChalBAS/curio-hq/issues/64)). It stays on UAT until the
+> reported defects are fixed and a new build is put up for sign-off.
 
 > 🔴 **Reached readers without a recorded sign-off:** v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
@@ -24,11 +27,41 @@ not by omission.*
 
 ---
 
-## v77 — ⏳ on UAT
+## v82 — ⏳ on UAT
+
+2026-08-22 · 760 questions · sign-off: **no release issue**
+
+- `29ca1f8` v82 — the v81 review fix batch: warm images, open doors, spoken phrases
+
+## v81 — ⏳ on UAT
+
+2026-08-21 · 760 questions · sign-off: **rejected**, [#64](https://github.com/ChalBAS/curio-hq/issues/64)
+
+- `f13eb29` v81 on UAT: Golden Source governance release — copy alignment, image preload, door instrument (OFF), ISBN backfill
+- `278249c` feat(release-control): CEO daily-override mechanism — window-constrained, fail-safe
+
+## v80 — ⏳ on UAT
+
+2026-08-20 · 760 questions · sign-off: **no release issue**
+
+- `0a27993` feat(editorial): sensitivity field model, scanner + release gate 4d, 14 reviewed classifications, v80 bump
+- `0299433` chore(release): record v80 content fingerprint
+
+## v78 — ⏳ on UAT
 
 2026-08-19 · 760 questions · sign-off: **no release issue**
 
+- `fa9c943` v78: remove 8 fabricated exhibitions from the shipped resource bank
+- `9a6c7e5` v78 on UAT: seal
+- `4280e59` feat(crn): P4 app contract — 1088 validated global resources, source diversity cap, matching quality suite
+
+## v77 — ⏳ on UAT
+
+2026-08-19 · 760 questions · sign-off: awaiting you, [#61](https://github.com/ChalBAS/curio-hq/issues/61)
+
 - `2774a3d` fix(links): canonical Met Arms and Armor URL (verified live)
+- `c52de4c` v77 on UAT: seal + release record
+- `6ed85ed` feat(crn): P3 app contract — 451 validated global resources, multilingual schema fields, updated integration tests
 
 ## v76 — 🟢 live
 
