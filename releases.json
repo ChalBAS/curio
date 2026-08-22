@@ -2,11 +2,12 @@
  "generated": "2026-08-22",
  "live": {
   "production": 76,
-  "uat": 82,
+  "uat": 83,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  83,
   80,
   78,
   77
@@ -47,6 +48,30 @@
  ],
  "releases": [
   {
+   "version": 83,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-08-22",
+   "to": "2026-08-22",
+   "questions": 760,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "9e4f3ac",
+     "date": "2026-08-22",
+     "subject": "v83 — the v82 review fixes: phrase audio, library doors, video doors"
+    },
+    {
+     "sha": "aa5c143",
+     "date": "2026-08-22",
+     "subject": "chore(release): v83 sealed on UAT"
+    }
+   ]
+  },
+  {
    "version": 82,
    "state": "ON UAT",
    "branch": "uat",
@@ -71,6 +96,16 @@
      "sha": "9d8af4e",
      "date": "2026-08-22",
      "subject": "chore(release): v82 on UAT — seal + release record"
+    },
+    {
+     "sha": "1e4fbf0",
+     "date": "2026-08-22",
+     "subject": "chore(release): register sync 2026-08-22 — rejected: v82 (#73), v81 (#64); awaiting: v80, v78, v77"
+    },
+    {
+     "sha": "9c55318",
+     "date": "2026-08-22",
+     "subject": "fix(release): read the CEO's short-form rejection"
     }
    ]
   },
