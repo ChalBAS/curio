@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-21",
+ "generated": "2026-08-22",
  "live": {
   "production": 76,
   "uat": 82,
@@ -7,12 +7,16 @@
  },
  "drift": null,
  "awaiting": [
-  82,
   80,
   78,
   77
  ],
  "rejected": [
+  {
+   "version": 82,
+   "issue": 73,
+   "at": "2026-08-22T01:04:05Z"
+  },
   {
    "version": 81,
    "issue": 64,
@@ -50,7 +54,11 @@
    "to": "2026-08-22",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "REJECTED",
+    "at": "2026-08-22T01:04:05Z",
+    "who": "ChalBAS",
+    "issue": 73,
+    "where": "comment"
    },
    "messageClash": [],
    "commits": [
@@ -58,6 +66,11 @@
      "sha": "29ca1f8",
      "date": "2026-08-22",
      "subject": "v82 — the v81 review fix batch: warm images, open doors, spoken phrases"
+    },
+    {
+     "sha": "9d8af4e",
+     "date": "2026-08-22",
+     "subject": "chore(release): v82 on UAT — seal + release record"
     }
    ]
   },
