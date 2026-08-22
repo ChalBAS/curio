@@ -102,9 +102,12 @@ console.log('\n\x1b[1mLinks — verbs match destinations, Watch stays vetted\x1b
     if (url) handles.push(url);
   });
   ok('watch urls exist for the six cats', handles.length >= 4, handles.length + ' urls');
-  ok('every watch url is a scoped channel search, never an open query',
-    handles.every(u => /^https:\/\/www\.youtube\.com\/@[A-Za-z0-9_\-]+\/search\?query=/.test(u)),
-    handles.find(u => !/^https:\/\/www\.youtube\.com\/@[A-Za-z0-9_\-]+\/search\?query=/.test(u)));
+  // 2026-08-22 (#77, v82 review): in-channel search 404s on mobile, so the
+  // contract is now "the results page, with the vetted channel's name always
+  // in the query text" — never a bare topic query, never an unknown channel.
+  ok('every watch url is the results page carrying a vetted channel name',
+    handles.every(u => /^https:\/\/www\.youtube\.com\/results\?search_query=.+%20(TED-Ed|smithsonianchannel|bbcearth|NationalGeographic|veritasium|TheRoyalInstitution|britishmuseum|lesciencecvous|arte|cnrs)$/.test(u)),
+    handles.find(u => !/^https:\/\/www\.youtube\.com\/results\?search_query=/.test(u)));
   is('uncovered category yields NO watch url (no open-search fallback)', GO.watchUrl('test', 'Conspiracy'), null);
 })();
 (function () {

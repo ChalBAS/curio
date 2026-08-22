@@ -2645,7 +2645,7 @@
           '</div>'
         );
         var sp = row.querySelector(".phrase-speak");
-        if (sp) sp.addEventListener("click", function () { speakLang(ph.phrase, pack.lang); });
+        if (sp) sp.addEventListener("click", function () { speakLang(ph.phrase, pack.lang, sp); });
         pcard.appendChild(row);
       });
       node.appendChild(pcard);
@@ -2689,13 +2689,54 @@
   }
 
   // Speak a phrase in its own language when the browser has a matching voice.
-  var LANG_CODE = { Italian: "it-IT", Japanese: "ja-JP", "Egyptian Arabic": "ar-EG", Arabic: "ar", Spanish: "es-ES", Turkish: "tr-TR" };
-  function speakLang(text, lang) {
+  // 2026-08-22 (v82 review, #75 — "The Cairo Audio doesn't work"): four pack
+  // languages had no mapping at all and fell through to an English voice
+  // reading Thai or Greek script aloud — indistinguishable from broken. And a
+  // device with no matching voice failed SILENTLY. Now: every pack language
+  // maps, the best installed voice is chosen at tap time (exact → language
+  // family), and a device that simply cannot speak the language says so in
+  // text instead of pretending.
+  var LANG_CODE = { Italian: "it-IT", Japanese: "ja-JP", "Egyptian Arabic": "ar-EG", Arabic: "ar", Spanish: "es-ES", Turkish: "tr-TR",
+                    Thai: "th-TH", "Moroccan Arabic (Darija)": "ar-MA", Greek: "el-GR", Uzbek: "uz-UZ" };
+  function voiceFor(langCode) {
+    try {
+      var vs = window.speechSynthesis.getVoices() || [];
+      var i;
+      for (i = 0; i < vs.length; i++) if (vs[i].lang === langCode) return vs[i];
+      var family = (langCode || "").split("-")[0];
+      for (i = 0; i < vs.length; i++) if (vs[i].lang && vs[i].lang.split("-")[0] === family) return vs[i];
+    } catch (e) {}
+    return null;
+  }
+  function speakLang(text, lang, btn) {
     if (!canTapSpeak()) return;
     try {
+      // Chrome loads the voice list asynchronously: the first tap can see an
+      // empty list on a device that HAS voices. Wait for it once (with a hard
+      // deadline — a device with no voices never fires voiceschanged).
+      if (!(window.speechSynthesis.getVoices() || []).length && !speakLang._waited) {
+        speakLang._waited = true;
+        var fired = false;
+        var retry = function () { if (fired) return; fired = true; speakLang(text, lang, btn); };
+        window.speechSynthesis.addEventListener("voiceschanged", retry, { once: true });
+        setTimeout(retry, 800);
+        return;
+      }
+      var code = LANG_CODE[lang] || "en-US";
+      var voice = voiceFor(code);
+      if (!voice) {
+        // Honest, not silent: the device has no voice for this language.
+        if (btn && btn.parentNode) {
+          var note = el('<span class="mini" role="status"></span>');
+          note.textContent = " " + tf("No {language} voice on this device.", { language: lang });
+          btn.parentNode.appendChild(note);
+          setTimeout(function () { if (note.parentNode) note.parentNode.removeChild(note); }, 5000);
+        }
+        return;
+      }
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
-      u.lang = LANG_CODE[lang] || "en-US"; u.rate = 0.9;
+      u.voice = voice; u.lang = voice.lang; u.rate = 0.9;
       window.speechSynthesis.speak(u);
     } catch (e) {}
   }

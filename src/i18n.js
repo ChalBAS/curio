@@ -417,6 +417,7 @@
       "▶ Play the {city} quiz ({n})": "▶ Jouer au quiz {city} ({n})",
       "Key phrases": "Phrases clés",
       "Say it": "Écouter",
+      "No {language} voice on this device.": "Aucune voix {language} sur cet appareil.",
       "🧭 Know before you go": "🧭 À savoir avant de partir",
       "ready for your trip 🧳": "le voyage peut commencer 🧳",
       "Play again": "Rejouer",

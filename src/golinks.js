@@ -119,7 +119,11 @@
   // costs trust. If Bookshop.org ever serves anonymous search reliably, the
   // US/GB affiliate routing can return — one line, with the evidence.
   function readUrl(title) {
-    return "https://openlibrary.org/search?q=" + encodeURIComponent(title);
+    // Title-scoped, not the fuzzy catch-all (v82 review, #76 — "some of the
+    // links to the library are off but still clickable"): ?q= sent "Armour"
+    // to 6,654 results led by an author of that surname. ?title= ranks books
+    // whose title actually carries the subject.
+    return "https://openlibrary.org/search?title=" + encodeURIComponent(title);
   }
 
   /* Watching.
@@ -184,7 +188,16 @@
     // No vetted channel covers this subject. Send nobody anywhere rather than
     // falling back to an open search — the fallback IS the risk.
     if (!best) return null;
-    return "https://www.youtube.com/@" + best.at + "/search?query=" + encodeURIComponent(title);
+    // 2026-08-22 (v82 review, #77 — "the video links are still not fixed"):
+    // the in-channel search URL (/@handle/search?query=…) is desktop-only and
+    // 404s on mobile web — verified. Every watch door was broken where the
+    // reader actually taps. The query now carries the vetted channel's name in
+    // the text, which works on every device and keeps the channel's own
+    // videos at the top. The trade-off against the old hard scope is recorded,
+    // not hidden: other channels may appear below the fold. What is NOT
+    // compromised: the channel list remains the only source of destinations,
+    // and an uncovered subject still sends nobody anywhere.
+    return "https://www.youtube.com/results?search_query=" + encodeURIComponent(title + " " + best.at);
   }
 
   // The slug is the entity. "Rock-Hewn_Churches,_Lalibela" → "Rock-Hewn Churches, Lalibela".
