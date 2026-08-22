@@ -69,6 +69,10 @@ console.log('\n\x1b[1mVerdicts\x1b[0m');
 is('plain acceptance in a comment', st([issue({ comments: [comment('Accepted for production')] })]), 'ACCEPTED');
 is('acceptance with trailing text', st([issue({ comments: [comment('accepted for production - good on the phone')] })]), 'ACCEPTED');
 is('rejection in a comment', st([issue({ comments: [comment('Rejected — French daily repeats')] })]), 'REJECTED');
+is('short-form leading rejection (the real v82 verdict)',
+   st([issue({ comments: [comment('Reject - The Cairo Audio doesn\'t work, and some of the links to the library are off')] })]), 'REJECTED');
+is('a mid-sentence "reject" is not a verdict',
+   st([issue({ comments: [comment('I won\'t reject this one — looking tonight')] })]), null);
 is('acceptance written into a human-authored body', st([issue({ body: 'Accepted for production' })]), 'ACCEPTED');
 is('no verdict yet', st([issue({ comments: [comment('will look tonight')] })]), null);
 is('no issues at all', st([]), null);

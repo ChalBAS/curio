@@ -35,7 +35,13 @@
 'use strict';
 
 const ACCEPT = /accepted for production/i;
-const REJECT = /\brejected\b/i;
+// "Rejected" counts anywhere ("Actually rejected — crashes on reopen"). The
+// bare imperative "Reject" counts only as a LEADING verdict — the CEO's phone
+// style, v82: "Reject - The Cairo Audio doesn't work…". A mid-sentence "I
+// won't reject this" must never read as a verdict, so the short form needs
+// line-start position. (Missed by the first version: /\brejected\b/ alone
+// left v82 looking AWAITING after the CEO had already rejected it.)
+const REJECT = /(?:\brejected\b|(?:^|\n)\s*[-*>]*\s*reject\b)/i;
 
 // Any issue body containing this was written by our own tooling and is an
 // instruction sheet, not a decision. Kept deliberately ugly and unlikely.
