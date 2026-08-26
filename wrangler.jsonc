@@ -1,9 +1,9 @@
-{
-  // QPIO app — UAT only.
+﻿{
+  // QPIO app â€” UAT only.
   //
   // PRODUCTION IS NOT DEPLOYED FROM HERE. qpio.app is served by wrangler.prod.jsonc.
   // A bare `wrangler deploy` in this directory publishes UAT and cannot touch
-  // production — that separation is the point of two files.
+  // production â€” that separation is the point of two files.
   //
   //   wrangler deploy            (run from the uat branch)
   //
@@ -12,7 +12,7 @@
   "compatibility_date": "2026-08-01",
 
   // The UAT entry wraps the production worker (worker/index.js, untouched)
-  // with the Gate 5 door instrument (worker/doors.js). UAT ONLY — the prod
+  // with the Gate 5 door instrument (worker/doors.js). UAT ONLY â€” the prod
   // config keeps main: worker/index.js and never routes the instrument paths.
   "main": "worker/uat.js",
 
@@ -30,19 +30,19 @@
     //
     // "/doors/*" and "/go/*" are the Gate 5 door instrument (denominator and
     // numerator). BOTH ARE MANDATORY for the instrument: not_found_handling is
-    // "single-page-application", so without them /go/… returns index.html with
-    // a 200 and never redirects — a silent failure that looks like a zero tap
+    // "single-page-application", so without them /go/â€¦ returns index.html with
+    // a 200 and never redirects â€” a silent failure that looks like a zero tap
     // rate. Removing these two entries and deploying is the server-side KILL
     // SWITCH: the counter dies, the product does not.
-    "run_worker_first": ["/src/*", "/robots.txt", "/api/*", "/doors/*", "/go/*"],
-    // A missing path serves index.html — the app is a single-page shell and its
+    "run_worker_first": ["/src/*", "/robots.txt", "/api/*", "/doors/*", "/go/*", "/s/*"],
+    // A missing path serves index.html â€” the app is a single-page shell and its
     // routes are hashes, so a deep link must not 404.
     "not_found_handling": "single-page-application"
   },
 
   // Gate 5 aggregate-on-write counter. One table (door_counts), hundreds of
   // rows, no raw lines, no identifier. Created 2026-08-21 via the Cloudflare
-  // MCP; schema in worker/doors.js §"aggregate-on-write". UAT only.
+  // MCP; schema in worker/doors.js Â§"aggregate-on-write". UAT only.
   "d1_databases": [
     {
       "binding": "DOOR_DB",
@@ -51,7 +51,7 @@
     }
   ],
 
-  // Nightly retention prune — aggregate rows older than 13 months. One
+  // Nightly retention prune â€” aggregate rows older than 13 months. One
   // invocation per day. There is no nightly aggregation job.
   "triggers": { "crons": ["10 3 * * *"] },
 

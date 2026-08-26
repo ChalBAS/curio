@@ -208,6 +208,35 @@ try {
   fail('editorial sensitivity gate', 'node tools/check_sensitivity.js — a CONTESTED/HIGHLY_CONTESTED question is LIVE without Perspective_Check=PASSED');
 }
 
+/* ---------- 4e. bank provenance (workstream C gate; audit gap C) ---------- */
+// THE RULE THIS ENFORCES: generated app files must never become a competing
+// hand-maintained source. The Golden Source export pipeline stamps a GENERATED
+// header on what it writes; a src/questions.js without that header is a bank
+// that hand edits can silently reach (add_anatomy.js and merge_batch_aug13.js
+// have both spliced rows in before).
+//
+// STAGED ON PURPOSE: today the shipped bank legitimately predates the exporter
+// (760 rows vs the workbook's 749 approved — the 11-row gap is founder ruling
+// R-B, and promoting the export before that ruling would silently shrink the
+// bank). So this warns by default and becomes BLOCKING when the promotion
+// lands: flip by setting REQUIRE_GENERATED_BANK=1 in the release environment,
+// in the same change that promotes the exported bank. Do not flip it before
+// R-B is ruled.
+head('4e · Bank provenance');
+try {
+  const bankHead = fs.readFileSync(path.join(ROOT, 'src', 'questions.js'), 'utf8').slice(0, 400);
+  const generated = /GENERATED/.test(bankHead);
+  if (generated) {
+    pass('src/questions.js carries the exporter\'s GENERATED header', 'the bank is pipeline-governed');
+  } else if (process.env.REQUIRE_GENERATED_BANK === '1') {
+    fail('src/questions.js lacks the exporter\'s GENERATED header', 'REQUIRE_GENERATED_BANK=1 — only the Golden Source export pipeline may write the bank');
+  } else {
+    warn('src/questions.js lacks the exporter\'s GENERATED header', 'pre-R-B state, tolerated; becomes blocking with REQUIRE_GENERATED_BANK=1 when the export is promoted');
+  }
+} catch (e) {
+  fail('bank provenance check could not read src/questions.js', String(e && e.message || e));
+}
+
 /* ---------- 5. sources (network, --full only) ---------- */
 head('5 · Sources' + (FULL ? '' : '  (skipped — run with --full)'));
 if (FULL) {

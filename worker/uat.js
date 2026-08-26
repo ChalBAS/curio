@@ -11,6 +11,7 @@
  */
 import app from "./index.js";
 import { handleDoorInstrument, pruneOld } from "./doors.js";
+import { handleLanding, pruneLanding } from "./landing.js";
 
 export default {
   async fetch(request, env, ctx) {
@@ -22,6 +23,12 @@ export default {
     const r = handleDoorInstrument(request, env, ctx, url);
     if (r) return r;
 
+    // Social landing paths (D-067 ruling-free tier, D-083 pilot): /s/tt·yt·ig·fb
+    // count-and-redirect. Same construction, same kill switch ("/s/*" in
+    // run_worker_first), same never-break-the-reader rule.
+    const l = handleLanding(request, env, ctx, url);
+    if (l) return l;
+
     // robots.txt: add the instrument paths to the generated disallow block
     // (spec §2.1C — crawler taps would inflate the numerator, crawler payload
     // fetches the denominator). Amended HERE rather than in index.js so the
@@ -30,7 +37,7 @@ export default {
       const res = await app.fetch(request, env, ctx);
       const body = await res.text();
       return new Response(
-        body.replace("Disallow: /src/", "Disallow: /src/\nDisallow: /go/\nDisallow: /doors/"),
+        body.replace("Disallow: /src/", "Disallow: /src/\nDisallow: /go/\nDisallow: /doors/\nDisallow: /s/"),
         { status: res.status, headers: res.headers }
       );
     }
@@ -43,5 +50,6 @@ export default {
   // time and raw lines never exist.
   async scheduled(event, env, ctx) {
     ctx.waitUntil(pruneOld(env));
+    ctx.waitUntil(pruneLanding(env));
   }
 };

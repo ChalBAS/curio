@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-22",
+ "generated": "2026-08-26",
  "live": {
   "production": 76,
   "uat": 83,
@@ -16,7 +16,7 @@
   {
    "version": 82,
    "issue": 73,
-   "at": "2026-08-22T01:04:05Z"
+   "at": "2026-08-22T08:55:20Z"
   },
   {
    "version": 81,
@@ -55,9 +55,15 @@
    "to": "2026-08-22",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 79,
+    "issues": [
+     79
+    ]
    },
-   "messageClash": [],
+   "messageClash": [
+    "6aaa76d"
+   ],
    "commits": [
     {
      "sha": "9e4f3ac",
@@ -68,6 +74,11 @@
      "sha": "aa5c143",
      "date": "2026-08-22",
      "subject": "chore(release): v83 sealed on UAT"
+    },
+    {
+     "sha": "6aaa76d",
+     "date": "2026-08-22",
+     "subject": "chore(release): register sync 2026-08-22 — rejected: v82 (#73), v81 (#64); awaiting: v83, v80, v78, v77"
     }
    ]
   },
@@ -80,7 +91,7 @@
    "questions": 760,
    "signoff": {
     "status": "REJECTED",
-    "at": "2026-08-22T01:04:05Z",
+    "at": "2026-08-22T08:55:20Z",
     "who": "ChalBAS",
     "issue": 73,
     "where": "comment"

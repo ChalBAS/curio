@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v83** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-08-22 |
+| Generated | 2026-08-26 |
 
 > ⏳ **Awaiting your sign-off:** v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -32,10 +32,12 @@ not by omission.*
 
 ## v83 — ⏳ on UAT
 
-2026-08-22 · 760 questions · sign-off: **no release issue**
+2026-08-22 · 760 questions · sign-off: awaiting you, [#79](https://github.com/ChalBAS/curio-hq/issues/79)
 
 - `9e4f3ac` v83 — the v82 review fixes: phrase audio, library doors, video doors
 - `aa5c143` chore(release): v83 sealed on UAT
+- `6aaa76d` chore(release): register sync 2026-08-22 — rejected: v82 (#73), v81 (#64); awaiting: v83, v80, v78, v77
+- ⚠️ commit message names a different version: 6aaa76d
 
 ## v82 — ⏳ on UAT
 
