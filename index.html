@@ -14,6 +14,22 @@
   <title>Qpio — knowledge, free forever</title>
   <meta name="description" content="Daily general-knowledge challenges, quick-fire quizzes and streaks. Free forever. I am curious to become wise.">
   <link rel="stylesheet" href="src/styles.css?v=76">
+  <style>
+    .reader-trust {
+      max-width: 760px;
+      margin: 28px auto 88px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      background: rgba(255,255,255,.035);
+      line-height: 1.55;
+    }
+    .reader-trust h2 { margin: 0 0 8px; font-size: 1.05rem; }
+    .reader-trust p { margin: 0; opacity: .86; font-size: .92rem; }
+    @media (max-width: 899px) {
+      .reader-trust { margin: 22px 14px 96px; padding: 16px; }
+    }
+  </style>
   <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
@@ -35,6 +51,11 @@
       <div class="tag">knowledge · free · forever</div>
     </div>
     <div id="app"></div>
+
+    <section class="reader-trust" aria-label="Qpio reader data promise">
+      <h2 id="readerTrustTitle">Your curiosity is yours.</h2>
+      <p id="readerTrustText">Qpio collects only information that has a defined purpose for improving the product, understanding its performance, operating a feature the reader chose, or fulfilling a transaction the reader initiated. We are transparent about what we collect, we do not sell reader data, and anonymous behaviour is not turned into a personal profile.</p>
+    </section>
   </div>
 
   <!-- iOS "add to home screen" hint (Safari has no install prompt) -->
@@ -60,6 +81,14 @@
   <script src="src/resources.js?v=76"></script>
   <script src="src/app.js?v=76"></script>
   <script>
+    // --- Reader data promise (public trust message, EN/FR) ---
+    (function () {
+      if (window.QLANG === "fr") {
+        document.getElementById("readerTrustTitle").textContent = "Votre curiosité vous appartient.";
+        document.getElementById("readerTrustText").textContent = "Qpio ne collecte que les informations qui ont une finalité définie : améliorer le produit, comprendre ses performances, faire fonctionner une fonctionnalité choisie par le lecteur ou exécuter une transaction qu’il a initiée. Nous sommes transparents sur ce que nous collectons, nous ne vendons pas les données de nos lecteurs et les comportements anonymes ne sont pas transformés en profils personnels.";
+      }
+    })();
+
     // --- Service worker (offline) ---
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", function () {
