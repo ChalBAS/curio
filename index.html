@@ -14,6 +14,34 @@
   <title>Qpio — knowledge, free forever</title>
   <meta name="description" content="Qpio (say: cue-pee-oh) — five questions a day, every answer sourced, and a door out to the real world. Knowledge is free, forever. I am curious to become wise — Quaero, ergo Sapio.">
   <link rel="stylesheet" href="src/styles.css?v=83">
+  <style>
+    /* The reader data promise (D-087). A product principle, not a legal
+       notice — so it uses the same card tokens as the rest of the app and
+       sits in the reading flow rather than in a banner. */
+    .reader-trust {
+      margin: 28px 0 0;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      line-height: 1.55;
+    }
+    .reader-trust h2 { margin: 0 0 8px; font-size: 1.05rem; color: var(--ink); }
+    .reader-trust p  { margin: 0; color: var(--muted); font-size: .92rem; }
+    /* A live question gets the whole screen — the same rule the masthead
+       tagline already follows (.quiz-live .tag, styles.css:406). The promise
+       belongs on the pages a reader browses, never under the question they
+       are in the middle of answering. */
+    /* NOTE: .quiz-live is set by app.js render(), but it is evaluated before
+       the progress bar exists, so today it never actually applies - the
+       masthead tagline it was written for stays visible too. That is a
+       pre-existing defect, reported separately, NOT worked around here.
+       :has() is what does the work; the .quiz-live rule is kept so this
+       still behaves once that defect is fixed. */
+    .quiz-live .reader-trust,
+    body:has(.quizhead .progress) .reader-trust { display: none; }
+    @media (max-width: 559px) { .reader-trust { margin-top: 22px; padding: 16px; } }
+  </style>
   <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/favicon-32.png" sizes="32x32">
@@ -35,6 +63,11 @@
       <div class="tag">knowledge · free · forever</div>
     </div>
     <div id="app"></div>
+
+    <section class="reader-trust" aria-labelledby="readerTrustTitle">
+      <h2 id="readerTrustTitle">Your curiosity is yours.</h2>
+      <p id="readerTrustText">Qpio collects only information that has a defined purpose for improving the product, understanding its performance, operating a feature the reader chose, or fulfilling a transaction the reader initiated. We are transparent about what we collect, we do not sell reader data, and anonymous behaviour is not turned into a personal profile.</p>
+    </section>
   </div>
 
   <!-- iOS "add to home screen" hint (Safari has no install prompt) -->
@@ -65,6 +98,18 @@
   <script src="src/preload.js?v=83"></script>
 <script src="src/app.js?v=83"></script>
   <script>
+    // --- Reader data promise (D-087), French wording. i18n.js has already
+    // set window.QLANG by this point, and changing language reloads the page
+    // (app.js), so a one-shot swap stays correct. ---
+    (function () {
+      if (window.QLANG !== "fr") return;
+      var h = document.getElementById("readerTrustTitle");
+      var p = document.getElementById("readerTrustText");
+      if (!h || !p) return;
+      h.textContent = "Votre curiosit\u00e9 vous appartient.";
+      p.textContent = "Qpio ne collecte que les informations qui ont une finalit\u00e9 d\u00e9finie\u00a0: am\u00e9liorer le produit, comprendre ses performances, faire fonctionner une fonctionnalit\u00e9 choisie par le lecteur ou ex\u00e9cuter une transaction qu\u2019il a initi\u00e9e. Nous sommes transparents sur ce que nous collectons, nous ne vendons pas les donn\u00e9es de nos lecteurs et les comportements anonymes ne sont pas transform\u00e9s en profils personnels.";
+    })();
+
     // --- Service worker (offline) ---
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", function () {
