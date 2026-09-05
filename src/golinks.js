@@ -130,11 +130,15 @@
   function readUrl(title, entity) {
     var hit = readFor(entity);
     if (hit && hit.u) return hit.u;
-    // Title-scoped, not the fuzzy catch-all (v82 review, #76 — "some of the
-    // links to the library are off but still clickable"): ?q= sent "Armour"
-    // to 6,654 results led by an author of that surname. ?title= ranks books
-    // whose title actually carries the subject.
-    return "https://openlibrary.org/search?title=" + encodeURIComponent(title);
+    // NO DOOR IS BETTER THAN A DOOR ONTO A SEARCH BOX. Seventy-one subjects
+    // have no book worth linking — Chandrayaan-3, Catatumbo lightning, the
+    // complaint tablet to Ea-nassir. They are too recent, too local or too
+    // small for anyone to have written one. Sending a reader to a list of
+    // search results and calling it "something to read" is the thing the CEO
+    // photographed and called "a search page, not a place" (5 Sep 2026), so
+    // the read door simply does not open for them. The watch and visit doors
+    // still do, and the source is always there.
+    return null;
   }
 
   /* Watching.
