@@ -118,7 +118,18 @@
   // reader can reach a page at all. A door behind a wall earns nothing and
   // costs trust. If Bookshop.org ever serves anonymous search reliably, the
   // US/GB affiliate routing can return — one line, with the evidence.
-  function readUrl(title) {
+  // A BOOK, NOT A SEARCH BOX (2026-09-05). Each subject was resolved once to a
+  // real Open Library work by tools/resolve_read_links.js and baked into
+  // src/links.read.js, so nothing is fetched at runtime. A subject with no good
+  // match keeps the title-scoped search below — weak, but honest, and it is
+  // reported rather than hidden.
+  function readFor(entity) {
+    var R = window.CURIO_READ;
+    return (R && entity && R[entity]) ? R[entity] : null;
+  }
+  function readUrl(title, entity) {
+    var hit = readFor(entity);
+    if (hit && hit.u) return hit.u;
     // Title-scoped, not the fuzzy catch-all (v82 review, #76 — "some of the
     // links to the library are off but still clickable"): ?q= sent "Armour"
     // to 6,654 results led by an author of that surname. ?title= ranks books
@@ -155,17 +166,23 @@
   var WATCH_CHANNELS = {
     // handle, and the categories it is a credible source for. Order matters:
     // the first match wins, so the most topic-appropriate is listed first.
+    // 2026-09-05: three of these handles were DEAD and had never been checked —
+    // every reader sent to them landed on a "channel does not exist" page.
+    // TED-Ed (the first-choice channel for five of the six categories) and
+    // NationalGeographic both 404; the French science channel did too. Verified
+    // by fetching each one, and a check now runs in the release routine so a
+    // handle cannot rot silently again.
     en: [
-      { at: "TED-Ed",            cats: ["Science", "History", "Arts", "Nature", "Tech"] },
+      { at: "TEDEd",             cats: ["Science", "History", "Arts", "Nature", "Tech"] },   // was TED-Ed — 404
       { at: "smithsonianchannel", cats: ["History", "Nature", "Arts"] },
       { at: "bbcearth",          cats: ["Nature"] },
-      { at: "NationalGeographic", cats: ["Nature", "Geography"] },
+      { at: "NatGeo",            cats: ["Nature", "Geography"] },                            // was NationalGeographic — 404
       { at: "veritasium",        cats: ["Science", "Tech"] },
       { at: "TheRoyalInstitution", cats: ["Science"] },
       { at: "britishmuseum",     cats: ["History", "Arts"] }
     ],
     fr: [
-      { at: "lesciencecvous",    cats: ["Science", "Tech", "Nature"] },
+      { at: "cestpassorcierofficiel", cats: ["Science", "Tech", "Nature"] },                 // was lesciencecvous — 404
       { at: "arte",              cats: ["History", "Arts", "Nature", "Geography"] },
       { at: "cnrs",              cats: ["Science", "Nature"] }
     ]
@@ -188,16 +205,23 @@
     // No vetted channel covers this subject. Send nobody anywhere rather than
     // falling back to an open search — the fallback IS the risk.
     if (!best) return null;
-    // 2026-08-22 (v82 review, #77 — "the video links are still not fixed"):
-    // the in-channel search URL (/@handle/search?query=…) is desktop-only and
-    // 404s on mobile web — verified. Every watch door was broken where the
-    // reader actually taps. The query now carries the vetted channel's name in
-    // the text, which works on every device and keeps the channel's own
-    // videos at the top. The trade-off against the old hard scope is recorded,
-    // not hidden: other channels may appear below the fold. What is NOT
-    // compromised: the channel list remains the only source of destinations,
-    // and an uncovered subject still sends nobody anywhere.
-    return "https://www.youtube.com/results?search_query=" + encodeURIComponent(title + " " + best.at);
+    // HARD CHANNEL SCOPE, RESTORED 2026-09-05.
+    //
+    // The CEO ruled on 16 Aug that a reader must never be steered towards
+    // anti-vaccine, men's-rights or similar creators. This was answered by
+    // searching INSIDE a vetted channel. On 22 Aug that was replaced with an
+    // open site-wide search carrying the channel's name as a hint, on the
+    // grounds that the in-channel URL "is desktop-only and 404s on mobile web
+    // — verified".
+    //
+    // That was wrong. Re-tested on 5 Sep with an Android Chrome user agent
+    // against www.youtube.com and m.youtube.com: both return 200. The open
+    // search was therefore a safety regression bought for nothing, and it is
+    // what the CEO photographed as "a search page, not a place".
+    //
+    // Scoped search it is: the reader lands inside the vetted channel, which
+    // is a real destination and cannot surface a creator we did not choose.
+    return "https://www.youtube.com/@" + best.at + "/search?query=" + encodeURIComponent(title);
   }
 
   // The slug is the entity. "Rock-Hewn_Churches,_Lalibela" → "Rock-Hewn Churches, Lalibela".
@@ -284,10 +308,19 @@
     var p = PLACES[slug];
     var src = q && q.src ? sourceUrl(q) : null;
 
+    /* The category was never passed to watchUrl, so the topic filter never ran
+       and every subject fell through to whichever channel claimed the fewest
+       categories — a wildlife question could be sent to a lessons channel and a
+       physics question to a museum. Found 5 Sep 2026. */
+    var cat = q && q.cat ? q.cat : null;
+    var book = readFor(slug);
+
     var made = {
-      read:   { title: title, sub: "", url: readUrl(title) },
+      /* naming the actual book is the difference between "somewhere to read"
+         and "here is the book" */
+      read:   { title: book ? book.t : title, sub: book && book.a ? book.a : "", url: readUrl(title, slug) },
       visit:  p ? { title: p.where, sub: p.city, url: destUrl(p) } : { title: "", sub: "", url: null },
-      watch:  { title: title, sub: "", url: watchUrl(title) },
+      watch:  { title: title, sub: "", url: watchUrl(title, cat) },
       source: { title: "", sub: "", url: src }
     };
 
