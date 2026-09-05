@@ -35,6 +35,7 @@ const ASSETS = [
   "./src/entities.img.js?v=84",
   "./src/entities.meta.js?v=84",
   "./src/country.js?v=84",
+  "./src/links.read.js?v=84",
   "./src/golinks.js?v=84",
   "./src/doors.js?v=84",
   "./src/hooks.js?v=84",

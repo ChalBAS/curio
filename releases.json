@@ -2,11 +2,12 @@
  "generated": "2026-09-05",
  "live": {
   "production": 76,
-  "uat": 83,
+  "uat": 84,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  84,
   83,
   80,
   78,
@@ -47,6 +48,25 @@
   }
  ],
  "releases": [
+  {
+   "version": 84,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-05",
+   "to": "2026-09-05",
+   "questions": 760,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "13d2503",
+     "date": "2026-09-05",
+     "subject": "v84 — AI illustrations marked, every picture cleared for commercial use"
+    }
+   ]
+  },
   {
    "version": 83,
    "state": "ON UAT",
@@ -99,6 +119,11 @@
      "sha": "e379bc3",
      "date": "2026-09-05",
      "subject": "Credit every picture whose licence asks for one"
+    },
+    {
+     "sha": "b18ee4f",
+     "date": "2026-09-05",
+     "subject": "A book and a vetted channel, not a search box"
     }
    ]
   },

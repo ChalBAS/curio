@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v83** at uat.qpio.app |
+| On UAT | **v84** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-05 |
 
-> ⏳ **Awaiting your sign-off:** v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v82 was rejected** on 2026-08-22 ([#73](https://github.com/ChalBAS/curio-hq/issues/73)). It stays on UAT until the
@@ -30,6 +30,12 @@ not by omission.*
 
 ---
 
+## v84 — ⏳ on UAT
+
+2026-09-05 · 760 questions · sign-off: **no release issue**
+
+- `13d2503` v84 — AI illustrations marked, every picture cleared for commercial use
+
 ## v83 — ⏳ on UAT
 
 2026-08-22 → 2026-09-05 · 760 questions · sign-off: awaiting you, [#79](https://github.com/ChalBAS/curio-hq/issues/79)
@@ -41,6 +47,7 @@ not by omission.*
 - `d6f2463` Ship the reader data promise on the release branch (D-087)
 - `3cb1e19` Every question now leads to a picture, and a batch process keeps it that way
 - `e379bc3` Credit every picture whose licence asks for one
+- `b18ee4f` A book and a vetted channel, not a search box
 - ⚠️ commit message names a different version: 6aaa76d
 
 ## v82 — ⏳ on UAT
