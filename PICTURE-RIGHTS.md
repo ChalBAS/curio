@@ -19,8 +19,27 @@ names the picture, the file and the reason. To keep a dated copy:
 node tools/verify_image_rights.js --report rights-2026-09-05.txt
 ```
 
-It also runs automatically in `node tools/preflight.js`, so a release cannot be
-promoted while a picture is unclear.
+### It runs on its own, every day
+
+You do not have to remember to run it.
+
+| When | What happens |
+|---|---|
+| **Every day at 08:12** | The Windows task `Qpio-DailyDashboard` runs the HQ sync, which runs this check before it builds anything else. The verdict is written to state, committed, and pushed. |
+| **In the cockpit** | The verdict appears in the question-bank card — green when clear, red when not, **shown either way**. A control you only see when it fails is one you stop believing when it passes. |
+| **Before any release** | `node tools/preflight.js` runs it too, so a version cannot be promoted while a picture is unclear. |
+
+**A stale pass is not a pass, and the daily control knows it.** Two guards, both
+tested by deliberately breaking them:
+
+- **Older than 36 hours** → reads `STALE`, not clear.
+- **The pictures changed since the check ran** → reads
+  `STALE — PICTURES CHANGED SINCE`. A green light from before the change is
+  worse than a red one, because nobody looks twice at green.
+
+If the check cannot reach Wikimedia, it fails rather than passing quietly, and
+the sync carries on so one network hiccup does not stop the rest of the day.
+"Could not check" never reads as "checked".
 
 ---
 
