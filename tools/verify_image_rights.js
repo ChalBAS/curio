@@ -46,6 +46,9 @@ const vm = require('vm');
 const ROOT = path.join(__dirname, '..');
 const argv = process.argv.slice(2);
 const REPORT = argv.includes('--report') ? argv[argv.indexOf('--report') + 1] : null;
+/* machine-readable verdict, so the daily control can show it rather than
+   burying it in a log nobody opens */
+const STATE = argv.includes('--state') ? argv[argv.indexOf('--state') + 1] : null;
 
 /* Licences that permit commercial use and derivatives. */
 const FREE = /^(public domain|cc0|cc[ -]by|fal\b|godl-india)/i;
@@ -298,6 +301,45 @@ async function ask(titles, attempt) {
   if (REPORT) {
     fs.writeFileSync(REPORT, lines.join('\n') + '\n', 'utf8');
     console.log('\nreport written to ' + REPORT);
+  }
+
+  /* THE VERDICT, MACHINE-READABLE, so the daily control can show it.
+   *
+   * CEO, 5 Sep 2026: "make sure the audit is part of the daily control."
+   *
+   * A check that runs every day into a log nobody opens is theatre. This file
+   * is what the cockpit reads, and it carries the DATE as well as the verdict —
+   * because a stale pass is not a pass. If it is older than the pictures it
+   * describes, nothing has been checked since they changed, and the cockpit
+   * says so rather than showing a comforting green from last week. */
+  if (STATE) {
+    const byKind = {};
+    problems.forEach(p => { byKind[p.kind] = (byKind[p.kind] || 0) + 1; });
+    fs.mkdirSync(path.dirname(STATE), { recursive: true });
+    fs.writeFileSync(STATE, JSON.stringify({
+      $schema: 'qpio-picture-rights/1',
+      checkedAt: new Date().toISOString(),
+      tool: 'curio/tools/verify_image_rights.js',
+      note: 'Verified against Wikimedia Commons, not against the repository. A pass '
+        + 'means Commons published a commercially free licence for every picture on '
+        + 'the date above. It does not mean each uploader held the rights they '
+        + 'granted; nobody can verify that. Re-run before every promotion.',
+      clear: problems.length === 0,
+      shipped: pics.length,
+      confirmedByCommons: confirmed,
+      ourOwnIllustrations: ours.length,
+      problems: problems.length,
+      problemsByKind: byKind,
+      /* named, so a failure is actionable from the cockpit without opening a log */
+      failing: problems.slice(0, 40).map(p => ({ kind: p.kind, where: p.where, detail: p.detail })),
+      advisoryNotes: restrictionTally,
+      /* what the pictures looked like when this verdict was reached; if the
+         picture file changes and this does not, the verdict is stale */
+      picturesFingerprint: require('crypto').createHash('sha256')
+        .update(fs.readFileSync(path.join(ROOT, 'src', 'entities.img.js')))
+        .digest('hex').slice(0, 16)
+    }, null, 1) + '\n', 'utf8');
+    console.log('state written to ' + STATE);
   }
   process.exit(problems.length ? 2 : 0);
 })();
