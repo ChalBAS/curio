@@ -2,11 +2,12 @@
  "generated": "2026-09-05",
  "live": {
   "production": 76,
-  "uat": 84,
+  "uat": 85,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  85,
   84,
   83,
   80,
@@ -49,6 +50,25 @@
  ],
  "releases": [
   {
+   "version": 85,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-05",
+   "to": "2026-09-05",
+   "questions": 760,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "fd92eb2",
+     "date": "2026-09-05",
+     "subject": "v85 — a real book, a subject shelf, or no read door at all"
+    }
+   ]
+  },
+  {
    "version": 84,
    "state": "ON UAT",
    "branch": "uat",
@@ -64,6 +84,21 @@
      "sha": "13d2503",
      "date": "2026-09-05",
      "subject": "v84 — AI illustrations marked, every picture cleared for commercial use"
+    },
+    {
+     "sha": "f148d79",
+     "date": "2026-09-05",
+     "subject": "v84 preflight: precache links.read.js, and correct the watch-url test"
+    },
+    {
+     "sha": "9e8ef0e",
+     "date": "2026-09-05",
+     "subject": "v84 release note — what to check, item by item"
+    },
+    {
+     "sha": "84f4a24",
+     "date": "2026-09-05",
+     "subject": "Picture rights: prove it against Wikimedia, not against ourselves"
     }
    ]
   },

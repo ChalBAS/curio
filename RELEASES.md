@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v84** at uat.qpio.app |
+| On UAT | **v85** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-05 |
 
-> ⏳ **Awaiting your sign-off:** v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v82 was rejected** on 2026-08-22 ([#73](https://github.com/ChalBAS/curio-hq/issues/73)). It stays on UAT until the
@@ -30,11 +30,20 @@ not by omission.*
 
 ---
 
+## v85 — ⏳ on UAT
+
+2026-09-05 · 760 questions · sign-off: **no release issue**
+
+- `fd92eb2` v85 — a real book, a subject shelf, or no read door at all
+
 ## v84 — ⏳ on UAT
 
 2026-09-05 · 760 questions · sign-off: **no release issue**
 
 - `13d2503` v84 — AI illustrations marked, every picture cleared for commercial use
+- `f148d79` v84 preflight: precache links.read.js, and correct the watch-url test
+- `9e8ef0e` v84 release note — what to check, item by item
+- `84f4a24` Picture rights: prove it against Wikimedia, not against ourselves
 
 ## v83 — ⏳ on UAT
 
