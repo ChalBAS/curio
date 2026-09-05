@@ -185,6 +185,35 @@ try {
   fail('sign-off verdict reader', 'tools/releases.test.js failed — run it to see which case');
 }
 
+/* ---------- 4b2. picture rights, checked against Wikimedia not against us ----------
+ *
+ * CEO, 5 Sep 2026: "make sure all images do not have copyright ... you cannot
+ * be wrong on this!!!" and "How can i independently check the copyright".
+ *
+ * Every other check here reads what this repository CLAIMS about a picture. If
+ * the claim is wrong the check passes and the picture is still unsafe — it
+ * marks its own homework. This one asks Wikimedia Commons what the licence
+ * actually is and compares, so a wrong record fails the release rather than
+ * shipping. It needs the network; when there is none it WARNS rather than
+ * passing silently, because "could not check" must never read as "checked".
+ */
+head('4b2 · Picture rights (verified against Wikimedia, not against this repo)');
+try {
+  const out = cp.execFileSync(process.execPath, [path.join(ROOT, 'tools/verify_image_rights.js')],
+    { stdio: 'pipe', timeout: 300000 }).toString();
+  const m = /confirmed by Commons\s+(\d+)/.exec(out);
+  pass('every picture independently confirmed free for commercial use',
+    (m ? m[1] : '?') + ' confirmed by Commons itself');
+} catch (e) {
+  const out = ((e.stdout && e.stdout.toString()) || '') + ((e.stderr && e.stderr.toString()) || '');
+  if (/COULD NOT CHECK|could not check|ENOTFOUND|ETIMEDOUT|EAI_AGAIN/.test(out)) {
+    warn('picture rights could not be checked', 'no network reach to Wikimedia — run tools/verify_image_rights.js before promoting');
+  } else {
+    const first = (out.match(/^\s+\d+ × .*$/m) || [''])[0].trim();
+    fail('picture rights NOT clear', first || 'run tools/verify_image_rights.js to see which pictures');
+  }
+}
+
 /* ---------- 4c. question intelligence ---------- */
 head('4c · Question intelligence');
 [['tools/intelligence.test.js', 'model + corpus'],
