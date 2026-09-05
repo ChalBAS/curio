@@ -1,7 +1,8 @@
-# v84 — release note
+# v85 — release note
 
 **On UAT at [uat.qpio.app](https://uat.qpio.app), sealed, awaiting your sign-off.**
-Preflight passed. `npm test` passed. Version fingerprint `289913c9f2022ec9`.
+Preflight passed — including a picture-rights check that verifies against Wikimedia
+rather than against this repository. `npm test` passed.
 
 This note exists so you can check, line by line, whether what you asked for on
 5 September 2026 is actually in the build. Each item says what to look at.
@@ -45,12 +46,58 @@ painting. The Papunya Tula card shows the desert country, not a dot painting.
 
 ## 2 · Every picture is cleared for commercial use
 
-> *"make sure all images do not have copyright, this is super important so we don't have a lawsuits and lose money. you cannot be wrong on this!!!"*
+> *"make sure all images do not have copyright ... you cannot be wrong on this!!!"*
+> *"How can i independently check the copyright"*
 
-**All 931 pictures were audited** — 863 attached to subjects, 68 attached to
-questions.
+**You were right to press, and the honest account is that my first report was
+narrower than it sounded.** I said every picture had a licence and let that read
+as every picture being safe. Those are different claims — having a licence
+recorded says nothing about whether that licence permits commercial use.
 
-**Ten were replaced.** Each carried a licence I would not ship commercially:
+**The deeper problem: every tool here marked its own homework.** They read the
+licence *this repository claims*. If the claim is wrong, the check passes and
+the picture is still unsafe.
+
+**So there is now a check that ignores our records entirely:**
+
+```bash
+node tools/verify_image_rights.js
+```
+
+For every picture it asks **Wikimedia Commons** what the licence is today, and
+compares. You are trusting Wikimedia and the arithmetic — not me. It exits 0
+only when everything is clear, writes a dated report with `--report FILE`, and
+runs inside preflight so a release cannot be promoted while a picture is
+unclear. What it proves and what it cannot is in
+[PICTURE-RIGHTS.md](PICTURE-RIGHTS.md).
+
+**Running it found four things my own audit had missed:**
+
+| What | Why it mattered |
+|---|---|
+| The **Colosseum** carried `ita-mibac` | Italy's cultural heritage code restricts *commercial* reproduction of Italian cultural property. The Uffizi and the Accademia have both sued over it. Replaced. |
+| **Two pictures are themselves AI-generated** | They came from Commons, so they were not among our own eleven — they would have shipped with **no AI mark at all**. Now marked. |
+| **One licence record was simply wrong** | We described a flag as CC BY-SA 3.0; Commons says public domain. Not unsafe, but exactly the failure the check exists to catch. |
+| **Eight flags served from en.wikipedia** | Where the licence cannot be checked at all. Repointed at Commons — all public domain. |
+
+**Two bugs in my own checker, found and fixed.** The first version sent 50
+queries at a time, was rate-limited, and reported the throttle as *"Commons has
+no such file"* for 856 pictures — a checker that invents 856 problems destroys
+trust in the real ones. And `resources.test.js` still listed GFDL, GPL, LGPL and
+"Attribution" as production-safe; two tools with different definitions of "safe"
+is how the gap opened. They now match exactly.
+
+**Where it stands: 931 pictures. 920 independently confirmed by Commons as free
+for commercial use. 11 our own. Zero problems.**
+
+**What this does not prove**, said plainly because a false assurance is worse
+than none: that each Commons uploader held the rights they granted. Nobody can
+verify that for 920 files. What is proven is that every picture rests on a free
+licence from a source with its own takedown process — and that nothing rests on
+me being right.
+
+**Before that, ten pictures were replaced** for carrying licences I would not
+ship commercially:
 
 | Subject | Was | Why it had to go |
 |---|---|---|
@@ -150,9 +197,22 @@ Three things were wrong underneath:
 - **The category was never passed to the watch link**, so the topic filter never
   ran. A physics question could be sent to a museum.
 
-**Read links now land on a book.** 574 of 747 subjects resolved to a real Open
-Library work. 170 keep a search page because no book genuinely matched — I would
-rather tell you than invent one.
+**Read links now land on a book, a shelf, or nowhere — never a search box.**
+
+- **634 subjects** resolved to a real Open Library book.
+- **42 subjects** open an Open Library **subject shelf** — a real page listing
+  books catalogued under that subject. These are the generic concepts where no
+  title match is meaningful: searching for "Ice" returns *Game of Thrones* and
+  "Sun" returns Sun Tzu. A shelf, honestly labelled as a shelf, beats a book
+  chosen wrongly — a confidently wrong book is harder to spot than an obvious gap.
+- **71 subjects have no read door at all.** Chandrayaan-3, Catatumbo lightning,
+  Ice stupa, the complaint tablet to Ea-nassir. Too recent, too local or too
+  small for a book to exist. **No door is better than a door onto a search box**
+  — which is exactly what you photographed and called "a search page, not a
+  place". They keep their watch and visit doors.
+
+**Across the bank: zero search pages, and all 760 questions still have at least
+one real onward destination.**
 
 **How to check.** Every link on the review card is now clickable, with the real
 address on hover, and labelled: *a real destination*, *inside the vetted
@@ -162,8 +222,8 @@ channel*, or *an open search, not a place*.
 
 ## What is still not right
 
-- **170 subjects still land on a search page** for "read", because Open Library
-  had no book worth linking. Honest, not fixed.
+- **71 subjects have no read door**, because no book about them exists. They
+  keep their watch and visit doors, so no reader is left with nowhere to go.
 - **852 of 863 pictures have no description for a blind reader.** Recorded as
   CON-16. Wikimedia does not supply them, so each must be written by someone
   looking at the picture.
@@ -175,11 +235,11 @@ channel*, or *an open search, not a place*.
 ## Verification handles
 
 ```
-version      v84, sealed on UAT, fingerprint 289913c9f2022ec9
-preflight    node tools/preflight.js        → PASSED (1 warning, pre-existing)
-tests        npm test                       → PASS
-licences     py tools/audit_image_licences.py → 0 unsafe
-credits      py tools/check_image_credits.py  → nothing owed
-pictures     node tools/image_gap.js          → 0 questions without one
-deployed     uat.qpio.app, worker version f1b40cd6 / 615fbbd5
+version      v85, sealed on UAT
+preflight    node tools/preflight.js          -> PASSED (1 pre-existing warning)
+RIGHTS       node tools/verify_image_rights.js -> CLEAR, 920 confirmed by Commons, 0 problems
+tests        npm test                         -> PASS
+pictures     node tools/image_gap.js          -> 0 questions without one
+links        0 search pages; 760 of 760 have a real onward door
+deployed     uat.qpio.app, worker db45c6ba
 ```
