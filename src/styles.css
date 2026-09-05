@@ -552,6 +552,22 @@ body {
 /* Portrait or square images (Nepal, Switzerland): height caps first, width
    follows — width:auto stops the border stretching past the visible image. */
 .qart.is-contain img { width: auto; max-width: 100%; }
+/* THE AI MARK. A generated illustration is labelled ON the picture, not only
+   under it - the picture is what gets screenshotted and shared, and a caption
+   does not travel with it. Sits top-right, readable on any image because it
+   carries its own dark plate. */
+.qart-ai {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(7,23,34,.82); color: var(--ink);
+  border: 1px solid var(--brand); border-radius: 999px;
+  padding: 4px 9px; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase;
+  backdrop-filter: blur(3px); pointer-events: none;
+}
+.qart.is-generated { position: relative; }
+.qart-credit-ai { color: var(--muted); font-style: italic; }
+@media (max-width: 480px) { .qart-ai { top: 6px; right: 6px; padding: 3px 7px; font-size: 9.5px; } }
 .qart-credit { font-size: 10.5px; color: var(--muted); margin: 0 0 2px; text-align: right; }
 .qart-credit a { color: inherit; }
 @media (min-width: 560px) { .qart img { max-height: 300px; } }

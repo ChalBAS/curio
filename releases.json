@@ -1,5 +1,5 @@
 {
- "generated": "2026-08-26",
+ "generated": "2026-09-05",
  "live": {
   "production": 76,
   "uat": 83,
@@ -52,7 +52,7 @@
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-08-22",
-   "to": "2026-08-22",
+   "to": "2026-09-05",
    "questions": 760,
    "signoff": {
     "status": "AWAITING",
@@ -79,6 +79,26 @@
      "sha": "6aaa76d",
      "date": "2026-08-22",
      "subject": "chore(release): register sync 2026-08-22 — rejected: v82 (#73), v81 (#64); awaiting: v83, v80, v78, v77"
+    },
+    {
+     "sha": "895bc06",
+     "date": "2026-08-26",
+     "subject": "﻿Measurement: landing-path counters live on UAT + bank provenance gate"
+    },
+    {
+     "sha": "d6f2463",
+     "date": "2026-09-04",
+     "subject": "Ship the reader data promise on the release branch (D-087)"
+    },
+    {
+     "sha": "3cb1e19",
+     "date": "2026-09-05",
+     "subject": "Every question now leads to a picture, and a batch process keeps it that way"
+    },
+    {
+     "sha": "e379bc3",
+     "date": "2026-09-05",
+     "subject": "Credit every picture whose licence asks for one"
     }
    ]
   },
