@@ -2056,19 +2056,46 @@
       var verdict = correct ? t("Correct") : (i === -1 ? t("Time") : t("Not quite"));
       var head = verdict + ". ";   // spoken only — the screen leads with the fact
       var hasDeeper = q.deeper && q.deeper.length > 0;
-      // The one destination worth offering at the moment of peak curiosity.
-      // Never sold, never ordered by money — Charter VAL-12 / D-061.
-      var lead = null;
-      if (window.CURIO_GO) {
-        var dests = window.CURIO_GO.goFor(q);
-        for (var di = 0; di < dests.length; di++) {
-          if (dests[di].kind !== "source") { lead = dests[di]; break; }
-        }
-      }
-      var leadLabel = !lead ? "" :
-        lead.kind === "see"   ? tf("See it at {where}", { where: esc(lead.title) }) :
-        lead.kind === "visit" ? tf("Visit {where}",     { where: esc(lead.title) }) :
-                                tf("Read about {name}", { name: esc(lead.title) });
+      // THE SAME THREE DOORS ON EVERY ANSWER, WHETHER OR NOT THEY LEAD ANYWHERE.
+      //
+      // CEO, 2026-09-07: "one of the 1st question i looked at doesn't have
+      // visit link, like a museum ... you need to put it but no link so that i
+      // know there is no link."
+      //
+      // This screen used to draw ONE destination — the first slot with
+      // anything behind it — which in practice was almost always Read. The
+      // museum slot was therefore invisible whether or not a museum existed,
+      // and the reader had no way to tell the two apart. Only 59 of the 760
+      // questions have somewhere to visit; drawing the empty slot is what
+      // turns that silence into a fact, and what makes a new destination
+      // noticeable the day it is added. Same rule, same look and the same
+      // four-slot vocabulary as the results shelf (golinks.js goFor()).
+      //
+      // Three here, not the shelf's four: the citation already has its own
+      // chip above, inside the fact box, and printing it twice is noise.
+      //
+      // Order is fixed by usefulness and can never be bought — VAL-12 / D-061.
+      var WAY_ORDER = ["read", "visit", "watch"];
+      var byKind = {};
+      (window.CURIO_GO ? window.CURIO_GO.goFor(q) : []).forEach(function (d) { byKind[d.kind] = d; });
+      var waysHtml = WAY_ORDER.map(function (k) {
+        var d = byKind[k];
+        if (!d) return "";
+        var word = k === "read" ? t("Read") : k === "visit" ? t("Visit") : t("Watch");
+        var inner =
+          '<span class="gf-ico" aria-hidden="true">' + d.icon + '</span>' +
+          '<span class="gf-text">' +
+            '<span class="gf-word">' + word + '</span>' +
+            '<span class="gf-sub">' + esc(d.on ? (d.title || "") : t("None yet")) + '</span>' +
+          '</span>';
+        // A slot with nothing behind it is not a link that does nothing — it is
+        // an element that was never a link, so nothing about it invites a tap
+        // that cannot be answered.
+        return d.on
+          ? '<a class="gf-link" href="' + doorHref(d.kind, "lead", d.url) + '" target="_blank" rel="noopener">' + inner + '</a>'
+          : '<span class="gf-link is-off" aria-disabled="true" title="' + esc(t("Nothing here yet")) +
+            '" aria-label="' + esc(word + " \u2014 " + t("Nothing here yet")) + '">' + inner + '</span>';
+      }).join("");
 
       // Speed, not difficulty (CEO, 2026-08-10): "how fast you answer" is
       // factual and non-judgemental — the same number for the professor and
@@ -2098,11 +2125,7 @@
         // the fact does. That is what makes "no scrolling" a guarantee rather
         // than a hope (CEO, 2026-08-11).
         '<div class="answerfoot">' +
-        (lead ? '<a class="gf-link gf-inline" href="' + doorHref(lead.kind, "lead", lead.url) + '" target="_blank" rel="noopener">' +
-                  '<span class="gf-ico" aria-hidden="true">' + lead.icon + '</span>' +
-                  '<span class="gf-text">' + leadLabel +
-                    (lead.sub ? '<span class="gf-sub">' + esc(lead.sub) + '</span>' : '') +
-                  '</span><span class="gf-go" aria-hidden="true">↗</span></a>' : '') +
+        '<div class="gf-ways">' + waysHtml + '</div>' +
         '<div class="btnrow">' +
           (hasDeeper ? '<button class="btn ghost" id="deeper">' + t("🕳️ Go deeper") + '</button>' : '') +
           '<button class="btn" id="next">' + (idx + 1 < cfg.questions.length ? t("Next →") : t("See results →")) + '</button>' +

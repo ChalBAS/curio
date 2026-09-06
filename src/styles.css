@@ -475,7 +475,8 @@ body {
   .answered-view .qtext { font-size: 14.5px; line-height: 1.35; margin: 2px 0 6px; }
   .answered-view .opts.answered { gap: 5px; }
   .answered-view .opts.answered .opt { padding: 7px 10px; font-size: 13.5px; }
-  .answered-view .gf-link { margin-top: 8px; padding: 9px 11px; }
+  .answered-view .gf-ways { margin-top: 8px; }
+  .answered-view .gf-ways .gf-link { padding: 7px 9px; }
   /* No floor at this height. There is not always room for one, and Next staying
      visible outranks the fact being tall — see the note on .fact above. */
   .answered-view .answerblock .fact { min-height: 0; }
@@ -497,7 +498,9 @@ body {
 .answered-view.cramped .opts.answered { gap: 3px; }
 .answered-view.cramped .opts.answered .opt { padding: 5px 8px; font-size: 12.5px; }
 .answered-view.cramped .fact { margin-top: 6px; padding: 8px 9px; font-size: 12.5px; }
-.answered-view.cramped .gf-link { margin-top: 5px; padding: 7px 9px; }
+.answered-view.cramped .gf-ways { margin-top: 5px; }
+.answered-view.cramped .gf-ways .gf-link { padding: 5px 8px; }
+.answered-view.cramped .gf-ways .gf-sub { display: none; }
 .answered-view.cramped .answerfoot .btnrow { margin-top: 5px; }
 .answered-view.cramped .answerfoot .btn { padding: 9px 14px; }
 /* The smallest phones still in real use — 320x568 is an iPhone SE. Measured on
@@ -517,7 +520,8 @@ body {
   .answered-view .opts.answered { gap: 4px; }
   .answered-view .opts.answered .opt { padding: 6px 9px; font-size: 13px; }
   .answered-view .fact { margin-top: 7px; padding: 9px 10px; font-size: 13px; }
-  .answered-view .gf-link { margin-top: 6px; padding: 7px 10px; }
+  .answered-view .gf-ways { margin-top: 6px; }
+  .answered-view .gf-ways .gf-link { padding: 6px 8px; }
   .answered-view .answerfoot .btnrow { margin-top: 7px; }
   .answered-view .answerfoot .btn { padding: 10px 14px; }
   .answered-view .srclink { margin-top: 5px; }
@@ -824,6 +828,39 @@ body {
 .gf-text { flex: 1 1 auto; min-width: 0; }
 .gf-sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
 .gf-go { flex: 0 0 auto; color: var(--brand); font-weight: 700; }
+/* THREE DOORS, ALWAYS THE SAME THREE, EVEN WHEN EMPTY (CEO, 2026-09-07).
+   Two columns on the narrowest phones so no word truncates, three from 380px
+   up. A slot with nothing behind it is drawn dashed and flat, exactly as on
+   the results shelf, and must never look tappable: no pointer, no hover, no
+   focus. Showing the shape of what we do not have is only honest while the
+   difference is obvious at a glance rather than on inspection. */
+.gf-ways {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px; margin-top: 12px;
+}
+@media (min-width: 340px) {
+  .gf-ways { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.gf-ways .gf-link { margin-top: 0; gap: 6px; padding: 8px 7px; font-size: 13px; }
+/* The icon is decoration; the word and the destination are the content. On a
+   360px phone a 17px emoji is the difference between "None yet" and "None ...". */
+.gf-ways .gf-ico { font-size: 14px; }
+.gf-word { display: block; font-weight: 800; }
+.gf-ways .gf-sub {
+  font-size: 11.5px; margin-top: 1px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.gf-link.is-off {
+  background: transparent; border-style: dashed; border-color: var(--line);
+  color: var(--muted); opacity: .55; cursor: default; pointer-events: none;
+}
+.gf-link.is-off .gf-ico { filter: grayscale(1); }
+@media (max-height: 700px) {
+  .gf-ways { margin-top: 8px; gap: 5px; }
+  .gf-ways .gf-link { padding: 6px 7px; font-size: 12.5px; }
+  .gf-ways .gf-sub { font-size: 11px; }
+}
+.hcontrast .gf-link.is-off { opacity: .8; }
 .gf-note { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); opacity: .75; }
 .rmotion .gf-link { transition: none; }
 

@@ -162,6 +162,9 @@
       "Get today's actual question as a notification — the question itself, and tapping it opens Qpio straight into the daily challenge. On Android, install Qpio to your home screen and your phone delivers it on its own. Turn it off any time.": "Reçois la vraie question du jour en notification — la question elle-même, et en la touchant tu ouvres Qpio directement sur le défi du jour. Sur Android, installe Qpio sur ton écran d’accueil et ton téléphone la livre tout seul. Désactivable à tout moment.",
       "{n} to explore": "{n} à explorer",
       "Nothing here yet": "Rien ici pour l’instant",
+      // The short form, for the three doors under an answer: at 360px a
+      // cell is 112px wide and the long sentence truncates mid-word.
+      "None yet": "Rien",
 
       // --- the country you represent ---
       "The country you represent": "Le pays que tu représentes",
