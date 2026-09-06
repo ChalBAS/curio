@@ -946,7 +946,7 @@
       var c = el(
         '<div class="dcard dcard-sm">' +
           '<div class="dcard-art">' +
-            (img ? '<img src="' + esc(img.u) + '" alt="" loading="lazy" decoding="async">' : '') +
+            (img ? '<img src="' + esc(img.u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
             '<span class="dcard-wash" aria-hidden="true"></span>' +
           '</div>' +
           '<div class="dcard-body">' +
@@ -1161,7 +1161,7 @@
     var u = pickArt(key);
     var b = el(
       '<button class="ptile' + (u ? " has-art" : "") + '" aria-pressed="' + (pressed ? "true" : "false") + '">' +
-        (u ? '<img class="ptile-art" src="' + esc(u) + '" alt="" loading="lazy" decoding="async">' : '') +
+        (u ? '<img class="ptile-art" src="' + esc(u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
         '<span class="ptile-wash" aria-hidden="true"></span>' +
         '<span class="ptile-label">' + label + '</span>' +
       '</button>'
@@ -1173,7 +1173,7 @@
     if (!im || !node) return node;
     node.classList.add("has-art");
     node.insertBefore(el('<span class="mode-wash" aria-hidden="true"></span>'), node.firstChild);
-    node.insertBefore(el('<img class="mode-art" src="' + esc(im.u) + '" alt="" loading="lazy" decoding="async">'), node.firstChild);
+    node.insertBefore(el('<img class="mode-art" src="' + esc(im.u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">'), node.firstChild);
     return node;
   }
 
@@ -1899,7 +1899,7 @@
               (isGen ? " is-generated" : "") + ' is-loading">' +
             '<span class="qart-wait" aria-hidden="true">⏳</span>' +
             '<img src="' + esc(q.img.u) + '" alt="' +
-              esc(isGen ? (t("AI-generated illustration") + ". " + alt) : alt) + '" decoding="async">' +
+              esc(isGen ? (t("AI-generated illustration") + ". " + alt) : alt) + '" decoding="async" referrerpolicy="no-referrer">' +
             (isGen ? '<span class="qart-ai">◆ ' + esc(t("AI generated")) + '</span>' : '') +
           '</div>' +
           (isGen
@@ -2409,7 +2409,7 @@
       var artHtml = pic
         ? '<a class="topic-art has-pic" href="' + srcLink0(pic.p) + '" target="_blank" rel="noopener" ' +
             'title="' + esc(tf("Photo: {by} · {lic}", { by: pic.by || "Wikimedia Commons", lic: pic.lic || "" })) + '">' +
-            '<img src="' + esc(pic.u) + '" alt="" loading="lazy" decoding="async">' +
+            '<img src="' + esc(pic.u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' +
             '<span class="topic-fallback" aria-hidden="true">' + art + '</span>' +
           '</a>'
         : '<div class="topic-art" aria-hidden="true"><span class="topic-emoji">' + art + '</span></div>';
@@ -2545,7 +2545,7 @@
       var art = (S.items[0] && S.items[0].image) || null;
       var d = el(
         '<button class="door' + (art ? " has-art" : "") + '">' +
-          (art ? '<img class="door-art" src="' + esc(art) + '" alt="" loading="lazy" decoding="async">' : '') +
+          (art ? '<img class="door-art" src="' + esc(art) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
           '<span class="door-wash" aria-hidden="true"></span>' +
           '<span class="door-body">' +
             '<span class="door-ico" aria-hidden="true">' + S.icon + '</span>' +
@@ -2614,7 +2614,7 @@
     var node = el(
       '<div class="dcard dcard-' + (size || "sm") + '" data-id="' + esc(it.id) + '">' +
         '<div class="dcard-art">' +
-          (it.image ? '<img src="' + esc(it.image) + '" alt="" loading="lazy" decoding="async">' : '') +
+          (it.image ? '<img src="' + esc(it.image) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
           '<span class="dcard-wash" aria-hidden="true"></span>' +
         '</div>' +
         '<div class="dcard-body">' +

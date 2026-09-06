@@ -42,6 +42,11 @@
         pending++;
         var im;
         try { im = makeImage(); } catch (e) { settle(u, false); return; }
+        // THE WARMER FETCHES THE SAME PICTURES, SO IT LEAKS THE SAME THING.
+        // Without this the visible <img> tags stop sending the page a reader is
+        // on and the pre-fetch quietly keeps sending it - a fix that looks
+        // complete and is not, which is worse than no fix at all.
+        try { im.referrerPolicy = "no-referrer"; } catch (e3) { /* older engines ignore it */ }
         im.onload = function () { settle(u, true); };
         im.onerror = function () { settle(u, false); };
         try { im.src = u; } catch (e2) { settle(u, false); }
