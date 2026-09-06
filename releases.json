@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-05",
+ "generated": "2026-09-06",
  "live": {
   "production": 76,
   "uat": 85,
@@ -65,6 +65,26 @@
      "sha": "fd92eb2",
      "date": "2026-09-05",
      "subject": "v85 — a real book, a subject shelf, or no read door at all"
+    },
+    {
+     "sha": "25dc0a8",
+     "date": "2026-09-05",
+     "subject": "v85 release record regenerated"
+    },
+    {
+     "sha": "ca91c7b",
+     "date": "2026-09-05",
+     "subject": "v85 release note — the independent rights check, and the books"
+    },
+    {
+     "sha": "8cbebdf",
+     "date": "2026-09-05",
+     "subject": "verify_image_rights: --state, so the daily control can show the verdict"
+    },
+    {
+     "sha": "4373d7a",
+     "date": "2026-09-05",
+     "subject": "PICTURE-RIGHTS: record that the check runs daily, and how a stale pass is caught"
     }
    ]
   },

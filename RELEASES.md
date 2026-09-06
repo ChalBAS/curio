@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v85** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-05 |
+| Generated | 2026-09-06 |
 
 > ⏳ **Awaiting your sign-off:** v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -35,6 +35,10 @@ not by omission.*
 2026-09-05 · 760 questions · sign-off: **no release issue**
 
 - `fd92eb2` v85 — a real book, a subject shelf, or no read door at all
+- `25dc0a8` v85 release record regenerated
+- `ca91c7b` v85 release note — the independent rights check, and the books
+- `8cbebdf` verify_image_rights: --state, so the daily control can show the verdict
+- `4373d7a` PICTURE-RIGHTS: record that the check runs daily, and how a stale pass is caught
 
 ## v84 — ⏳ on UAT
 
