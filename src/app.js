@@ -509,6 +509,14 @@
   // ---------- stats (Brain Map) ----------
   function getStats() {
     var s = LS.get("stats", null);
+    // A STORED SHAPE IS NOT A PROMISE. This read the saved object and trusted
+    // it to carry a cats map. Anything that leaves a partial write behind - a
+    // full disk, a quota refusal, a tab killed mid-save, an older build - then
+    // threw at start-up, and the reader got a blank screen with no way back
+    // except clearing their browser, which also destroys everything they saved.
+    if (s && (typeof s !== "object" || !s.cats || typeof s.cats !== "object")) {
+      s = { cats: {}, mastered: (s && s.mastered) || 0 };
+    }
     if (!s) { s = { cats: {}, mastered: 0 }; CATS.forEach(function (c) { s.cats[c] = { s: 0, c: 0 }; }); }
     CATS.forEach(function (c) { if (!s.cats[c]) s.cats[c] = { s: 0, c: 0 }; });
     return s;
