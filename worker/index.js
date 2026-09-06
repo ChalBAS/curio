@@ -152,7 +152,17 @@ async function stats(request, env, url) {
   }
   const sample = picks.length ? picks[Math.floor(Math.random() * picks.length)] : null;
 
-  return new Response(JSON.stringify({ version, questions: count, languages: 2, lang, sample }), { headers: cors });
+  /* THE DECISION WAS ENFORCED IN THE RENDERER AND NOT AT THE SOURCE.
+     *
+     * On 2026-08-14 the CEO had the bank size taken off the public site:
+     * "a figure a reader cannot judge and a competitor can". The site stopped
+     * DISPLAYING it. This endpoint went on SERVING it, to anyone who opened
+     * the URL, so the number and its growth rate were readable by polling one
+     * address. A decision enforced only where it is drawn is not enforced.
+     *
+     * The page reads d.sample and nothing else, so version and questions are
+     * simply gone rather than hidden. */
+    return new Response(JSON.stringify({ languages: 2, lang, sample }), { headers: cors });
 }
 
 export default {
