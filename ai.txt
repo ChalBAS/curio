@@ -14,4 +14,9 @@ Disallow: /brand/
 # Source code is separately MIT-licensed and is not covered by this reservation.
 # See /LICENSE.
 
-# Licensing enquiries: QpioCorp@mail.com
+# Licensing enquiries: hello@qpio.app
+#
+# (Was QpioCorp@mail.com, which is not a real address and never was. A
+# reservation of rights whose contact bounces is materially weaker than one
+# that can be answered - the whole point of naming an address is that a
+# licensee has somewhere to ask.)
