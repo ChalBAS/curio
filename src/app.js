@@ -48,17 +48,35 @@
   var Q_EN = window.CURIO_QUESTIONS || [];
   var Q_FR = window.CURIO_QUESTIONS_FR || [];
 
+  // ONE QUESTION, ITS FACTS ONCE, ITS WORDS PER LANGUAGE.
+  //
+  // The canonical row owns what is true of the question -- its category, its
+  // difficulty, whether it suits children, its region, its source, its answer.
+  // The translation owns only the words. Before 6 Sep 2026 the French file kept
+  // its own copy of the facts too, and the copies had drifted apart on 538 of
+  // the 760 rows: one question was Science in English and Tech in French, and
+  // hundreds had lost their source entirely. Anything counted by category gave
+  // a different answer depending on the reader's language.
+  //
+  // Rows are joined on the PERMANENT ID, not on their position in the file. A
+  // translation that arrives out of order, short, or missing a question now
+  // falls back to the English for that one row instead of silently pairing a
+  // question with someone else's words -- the failure that would be invisible
+  // and unrecoverable.
   function mergeTranslated(en, fr) {
-    if (!en.length || en.length !== fr.length) return fr;
-    for (var i = 0; i < en.length; i++) {
-      if (en[i].answer !== fr[i].answer) return fr;   // not aligned — do not touch
-    }
-    return fr.map(function (f, i) {
-      var e = en[i], out = {}, k;
-      for (k in e) if (e.hasOwnProperty(k)) out[k] = e[k];       // all metadata
-      for (k in f) if (f.hasOwnProperty(k)) {
-        if (k === "q" || k === "options" || k === "fact") out[k] = f[k];   // the words
-      }
+    if (!en.length || !fr.length) return en;
+    var byId = {}, i;
+    for (i = 0; i < fr.length; i++) if (fr[i] && fr[i].id) byId[fr[i].id] = fr[i];
+    return en.map(function (e) {
+      var f = e.id ? byId[e.id] : null;
+      if (!f) return e;                       // no translation: serve the English
+      var out = {}, k;
+      for (k in e) if (e.hasOwnProperty(k)) out[k] = e[k];              // the facts
+      if (f.q !== undefined) out.q = f.q;                               // the words
+      if (f.options !== undefined) out.options = f.options;
+      if (f.fact !== undefined) out.fact = f.fact;
+      if (f.lrev !== undefined) out.lrev = f.lrev;   // which rendering was served
+      out.lang = "fr";
       return out;
     });
   }
@@ -107,27 +125,85 @@
     set: function (k, v) { try { localStorage.setItem("curio." + k, JSON.stringify(v)); } catch (e) {} }
   };
 
-  // ---------- stable question ids ----------
-  // Hashed from the question text — plus the picture, but ONLY when there is
-  // one. All 68 flag questions ask "Which country's flag is this?", so on text
-  // alone they share a single id: one vault entry, one "mastered" flag, and 67
-  // questions the reader could never be shown again after answering any one of
-  // them.
+  // ---------- permanent question identity ----------
+  // CEO, 6 Sep 2026: "The current editable-text/image-derived QID is not
+  // acceptable." It was a hash of the question's own words, and three things
+  // broke silently because of it.
   //
-  // The `q.img &&` guard is not tidiness. Every existing question's id must not
-  // change, or every existing reader's vault is orphaned and pruneVault() wipes
-  // the facts they have been saving. Text-only questions hash exactly as they
-  // did before; only picture questions get the extra component.
-  function qid(q) {
+  //   * Fixing a typo changed the identity, so that question's whole history --
+  //     every reader's saved fact, every future count -- was orphaned.
+  //   * The English and French versions of one question hashed differently, so
+  //     the app thought they were two questions. Answer it in English and it
+  //     came back in French. That was the French vault defect.
+  //   * All 68 flag questions ask the same words, so on text alone they shared
+  //     ONE id: answering any one of them retired all 68.
+  //
+  // Every question now carries a permanent id, minted once and never reused,
+  // and the SAME id is on the English and the French row because they are one
+  // knowledge item. The hash survives only as a fallback for a bank that has
+  // not been re-minted yet, and as the key the migration below reads from.
+  function legacyQid(q) {
     var s = q.q + (q.img && q.img.u ? "|" + q.img.u : "");
     var h = 5381;
     for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
     return "q" + (h >>> 0).toString(36);
   }
+  function qid(q) { return (q && q.id) || legacyQid(q); }
+
+  // THE READER KEEPS EVERYTHING. Their saved facts, the questions they have
+  // already seen and their progress are stored in their own browser under the
+  // OLD ids. Without this they would open the app to an empty vault and a bank
+  // of questions they had already answered. It runs once, marks itself done,
+  // and is harmless if it somehow runs twice.
+  var QID_MIGRATION = 2;
+  function migrateQids() {
+    try {
+      if (LS.get("qidmig", 0) >= QID_MIGRATION) return;
+      var map = window.CURIO_QID_LEGACY || {};
+      var moved = 0;
+
+      var vault = LS.get("vault", null);
+      if (vault) {
+        var nv = {};
+        Object.keys(vault).forEach(function (old) {
+          var to = map[old] || old;
+          // Two old ids can map to one new one -- the 68 flag questions shared
+          // a single id. Keep the entry that is further along the ladder rather
+          // than whichever happened to be read last.
+          if (!nv[to] || (vault[old] && vault[old].rung > nv[to].rung)) nv[to] = vault[old];
+          if (to !== old) moved++;
+        });
+        LS.set("vault", nv);
+      }
+
+      var seen = LS.get("qseen2", null);
+      if (seen && seen.length) {
+        var byId = {};
+        seen.forEach(function (e) {
+          var to = map[e.i] || e.i;
+          // Keep the most recent sighting, so nothing the reader saw yesterday
+          // reappears today because an older row won.
+          if (!byId[to] || e.d > byId[to].d) byId[to] = { i: to, d: e.d };
+        });
+        LS.set("qseen2", Object.keys(byId).map(function (k) { return byId[k]; }));
+      }
+
+      var ring = LS.get("qfseen", null);
+      if (ring && ring.length) {
+        LS.set("qfseen", ring.map(function (id) { return map[id] || id; }));
+      }
+
+      LS.set("qidmig", QID_MIGRATION);
+      if (window.console && moved) console.info("Qpio: carried " + moved + " saved items to permanent question ids.");
+    } catch (e) { /* a failed migration must never stop the app loading */ }
+  }
+  migrateQids();
+
   var BY_ID = {};
   Q.forEach(function (q) { BY_ID[qid(q)] = q; });
-  // Ids across ALL loaded banks — pruning must never wipe the other
-  // language's vault entries when the user switches languages.
+  // Ids across ALL loaded banks. Since the two languages now share one id per
+  // question this is the same set in both, which is the point: switching
+  // language no longer changes what the reader has already answered.
   var KNOWN_IDS = {};
   Q_EN.forEach(function (q) { KNOWN_IDS[qid(q)] = true; });
   Q_FR.forEach(function (q) { KNOWN_IDS[qid(q)] = true; });

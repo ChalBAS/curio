@@ -131,11 +131,33 @@ const FR = global.window.CURIO_QUESTIONS_FR || [];
 if (!EN.length) fail('English bank empty');
 else pass('English bank loaded', EN.length + ' questions');
 
+/* THE TWO BANKS ARE ONE QUESTION SET IN TWO LANGUAGES.
+ *
+ * This used to compare the answer index row by row, because the two files were
+ * paired by POSITION and each kept its own copy of every fact. Since 6 Sep 2026
+ * they are paired by a permanent id, and the translation carries only the words
+ * -- the category, difficulty, kids flag, region, source and answer live on the
+ * question once. Comparing an answer index the French file no longer has would
+ * fail forever while nothing is wrong.
+ *
+ * What matters now: every question has a translation with the SAME id, and the
+ * translation has not started keeping a second copy of the facts. That second
+ * copy is what drifted apart on 538 of 760 rows before, giving one question two
+ * different categories depending on the reader's language. */
 if (EN.length !== FR.length) fail('bank lengths differ', `EN ${EN.length} vs FR ${FR.length}`);
 else {
-  const drift = EN.filter((q, i) => FR[i] && q.answer !== FR[i].answer).length;
-  if (drift) fail('EN/FR answer index drift — app.js will refuse the merge and serve French unmerged', drift + ' rows');
-  else pass('EN/FR aligned', 'answer index matches on all ' + EN.length);
+  const frById = new Map(FR.filter(q => q && q.id).map(q => [q.id, q]));
+  const noId = EN.filter(q => !q.id).length;
+  const noTranslation = EN.filter(q => q.id && !frById.has(q.id)).length;
+  const dupIds = EN.length - new Set(EN.map(q => q.id)).size;
+  const facts = ['cat', 'diff', 'kids', 'region', 'src', 'answer'];
+  const leaked = FR.filter(q => facts.some(k => q[k] !== undefined)).length;
+
+  if (noId) fail('questions with no permanent id — identity would fall back to a text hash', noId + ' rows');
+  else if (dupIds) fail('two questions share a permanent id — their histories would merge', dupIds + ' duplicates');
+  else if (noTranslation) fail('English questions with no French row of the same id', noTranslation + ' rows');
+  else if (leaked) fail('the French bank has started keeping its own copy of the question facts — they will drift', leaked + ' rows');
+  else pass('EN/FR are one question set', 'all ' + EN.length + ' joined on a permanent id, facts held once');
 }
 
 /* structural faults that reach the screen */

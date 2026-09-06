@@ -33,15 +33,26 @@ const QI = W.CURIO_QI;
 const EN = W.CURIO_QUESTIONS, FR = W.CURIO_QUESTIONS_FR;
 
 /* Reproduce app.js's mergeTranslated EXACTLY: EN metadata + FR words. */
+/* MIRRORS app.js EXACTLY. The two banks are joined on the permanent question id
+ * rather than on their position in the file, and the translation carries only
+ * the words -- the category, difficulty, kids flag, region, source and answer
+ * live on the question once. This test exists to prove the French reader gets
+ * the SAME five questions as the English reader, so if this copy drifts from
+ * app.js the test stops proving anything. */
 function mergeTranslated(en, fr) {
-  if (!en.length || en.length !== fr.length) return fr;
-  for (let i = 0; i < en.length; i++) if (en[i].answer !== fr[i].answer) return fr;
-  return fr.map((f, i) => {
-    const e = en[i], out = {};
+  if (!en.length || !fr.length) return en;
+  const byId = {};
+  for (let i = 0; i < fr.length; i++) if (fr[i] && fr[i].id) byId[fr[i].id] = fr[i];
+  return en.map(e => {
+    const f = e.id ? byId[e.id] : null;
+    if (!f) return e;
+    const out = {};
     for (const k in e) if (Object.prototype.hasOwnProperty.call(e, k)) out[k] = e[k];
-    for (const k in f) if (Object.prototype.hasOwnProperty.call(f, k)) {
-      if (k === 'q' || k === 'options' || k === 'fact') out[k] = f[k];
-    }
+    if (f.q !== undefined) out.q = f.q;
+    if (f.options !== undefined) out.options = f.options;
+    if (f.fact !== undefined) out.fact = f.fact;
+    if (f.lrev !== undefined) out.lrev = f.lrev;
+    out.lang = 'fr';
     return out;
   });
 }

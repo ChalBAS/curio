@@ -1,0 +1,265 @@
+{
+ "generated": "2026-09-06T14:33:57.334Z",
+ "shipped": 760,
+ "golden": 2000,
+ "matched": 681,
+ "shippedOnly": 79,
+ "goldenOnly": 1319,
+ "goldenOnlyByStatus": {
+  "LIVE UAT": 68,
+  "NOT LIVE": 1251
+ },
+ "mintedThisRun": 79,
+ "pairingBreaks": [],
+ "goldenDuplicateText": [
+  {
+   "a": "Q263",
+   "b": "Q264",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q265",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q266",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q267",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q268",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q269",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q270",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q271",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q272",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q273",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q274",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q275",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q276",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q277",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q278",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q279",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q280",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q281",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q282",
+   "text": "Which country's flag is this?"
+  },
+  {
+   "a": "Q263",
+   "b": "Q283",
+   "text": "Which country's flag is this?"
+  }
+ ],
+ "metaDriftRows": 538,
+ "metaDriftSample": [
+  {
+   "i": 222,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/HTTP"
+  },
+  {
+   "i": 223,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Binary_number"
+  },
+  {
+   "i": 224,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Ada_Lovelace"
+  },
+  {
+   "i": 225,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Pi"
+  },
+  {
+   "i": 226,
+   "field": "cat",
+   "en": "Science",
+   "fr": "Tech"
+  },
+  {
+   "i": 227,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Central_processing_unit"
+  },
+  {
+   "i": 228,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
+  },
+  {
+   "i": 229,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Macintosh_128K"
+  },
+  {
+   "i": 230,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Byte"
+  },
+  {
+   "i": 231,
+   "field": "src",
+   "en": "https://en.wikipedia.org/wiki/Units_of_information"
+  }
+ ],
+ "collisions": [],
+ "shippedOnlySample": [
+  {
+   "i": 204,
+   "text": "Which artist painted 'The Starry Night' from memory during his stay at the Saint",
+   "cat": "Arts",
+   "legacy": "q18k67sv"
+  },
+  {
+   "i": 263,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qqjl3xt"
+  },
+  {
+   "i": 264,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "q1d7rw25"
+  },
+  {
+   "i": 265,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qiehu9h"
+  },
+  {
+   "i": 266,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "q1v6wric"
+  },
+  {
+   "i": 267,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qrfr56b"
+  },
+  {
+   "i": 268,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qe2abev"
+  },
+  {
+   "i": 269,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qvb6ct8"
+  },
+  {
+   "i": 270,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "q3zhbnp"
+  },
+  {
+   "i": 271,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "q1k22err"
+  },
+  {
+   "i": 272,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qjnrzfv"
+  },
+  {
+   "i": 273,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qi8b3qv"
+  },
+  {
+   "i": 274,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "qobaff"
+  },
+  {
+   "i": 275,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "q1p3609f"
+  },
+  {
+   "i": 276,
+   "text": "Which country's flag is this?",
+   "cat": "Geography",
+   "legacy": "q1f9c8z1"
+  }
+ ],
+ "written": true,
+ "legacyMapEntries": 1453
+}
