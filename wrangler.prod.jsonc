@@ -77,5 +77,26 @@
   // included per month. Left at the default alongside the broad glob above it
   // was the same multiplier applied twice. One per cent is plenty to spot a
   // pattern and cannot become a bill.
-  "observability": { "enabled": true, "head_sampling_rate": 0.01 }
+  // WHAT CLOUDFLARE ITSELF WRITES DOWN, and why this is not left at the default.
+  //
+  // CEO, 6 Sep 2026: "review Cloudflare observability/request logging and
+  // minimise it to what has a defined operational/security purpose."
+  //
+  // Every Worker invocation produces an automatic log holding the request, the
+  // response and the metadata around it - including the FULL URL. A door tap is
+  // "/go/read/lead?u=https://bookshop.org/...", so that log line records where a
+  // reader went, sitting beside the address they came from. This file carried no
+  // sampling rate at all, which means the default: one hundred per cent of them.
+  //
+  // Invocation logs are therefore OFF. Our own console.error survives, because
+  // diagnosing a broken worker is a defined operational purpose and an error we
+  // wrote carries only what we chose to put in it. The sampling rate stays low
+  // as a second guard rather than a first one.
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "invocation_logs": false,
+      "head_sampling_rate": 0.01
+    }
+  }
 }

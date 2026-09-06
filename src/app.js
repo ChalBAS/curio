@@ -1798,6 +1798,21 @@
     var seedBase = dayNumber() * 100;
     var secs = cfg.timed ? timerSecs() : null;
 
+    // HOW EACH QUESTION PERFORMS. Opened here, with the deck, so a round that is
+    // abandoned still records what was SHOWN - without that, the questions
+    // people give up on look exactly like questions nobody was given, and
+    // drop-off can never be measured. Nothing about the reader travels with it.
+    // cfg.noStats covers the surfaces that are not a round (the vault review).
+    if (!cfg.noStats && window.QpioMeasure) {
+      window.QpioMeasure.begin({
+        surface: cfg.surface || (cfg.resumeKey ? "daily" : "quickfire"),
+        mode: settings.ageMode === "kids" ? "kids" : "adult",
+        questions: cfg.questions.map(function (q) {
+          return { id: q.id, qrev: q.qrev || 1, lrev: q.lrev || 1 };
+        })
+      });
+    }
+
     function checkpoint() {
       if (!cfg.resumeKey) return;
       LS.set(cfg.resumeKey, { idx: idx, score: score, correct: correctCount,
@@ -2008,6 +2023,7 @@
         score += 100 + bonus + (q.diff - 1) * 25 + (recalled ? 25 : 0);
       }
       marks.push(correct);
+      if (window.QpioMeasure) window.QpioMeasure.mark(idx + 1, true, correct);
       if (!cfg.noStats) {
         recordAnswer(q.cat, correct);
         if (cfg.vault) { if (correct) vaultHit(q.id); else vaultMiss(q.id); }
@@ -2186,7 +2202,12 @@
         // no score is lost and no half-answered state has to be rebuilt.
         checkpoint();
         if (idx < cfg.questions.length) show();
-        else cfg.onDone({ score: score, correct: correctCount, total: cfg.questions.length, marks: marks });
+        else {
+          // Sent before the results screen renders, so a reader who closes the
+          // tab on the last question is still counted as having finished it.
+          if (window.QpioMeasure) window.QpioMeasure.finish(true);
+          cfg.onDone({ score: score, correct: correctCount, total: cfg.questions.length, marks: marks });
+        }
       });
     }
   }

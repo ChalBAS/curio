@@ -34,7 +34,7 @@
     // a 200 and never redirects â€” a silent failure that looks like a zero tap
     // rate. Removing these two entries and deploying is the server-side KILL
     // SWITCH: the counter dies, the product does not.
-    "run_worker_first": ["/src/*", "/robots.txt", "/api/*", "/doors/*", "/go/*", "/s/*"],
+    "run_worker_first": ["/src/*", "/robots.txt", "/api/*", "/doors/*", "/go/*", "/s/*", "/m"],
     // A missing path serves index.html â€” the app is a single-page shell and its
     // routes are hashes, so a deep link must not 404.
     "not_found_handling": "single-page-application"
@@ -48,6 +48,18 @@
       "binding": "DOOR_DB",
       "database_name": "qpio-doors-uat",
       "database_id": "db67241f-f0d9-4afb-b0d8-c24bba94286b"
+    },
+    // EVERYTHING A READER TOUCHES LIVES IN THE EU. qpio-analytics-eu was
+    // created 6 Sep 2026 with --jurisdiction=eu. That flag can ONLY be set
+    // when a database is created and can never be added afterwards, so it was
+    // taken while the database was empty and the choice cost nothing.
+    // Its tables are separated by PURPOSE, not by continent: question
+    // performance, audience, doors, cohorts, the content registry and the
+    // health of the instrument itself.
+    {
+      "binding": "ANALYTICS_DB",
+      "database_name": "qpio-analytics-eu",
+      "database_id": "a6e9f9b4-98cc-4e32-842b-71aab98fe1a3"
     }
   ],
 
@@ -55,5 +67,26 @@
   // invocation per day. There is no nightly aggregation job.
   "triggers": { "crons": ["10 3 * * *"] },
 
-  "observability": { "enabled": true }
+  // WHAT CLOUDFLARE ITSELF WRITES DOWN, and why this is not left at the default.
+  //
+  // CEO, 6 Sep 2026: "review Cloudflare observability/request logging and
+  // minimise it to what has a defined operational/security purpose."
+  //
+  // Every Worker invocation produces an automatic log holding the request, the
+  // response and the metadata around it - including the FULL URL. A door tap is
+  // "/go/read/lead?u=https://bookshop.org/...", so that log line records where a
+  // reader went, sitting beside the address they came from. This file carried no
+  // sampling rate at all, which means the default: one hundred per cent of them.
+  //
+  // Invocation logs are therefore OFF. Our own console.error survives, because
+  // diagnosing a broken worker is a defined operational purpose and an error we
+  // wrote carries only what we chose to put in it. The sampling rate stays low
+  // as a second guard rather than a first one.
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "invocation_logs": false,
+      "head_sampling_rate": 0.01
+    }
+  }
 }

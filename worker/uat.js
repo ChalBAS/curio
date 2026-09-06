@@ -12,6 +12,7 @@
 import app from "./index.js";
 import { handleDoorInstrument, pruneOld } from "./doors.js";
 import { handleLanding, pruneLanding } from "./landing.js";
+import { handleAnalytics, pruneAnalytics } from "./analytics.js";
 
 export default {
   async fetch(request, env, ctx) {
@@ -29,6 +30,17 @@ export default {
     const l = handleLanding(request, env, ctx, url);
     if (l) return l;
 
+    // HOW EACH QUESTION PERFORMS. One POST per round, never one per answer:
+    // five requests would cost five times as much for the same information,
+    // and the gaps between them would themselves be a behavioural trace.
+    // Reaches the worker only because "/m" is in run_worker_first - without
+    // that line the asset layer answers first and the counter records
+    // nothing while looking perfectly healthy, which is exactly how the
+    // first door instrument returned a permanent zero. Removing it and
+    // deploying is the server-side kill switch.
+    const m = handleAnalytics(request, env, ctx, url);
+    if (m) return m;
+
     // robots.txt: add the instrument paths to the generated disallow block
     // (spec §2.1C — crawler taps would inflate the numerator, crawler payload
     // fetches the denominator). Amended HERE rather than in index.js so the
@@ -37,7 +49,7 @@ export default {
       const res = await app.fetch(request, env, ctx);
       const body = await res.text();
       return new Response(
-        body.replace("Disallow: /src/", "Disallow: /src/\nDisallow: /go/\nDisallow: /doors/\nDisallow: /s/"),
+        body.replace("Disallow: /src/", "Disallow: /src/\nDisallow: /go/\nDisallow: /doors/\nDisallow: /s/\nDisallow: /m"),
         { status: res.status, headers: res.headers }
       );
     }
@@ -51,5 +63,6 @@ export default {
   async scheduled(event, env, ctx) {
     ctx.waitUntil(pruneOld(env));
     ctx.waitUntil(pruneLanding(env));
+    ctx.waitUntil(pruneAnalytics(env));
   }
 };
