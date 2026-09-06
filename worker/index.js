@@ -204,6 +204,17 @@ export default {
       );
     }
 
+    // /privacy IS A REAL PAGE, NOT THE APP SHELL.
+    //
+    // Unknown paths fall back to index.html because the app's routes are
+    // hashes. That meant /privacy answered 200 with the app on it: a link that
+    // looks like it works, a page that does not exist, and the one document a
+    // reader needs in order to check any promise made to them. Mapped here
+    // rather than in the UAT wrapper so production carries it too.
+    if (url.pathname === "/privacy" || url.pathname === "/privacy/") {
+      return env.ASSETS.fetch(new Request(url.origin + "/privacy.html", request));
+    }
+
     const res = await env.ASSETS.fetch(request);
 
     // A protected asset's response must never be cached without varying on the

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!--
+  Qpio — what we hold, and what we do not.
+  © 2026 Qpio. All rights reserved.
+
+  THIS PAGE IS CHECKED AGAINST THE CODE, NOT AGAINST A PROMISE.
+  Everything below can be verified in the repository:
+    src/measure.js       everything that can ever leave a reader's device
+    worker/analytics.js  everything that can ever be written, and what never is
+    worker/analytics-schema.sql   the columns that exist at all
+  If those three files and this page ever disagree, the files are right and this
+  page is wrong. CEO instruction, 6 Sep 2026: "ensure the public privacy/data
+  explanation accurately describes the implemented system."
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your data — Qpio</title>
+<meta name="robots" content="index, follow">
+<style>
+  :root {
+    --ink: #14161a; --dim: #5b6470; --line: #e3e6ea; --bg: #fbfbfc;
+    --accent: #1f6feb; --warn: #8a5a00; --ok: #1a7f4b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8eaed; --dim: #9aa3ae; --line: #2a2f36; --bg: #14161a; --accent: #79a9ff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.15rem 5rem; }
+  h1 { font-size: 1.7rem; line-height: 1.25; margin: .4rem 0 .2rem; }
+  h2 { font-size: 1.18rem; margin: 2.4rem 0 .5rem; }
+  h3 { font-size: 1rem; margin: 1.5rem 0 .35rem; }
+  p, li { color: var(--ink); }
+  .lede { font-size: 1.05rem; color: var(--dim); margin-top: 0; }
+  .promise { border-left: 3px solid var(--accent); padding: .1rem 0 .1rem 1rem; margin: 1.5rem 0; font-style: italic; }
+  table { border-collapse: collapse; width: 100%; margin: .8rem 0 1.2rem; font-size: .94rem; }
+  th, td { text-align: left; vertical-align: top; padding: .5rem .6rem; border-bottom: 1px solid var(--line); }
+  th { font-weight: 600; }
+  code { font: .88em ui-monospace, SFMono-Regular, Menlo, monospace; opacity: .85; }
+  .note { background: rgba(127,127,127,.07); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; margin: 1.2rem 0; }
+  .foot { color: var(--dim); font-size: .9rem; margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  a { color: var(--accent); }
+  .switch { display: flex; gap: .6rem; align-items: center; margin: .8rem 0 0; }
+  button { font: inherit; padding: .55rem 1rem; border-radius: 8px; border: 1px solid var(--line);
+    background: transparent; color: var(--ink); cursor: pointer; }
+  button.on { border-color: var(--accent); color: var(--accent); }
+  #optState { font-size: .93rem; color: var(--dim); }
+  [hidden] { display: none !important; }
+  .langbar { display: flex; gap: .5rem; justify-content: flex-end; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+<main>
+
+<div class="langbar">
+  <button id="btnEn" class="on" type="button">English</button>
+  <button id="btnFr" type="button">Français</button>
+</div>
+
+<!-- ============================================================ ENGLISH -->
+<section id="en">
+
+<h1>Your data</h1>
+<p class="lede">Qpio has no accounts, no advertising and no reader profiles. This page says exactly what that does and does not mean.</p>
+
+<p class="promise">Qpio collects only information that has a defined purpose for improving the product, understanding its performance, operating a feature the reader chose, or fulfilling a transaction the reader initiated. We are transparent about what we collect, we do not sell reader data, and anonymous behaviour is not turned into a personal profile.</p>
+
+<h2>The short version</h2>
+<ul>
+  <li>You do not have an account, and there is nothing to sign into.</li>
+  <li>Nothing on our side identifies you, and nothing links two of your visits together.</li>
+  <li>We count <strong>how questions perform</strong> — how often each one is shown, answered and answered correctly. We do not count <em>people</em>, and we could not: there is no column anywhere that holds a person.</li>
+  <li>What you have answered, and anything you save, stays <strong>on your device</strong>.</li>
+  <li>You can <strong>turn the counting off</strong> below. It takes effect immediately and nothing breaks.</li>
+</ul>
+
+<h2>What Qpio itself stores</h2>
+<p>Every time you finish or leave a round, your device sends one short summary. This is the whole of it — there is nothing else, and you can read the code that builds it in <code>src/measure.js</code>.</p>
+
+<table>
+  <tr><th>What</th><th>Example</th><th>Why</th></tr>
+  <tr><td>The day the questions were for</td><td>2026-09-06</td><td>Everyone gets the same five on a given day, so the day is how a question's results are grouped. It is <em>your</em> day, not our server's clock.</td></tr>
+  <tr><td>Which question, and which version of it</td><td>Q001, revision 1</td><td>To know which questions work. A question that is reworded starts a new count rather than mixing with the old one.</td></tr>
+  <tr><td>Whether it was answered, and correctly</td><td>yes / no</td><td>The only evidence that a question is too hard, too easy, or badly written.</td></tr>
+  <tr><td>Where it sat in the round</td><td>3rd of 5</td><td>Later questions look easier because fewer people reach them. Without this, every comparison is wrong.</td></tr>
+  <tr><td>Language, and which translation</td><td>French, revision 2</td><td>So a translation can be judged on its own, rather than blamed on the question.</td></tr>
+  <tr><td>Country</td><td>Senegal</td><td>Qpio exists to widen whose history gets told. Whether a question lands differently in Senegal than in France is exactly the thing we need to see, and it cannot be seen in a continent.</td></tr>
+  <tr><td>Adult or Kids mode</td><td>kids</td><td>Children get their own set, reviewed separately. Without this we cannot tell whether it is working.</td></tr>
+  <tr><td>Kind of device, and whether installed</td><td>iPhone, installed</td><td>Four values only. Enough to know if something is broken on phones.</td></tr>
+  <tr><td>App version and question-bank version</td><td>87 · 760 questions</td><td>Publishing new questions changes which five each day gets, so results either side of that are not comparable. This is what makes the join visible.</td></tr>
+  <tr><td>How you said you found Qpio</td><td>TikTok</td><td>You choose it once, from a list, and can decline. It is a single word. Nothing follows you.</td></tr>
+  <tr><td>Roughly how long ago you first played</td><td>“5–12 weeks”</td><td>One of four bands, shared by everyone in it. It is how we ask “do people come back” without being able to tell who came back.</td></tr>
+  <tr><td>Which links out you tapped</td><td>a book, from question Q001</td><td>It is how Qpio can show it sends people somewhere, which is how the project pays for itself without advertising.</td></tr>
+</table>
+
+<h3>What is never sent, and never stored</h3>
+<p>Not as a policy — there is no column for any of it, and a test fails the build if one appears:</p>
+<ul>
+  <li>Your internet address, in any form, including scrambled or shortened.</li>
+  <li>Your browser's identity string. It is looked at once to tell a person from a robot, then thrown away.</li>
+  <li>Any cookie, session, device or installation marker. There is no identifier of any kind.</li>
+  <li>Any time more precise than the day. A precise time is enough to stitch two events together, so we do not have one.</li>
+  <li>The page you came from, your city, your network, your coordinates.</li>
+  <li>Anything you typed. There is nowhere to type.</li>
+</ul>
+<p>Because there is no marker of any kind, two visits from the same phone are two unrelated rows. That is a real limit on what we can learn, and we accept it.</p>
+
+<h2>What stays on your device</h2>
+<p>Your saved facts, which questions you have already met, your settings, your country and your name for the leaderboard live in your browser's own storage and are never sent anywhere. Clearing your browser data deletes them, and we cannot recover them because we never had them.</p>
+
+<h2>What our suppliers unavoidably see</h2>
+<div class="note">
+<p><strong>We are not going to tell you nobody ever sees your internet address.</strong> That is true of no website, including this one, and saying it would be the one dishonest sentence on this page.</p>
+<p>Qpio is delivered by <strong>Cloudflare</strong>. To send you a page at all, Cloudflare's network receives your internet address, in the same way a postal service must see an envelope. Cloudflare processes it to deliver the page and to stop attacks. <strong>We never store it, never see it attached to anything you read, and it never reaches the database this page describes.</strong> Cloudflare keeps its own operational records under its own terms.</p>
+<p>The database holding the counts above is <strong>located in the European Union</strong>, and was created that way — it is a setting that can only be chosen when a database is made, so we chose it before anything was in it.</p>
+<p>We have switched off the automatic per-request logging that most sites leave on, because it records the full address of every page and link, and that is more than we need to run the service.</p>
+</div>
+
+<h2>How long anything is kept</h2>
+<table>
+  <tr><th>What</th><th>How long</th><th>Why that long</th></tr>
+  <tr><td>Question and audience counts</td><td>13 months</td><td>A year lets a week be compared with the same week a year before; the extra month covers the ragged ends. After that it answers nothing new.</td></tr>
+  <tr><td>Records of the counter failing</td><td>13 months</td><td>Same clock. It is how we tell "nobody played" from "the counter broke".</td></tr>
+  <tr><td>Anything on your device</td><td>Until you clear it</td><td>It is yours. We cannot reach it.</td></tr>
+</table>
+
+<h2>Children</h2>
+<p>Kids mode asks for nothing, offers nothing to buy, and has no way to type anything. It is counted exactly like everything else — as a count of questions, never of children — and the only extra thing recorded is that the round was a Kids round, which is how we can tell whether children's questions are any good.</p>
+
+<h2>Turning the counting off</h2>
+<p>If you would rather Qpio counted nothing at all, switch it off. It takes effect at once, on this device, and everything in the app carries on working exactly as before.</p>
+<div class="switch">
+  <button id="optBtn" type="button">Loading…</button>
+  <span id="optState"></span>
+</div>
+
+<h2>Questions, or wanting something removed</h2>
+<p>There is nothing to remove on our side, because there is nothing of yours on our side. What is on your device is deleted by clearing your browser data for this site. For anything else, write to <a href="mailto:hello@qpio.app">hello@qpio.app</a>.</p>
+
+<p class="foot">Last updated 6 September 2026. Qpio is being incorporated; this page will name the operating company as soon as it exists.
+This page describes the system that is actually built — if you find a difference between what it says and what the code does, we want to know.</p>
+
+</section>
+
+<!-- ============================================================= FRANÇAIS -->
+<section id="fr" hidden>
+
+<h1>Vos données</h1>
+<p class="lede">Qpio n’a ni compte, ni publicité, ni profil de lecteur. Cette page explique exactement ce que cela veut dire, et ce que cela ne veut pas dire.</p>
+
+<p class="promise">Qpio ne collecte que des informations ayant une finalité définie : améliorer le produit, comprendre ses performances, faire fonctionner une fonctionnalité choisie par le lecteur, ou réaliser une transaction initiée par le lecteur. Nous sommes transparents sur ce que nous collectons, nous ne vendons pas les données des lecteurs, et un comportement anonyme n’est jamais transformé en profil personnel.</p>
+
+<h2>En bref</h2>
+<ul>
+  <li>Vous n’avez pas de compte, et il n’y a rien à connecter.</li>
+  <li>Rien de notre côté ne vous identifie, et rien ne relie deux de vos visites.</li>
+  <li>Nous comptons <strong>comment les questions se comportent</strong> — combien de fois chacune est montrée, répondue, et bien répondue. Nous ne comptons pas les <em>personnes</em>, et nous ne le pourrions pas : aucune colonne, nulle part, ne contient une personne.</li>
+  <li>Ce que vous avez répondu, et ce que vous gardez, reste <strong>sur votre appareil</strong>.</li>
+  <li>Vous pouvez <strong>tout désactiver</strong> ci-dessous. L’effet est immédiat et rien ne casse.</li>
+</ul>
+
+<h2>Ce que Qpio conserve</h2>
+<p>À la fin de chaque série — ou si vous la quittez — votre appareil envoie un seul résumé. Le voici en entier ; il n’y a rien d’autre, et le code qui le construit est lisible dans <code>src/measure.js</code>.</p>
+
+<table>
+  <tr><th>Quoi</th><th>Exemple</th><th>Pourquoi</th></tr>
+  <tr><td>Le jour des questions</td><td>2026-09-06</td><td>Tout le monde reçoit les mêmes cinq questions un jour donné. C’est <em>votre</em> jour, pas l’horloge de notre serveur.</td></tr>
+  <tr><td>Quelle question, et quelle version</td><td>Q001, révision 1</td><td>Pour savoir quelles questions fonctionnent. Une question reformulée repart à zéro plutôt que de se mélanger à l’ancienne.</td></tr>
+  <tr><td>Répondue, et bien répondue</td><td>oui / non</td><td>La seule preuve qu’une question est trop dure, trop facile, ou mal écrite.</td></tr>
+  <tr><td>Sa place dans la série</td><td>3ᵉ sur 5</td><td>Les dernières paraissent plus faciles parce que moins de gens y arrivent. Sans cela, toute comparaison est fausse.</td></tr>
+  <tr><td>La langue, et quelle traduction</td><td>français, révision 2</td><td>Pour juger une traduction pour elle-même, au lieu d’en blâmer la question.</td></tr>
+  <tr><td>Le pays</td><td>Sénégal</td><td>Qpio existe pour élargir l’histoire que l’on raconte. Savoir si une question résonne autrement au Sénégal qu’en France est précisément ce qu’il faut voir — et cela ne se voit pas à l’échelle d’un continent.</td></tr>
+  <tr><td>Mode adulte ou enfant</td><td>enfant</td><td>Les enfants ont leur propre série, relue séparément. Sans cela, impossible de savoir si elle est bonne.</td></tr>
+  <tr><td>Type d’appareil, et application installée</td><td>iPhone, installée</td><td>Quatre valeurs, pas plus. De quoi voir si quelque chose casse sur téléphone.</td></tr>
+  <tr><td>Version de l’app et de la banque de questions</td><td>87 · 760 questions</td><td>Publier de nouvelles questions change les cinq du jour : les résultats de part et d’autre ne sont pas comparables.</td></tr>
+  <tr><td>Comment vous avez connu Qpio</td><td>TikTok</td><td>Vous le choisissez une fois, dans une liste, et pouvez refuser. C’est un seul mot. Rien ne vous suit.</td></tr>
+  <tr><td>Depuis quand vous jouez, en gros</td><td>« 5 à 12 semaines »</td><td>Une de quatre tranches, partagée par tous ceux qui y sont. C’est ainsi que l’on demande « les gens reviennent-ils ? » sans pouvoir savoir qui revient.</td></tr>
+  <tr><td>Les liens sortants ouverts</td><td>un livre, depuis Q001</td><td>C’est ce qui permet à Qpio de montrer qu’il envoie des gens quelque part — et donc de vivre sans publicité.</td></tr>
+</table>
+
+<h3>Ce qui n’est jamais envoyé ni conservé</h3>
+<p>Non par principe : il n’existe aucune colonne pour cela, et un test bloque la mise en ligne si l’une apparaît.</p>
+<ul>
+  <li>Votre adresse internet, sous aucune forme, même hachée ou tronquée.</li>
+  <li>La signature de votre navigateur. Elle est lue une fois pour distinguer un humain d’un robot, puis jetée.</li>
+  <li>Aucun cookie, aucune session, aucun marqueur d’appareil ou d’installation. Aucun identifiant, d’aucune sorte.</li>
+  <li>Aucune heure plus précise que le jour. Une heure précise suffirait à recoudre deux événements ; nous n’en avons pas.</li>
+  <li>La page d’où vous venez, votre ville, votre opérateur, vos coordonnées.</li>
+  <li>Rien de ce que vous auriez écrit. Il n’y a nulle part où écrire.</li>
+</ul>
+<p>Faute du moindre marqueur, deux visites depuis le même téléphone sont deux lignes sans lien. C’est une vraie limite à ce que nous pouvons apprendre, et nous l’assumons.</p>
+
+<h2>Ce qui reste sur votre appareil</h2>
+<p>Vos faits gardés, les questions déjà vues, vos réglages, votre pays et votre nom pour le classement vivent dans la mémoire de votre navigateur et ne partent jamais. Effacer les données du site les supprime, et nous ne pouvons pas les restaurer : nous ne les avons jamais eues.</p>
+
+<h2>Ce que nos prestataires voient forcément</h2>
+<div class="note">
+<p><strong>Nous n’allons pas vous dire que personne ne voit jamais votre adresse internet.</strong> Ce serait faux pour n’importe quel site, celui-ci compris, et ce serait la seule phrase malhonnête de cette page.</p>
+<p>Qpio est distribué par <strong>Cloudflare</strong>. Pour vous envoyer une page, son réseau reçoit votre adresse internet, comme un service postal doit voir une enveloppe. Cloudflare la traite pour livrer la page et bloquer les attaques. <strong>Nous ne la stockons jamais, ne la voyons jamais rattachée à ce que vous lisez, et elle n’atteint jamais la base de données décrite ici.</strong></p>
+<p>La base qui contient ces comptages est <strong>située dans l’Union européenne</strong>, et a été créée ainsi — c’est un réglage qui ne se choisit qu’à la création, alors nous l’avons choisi avant qu’elle ne contienne quoi que ce soit.</p>
+<p>Nous avons désactivé la journalisation automatique de chaque requête que la plupart des sites laissent active : elle enregistre l’adresse complète de chaque page et de chaque lien, ce qui dépasse ce dont nous avons besoin.</p>
+</div>
+
+<h2>Durées de conservation</h2>
+<table>
+  <tr><th>Quoi</th><th>Combien de temps</th><th>Pourquoi</th></tr>
+  <tr><td>Comptages des questions et de l’audience</td><td>13 mois</td><td>Un an permet de comparer une semaine à la même l’an passé ; le mois de plus couvre les bords. Au-delà, cela n’apprend rien de neuf.</td></tr>
+  <tr><td>Traces des pannes du compteur</td><td>13 mois</td><td>Même horloge. C’est ce qui distingue « personne n’a joué » de « le compteur est cassé ».</td></tr>
+  <tr><td>Ce qui est sur votre appareil</td><td>Jusqu’à ce que vous l’effaciez</td><td>C’est à vous. Nous n’y avons pas accès.</td></tr>
+</table>
+
+<h2>Les enfants</h2>
+<p>Le mode enfant ne demande rien, ne vend rien, et n’offre aucun endroit où écrire. Il est compté comme tout le reste — des questions, jamais des enfants — et la seule chose ajoutée est que la série était une série enfant, ce qui permet de savoir si ces questions sont bonnes.</p>
+
+<h2>Tout désactiver</h2>
+<p>Si vous préférez que Qpio ne compte rien du tout, désactivez-le. L’effet est immédiat, sur cet appareil, et l’application continue de fonctionner exactement pareil.</p>
+<div class="switch">
+  <button id="optBtnFr" type="button">Chargement…</button>
+  <span id="optStateFr"></span>
+</div>
+
+<h2>Questions, ou suppression</h2>
+<p>Il n’y a rien à supprimer chez nous, parce qu’il n’y a rien de vous chez nous. Ce qui est sur votre appareil s’efface en supprimant les données de ce site. Pour tout le reste : <a href="mailto:hello@qpio.app">hello@qpio.app</a>.</p>
+
+<p class="foot">Mise à jour le 6 septembre 2026. Qpio est en cours de constitution ; cette page nommera la société dès qu’elle existera.
+Cette page décrit le système réellement construit — si vous trouvez un écart entre ce qu’elle dit et ce que fait le code, nous voulons le savoir.</p>
+
+</section>
+
+<script>
+/* THE OPT-OUT IS THE PAGE'S ONLY MOVING PART, and it is not decoration.
+ * Counting how a service is used without asking first is only defensible while
+ * a plain explanation and a free, simple way to object are BOTH actually
+ * shipped. The explanation is above; this is the objection, and it writes the
+ * same key src/measure.js reads before it sends anything. */
+(function () {
+  "use strict";
+  var KEY = "curio.measure.off";
+  function isOff() {
+    try { return localStorage.getItem(KEY) === "true"; } catch (e) { return false; }
+  }
+  function setOff(v) {
+    try {
+      localStorage.setItem(KEY, v ? "true" : "false");
+      /* Anything already waiting to be sent goes too, or opting out would still
+       * let one last round through on the next visit. */
+      if (v) { localStorage.setItem("curio.mq", "[]"); localStorage.setItem("curio.mhealth", "{}"); }
+    } catch (e) { /* a browser refusing storage is handled below */ }
+  }
+  var COPY = {
+    en: { on: "Turn counting off", off: "Turn counting back on",
+          isOn: "Counting is on. Nothing about you is recorded.",
+          isOff: "Counting is off on this device.",
+          broken: "Your browser is blocking storage, so nothing can be counted here anyway." },
+    fr: { on: "Désactiver le comptage", off: "Réactiver le comptage",
+          isOn: "Le comptage est actif. Rien vous concernant n’est enregistré.",
+          isOff: "Le comptage est désactivé sur cet appareil.",
+          broken: "Votre navigateur bloque le stockage : rien ne peut être compté ici de toute façon." }
+  };
+  function storageWorks() {
+    try { localStorage.setItem("curio.t", "1"); localStorage.removeItem("curio.t"); return true; }
+    catch (e) { return false; }
+  }
+  function wire(btnId, stateId, lang) {
+    var btn = document.getElementById(btnId), st = document.getElementById(stateId);
+    if (!btn || !st) return;
+    var c = COPY[lang];
+    if (!storageWorks()) { btn.disabled = true; btn.textContent = c.on; st.textContent = c.broken; return; }
+    function paint() {
+      var off = isOff();
+      btn.textContent = off ? c.off : c.on;
+      btn.className = off ? "on" : "";
+      st.textContent = off ? c.isOff : c.isOn;
+    }
+    btn.addEventListener("click", function () { setOff(!isOff()); paint(); });
+    paint();
+  }
+  wire("optBtn", "optState", "en");
+  wire("optBtnFr", "optStateFr", "fr");
+
+  /* The reader lands in the language they are reading the app in, and can move.
+   * A privacy page nobody can read in their own language is not transparency. */
+  var en = document.getElementById("en"), fr = document.getElementById("fr");
+  var bEn = document.getElementById("btnEn"), bFr = document.getElementById("btnFr");
+  function show(l) {
+    en.hidden = l !== "en"; fr.hidden = l !== "fr";
+    bEn.className = l === "en" ? "on" : ""; bFr.className = l === "fr" ? "on" : "";
+    document.documentElement.lang = l;
+  }
+  bEn.addEventListener("click", function () { show("en"); });
+  bFr.addEventListener("click", function () { show("fr"); });
+  var pref = null;
+  try { pref = localStorage.getItem("curio.lang"); } catch (e) {}
+  if (pref !== "en" && pref !== "fr") {
+    pref = (navigator.language || "").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  show(pref);
+})();
+</script>
+</main>
+</body>
+</html>

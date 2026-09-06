@@ -214,43 +214,67 @@ async function reject(env, reason, now) {
  * instrument tables, where it belongs, rather than in a status code nobody
  * reads. */
 export function handleAnalytics(request, env, ctx, url) {
+  /* The path check stays SYNCHRONOUS so every other request falls straight
+   * through to the app. Only a real beacon pays for a promise. */
   if (url.pathname !== '/m') return null;
-  const no = new Response(null, { status: 204, headers: { 'cache-control': 'no-store' } });
   if (request.method !== 'POST') return new Response(null, { status: 405 });
-  if (!env || !env.ANALYTICS_DB || env.ANALYTICS_OFF === '1') return no;
+
+  const no = () => new Response(null, { status: 204, headers: { 'cache-control': 'no-store' } });
+  if (!env || !env.ANALYTICS_DB || env.ANALYTICS_OFF === '1') return no();
 
   /* Robots and prefetches are excluded before anything is read. A crawler
    * counted as a reader does not merely add noise -- it moves every rate. */
-  if (!isHuman(request.headers.get('user-agent')) || isPrefetch(request.headers)) return no;
+  if (!isHuman(request.headers.get('user-agent')) || isPrefetch(request.headers)) return no();
 
   const now = new Date();
   const country = countryOf(request.cf);
 
-  ctx.waitUntil((async () => {
-    let body;
-    try {
-      const text = await request.text();
-      if (text.length > MAX_BODY) return reject(env, 'oversize', now);
-      body = JSON.parse(text);
-    } catch (e) { return reject(env, 'unparseable', now); }
-    if (!body || typeof body !== 'object') return reject(env, 'unparseable', now);
+  /* THE BODY IS READ BEFORE THE ANSWER GOES BACK, AND THAT IS THE WHOLE POINT.
+   *
+   * The first version started request.text() and returned 204 immediately,
+   * leaving the read to finish in the background. It never did: by the time the
+   * response has gone, the request stream is done, and every single round came
+   * back "body_unreadable" -- a 204 to the reader, empty tables, and no symptom
+   * anywhere except the rejection counter. That counter turned a bug that would
+   * have looked like "nobody is playing" into one that named itself in minutes.
+   *
+   * So the handler is async: it reads and validates while the reader waits,
+   * which costs a few milliseconds on a payload under a kilobyte, and only the
+   * database write is left to finish in the background. */
+  return (async () => {
+    let text;
+    try { text = await request.text(); }
+    catch (e) { ctx.waitUntil(reject(env, 'body_unreadable', now)); return no(); }
 
-    if (!dayAcceptable(body.d, now)) return reject(env, 'day_out_of_range', now);
+    if (typeof text !== 'string' || !text.length) { ctx.waitUntil(reject(env, 'body_empty', now)); return no(); }
+    if (text.length > MAX_BODY) { ctx.waitUntil(reject(env, 'oversize', now)); return no(); }
+
+    let body;
+    try { body = JSON.parse(text); }
+    catch (e) { ctx.waitUntil(reject(env, 'body_not_json', now)); return no(); }
+    if (!body || typeof body !== 'object') { ctx.waitUntil(reject(env, 'body_not_json', now)); return no(); }
+
+    /* Every refusal below is COUNTED with its reason. A counter that quietly
+     * drops what it does not understand is indistinguishable from a quiet week,
+     * which is the failure this whole file exists to make impossible. */
+    const bad = r => { ctx.waitUntil(reject(env, r, now)); return no(); };
+
+    if (!dayAcceptable(body.d, now)) return bad('day_out_of_range');
 
     const lang = pick(LANGS, body.lang, null);
-    if (!lang) return reject(env, 'bad_lang', now);
+    if (!lang) return bad('bad_lang');
     const mode = pick(MODES, body.mode, null);
-    if (!mode) return reject(env, 'bad_mode', now);
+    if (!mode) return bad('bad_mode');
     const surface = pick(SURFACES, body.surface, null);
-    if (!surface) return reject(env, 'bad_surface', now);
+    if (!surface) return bad('bad_surface');
     const platform = pick(PLATFORMS, body.plat, 'other');
     const band = pick(BANDS, body.band, null);
-    if (!band) return reject(env, 'bad_band', now);
+    if (!band) return bad('bad_band');
     const discovery = pick(DISCOVERY, body.ds, 'unknown');
 
     const rawQ = Array.isArray(body.q) ? body.q : null;
-    if (!rawQ || !rawQ.length) return reject(env, 'no_questions', now);
-    if (rawQ.length > MAX_QUESTIONS) return reject(env, 'too_many_questions', now);
+    if (!rawQ || !rawQ.length) return bad('no_questions');
+    if (rawQ.length > MAX_QUESTIONS) return bad('too_many_questions');
 
     const questions = [];
     for (const q of rawQ) {
@@ -258,55 +282,59 @@ export function handleAnalytics(request, env, ctx, url) {
       const qrev = intIn(q && q.qrev, 1, 9999);
       const lrev = intIn(q && q.lrev, 1, 9999);
       const pos = intIn(q && q.pos, 1, MAX_QUESTIONS);
-      if (!id || qrev === null || lrev === null || pos === null) return reject(env, 'bad_question_row', now);
+      if (!id || qrev === null || lrev === null || pos === null) return bad('bad_question_row');
       const answered = q.a ? 1 : 0;
-      /* Correct without answered is arithmetically impossible and would make
-       * every rate above 100%. It is refused rather than clamped, because a
-       * clamp hides the bug that produced it. */
       const correct = q.c ? 1 : 0;
-      if (correct && !answered) return reject(env, 'correct_without_answer', now);
+      /* Correct without answered is arithmetically impossible and would put
+       * every rate above 100%. Refused rather than clamped, because a clamp
+       * hides the bug that produced it. */
+      if (correct && !answered) return bad('correct_without_answer');
       questions.push({ id, qrev, lrev, pos, answered, correct });
     }
 
     const rawD = Array.isArray(body.doors) ? body.doors : [];
-    if (rawD.length > MAX_DOORS) return reject(env, 'too_many_doors', now);
+    if (rawD.length > MAX_DOORS) return bad('too_many_doors');
     const doors = [];
     for (const d of rawD) {
       const id = qidOf(d && d.id);
       const cls = pick(DOOR_CLASSES, d && d.cls, null);
       const slot = pick(SLOTS, d && d.slot, null);
       const n = intIn(d && d.n, 1, 20);
-      if (!id || !cls || !slot || n === null) return reject(env, 'bad_door_row', now);
+      if (!id || !cls || !slot || n === null) return bad('bad_door_row');
       doors.push({ id, cls, slot, n });
     }
 
-    const answers = questions.filter(q => q.answered).length;
     const p = {
       day: body.d,
       lang, mode, surface, platform, band, discovery, country,
       installed: body.inst ? 1 : 0,
       appVersion: versionOf(body.av),
       contentVersion: versionOf(body.cv),
-      questions, doors, answers,
+      questions, doors,
+      answers: questions.filter(q => q.answered).length,
       completed: body.done ? 1 : 0,
     };
 
-    try {
-      const stmts = upserts(p, country).map(u => env.ANALYTICS_DB.prepare(u.sql).bind(...u.bind));
-      await env.ANALYTICS_DB.batch(stmts);
-    } catch (e) {
-      /* THE WRITE FAILED AND SOMEBODY HAS TO KNOW. A database at its limit, a
-       * schema drift, a transient error -- all of them look exactly like "no
-       * readers today" if the failure is swallowed. The message is not stored,
-       * only its class, because an error string can echo the input back. */
-      const kind = /limit|exceeded|quota|too many/i.test(String(e && e.message)) ? 'write_limit'
-        : /no such table|no such column/i.test(String(e && e.message)) ? 'schema_drift'
-          : 'write_failed';
-      await reject(env, kind, now);
-    }
-  })());
+    /* The write is the only part left in the background. The reader is not
+     * waiting on a database. */
+    ctx.waitUntil((async () => {
+      try {
+        const stmts = upserts(p, country).map(u => env.ANALYTICS_DB.prepare(u.sql).bind(...u.bind));
+        await env.ANALYTICS_DB.batch(stmts);
+      } catch (e) {
+        /* A database at its limit, a schema that has drifted, or a transient
+         * error all look exactly like "no readers today" if swallowed. The
+         * message itself is never stored -- an error string can echo the input
+         * back -- only which of the three it was. */
+        const kind = /limit|exceeded|quota|too many/i.test(String(e && e.message)) ? 'write_limit'
+          : /no such table|no such column/i.test(String(e && e.message)) ? 'schema_drift'
+            : 'write_failed';
+        await reject(env, kind, now);
+      }
+    })());
 
-  return no;
+    return no();
+  })();
 }
 
 /* THIRTEEN MONTHS, AND THE REASON IS NOT SENTIMENT. A year lets any week be

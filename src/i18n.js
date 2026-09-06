@@ -167,6 +167,18 @@
       "The country you represent": "Le pays que tu représentes",
       "Which country do you represent?": "Quel pays représentes-tu ?",
       "Prefer not to say": "Je préfère ne pas le dire",
+      // The privacy page link, and the one question asked at onboarding about
+      // how someone found Qpio. The option labels are translated too: they are
+      // passed through t() from a list, so the scanner cannot see them and
+      // would otherwise leave a French reader a French screen with an English
+      // dropdown on it.
+      "Your data": "Vos données",
+      "How did you hear about Qpio?": "Comment avez-vous connu Qpio ?",
+      "One tap, and it helps us know where to put our effort. It is kept as a single word — no link to you, and nothing follows you around.": "Un seul geste, et cela nous aide à savoir où porter nos efforts. C’est gardé sous la forme d’un simple mot — aucun lien avec vous, et rien ne vous suit.",
+      "A search engine": "Un moteur de recherche",
+      "Someone told me": "Quelqu’un m’en a parlé",
+      "Somewhere else": "Ailleurs",
+      "I do not remember": "Je ne m’en souviens plus",
       "Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It is kept on this device, and counted only as a country — never as a person.":
         "Sert à t’envoyer vers une librairie ou une bibliothèque qui peut vraiment te servir, et à te placer sur le classement de ton pays quand les concours commenceront. Il est conservé sur cet appareil, et n’est compté que comme un pays — jamais comme une personne.",
       "It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It is counted as a country, never as a person — no name is ever attached to it.":

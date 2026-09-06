@@ -1065,7 +1065,11 @@
       // against an accusation nobody had made, and third-party destinations
       // now sit one screen away — a claim that invites a lawyer to parse it.
       '<div class="footer">' + t("Qpio — knowledge is free, forever.") + '<br>' +
-      t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a></div>'
+      t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a>' +
+      // A privacy page nobody can find is not transparency. One link, on every
+      // screen that carries the footer, opening a real page rather than the app
+      // shell - and it is where the reader turns the counting off.
+      ' · <a href="/privacy">' + t("Your data") + '</a></div>'
     );
     node.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); openSettings(); });
     return node;
@@ -3073,6 +3077,21 @@
   }
 
   // ---------- onboarding (FEAT-011 / US-008): 3 cards, skippable, once ----------
+  // The closed list the reader chooses from, and the only values the counter
+  // will accept. Kept here beside the screen that asks, so the words a reader
+  // sees and the values that are stored cannot drift apart.
+  var DISCOVERY_CHOICES = [
+    ["unknown", "Prefer not to say"],
+    ["tiktok", "TikTok"],
+    ["youtube", "YouTube"],
+    ["instagram", "Instagram"],
+    ["facebook", "Facebook"],
+    ["search", "A search engine"],
+    ["referral", "Someone told me"],
+    ["other", "Somewhere else"],
+    ["dontremember", "I do not remember"]
+  ];
+
   function onboardingView(step) {
     step = step || 0;
     var slides = [
@@ -3096,6 +3115,20 @@
         // never as a person.
         text: t("It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It is counted as a country, never as a person — no name is ever attached to it."),
         pick: "country" },
+      // ASKED ONCE, ANSWERED BY THE READER, NEVER INFERRED.
+      //
+      // CEO, 6 Sep 2026: "Do not create a hidden lifetime attribution tracker.
+      // On first onboarding/install, ask the reader once: How did you hear
+      // about Qpio?"
+      //
+      // The alternative the industry uses is a tracking parameter that follows
+      // someone from a post to an install and onwards for the life of the app.
+      // This is the opposite: one question, one word kept on this device, no
+      // link to anything the reader does afterwards. "Prefer not to say" is a
+      // real answer and costs them nothing.
+      { emoji: "👋", title: t("How did you hear about Qpio?"),
+        text: t("One tap, and it helps us know where to put our effort. It is kept as a single word — no link to you, and nothing follows you around."),
+        pick: "discovery" },
       { emoji: "⚙️", title: t("Made for the way you learn."),
         text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device.") }
     ];
@@ -3109,6 +3142,11 @@
         '<div class="onb-emoji">' + s.emoji + '</div>' +
         '<h1 class="onb-title">' + s.title + '</h1>' +
         '<p class="onb-text">' + s.text + '</p>' +
+        (s.pick === "discovery" ? '<select class="cselect" id="onbDiscovery" aria-label="' +
+          esc(t("How did you hear about Qpio?")) + '">' +
+          DISCOVERY_CHOICES.map(function (d) {
+            return '<option value="' + d[0] + '">' + esc(t(d[1])) + '</option>';
+          }).join("") + '</select>' : '') +
         (s.pick === "country" ? '<select class="cselect" id="onbCC" aria-label="' +
           esc(t("The country you represent")) + '"></select>' +
           // Asked once, here, so no round ever has to interrupt itself to ask
@@ -3153,6 +3191,17 @@
     // fresh node, so by the time finish() runs on the last slide the field from
     // the country slide is long gone and the name was silently discarded —
     // measured on a real first run before this line existed.
+    var dsField = node.querySelector("#onbDiscovery");
+    if (dsField) {
+      var pref = LS.get("discovery", null);
+      if (pref) dsField.value = pref;
+      // Saved as it changes rather than at the end: every step renders a new
+      // node, so by the time the last slide finishes this one no longer exists.
+      dsField.addEventListener("change", function () {
+        LS.set("discovery", dsField.value || "unknown");
+      });
+    }
+
     var nmField = node.querySelector("#onbName");
     if (nmField) {
       var saveName = function () { LS.set("playerName", (nmField.value || "").trim().slice(0, 16)); };
