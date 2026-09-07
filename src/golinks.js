@@ -34,13 +34,13 @@
   // `hold` = an object held somewhere · `site` = a place you travel to.
   var PLACES = {
     // — objects, in named institutions —
-    "Mona_Lisa":                    { kind: "hold", where: "Musée du Louvre", city: "Paris", url: "https://www.louvre.fr/en/explore/the-palace/the-mona-lisa" },
+    "Mona_Lisa":                    { kind: "hold", where: "Musée du Louvre", city: "Paris", url: "https://collections.louvre.fr/en/ark:/53355/cl010062370" },
     "Code_of_Hammurabi":            { kind: "hold", where: "Musée du Louvre", city: "Paris", url: "https://www.louvre.fr/en" },
     "Rosetta_Stone":                { kind: "hold", where: "The British Museum", city: "London", url: "https://www.britishmuseum.org/collection/object/Y_EA24" },
     "Cyrus_Cylinder":               { kind: "hold", where: "The British Museum", city: "London", url: "https://www.britishmuseum.org/collection/object/W_1880-0617-1941" },
     "Epic_of_Gilgamesh":            { kind: "hold", where: "The British Museum", city: "London", url: "https://www.britishmuseum.org/" },
     "Benin_Bronzes":                { kind: "hold", where: "Split between museums worldwide — and the subject of a live restitution debate", city: "Benin City · London · Berlin", url: "https://www.britishmuseum.org/about-us/british-museum-story/contested-objects-collection/benin-bronzes" },
-    "Magna_Carta":                  { kind: "hold", where: "The British Library", city: "London", url: "https://www.bl.uk/magna-carta" },
+    "Magna_Carta":                  { kind: "hold", where: "The British Library", city: "London", url: "https://www.bl.uk/collection-items/magna-carta-1215" },
     "The_Starry_Night":             { kind: "hold", where: "Museum of Modern Art", city: "New York", url: "https://www.moma.org/collection/works/79802" },
     "The_Scream":                   { kind: "hold", where: "The National Museum and the Munch Museum", city: "Oslo", url: "https://www.munchmuseet.no/en/" },
     "Self-portraits_by_Rembrandt":  { kind: "hold", where: "Rijksmuseum", city: "Amsterdam", url: "https://www.rijksmuseum.nl/en" },
@@ -81,7 +81,7 @@
     "Victoria_Falls":               { kind: "site", where: "Mosi-oa-Tunya / Victoria Falls", city: "Zambia · Zimbabwe", url: "https://whc.unesco.org/en/list/509/", tour: "https://www.zambiatourism.com/" },
     "Great_Barrier_Reef":           { kind: "site", where: "The Great Barrier Reef", city: "Australia", url: "https://whc.unesco.org/en/list/154/" },
     "Mount_Fuji":                   { kind: "site", where: "Fujisan", city: "Japan", url: "https://whc.unesco.org/en/list/1418/", tour: "https://www.fujisan-climb.jp/" },
-    "Nairobi_National_Park":        { kind: "site", where: "Nairobi National Park", city: "Kenya", url: "https://www.kws.go.ke/parks/nairobi-national-park" },
+    "Nairobi_National_Park":        { kind: "site", where: "Nairobi National Park", city: "Kenya", url: "https://www.kws.go.ke/content/nairobi-national-park" },
     "Rideau_Canal":                 { kind: "site", where: "The Rideau Canal", city: "Ottawa, Canada", url: "https://whc.unesco.org/en/list/1221/" },
     "Panama_Canal":                 { kind: "site", where: "The Panama Canal", city: "Panama", url: "https://pancanal.com/en/" },
     "Inca_road_system":             { kind: "site", where: "Qhapaq Ñan, the Andean road system", city: "Six countries, 30,000 km", url: "https://whc.unesco.org/en/list/1459/" },
