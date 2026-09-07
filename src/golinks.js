@@ -351,11 +351,26 @@
          and "here is the book" */
       read:   { title: book ? book.t : title, sub: book && book.a ? book.a : "", url: readUrl(title, slug) },
       visit:  p ? { title: p.where, sub: p.city, url: destUrl(p) } : { title: "", sub: "", url: null },
-      /* The channel is the destination; the topic is only what gets typed into
-       * its search box. Saying so is the difference between a promise and a
-       * description. `search: true` lets a surface show that plainly. */
-      watch:  { title: watchChannel(cat) || title, sub: "search their channel",
-                url: watchUrl(title, cat), search: true },
+      /* A DOOR IS ONLY A DOOR IF THERE IS SOMETHING BEHIND IT.
+       *
+       * CEO, 7 Sep 2026, on the first question of his review screen: "the
+       * youtube link is incorrect". It was not one link. Every Watch door is a
+       * search inside a vetted channel, and asking "does the address answer"
+       * got 200 every time -- so it passed every check ever run. Asking whether
+       * there is a VIDEO gives a different answer: 266 of the 760 land on an
+       * empty shelf, 121 of them because the British Museum was handed West
+       * African instruments and Mesoamerican farming.
+       *
+       * Those are switched off here and show greyed, like a missing Visit. The
+       * absence is the useful signal: it says where a real video is worth
+       * finding. Re-derive the list with curio-hq/tools/check_watch_doors.js. */
+      watch:  (function () {
+        var emptyList = window.CURIO_WATCH_EMPTY;
+        var known = emptyList && emptyList.indexOf && q && q.id && emptyList.indexOf(q.id) !== -1;
+        if (known) return { title: "", sub: "", url: null, search: true };
+        return { title: watchChannel(cat) || title, sub: "search their channel",
+                 url: watchUrl(title, cat), search: true };
+      })(),
       source: { title: "", sub: "", url: src }
     };
 
