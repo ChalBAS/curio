@@ -2086,7 +2086,17 @@
       var waysHtml = WAY_ORDER.map(function (k) {
         var d = byKind[k];
         if (!d) return "";
-        var word = k === "read" ? t("Read") : k === "visit" ? t("Visit") : t("Watch");
+        /* A DOOR SAYS WHAT IS BEHIND IT.
+           Every Watch link is a search inside a vetted channel -- the right
+           safety call, and the wrong word. "Watch - Kora" promises a film about
+           the kora; what arrives is the British Museum's channel with "Kora"
+           typed into its search box, which may return nothing. So a search door
+           is labelled Search, and names the channel underneath. The CEO has
+           made this exact complaint once already about Visit links that led to
+           a UNESCO listing rather than somewhere to go. */
+        var word = d.search ? t("Search")
+                 : k === "read" ? t("Read")
+                 : k === "visit" ? t("Visit") : t("Watch");
         var inner =
           '<span class="gf-ico" aria-hidden="true">' + d.icon + '</span>' +
           '<span class="gf-text">' +

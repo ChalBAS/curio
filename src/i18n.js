@@ -211,6 +211,8 @@
       "Go": "Y aller",
       "Read": "Lire",
       "Watch": "Regarder",
+      // A door that opens a search box says so. See golinks.js watchChannel().
+      "Search": "Chercher",
       "Dive deeper": "Creuser",
       "Follow your curiosity anywhere.": "Suis ta curiosité où elle te mène.",
       "Documentaries": "Documentaires",

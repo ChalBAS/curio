@@ -176,19 +176,22 @@
     // NationalGeographic both 404; the French science channel did too. Verified
     // by fetching each one, and a check now runs in the release routine so a
     // handle cannot rot silently again.
+    // `name` is what the reader is shown. The handle is an address --
+    // "bbcearth" is not a thing anybody says out loud, and a door labelled
+    // with an address is a door that has not been finished.
     en: [
-      { at: "TEDEd",             cats: ["Science", "History", "Arts", "Nature", "Tech"] },   // was TED-Ed — 404
-      { at: "smithsonianchannel", cats: ["History", "Nature", "Arts"] },
-      { at: "bbcearth",          cats: ["Nature"] },
-      { at: "NatGeo",            cats: ["Nature", "Geography"] },                            // was NationalGeographic — 404
-      { at: "veritasium",        cats: ["Science", "Tech"] },
-      { at: "TheRoyalInstitution", cats: ["Science"] },
-      { at: "britishmuseum",     cats: ["History", "Arts"] }
+      { at: "TEDEd",             name: "TED-Ed",              cats: ["Science", "History", "Arts", "Nature", "Tech"] },   // was TED-Ed — 404
+      { at: "smithsonianchannel", name: "Smithsonian Channel", cats: ["History", "Nature", "Arts"] },
+      { at: "bbcearth",          name: "BBC Earth",           cats: ["Nature"] },
+      { at: "NatGeo",            name: "National Geographic", cats: ["Nature", "Geography"] },                            // was NationalGeographic — 404
+      { at: "veritasium",        name: "Veritasium",          cats: ["Science", "Tech"] },
+      { at: "TheRoyalInstitution", name: "The Royal Institution", cats: ["Science"] },
+      { at: "britishmuseum",     name: "The British Museum",  cats: ["History", "Arts"] }
     ],
     fr: [
-      { at: "cestpassorcierofficiel", cats: ["Science", "Tech", "Nature"] },                 // was lesciencecvous — 404
-      { at: "arte",              cats: ["History", "Arts", "Nature", "Geography"] },
-      { at: "cnrs",              cats: ["Science", "Nature"] }
+      { at: "cestpassorcierofficiel", name: "C'est pas sorcier", cats: ["Science", "Tech", "Nature"] },                 // was lesciencecvous — 404
+      { at: "arte",              name: "ARTE",                cats: ["History", "Arts", "Nature", "Geography"] },
+      { at: "cnrs",              name: "CNRS",                cats: ["Science", "Nature"] }
     ]
   };
 
@@ -226,6 +229,30 @@
     // Scoped search it is: the reader lands inside the vetted channel, which
     // is a real destination and cannot surface a creator we did not choose.
     return "https://www.youtube.com/@" + best.at + "/search?query=" + encodeURIComponent(title);
+  }
+
+  /* WHAT IS ACTUALLY BEHIND THE WATCH DOOR, so the label can say it.
+   *
+   * Found 7 Sep 2026. Every one of the 760 Watch links is a SEARCH inside a
+   * vetted channel -- which is the right safety decision (5 Sep) and the wrong
+   * label. The door read "Watch - Kora", which promises a film about the kora;
+   * what the reader gets is the British Museum's channel with "Kora" typed into
+   * its search box, and it may return nothing at all.
+   *
+   * The CEO has made this exact complaint once already, about Visit links that
+   * went to a UNESCO listing instead of somewhere to go. A door must say what is
+   * behind it. Naming the channel is the honest label AND the more useful one:
+   * "British Museum - search their channel" tells a reader both where they are
+   * going and that they are going to have to look. */
+  function watchChannel(cat) {
+    var lang = window.QLANG === "fr" ? "fr" : "en";
+    var list = WATCH_CHANNELS[lang] || WATCH_CHANNELS.en;
+    var best = null, bestSpan = 99, i;
+    for (i = 0; i < list.length; i++) {
+      if (cat && list[i].cats.indexOf(cat) === -1) continue;
+      if (list[i].cats.length < bestSpan) { best = list[i]; bestSpan = list[i].cats.length; }
+    }
+    return best ? (best.name || best.at) : null;
   }
 
   // The slug is the entity. "Rock-Hewn_Churches,_Lalibela" → "Rock-Hewn Churches, Lalibela".
@@ -324,7 +351,11 @@
          and "here is the book" */
       read:   { title: book ? book.t : title, sub: book && book.a ? book.a : "", url: readUrl(title, slug) },
       visit:  p ? { title: p.where, sub: p.city, url: destUrl(p) } : { title: "", sub: "", url: null },
-      watch:  { title: title, sub: "", url: watchUrl(title, cat) },
+      /* The channel is the destination; the topic is only what gets typed into
+       * its search box. Saying so is the difference between a promise and a
+       * description. `search: true` lets a surface show that plainly. */
+      watch:  { title: watchChannel(cat) || title, sub: "search their channel",
+                url: watchUrl(title, cat), search: true },
       source: { title: "", sub: "", url: src }
     };
 
@@ -332,7 +363,9 @@
       var d = made[s.kind];
       return {
         kind: s.kind, icon: s.icon, label: s.label,
-        title: d.title, sub: d.sub, url: d.url, on: !!d.url
+        title: d.title, sub: d.sub, url: d.url, on: !!d.url,
+        /* True when the door opens a search rather than the thing itself. */
+        search: !!d.search
       };
     });
   }
@@ -417,6 +450,7 @@
   window.CURIO_GO = {
     places: PLACES, goFor: goFor, primaryOf: primaryOf, entityOf: entityOf,
     titleOf: titleOf, sourceUrl: sourceUrl, readUrl: readUrl, watchUrl: watchUrl,
+    watchChannel: watchChannel,
     lanesFor: lanesFor, surprise: surprise
   };
 })();
