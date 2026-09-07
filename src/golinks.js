@@ -365,6 +365,24 @@
        * absence is the useful signal: it says where a real video is worth
        * finding. Re-derive the list with curio-hq/tools/check_watch_doors.js. */
       watch:  (function () {
+        /* HIS CHOICE WINS, AND IT IS NOT A SEARCH.
+         *
+         * CEO, 7 Sep 2026: "the workflow should allow to have several links so i
+         * can choose". Where he has picked one on the review screen it is served
+         * exactly -- so somebody who has never heard a kora gets Sona Jobarteh
+         * playing one, rather than a search box with the word typed into it.
+         * Written by curio-hq/tools/export_watch_choices.js from his choices. */
+        var chosen = window.CURIO_WATCH_CHOSEN;
+        var pick = chosen && q && q.id ? chosen[q.id] : null;
+        if (pick) return { title: title, sub: "chosen for this question", url: pick, search: false };
+
+        /* He looked and said none of them were good enough. That is a decision,
+         * not a gap, and a search must not quietly re-fill it. */
+        var declined = window.CURIO_WATCH_DECLINED;
+        if (declined && declined.indexOf && q && q.id && declined.indexOf(q.id) !== -1) {
+          return { title: "", sub: "", url: null, search: false };
+        }
+
         var emptyList = window.CURIO_WATCH_EMPTY;
         var known = emptyList && emptyList.indexOf && q && q.id && emptyList.indexOf(q.id) !== -1;
         if (known) return { title: "", sub: "", url: null, search: true };
