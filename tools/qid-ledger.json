@@ -2,73 +2,6 @@
  "_README": "APPEND-ONLY. Every canonical question id ever issued. An id in this file is never issued again, even if its question is deleted - reusing one would attach a dead question's history to a live question.",
  "minted": {
   "q18k67sv": "X0001",
-  "qqjl3xt": "X0002",
-  "q1d7rw25": "X0003",
-  "qiehu9h": "X0004",
-  "q1v6wric": "X0005",
-  "qrfr56b": "X0006",
-  "qe2abev": "X0007",
-  "qvb6ct8": "X0008",
-  "q3zhbnp": "X0009",
-  "q1k22err": "X0010",
-  "qjnrzfv": "X0011",
-  "qi8b3qv": "X0012",
-  "qobaff": "X0013",
-  "q1p3609f": "X0014",
-  "q1f9c8z1": "X0015",
-  "q17mcl8l": "X0016",
-  "q1mn5bu1": "X0017",
-  "qflhy6f": "X0018",
-  "q1hrmfsk": "X0019",
-  "q2eyzxt": "X0020",
-  "qwscq2o": "X0021",
-  "q1sfaa5h": "X0022",
-  "qo260il": "X0023",
-  "q1vnnrpq": "X0024",
-  "q1a24mzl": "X0025",
-  "q907cix": "X0026",
-  "qyvyfed": "X0027",
-  "q1ww04o": "X0028",
-  "q1f1ox2t": "X0029",
-  "q1x8uksz": "X0030",
-  "q3iy9h7": "X0031",
-  "qc89dby": "X0032",
-  "qcbehui": "X0033",
-  "q1xc7msa": "X0034",
-  "q1adqabn": "X0035",
-  "q1brncij": "X0036",
-  "qmilv9e": "X0037",
-  "quknx4s": "X0038",
-  "q10xhssn": "X0039",
-  "q43f1wb": "X0040",
-  "qcm6nop": "X0041",
-  "q4dc2h": "X0042",
-  "qcn1r95": "X0043",
-  "q61rms3": "X0044",
-  "q6rs6jr": "X0045",
-  "q373a35": "X0046",
-  "q1s9uoj3": "X0047",
-  "q1d70x7f": "X0048",
-  "qmk3o2o": "X0049",
-  "q1buedh9": "X0050",
-  "q1t2h3zz": "X0051",
-  "q1keokrv": "X0052",
-  "q15nu8t0": "X0053",
-  "q1rwudq3": "X0054",
-  "q1btg4lr": "X0055",
-  "q1j43n5o": "X0056",
-  "q1qyp4uo": "X0057",
-  "qa88zm4": "X0058",
-  "qdx1u5a": "X0059",
-  "q14dke8b": "X0060",
-  "qt2kzjl": "X0061",
-  "q1bc57ia": "X0062",
-  "q9zilpf": "X0063",
-  "qbydts6": "X0064",
-  "qvjcjkk": "X0065",
-  "qvl7crv": "X0066",
-  "q1krjzsp": "X0067",
-  "qa51fzx": "X0068",
   "q1bq0u1x": "X0069",
   "q150tzf3": "X0070",
   "q1itpmh7": "X0071",
@@ -81,6 +14,275 @@
   "qj8ffzo": "X0078",
   "q1m2b92t": "X0079"
  },
- "retired": {},
+ "retired": {
+  "X0002": {
+   "supersededBy": "Q264",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0003": {
+   "supersededBy": "Q265",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0004": {
+   "supersededBy": "Q266",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0005": {
+   "supersededBy": "Q267",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0006": {
+   "supersededBy": "Q268",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0007": {
+   "supersededBy": "Q269",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0008": {
+   "supersededBy": "Q270",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0009": {
+   "supersededBy": "Q271",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0010": {
+   "supersededBy": "Q272",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0011": {
+   "supersededBy": "Q273",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0012": {
+   "supersededBy": "Q274",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0013": {
+   "supersededBy": "Q275",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0014": {
+   "supersededBy": "Q276",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0015": {
+   "supersededBy": "Q277",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0016": {
+   "supersededBy": "Q278",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0017": {
+   "supersededBy": "Q279",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0018": {
+   "supersededBy": "Q280",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0019": {
+   "supersededBy": "Q281",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0020": {
+   "supersededBy": "Q282",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0021": {
+   "supersededBy": "Q283",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0022": {
+   "supersededBy": "Q284",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0023": {
+   "supersededBy": "Q285",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0024": {
+   "supersededBy": "Q286",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0025": {
+   "supersededBy": "Q287",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0026": {
+   "supersededBy": "Q288",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0027": {
+   "supersededBy": "Q289",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0028": {
+   "supersededBy": "Q290",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0029": {
+   "supersededBy": "Q291",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0030": {
+   "supersededBy": "Q292",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0031": {
+   "supersededBy": "Q293",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0032": {
+   "supersededBy": "Q294",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0033": {
+   "supersededBy": "Q295",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0034": {
+   "supersededBy": "Q296",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0035": {
+   "supersededBy": "Q297",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0036": {
+   "supersededBy": "Q298",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0037": {
+   "supersededBy": "Q299",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0038": {
+   "supersededBy": "Q300",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0039": {
+   "supersededBy": "Q301",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0040": {
+   "supersededBy": "Q302",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0041": {
+   "supersededBy": "Q303",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0042": {
+   "supersededBy": "Q304",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0043": {
+   "supersededBy": "Q305",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0044": {
+   "supersededBy": "Q306",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0045": {
+   "supersededBy": "Q307",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0046": {
+   "supersededBy": "Q308",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0047": {
+   "supersededBy": "Q309",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0048": {
+   "supersededBy": "Q310",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0049": {
+   "supersededBy": "Q311",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0050": {
+   "supersededBy": "Q312",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0051": {
+   "supersededBy": "Q313",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0052": {
+   "supersededBy": "Q314",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0053": {
+   "supersededBy": "Q315",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0054": {
+   "supersededBy": "Q316",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0055": {
+   "supersededBy": "Q317",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0056": {
+   "supersededBy": "Q318",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0057": {
+   "supersededBy": "Q319",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0058": {
+   "supersededBy": "Q320",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0059": {
+   "supersededBy": "Q321",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0060": {
+   "supersededBy": "Q322",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0061": {
+   "supersededBy": "Q323",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0062": {
+   "supersededBy": "Q324",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0063": {
+   "supersededBy": "Q325",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0064": {
+   "supersededBy": "Q326",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0065": {
+   "supersededBy": "Q327",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0066": {
+   "supersededBy": "Q328",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0067": {
+   "supersededBy": "Q329",
+   "why": "paired to the workbook once the match key included the answer"
+  },
+  "X0068": {
+   "supersededBy": "Q330",
+   "why": "paired to the workbook once the match key included the answer"
+  }
+ },
  "nextMinted": 80
 }

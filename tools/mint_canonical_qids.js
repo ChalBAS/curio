@@ -147,30 +147,85 @@ if (en.length !== fr.length) {
  * copies drifted. Treating that as a pairing failure would block the very change
  * that fixes it: after this run those fields live on the question once, and the
  * translation carries only the words. */
+/* THE SAFETY CHECK HAS TO KNOW WHICH SHAPE THE FRENCH BANK IS IN.
+ *
+ * Before 6 Sep 2026 the French file was a full copy of every question, metadata
+ * and all, and the check was: do the two rows agree on the answer index and the
+ * option count? That was right then.
+ *
+ * The 6 Sep run slimmed French to a TRANSLATION row -- id, lrev, question,
+ * options, fact -- precisely so that the answer, the category, the source and
+ * the difficulty could have exactly one home. So from that moment the old check
+ * compared a number against `undefined` on every row and reported all 760 as
+ * broken, which meant the tool could never be run a second time. Found 7 Sep
+ * 2026 while fixing the match key; the guard was protecting against a shape that
+ * no longer exists and blocking the fix to a real defect.
+ *
+ * What still MUST hold in the slim shape:
+ *   - the two rows are the same question (same id, when both carry one)
+ *   - they offer the same number of options, so an answer index means the same
+ *     thing in both languages
+ * What deliberately does NOT hold: the French row carrying its own copy of the
+ * answer or the metadata. That is the fix, not a defect. */
+const frIsTranslationOnly = fr.length > 0 && fr.every(r => r && r.answer === undefined);
 const pairingBreaks = [];
 const metaDrift = [];
 for (let i = 0; i < en.length; i++) {
   const a = en[i], b = fr[i];
-  if (a.answer !== b.answer || (a.options || []).length !== (b.options || []).length) {
-    pairingBreaks.push({ i, en: a.q.slice(0, 60), fr: b.q.slice(0, 60),
+  if (!b) { pairingBreaks.push({ i, en: a.q.slice(0, 60), fr: '(no French row)' }); continue; }
+
+  const optionsDisagree = (a.options || []).length !== (b.options || []).length;
+  const idsDisagree = a.id && b.id && a.id !== b.id;
+  const answersDisagree = !frIsTranslationOnly && a.answer !== b.answer;
+
+  if (optionsDisagree || idsDisagree || answersDisagree) {
+    pairingBreaks.push({ i, en: a.q.slice(0, 60), fr: String(b.q || '').slice(0, 60),
+      enId: a.id, frId: b.id,
       enAnswer: a.answer, frAnswer: b.answer,
       enOptions: (a.options || []).length, frOptions: (b.options || []).length });
   }
-  for (const k of ['cat', 'region', 'diff', 'kids', 'src']) {
-    if (JSON.stringify(a[k]) !== JSON.stringify(b[k])) {
-      metaDrift.push({ i, field: k, en: a[k], fr: b[k] });
-      break;
+
+  /* Metadata drift is only meaningful while the French row still carries its own
+   * copy of the metadata. Once it does not, there is nothing to drift. */
+  if (!frIsTranslationOnly) {
+    for (const k of ['cat', 'region', 'diff', 'kids', 'src']) {
+      if (JSON.stringify(a[k]) !== JSON.stringify(b[k])) {
+        metaDrift.push({ i, field: k, en: a[k], fr: b[k] });
+        break;
+      }
     }
   }
 }
 
 /* --------------------------------------------------------- reconcile the banks */
 
+/* THE MATCH KEY IS THE QUESTION *PLUS ITS ANSWER*, NOT THE QUESTION TEXT.
+ *
+ * Found 7 September 2026, after the CEO challenged the inventory table for the
+ * FIFTH time. Matching on question text alone made 68 legitimate questions look
+ * like one: "Which country's flag is this?" is asked 68 times, with 68 different
+ * flags and 68 different answers. The picture IS the question, and the text is
+ * identical by design.
+ *
+ * The consequence was silent and it was mine. Only one of the 68 could pair, so
+ * 67 workbook rows looked "live but missing from the app" and the app's other 67
+ * flag questions were minted fresh ids and reported as "served to readers with
+ * no workbook row governing them". That is 134 of the 147-question disagreement
+ * the dashboard has been showing -- an artefact of this line, not a content
+ * problem. The real gap is 12.
+ *
+ * Text + correct answer gives 2,000 distinct keys for 2,000 rows, with none
+ * dropped. If a genuine duplicate ever appears it will show up here as a
+ * dropped key rather than being laundered into a mint.
+ */
+const goldenKey = g => norm(g.questionEN) + ' || ' + norm(g.correctAnswer);
+const shippedKey = q => norm(q.q) + ' || ' + norm(q.options && q.options[q.answer]);
+
 const goldenByText = new Map();
 const goldenDupText = [];
 for (const g of golden) {
-  const k = norm(g.questionEN);
-  if (!k) continue;
+  const k = goldenKey(g);
+  if (!k || k === ' || ') continue;
   if (goldenByText.has(k)) { goldenDupText.push({ a: goldenByText.get(k).qid, b: g.qid, text: g.questionEN.slice(0, 70) }); continue; }
   goldenByText.set(k, g);
 }
@@ -178,7 +233,7 @@ for (const g of golden) {
 const matched = [], shippedOnly = [];
 const usedGolden = new Set();
 en.forEach((q, i) => {
-  const g = goldenByText.get(norm(q.q));
+  const g = goldenByText.get(shippedKey(q));
   if (g && !usedGolden.has(g.qid)) {
     usedGolden.add(g.qid);
     matched.push({ i, qid: g.qid, status: g.releaseStatus });
@@ -352,6 +407,27 @@ fs.writeFileSync(FR_PATH, emitTranslation(fr, assign, FR_HEADER, 'CURIO_QUESTION
 const legacyPairs = {};
 en.forEach((q, i) => { legacyPairs[legacyQid(q)] = assign[i]; });
 fr.forEach((q, i) => { legacyPairs[legacyQid(q)] = assign[i]; });
+
+/* A MINTED ID THAT TURNED OUT TO BE GOVERNED AFTER ALL.
+ *
+ * 67 flag questions were minted X-ids on 6 Sep because the text-only match could
+ * not pair them. They are now correctly paired to their workbook ids. Anyone who
+ * already opened the test site has those X-ids saved in their browser, so the map
+ * has to carry them forward too -- otherwise the fix to the identity bug would
+ * itself orphan a vault, which is the exact failure the ids were introduced to
+ * end. The ledger records the retirement so a retired id is never issued again. */
+const supersededMints = [];
+en.forEach((q, i) => {
+  const prior = ledger.minted[legacyQid(q)];
+  if (prior && assign[i] && prior !== assign[i]) {
+    legacyPairs[prior] = assign[i];
+    supersededMints.push({ from: prior, to: assign[i] });
+    ledger.retired[prior] = { supersededBy: assign[i], why: 'paired to the workbook once the match key included the answer' };
+    delete ledger.minted[legacyQid(q)];
+  }
+});
+report.supersededMints = supersededMints.length;
+report.supersededMintsSample = supersededMints.slice(0, 5);
 
 const legacyJs = `// © 2026 Qpio. GENERATED by tools/mint_canonical_qids.js — do not edit by hand.
 //

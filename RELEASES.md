@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v85** at uat.qpio.app |
+| On UAT | **v92** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-06 |
+| Generated | 2026-09-07 |
 
-> ⏳ **Awaiting your sign-off:** v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v82 was rejected** on 2026-08-22 ([#73](https://github.com/ChalBAS/curio-hq/issues/73)). It stays on UAT until the
@@ -30,15 +30,49 @@ not by omission.*
 
 ---
 
+## v92 — ⏳ on UAT
+
+2026-09-07 · 0 questions · sign-off: **no release issue**
+
+- `621adf3` The Visit slot is now drawn even when there is nowhere to visit
+
+## v89 — ⏳ on UAT
+
+2026-09-06 → 2026-09-07 · 0 questions · sign-off: **no release issue**
+
+- `375038b` Pictures stop telling Wikimedia which page a reader is on
+- `0b3895c` The public API stops serving the question-bank size
+- `994ebd2` The rights reservation had a contact address that bounces
+
+## v88 — ⏳ on UAT
+
+2026-09-06 · 0 questions · sign-off: **no release issue**
+
+- `7ecaf18` A real privacy page, and one question asked instead of a tracker
+
+## v87 — ⏳ on UAT
+
+2026-09-06 · 0 questions · sign-off: **no release issue**
+
+- `5a57e98` Measure how each question performs, without holding anything about a person
+
+## v86 — ⏳ on UAT
+
+2026-09-06 · 0 questions · sign-off: **no release issue**
+
+- `c33c824` Questions get a permanent identity, and the two languages become one question
+- `466939b` A half-written stats blob no longer gives the reader a blank app
+
 ## v85 — ⏳ on UAT
 
-2026-09-05 · 760 questions · sign-off: **no release issue**
+2026-09-05 → 2026-09-06 · 760 questions · sign-off: **no release issue**
 
 - `fd92eb2` v85 — a real book, a subject shelf, or no read door at all
 - `25dc0a8` v85 release record regenerated
 - `ca91c7b` v85 release note — the independent rights check, and the books
 - `8cbebdf` verify_image_rights: --state, so the daily control can show the verdict
 - `4373d7a` PICTURE-RIGHTS: record that the check runs daily, and how a stale pass is caught
+- `5f58b63` state: release record refreshed by the daily chain
 
 ## v84 — ⏳ on UAT
 

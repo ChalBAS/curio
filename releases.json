@@ -1,12 +1,17 @@
 {
- "generated": "2026-09-06",
+ "generated": "2026-09-07",
  "live": {
   "production": 76,
-  "uat": 85,
+  "uat": 92,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  92,
+  89,
+  88,
+  87,
+  86,
   85,
   84,
   83,
@@ -50,11 +55,121 @@
  ],
  "releases": [
   {
+   "version": 92,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-07",
+   "to": "2026-09-07",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "621adf3",
+     "date": "2026-09-07",
+     "subject": "The Visit slot is now drawn even when there is nowhere to visit"
+    }
+   ]
+  },
+  {
+   "version": 89,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-06",
+   "to": "2026-09-07",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "375038b",
+     "date": "2026-09-06",
+     "subject": "Pictures stop telling Wikimedia which page a reader is on"
+    },
+    {
+     "sha": "0b3895c",
+     "date": "2026-09-07",
+     "subject": "The public API stops serving the question-bank size"
+    },
+    {
+     "sha": "994ebd2",
+     "date": "2026-09-07",
+     "subject": "The rights reservation had a contact address that bounces"
+    }
+   ]
+  },
+  {
+   "version": 88,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-06",
+   "to": "2026-09-06",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "7ecaf18",
+     "date": "2026-09-06",
+     "subject": "A real privacy page, and one question asked instead of a tracker"
+    }
+   ]
+  },
+  {
+   "version": 87,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-06",
+   "to": "2026-09-06",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "5a57e98",
+     "date": "2026-09-06",
+     "subject": "Measure how each question performs, without holding anything about a person"
+    }
+   ]
+  },
+  {
+   "version": 86,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-06",
+   "to": "2026-09-06",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "c33c824",
+     "date": "2026-09-06",
+     "subject": "Questions get a permanent identity, and the two languages become one question"
+    },
+    {
+     "sha": "466939b",
+     "date": "2026-09-06",
+     "subject": "A half-written stats blob no longer gives the reader a blank app"
+    }
+   ]
+  },
+  {
    "version": 85,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-09-05",
-   "to": "2026-09-05",
+   "to": "2026-09-06",
    "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
@@ -85,6 +200,11 @@
      "sha": "4373d7a",
      "date": "2026-09-05",
      "subject": "PICTURE-RIGHTS: record that the check runs daily, and how a stale pass is caught"
+    },
+    {
+     "sha": "5f58b63",
+     "date": "2026-09-06",
+     "subject": "state: release record refreshed by the daily chain"
     }
    ]
   },

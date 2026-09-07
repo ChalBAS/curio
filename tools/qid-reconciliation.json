@@ -1,172 +1,19 @@
 {
- "generated": "2026-09-06T14:33:57.334Z",
+ "generated": "2026-09-07T04:25:28.400Z",
  "shipped": 760,
  "golden": 2000,
- "matched": 681,
- "shippedOnly": 79,
- "goldenOnly": 1319,
+ "matched": 748,
+ "shippedOnly": 12,
+ "goldenOnly": 1252,
  "goldenOnlyByStatus": {
-  "LIVE UAT": 68,
+  "LIVE UAT": 1,
   "NOT LIVE": 1251
  },
- "mintedThisRun": 79,
+ "mintedThisRun": 0,
  "pairingBreaks": [],
- "goldenDuplicateText": [
-  {
-   "a": "Q263",
-   "b": "Q264",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q265",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q266",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q267",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q268",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q269",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q270",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q271",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q272",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q273",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q274",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q275",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q276",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q277",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q278",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q279",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q280",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q281",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q282",
-   "text": "Which country's flag is this?"
-  },
-  {
-   "a": "Q263",
-   "b": "Q283",
-   "text": "Which country's flag is this?"
-  }
- ],
- "metaDriftRows": 538,
- "metaDriftSample": [
-  {
-   "i": 222,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/HTTP"
-  },
-  {
-   "i": 223,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Binary_number"
-  },
-  {
-   "i": 224,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Ada_Lovelace"
-  },
-  {
-   "i": 225,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Pi"
-  },
-  {
-   "i": 226,
-   "field": "cat",
-   "en": "Science",
-   "fr": "Tech"
-  },
-  {
-   "i": 227,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Central_processing_unit"
-  },
-  {
-   "i": 228,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Fibonacci_sequence"
-  },
-  {
-   "i": 229,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Macintosh_128K"
-  },
-  {
-   "i": 230,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Byte"
-  },
-  {
-   "i": 231,
-   "field": "src",
-   "en": "https://en.wikipedia.org/wiki/Units_of_information"
-  }
- ],
+ "goldenDuplicateText": [],
+ "metaDriftRows": 0,
+ "metaDriftSample": [],
  "collisions": [],
  "shippedOnlySample": [
   {
@@ -176,90 +23,95 @@
    "legacy": "q18k67sv"
   },
   {
-   "i": 263,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qqjl3xt"
+   "i": 749,
+   "text": "About twenty years after the female pharaoh Hatshepsut died, what happened to ma",
+   "cat": "History",
+   "legacy": "q1bq0u1x"
   },
   {
-   "i": 264,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "q1d7rw25"
+   "i": 750,
+   "text": "A clay letter from ancient Ur, written around 1750 BCE, records a customer named",
+   "cat": "History",
+   "legacy": "q150tzf3"
   },
   {
-   "i": 265,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qiehu9h"
+   "i": 751,
+   "text": "Many ancient Greek and Roman marble statues now look plain white. How did many o",
+   "cat": "Arts",
+   "legacy": "q1itpmh7"
   },
   {
-   "i": 266,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "q1v6wric"
+   "i": 752,
+   "text": "Traditional Polynesian wayfinders crossed huge stretches of the Pacific without ",
+   "cat": "History",
+   "legacy": "q1chly4b"
   },
   {
-   "i": 267,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qrfr56b"
+   "i": 753,
+   "text": "Before chocolate became a sweet bar, cacao beans were so valuable in parts of Me",
+   "cat": "History",
+   "legacy": "q1l00dn2"
   },
   {
-   "i": 268,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qe2abev"
+   "i": 754,
+   "text": "What surviving evidence lets historians hear unusually ordinary voices from anci",
+   "cat": "History",
+   "legacy": "q1e0ea8b"
   },
   {
-   "i": 269,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qvb6ct8"
+   "i": 755,
+   "text": "The giant Nazca geoglyphs in Peru were created without carving deep trenches. Wh",
+   "cat": "History",
+   "legacy": "qjuyol7"
   },
   {
-   "i": 270,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "q3zhbnp"
+   "i": 756,
+   "text": "Why was famous Tyrian purple such an extraordinary luxury in the ancient Mediter",
+   "cat": "History",
+   "legacy": "q1inpb35"
   },
   {
-   "i": 271,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "q1k22err"
+   "i": 757,
+   "text": "Popular films often make medieval armour look like equipment reserved for knight",
+   "cat": "History",
+   "legacy": "q1vnqrhz"
   },
   {
-   "i": 272,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qjnrzfv"
+   "i": 758,
+   "text": "Busy residents of Pompeii could stop at a thermopolium. What modern place was it",
+   "cat": "History",
+   "legacy": "qj8ffzo"
   },
   {
-   "i": 273,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qi8b3qv"
-  },
-  {
-   "i": 274,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "qobaff"
-  },
-  {
-   "i": 275,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "q1p3609f"
-  },
-  {
-   "i": 276,
-   "text": "Which country's flag is this?",
-   "cat": "Geography",
-   "legacy": "q1f9c8z1"
+   "i": 759,
+   "text": "Hatshepsut was sometimes depicted with the traditional male body and clothing of",
+   "cat": "History",
+   "legacy": "q1m2b92t"
   }
  ],
  "written": true,
- "legacyMapEntries": 1453
+ "supersededMints": 67,
+ "supersededMintsSample": [
+  {
+   "from": "X0002",
+   "to": "Q264"
+  },
+  {
+   "from": "X0003",
+   "to": "Q265"
+  },
+  {
+   "from": "X0004",
+   "to": "Q266"
+  },
+  {
+   "from": "X0005",
+   "to": "Q267"
+  },
+  {
+   "from": "X0006",
+   "to": "Q268"
+  }
+ ],
+ "legacyMapEntries": 1520
 }

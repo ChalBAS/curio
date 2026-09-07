@@ -155,7 +155,12 @@
   // OLD ids. Without this they would open the app to an empty vault and a bank
   // of questions they had already answered. It runs once, marks itself done,
   // and is harmless if it somehow runs twice.
-  var QID_MIGRATION = 2;
+  /* 3, from 7 Sep 2026. Migration 2 gave 67 flag questions freshly minted X-ids
+     because the workbook match compared question text alone, and 68 flag
+     questions share the text "Which country's flag is this?". They are now
+     paired to their real workbook ids, and the legacy map carries X -> Q so a
+     test reader who already migrated does not lose the 67 a second time. */
+  var QID_MIGRATION = 3;
   function migrateQids() {
     try {
       if (LS.get("qidmig", 0) >= QID_MIGRATION) return;
