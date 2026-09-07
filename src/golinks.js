@@ -372,14 +372,39 @@
          * exactly -- so somebody who has never heard a kora gets Sona Jobarteh
          * playing one, rather than a search box with the word typed into it.
          * Written by curio-hq/tools/export_watch_choices.js from his choices. */
+        var wlang = window.QLANG === "fr" ? "fr" : "en";
         var chosen = window.CURIO_WATCH_CHOSEN;
         var pick = chosen && q && q.id ? chosen[q.id] : null;
-        if (pick) return { title: title, sub: "chosen for this question", url: pick, search: false };
+        if (pick) {
+          /* THE READER'S OWN LANGUAGE FIRST, THEN A VIDEO THAT NEEDS NONE.
+           *
+           * CEO, 7 Sep 2026: "right now we have English and French, how are we
+           * going to do when we have more languages?"
+           *
+           * Sending a French reader to a 22-minute English documentary is
+           * sending them nowhere. But sending them to somebody PLAYING a kora
+           * is sending them exactly where the English reader went -- music
+           * needs no translation, and neither does a demonstration. So `any` is
+           * the fallback before we give up, and it is what makes adding a fifth
+           * language cost only the videos that actually talk. */
+          var url = (typeof pick === "string") ? pick : (pick[wlang] || pick.any);
+          if (url) {
+            return {
+              title: title,
+              sub: (typeof pick !== "string" && !pick[wlang] && pick.any)
+                ? "chosen for this question — no narration"
+                : "chosen for this question",
+              url: url, search: false
+            };
+          }
+        }
 
-        /* He looked and said none of them were good enough. That is a decision,
-         * not a gap, and a search must not quietly re-fill it. */
+        /* He looked at the candidates IN THIS LANGUAGE and said none were good
+         * enough. That is a decision, not a gap, and a search must not quietly
+         * re-fill it. Declining in English says nothing about French. */
         var declined = window.CURIO_WATCH_DECLINED;
-        if (declined && declined.indexOf && q && q.id && declined.indexOf(q.id) !== -1) {
+        var decl = declined && q && q.id ? declined[q.id] : null;
+        if (decl && decl.indexOf && decl.indexOf(wlang) !== -1) {
           return { title: "", sub: "", url: null, search: false };
         }
 

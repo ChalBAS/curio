@@ -12,5 +12,12 @@
 // greyed — which is a decision, not a gap, and is recorded as one.
 //
 // Re-derived by: node curio-hq/tools/export_watch_choices.js
+// SHAPE: qid -> { en, fr, any }. "any" is a video that needs no
+// language at all - a performance, a demonstration - so it serves every reader,
+// including languages not added yet. A reader gets pick[theirLanguage] first,
+// then their "any" video, and only then falls back to a search in their language.
 window.CURIO_WATCH_CHOSEN = {};
-window.CURIO_WATCH_DECLINED = [];
+// qid -> the languages where he looked at the candidates and said none of them
+// were good enough. Greyed on purpose IN THAT LANGUAGE, which is not the same as
+// greyed everywhere and not the same as never looked at.
+window.CURIO_WATCH_DECLINED = {};

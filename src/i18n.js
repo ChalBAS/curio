@@ -253,6 +253,44 @@
       "Stats": "Progrès",
       "Settings": "Réglages",
       "Brain Gym": "Gym du cerveau",
+      /* ---- Brain Gym, 8 Sep 2026. The section is bilingual from the day it
+         ships, not translated afterwards: Qpio is being built as a
+         multinational company (Charter v0.11), and a screen that arrives in
+         English and gets French later is a screen that arrives twice. */
+      "Today\u2019s five": "Les cinq du jour",
+      "Choose a kind": "Choisir un type",
+      "Seven kinds. Five of them never run out.": "Sept types. Cinq d\u2019entre eux sont in\u00e9puisables.",
+      "never runs out": "in\u00e9puisable",
+      "hand-written": "\u00e9crit \u00e0 la main",
+      "Start": "Commencer",
+      "Remember these": "Retiens ceci",
+      "Take as long as you like. They will not come back.":
+        "Prends le temps qu\u2019il te faut. La liste ne reviendra pas.",
+      "Ready": "Pr\u00eat",
+      "This one trains": "Celui-ci entra\u00eene",
+      "See how you did": "Voir ton r\u00e9sultat",
+      "Another five": "Cinq de plus",
+      "That is five puzzles, not a verdict on you.":
+        "Ce sont cinq \u00e9nigmes, pas un verdict sur toi.",
+      "These get easier with practice \u2014 that is the only promise Qpio makes about them.":
+        "\u00c7a devient plus facile avec la pratique \u2014 c\u2019est la seule promesse que Qpio fait \u00e0 leur sujet.",
+      "Sequences and patterns": "Suites et motifs",
+      "Work out the rule, then continue it.": "Trouve la r\u00e8gle, puis continue-la.",
+      "Logic and deduction": "Logique et d\u00e9duction",
+      "Some always tell the truth, some always lie. Work out which.":
+        "Certains disent toujours la v\u00e9rit\u00e9, d\u2019autres mentent toujours. \u00c0 toi de voir qui est qui.",
+      "Spatial reasoning": "Raisonnement dans l\u2019espace",
+      "Turn it in your head.": "Fais-le tourner dans ta t\u00eate.",
+      "Working memory": "M\u00e9moire de travail",
+      "Hold a few things at once, then answer.":
+        "Garde plusieurs choses en t\u00eate, puis r\u00e9ponds.",
+      "Attention": "Attention",
+      "One of these is not like the others.": "L\u2019un de ces \u00e9l\u00e9ments n\u2019est pas comme les autres.",
+      "Estimation": "Estimation",
+      "No looking it up. Build the answer out of what you already know.":
+        "Rien \u00e0 chercher. Construis la r\u00e9ponse \u00e0 partir de ce que tu sais d\u00e9j\u00e0.",
+      "Lateral thinking": "Pens\u00e9e lat\u00e9rale",
+      "The answer is obvious \u2014 afterwards.": "La r\u00e9ponse est \u00e9vidente \u2014 apr\u00e8s coup.",
       "Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.":
         "Des casse-têtes, pas des questions. Rien à savoir d’avance. Certains sont amusants. Certains sont vraiment difficiles. Tu t’y amélioreras avec le temps — comme tout le monde. Ce que ça change ailleurs, c’est à toi de le découvrir.",
 

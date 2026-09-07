@@ -1135,7 +1135,13 @@
   // three-card tab reads as an unfinished app to a first-time user - Kimi
   // called it vaporware in the 2026-08-04 council review; CEO agreed
   // 2026-08-07. Flip this to true the day it ships; nothing else changes.
-  var FEAT_BRAIN_GYM = false;
+  /* ON. CEO, 8 Sep 2026: "I has asked you to find the material, and build that
+     section there is no dependency and nothing at this stage the should prevent
+     you from performing the task."
+     The exercises are in src/braingym.js — five families generated from a seed
+     and two written by hand — and every generated answer is solved again
+     independently by curio-hq/tools/test_braingym.js before this ships. */
+  var FEAT_BRAIN_GYM = !!window.CURIO_GYM;
 
   // Illustrations for the Train tab (CEO, 2026-08-09): a real photograph
   // behind each mode, so the tab reads as a product rather than a settings
@@ -1186,8 +1192,172 @@
     var wrap = el('<div class="grid"></div>');
     var mt = modeCardTruth(); if (mt) wrap.appendChild(dressMode(mt, "truth"));
     wrap.appendChild(quickfirePicker());
-    if (FEAT_BRAIN_GYM) wrap.appendChild(el('<div class="card"><div class="emoji">\ud83e\udde0</div><h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3><p class="mini" style="margin:0">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p></div>'));
+    if (FEAT_BRAIN_GYM) wrap.appendChild(brainGymCard());
     return wrap;
+  }
+
+  /* ==================== BRAIN GYM ====================
+   *
+   * CEO, 2026-08-11: "Once we reach the 2,000 questions we'll start the gym
+   * brain section with brain teasers, logic exercises, and neurologic exercises
+   * people can do to keep their brain guessing."
+   *
+   * It has its own small round rather than borrowing the quiz's. The quiz round
+   * carries a timer, the Vault, the brain map and per-question measurement, all
+   * of which are about KNOWLEDGE — how often a fact is answered correctly is a
+   * meaningful number, and how often somebody solves a randomly generated
+   * sequence is not. Borrowing it would have quietly filled the reader's record
+   * with numbers that mean nothing.
+   *
+   * THE THREE THINGS WE MAY SAY, founder ruling 2026-08-11: it is fun, it is
+   * challenging, and you will get better AT THESE with time. Nothing about
+   * being smarter, nothing medical. The copy below keeps that promise, and the
+   * test in curio-hq fails the build if any string on this screen breaks it.
+   */
+  function brainGymCard() {
+    var node = el(
+      '<div class="card">' +
+        '<div class="emoji">\ud83e\udde0</div>' +
+        '<h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3>' +
+        '<p class="mini" style="margin:0 0 12px">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p>' +
+        '<div class="btnrow"><button class="btn" id="gymToday">' + t("Today\u2019s five") + '</button>' +
+        '<button class="btn ghost" id="gymPick">' + t("Choose a kind") + '</button></div>' +
+      '</div>'
+    );
+    node.querySelector("#gymToday").addEventListener("click", function () { startBrainGym(null); });
+    node.querySelector("#gymPick").addEventListener("click", brainGymPicker);
+    return node;
+  }
+
+  function brainGymPicker() {
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(el(
+      '<div class="card"><h3 style="margin:0 0 4px">' + t("Brain Gym") + '</h3>' +
+      '<p class="mini" style="margin:0">' + t("Seven kinds. Five of them never run out.") + '</p></div>'));
+    window.CURIO_GYM.families.forEach(function (f) {
+      var c = el(
+        '<div class="card">' +
+          '<div class="emoji">' + f.icon + '</div>' +
+          '<h3 style="margin:8px 0 4px">' + t(f.name) + '</h3>' +
+          '<p class="mini" style="margin:0 0 10px">' + t(f.blurb) +
+            (f.infinite ? ' \u00b7 ' + t("never runs out") : ' \u00b7 ' + t("hand-written")) + '</p>' +
+          '<div class="btnrow"><button class="btn">' + t("Start") + '</button></div>' +
+        '</div>');
+      c.querySelector("button").addEventListener("click", function () { startBrainGym(f.key); });
+      wrap.appendChild(c);
+    });
+    var back = el('<div class="card"><div class="btnrow"><button class="btn ghost" id="gymBack">\u2190 ' + t("Back") + '</button></div></div>');
+    back.querySelector("#gymBack").addEventListener("click", function () { renderTab("games"); });
+    wrap.appendChild(back);
+    render(wrap);
+  }
+
+  /* A gym round: five puzzles, one at a time, answer then explanation.
+     `family` null means today's mixed five — the same five for everybody, so it
+     can be talked about, which is the reason the exercises are seeded rather
+     than random. */
+  function startBrainGym(family) {
+    var GYM = window.CURIO_GYM;
+    var seed = GYM.seedForDay();
+    var set = family
+      ? [0, 1, 2, 3, 4].map(function (i) { return GYM.make(family, (seed * 7919 + i * 104729) >>> 0); })
+      : GYM.makeSet(seed, 5);
+    var idx = 0, right = 0;
+
+    function step() {
+      var p = set[idx];
+      /* A working-memory puzzle has to take the list away, or it is a reading
+         test. Study first, then the question, and the list does not come back. */
+      if (p.hide && !p._studied) { study(p); return; }
+      ask(p);
+    }
+
+    function study(p) {
+      var node = el(
+        '<div class="card">' +
+          '<div class="mini">' + t("Brain Gym") + ' \u00b7 ' + (idx + 1) + '/' + set.length + '</div>' +
+          '<h3 style="margin:10px 0 6px">' + t("Remember these") + '</h3>' +
+          '<div class="qtext" style="letter-spacing:.04em">' + fmt(p.show) + '</div>' +
+          '<p class="mini" style="margin:14px 0 0">' + t("Take as long as you like. They will not come back.") + '</p>' +
+          '<div class="btnrow" style="margin-top:14px"><button class="btn" id="gymReady">' + t("Ready") + '</button></div>' +
+        '</div>');
+      node.querySelector("#gymReady").addEventListener("click", function () { p._studied = true; step(); });
+      render(node);
+    }
+
+    function ask(p) {
+      var fam = GYM.byKey[p.family];
+      var html =
+        '<div class="card">' +
+          '<div class="mini">' + (fam ? fam.icon + ' ' + t(fam.name) : t("Brain Gym")) +
+            ' \u00b7 ' + (idx + 1) + '/' + set.length + '</div>' +
+          '<div class="qtext" style="margin-top:10px">' + fmt(p.prompt) + '</div>' +
+          (p.show && !p.hide ? '<div class="qtext" style="opacity:.9;letter-spacing:.06em;margin-top:6px">' + fmt(p.show) + '</div>' : '') +
+          '<div class="opts" id="gymOpts"></div>' +
+          '<div id="gymAfter"></div>' +
+        '</div>';
+      var node = el(html);
+      var opts = node.querySelector("#gymOpts");
+      p.options.forEach(function (o) {
+        var b = el('<button class="opt"></button>');
+        b.textContent = o;
+        b.addEventListener("click", function () { answer(node, p, o); });
+        opts.appendChild(b);
+      });
+      render(node);
+    }
+
+    function answer(node, p, chosen) {
+      var correct = chosen === p.answer;
+      if (correct) right++;
+      Array.prototype.forEach.call(node.querySelectorAll(".opt"), function (b) {
+        b.disabled = true;
+        if (b.textContent === p.answer) b.classList.add("good");
+        else if (b.textContent === chosen) b.classList.add("bad");
+      });
+      var after = node.querySelector("#gymAfter");
+      var fam = window.CURIO_GYM.byKey[p.family];
+      after.appendChild(el(
+        '<div class="reveal" style="margin-top:12px">' +
+          '<div>' + fmt(p.explain) + '</div>' +
+          (fam ? '<div class="mini" style="margin-top:8px;opacity:.75">' + t("This one trains") + ' ' + fmt(p.trains) + '</div>' : '') +
+        '</div>'));
+      var row = el('<div class="btnrow" style="margin-top:14px"></div>');
+      var b = el('<button class="btn"></button>');
+      b.textContent = idx + 1 < set.length ? t("Next") : t("See how you did");
+      b.addEventListener("click", function () { idx++; idx < set.length ? step() : done(); });
+      row.appendChild(b);
+      after.appendChild(row);
+    }
+
+    function done() {
+      /* NO SCORE LANGUAGE THAT SOUNDS LIKE A MEASUREMENT OF THE READER.
+         Five out of five is a fact about five puzzles, not about a mind. */
+      var node = el(
+        '<div class="card result">' +
+          '<div class="scorebig">' + right + '/' + set.length + '</div>' +
+          '<h2>' + t("That is five puzzles, not a verdict on you.") + '</h2>' +
+          '<div class="sub">' + t("These get easier with practice — that is the only promise Qpio makes about them.") + '</div>' +
+          '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
+            '<button class="btn" id="gymAgain">' + t("Another five") + '</button>' +
+            '<button class="btn ghost" id="gymKinds">' + t("Choose a kind") + '</button>' +
+            '<button class="btn ghost" id="gymHome">\ud83c\udfe0 ' + t("Home") + '</button>' +
+          '</div>' +
+        '</div>');
+      node.querySelector("#gymAgain").addEventListener("click", function () {
+        /* A different five, from a seed nobody has to remember. */
+        var GYM2 = window.CURIO_GYM;
+        var s2 = (GYM2.seedForDay() * 31 + Math.floor(Date.now() / 60000)) >>> 0;
+        set = family ? [0, 1, 2, 3, 4].map(function (i) { return GYM2.make(family, (s2 * 7919 + i * 104729) >>> 0); })
+                     : GYM2.makeSet(s2, 5);
+        idx = 0; right = 0; step();
+      });
+      node.querySelector("#gymKinds").addEventListener("click", brainGymPicker);
+      node.querySelector("#gymHome").addEventListener("click", goHome);
+      render(node);
+    }
+
+    step();
   }
 
   function statsTabView() { // mobile Stats: brain map · leaderboard · big numbers
