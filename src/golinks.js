@@ -346,11 +346,25 @@
     var cat = q && q.cat ? q.cat : null;
     var book = readFor(slug);
 
+    /* HIS CHOICE WINS FOR THE BOOK AND THE PLACE TOO (8 Sep 2026: "Similar to
+       the video I need to be able to choose the book I want to highlight ...
+       if I found a place I need to be able to input that place manually").
+       Written by curio-hq/tools/inventory/apply_decisions.js from the review
+       ledger; {none:true} is a door he closed on purpose. */
+    var dl = window.QLANG === "fr" ? "fr" : "en";
+    var chosenDoors = window.CURIO_DOORS_CHOSEN && q && q.id ? window.CURIO_DOORS_CHOSEN[q.id] : null;
+    var cb = chosenDoors && chosenDoors.book ? (chosenDoors.book[dl] || chosenDoors.book.en) : null;
+    var cv = chosenDoors ? chosenDoors.visit : null;
+
     var made = {
       /* naming the actual book is the difference between "somewhere to read"
          and "here is the book" */
-      read:   { title: book ? book.t : title, sub: book && book.a ? book.a : "", url: readUrl(title, slug) },
-      visit:  p ? { title: p.where, sub: p.city, url: destUrl(p) } : { title: "", sub: "", url: null },
+      read:   cb && cb.none ? { title: "", sub: "", url: null }
+            : cb && cb.u ? { title: cb.t || title, sub: cb.a || "", url: cb.u, chosen: true }
+            : { title: book ? book.t : title, sub: book && book.a ? book.a : "", url: readUrl(title, slug) },
+      visit:  cv && cv.none ? { title: "", sub: "", url: null }
+            : cv && cv.url ? { title: cv.where || "", sub: cv.city || "", url: cv.url, chosen: true }
+            : p ? { title: p.where, sub: p.city, url: destUrl(p) } : { title: "", sub: "", url: null },
       /* A DOOR IS ONLY A DOOR IF THERE IS SOMETHING BEHIND IT.
        *
        * CEO, 7 Sep 2026, on the first question of his review screen: "the
