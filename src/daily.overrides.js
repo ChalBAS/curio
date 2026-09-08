@@ -21,8 +21,9 @@
   //   win     — the day's dealt window (question objects)
   //   indexOf — maps a window card to its 1-based bank position
   //   count   — DAILY_COUNT; the override must name exactly this many cards
-  function resolve(dateKey, win, indexOf, count) {
-    var five = DAYS[dateKey];
+  // mode — "kids" looks up dateKey + ":kids"; anything else the adult key.
+  function resolve(dateKey, win, indexOf, count, mode) {
+    var five = DAYS[mode === "kids" ? dateKey + ":kids" : dateKey];
     if (!five || five.length !== count) return null;
     var slots = {}, i;
     for (i = 0; i < win.length; i++) slots[indexOf(win[i])] = win[i];

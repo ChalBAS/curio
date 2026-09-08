@@ -323,9 +323,11 @@
     // resolve() returns null on any mismatch (kids pool, re-cut deck, stale
     // index) and the walk proceeds exactly as before.
     var OV = window.CURIO_DAILY_OVERRIDES;
-    if (OV && OV.resolve && settings.ageMode !== "kids") {
+    // BOTH SETS (9 Sep 2026): the children's five can be replaced too, under
+    // its own key, resolved against the kids window — never the adult one.
+    if (OV && OV.resolve) {
       var ovKey = new Date(d * 86400000).toISOString().slice(0, 10);
-      var ovFive = OV.resolve(ovKey, win, function (c) { return p.indexOf(c) + 1; }, DAILY_COUNT);
+      var ovFive = OV.resolve(ovKey, win, function (c) { return p.indexOf(c) + 1; }, DAILY_COUNT, settings.ageMode === "kids" ? "kids" : "adult");
       if (ovFive) return ovFive;
     }
     if (window.CURIO_QI && window.CURIO_QI.paceDaily && p.length >= DAILY_WINDOW)
