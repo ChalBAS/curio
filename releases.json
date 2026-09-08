@@ -1,12 +1,15 @@
 {
- "generated": "2026-09-07",
+ "generated": "2026-09-08",
  "live": {
   "production": 76,
-  "uat": 92,
+  "uat": 95,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  95,
+  94,
+  93,
   92,
   89,
   88,
@@ -55,6 +58,78 @@
  ],
  "releases": [
   {
+   "version": 95,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-07",
+   "to": "2026-09-08",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "7a7f76a",
+     "date": "2026-09-07",
+     "subject": "Three dead Visit links replaced, and the real broken count is three"
+    },
+    {
+     "sha": "070aecc",
+     "date": "2026-09-07",
+     "subject": "A chosen video is served exactly, and a declined one stays greyed"
+    },
+    {
+     "sha": "4623e85",
+     "date": "2026-09-08",
+     "subject": "Brain Gym is built and playable"
+    },
+    {
+     "sha": "4053630",
+     "date": "2026-09-08",
+     "subject": "Two AI pictures had no words for a reader who cannot see them"
+    }
+   ]
+  },
+  {
+   "version": 94,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-07",
+   "to": "2026-09-07",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "050de52",
+     "date": "2026-09-07",
+     "subject": "266 Watch doors led to an empty shelf. They are switched off."
+    }
+   ]
+  },
+  {
+   "version": 93,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-07",
+   "to": "2026-09-07",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "8b4ab79",
+     "date": "2026-09-07",
+     "subject": "A door that opens a search box now says so"
+    }
+   ]
+  },
+  {
    "version": 92,
    "state": "ON UAT",
    "branch": "uat",
@@ -70,6 +145,11 @@
      "sha": "621adf3",
      "date": "2026-09-07",
      "subject": "The Visit slot is now drawn even when there is nowhere to visit"
+    },
+    {
+     "sha": "6fa011f",
+     "date": "2026-09-07",
+     "subject": "The 147-question disagreement was one bug of mine, not a content problem"
     }
    ]
   },

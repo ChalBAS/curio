@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v92** at uat.qpio.app |
+| On UAT | **v95** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-07 |
+| Generated | 2026-09-08 |
 
-> ⏳ **Awaiting your sign-off:** v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v95, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v82 was rejected** on 2026-08-22 ([#73](https://github.com/ChalBAS/curio-hq/issues/73)). It stays on UAT until the
@@ -30,11 +30,33 @@ not by omission.*
 
 ---
 
+## v95 — ⏳ on UAT
+
+2026-09-07 → 2026-09-08 · 0 questions · sign-off: **no release issue**
+
+- `7a7f76a` Three dead Visit links replaced, and the real broken count is three
+- `070aecc` A chosen video is served exactly, and a declined one stays greyed
+- `4623e85` Brain Gym is built and playable
+- `4053630` Two AI pictures had no words for a reader who cannot see them
+
+## v94 — ⏳ on UAT
+
+2026-09-07 · 0 questions · sign-off: **no release issue**
+
+- `050de52` 266 Watch doors led to an empty shelf. They are switched off.
+
+## v93 — ⏳ on UAT
+
+2026-09-07 · 0 questions · sign-off: **no release issue**
+
+- `8b4ab79` A door that opens a search box now says so
+
 ## v92 — ⏳ on UAT
 
 2026-09-07 · 0 questions · sign-off: **no release issue**
 
 - `621adf3` The Visit slot is now drawn even when there is nowhere to visit
+- `6fa011f` The 147-question disagreement was one bug of mine, not a content problem
 
 ## v89 — ⏳ on UAT
 
