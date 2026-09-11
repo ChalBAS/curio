@@ -1,27 +1,105 @@
 {
-  "generated_at": "2026-09-08T07:59:50.738Z",
+  "generated_at": "2026-09-11T17:47:33.606Z",
   "totals": {
-    "questions": 760
+    "questions": 1968
   },
   "by_level": {
-    "NONE": 747,
-    "SENSITIVE": 13,
+    "NONE": 1693,
+    "SENSITIVE": 275,
     "CONTESTED": 0,
     "HIGHLY_CONTESTED": 0
   },
   "by_type": {
-    "COLONIAL": 6,
-    "GEOPOLITICAL": 1,
-    "RELIGIOUS": 0,
-    "ETHNIC": 0,
-    "RACIAL": 0,
-    "INDIGENOUS": 5,
-    "WAR_ATROCITY": 2,
-    "CURRENT_POLITICS": 0,
-    "DISPUTED_TERRITORY": 2,
-    "OTHER": 0
+    "COLONIAL": 119,
+    "GEOPOLITICAL": 25,
+    "RELIGIOUS": 19,
+    "ETHNIC": 13,
+    "RACIAL": 18,
+    "INDIGENOUS": 36,
+    "WAR_ATROCITY": 26,
+    "CURRENT_POLITICS": 18,
+    "DISPUTED_TERRITORY": 26,
+    "OTHER": 13
   },
   "flagged": [
+    {
+      "index": 1,
+      "q": "The Rosetta Stone was key to deciphering which writing?",
+      "src": "https://en.wikipedia.org/wiki/Rosetta_Stone",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 8,
+      "q": "Which South American civilization built Machu Picchu high in the Andes?",
+      "src": "https://en.wikipedia.org/wiki/Machu_Picchu",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 18,
+      "q": "Which African kingdom, centered in modern Ethiopia, grew rich on Red Sea trade and minted ",
+      "src": "https://en.wikipedia.org/wiki/Obelisk_of_Axum",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 20,
+      "q": "The great medieval stone city of Great Zimbabwe gave its name to which modern country?",
+      "src": "https://en.wikipedia.org/wiki/Great_Zimbabwe",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 22,
+      "q": "Which land, home to the ancient Kingdom of Kush, actually contains more ancient pyramids t",
+      "src": "https://en.wikipedia.org/wiki/Nubian_pyramids",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 23,
+      "q": "In the Mali and Songhai empires, the city of Timbuktu became famous across the world as a ",
+      "src": "https://en.wikipedia.org/wiki/Timbuktu",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
     {
       "index": 26,
       "q": "In 1896 Ethiopia defeated an invading European army at the Battle of Adwa, keeping its ind",
@@ -62,6 +140,110 @@
       "sovereignty_adjudicating": false
     },
     {
+      "index": 33,
+      "q": "English words like 'canoe,' 'hammock,' and 'hurricane' come from the Taino — the people wh",
+      "src": "https://en.wikipedia.org/wiki/Ta%C3%ADno",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 38,
+      "q": "The Maya were expert skywatchers. Their Dresden Codex is celebrated above all for a table ",
+      "src": "https://en.wikipedia.org/wiki/Dresden_Codex",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 54,
+      "q": "The Black Death that swept Europe in the 1340s was a devastating outbreak of which disease",
+      "src": "https://en.wikipedia.org/wiki/Black_Death",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 56,
+      "q": "In 1517 Martin Luther sparked the Reformation by publishing his Ninety-five Theses in whic",
+      "src": "https://en.wikipedia.org/wiki/Ninety-five_Theses",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 57,
+      "q": "The Industrial Revolution began around the 1760s in which country?",
+      "src": "https://en.wikipedia.org/wiki/Industrial_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 61,
+      "q": "Which Persian king founded the Achaemenid Empire and let the peoples he ruled keep their o",
+      "src": "https://en.wikipedia.org/wiki/Cyrus_Cylinder",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 66,
+      "q": "The Epic of Gilgamesh, among the world's oldest surviving stories, was composed by which c",
+      "src": "https://en.wikipedia.org/wiki/Epic_of_Gilgamesh",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 71,
+      "q": "Founded in 670 CE, which city in today's Tunisia became one of North Africa's earliest gre",
+      "src": "https://en.wikipedia.org/wiki/Kairouan",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
       "index": 73,
       "q": "Emir Abdelkader, honoured as a founding hero of modern Algeria, led a 16-year resistance f",
       "src": "https://en.wikipedia.org/wiki/Abdelkader_ibn_Muhieddine",
@@ -76,9 +258,35 @@
       "sovereignty_adjudicating": false
     },
     {
+      "index": 78,
+      "q": "The Roman emperor Septimius Severus was born in Leptis Magna and showered his home city wi",
+      "src": "https://en.wikipedia.org/wiki/Leptis_Magna",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
       "index": 79,
       "q": "Tuareg communities of the Sahara — in Niger, Mali and beyond — still write with the tifina",
       "src": "https://en.wikipedia.org/wiki/Tifinagh",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 86,
+      "q": "What was the name of the ship that carried the Pilgrims from England to America in 1620?",
+      "src": "https://en.wikipedia.org/wiki/Mayflower",
       "sens": "SENSITIVE",
       "sens_type": [
         "INDIGENOUS"
@@ -116,6 +324,201 @@
       "sovereignty_adjudicating": false
     },
     {
+      "index": 100,
+      "q": "In 1821, Sequoyah completed a groundbreaking writing system for which language?",
+      "src": "https://en.wikipedia.org/wiki/Sequoyah",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 101,
+      "q": "Which African country, formerly the British colony of the Gold Coast, won independence in ",
+      "src": "https://en.wikipedia.org/wiki/Ghana",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 130,
+      "q": "What is the chemical name for common table salt?",
+      "src": "https://en.wikipedia.org/wiki/Sodium_chloride",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 154,
+      "q": "Which country has the most time zones?",
+      "src": "https://en.wikipedia.org/wiki/Time_in_France",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 170,
+      "q": "How many capital cities does South Africa have?",
+      "src": "https://en.wikipedia.org/wiki/Pretoria",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 172,
+      "q": "Which country is 'doubly landlocked' — surrounded only by other landlocked countries?",
+      "src": "https://en.wikipedia.org/wiki/Landlocked_country",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 181,
+      "q": "What is the largest US state by area?",
+      "src": "https://en.wikipedia.org/wiki/Alaska_Purchase",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 188,
+      "q": "Victoria Falls thunders down on which African river?",
+      "src": "https://en.wikipedia.org/wiki/Victoria_Falls",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 189,
+      "q": "What is Africa's largest lake by area?",
+      "src": "https://en.wikipedia.org/wiki/Lake_Victoria",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 193,
+      "q": "The Bering Strait separates Russia from which country?",
+      "src": "https://en.wikipedia.org/wiki/Diomede_Islands",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 196,
+      "q": "Which two South American countries are landlocked?",
+      "src": "https://en.wikipedia.org/wiki/Bolivian_Navy",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 264,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Vietnam",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 274,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Sri_Lanka",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 286,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Kenya",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 289,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_South_Africa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
       "index": 290,
       "q": "Which country's flag is this?",
       "src": "https://en.wikipedia.org/wiki/Flag_of_Ethiopia",
@@ -142,12 +545,350 @@
       "sovereignty_adjudicating": false
     },
     {
+      "index": 299,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Mozambique",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 313,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Ireland",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 316,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Ukraine",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
       "index": 319,
       "q": "Which country's flag is this?",
       "src": "https://en.wikipedia.org/wiki/Flag_of_Israel",
       "sens": "SENSITIVE",
       "sens_type": [
         "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 320,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Saudi_Arabia",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 321,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Iran",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 323,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Jordan",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 326,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Australia",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 328,
+      "q": "Which country's flag is this?",
+      "src": "https://en.wikipedia.org/wiki/Flag_of_Fiji",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 354,
+      "q": "Benjamin Banneker, born free in 1730s Maryland, taught himself astronomy and then publishe",
+      "src": "https://en.wikipedia.org/wiki/Benjamin_Banneker",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 355,
+      "q": "Hypatia, the earliest woman mathematician whose life is well recorded, taught in which cit",
+      "src": "https://en.wikipedia.org/wiki/Hypatia",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 428,
+      "q": "Joy Buolamwini tested commercial face-recognition systems. Whose faces did they get wrong ",
+      "src": "https://en.wikipedia.org/wiki/Joy_Buolamwini",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 448,
+      "q": "In the 300s CE the kingdom of Aksum became one of the first states anywhere to adopt which",
+      "src": "https://en.wikipedia.org/wiki/Kingdom_of_Aksum",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 452,
+      "q": "Yaa Asantewaa led the Asante to war in 1900 after a British governor demanded what?",
+      "src": "https://en.wikipedia.org/wiki/Yaa_Asantewaa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 459,
+      "q": "Nzinga Mbande ruled the kingdoms of Ndongo and Matamba, in what is now which country?",
+      "src": "https://en.wikipedia.org/wiki/Nzinga_of_Ndongo_and_Matamba",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 464,
+      "q": "Imam Ahmad ibn Ibrahim al-Ghazi, who led the Adal Sultanate's armies in the 1500s, was nic",
+      "src": "https://en.wikipedia.org/wiki/Ahmad_ibn_Ibrahim_al-Ghazi",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 467,
+      "q": "In the Yoruba empire of Oyo, the council known as the Oyo Mesi could force the ruler, the ",
+      "src": "https://en.wikipedia.org/wiki/Oyo_Empire",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 471,
+      "q": "The Baqt, one of the longest-lasting treaties in history, was agreed around 652 between Eg",
+      "src": "https://en.wikipedia.org/wiki/Baqt",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 513,
+      "q": "Nigerian musician Fela Kuti named the style he built from Yoruba music, highlife, jazz and",
+      "src": "https://en.wikipedia.org/wiki/Fela_Kuti",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 519,
+      "q": "In much of the Islamic world, which art form has long been ranked the most prestigious of ",
+      "src": "https://en.wikipedia.org/wiki/Islamic_calligraphy",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 525,
+      "q": "The classical dance Bharatanatyam comes from which Indian state?",
+      "src": "https://en.wikipedia.org/wiki/Bharatanatyam",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 535,
+      "q": "The Western Desert painting movement began in 1971 at Papunya, Australia, when senior men ",
+      "src": "https://en.wikipedia.org/wiki/Papunya_Tula",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 549,
+      "q": "Picasso painted 'Guernica' in 1937 in response to what?",
+      "src": "https://en.wikipedia.org/wiki/Guernica_(Picasso)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 572,
+      "q": "As NASA moved to electronic computers, Dorothy Vaughan taught herself a programming langua",
+      "src": "https://en.wikipedia.org/wiki/Dorothy_Vaughan",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 575,
+      "q": "Clarence Ellis pioneered the technique that lets two people type into the same document at",
+      "src": "https://en.wikipedia.org/wiki/Clarence_Ellis_(computer_scientist)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 615,
+      "q": "The 1883 eruption of Krakatoa, in what is now Indonesia, made what is thought to be the lo",
+      "src": "https://en.wikipedia.org/wiki/1883_eruption_of_Krakatoa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 616,
+      "q": "The eruption of Mount Tambora in Indonesia in 1815 was followed, half a world away, by wha",
+      "src": "https://en.wikipedia.org/wiki/Mount_Tambora",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
       ],
       "perspective": "PASSED",
       "release": "LIVE",
@@ -181,6 +922,45 @@
       "sovereignty_adjudicating": false
     },
     {
+      "index": 666,
+      "q": "Guinness World Records lists the largest church in the world. In which country does it sta",
+      "src": "https://en.wikipedia.org/wiki/Basilica_of_Our_Lady_of_Peace",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 670,
+      "q": "Jaipur is known as India's Pink City. Why was it painted pink?",
+      "src": "https://en.wikipedia.org/wiki/Jaipur",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 674,
+      "q": "Uluru rises from the Australian desert. What kind of rock is it?",
+      "src": "https://en.wikipedia.org/wiki/Uluru",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
       "index": 678,
       "q": "Socotra, an island famous for its umbrella-shaped dragon's blood trees, belongs to which c",
       "src": "https://en.wikipedia.org/wiki/Socotra",
@@ -192,6 +972,2632 @@
       "release": "LIVE",
       "explicit": true,
       "sovereignty_adjudicating": true
+    },
+    {
+      "index": 695,
+      "q": "A returning boomerang spins as it flies. What makes its path curve back towards the throwe",
+      "src": "https://en.wikipedia.org/wiki/Boomerang",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 718,
+      "q": "On a Mercator world map Greenland looks about the size of Africa. In reality, how much lar",
+      "src": "https://en.wikipedia.org/wiki/Mercator_projection",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 764,
+      "q": "Why does landlocked Bolivia maintain a navy?",
+      "src": "https://en.wikipedia.org/wiki/Landlocked_country",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "DISPUTED_TERRITORY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 769,
+      "q": "Why does a vaccine train the immune system without requiring you to suffer the full diseas",
+      "src": "https://en.wikipedia.org/wiki/Vaccine",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 793,
+      "q": "Selective Availability — the deliberate error that limited civilian GPS to about 100 metre",
+      "src": "https://en.wikipedia.org/wiki/Global_Positioning_System",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 817,
+      "q": "Some British clocks from the 1850s had two minute hands — why?",
+      "src": "https://en.wikipedia.org/wiki/Time_zone",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 826,
+      "q": "In 1958 the United States recorded 763,094 cases of measles; after new vaccines arrived, t",
+      "src": "https://en.wikipedia.org/wiki/Vaccine",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 830,
+      "q": "How did Semmelweis die in 1865?",
+      "src": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 831,
+      "q": "Why was Selective Availability, the deliberate GPS error, temporarily disabled during the ",
+      "src": "https://en.wikipedia.org/wiki/Global_Positioning_System",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 841,
+      "q": "With more than 39 million people, Uzbekistan is the most populous country of which region?",
+      "src": "https://en.wikipedia.org/wiki/Uzbekistan",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 849,
+      "q": "The Nile's two great tributaries, the White Nile and the Blue Nile, meet at which city?",
+      "src": "https://en.wikipedia.org/wiki/Nile",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 870,
+      "q": "The European Union's Galileo satellite navigation system is headquartered in which city?",
+      "src": "https://en.wikipedia.org/wiki/Galileo_(satellite_navigation_system)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 880,
+      "q": "Who founded Lesotho, in 1824?",
+      "src": "https://en.wikipedia.org/wiki/Lesotho",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 885,
+      "q": "Onesimus, an enslaved African man in Boston, taught the principle of inoculation to whom, ",
+      "src": "https://en.wikipedia.org/wiki/Onesimus_(Bostonian)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 894,
+      "q": "In many historical societies, 'usury' meant charging what?",
+      "src": "https://en.wikipedia.org/wiki/Usury",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 900,
+      "q": "Mongolia is the world's most sparsely populated sovereign state — how many people live the",
+      "src": "https://en.wikipedia.org/wiki/Mongolia",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 902,
+      "q": "Why did Enigma's rotors mean each letter was effectively encrypted with a different key?",
+      "src": "https://en.wikipedia.org/wiki/Enigma_machine",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 905,
+      "q": "Lady Mary Wortley Montagu learned about smallpox inoculation where, while her husband was ",
+      "src": "https://en.wikipedia.org/wiki/Lady_Mary_Wortley_Montagu",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 908,
+      "q": "The Yangtze basin is home to roughly what share of China's population?",
+      "src": "https://en.wikipedia.org/wiki/Yangtze",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 923,
+      "q": "When Taghaza's salt mines were abandoned at the end of the 16th century, which salt pan re",
+      "src": "https://en.wikipedia.org/wiki/Taghaza",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 927,
+      "q": "When the Ganges crosses into Bangladesh, its name changes to what?",
+      "src": "https://en.wikipedia.org/wiki/Ganges",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 931,
+      "q": "In the Yolŋu languages of northeast Arnhem Land, what is the didgeridoo called?",
+      "src": "https://en.wikipedia.org/wiki/Didgeridoo",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 934,
+      "q": "Besides promoting worldwide time zones, Sandford Fleming designed what for Canada?",
+      "src": "https://en.wikipedia.org/wiki/Sandford_Fleming",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 942,
+      "q": "According to Ibn Battuta, who travelled with one, an average trans-Saharan caravan numbere",
+      "src": "https://en.wikipedia.org/wiki/Trans-Saharan_trade",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 961,
+      "q": "Herd immunity applies only to which kind of disease?",
+      "src": "https://en.wikipedia.org/wiki/Herd_immunity",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 963,
+      "q": "The longest-lasting rainbow on record was seen where, in November 2017, for 8 hours 58 min",
+      "src": "https://en.wikipedia.org/wiki/Rainbow",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "DISPUTED_TERRITORY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 976,
+      "q": "What is 'spear phishing'?",
+      "src": "https://en.wikipedia.org/wiki/Phishing",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 980,
+      "q": "What protects the fragile mRNA inside an mRNA vaccine and helps cells take it in?",
+      "src": "https://en.wikipedia.org/wiki/MRNA_vaccine",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 985,
+      "q": "Gladys West graduated as valedictorian in 1948 and won a full scholarship to which univers",
+      "src": "https://en.wikipedia.org/wiki/Gladys_West",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 989,
+      "q": "Fibonacci's Liber Abaci of 1202 is famous for introducing what to Europe?",
+      "src": "https://en.wikipedia.org/wiki/Liber_Abaci",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 995,
+      "q": "Azerbaijan's Nakhchivan is an exclave but not an enclave — why?",
+      "src": "https://en.wikipedia.org/wiki/Enclave_and_exclave",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 999,
+      "q": "Sea salt is mentioned in which Buddhist scripture, compiled in the mid-5th century BC?",
+      "src": "https://en.wikipedia.org/wiki/Sea_salt",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1024,
+      "q": "Polynesian wayfinders crossed thousands of kilometres of open Pacific using what kinds of ",
+      "src": "https://en.wikipedia.org/wiki/Polynesian_navigation",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1036,
+      "q": "The formal 'type one' code-talker codes, built on Comanche, Hopi, Meskwaki and Navajo, use",
+      "src": "https://en.wikipedia.org/wiki/Code_talker",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1049,
+      "q": "Why did the Kingdom of Kongo adopt Christianity in the late 15th century?",
+      "src": "https://en.wikipedia.org/wiki/Kingdom_of_Kongo",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1050,
+      "q": "What made the Haitian Revolution historically unprecedented?",
+      "src": "https://en.wikipedia.org/wiki/Haitian_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1051,
+      "q": "What was largely missing from the Berlin Conference that formalized rules for European col",
+      "src": "https://en.wikipedia.org/wiki/Berlin_Conference",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1052,
+      "q": "What helped unite diverse communities in the Maji Maji resistance against German colonial ",
+      "src": "https://en.wikipedia.org/wiki/Maji_Maji_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1053,
+      "q": "Against which colonial power did the Herero and Nama resist in the early 1900s?",
+      "src": "https://en.wikipedia.org/wiki/Herero_and_Nama_genocide",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1054,
+      "q": "Samori Ture is remembered for resisting which expansion?",
+      "src": "https://en.wikipedia.org/wiki/Samori_Ture",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1055,
+      "q": "Why is Yaa Asantewaa remembered in Ghanaian history?",
+      "src": "https://en.wikipedia.org/wiki/Yaa_Asantewaa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1056,
+      "q": "What happened to a British force at Isandlwana in 1879?",
+      "src": "https://en.wikipedia.org/wiki/Battle_of_Isandlwana",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1057,
+      "q": "The Mau Mau uprising took place primarily in which British colony?",
+      "src": "https://en.wikipedia.org/wiki/Mau_Mau_rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1058,
+      "q": "What trade imbalance helped drive Britain's illegal opium trade into Qing China?",
+      "src": "https://en.wikipedia.org/wiki/First_Opium_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1059,
+      "q": "The Taiping Rebellion took place during which dynasty?",
+      "src": "https://en.wikipedia.org/wiki/Taiping_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1060,
+      "q": "The Boxer Uprising was directed partly against what?",
+      "src": "https://en.wikipedia.org/wiki/Boxer_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1061,
+      "q": "What helped trigger China's May Fourth Movement in 1919?",
+      "src": "https://en.wikipedia.org/wiki/May_Fourth_Movement",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1062,
+      "q": "Why did Gandhi's 1930 Salt March target salt?",
+      "src": "https://en.wikipedia.org/wiki/Salt_March",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1063,
+      "q": "After Spain's defeat in 1898, Filipino independence forces fought which new colonial power",
+      "src": "https://en.wikipedia.org/wiki/Philippine%E2%80%93American_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1064,
+      "q": "The March 1st Movement of 1919 protested colonial rule by which country?",
+      "src": "https://en.wikipedia.org/wiki/March_First_Movement",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1065,
+      "q": "The August Revolution of 1945 led to the proclamation of independence of which country?",
+      "src": "https://en.wikipedia.org/wiki/August_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1066,
+      "q": "Indonesia declared independence in 1945 from which returning colonial power it then fought",
+      "src": "https://en.wikipedia.org/wiki/Indonesian_National_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1070,
+      "q": "Túpac Amaru II led a major rebellion against which colonial empire?",
+      "src": "https://en.wikipedia.org/wiki/T%C3%BApac_Amaru_II",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1071,
+      "q": "The Mapuche resisted colonial expansion for centuries in territory now mainly in which cou",
+      "src": "https://en.wikipedia.org/wiki/Mapuche",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1072,
+      "q": "Why did Simón Bolívar seek support from Haiti?",
+      "src": "https://en.wikipedia.org/wiki/Sim%C3%B3n_Bol%C3%ADvar",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1073,
+      "q": "What dark labor history accompanied the Amazon rubber boom?",
+      "src": "https://en.wikipedia.org/wiki/Amazon_river_dolphin",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1074,
+      "q": "Potosí became one of the Spanish Empire's richest mining centers because of what?",
+      "src": "https://en.wikipedia.org/wiki/Potos%C3%AD",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1075,
+      "q": "Jesuit missions in parts of South America were built among which Indigenous people in part",
+      "src": "https://en.wikipedia.org/wiki/Jesuit_missions_among_the_Guaran%C3%AD",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1076,
+      "q": "Cuba's struggle for independence in the 1890s was primarily against which empire?",
+      "src": "https://en.wikipedia.org/wiki/Cuban_War_of_Independence",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1077,
+      "q": "Egypt's 1919 Revolution opposed which occupying power?",
+      "src": "https://en.wikipedia.org/wiki/1919_Egyptian_revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1079,
+      "q": "Which empire ruled much of the Arab Middle East immediately before World War I?",
+      "src": "https://en.wikipedia.org/wiki/Ottoman_Empire",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1080,
+      "q": "The 1916 Easter Rising took place in which city?",
+      "src": "https://en.wikipedia.org/wiki/Easter_Rising",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1082,
+      "q": "Why did newly independent states form the Non-Aligned Movement during the Cold War?",
+      "src": "https://en.wikipedia.org/wiki/Non-Aligned_Movement",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1083,
+      "q": "The 1955 Bandung Conference brought together states mainly from which regions?",
+      "src": "https://en.wikipedia.org/wiki/Bandung_Conference",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1084,
+      "q": "The Kingdom of Kongo was an independent state from about 1390 until which year, after whic",
+      "src": "https://en.wikipedia.org/wiki/Kingdom_of_Kongo",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1085,
+      "q": "Toussaint Louverture, who emerged as the Haitian Revolution's most prominent general, had ",
+      "src": "https://en.wikipedia.org/wiki/Haitian_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1086,
+      "q": "How many countries took part in the Berlin Conference of 1884–85 that set the rules for Eu",
+      "src": "https://en.wikipedia.org/wiki/Berlin_Conference",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1087,
+      "q": "Of the 75,000 to 300,000 people who died in the Maji Maji war of 1905–07, most died from w",
+      "src": "https://en.wikipedia.org/wiki/Maji_Maji_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1088,
+      "q": "Roughly what share of the Herero people's pre-war population died in the genocide of 1904–",
+      "src": "https://en.wikipedia.org/wiki/Herero_and_Nama_genocide",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1089,
+      "q": "Samori Ture's late-19th-century empire stretched across parts of how many present-day West",
+      "src": "https://en.wikipedia.org/wiki/Samori_Ture",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1090,
+      "q": "Before she led the Asante to war in 1900, how did Yaa Asantewaa earn her living?",
+      "src": "https://en.wikipedia.org/wiki/Yaa_Asantewaa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1091,
+      "q": "At Isandlwana on 22 January 1879, some 20,000 Zulu warriors attacked a British column of r",
+      "src": "https://en.wikipedia.org/wiki/Battle_of_Isandlwana",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1092,
+      "q": "In the referendum held in Algeria on 1 July 1962, roughly what share of voters chose indep",
+      "src": "https://en.wikipedia.org/wiki/Algerian_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1093,
+      "q": "The Kenya Land and Freedom Army of the Mau Mau uprising was made up mainly of fighters fro",
+      "src": "https://en.wikipedia.org/wiki/Mau_Mau_rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1094,
+      "q": "The Second Opium War of 1856–60, waged by Britain and France, ended with China being force",
+      "src": "https://en.wikipedia.org/wiki/Opium_Wars",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1095,
+      "q": "The Taiping rebels renamed Nanjing 'Tianjing' — a name meaning what?",
+      "src": "https://en.wikipedia.org/wiki/Taiping_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1096,
+      "q": "In 1898, Boxers in North China blamed foreign and Christian influence for what?",
+      "src": "https://en.wikipedia.org/wiki/Boxer_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1097,
+      "q": "The May Fourth protests of 1919 were a turning point in which broader effort of 1915–21 to",
+      "src": "https://en.wikipedia.org/wiki/May_Fourth_Movement",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1098,
+      "q": "When Gandhi was arrested on the night of 4–5 May 1930, the Congress Party was about to sta",
+      "src": "https://en.wikipedia.org/wiki/Salt_March",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1099,
+      "q": "When Brigadier General Dyer's troops opened fire at Jallianwala Bagh on 13 April 1919, rou",
+      "src": "https://en.wikipedia.org/wiki/Jallianwala_Bagh",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1100,
+      "q": "The United States officially declared the Philippine–American War over on which date?",
+      "src": "https://en.wikipedia.org/wiki/Philippine%E2%80%93American_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1101,
+      "q": "Vietnam's August Revolution of 1945 took power across the country in how much time?",
+      "src": "https://en.wikipedia.org/wiki/August_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1102,
+      "q": "During Indonesia's revolution of 1945–49, Dutch forces held the main towns and industries ",
+      "src": "https://en.wikipedia.org/wiki/Indonesian_National_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1106,
+      "q": "José Gabriel Condorcanqui, who led the great Andean rebellion of 1780, took the name of hi",
+      "src": "https://en.wikipedia.org/wiki/T%C3%BApac_Amaru_II",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1107,
+      "q": "In peacetime, a Mapuche extended family follows a chief known by what title?",
+      "src": "https://en.wikipedia.org/wiki/Mapuche",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1108,
+      "q": "Which Haitian president gave Simón Bolívar sanctuary in 1815 and sent him soldiers and sup",
+      "src": "https://en.wikipedia.org/wiki/Alexandre_P%C3%A9tion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1109,
+      "q": "After the first Amazon rubber boom of 1879–1912, a second one came in which years?",
+      "src": "https://en.wikipedia.org/wiki/Amazon_rubber_cycle",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1110,
+      "q": "Who is traditionally credited with discovering the silver of Cerro Rico above Potosí in 15",
+      "src": "https://en.wikipedia.org/wiki/Potos%C3%AD",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1111,
+      "q": "Before they met Europeans, the Guarani called themselves what?",
+      "src": "https://en.wikipedia.org/wiki/Guaran%C3%AD_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1112,
+      "q": "During Cuba's war of 1895–98, Spain shipped how many soldiers across the Atlantic — the la",
+      "src": "https://en.wikipedia.org/wiki/Cuban_War_of_Independence",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1113,
+      "q": "After the 1919 revolution, Britain recognised Egyptian independence in which year, as the ",
+      "src": "https://en.wikipedia.org/wiki/1919_Egyptian_revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1114,
+      "q": "The 1890 tobacco concession that set off Iran's Tobacco Protest was granted by Naser al-Di",
+      "src": "https://en.wikipedia.org/wiki/Tobacco_Protest",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1115,
+      "q": "In Irish, the famine years of 1845–52 were called 'an Drochshaol' — meaning what?",
+      "src": "https://en.wikipedia.org/wiki/Great_Famine_(Ireland)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1116,
+      "q": "How many women of Cumann na mBan took part in the Easter Rising of 1916, alongside the Vol",
+      "src": "https://en.wikipedia.org/wiki/Easter_Rising",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1117,
+      "q": "In the French Basque Country, home rule was abruptly suppressed during which event?",
+      "src": "https://en.wikipedia.org/wiki/End_of_Basque_home_rule_in_Spain",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1118,
+      "q": "The Non-Aligned Movement counts how many member countries today?",
+      "src": "https://en.wikipedia.org/wiki/Non-Aligned_Movement",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1119,
+      "q": "The 1955 Bandung Conference was organised by Indonesia, India, Pakistan, Burma and which o",
+      "src": "https://en.wikipedia.org/wiki/Bandung_Conference",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1120,
+      "q": "In 1914, after suppressing a revolt, what did Portugal do to the Kongo monarchy?",
+      "src": "https://en.wikipedia.org/wiki/Kingdom_of_Kongo",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1121,
+      "q": "Before the 1791 slave revolt, whose 1790 revolt pressed France to grant citizenship to fre",
+      "src": "https://en.wikipedia.org/wiki/Haitian_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1122,
+      "q": "German policy that triggered the Maji Maji war of 1905–07 forced villagers to grow which c",
+      "src": "https://en.wikipedia.org/wiki/Maji_Maji_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1123,
+      "q": "After the Battle of Waterberg in 1904, most Herero who fled died in which place?",
+      "src": "https://en.wikipedia.org/wiki/Herero_and_Nama_genocide",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1124,
+      "q": "Samori Ture, who fought French conquest from 1882 to 1898, was the great-grandfather of wh",
+      "src": "https://en.wikipedia.org/wiki/Samori_Ture",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1125,
+      "q": "Where did Yaa Asantewaa die in 1921, after leading the War of the Golden Stool?",
+      "src": "https://en.wikipedia.org/wiki/Yaa_Asantewaa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1126,
+      "q": "The capture of which Mau Mau field marshal in October 1956 signalled the end of the Britis",
+      "src": "https://en.wikipedia.org/wiki/Mau_Mau_rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1127,
+      "q": "The First Opium War was triggered when the Qing government did what to British merchants' ",
+      "src": "https://en.wikipedia.org/wiki/Opium_Wars",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1128,
+      "q": "Hong Xiuquan, who led the Taiping Rebellion, claimed to be the younger brother of whom?",
+      "src": "https://en.wikipedia.org/wiki/Taiping_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1129,
+      "q": "The 'Boxers' got their English name because many members practised what?",
+      "src": "https://en.wikipedia.org/wiki/Boxer_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1130,
+      "q": "How far did Gandhi and his volunteers walk from Sabarmati Ashram to Dandi in March–April 1",
+      "src": "https://en.wikipedia.org/wiki/Salt_March",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1131,
+      "q": "Philippine President Emilio Aguinaldo was captured by US forces in which year?",
+      "src": "https://en.wikipedia.org/wiki/Philippine%E2%80%93American_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1132,
+      "q": "Which emperor abdicated at Hue on 30 August 1945, ending the Nguyen dynasty during the Aug",
+      "src": "https://en.wikipedia.org/wiki/August_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1133,
+      "q": "What pressure helped push the Netherlands to transfer sovereignty to Indonesia in 1949?",
+      "src": "https://en.wikipedia.org/wiki/Indonesian_National_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1137,
+      "q": "Túpac Amaru II began his 1780 rebellion by executing which colonial official?",
+      "src": "https://en.wikipedia.org/wiki/T%C3%BApac_Amaru_II",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1139,
+      "q": "Which Haitian president gave Simón Bolívar sanctuary in 1815, and the men and materials th",
+      "src": "https://en.wikipedia.org/wiki/Alexandre_P%C3%A9tion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1140,
+      "q": "Which Peruvian river city expanded during the Amazon rubber boom, alongside Manaus and Bel",
+      "src": "https://en.wikipedia.org/wiki/Amazon_rubber_cycle",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1141,
+      "q": "Around 1600, Potosí is said to have been the second largest city in the world — after whic",
+      "src": "https://en.wikipedia.org/wiki/Potos%C3%AD",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1142,
+      "q": "Guarani is one of the two official languages of which country?",
+      "src": "https://en.wikipedia.org/wiki/Guaran%C3%AD_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1143,
+      "q": "Spain's 'reconcentration' policy during Cuba's 1895–98 war created what, according to the ",
+      "src": "https://en.wikipedia.org/wiki/Cuban_War_of_Independence",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1144,
+      "q": "Under the Sykes–Picot Agreement of 1916, which power was to control Syria and Lebanon?",
+      "src": "https://en.wikipedia.org/wiki/Sykes%E2%80%93Picot_Agreement",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1145,
+      "q": "Britain's 1919 exile of which Egyptian leader sparked the nationwide revolution?",
+      "src": "https://en.wikipedia.org/wiki/1919_Egyptian_revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1146,
+      "q": "The 1891 boycott that broke Iran's tobacco concession was sealed by a fatwa against tobacc",
+      "src": "https://en.wikipedia.org/wiki/Tobacco_Protest",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1147,
+      "q": "The Algerian War began on 1 November 1954 with coordinated FLN attacks remembered by what ",
+      "src": "https://en.wikipedia.org/wiki/Algerian_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1148,
+      "q": "How many leaders of the 1916 Easter Rising were executed by the British from May 1916?",
+      "src": "https://en.wikipedia.org/wiki/Easter_Rising",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1149,
+      "q": "After the Third Carlist War, the loss of Basque home rule in Spain was followed in 1878 by",
+      "src": "https://en.wikipedia.org/wiki/End_of_Basque_home_rule_in_Spain",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1152,
+      "q": "The ruler of Kongo was called the Manikongo, the Portuguese form of a Kongo title meaning ",
+      "src": "https://en.wikipedia.org/wiki/Kingdom_of_Kongo",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1153,
+      "q": "The Haitian Revolution was the largest slave uprising since which ancient revolt, nearly 1",
+      "src": "https://en.wikipedia.org/wiki/Haitian_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1154,
+      "q": "The General Act of Berlin required a European power claiming African coast to show what?",
+      "src": "https://en.wikipedia.org/wiki/Berlin_Conference",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1155,
+      "q": "The name 'Maji Maji' may have inspired the name of which later uprising in Kenya?",
+      "src": "https://en.wikipedia.org/wiki/Maji_Maji_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1156,
+      "q": "In 1904 the Nama first fought alongside the Germans at Waterberg — then did what in Septem",
+      "src": "https://en.wikipedia.org/wiki/Herero_and_Nama_genocide",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1157,
+      "q": "Yaa Asantewaa was appointed Queen Mother of Ejisu by whom?",
+      "src": "https://en.wikipedia.org/wiki/Yaa_Asantewaa",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1158,
+      "q": "Which French president, elected under the new Fifth Republic, eventually negotiated Algeri",
+      "src": "https://en.wikipedia.org/wiki/Algerian_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1159,
+      "q": "After the British campaign ended, Mau Mau resistance survived until after independence, le",
+      "src": "https://en.wikipedia.org/wiki/Mau_Mau_rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1160,
+      "q": "Which port did the treaties that followed the Opium Wars force China to open to Western me",
+      "src": "https://en.wikipedia.org/wiki/Opium_Wars",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1161,
+      "q": "Hong Xiuquan, leader of the Taiping, belonged to which ethnic group?",
+      "src": "https://en.wikipedia.org/wiki/Taiping_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1162,
+      "q": "Boxer fighters converged on Beijing in June 1900 under which slogan?",
+      "src": "https://en.wikipedia.org/wiki/Boxer_Rebellion",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1164,
+      "q": "How many trusted volunteers set out with Gandhi from Sabarmati Ashram on 12 March 1930?",
+      "src": "https://en.wikipedia.org/wiki/Salt_March",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1165,
+      "q": "Jallianwala Bagh stands close to which famous religious complex in Amritsar?",
+      "src": "https://en.wikipedia.org/wiki/Jallianwala_Bagh",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1166,
+      "q": "The Moro Rebellion in the southern Philippines ended with a final defeat at which battle i",
+      "src": "https://en.wikipedia.org/wiki/Philippine%E2%80%93American_War",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1167,
+      "q": "The one armed confrontation of the August Revolution came on 20 August 1945, when Viet Min",
+      "src": "https://en.wikipedia.org/wiki/August_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1168,
+      "q": "What did the Netherlands keep when it transferred sovereignty over the East Indies at the ",
+      "src": "https://en.wikipedia.org/wiki/Indonesian_National_Revolution",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "DISPUTED_TERRITORY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1184,
+      "q": "Why are the Ethiopian Highlands sometimes called the 'water tower' of northeastern Africa?",
+      "src": "https://en.wikipedia.org/wiki/Ethiopian_Highlands",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1186,
+      "q": "Lake Victoria is important as a headwater region of which major river system?",
+      "src": "https://en.wikipedia.org/wiki/Lake_Victoria",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1200,
+      "q": "Why does all of China officially use one time zone despite its huge east-west width?",
+      "src": "https://en.wikipedia.org/wiki/Time_in_China",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1213,
+      "q": "In official Chinese documents, the Pearl River Delta region goes by what name?",
+      "src": "https://en.wikipedia.org/wiki/Pearl_River_Delta",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1225,
+      "q": "Although it lies within the tropics, the Sahel's climate is classed as what?",
+      "src": "https://en.wikipedia.org/wiki/Sahel",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1228,
+      "q": "Lake Victoria's surface is shared by three countries — which holds the largest share, abou",
+      "src": "https://en.wikipedia.org/wiki/Lake_Victoria",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1229,
+      "q": "The Berber words adrar and adras, cognates of the name 'Atlas', mean what?",
+      "src": "https://en.wikipedia.org/wiki/Atlas_Mountains",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1242,
+      "q": "Inside China, the single national time zone goes by what name?",
+      "src": "https://en.wikipedia.org/wiki/Time_in_China",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1258,
+      "q": "The name 'Japanese Alps' was coined by an English archaeologist — who?",
+      "src": "https://en.wikipedia.org/wiki/Japanese_Alps",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1263,
+      "q": "The term 'Great Rift Valley' was introduced in 1896 by which British geologist?",
+      "src": "https://en.wikipedia.org/wiki/Great_Rift_Valley",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1266,
+      "q": "The word Sahel comes from an Arabic word meaning what?",
+      "src": "https://en.wikipedia.org/wiki/Sahel",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1269,
+      "q": "Lake Victoria was renamed after the British queen by which explorer, the first Briton to d",
+      "src": "https://en.wikipedia.org/wiki/Lake_Victoria",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1270,
+      "q": "The highest peak of the Atlas Mountains, Toubkal, rises to about what height?",
+      "src": "https://en.wikipedia.org/wiki/Atlas_Mountains",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1282,
+      "q": "China Standard Time has not observed daylight saving since which year?",
+      "src": "https://en.wikipedia.org/wiki/Time_in_China",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1295,
+      "q": "What is the traditional language of the Pearl River Delta?",
+      "src": "https://en.wikipedia.org/wiki/Pearl_River_Delta",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1320,
+      "q": "The Benin Bronzes were primarily created for which historical court?",
+      "src": "https://en.wikipedia.org/wiki/Benin_Bronzes",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1321,
+      "q": "The naturalistic brass and terracotta heads of Ife come from which present-day country?",
+      "src": "https://en.wikipedia.org/wiki/If%E1%BA%B9",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1326,
+      "q": "Ethiopian Christian painting developed distinctive conventions within which long religious",
+      "src": "https://en.wikipedia.org/wiki/Ethiopian_Highlands",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1330,
+      "q": "Gnawa music in Morocco combines musical practice with what broader heritage?",
+      "src": "https://en.wikipedia.org/wiki/Gnawa_music",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1334,
+      "q": "Featherwork in many Indigenous Amazonian cultures demonstrates what?",
+      "src": "https://en.wikipedia.org/wiki/Featherwork",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1337,
+      "q": "Candombe is an Afro-Uruguayan tradition centered strongly on what?",
+      "src": "https://en.wikipedia.org/wiki/Candombe",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1339,
+      "q": "Wayuu weaving is associated particularly with Indigenous communities in which region?",
+      "src": "https://en.wikipedia.org/wiki/Wayuu_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1354,
+      "q": "Under the British Raj, Indian artists made 'Company paintings' — for whom?",
+      "src": "https://en.wikipedia.org/wiki/Indian_painting",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1360,
+      "q": "Korean ceramic history begins with earthenware from about when?",
+      "src": "https://en.wikipedia.org/wiki/Korean_pottery_and_porcelain",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1362,
+      "q": "Most of the several thousand Benin plaques and sculptures date to which centuries?",
+      "src": "https://en.wikipedia.org/wiki/Benin_Bronzes",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1367,
+      "q": "One theory says the name 'Ndebele' comes from a Tswana word, tebele, meaning what?",
+      "src": "https://en.wikipedia.org/wiki/Southern_Ndebele_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1372,
+      "q": "Gnawa music grew in the 16th and 17th centuries from the traditions of which West African ",
+      "src": "https://en.wikipedia.org/wiki/Gnawa_music",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1377,
+      "q": "Tarsila do Amaral was born in 1886 into a family of coffee planters — how many years befor",
+      "src": "https://en.wikipedia.org/wiki/Tarsila_do_Amaral",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1379,
+      "q": "Candombe is played in Montevideo's February carnival at drum parades known by what name?",
+      "src": "https://en.wikipedia.org/wiki/Candombe",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1380,
+      "q": "Nueva canción musicians often paid for their political lyrics with what?",
+      "src": "https://en.wikipedia.org/wiki/Nueva_canci%C3%B3n",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1381,
+      "q": "In the Wayuu calendar, the main rainy season, from September to December, is called what?",
+      "src": "https://en.wikipedia.org/wiki/Wayuu_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1392,
+      "q": "Whose prosecution of the art thief Verres set a Roman precedent for returning looted art, ",
+      "src": "https://en.wikipedia.org/wiki/Repatriation_(cultural_property)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1402,
+      "q": "Which Japanese porcelain tradition was founded by a captured Korean potter, Yi Sam-pyeong?",
+      "src": "https://en.wikipedia.org/wiki/Korean_pottery_and_porcelain",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1404,
+      "q": "The Ife Head, unearthed in 1938, is one of how many copper-alloy sculptures found together",
+      "src": "https://en.wikipedia.org/wiki/Bronze_Head_from_Ife",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1408,
+      "q": "The Southern Ndebele mainly live in which South African provinces?",
+      "src": "https://en.wikipedia.org/wiki/Southern_Ndebele_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1409,
+      "q": "Ethiopian art has developed alongside Christian art for centuries and, since which century",
+      "src": "https://en.wikipedia.org/wiki/Ethiopian_art",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1411,
+      "q": "Which ethnomusicologist produced and exported the kalimba from the late 1950s, popularisin",
+      "src": "https://en.wikipedia.org/wiki/Mbira",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1412,
+      "q": "The word 'griot' may derive, via French, from a Portuguese word — criado — meaning what?",
+      "src": "https://en.wikipedia.org/wiki/Griot",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1413,
+      "q": "Gnawa music is performed at communal nights of prayer and healing called what?",
+      "src": "https://en.wikipedia.org/wiki/Gnawa_music",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1417,
+      "q": "Hawaiian royalty wore feathered cloaks and helmets known by what names?",
+      "src": "https://en.wikipedia.org/wiki/Featherwork",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1418,
+      "q": "Tarsila do Amaral's painting Abaporu inspired which 1928 manifesto by Oswald de Andrade?",
+      "src": "https://en.wikipedia.org/wiki/Tarsila_do_Amaral",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1420,
+      "q": "Uruguayan candombe is built on three drums — the chico, the repique and which third?",
+      "src": "https://en.wikipedia.org/wiki/Candombe",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1421,
+      "q": "Nueva canción surfaced almost simultaneously in the 1960s in Argentina, Chile, Uruguay and",
+      "src": "https://en.wikipedia.org/wiki/Nueva_canci%C3%B3n",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "WAR_ATROCITY"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1422,
+      "q": "The Wayuu language belongs to which language family?",
+      "src": "https://en.wikipedia.org/wiki/Wayuu_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1433,
+      "q": "After Napoleon's defeat, which looted artworks were returned to Venice under the Treaty of",
+      "src": "https://en.wikipedia.org/wiki/Repatriation_(cultural_property)",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1442,
+      "q": "Gamelan melayu, a courtly gamelan tradition documented since the 18th century, is today pr",
+      "src": "https://en.wikipedia.org/wiki/Gamelan",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1445,
+      "q": "In the Edo language, the Benin plaques are called what?",
+      "src": "https://en.wikipedia.org/wiki/Benin_Bronzes",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1455,
+      "q": "Gnawa music's origins are closely tied to which famous Moroccan institution?",
+      "src": "https://en.wikipedia.org/wiki/Gnawa_music",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1462,
+      "q": "Songs of conflict in Latin America were earlier associated with which Mexican song form, f",
+      "src": "https://en.wikipedia.org/wiki/Nueva_canci%C3%B3n",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1463,
+      "q": "What did the Wayuu destroy in their 1701 rebellion against the Spanish?",
+      "src": "https://en.wikipedia.org/wiki/Wayuu_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "NEEDS_REVIEW",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1479,
+      "q": "Ajanta was 'rediscovered' in 1819 by a British officer who was doing what?",
+      "src": "https://en.wikipedia.org/wiki/Ajanta_Caves",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1485,
+      "q": "Benin's brass came partly from manillas — bracelet-shaped ingots bought from whom?",
+      "src": "https://en.wikipedia.org/wiki/Benin_Bronzes",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1486,
+      "q": "The Ife head now in the British Museum was taken out of Nigeria by whom?",
+      "src": "https://en.wikipedia.org/wiki/Bronze_Head_from_Ife",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1494,
+      "q": "Historically, griots have formed what kind of group, marrying mostly among themselves?",
+      "src": "https://en.wikipedia.org/wiki/Griot",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "ETHNIC"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1498,
+      "q": "The Huaca del Sol, the largest pre-Columbian structure in Peru, was partly destroyed by wh",
+      "src": "https://en.wikipedia.org/wiki/Moche_culture",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1499,
+      "q": "Montezuma's feather headdress is now displayed in which city?",
+      "src": "https://en.wikipedia.org/wiki/Featherwork",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1504,
+      "q": "Uniquely among the Indigenous peoples of Colombia, the Wayuu had learned the use of what?",
+      "src": "https://en.wikipedia.org/wiki/Wayuu_people",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "INDIGENOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1520,
+      "q": "Which Mughal emperor disapproved of painting on religious grounds and disbanded the imperi",
+      "src": "https://en.wikipedia.org/wiki/Indian_painting",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1525,
+      "q": "During the Cultural Revolution of 1966–76, traditional Peking opera was replaced mostly by",
+      "src": "https://en.wikipedia.org/wiki/Peking_opera",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1681,
+      "q": "Deepfakes are considered a form of what kind of media?",
+      "src": "https://en.wikipedia.org/wiki/Deepfake",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1843,
+      "q": "In 2022, an African cheetah subspecies was introduced to which country?",
+      "src": "https://en.wikipedia.org/wiki/Cheetah",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1897,
+      "q": "The name Sundarbans most likely comes from what?",
+      "src": "https://en.wikipedia.org/wiki/Sundarbans",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1947,
+      "q": "The literal meaning of Sundarbans in Bengali is what?",
+      "src": "https://en.wikipedia.org/wiki/Sundarbans",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
     }
   ],
   "hook_flags": [],

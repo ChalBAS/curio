@@ -98,10 +98,24 @@ function legacyQid(q) {
 }
 /* The map is built from the pre-migration banks, so it is checked against the
  * ids the OLD code would have produced for the words that are still there. */
-const enLegacyCovered = EN.filter(q => LEGACY[legacyQid(q)] === q.id).length;
+/* THE PROPERTY IS "NOBODY LOSES HISTORY", NOT "EVERY ROW HAS A PAST".
+ *
+ * This used to demand a legacy id for every row in the bank, which held only
+ * while the bank never grew. On 12 Sep 2026 the golden source was piped into
+ * the app and 1,233 questions arrived that no reader has ever answered under
+ * any id — they cannot have an old identity, and requiring one failed the
+ * build for the arrival of new content.
+ *
+ * What protects a reader is the other direction: an id the old code could have
+ * saved must still find its question. That is what is asserted here, over the
+ * questions that existed before canonical ids, and again below over every
+ * target the map points at. */
+const enPreMigration = EN.filter(q => LEGACY[legacyQid(q)] !== undefined);
+const enLegacyCovered = enPreMigration.filter(q => LEGACY[legacyQid(q)] === q.id).length;
 check('an English question saved under its old id still finds its question',
-  enLegacyCovered === EN.length,
-  enLegacyCovered + ' of ' + EN.length);
+  enLegacyCovered === enPreMigration.length,
+  enLegacyCovered + ' of ' + enPreMigration.length + ' that existed before canonical ids · ' +
+  (EN.length - enPreMigration.length) + ' arrived later and never had an old id');
 
 /* THE FRENCH FLAG QUESTIONS COULD NOT ALL BE CARRIED, AND THAT IS NOT A BUG.
  *
@@ -118,12 +132,16 @@ check('an English question saved under its old id still finds its question',
  * The test asserts what is actually achievable -- every DISTINCT old id carries
  * forward -- and pins the collapse at 67 so that if it ever grows, someone has
  * to come and look. */
-const frOldIds = new Set(FR.map(legacyQid));
+/* Same correction as above: only the French rows that existed before canonical
+ * ids can have carried an old one. */
+const frPreMigration = FR.filter(q => LEGACY[legacyQid(q)] !== undefined);
+const frOldIds = new Set(frPreMigration.map(legacyQid));
 const frMapped = Array.from(frOldIds).filter(k => LEGACY[k]).length;
 check('every distinct old French id carries forward', frMapped === frOldIds.size,
-  frMapped + ' of ' + frOldIds.size + ' distinct old ids');
+  frMapped + ' of ' + frOldIds.size + ' distinct old ids · ' +
+  (FR.length - frPreMigration.length) + ' French rows arrived later');
 
-const frCollapsed = FR.length - frOldIds.size;
+const frCollapsed = frPreMigration.length - frOldIds.size;
 check('only the 68 identically-worded flag questions shared an old French id',
   frCollapsed === 67,
   frCollapsed + ' French questions had no distinguishable old identity ' +

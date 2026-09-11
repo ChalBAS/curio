@@ -143,8 +143,12 @@
             return wait(420).then(function () {
               var next = $(w, "#next");
               // measure the answered layout — acceptance criterion 2
+              // ":not(.is-off)" matters: a greyed door is still a .gf-link, so
+              // this check used to pass on a question whose every door was
+              // dead. "A destination offered" has to mean one that opens.
+              var live = $(w, ".gf-link:not(.is-off)");
               if (next) shots.push({ next: next.getBoundingClientRect().bottom, usable: usable(w),
-                                     gf: $(w, ".gf-link") ? $(w, ".gf-link").getBoundingClientRect().bottom : null });
+                                     gf: live ? live.getBoundingClientRect().bottom : null });
               if (!next) return Promise.resolve();
               next.click();
               return wait(380).then(function () { return step(n + 1); });
@@ -250,6 +254,158 @@
       }, Promise.resolve()).then(function () {
         s.log(lang, "language · no English prose on any tab", found.length === 0,
               found.length ? found.length + " found — " + found[0] : "four tabs swept");
+      });
+    } },
+
+  /* ------------------------------------------------------------- the doors
+     CEO, 12 Sep 2026, rejecting v95: "There are still questions with the wrong
+     links ... some of the questions dont have a visit website, showing grey but
+     when clicking it still bring to a link. I need the automated tests to check
+     the interfaces properly. the automated test should check for these bug as
+     it is not the 1st time."
+
+     He is right that it is not the first time, and the reason is that no test
+     had ever touched a link. The suite measured where the destination SAT on
+     the screen and never what it was or whether it opened. Worse, the "a
+     destination offered after each answer" check used querySelector(".gf-link"),
+     which matches a greyed one — so a question with all three doors dead
+     passed it.
+
+     Three things are asserted here, and each of them is a bug that shipped:
+       1. a greyed control opens NOTHING when it is tapped. The stylesheet used
+          to take it out of hit-testing, so the tap fell through to the card
+          underneath and opened the card's best OTHER destination: tapping a
+          greyed Visit sent the reader to a book.
+       2. a live door is a real link to a real address — http(s), not "#".
+       3. a live door goes where its own word promises. A door that says Read
+          and opens YouTube is the "wrong link" complaint in one sentence.
+     window.open is replaced for the duration so a wrongly-opened tab is
+     counted instead of appearing. */
+  { id: "doors", title: "A door that is greyed opens nothing; a door that opens goes where it says",
+    run: function (w, s, lang) {
+      var opened = [];
+      var realOpen = w.open;
+      w.open = function (u) { opened.push(String(u || "")); return null; };
+      /* Where each kind of door is allowed to lead. The icon identifies the
+         door, not its label, so this works in every language — and 📚 (Read, a
+         book) and 📖 (Sources, the article) are different doors that look
+         alike at a glance, which is exactly why they are listed apart. */
+      var HOST = { read: /openlibrary\.org|archive\.org|gutenberg\.org|worldcat\.org/i,
+                   source: /wikipedia\.org/i,
+                   watch: /youtube\.com|youtu\.be|vimeo\.com/i };
+      var wrongKind = [], notALink = [], greyOpened = [], greyIsLink = [];
+
+      var auditDoors = function (where) {
+        $$(w, ".way, .gf-link").forEach(function (d) {
+          var off = /is-off/.test(d.className);
+          var href = d.getAttribute("href");
+          if (off) {
+            // A dead door must not be a link at all, and tapping it must not open a tab.
+            if (href) greyIsLink.push(where + ": " + (d.textContent || "").trim().slice(0, 30));
+            var before = opened.length;
+            d.click();
+            if (opened.length > before) greyOpened.push(where + ": " + (d.textContent || "").trim().slice(0, 40) + " → " + opened[opened.length - 1].slice(0, 60));
+            return;
+          }
+          if (!href || !/^https?:\/\//i.test(href)) { notALink.push(where + ": " + (href || "(none)")); return; }
+          // The door's own word decides where it is allowed to lead. Read by
+          // its icon rather than its label, so this works in every language.
+          var word = d.textContent || "";
+          var kind = word.indexOf("📚") !== -1 ? "read"
+                   : word.indexOf("📖") !== -1 ? "source"
+                   : /▶|🎬|📺/.test(word) ? "watch" : null;
+          if (kind && HOST[kind] && !HOST[kind].test(href)) wrongKind.push(where + ": a " + kind + " door → " + href.slice(0, 70));
+        });
+      };
+
+      return tab(w, "home").then(function () {
+        var start = $$(w, "button").filter(function (b) { return /#daily|challenge|défi/i.test(b.id + " " + b.innerText); })[0];
+        if (!start) { s.log(lang, "doors · could not start a round", false, "no start control on Home"); return; }
+        start.click();
+        return until(function () { return $(w, ".qtext"); }).then(function () {
+          return (function step(n) {
+            if (n > 6) return Promise.resolve();
+            if (!$(w, ".qtext")) return Promise.resolve();
+            var opts = $$(w, ".opts button:not([disabled])");
+            if (!opts.length) return Promise.resolve();
+            opts[0].click();
+            return wait(420).then(function () {
+              auditDoors("answer " + (n + 1));
+              var next = $(w, "#next");
+              if (!next) return Promise.resolve();
+              next.click();
+              return wait(380).then(function () { return step(n + 1); });
+            });
+          })(0);
+        }).then(function () {
+          // The results shelf is where the fall-through bug lived: the card
+          // itself is tappable, so a dead slot on it has something to fall into.
+          return until(function () { return $(w, ".card.result") || $(w, ".shelf") || $(w, ".topic"); }, 4000)
+            .catch(function () { return null; })
+            .then(function () { auditDoors("results shelf"); });
+        }).then(function () {
+          s.log(lang, "doors · a greyed door opens nothing", greyOpened.length === 0,
+                greyOpened.length ? greyOpened.length + " opened a tab — " + greyOpened[0] : "every greyed door stayed shut");
+          s.log(lang, "doors · a greyed door is not a link", greyIsLink.length === 0,
+                greyIsLink.length ? greyIsLink.length + " greyed doors carry an address" : "none carries an address");
+          s.log(lang, "doors · every live door is a real address", notALink.length === 0,
+                notALink.length ? notALink.length + " are not — " + notALink[0] : "all http(s)");
+          s.log(lang, "doors · a door leads where its word promises", wrongKind.length === 0,
+                wrongKind.length ? wrongKind.length + " do not — " + wrongKind[0] : "read and watch doors checked");
+        }).then(function () { w.open = realOpen; }, function (e) { w.open = realOpen; throw e; });
+      });
+    } },
+
+  /* Brain Gym and Fact or Fake were built, wired into the app and shipped
+     without a single acceptance check between them. A section nobody tests is a
+     section that breaks quietly, and he found the Brain Gym one by hand. */
+  { id: "braingym", title: "Brain Gym gives a playable set of five",
+    run: function (w, s, lang) {
+      return tab(w, "train").then(function () {
+        var go = $(w, "#gymToday");
+        if (!go) { s.log(lang, "brain gym · the section is on the Train tab", false, "no Brain Gym card"); return; }
+        s.log(lang, "brain gym · exercises loaded", !!(w.CURIO_GYM && w.CURIO_GYM.families && w.CURIO_GYM.families.length),
+              w.CURIO_GYM ? w.CURIO_GYM.families.length + " kinds of exercise" : "none");
+        go.click();
+        return until(function () { return $(w, "#gymOpts") || $(w, "#gymReady"); }, 6000).then(function () {
+          var ready = $(w, "#gymReady"); if (ready) ready.click();
+          return wait(300);
+        }).then(function () {
+          var opts = $$(w, "#gymOpts button");
+          s.log(lang, "brain gym · a puzzle offers four answers", opts.length === 4, opts.length + " offered");
+          if (!opts.length) return;
+          opts[0].click();
+          return wait(400).then(function () {
+            s.log(lang, "brain gym · answering shows the reasoning", !!$(w, "#gymAfter"), "");
+          });
+        });
+      });
+    } },
+
+  { id: "factorfake", title: "Fact or Fake runs a round and cites a source",
+    run: function (w, s, lang) {
+      // Fact or Fake lives on the Train tab beside Quick-Fire and Brain Gym —
+      // Home carries the daily and the travel card only.
+      return tab(w, "train").then(function () {
+        var card = $(w, "#modeTruth");
+        if (!card) { s.log(lang, "fact or fake · the mode is offered", false, "no Fact or Fake card on the Train tab"); return; }
+        s.log(lang, "fact or fake · statements loaded in this language",
+              !!(w.CURIO_STATEMENTS && w.CURIO_STATEMENTS.length),
+              (w.CURIO_STATEMENTS || []).length + " statements");
+        card.click();
+        return wait(500).then(function () {
+          // Two buttons, "Fact" and "Fake" — not the four-option .opts row the
+          // quiz uses. Addressed by class rather than by their words, so this
+          // keeps working in every language.
+          var choices = $$(w, ".truthbtns button:not([disabled])");
+          s.log(lang, "fact or fake · a statement offers a verdict to give", choices.length === 2, choices.length + " choices");
+          if (!choices.length) return;
+          choices[0].click();
+          return wait(420).then(function () {
+            var src = $$(w, "a[href^='http']").filter(function (a) { return /wikipedia|source/i.test(a.href + " " + a.textContent); });
+            s.log(lang, "fact or fake · the verdict carries a source", src.length > 0, src.length + " source links", true);
+          });
+        });
       });
     } },
 

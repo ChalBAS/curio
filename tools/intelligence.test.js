@@ -134,7 +134,12 @@ is('LOW/LOW/LOW → reframe', QI.diagnose((function () {
 })()), 'reframe');
 
 console.log('\n\x1b[1mK · the existing bank, unchanged\x1b[0m');
-is('bank still loads', BANK.length, 760);
+/* This said 760 — the size of the bank on the day it was written. The point of
+ * the check is that adding the intelligence layer does not disturb the bank,
+ * which is the three assertions below; pinning the COUNT made the arrival of
+ * new questions a test failure. The size is checked where it belongs, against
+ * the content-version stamp (tools/stamp_content_version.js --check). */
+ok('bank still loads', BANK.length > 0, BANK.length + ' questions');
 ok('every legacy question validates as-is (intelligence optional)',
   BANK.every(q => QI.validateQuestion(q).ok),
   BANK.filter(q => !QI.validateQuestion(q).ok).length + ' invalid');

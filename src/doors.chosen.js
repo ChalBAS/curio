@@ -8,4 +8,28 @@
 // golinks.js reads this ahead of its own lists.
 //
 // Re-derived by: node curio-hq/tools/inventory/apply_decisions.js
-window.CURIO_DOORS_CHOSEN = {};
+window.CURIO_DOORS_CHOSEN = {
+ "Q191": {
+  "book": {
+   "en": {
+    "t": "A trip, Panama Canal ..",
+    "a": "Avery & Garrison, New Orleans",
+    "u": "https://openlibrary.org/works/OL7715297W",
+    "isbn": null,
+    "shops": null
+   },
+   "fr": {
+    "t": null,
+    "a": null,
+    "u": "https://www.google.fr/books/edition/Histoire_Du_Canal_De_Panama/DutU0AEACAAJ?hl=fr",
+    "isbn": null,
+    "shops": null
+   }
+  },
+  "visit": {
+   "where": "Panama City",
+   "city": null,
+   "url": "https://www.tourismpanama.com/places-to-visit/panama-city/things-to-do/historical-sites/panama-canal/"
+  }
+ }
+};

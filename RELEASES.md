@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v95** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-08 |
+| Generated | 2026-09-11 |
 
 > ⏳ **Awaiting your sign-off:** v95, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -32,12 +32,15 @@ not by omission.*
 
 ## v95 — ⏳ on UAT
 
-2026-09-07 → 2026-09-08 · 0 questions · sign-off: **no release issue**
+2026-09-07 → 2026-09-09 · 0 questions · sign-off: **no release issue**
 
 - `7a7f76a` Three dead Visit links replaced, and the real broken count is three
 - `070aecc` A chosen video is served exactly, and a declined one stays greyed
 - `4623e85` Brain Gym is built and playable
 - `4053630` Two AI pictures had no words for a reader who cannot see them
+- `89f33a8` A French question that named its own answer, and the reader history it nearly cost
+- `014bf4f` The book and the place the founder chose win, as the video already does
+- `c8bcbc2` The children's daily five can be replaced too, under its own key
 
 ## v94 — ⏳ on UAT
 

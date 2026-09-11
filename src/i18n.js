@@ -428,6 +428,9 @@
       "Not quite. ": "Pas tout à fait. ",
       "📖 Check the source ↗": "📖 Vérifie la source ↗",
       "Next →": "Suivant →",
+      /* The Brain Gym set uses the bare word between puzzles, where the quiz
+         uses the arrow form. Two strings, because they are two labels. */
+      "Next": "Suivant",
       "See results →": "Voir les résultats →",
       "🕳️ Go deeper": "🕳️ Creuser plus loin",
       "🕳️ Bottom reached": "🕳️ Fond atteint",

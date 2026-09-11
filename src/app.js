@@ -2266,7 +2266,12 @@
            is labelled Search, and names the channel underneath. The CEO has
            made this exact complaint once already about Visit links that led to
            a UNESCO listing rather than somewhere to go. */
-        var word = d.search ? t("Search")
+        /* ...but only a door that OPENS can be a search door. 266 questions
+           have no video at all: their Watch slot is greyed, and labelling it
+           "Search — None yet" described a search nobody is offered and hid
+           which of the three doors was the missing one. A dead door is named
+           for what it would have been. */
+        var word = (d.search && d.on) ? t("Search")
                  : k === "read" ? t("Read")
                  : k === "visit" ? t("Visit") : t("Watch");
         var inner =
@@ -2606,9 +2611,18 @@
       var art = CAT_ART[q.cat] || "✨";
       // Beat two. The written hook opens the gap; the depth fact closes it, so
       // it is only the fallback (Charter VAL-13).
+      // THE HOOK WRITTEN FOR THIS QUESTION WINS OVER THE ONE WRITTEN FOR ITS
+      // SUBJECT. hooks.js is keyed by subject, which was right when a subject
+      // had one question. It now has several — twenty on the Silk Road — and
+      // they would all have opened with the same line. hooks.q.js carries the
+      // hook written for this exact question; the subject hook stays as the
+      // fallback, and the depth fact behind that.
       var slugH = window.CURIO_GO.entityOf(q);
+      var own = q.id && (window.CURIO_HOOKS_Q || {})[q.id];
       var written = slugH && (window.CURIO_HOOKS || {})[slugH];
-      var hook = (written && (window.QLANG === "fr" ? written.fr : written.en)) || q.fact || "";
+      var hook = (own && (window.QLANG === "fr" ? own.fr : own.en))
+              || (written && (window.QLANG === "fr" ? written.fr : written.en))
+              || q.fact || "";
 
       // A real photograph of the real thing, from Wikimedia Commons, credited
       // and linked back. Falls back to the category tile when there is no
@@ -2678,7 +2692,9 @@
         } else {
           a = el('<span class="way is-off" aria-disabled="true" title="' +
                  esc(t("Nothing here yet")) + '">' + inner + '</span>');
-          a.addEventListener("click", function (e) { e.stopPropagation(); });
+          // A dead slot eats its own tap. preventDefault as well as stop, so
+          // the guard still holds the day this span becomes an <a> again.
+          a.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); });
         }
         ways.appendChild(a);
       });
@@ -2694,11 +2710,20 @@
       // own — no duplicate stop, no invented widget role.
       var primary = window.CURIO_GO.primaryOf(item.dest);
       if (primary) {
-        node.addEventListener("click", function () {
+        node.addEventListener("click", function (e) {
+          // A TAP ON A GREYED SLOT OPENS NOTHING. The slot stops the event
+          // itself, and this is the second lock: for two weeks the stylesheet
+          // took the slot out of hit-testing, so its stop never ran and the
+          // tap arrived here instead — opening the card's best OTHER door.
+          // Tapping a greyed Visit sent the reader to a book. (CEO, 12 Sep
+          // 2026.) A fix that lives only in a stylesheet is one stylesheet
+          // edit away from coming back.
+          var hit = e && e.target && e.target.closest ? e.target.closest(".is-off") : null;
+          if (hit && node.contains(hit)) return;
           // Raw URL, not the attribute-escaped one — window.open is not HTML.
           var D = window.QPIO_DOORS;
           var via = D && D.href ? D.href(primary.kind, slotName, primary.url) : null;
-          window.open(via || srcLink0(primary.url), "_blank", "noopener");
+          window.open(via || srcOpen0(primary.url), "_blank", "noopener");
         });
       }
       return node;
@@ -2841,7 +2866,7 @@
       node.setAttribute("role", "link");
       node.setAttribute("tabindex", "0");
       node.setAttribute("aria-label", it.title + (it.hook ? ". " + it.hook : ""));
-      var open = function () { window.open(srcLink0(it.url), "_blank", "noopener"); };
+      var open = function () { window.open(srcOpen0(it.url), "_blank", "noopener"); };
       node.addEventListener("click", open);
       node.addEventListener("keydown", function (e) {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
@@ -2850,10 +2875,20 @@
     return node;
   }
 
-  // Same scheme check srcLink() applies, for a bare URL.
+  // Same scheme check srcLink() applies, for a bare URL going into an HTML
+  // attribute — so the result is escaped.
   function srcLink0(u) {
     if (!/^https?:\/\//i.test(u || "")) return "#";
     return esc(u);
+  }
+  // The same check for a URL going into window.open, which is NOT HTML.
+  // Escaping it there turns the first "&" of a query string into "&amp;" and
+  // opens an address that does not exist. No shipped link carries a query
+  // today, which is why nobody has seen it; the first one would break, and the
+  // call sites already carried a comment saying they used the raw URL.
+  function srcOpen0(u) {
+    if (!/^https?:\/\//i.test(u || "")) return "#";
+    return String(u);
   }
 
   // Gate 5 door instrument: a door tap routes via /go/<class>/<slot> when the

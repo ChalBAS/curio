@@ -64,7 +64,11 @@ const Q = sandbox.window.CURIO_QUESTIONS || [];
 
 const pics = [];
 Object.entries(IM).forEach(([k, v]) => pics.push({ where: 'subject "' + k + '"', u: v.u, by: v.by, lic: v.lic, page: v.p, gen: v.gen === true }));
-Q.forEach(q => { if (q.img && q.img.u) pics.push({ where: 'question "' + String(q.q).slice(0, 44) + '"', u: q.img.u, by: q.img.by, lic: q.img.lic, page: q.img.p, gen: false }); });
+/* gen was hardcoded false here, so a picture carried on a QUESTION could never
+   be declared AI-generated — the disclosure this tool exists to enforce was
+   impossible to satisfy on the only rows where it came up. It now reads the
+   row's own flag, exactly as it does for a subject's picture. */
+Q.forEach(q => { if (q.img && q.img.u) pics.push({ where: 'question "' + String(q.q).slice(0, 44) + '"', u: q.img.u, by: q.img.by, lic: q.img.lic, page: q.img.p, gen: q.img.gen === true }); });
 
 console.log('pictures the app ships: ' + pics.length + '\n');
 
