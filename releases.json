@@ -2,12 +2,12 @@
  "generated": "2026-09-11",
  "live": {
   "production": 76,
-  "uat": 95,
+  "uat": 96,
   "main": 76
  },
  "drift": null,
  "awaiting": [
-  95,
+  96,
   94,
   93,
   92,
@@ -23,6 +23,11 @@
   77
  ],
  "rejected": [
+  {
+   "version": 95,
+   "issue": 84,
+   "at": "2026-09-11T16:34:41Z"
+  },
   {
    "version": 82,
    "issue": 73,
@@ -58,6 +63,25 @@
  ],
  "releases": [
   {
+   "version": 96,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-12",
+   "to": "2026-09-12",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "e65d95e",
+     "date": "2026-09-12",
+     "subject": "The 1,208 questions that were written and never shipped"
+    }
+   ]
+  },
+  {
    "version": 95,
    "state": "ON UAT",
    "branch": "uat",
@@ -65,7 +89,11 @@
    "to": "2026-09-09",
    "questions": 0,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "REJECTED",
+    "at": "2026-09-11T16:34:41Z",
+    "who": "ChalBAS",
+    "issue": 84,
+    "where": "body"
    },
    "messageClash": [],
    "commits": [

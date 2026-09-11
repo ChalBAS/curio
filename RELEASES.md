@@ -8,12 +8,15 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v95** at uat.qpio.app |
+| On UAT | **v96** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-11 |
 
-> ⏳ **Awaiting your sign-off:** v95, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v96, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
+
+> 🔴 **v95 was rejected** on 2026-09-11 ([#84](https://github.com/ChalBAS/curio-hq/issues/84)). It stays on UAT until the
+> reported defects are fixed and a new build is put up for sign-off.
 
 > 🔴 **v82 was rejected** on 2026-08-22 ([#73](https://github.com/ChalBAS/curio-hq/issues/73)). It stays on UAT until the
 > reported defects are fixed and a new build is put up for sign-off.
@@ -30,9 +33,15 @@ not by omission.*
 
 ---
 
+## v96 — ⏳ on UAT
+
+2026-09-12 · 0 questions · sign-off: **no release issue**
+
+- `e65d95e` The 1,208 questions that were written and never shipped
+
 ## v95 — ⏳ on UAT
 
-2026-09-07 → 2026-09-09 · 0 questions · sign-off: **no release issue**
+2026-09-07 → 2026-09-09 · 0 questions · sign-off: **rejected**, [#84](https://github.com/ChalBAS/curio-hq/issues/84)
 
 - `7a7f76a` Three dead Visit links replaced, and the real broken count is three
 - `070aecc` A chosen video is served exactly, and a declined one stays greyed
