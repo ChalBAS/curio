@@ -290,7 +290,14 @@
          door, not its label, so this works in every language — and 📚 (Read, a
          book) and 📖 (Sources, the article) are different doors that look
          alike at a glance, which is exactly why they are listed apart. */
-      var HOST = { read: /openlibrary\.org|archive\.org|gutenberg\.org|worldcat\.org/i,
+      /* Every place a BOOK is allowed to live. The list started as the four the
+         app used in August and failed the day the pipeline's own books arrived:
+         it finds an ISBN and offers, in order, somewhere to read it free, Open
+         Library, Google Books, then Wikipedia's list of booksellers for that
+         ISBN. Those last two are book pages and the list simply did not know
+         them. Wikipedia appears here only as Special:BookSources — a Read door
+         landing on an ordinary article is still wrong, and still caught. */
+      var HOST = { read: /openlibrary\.org|archive\.org|gutenberg\.org|worldcat\.org|books\.google\.[a-z.]+|wikipedia\.org\/wiki\/Special:BookSources/i,
                    source: /wikipedia\.org/i,
                    watch: /youtube\.com|youtu\.be|vimeo\.com/i };
       var wrongKind = [], notALink = [], greyOpened = [], greyIsLink = [];
