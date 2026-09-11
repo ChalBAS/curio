@@ -1,14 +1,14 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-09-11T17:44:51.012Z",
+ "generated": "2026-09-11T17:58:46.809Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",
  "counts": {
   "shipped": 1968,
-  "added": 1208,
-  "changedEn": 3,
-  "changedFr": 4,
+  "added": 0,
+  "changedEn": 0,
+  "changedFr": 0,
   "carriedBecauseShipped": 22,
   "ungoverned": 12,
   "unruled": 1956

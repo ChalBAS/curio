@@ -356,15 +356,32 @@
     var cb = chosenDoors && chosenDoors.book ? (chosenDoors.book[dl] || chosenDoors.book.en) : null;
     var cv = chosenDoors ? chosenDoors.visit : null;
 
+    /* THE BOOK AND THE PLACE FOUND FOR THIS QUESTION — under his choice, above
+       the subject tables.
+
+       Everything else on this screen is keyed by SUBJECT, from tables built for
+       the 760 questions that existed in August. When the bank grew to 1,968,
+       only 64 questions offered anywhere to visit, while the inventory held a
+       checked place for 542 of them: the work had been done and the reader
+       could not see it. Written per question id by
+       curio-hq/tools/publish_to_app.js. */
+    var bank = window.CURIO_DOORS_BANK && q && q.id ? window.CURIO_DOORS_BANK[q.id] : null;
+    var bb = bank && bank.read ? (bank.read[dl] || bank.read.en) : null;
+    var bv = bank && bank.visit ? bank.visit : null;
+
     var made = {
       /* naming the actual book is the difference between "somewhere to read"
          and "here is the book" */
       read:   cb && cb.none ? { title: "", sub: "", url: null }
             : cb && cb.u ? { title: cb.t || title, sub: cb.a || "", url: cb.u, chosen: true }
-            : { title: book ? book.t : title, sub: book && book.a ? book.a : "", url: readUrl(title, slug) },
+            : book ? { title: book.t, sub: book.a || "", url: readUrl(title, slug) }
+            : bb && bb.u ? { title: bb.t || title, sub: bb.a || "", url: bb.u }
+            : { title: title, sub: "", url: readUrl(title, slug) },
       visit:  cv && cv.none ? { title: "", sub: "", url: null }
             : cv && cv.url ? { title: cv.where || "", sub: cv.city || "", url: cv.url, chosen: true }
-            : p ? { title: p.where, sub: p.city, url: destUrl(p) } : { title: "", sub: "", url: null },
+            : p ? { title: p.where, sub: p.city, url: destUrl(p) }
+            : bv && bv.url ? { title: bv.where || "", sub: bv.city || "", url: bv.url }
+            : { title: "", sub: "", url: null },
       /* A DOOR IS ONLY A DOOR IF THERE IS SOMETHING BEHIND IT.
        *
        * CEO, 7 Sep 2026, on the first question of his review screen: "the

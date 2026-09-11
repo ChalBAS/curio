@@ -45,6 +45,7 @@ const ASSETS = [
   "./src/braingym.js?v=96",
   "./src/watch.chosen.js?v=96",
   "./src/doors.chosen.js?v=96",
+  "./src/doors.bank.js?v=96",
   "./src/watch.empty.js?v=96",
   "./src/hooks.q.js?v=96",
   "./src/discovery.js?v=96",
