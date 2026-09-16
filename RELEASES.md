@@ -10,10 +10,13 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v96** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-11 |
+| Generated | 2026-09-15 |
 
-> ⏳ **Awaiting your sign-off:** v96, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
+
+> 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
+> reported defects are fixed and a new build is put up for sign-off.
 
 > 🔴 **v95 was rejected** on 2026-09-11 ([#84](https://github.com/ChalBAS/curio-hq/issues/84)). It stays on UAT until the
 > reported defects are fixed and a new build is put up for sign-off.
@@ -35,9 +38,12 @@ not by omission.*
 
 ## v96 — ⏳ on UAT
 
-2026-09-12 · 0 questions · sign-off: **no release issue**
+2026-09-12 · 0 questions · sign-off: **rejected**, [#85](https://github.com/ChalBAS/curio-hq/issues/85)
 
 - `e65d95e` The 1,208 questions that were written and never shipped
+- `e802aae` v96 enters the register awaiting your sign-off
+- `334958f` The books and places that were found and never shown
+- `60efe47` The link test knew four book sites; the pipeline uses six
 
 ## v95 — ⏳ on UAT
 

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-11",
+ "generated": "2026-09-15",
  "live": {
   "production": 76,
   "uat": 96,
@@ -7,7 +7,6 @@
  },
  "drift": null,
  "awaiting": [
-  96,
   94,
   93,
   92,
@@ -23,6 +22,11 @@
   77
  ],
  "rejected": [
+  {
+   "version": 96,
+   "issue": 85,
+   "at": "2026-09-11T17:55:55Z"
+  },
   {
    "version": 95,
    "issue": 84,
@@ -70,7 +74,11 @@
    "to": "2026-09-12",
    "questions": 0,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "REJECTED",
+    "at": "2026-09-11T17:55:55Z",
+    "who": "ChalBAS",
+    "issue": 85,
+    "where": "comment"
    },
    "messageClash": [],
    "commits": [
@@ -78,6 +86,21 @@
      "sha": "e65d95e",
      "date": "2026-09-12",
      "subject": "The 1,208 questions that were written and never shipped"
+    },
+    {
+     "sha": "e802aae",
+     "date": "2026-09-12",
+     "subject": "v96 enters the register awaiting your sign-off"
+    },
+    {
+     "sha": "334958f",
+     "date": "2026-09-12",
+     "subject": "The books and places that were found and never shown"
+    },
+    {
+     "sha": "60efe47",
+     "date": "2026-09-12",
+     "subject": "The link test knew four book sites; the pipeline uses six"
     }
    ]
   },
