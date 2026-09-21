@@ -232,6 +232,7 @@
     var h = int(r, 1, 12);
     var turn = pick(r, [90, 180, 270]);
     var steps = turn / 30;                /* the face turns one number per 30° */
+    var turnWord = { 90: ["a quarter turn", "un quart de tour"], 180: ["half a turn", "un demi-tour"], 270: ["three quarters of a turn", "trois quarts de tour"] }[turn];
     var nh = ((h - 1 + steps) % 12) + 1;
     var answer = String(nh);
     /* wrong for different reasons: the number it pointed at before (nothing
@@ -247,8 +248,8 @@
     return {
       family: "spatial",
       prompt: fr
-        ? "Fais tourner toute l'horloge, aiguilles comprises, de " + turn + " degrés dans le sens des aiguilles d'une montre. L'aiguille des heures pointe maintenant là où se trouvait l'un des chiffres. Lequel ?"
-        : "Turn the whole clock — hands and all — clockwise by " + turn + " degrees. The hour hand now points where one of the numbers used to be. Which one?",
+        ? "Fais tourner toute l'horloge, aiguilles comprises, de " + turn + " degrés (" + turnWord[1] + ") dans le sens des aiguilles d'une montre. L'aiguille des heures pointe maintenant là où se trouvait l'un des chiffres. Lequel ?"
+        : "Turn the whole clock — hands and all — clockwise by " + turn + " degrees (" + turnWord[0] + "). The hour hand now points where one of the numbers used to be. Which one?",
       show: fr ? "L'horloge indique " + h + " h" : "The clock reads " + h + " o'clock",
       options: shuffle(r, opts),
       answer: answer,
@@ -428,8 +429,8 @@
       var k = pick(r, kinds), v;
       if (k === "double") { n = n * 2; steps.push(fr ? "Double-le." : "Double it."); }
       else if (k === "half") { n = n / 2; steps.push(fr ? "Divise-le par deux." : "Halve it."); }
-      else if (k === "add") { v = int(r, 3, 9); n = n + v; steps.push(fr ? "Ajoute " + v + "." : "Add " + v + "."); }
-      else { v = int(r, 2, Math.min(7, n - 2)); n = n - v; steps.push(fr ? "Retire " + v + "." : "Take away " + v + "."); }
+      else if (k === "add") { v = int(r, 3, 9); if (/^(Take away|Retire) / .test(prev) && Number(prev.match(/\d+/)[0]) === v) v = v === 9 ? 3 : v + 1; n = n + v; steps.push(fr ? "Ajoute " + v + "." : "Add " + v + "."); }
+      else { v = int(r, 2, Math.min(7, n - 2)); if (/^(Add|Ajoute) /.test(prev) && Number(prev.match(/\d+/)[0]) === v) v = v >= Math.min(7, n - 2) ? 2 : v + 1; n = n - v; steps.push(fr ? "Retire " + v + "." : "Take away " + v + "."); }
       trail.push(n);
     }
     var answer = n;
@@ -799,10 +800,10 @@
             a: "Blanc", opts: ["Blanc", "Brun", "Noir", "On ne peut pas savoir"],
             why: "Toutes les fenêtres ne peuvent donner au sud qu'au pôle Nord, où toutes les directions sont le sud. Les seuls ours qui y vivent sont les ours polaires." } },
     { en: { q: "In a shop, a customer asks: \"How much for one?\" \"Twenty.\" \"And for twelve?\" \"Forty.\" \"And for a hundred and twelve?\" \"Sixty.\" What is she buying?",
-            a: "House numbers", opts: ["House numbers", "Eggs", "Stamps", "Bricks"],
+            a: "House numbers", opts: ["House numbers", "Lottery tickets", "Stamps", "Bus tickets"],
             why: "The price is twenty per digit: one digit, two digits, three digits. She is buying the numbers for her front door." },
       fr: { q: "Dans une boutique, une cliente demande : « Combien pour un ? » « Vingt. » « Et pour douze ? » « Quarante. » « Et pour cent douze ? » « Soixante. » Qu'achète-t-elle ?",
-            a: "Des numéros de maison", opts: ["Des numéros de maison", "Des œufs", "Des timbres", "Des briques"],
+            a: "Des numéros de maison", opts: ["Des numéros de maison", "Des billets de loterie", "Des timbres", "Des tickets de bus"],
             why: "Le prix est de vingt par chiffre : un chiffre, deux chiffres, trois chiffres. Elle achète les chiffres de sa porte d'entrée." } },
     { en: { q: "A rope ladder hangs over the side of a ship, its bottom rung just touching the water. The rungs are 30 cm apart. The tide rises 90 cm. How many rungs are now under water?",
             a: "None", opts: ["None", "Three", "Two", "One"],
@@ -834,11 +835,11 @@
       fr: { q: "Un homme regarde un portrait et dit : « Je n'ai ni frère ni sœur, mais le père de cet homme est le fils de mon père. » Qui est sur le portrait ?",
             a: "Son fils", opts: ["Son fils", "Lui-même", "Son père", "Son neveu"],
             why: "« Le fils de mon père », pour un homme sans frère ni sœur, c'est lui-même. L'homme du portrait a donc pour père celui qui parle — c'est son fils." } },
-    { en: { q: "Three switches in a corridor control one light bulb in a closed room. You may do what you like with the switches, but you may open the door only once. How do you find out which switch works the bulb?",
-            a: "Feel whether the bulb is warm", opts: ["Feel whether the bulb is warm", "Listen for a click", "Look under the door", "It cannot be done with one look"],
+    { en: { q: "Three switches in a corridor control one old-style light bulb in a closed room, and no light shows from outside. You may do what you like with the switches, but you may open the door only once. How do you find out which switch works the bulb?",
+            a: "Hold a hand near the bulb to feel if it is warm", opts: ["Hold a hand near the bulb to feel if it is warm", "Listen for a click", "Count the switches", "It cannot be done with one look"],
             why: "Turn the first switch on for a few minutes, then off; turn the second on; open the door. Lit means the second switch, warm means the first, cold and dark means the third. The bulb gives two kinds of evidence, and everyone looks for only one." },
-      fr: { q: "Trois interrupteurs dans un couloir commandent une seule ampoule dans une pièce fermée. Tu peux faire ce que tu veux avec les interrupteurs, mais tu ne peux ouvrir la porte qu'une seule fois. Comment savoir quel interrupteur commande l'ampoule ?",
-            a: "Toucher l'ampoule pour voir si elle est chaude", opts: ["Toucher l'ampoule pour voir si elle est chaude", "Écouter s'il y a un déclic", "Regarder sous la porte", "Impossible en un seul coup d'œil"],
+      fr: { q: "Trois interrupteurs dans un couloir commandent une seule ampoule à l'ancienne dans une pièce fermée, et aucune lumière ne filtre à l'extérieur. Tu peux faire ce que tu veux avec les interrupteurs, mais tu ne peux ouvrir la porte qu'une seule fois. Comment savoir quel interrupteur commande l'ampoule ?",
+            a: "Approcher la main de l'ampoule pour sentir si elle est chaude", opts: ["Approcher la main de l'ampoule pour sentir si elle est chaude", "Écouter s'il y a un déclic", "Compter les interrupteurs", "Impossible en un seul coup d'œil"],
             why: "Allume le premier interrupteur quelques minutes, puis éteins-le ; allume le deuxième ; ouvre la porte. Allumée : c'est le deuxième. Chaude : c'est le premier. Froide et éteinte : c'est le troisième. L'ampoule donne deux sortes d'indices, et tout le monde n'en cherche qu'une." } }
   ];
 
