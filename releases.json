@@ -76,7 +76,11 @@
    "to": "2026-09-21",
    "questions": 0,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 86,
+    "issues": [
+     86
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -84,6 +88,11 @@
      "sha": "7cf62bd",
      "date": "2026-09-21",
      "subject": "v98: the eight new city packs repaired, French whole again, nothing dated"
+    },
+    {
+     "sha": "8185a62",
+     "date": "2026-09-21",
+     "subject": "v98 enters the register awaiting sign-off"
     }
    ]
   },

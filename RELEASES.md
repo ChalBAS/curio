@@ -38,9 +38,10 @@ not by omission.*
 
 ## v98 — ⏳ on UAT
 
-2026-09-21 · 0 questions · sign-off: **no release issue**
+2026-09-21 · 0 questions · sign-off: awaiting you, [#86](https://github.com/ChalBAS/curio-hq/issues/86)
 
 - `7cf62bd` v98: the eight new city packs repaired, French whole again, nothing dated
+- `8185a62` v98 enters the register awaiting sign-off
 
 ## v97 — ⏳ on UAT
 
