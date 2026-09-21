@@ -38,9 +38,10 @@ not by omission.*
 
 ## v99 — ⏳ on UAT
 
-2026-09-21 · 0 questions · sign-off: **no release issue**
+2026-09-21 · 0 questions · sign-off: awaiting you, [#87](https://github.com/ChalBAS/curio-hq/issues/87)
 
 - `65fc6b4` v99: the flags travel with the app, so they are there offline
+- `17de685` v99 enters the register awaiting sign-off
 
 ## v98 — ⏳ on UAT
 

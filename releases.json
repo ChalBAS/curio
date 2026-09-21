@@ -77,7 +77,11 @@
    "to": "2026-09-21",
    "questions": 0,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 87,
+    "issues": [
+     87
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -85,6 +89,11 @@
      "sha": "65fc6b4",
      "date": "2026-09-21",
      "subject": "v99: the flags travel with the app, so they are there offline"
+    },
+    {
+     "sha": "17de685",
+     "date": "2026-09-21",
+     "subject": "v99 enters the register awaiting sign-off"
     }
    ]
   },
