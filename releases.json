@@ -78,7 +78,11 @@
    "to": "2026-09-21",
    "questions": 0,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 88,
+    "issues": [
+     88
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -86,6 +90,11 @@
      "sha": "7c0cbe4",
      "date": "2026-09-21",
      "subject": "v100: every question shows its picture, every city pack has one, no picture no question"
+    },
+    {
+     "sha": "c72ca78",
+     "date": "2026-09-21",
+     "subject": "v100 enters the register awaiting sign-off"
     }
    ]
   },

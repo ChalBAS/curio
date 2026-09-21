@@ -38,9 +38,10 @@ not by omission.*
 
 ## v100 — ⏳ on UAT
 
-2026-09-21 · 0 questions · sign-off: **no release issue**
+2026-09-21 · 0 questions · sign-off: awaiting you, [#88](https://github.com/ChalBAS/curio-hq/issues/88)
 
 - `7c0cbe4` v100: every question shows its picture, every city pack has one, no picture no question
+- `c72ca78` v100 enters the register awaiting sign-off
 
 ## v99 — ⏳ on UAT
 
