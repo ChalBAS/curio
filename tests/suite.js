@@ -380,10 +380,70 @@
         }).then(function () {
           var opts = $$(w, "#gymOpts button");
           s.log(lang, "brain gym · a puzzle offers four answers", opts.length === 4, opts.length + " offered");
+          /* A French reader got English puzzles until 17 Sep 2026: the French
+             lived only in the review tool. The puzzle's own words must now be
+             in the reader's language — checked on the words, not the labels. */
+          if (lang === "fr") {
+            var EN = /\b(the|and|which|what|next|comes|facing|today|start|group|people|clock|reads|says|truth|lies)\b/i;
+            var words = ($(w, ".qtext") ? $(w, ".qtext").textContent : "") + " " + opts.map(function (b) { return b.textContent; }).join(" ");
+            s.log(lang, "brain gym · the puzzle is in French", !EN.test(words), words.slice(0, 80));
+          }
           if (!opts.length) return;
           opts[0].click();
           return wait(400).then(function () {
             s.log(lang, "brain gym · answering shows the reasoning", !!$(w, "#gymAfter"), "");
+          });
+        });
+      });
+    } },
+
+  /* The city packs shipped with no acceptance check of their own. Eight more
+     arrived on 17 Sep 2026; a pack that renders empty, or in the wrong
+     language, is exactly the kind of thing only a reader would notice. */
+  { id: "citypacks", title: "Every city pack opens, in this language, with its questions, phrases and tips",
+    run: function (w, s, lang) {
+      var packs = (w.CURIO_CITYPACKS || []);
+      s.log(lang, "city packs · packs loaded", packs.length > 0, packs.length + " packs");
+      if (lang === "fr") {
+        var fr = w.CURIO_CITYPACKS_FR || [];
+        s.log(lang, "city packs · every pack has French", fr.length === packs.length, fr.length + " of " + packs.length);
+      }
+      var thin = packs.filter(function (p) { return !p.questions || p.questions.length < 12 || !p.phrases || p.phrases.length < 6 || !p.tips || p.tips.length < 5; });
+      s.log(lang, "city packs · none is thin", thin.length === 0, thin.length ? thin.map(function (p) { return p.city; }).join(", ") : "12 questions, 6 phrases, 5 tips each");
+      var bad = [];
+      packs.forEach(function (p) {
+        p.questions.forEach(function (q, i) {
+          if (!q.options || q.options.length !== 4 || !(q.answer >= 0 && q.answer < 4)) bad.push(p.city + " Q" + i);
+          else if (!/^https:\/\/en\.wikipedia\.org\/wiki\//.test(q.src || "")) bad.push(p.city + " Q" + i + " source");
+        });
+      });
+      s.log(lang, "city packs · every question has four answers and a source", bad.length === 0, bad.slice(0, 3).join(", "));
+      return tab(w, "home").then(function () {
+        /* The travel card on Home holds one small card per pack (#cityPeek);
+           tapping one opens the pack page. Addressed by structure, not words. */
+        var travel = $(w, "#modeTravel");
+        if (!travel) { s.log(lang, "city packs · the travel card is on Home", false, "no #modeTravel"); return; }
+        var cards = $$(w, "#cityPeek .dcard");
+        s.log(lang, "city packs · one card per pack", cards.length === packs.length, cards.length + " cards for " + packs.length + " packs");
+        if (!cards.length) return;
+        cards[cards.length - 1].click();          /* the newest pack, last in the file */
+        return wait(350).then(function () {
+          return Promise.resolve().then(function () {
+            var play = $(w, "#playCity");
+            var phrases = $$(w, ".phrase");
+            var tips = $$(w, "ul.tips li");
+            s.log(lang, "city packs · the pack page shows its phrases and tips", !!play && phrases.length === 6 && tips.length === 5, phrases.length + " phrases, " + tips.length + " tips");
+            if (lang === "fr") {
+              var EN2 = /\b(the|and|with|from|that|which|were|their|when|where|only|more|than)\b/i;
+              var prose = $$(w, "ul.tips li").map(function (li) { return li.textContent; }).join(" ");
+              s.log(lang, "city packs · the tips are in French", prose.length > 40 && !EN2.test(prose), prose.slice(0, 60));
+            }
+            if (!play) return;
+            play.click();
+            return until(function () { return $(w, ".qtext"); }, 4000).then(function () {
+              var o = $$(w, ".opts button");
+              s.log(lang, "city packs · the pack quiz starts with four answers", o.length === 4, o.length + " offered");
+            });
           });
         });
       });

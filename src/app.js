@@ -1235,13 +1235,17 @@
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(el(
       '<div class="card"><h3 style="margin:0 0 4px">' + t("Brain Gym") + '</h3>' +
-      '<p class="mini" style="margin:0">' + t("Seven kinds. Five of them never run out.") + '</p></div>'));
+      '<p class="mini" style="margin:0">' + tf("{n} kinds. {k} of them never run out.", { n: window.CURIO_GYM.counts.families, k: window.CURIO_GYM.counts.generated }) + '</p></div>'));
     window.CURIO_GYM.families.forEach(function (f) {
+      /* A family carries its own French name and blurb, so a new kind of
+         exercise cannot ship with an untranslated card. */
+      var name = (QLANG === "fr" && f.nameFr) ? f.nameFr : t(f.name);
+      var blurb = (QLANG === "fr" && f.blurbFr) ? f.blurbFr : t(f.blurb);
       var c = el(
         '<div class="card">' +
           '<div class="emoji">' + f.icon + '</div>' +
-          '<h3 style="margin:8px 0 4px">' + t(f.name) + '</h3>' +
-          '<p class="mini" style="margin:0 0 10px">' + t(f.blurb) +
+          '<h3 style="margin:8px 0 4px">' + esc(name) + '</h3>' +
+          '<p class="mini" style="margin:0 0 10px">' + esc(blurb) +
             (f.infinite ? ' \u00b7 ' + t("never runs out") : ' \u00b7 ' + t("hand-written")) + '</p>' +
           '<div class="btnrow"><button class="btn">' + t("Start") + '</button></div>' +
         '</div>');
@@ -1258,12 +1262,21 @@
      `family` null means today's mixed five — the same five for everybody, so it
      can be talked about, which is the reason the exercises are seeded rather
      than random. */
+  /* French typography, applied at render time rather than in the generator:
+     a no-break space before ? ; : ! and inside « », so a phone never wraps a
+     lone "?" onto the next line. The generator keeps plain spaces because the
+     independent solvers read its text with ordinary regexes. */
+  function gymText(s) {
+    if (QLANG !== "fr" || !s) return s;
+    return String(s).replace(/ ([?;:!»])/g, " $1").replace(/« /g, "« ").replace(/(\d) (\d{3})\b/g, "$1 $2");
+  }
+
   function startBrainGym(family) {
     var GYM = window.CURIO_GYM;
     var seed = GYM.seedForDay();
     var set = family
-      ? [0, 1, 2, 3, 4].map(function (i) { return GYM.make(family, (seed * 7919 + i * 104729) >>> 0); })
-      : GYM.makeSet(seed, 5);
+      ? [0, 1, 2, 3, 4].map(function (i) { return GYM.make(family, (seed * 7919 + i * 104729) >>> 0, QLANG); })
+      : GYM.makeSet(seed, 5, QLANG);
     var idx = 0, right = 0;
 
     function step() {
@@ -1279,7 +1292,7 @@
         '<div class="card">' +
           '<div class="mini">' + t("Brain Gym") + ' \u00b7 ' + (idx + 1) + '/' + set.length + '</div>' +
           '<h3 style="margin:10px 0 6px">' + t("Remember these") + '</h3>' +
-          '<div class="qtext" style="letter-spacing:.04em">' + fmt(p.show) + '</div>' +
+          '<div class="qtext" style="letter-spacing:.04em">' + fmt(gymText(p.show)) + '</div>' +
           '<p class="mini" style="margin:14px 0 0">' + t("Take as long as you like. They will not come back.") + '</p>' +
           '<div class="btnrow" style="margin-top:14px"><button class="btn" id="gymReady">' + t("Ready") + '</button></div>' +
         '</div>');
@@ -1291,10 +1304,10 @@
       var fam = GYM.byKey[p.family];
       var html =
         '<div class="card">' +
-          '<div class="mini">' + (fam ? fam.icon + ' ' + t(fam.name) : t("Brain Gym")) +
+          '<div class="mini">' + (fam ? fam.icon + ' ' + esc((QLANG === "fr" && fam.nameFr) ? fam.nameFr : t(fam.name)) : t("Brain Gym")) +
             ' \u00b7 ' + (idx + 1) + '/' + set.length + '</div>' +
-          '<div class="qtext" style="margin-top:10px">' + fmt(p.prompt) + '</div>' +
-          (p.show && !p.hide ? '<div class="qtext" style="opacity:.9;letter-spacing:.06em;margin-top:6px">' + fmt(p.show) + '</div>' : '') +
+          '<div class="qtext" style="margin-top:10px">' + fmt(gymText(p.prompt)) + '</div>' +
+          (p.show && !p.hide ? '<div class="qtext" style="opacity:.9;letter-spacing:.06em;margin-top:6px">' + fmt(gymText(p.show)) + '</div>' : '') +
           '<div class="opts" id="gymOpts"></div>' +
           '<div id="gymAfter"></div>' +
         '</div>';
@@ -1302,7 +1315,7 @@
       var opts = node.querySelector("#gymOpts");
       p.options.forEach(function (o) {
         var b = el('<button class="opt"></button>');
-        b.textContent = o;
+        b.textContent = gymText(o);
         b.addEventListener("click", function () { answer(node, p, o); });
         opts.appendChild(b);
       });
@@ -1314,15 +1327,16 @@
       if (correct) right++;
       Array.prototype.forEach.call(node.querySelectorAll(".opt"), function (b) {
         b.disabled = true;
-        if (b.textContent === p.answer) b.classList.add("good");
-        else if (b.textContent === chosen) b.classList.add("bad");
+        /* the buttons carry the typographic rendering; compare like with like */
+        if (b.textContent === gymText(p.answer)) b.classList.add("good");
+        else if (b.textContent === gymText(chosen)) b.classList.add("bad");
       });
       var after = node.querySelector("#gymAfter");
       var fam = window.CURIO_GYM.byKey[p.family];
       after.appendChild(el(
         '<div class="reveal" style="margin-top:12px">' +
-          '<div>' + fmt(p.explain) + '</div>' +
-          (fam ? '<div class="mini" style="margin-top:8px;opacity:.75">' + t("This one trains") + ' ' + fmt(p.trains) + '</div>' : '') +
+          '<div>' + fmt(gymText(p.explain)) + '</div>' +
+          (fam ? '<div class="mini" style="margin-top:8px;opacity:.75">' + t("This one trains") + ' ' + fmt(gymText(p.trains)) + '</div>' : '') +
         '</div>'));
       var row = el('<div class="btnrow" style="margin-top:14px"></div>');
       var b = el('<button class="btn"></button>');
@@ -1350,8 +1364,8 @@
         /* A different five, from a seed nobody has to remember. */
         var GYM2 = window.CURIO_GYM;
         var s2 = (GYM2.seedForDay() * 31 + Math.floor(Date.now() / 60000)) >>> 0;
-        set = family ? [0, 1, 2, 3, 4].map(function (i) { return GYM2.make(family, (s2 * 7919 + i * 104729) >>> 0); })
-                     : GYM2.makeSet(s2, 5);
+        set = family ? [0, 1, 2, 3, 4].map(function (i) { return GYM2.make(family, (s2 * 7919 + i * 104729) >>> 0, QLANG); })
+                     : GYM2.makeSet(s2, 5, QLANG);
         idx = 0; right = 0; step();
       });
       node.querySelector("#gymKinds").addEventListener("click", brainGymPicker);
@@ -3072,7 +3086,11 @@
   // family), and a device that simply cannot speak the language says so in
   // text instead of pretending.
   var LANG_CODE = { Italian: "it-IT", Japanese: "ja-JP", "Egyptian Arabic": "ar-EG", Arabic: "ar", Spanish: "es-ES", Turkish: "tr-TR",
-                    Thai: "th-TH", "Moroccan Arabic (Darija)": "ar-MA", Greek: "el-GR", Uzbek: "uz-UZ" };
+                    Thai: "th-TH", "Moroccan Arabic (Darija)": "ar-MA", Greek: "el-GR", Uzbek: "uz-UZ",
+                    /* the eight packs of 17 Sep 2026 — mapped the day they arrived, because an
+                       unmapped language fails silently (register item, #75) */
+                    Yoruba: "yo-NG", Amharic: "am-ET", "Rioplatense Spanish": "es-AR", "Brazilian Portuguese": "pt-BR",
+                    Vietnamese: "vi-VN", Georgian: "ka-GE", "Levantine Arabic": "ar-JO", "Omani Arabic": "ar-OM" };
   function voiceFor(langCode) {
     try {
       var vs = window.speechSynthesis.getVoices() || [];

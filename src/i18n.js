@@ -259,7 +259,7 @@
          English and gets French later is a screen that arrives twice. */
       "Today\u2019s five": "Les cinq du jour",
       "Choose a kind": "Choisir un type",
-      "Seven kinds. Five of them never run out.": "Sept types. Cinq d\u2019entre eux sont in\u00e9puisables.",
+      "{n} kinds. {k} of them never run out.": "{n} types. {k} d\u2019entre eux sont in\u00e9puisables.",
       "never runs out": "in\u00e9puisable",
       "hand-written": "\u00e9crit \u00e0 la main",
       "Start": "Commencer",

@@ -25,10 +25,26 @@
 // answer can be reproduced when somebody reports it. Math.random() would make
 // all three impossible.
 //
-// EVERY ANSWER IS CHECKED BY MACHINE. curio-hq/tools/test_braingym.js solves
-// each generated puzzle independently of the generator and fails the build on
+// ONE PUZZLE, TWO LANGUAGES, BY CONSTRUCTION. make(key, seed, lang) draws the
+// puzzle from the seed first and puts words on it last, so the French and the
+// English are the same puzzle with the same answer — never a translation that
+// might drift. Until 17 Sep 2026 the French existed only in the review tool,
+// and a French reader got English puzzles in the app. Every family now
+// renders both languages here, and the review tool reads them from here. The
+// French says "tu", as the rest of the app does.
+//
+// EVERY ANSWER IS CHECKED BY MACHINE. curio-hq/tools/gym_solvers.js solves
+// each generated puzzle independently of the generator, in both languages,
+// reading only what a reader would see; test_braingym.js fails the build on
 // any disagreement. A puzzle bank nobody verified is a bank of plausible
 // wrong answers.
+//
+// READ BY THE PANEL, 11 and 17 Sep 2026. The second reading and an adversary
+// that ran every generator through hundreds of thousands of seeds found two
+// blockers (a clock puzzle with two right answers whenever the minute hand is
+// off the hour; an arithmetic chain that could go negative) and a list of
+// smaller things, all applied here and recorded in
+// curio-hq/03-Engine/question-intelligence/inventory/gym-panel-reads.json.
 
 (function () {
   "use strict";
@@ -47,23 +63,30 @@
     };
   }
   function pick(r, xs) { return xs[Math.floor(r() * xs.length)]; }
-  function int(r, lo, hi) { return lo + Math.floor(r() * (hi - lo + 1)); }
+  function int(r, lo, hi) { if (hi < lo) hi = lo; return lo + Math.floor(r() * (hi - lo + 1)); }
   function shuffle(r, xs) {
     var a = xs.slice();
     for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
     return a;
   }
   /* Three wrong answers that are wrong for a REASON — near misses, not noise.
-     An obviously silly option turns a puzzle into a reading test. */
+     An obviously silly option turns a puzzle into a reading test. The
+     distractor maker is given the ATTEMPT number, so every candidate in its
+     list gets tried; it used to be given the set size, which only ever
+     reached three of them (an adversarial read, 17 Sep 2026). */
   function optionsAround(r, answer, makeDistractor) {
-    var set = [answer], guard = 0;
-    while (set.length < 4 && guard++ < 60) {
-      var d = makeDistractor(r, set.length);
+    var set = [answer], attempt = 0;
+    while (set.length < 4 && attempt < 60) {
+      var d = makeDistractor(r, attempt++);
       if (d !== null && d !== undefined && set.indexOf(d) === -1) set.push(d);
     }
     while (set.length < 4) set.push(answer + set.length * 7 + 1);
     return shuffle(r, set);
   }
+  function FR(lang) { return lang === "fr"; }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  /* "que Ana" is not French; "qu'Ana" is */
+  function que(x) { return (/^[aeiouyàâéèêëîïôöùûü]/i.test(x) ? "qu'" : "que ") + x; }
 
   /* =========================================================== SEQUENCES
      Infer the rule, then continue it. The oldest exercise there is, and the
@@ -73,51 +96,51 @@
     { id: "add", make: function (r) {
         var a = int(r, 2, 12), d = int(r, 3, 13), n = [];
         for (var i = 0; i < 5; i++) n.push(a + d * i);
-        return { n: n, next: a + d * 5, why: "each step adds " + d };
+        return { n: n, next: a + d * 5, why: "each step adds " + d, whyFr: "on ajoute " + d + " à chaque étape" };
       } },
     { id: "mul", make: function (r) {
         var a = int(r, 1, 5), k = int(r, 2, 4), n = [];
         for (var i = 0; i < 5; i++) n.push(a * Math.pow(k, i));
-        return { n: n, next: a * Math.pow(k, 5), why: "each step multiplies by " + k };
+        return { n: n, next: a * Math.pow(k, 5), why: "each step multiplies by " + k, whyFr: "on multiplie par " + k + " à chaque étape" };
       } },
     { id: "square", make: function (r) {
         var s = int(r, 1, 6), n = [];
         for (var i = 0; i < 5; i++) n.push((s + i) * (s + i));
-        return { n: n, next: (s + 5) * (s + 5), why: "these are the square numbers from " + s + " upward" };
+        return { n: n, next: (s + 5) * (s + 5), why: "these are the square numbers from " + s + " upward", whyFr: "ce sont les carrés des nombres à partir de " + s };
       } },
     { id: "fib", make: function (r) {
         var a = int(r, 1, 6), b = int(r, 2, 9), n = [a, b];
         for (var i = 2; i < 6; i++) n.push(n[i - 1] + n[i - 2]);
         var next = n[5]; n = n.slice(0, 5);
-        return { n: n, next: next, why: "each number is the two before it added together" };
+        return { n: n, next: next, why: "each number is the two before it added together", whyFr: "chaque nombre est la somme des deux précédents" };
       } },
     { id: "alt", make: function (r) {
         var a = int(r, 4, 20), up = int(r, 5, 12), down = int(r, 2, 6), n = [a];
         for (var i = 1; i < 5; i++) n.push(i % 2 ? n[i - 1] + up : n[i - 1] - down);
-        return { n: n, next: n[4] + up, why: "it adds " + up + ", then takes away " + down + ", over and over" };
+        return { n: n, next: n[4] + up, why: "it adds " + up + ", then takes away " + down + ", over and over", whyFr: "on ajoute " + up + ", puis on retire " + down + ", et ainsi de suite" };
       } },
     { id: "growadd", make: function (r) {
         var a = int(r, 1, 9), d = int(r, 1, 4), step = d, n = [a];
         for (var i = 1; i < 5; i++) { n.push(n[i - 1] + step); step += d; }
-        return { n: n, next: n[4] + step, why: "the gap itself grows by " + d + " each time" };
+        return { n: n, next: n[4] + step, why: "the gap itself grows by " + d + " each time", whyFr: "l'écart lui-même augmente de " + d + " à chaque fois" };
       } }
   ];
 
-  function makeSequence(seed) {
+  function makeSequence(seed, lang) {
     var r = rng(seed), rule = pick(r, SEQ_RULES), s = rule.make(r);
     var opts = optionsAround(r, s.next, function (rr, i) {
-      var jitter = [1, -1, 2, -2, 3][i % 5];
-      var d = s.next + (s.n[4] - s.n[3]) * (i === 1 ? 0 : 0) + jitter * Math.max(1, Math.round(Math.abs(s.next) * 0.08) || 1);
-      return d === s.next ? null : d;
+      var jitter = [1, -1, 2, -2, 3, -3][i % 6];
+      var d = s.next + jitter * Math.max(1, Math.round(Math.abs(s.next) * 0.08) || 1);
+      return d === s.next || s.n.indexOf(d) !== -1 ? null : d;   /* never a number already on show */
     });
     return {
       family: "sequences",
-      prompt: "What comes next?",
+      prompt: FR(lang) ? "Quelle est la suite ?" : "What comes next?",
       show: s.n.join("  ·  ") + "  ·  ?",
       options: opts.map(String),
       answer: String(s.next),
-      explain: "It is " + s.next + " — " + s.why + ".",
-      trains: "spotting a rule from very little evidence"
+      explain: FR(lang) ? "C'est " + s.next + " — " + s.whyFr + "." : "It is " + s.next + " — " + s.why + ".",
+      trains: FR(lang) ? "repérer une règle à partir de très peu d'indices" : "spotting a rule from very little evidence"
     };
   }
 
@@ -125,141 +148,176 @@
      Knights always tell the truth, knaves always lie. Two sentences and one
      of them settles it. No knowledge, no arithmetic, no language tricks —
      which is why it works identically in French. */
-  function makeKnights(seed) {
-    var r = rng(seed);
-    var names = shuffle(r, ["Ana", "Bo", "Cai", "Dee", "Eli", "Fen", "Gus", "Hal"]).slice(0, 2);
+  var NAMES = ["Ali", "Bo", "Cai", "Dan", "Eli", "Fen", "Gus", "Hal"];
+  function makeKnights(seed, lang) {
+    var r = rng(seed), fr = FR(lang);
+    var names = shuffle(r, NAMES).slice(0, 2);
     var A = names[0], B = names[1];
     var form = int(r, 0, 3);
+    var truth = function (x) { return fr ? x + " dit la vérité" : x + " tells the truth"; };
+    var lies = function (x) { return fr ? x + " ment" : x + " lies"; };
+    var both = fr ? "Les deux disent la vérité" : "Both tell the truth";
+    var bothLie = fr ? "Les deux mentent" : "Both lie";
+    var pairImpossible = fr ? "Impossible — les deux phrases sont incompatibles" : "Neither can be true — the pair is impossible";
+    var nobody = fr ? "Personne ne peut prononcer cette phrase — impossible dans les deux cas" : "Nobody could say it — it is impossible either way";
+    var says = function (who, what) { return fr ? who + " dit : « " + what + " »" : who + ' says: "' + what + '"'; };
     var said, answer, explain;
 
     if (form === 0) {
-      /* A: "We are both knaves." A knight cannot say it (it would be false of
-         a knight); a knave saying it would make it true, and a knave cannot
-         say a true thing. So A is a knave and B is a knight. */
-      said = A + ' says: "We are both liars."';
-      answer = A + " lies, " + B + " tells the truth";
-      explain = "A truth-teller could not say it — it would be false. A liar saying it would make it " +
-                "true, and a liar cannot say something true. So " + A + " is the liar, which makes the " +
-                "sentence false, which means " + B + " is not a liar.";
+      /* A: "We are both liars." A truth-teller cannot say it (it would be
+         false); a liar saying it would make it true, and a liar cannot say a
+         true thing. So A lies and B tells the truth. */
+      said = says(A, fr ? "Nous sommes tous les deux des menteurs." : "We are both liars.");
+      answer = lies(A) + ", " + truth(B);
+      explain = fr
+        ? "Quelqu'un qui dit toujours la vérité ne pourrait pas le dire — ce serait faux. Un menteur qui le dirait rendrait la phrase vraie, et un menteur ne peut rien dire de vrai. Donc " + A + " est le menteur, la phrase est fausse, et " + B + " n'est pas un menteur."
+        : "A truth-teller could not say it — it would be false. A liar saying it would make it true, and a liar cannot say something true. So " + A + " is the liar, which makes the sentence false, which means " + B + " is not a liar.";
     } else if (form === 1) {
-      /* A: "At least one of us is a knave." True if either is a knave. A knave
-         saying it would make it true — impossible. So A is a knight, and the
-         statement is true, so B is a knave. */
-      said = A + ' says: "At least one of us is a liar."';
-      answer = A + " tells the truth, " + B + " lies";
-      explain = "If " + A + " were the liar the sentence would be true, and a liar cannot say a true " +
-                "thing. So " + A + " tells the truth — and then the sentence is true, so the liar must be " + B + ".";
+      /* A: "At least one of us is a liar." A liar saying it would make it
+         true — impossible. So A tells the truth, the sentence is true, and the
+         liar must be B. */
+      said = says(A, fr ? "Au moins l'un de nous deux est un menteur." : "At least one of us is a liar.");
+      answer = truth(A) + ", " + lies(B);
+      explain = fr
+        ? "Si " + A + " était le menteur, la phrase serait vraie, et un menteur ne peut rien dire de vrai. Donc " + A + " dit la vérité — la phrase est vraie, et le menteur est forcément " + B + "."
+        : "If " + A + " were the liar the sentence would be true, and a liar cannot say a true thing. So " + A + " tells the truth — and then the sentence is true, so the liar must be " + B + ".";
     } else if (form === 2) {
-      /* A: "B is a knight." B: "A is a knave." If A truthful → B knight → B truthful
-         → A knave. Contradiction. So A lies → B is a knave → B's claim "A is a knave"
-         would be true, but B lies. Contradiction unless... A lies, so B is a knave;
-         B says "A is a knave" which is TRUE, but B always lies. Contradiction both
-         ways -> this pair is impossible. Use it as the "no consistent answer" case. */
-      said = A + ' says: "' + B + ' tells the truth."  ' + B + ' says: "' + A + ' lies."';
-      answer = "Neither can be true — the pair is impossible";
-      explain = "Suppose " + A + " tells the truth: then " + B + " does too, so " + B + "'s claim that " +
-                A + " lies is true — but " + A + " told the truth. Suppose instead " + A + " lies: then " +
-                B + " lies, so " + B + "'s claim is false, meaning " + A + " tells the truth. Both roads " +
-                "double back. No arrangement works.";
+      /* A: "B tells the truth." B: "A lies." Both roads double back: no
+         arrangement is consistent. */
+      said = says(A, fr ? B + " dit la vérité." : B + " tells the truth.") + "  " + says(B, fr ? A + " ment." : A + " lies.");
+      answer = pairImpossible;
+      explain = fr
+        ? "Supposons " + que(A) + " dise la vérité : alors " + B + " aussi, donc l'affirmation de " + B + " selon laquelle " + A + " ment est vraie — mais " + A + " a dit la vérité. Supposons au contraire " + que(A) + " mente : alors " + B + " ment aussi, donc son affirmation est fausse, ce qui signifie " + que(A) + " dit la vérité. Les deux chemins se contredisent. Aucune combinaison ne tient."
+        : "Suppose " + A + " tells the truth: then " + B + " does too, so " + B + "'s claim that " + A + " lies is true — but " + A + " told the truth. Suppose instead " + A + " lies: then " + B + " lies, so " + B + "'s claim is false, meaning " + A + " tells the truth. Both roads double back. No arrangement works.";
     } else {
-      /* A: "I am a knave." Nobody can say this: a knight would be lying, a knave
-         would be telling the truth. */
-      said = A + ' says: "I am a liar."';
-      answer = "Nobody could say it — it is impossible either way";
-      explain = "A truth-teller saying it would be lying. A liar saying it would be telling the truth. " +
-                "The sentence rules itself out whoever says it.";
+      /* A: "I am a liar." Nobody can say this. */
+      said = says(A, fr ? "Je suis un menteur." : "I am a liar.");
+      answer = nobody;
+      explain = fr
+        ? "Quelqu'un qui dit la vérité mentirait en le disant. Un menteur, lui, dirait la vérité. La phrase se contredit elle-même, qui que soit celui qui la prononce."
+        : "A truth-teller saying it would be lying. A liar saying it would be telling the truth. The sentence rules itself out whoever says it.";
     }
 
     var wrongs = shuffle(r, [
-      A + " tells the truth, " + B + " lies",
-      A + " lies, " + B + " tells the truth",
-      "Both tell the truth",
-      "Both lie",
-      "Neither can be true — the pair is impossible",
-      "Nobody could say it — it is impossible either way"
+      truth(A) + ", " + lies(B),
+      lies(A) + ", " + truth(B),
+      both, bothLie, pairImpossible, nobody
     ].filter(function (x) { return x !== answer; })).slice(0, 3);
 
     return {
       family: "logic",
-      prompt: "On this island some people always tell the truth and some always lie. Who is who?",
+      prompt: fr ? "Sur cette île, certains disent toujours la vérité et d'autres mentent toujours. Qui est qui ?"
+                 : "On this island some people always tell the truth and some always lie. Who is who?",
       show: said,
       options: shuffle(r, wrongs.concat([answer])),
       answer: answer,
       explain: explain,
-      trains: "following a chain of consequences without losing your place"
+      trains: fr ? "suivre une chaîne de conséquences sans perdre le fil" : "following a chain of consequences without losing your place"
     };
   }
 
   /* ============================================================ SPATIAL
      A clock face, because it is the one spatial object everybody already
-     carries and it needs no picture. Turning hands is rotation, and the
-     wrap-around at twelve is what makes it work rather than arithmetic. */
-  function makeClock(seed) {
-    var r = rng(seed);
-    var h = int(r, 1, 12), m = pick(r, [0, 15, 30, 45]);
+     carries and it needs no picture. Turning the face is rotation, and the
+     wrap-around at twelve is what makes it work rather than arithmetic.
+
+     REWORDED 17 Sep 2026 on the panel's objection: turning the whole face
+     turns both hands, so the clock still READS the same time, and the old
+     answer "10:15" marked a careful reader wrong. And the time is always on
+     the hour now — at 10:45 the hour hand sits three-quarters of the way to
+     11, and after the turn it pointed between two offered numbers. The
+     adversarial read found that on 72% of seeds. */
+  function makeClock(seed, lang) {
+    var r = rng(seed), fr = FR(lang);
+    var h = int(r, 1, 12);
     var turn = pick(r, [90, 180, 270]);
-    var stepsOfFive = turn / 30;          /* the hour hand moves 30° an hour */
-    var nh = ((h - 1 + stepsOfFive) % 12) + 1;
-    var answer = nh + ":" + (m === 0 ? "00" : m);
-    var opts = shuffle(r, [answer].concat(
-      [1, 2, 3].map(function (k) {
-        var x = ((h - 1 + stepsOfFive + k) % 12) + 1;
-        return x + ":" + (m === 0 ? "00" : m);
-      }).filter(function (x) { return x !== answer; }).slice(0, 3)));
+    var steps = turn / 30;                /* the face turns one number per 30° */
+    var nh = ((h - 1 + steps) % 12) + 1;
+    var answer = String(nh);
+    /* wrong for different reasons: the number it pointed at before (nothing
+       moved), the turn taken the other way, and one neighbour of the answer —
+       a fixed {before, answer−1, answer, answer+1} shape let a regular reader
+       pick the middle of three consecutive numbers without rotating anything */
+    var wrongWay = ((h - 1 - steps + 12) % 12) + 1;
+    var neighbour = int(r, 0, 1) === 0 ? (nh % 12) + 1 : ((nh + 10) % 12) + 1;
+    var opts = [answer];
+    [h, wrongWay, neighbour].forEach(function (c) { if (opts.indexOf(String(c)) === -1 && opts.length < 4) opts.push(String(c)); });
+    var cands = shuffle(r, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(String).filter(function (x) { return opts.indexOf(x) === -1; }));
+    while (opts.length < 4) opts.push(cands.pop());
     return {
       family: "spatial",
-      prompt: "Turn the whole clock face clockwise by " + turn + " degrees. What does the hour hand now point at?",
-      show: "The clock reads " + h + ":" + (m === 0 ? "00" : m),
-      options: opts,
+      prompt: fr
+        ? "Fais tourner toute l'horloge, aiguilles comprises, de " + turn + " degrés dans le sens des aiguilles d'une montre. L'aiguille des heures pointe maintenant là où se trouvait l'un des chiffres. Lequel ?"
+        : "Turn the whole clock — hands and all — clockwise by " + turn + " degrees. The hour hand now points where one of the numbers used to be. Which one?",
+      show: fr ? "L'horloge indique " + h + " h" : "The clock reads " + h + " o'clock",
+      options: shuffle(r, opts),
       answer: answer,
-      explain: "The hour hand moves one hour for every 30 degrees, so " + turn + " degrees is " +
-               stepsOfFive + " hours. From " + h + " that lands on " + nh + ".",
-      trains: "turning something in your head without turning your head"
+      explain: fr
+        ? "L'horloge tourne d'un chiffre tous les 30 degrés, donc " + turn + " degrés font " + steps + " chiffres. L'aiguille, qui pointait sur le " + h + ", pointe maintenant là où était le " + nh + ". L'horloge, elle, indique toujours " + h + " h — tout a tourné ensemble, aiguilles comprises."
+        : "The clock turns one number for every 30 degrees, so " + turn + " degrees is " + steps + " numbers. The hand that pointed at " + h + " now points at where " + nh + " used to be. The clock itself still reads " + h + " o'clock — everything turned together, hands and all.",
+      trains: fr ? "faire tourner quelque chose dans sa tête sans tourner la tête" : "turning something in your head without turning your head"
     };
   }
 
   /* ====================================================== WORKING MEMORY
      Hold a short list, then answer a question about it that you could not
      have prepared for. The load is deliberately light — this is not a test,
-     it is the thing you can feel getting easier. */
-  var MEM_WORDS = ["river", "copper", "lantern", "harbour", "cedar", "marble", "compass", "saffron",
-                   "anchor", "willow", "amber", "quarry", "thistle", "beacon", "orchard", "flint"];
-  function makeMemory(seed) {
-    var r = rng(seed);
+     it is the thing you can feel getting easier. The word pool maps one to
+     one onto French, all sixteen distinct in both, so the French reader
+     holds the same list. */
+  var MEM_WORDS = [
+    ["river", "rivière"], ["copper", "cuivre"], ["lantern", "lanterne"], ["harbour", "port"],
+    ["cedar", "cèdre"], ["marble", "marbre"], ["compass", "boussole"], ["saffron", "safran"],
+    ["anchor", "ancre"], ["willow", "saule"], ["amber", "ambre"], ["quarry", "carrière"],
+    ["thistle", "chardon"], ["beacon", "balise"], ["orchard", "verger"], ["flint", "silex"]
+  ];
+  function makeMemory(seed, lang) {
+    var r = rng(seed), fr = FR(lang), w = fr ? 1 : 0;
     var n = int(r, 5, 7);
     var list = shuffle(r, MEM_WORDS).slice(0, n);
     var kind = int(r, 0, 2);
-    var answer, prompt;
+    var answerIdx, prompt;
     if (kind === 0) {
-      var pos = int(r, 1, n);
-      prompt = "Which word was number " + pos + "?";
-      answer = list[pos - 1];
+      var pos = int(r, 2, n);            /* 1 would be the "first one" question in other words */
+      prompt = fr ? "Quel était le mot numéro " + pos + " ?" : "Which word was number " + pos + "?";
+      answerIdx = pos - 1;
     } else if (kind === 1) {
-      prompt = "Which word came immediately after " + list[n - 2] + "?";
-      answer = list[n - 1];
+      /* the anchor used to be the second-to-last word every time, so "after X"
+         always meant "the last one" — a regular reader learned that in a week */
+      var anchor = int(r, 0, n - 2);
+      prompt = fr ? "Quel mot venait juste après « " + list[anchor][1] + " » ?" : "Which word came immediately after " + list[anchor][0] + "?";
+      answerIdx = anchor + 1;
     } else {
-      var longest = list.slice().sort(function (a, b) { return b.length - a.length || (a < b ? -1 : 1); })[0];
-      prompt = "Which of these words was the longest?";
-      answer = longest;
+      /* "the longest" used to live here, and could tie (willow/quarry), which
+         made the answer arbitrary — a panel finding, 11 Sep. "The first one"
+         cannot tie. */
+      prompt = fr ? "Quel était le premier mot de la liste ?" : "Which word was the first one on the list?";
+      answerIdx = 0;
     }
-    var wrongs = shuffle(r, list.filter(function (w) { return w !== answer; })).slice(0, 3);
+    var words = list.map(function (p) { return p[w]; });
+    var answer = words[answerIdx];
+    var wrongs = shuffle(r, words.filter(function (x) { return x !== answer; })).slice(0, 3);
     return {
       family: "memory",
       prompt: prompt,
-      show: list.join("  ·  "),
+      show: words.join("  ·  "),
       hide: true,                       /* the list is shown, then taken away */
       options: shuffle(r, wrongs.concat([answer])),
       answer: answer,
-      explain: "The list was: " + list.join(", ") + ".",
-      trains: "holding several things at once while doing something else"
+      explain: (fr ? "La liste était : " : "The list was: ") + words.join(", ") + ".",
+      trains: fr ? "garder une courte liste en tête une fois qu'elle a disparu" : "holding a short list in your head after it has gone"
     };
   }
 
   /* ========================================================== ATTENTION
      One of these is not like the others, and the difference is small on
-     purpose. Speed matters less than not being fooled by the obvious. */
-  function makeOddOne(seed) {
-    var r = rng(seed);
+     purpose. Speed matters less than not being fooled by the obvious. The
+     palindromes are a French pool for French readers, not translations — a
+     word that reads the same backwards in one language does not in the other. */
+  var PAL = { en: ["level", "rotor", "civic", "kayak", "refer", "madam", "stats"], fr: ["radar", "rotor", "kayak", "été", "ici", "elle", "tôt"] };
+  var NOTPAL = { en: ["ledge", "cider", "torch", "plumb"], fr: ["pente", "cidre", "torche", "plomb"] };
+  function makeOddOne(seed, lang) {
+    var r = rng(seed), fr = FR(lang), L = fr ? "fr" : "en";
     var kind = int(r, 0, 2);
     var items, answer, why;
     if (kind === 0) {
@@ -268,28 +326,254 @@
       var odd = base * 4 + 1;
       items[int(r, 0, 3)] = String(odd);
       answer = String(odd);
-      why = "every other number divides by " + base + "; " + odd + " does not";
+      why = fr ? "tous les autres nombres sont divisibles par " + base + " ; " + odd + " non" : "every other number divides by " + base + "; " + odd + " does not";
     } else if (kind === 1) {
-      var pool = shuffle(r, ["level", "rotor", "civic", "kayak", "refer", "madam", "stats"]);
-      var notPal = pick(r, ["ledge", "cider", "torch", "plumb"]);
-      items = shuffle(r, pool.slice(0, 3).concat([notPal]));
+      var order = shuffle(r, [0, 1, 2, 3, 4, 5, 6]).slice(0, 3);
+      var notIdx = int(r, 0, 3);
+      var pool = order.map(function (i) { return PAL[L][i]; });
+      var notPal = NOTPAL[L][notIdx];
+      items = shuffle(r, pool.concat([notPal]));
       answer = notPal;
-      why = "the others read the same backwards";
+      why = fr ? "les autres se lisent pareil à l'envers" : "the others read the same backwards";
     } else {
       var evens = shuffle(r, [12, 24, 36, 48, 60, 72, 84]).slice(0, 3);
       var oddN = pick(r, [15, 21, 33, 45, 57]);
       items = shuffle(r, evens.concat([oddN])).map(String);
       answer = String(oddN);
-      why = "the others are all even";
+      why = fr ? "les autres sont tous pairs" : "the others are all even";
     }
     return {
       family: "attention",
-      prompt: "Which one does not belong?",
+      prompt: fr ? "Lequel n'est pas à sa place ?" : "Which one does not belong?",
       show: items.join("   "),
       options: shuffle(r, items),
       answer: answer,
       explain: answer + " — " + why + ".",
-      trains: "noticing the small difference rather than the loud one"
+      trains: fr ? "remarquer la petite différence plutôt que la grande" : "noticing the small difference rather than the loud one"
+    };
+  }
+
+  /* ========================================================== DEDUCTION
+     Two comparisons, three things, one question — and sometimes the honest
+     answer is that it cannot be told. That fourth option is right often
+     enough that a reader learns to check whether the clues actually reach
+     the thing asked about, which is the whole skill. Objects rather than
+     people, so the French adjectives have one fixed gender. */
+  var THINGS = [
+    { en: ["box", "heavier", "lighter", "heaviest", "lightest"], fr: ["boîte", "plus lourde", "plus légère", "la plus lourde", "la plus légère"] },
+    { en: ["tower", "taller", "shorter", "tallest", "shortest"], fr: ["tour", "plus haute", "plus basse", "la plus haute", "la plus basse"] },
+    { en: ["rope", "longer", "shorter", "longest", "shortest"], fr: ["corde", "plus longue", "plus courte", "la plus longue", "la plus courte"] }
+  ];
+  var COLOURS = [["red", "rouge"], ["blue", "bleue"], ["green", "verte"], ["yellow", "jaune"]];
+  function makeOrdering(seed, lang) {
+    var r = rng(seed), fr = FR(lang);
+    var thing = pick(r, THINGS), T = fr ? thing.fr : thing.en;
+    var cols = shuffle(r, COLOURS).slice(0, 3);   /* cols[0] > cols[1] > cols[2] on the attribute */
+    var name = function (i) { return fr ? "la " + T[0] + " " + cols[i][1] : "the " + cols[i][0] + " " + T[0]; };
+    var Name = function (i) { return cap(name(i)); };
+    var clue = function (hi, lo) {
+      /* "X is more than Y" or "Y is less than X" — same fact, two surfaces */
+      return int(r, 0, 1) === 1
+        ? Name(lo) + (fr ? " est " : " is ") + T[2] + (fr ? " que " : " than ") + name(hi) + "."
+        : Name(hi) + (fr ? " est " : " is ") + T[1] + (fr ? " que " : " than ") + name(lo) + ".";
+    };
+    var form = int(r, 0, 2), edges;
+    if (form === 0) edges = [[0, 1], [1, 2]];        /* a chain: everything is determined */
+    else if (form === 1) edges = [[0, 1], [0, 2]];   /* a fork from the top: only the greatest is known */
+    else edges = [[0, 2], [1, 2]];                   /* a fork to the bottom: only the least is known */
+    var askGreatest = int(r, 0, 1) === 0;
+    var determined = form === 0 || (form === 1 && askGreatest) || (form === 2 && !askGreatest);
+    var cannot = fr ? "On ne peut pas le savoir avec ces indices" : "You can't tell from these clues";
+    var answer = !determined ? cannot : Name(askGreatest ? 0 : 2);
+    var options = shuffle(r, [Name(0), Name(1), Name(2), cannot]);
+    var shown = shuffle(r, edges).map(function (e) { return clue(e[0], e[1]); }).join(" ");
+    var pivot = form === 1 ? 0 : 2;           /* the thing both clues mention, in the fork forms */
+    var explain;
+    if (form === 0) explain = fr
+      ? "Les deux indices parlent de " + name(1) + " : une chose est au-dessus d'elle, une autre en dessous. Mis bout à bout, de " + T[3] + " à " + T[4] + " : " + name(0) + ", puis " + name(1) + ", puis " + name(2) + ". " + Name(askGreatest ? 0 : 2) + " est donc " + T[askGreatest ? 3 : 4] + "."
+      : "Both clues mention " + name(1) + ": one thing is above it, one is below it. Put end to end, from " + T[3] + " to " + T[4] + ": " + name(0) + ", then " + name(1) + ", then " + name(2) + ". So " + name(askGreatest ? 0 : 2) + " is the " + T[askGreatest ? 3 : 4] + ".";
+    else if (determined) explain = fr
+      ? "Les deux indices parlent de " + name(pivot) + ", et les deux fois elle est " + T[askGreatest ? 1 : 2] + " que l'autre. Elle est donc " + T[askGreatest ? 3 : 4] + " des trois — même si l'ordre des deux autres reste inconnu."
+      : "Both clues are about " + name(pivot) + ", and both times it is " + T[askGreatest ? 1 : 2] + " than the other one. So it is the " + T[askGreatest ? 3 : 4] + " of the three — even though the order of the other two is unknown.";
+    else explain = fr
+      ? "Les deux indices ne comparent jamais " + name(form === 1 ? 1 : 0) + " et " + name(form === 1 ? 2 : 1) + " entre elles. " + cap(T[askGreatest ? 3 : 4]) + " est forcément l'une des deux, mais rien ne dit laquelle."
+      : "The clues never compare " + name(form === 1 ? 1 : 0) + " and " + name(form === 1 ? 2 : 1) + " with each other. The " + T[askGreatest ? 3 : 4] + " must be one of them, but nothing says which.";
+    return {
+      family: "deduction",
+      prompt: fr ? "Quelle " + T[0] + " est " + T[askGreatest ? 3 : 4] + " ?" : "Which " + T[0] + " is the " + T[askGreatest ? 3 : 4] + "?",
+      show: shown,
+      options: options,
+      answer: answer,
+      explain: explain,
+      trains: fr ? "vérifier que les indices portent bien sur ce qu'on te demande" : "checking that the clues actually reach the thing you were asked about"
+    };
+  }
+
+  /* ========================================================= ARITHMETIC
+     A short chain of operations held in the head, no paper. Small numbers on
+     purpose: the exercise is keeping your place, not multiplication. Every
+     value along the way stays at 2 or above — the first version could reach
+     zero and below and then say "take away 0" (an adversarial read, 17 Sep). */
+  function makeChain(seed, lang) {
+    var r = rng(seed), fr = FR(lang);
+    var n = int(r, 3, 12), start = n, steps = [], trail = [];
+    var count = int(r, 3, 4);
+    for (var i = 0; i < count; i++) {
+      var prev = steps.length ? steps[steps.length - 1] : "";
+      var kinds = ["add"];
+      if (n <= 40 && !/Halve|Divise/.test(prev)) kinds.push("double");
+      if (n >= 4) kinds.push("sub");
+      if (n % 2 === 0 && n >= 4 && !/Double/.test(prev)) kinds.push("half");
+      if (n > 40) kinds = n % 2 === 0 && !/Double/.test(prev) ? ["sub", "half"] : ["sub"];
+      var k = pick(r, kinds), v;
+      if (k === "double") { n = n * 2; steps.push(fr ? "Double-le." : "Double it."); }
+      else if (k === "half") { n = n / 2; steps.push(fr ? "Divise-le par deux." : "Halve it."); }
+      else if (k === "add") { v = int(r, 3, 9); n = n + v; steps.push(fr ? "Ajoute " + v + "." : "Add " + v + "."); }
+      else { v = int(r, 2, Math.min(7, n - 2)); n = n - v; steps.push(fr ? "Retire " + v + "." : "Take away " + v + "."); }
+      trail.push(n);
+    }
+    var answer = n;
+    var opts = optionsAround(r, answer, function (rr, i) {
+      /* the slips a real reader makes: off by one either way, a step missed,
+         a step applied twice */
+      var d = answer + [1, -1, 2, -2, 3, -3, 4, 5][i % 8];
+      return d < 0 || d === answer ? null : d;
+    });
+    return {
+      family: "arithmetic",
+      prompt: (fr ? "Pars de " + start + ". " : "Start with " + start + ". ") + steps.join(" ") + (fr ? " Qu'obtiens-tu ?" : " What do you have?"),
+      show: "",
+      options: opts.map(String),
+      answer: String(answer),
+      explain: (fr ? "Étape par étape : " : "Step by step: ") + start + " → " + trail.join(" → ") + ".",
+      trains: fr ? "ne pas perdre le fil d'un calcul sans rien écrire" : "keeping your place in a calculation without writing anything down"
+    };
+  }
+
+  /* =========================================================== CALENDAR
+     Days of the week go round in sevens, and the reader who spots that
+     100 days is fourteen weeks and two days has done the whole puzzle. Eight
+     and fifteen days are skipped: "dans 8 jours" is a week to a French ear,
+     and "15 jours" a fortnight, so the French would have had two readings. */
+  var DAYS = { en: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+               fr: ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"] };
+  function makeDays(seed, lang) {
+    var r = rng(seed), fr = FR(lang), D = fr ? DAYS.fr : DAYS.en;
+    var today = int(r, 0, 6), n = int(r, 9, 120), ahead = int(r, 0, 1) === 0;
+    if (n === 15) n = 16;
+    var target = ((today + (ahead ? n : -n)) % 7 + 7) % 7;
+    var weeks = Math.floor(n / 7), rest = n % 7;
+    var answer = D[target];
+    /* wrong for a reason: counted the other way, or off by one */
+    var wrongWay = D[((today + (ahead ? -n : n)) % 7 + 7) % 7], offBy = D[(target + (int(r, 0, 1) ? 1 : 6)) % 7];
+    var wrongs = [wrongWay, offBy].filter(function (d, i, a) { return d !== answer && a.indexOf(d) === i; });
+    shuffle(r, D.filter(function (d) { return d !== answer && wrongs.indexOf(d) === -1; })).forEach(function (d) { if (wrongs.length < 3) wrongs.push(d); });
+    var wk = function (k) { return k + (fr ? " semaine" : " week") + (k === 1 ? "" : "s"); };
+    var dy = function (k) { return k + (fr ? " jour" : " day") + (k === 1 ? "" : "s"); };
+    return {
+      family: "calendar",
+      prompt: fr
+        ? "Nous sommes " + D[today] + ". Quel jour de la semaine " + (ahead ? "serons-nous dans " + n + " jours ?" : "étions-nous il y a " + n + " jours ?")
+        : "Today is " + D[today] + ". What day of the week " + (ahead ? "will it be in " + n + " days?" : "was it " + n + " days ago?"),
+      show: "",
+      options: shuffle(r, wrongs.concat([answer])),
+      answer: answer,
+      explain: fr
+        ? "Les jours de la semaine reviennent tous les sept jours, donc les semaines entières ne comptent pas. " + n + " jours, c'est " + wk(weeks) + (rest ? " et " + dy(rest) : "") + ". " + cap(wk(weeks)) + " plus " + (ahead ? "tard" : "tôt") + ", on retombe sur " + D[today] + (rest ? " ; " + dy(rest) + " plus " + (ahead ? "tard" : "tôt") + ", c'est " + D[target] : "") + "."
+        : "The days of the week come round every seven days, so whole weeks do not count. " + n + " days is " + wk(weeks) + (rest ? " and " + dy(rest) : "") + ". " + cap(wk(weeks)) + " " + (ahead ? "on" : "back") + ", you land on " + D[today] + " again" + (rest ? "; " + dy(rest) + " " + (ahead ? "further on" : "further back") + " is " + D[target] : "") + ".",
+      trains: fr ? "raisonner sur quelque chose qui revient en boucle" : "reasoning about something that goes round in a circle"
+    };
+  }
+
+  /* =============================================================== SETS
+     Two overlapping groups and one number the reader has to keep from
+     counting twice. The classic mistake is adding the two groups; the
+     puzzle is built so that mistake is always one of the options. Each
+     group carries its own words for "both" and "neither", singular and
+     plural, so no sentence reads "1 do both". */
+  var GROUPS = [
+    { en: ["drink tea", "drink coffee", "drink tea but not coffee", "drink both", "drinks both", "drink neither"],
+      fr: ["boivent du thé", "boivent du café", "boivent du thé mais pas de café", "boivent les deux", "boit les deux", "ne boivent ni l'un ni l'autre"] },
+    { en: ["play football", "play chess", "play football but not chess", "play both", "plays both", "play neither"],
+      fr: ["jouent au football", "jouent aux échecs", "jouent au football mais pas aux échecs", "jouent aux deux", "joue aux deux", "ne jouent ni à l'un ni à l'autre"] },
+    { en: ["speak Spanish", "speak Arabic", "speak Spanish but not Arabic", "speak both", "speaks both", "speak neither"],
+      fr: ["parlent espagnol", "parlent arabe", "parlent espagnol mais pas arabe", "parlent les deux", "parle les deux", "ne parlent ni l'un ni l'autre"] },
+    { en: ["have a cat", "have a dog", "have a cat but not a dog", "have both", "has both", "have neither"],
+      fr: ["ont un chat", "ont un chien", "ont un chat mais pas de chien", "ont les deux", "a les deux", "n'ont ni l'un ni l'autre"] }
+  ];
+  function makeGroups(seed, lang) {
+    var r = rng(seed), fr = FR(lang);
+    var g = pick(r, GROUPS), G = fr ? g.fr : g.en;
+    var N = int(r, 20, 40);
+    var A = int(r, 8, N - 6), B = int(r, 8, N - 6);
+    var lo = Math.max(1, A + B - N + 1), hi = Math.min(A, B) - 1;
+    if (hi < lo) { hi = Math.min(A, B); lo = Math.max(0, A + B - N); }
+    var both = int(r, lo, hi);
+    var neither = N - (A + B - both), onlyA = A - both;
+    var askNeither = int(r, 0, 1) === 0;
+    var answer = askNeither ? neither : onlyA;
+    var naive = askNeither ? N - A - B : A;             /* the double-count mistake */
+    var opts = optionsAround(r, answer, function (rr, i) {
+      var cand = [naive, answer + both, answer - 1, answer + 2, answer + 1, answer - 2, answer + both + 1, answer + 3][i % 8];
+      return (cand < 0 || cand === answer) ? null : cand;
+    });
+    var bothWord = both === 1 ? G[4] : G[3];
+    var whoBothEn = (both === 1 ? "The one who " + G[4] + " is counted" : "The " + both + " who " + G[3] + " are counted");
+    var whoBothFr = (both === 1 ? "La personne qui " + G[4] + " est comptée" : "Les " + both + " qui " + G[3] + " sont comptés");
+    return {
+      family: "sets",
+      prompt: fr
+        ? "Dans un groupe de " + N + " personnes, " + A + " " + G[0] + " et " + B + " " + G[1] + ", et " + both + " " + bothWord + ". Combien d'entre elles " + (askNeither ? G[5] : G[2]) + " ?"
+        : "In a group of " + N + " people, " + A + " " + G[0] + " and " + B + " " + G[1] + ", and " + both + " " + bothWord + ". How many " + (askNeither ? G[5] : G[2]) + "?",
+      show: "",
+      options: opts.map(String),
+      answer: String(answer),
+      explain: fr
+        ? (askNeither
+          ? whoBothFr + (A === B ? " dans chacun des deux groupes de " + A : " dans les " + A + " et dans les " + B) + ". Celles qui sont dans au moins l'un des deux groupes sont donc au nombre de " + A + " + " + B + " − " + both + " = " + (A + B - both) + ", et il en reste " + N + " − " + (A + B - both) + " = " + neither + ". Le total et l'autre groupe n'étaient là que pour distraire."
+          : whoBothFr + " dans les " + A + ". " + (both === 1 ? "Retire-la" : "Retire-les") + " : " + A + " − " + both + " = " + onlyA + ". Le total de " + N + " et les " + B + " de l'autre groupe ne servaient à rien.")
+        : (askNeither
+          ? whoBothEn + (A === B ? " in each of the two groups of " + A : " inside the " + A + " and inside the " + B) + ". So the people in at least one of the two groups are " + A + " + " + B + " − " + both + " = " + (A + B - both) + ", leaving " + N + " − " + (A + B - both) + " = " + neither + "."
+          : whoBothEn + " inside the " + A + ". Take " + (both === 1 ? "that one" : "them") + " out: " + A + " − " + both + " = " + onlyA + ". The total of " + N + " and the " + B + " in the other group were only there to distract."),
+      trains: fr ? "ne pas compter deux fois ce qui appartient à deux groupes" : "not counting twice what belongs to two groups"
+    };
+  }
+
+  /* ========================================================== DIRECTION
+     Face one way, turn a few times, say where you face. Nothing to see, so
+     it has to be done in the head — and "turn around" is the step everyone
+     rushes. Three identical turns in a row are redrawn: they are a reflex,
+     not a puzzle. */
+  var DIRS = { en: ["north", "east", "south", "west"], fr: ["le nord", "l'est", "le sud", "l'ouest"] };
+  var TURNS = { en: ["Turn left.", "Turn right.", "Turn around to face the other way."], fr: ["Tourne à gauche.", "Tourne à droite.", "Fais demi-tour."] };
+  function makeCompass(seed, lang) {
+    var r = rng(seed), fr = FR(lang), D = fr ? DIRS.fr : DIRS.en, T = fr ? TURNS.fr : TURNS.en;
+    var facing = int(r, 0, 3), start = facing, count = int(r, 3, 5), kinds = [];
+    for (var i = 0; i < count; i++) {
+      var t = int(r, 0, 2);
+      if (i >= 2 && kinds[i - 1] === t && kinds[i - 2] === t) t = (t + 1 + int(r, 0, 1)) % 3;
+      kinds.push(t);
+    }
+    var turns = [], trail = [D[start]];
+    kinds.forEach(function (t) {
+      facing = (facing + (t === 0 ? 3 : t === 1 ? 1 : 2)) % 4;
+      turns.push(T[t]);
+      trail.push(D[facing]);
+    });
+    var answer = cap(D[facing]);
+    var lefts = kinds.filter(function (t) { return t === 0; }).length, rights = kinds.filter(function (t) { return t === 1; }).length, arounds = kinds.filter(function (t) { return t === 2; }).length;
+    var tip = fr
+      ? " Un raccourci : un tour à gauche et un tour à droite s'annulent, et deux demi-tours aussi."
+      : " A shortcut: a left and a right cancel each other out, and so do two turn-arounds.";
+    var applies = (lefts && rights) || arounds >= 2;
+    return {
+      family: "direction",
+      prompt: (fr ? "Tu regardes vers " + D[start] + ". " : "You are facing " + D[start] + ". ") + turns.join(" ") + (fr ? " Dans quelle direction regardes-tu maintenant ?" : " Which way are you facing now?"),
+      show: "",
+      options: shuffle(r, D.map(cap)),
+      answer: answer,
+      explain: (fr ? "Pas à pas : " : "Step by step: ") + trail.join(" → ") + "." + (applies ? tip : ""),
+      trains: fr ? "garder son orientation en tête au fil de plusieurs changements" : "holding an orientation in your head through several changes"
     };
   }
 
@@ -297,128 +581,310 @@
      Fermi problems. There is no looking this up: the whole exercise is
      building an answer out of things you already roughly know. The "answer"
      is a band, and the explanation is the reasoning, because the reasoning is
-     the point and the number is not. */
+     the point and the number is not. Each carries its French beside it. */
   var FERMI = [
-    { q: "Roughly how many times does a human heart beat in one lifetime?",
-      band: "About 2 to 3 billion",
-      opts: ["About 2 to 3 billion", "About 2 to 3 million", "About 200 million", "About 20 billion"],
-      how: "Around 70 beats a minute is about 100,000 a day, about 37 million a year. Multiply by a " +
-           "lifetime of roughly 75 years and you land near 2.7 billion." },
-    { q: "Roughly how many words does a person speak in a day?",
-      band: "About 15,000",
-      opts: ["About 15,000", "About 1,500", "About 150,000", "About 500"],
-      how: "Speaking runs at roughly 120 words a minute. Two hours of actual talking spread across a " +
-           "day is 120 minutes, so about 14,000 — call it 15,000." },
-    { q: "Roughly how many piano tuners work in a city of 5 million people?",
-      band: "Around 100",
-      opts: ["Around 100", "Around 10", "Around 1,000", "Around 10,000"],
-      how: "Perhaps one household in fifty has a piano, so 5 million people is maybe 40,000 pianos. " +
-           "Tuned once a year, and one tuner handles perhaps 400 a year, that is about 100 tuners." },
-    { q: "Roughly how much does all the air inside an ordinary room weigh?",
-      band: "About 60 kilograms",
-      opts: ["About 60 kilograms", "About 600 grams", "About 6 kilograms", "About 600 kilograms"],
-      how: "A room 5m by 4m by 2.5m is 50 cubic metres. Air weighs about 1.2 kg per cubic metre. " +
-           "That is 60 kg — roughly a person." },
-    { q: "Roughly how many hairs are on an average human head?",
-      band: "About 100,000",
-      opts: ["About 100,000", "About 10,000", "About 1 million", "About 5,000"],
-      how: "Hair grows at roughly 200 per square centimetre, and a scalp is around 500 square " +
-           "centimetres. That is about 100,000." },
-    { q: "Roughly how far does a car tyre travel before it wears out?",
-      band: "About 50,000 kilometres",
-      opts: ["About 50,000 kilometres", "About 5,000 kilometres", "About 500,000 kilometres", "About 2,000 kilometres"],
-      how: "Tyres are usually replaced somewhere between 40,000 and 60,000 km — about the distance " +
-           "round the Earth once." },
-    { q: "Roughly how many breaths does a person take in a year?",
-      band: "About 8 million",
-      opts: ["About 8 million", "About 800,000", "About 80 million", "About 80,000"],
-      how: "About 15 breaths a minute is 900 an hour, roughly 21,600 a day. Times 365 gives just " +
-           "under 8 million." },
-    { q: "Roughly how many grains of rice are in one kilogram?",
-      band: "About 50,000",
-      opts: ["About 50,000", "About 5,000", "About 500,000", "About 1,000"],
-      how: "A grain of rice weighs around 20 milligrams. A kilogram is a million milligrams, so " +
-           "about 50,000 grains." }
+    { en: { q: "Roughly how many times does a human heart beat in one lifetime?", band: "About 2 to 3 billion",
+            opts: ["About 2 to 3 billion", "About 2 to 3 million", "About 200 million", "About 20 billion"],
+            how: "Around 70 beats a minute is about 100,000 a day, about 37 million a year. Multiply by a lifetime of roughly 75 years and you land near 2.7 billion." },
+      fr: { q: "À peu près combien de fois un cœur humain bat-il en une vie ?", band: "Environ 2 à 3 milliards",
+            opts: ["Environ 2 à 3 milliards", "Environ 2 à 3 millions", "Environ 200 millions", "Environ 20 milliards"],
+            how: "Autour de 70 battements par minute, c'est environ 100 000 par jour, à peu près 37 millions par an. Sur une vie d'environ 75 ans, on arrive à près de 2,7 milliards." } },
+    { en: { q: "Roughly how many words does a person speak in a day?", band: "Roughly 15,000",
+            opts: ["Roughly 15,000", "Roughly 1,500", "Roughly 150,000", "Roughly 500"],
+            how: "Speaking runs at roughly 120 words a minute. Two hours of actual talking spread across a day is 120 minutes, so about 14,000 — call it 15,000. Studies disagree on the exact figure; the method is the point." },
+      fr: { q: "À peu près combien de mots une personne prononce-t-elle en une journée ?", band: "À peu près 15 000",
+            opts: ["À peu près 15 000", "À peu près 1 500", "À peu près 150 000", "À peu près 500"],
+            how: "On parle à raison d'environ 120 mots par minute. Deux heures de parole réelle réparties sur la journée font 120 minutes, soit environ 14 000 — disons 15 000. Les études divergent sur le chiffre exact ; c'est la méthode qui compte." } },
+    { en: { q: "Roughly how many piano tuners work in a city of 5 million people?", band: "Around 100",
+            opts: ["Around 100", "Around 10", "Around 1,000", "Around 10,000"],
+            how: "Perhaps one household in fifty has a piano, so 5 million people is maybe 40,000 pianos. Tuned once a year, and one tuner handles perhaps 400 a year, that is about 100 tuners." },
+      fr: { q: "À peu près combien d'accordeurs de piano travaillent dans une ville de 5 millions d'habitants ?", band: "Environ 100",
+            opts: ["Environ 100", "Environ 10", "Environ 1 000", "Environ 10 000"],
+            how: "Un foyer sur cinquante a peut-être un piano : 5 millions d'habitants, c'est peut-être 40 000 pianos. À un accordage par an et 400 pianos par accordeur et par an, cela fait environ 100 accordeurs." } },
+    { en: { q: "Roughly how much does all the air inside an ordinary room weigh?", band: "About 60 kilograms",
+            opts: ["About 60 kilograms", "About 600 grams", "About 6 kilograms", "About 600 kilograms"],
+            how: "A room 5m by 4m by 2.5m is 50 cubic metres. Air weighs about 1.2 kg per cubic metre. That is 60 kg — roughly a person." },
+      fr: { q: "À peu près combien pèse tout l'air d'une pièce ordinaire ?", band: "Environ 60 kilos",
+            opts: ["Environ 60 kilos", "Environ 600 grammes", "Environ 6 kilos", "Environ 600 kilos"],
+            how: "Une pièce de 5 m sur 4 sur 2,5 fait 50 mètres cubes. L'air pèse environ 1,2 kg par mètre cube. Cela fait 60 kg — à peu près le poids d'une personne." } },
+    { en: { q: "Roughly how many hairs are on an average human head?", band: "About 100,000",
+            opts: ["About 100,000", "About 10,000", "About 1 million", "About 5,000"],
+            how: "Hair grows at roughly 200 per square centimetre, and a scalp is around 500 square centimetres. That is about 100,000." },
+      fr: { q: "À peu près combien de cheveux y a-t-il sur une tête humaine ?", band: "Environ 100 000",
+            opts: ["Environ 100 000", "Environ 10 000", "Environ 1 million", "Environ 5 000"],
+            how: "On compte environ 200 cheveux par centimètre carré, et un cuir chevelu fait autour de 500 centimètres carrés. Cela fait environ 100 000." } },
+    { en: { q: "Roughly how far does a car tyre travel before it wears out?", band: "About 50,000 kilometres",
+            opts: ["About 50,000 kilometres", "About 5,000 kilometres", "About 500,000 kilometres", "About 2,000 kilometres"],
+            how: "Tyres are usually replaced somewhere between 40,000 and 60,000 km — about the distance round the Earth once." },
+      fr: { q: "À peu près quelle distance un pneu de voiture parcourt-il avant d'être usé ?", band: "Environ 50 000 kilomètres",
+            opts: ["Environ 50 000 kilomètres", "Environ 5 000 kilomètres", "Environ 500 000 kilomètres", "Environ 2 000 kilomètres"],
+            how: "Les pneus sont en général remplacés entre 40 000 et 60 000 km — à peu près le tour de la Terre." } },
+    { en: { q: "Roughly how many breaths does a person take in a year?", band: "About 8 million",
+            opts: ["About 8 million", "About 800,000", "About 80 million", "About 80,000"],
+            how: "About 15 breaths a minute is 900 an hour, roughly 21,600 a day. Times 365 gives just under 8 million." },
+      fr: { q: "À peu près combien de fois une personne respire-t-elle en un an ?", band: "Environ 8 millions",
+            opts: ["Environ 8 millions", "Environ 800 000", "Environ 80 millions", "Environ 80 000"],
+            how: "Environ 15 respirations par minute font 900 par heure, à peu près 21 600 par jour. Multiplié par 365, cela fait un peu moins de 8 millions." } },
+    { en: { q: "Roughly how many grains of rice are in one kilogram?", band: "About 50,000",
+            opts: ["About 50,000", "About 5,000", "About 500,000", "About 1,000"],
+            how: "A grain of rice weighs around 20 milligrams. A kilogram is a million milligrams, so about 50,000 grains." },
+      fr: { q: "À peu près combien de grains de riz y a-t-il dans un kilo ?", band: "Environ 50 000",
+            opts: ["Environ 50 000", "Environ 5 000", "Environ 500 000", "Environ 1 000"],
+            how: "Un grain de riz pèse autour de 20 milligrammes. Un kilo fait un million de milligrammes, donc environ 50 000 grains." } },
+    /* --- added 17 Sep 2026 --- */
+    { en: { q: "Roughly how much water does a person drink over a lifetime?", band: "About 50,000 litres",
+            opts: ["About 50,000 litres", "About 5,000 litres", "About 500,000 litres", "About 500 litres"],
+            how: "Call it 2 litres a day. That is about 730 litres a year, and over 75 years about 55,000 litres — a small swimming pool." },
+      fr: { q: "À peu près combien d'eau une personne boit-elle au cours de sa vie ?", band: "Environ 50 000 litres",
+            opts: ["Environ 50 000 litres", "Environ 5 000 litres", "Environ 500 000 litres", "Environ 500 litres"],
+            how: "Disons 2 litres par jour. Cela fait environ 730 litres par an, et sur 75 ans environ 55 000 litres — une petite piscine." } },
+    { en: { q: "Roughly how many steps does a person walk in a year?", band: "About 2 million",
+            opts: ["About 2 million", "About 200,000", "About 20 million", "About 20,000"],
+            how: "An ordinary day is somewhere around 5,000 steps. Times 365 is a little over 1.8 million — and guess 3,000 or 8,000 a day instead, you still land nearest 2 million. That is the point: a rough anchor is enough when the options are ten times apart." },
+      fr: { q: "À peu près combien de pas une personne fait-elle en un an ?", band: "Environ 2 millions",
+            opts: ["Environ 2 millions", "Environ 200 000", "Environ 20 millions", "Environ 20 000"],
+            how: "Une journée ordinaire, c'est autour de 5 000 pas. Multiplié par 365, cela fait un peu plus de 1,8 million — et même avec 3 000 ou 8 000 pas par jour, la réponse la plus proche reste 2 millions. C'est tout l'intérêt : un ordre de grandeur suffit quand chaque réponse proposée vaut dix fois la précédente." } },
+    { en: { q: "Roughly how many hours does a person spend asleep over a lifetime?", band: "About 200,000 hours",
+            opts: ["About 200,000 hours", "About 20,000 hours", "About 2 million hours", "About 2,000 hours"],
+            how: "About 8 hours a night is roughly 2,900 hours a year. Over 75 years that is about 220,000 hours — a quarter of a century spent asleep." },
+      fr: { q: "À peu près combien d'heures une personne passe-t-elle à dormir au cours de sa vie ?", band: "Environ 200 000 heures",
+            opts: ["Environ 200 000 heures", "Environ 20 000 heures", "Environ 2 millions d'heures", "Environ 2 000 heures"],
+            how: "Environ 8 heures par nuit, c'est à peu près 2 900 heures par an. Sur 75 ans, environ 220 000 heures — un quart de siècle passé à dormir." } },
+    { en: { q: "Roughly how many times does a person blink in a day?", band: "About 15,000",
+            opts: ["About 15,000", "About 1,500", "About 150,000", "About 150"],
+            how: "Around 15 blinks a minute, for about 16 waking hours. That is 15 × 60 × 16, about 14,000 — call it 15,000." },
+      fr: { q: "À peu près combien de fois une personne cligne-t-elle des yeux en une journée ?", band: "Environ 15 000",
+            opts: ["Environ 15 000", "Environ 1 500", "Environ 150 000", "Environ 150"],
+            how: "Autour de 15 clignements par minute, pendant environ 16 heures d'éveil. Cela fait 15 × 60 × 16, environ 14 000 — disons 15 000." } },
+    { en: { q: "Roughly how much blood does a human heart pump in a day?", band: "About 7,000 litres",
+            opts: ["About 7,000 litres", "About 700 litres", "About 70 litres", "About 70,000 litres"],
+            how: "At rest the heart moves about 5 litres a minute. A day has 1,440 minutes, so about 7,200 litres — a small road tanker." },
+      fr: { q: "À peu près combien de sang un cœur humain pompe-t-il en une journée ?", band: "Environ 7 000 litres",
+            opts: ["Environ 7 000 litres", "Environ 700 litres", "Environ 70 litres", "Environ 70 000 litres"],
+            how: "Au repos, le cœur fait circuler environ 5 litres par minute. Une journée compte 1 440 minutes, donc environ 7 200 litres — un petit camion-citerne." } },
+    { en: { q: "Roughly how many leaves are on a big, mature oak tree?", band: "About 200,000",
+            opts: ["About 200,000", "About 20,000", "About 2,000", "About 2 million"],
+            how: "A crown 15 metres across shades about 180 square metres of ground. Look up through a leafy tree and you see several leaves stacked over any point — call it five layers — so about 900 square metres of leaf. At 50 square centimetres a leaf, that is around 180,000." },
+      fr: { q: "À peu près combien de feuilles porte un grand chêne adulte ?", band: "Environ 200 000",
+            opts: ["Environ 200 000", "Environ 20 000", "Environ 2 000", "Environ 2 millions"],
+            how: "Une couronne de 15 mètres de large ombrage environ 180 mètres carrés de sol. Lève les yeux sous un arbre bien feuillu : plusieurs feuilles se superposent au-dessus de chaque point — disons cinq couches — soit environ 900 mètres carrés de feuillage. À 50 centimètres carrés la feuille, cela fait autour de 180 000." } },
+    { en: { q: "Roughly how long would it take to count to a million out loud, one number a second, without stopping?", band: "About 12 days",
+            opts: ["About 12 days", "About 12 hours", "About 12 weeks", "About 12 months"],
+            how: "A day has 86,400 seconds. A million divided by 86,400 is about 11.6 — so nearly twelve days, with no sleep. (Big numbers take longer than a second to say, so the real figure is higher still.)" },
+      fr: { q: "À peu près combien de temps faudrait-il pour compter jusqu'à un million à voix haute, un nombre par seconde, sans s'arrêter ?", band: "Environ 12 jours",
+            opts: ["Environ 12 jours", "Environ 12 heures", "Environ 12 semaines", "Environ 12 mois"],
+            how: "Une journée compte 86 400 secondes. Un million divisé par 86 400 fait environ 11,6 — donc près de douze jours, sans dormir. (On met plus d'une seconde à prononcer les grands nombres, alors le vrai chiffre est encore plus élevé.)" } },
+    { en: { q: "Roughly how many words are in a typical 300-page novel?", band: "About 90,000",
+            opts: ["About 90,000", "About 40,000", "About 200,000", "About 9,000"],
+            how: "A printed page holds around 300 words. Three hundred pages of that is about 90,000." },
+      fr: { q: "À peu près combien de mots contient un roman ordinaire de 300 pages ?", band: "Environ 90 000",
+            opts: ["Environ 90 000", "Environ 40 000", "Environ 200 000", "Environ 9 000"],
+            how: "Une page imprimée contient autour de 300 mots. Trois cents pages de ce genre, cela fait environ 90 000." } },
+    { en: { q: "A fair-weather cloud about a kilometre across holds about half a gram of water in every cubic metre. Roughly how much does the whole cloud weigh?", band: "About 500 tonnes",
+            opts: ["About 500 tonnes", "About 500 kilograms", "About 5 tonnes", "About 500,000 tonnes"],
+            how: "A cloud a kilometre in each direction is a billion cubic metres. Half a gram a billion times is 500,000 kilograms — 500 tonnes, floating because that water is spread through an enormous volume of air." },
+      fr: { q: "Un nuage de beau temps d'environ un kilomètre de large contient à peu près un demi-gramme d'eau par mètre cube. À peu près combien pèse le nuage entier ?", band: "Environ 500 tonnes",
+            opts: ["Environ 500 tonnes", "Environ 500 kilos", "Environ 5 tonnes", "Environ 500 000 tonnes"],
+            how: "Un nuage d'un kilomètre dans chaque direction fait un milliard de mètres cubes. Un demi-gramme multiplié par un milliard, c'est 500 000 kilos — 500 tonnes, qui tiennent en l'air parce que cette eau est dispersée dans un volume d'air immense." } },
+    { en: { q: "Roughly how many times does the Earth turn on its axis during one human lifetime?", band: "About 27,000",
+            opts: ["About 27,000", "About 9,000", "About 75,000", "About 270,000"],
+            how: "Once a day. Around 365 days a year for about 75 years is a little over 27,000 turns." },
+      fr: { q: "À peu près combien de fois la Terre tourne-t-elle sur elle-même au cours d'une vie humaine ?", band: "Environ 27 000",
+            opts: ["Environ 27 000", "Environ 9 000", "Environ 75 000", "Environ 270 000"],
+            how: "Une fois par jour. Autour de 365 jours par an pendant environ 75 ans, cela fait un peu plus de 27 000 tours." } }
   ];
 
   /* ===================================== LATERAL THINKING, hand-written
      The answer is obvious only afterwards, and that lurch is the whole
      experience. Generated puzzles cannot do this — the surprise has to be
      designed — so this family is finite and written by hand, exactly as the
-     roadmap says. */
+     roadmap says. Every one is written to work in French as well as English:
+     a puzzle that only works in one language is not a Qpio puzzle. The
+     options are kept short, so the right one is never the only one that
+     explains itself (a panel finding, 17 Sep). */
   var LATERAL = [
-    { q: "A man lives on the tenth floor. Every morning he takes the lift down. Coming home he takes it to the seventh floor and walks the rest — except on rainy days, when he rides all the way. Why?",
-      a: "He is short and can only reach the button for the seventh floor",
-      opts: ["He is short and can only reach the button for the seventh floor",
-             "He wants the exercise",
-             "The lift is broken above the seventh floor",
-             "He visits a neighbour on the seventh floor"],
-      why: "On rainy days he has an umbrella, and he uses it to press the higher button. Everything " +
-           "in the puzzle points at the lift; the answer is about his arm." },
-    { q: "Two people are born at the same moment to the same mother, on the same day, in the same place — and they are not twins. How?",
-      a: "They are two of a set of triplets",
-      opts: ["They are two of a set of triplets", "They were adopted", "One was born a year later", "They have different fathers"],
-      why: "'Not twins' invites you to break the birth, when the thing to break is the number two." },
-    { q: "A woman shoots her husband, holds him under water for five minutes, then hangs him. Twenty minutes later they go out to dinner together. How?",
-      a: "She is a photographer developing a picture",
-      opts: ["She is a photographer developing a picture", "He survived the attack", "It was a dream", "She hired an actor"],
-      why: "Every verb has a second, ordinary meaning. The puzzle works because you take the first one." },
-    { q: "A farmer has 17 sheep. All but 9 run away. How many are left?",
-      a: "9",
-      opts: ["9", "8", "17", "0"],
-      why: "'All but 9 run away' means 9 stayed. The subtraction you reach for is the trap." },
-    { q: "You are in a race and you overtake the person in second place. What position are you in now?",
-      a: "Second",
-      opts: ["Second", "First", "Third", "It depends on the number of runners"],
-      why: "You took their place, not the leader's. Almost everyone says first, once." },
-    { q: "A doctor gives you three pills and says take one every half hour. How long do the pills last?",
-      a: "One hour",
-      opts: ["One hour", "One and a half hours", "Half an hour", "Three hours"],
-      why: "You take the first one now. The gaps between three pills are two, not three." },
-    { q: "Some months have 31 days. How many have 28?",
-      a: "All twelve",
-      opts: ["All twelve", "One", "Four", "Eleven"],
-      why: "Every month has a 28th day. The question never said 'only'." },
-    { q: "A man pushes his car to a hotel and tells the owner he is bankrupt. Why?",
-      a: "He is playing Monopoly",
-      opts: ["He is playing Monopoly", "His car broke down", "He lost his job", "He is being robbed"],
-      why: "Each detail is true and the frame is wrong. Once you see the board you cannot unsee it." },
-    { q: "What can travel around the world while staying in a corner?",
-      a: "A stamp",
-      opts: ["A stamp", "The wind", "A shadow", "A satellite"],
-      why: "'Corner' is doing two jobs — a place to stay and a place on an envelope." },
-    { q: "Forward I am heavy, backward I am not. What am I?",
-      a: "A ton",
-      opts: ["A ton", "A stone", "A load", "A weight"],
-      why: "Read it backwards: 'not'. The puzzle tells you the trick and you still have to see it." }
+    { en: { q: "A man lives on the tenth floor. Every morning he takes the lift down. Coming home he takes it to the seventh floor and walks the rest — except on rainy days, when he rides all the way. Why?",
+            a: "He is short and can only reach the button for the seventh floor",
+            opts: ["He is short and can only reach the button for the seventh floor", "He wants the exercise", "The lift is broken above the seventh floor", "He visits a neighbour on the seventh floor"],
+            why: "On rainy days he has an umbrella, and he uses it to press the higher button. Everything in the puzzle points at the lift; the answer is about his arm." },
+      fr: { q: "Un homme habite au dixième étage. Chaque matin, il prend l'ascenseur pour descendre. En rentrant, il monte jusqu'au septième et finit à pied — sauf les jours de pluie, où il monte jusqu'en haut. Pourquoi ?",
+            a: "Il est petit et n'atteint que le bouton du septième",
+            opts: ["Il est petit et n'atteint que le bouton du septième", "Il veut faire de l'exercice", "L'ascenseur est en panne au-dessus du septième", "Il rend visite à un voisin du septième"],
+            why: "Les jours de pluie, il a un parapluie, et il s'en sert pour appuyer sur le bouton du dixième. Tout dans l'énigme pointe vers l'ascenseur ; la réponse, elle, tient à la longueur de son bras." } },
+    { en: { q: "Two people are born at the same moment to the same mother, on the same day, in the same place — and they are not twins. How?",
+            a: "They are two of a set of triplets",
+            opts: ["They are two of a set of triplets", "They were adopted", "One was born a year later", "They have different fathers"],
+            why: "'Not twins' invites you to break the birth, when the thing to break is the number two." },
+      fr: { q: "Deux personnes naissent au même instant, de la même mère, le même jour, au même endroit — et ce ne sont pas des jumeaux. Comment ?",
+            a: "Ce sont deux triplés",
+            opts: ["Ce sont deux triplés", "Elles ont été adoptées", "L'une est née un an plus tard", "Elles ont des pères différents"],
+            why: "« Pas des jumeaux » te pousse à remettre en cause la naissance, alors que ce qu'il faut remettre en cause, c'est le chiffre deux." } },
+    { en: { q: "A woman shoots her husband, holds him under water for five minutes, then hangs him. Twenty minutes later they go out to dinner together. How?",
+            a: "She is a photographer developing a picture",
+            opts: ["She is a photographer developing a picture", "He survived the attack", "It was a dream", "She hired an actor"],
+            why: "Every verb has a second, ordinary meaning. The puzzle works because you take the first one." },
+      fr: { q: "Une femme tire sur son mari, le plonge cinq minutes dans l'eau, puis le pend. Vingt minutes plus tard, ils sortent dîner ensemble. Comment ?",
+            a: "Elle est photographe et développe une photo",
+            opts: ["Elle est photographe et développe une photo", "Il a survécu à l'attaque", "C'était un rêve", "Elle a engagé un acteur"],
+            why: "Chaque verbe a un second sens, tout à fait ordinaire — celui du labo photo : on tire une épreuve, on la plonge dans le bain, on la pend pour la faire sécher. L'énigme marche parce qu'on prend le premier sens." } },
+    { en: { q: "A farmer has 17 sheep. All but 9 run away. How many are left?",
+            a: "9", opts: ["9", "8", "17", "0"],
+            why: "'All but 9 run away' means 9 stayed. The subtraction you reach for is the trap." },
+      fr: { q: "Un fermier a 17 moutons. Tous sauf 9 s'enfuient. Combien en reste-t-il ?",
+            a: "9", opts: ["9", "8", "17", "0"],
+            why: "« Tous sauf 9 s'enfuient » veut dire que 9 sont restés. La soustraction qu'on a le réflexe de faire est le piège." } },
+    { en: { q: "You are in a race and you overtake the person in second place. What position are you in now?",
+            a: "Second", opts: ["Second", "First", "Third", "It depends on the number of runners"],
+            why: "You took their place, not the leader's. Almost everyone says first, once." },
+      fr: { q: "Tu es dans une course et tu doubles le deuxième. À quelle place es-tu maintenant ?",
+            a: "Deuxième", opts: ["Deuxième", "Première", "Troisième", "Cela dépend du nombre de coureurs"],
+            why: "Tu as pris sa place, pas celle de la première. Presque tout le monde répond « première » la première fois." } },
+    { en: { q: "A doctor gives you three pills and says take one every half hour. How long until you have taken them all?",
+            a: "One hour", opts: ["One hour", "One and a half hours", "Half an hour", "Three hours"],
+            why: "You take the first one now. The gaps between three pills are two, not three." },
+      fr: { q: "Un médecin te donne trois comprimés et te dit d'en prendre un toutes les demi-heures. Au bout de combien de temps les auras-tu tous pris ?",
+            a: "Une heure", opts: ["Une heure", "Une heure et demie", "Une demi-heure", "Trois heures"],
+            why: "Tu prends le premier tout de suite. Entre trois comprimés il y a deux intervalles, pas trois." } },
+    { en: { q: "Some months have 31 days. How many have 28?",
+            a: "All twelve", opts: ["All twelve", "One", "Four", "Eleven"],
+            why: "Every month has a 28th day. The question never said 'only'." },
+      fr: { q: "Certains mois ont 31 jours. Combien en ont 28 ?",
+            a: "Tous les douze", opts: ["Tous les douze", "Un", "Quatre", "Onze"],
+            why: "Chaque mois a un 28e jour. La question n'a jamais dit « seulement »." } },
+    { en: { q: "A man pushes his car to a hotel and tells the owner he is bankrupt. Why?",
+            a: "He is playing Monopoly", opts: ["He is playing Monopoly", "His car broke down", "He lost his job", "He is being robbed"],
+            why: "Each detail is true and the frame is wrong. Once you see the board you cannot unsee it." },
+      fr: { q: "Un homme pousse sa voiture jusqu'à un hôtel et dit au propriétaire qu'il est ruiné. Pourquoi ?",
+            a: "Il joue au Monopoly", opts: ["Il joue au Monopoly", "Sa voiture est tombée en panne", "Il a perdu son travail", "On le dévalise"],
+            why: "Chaque détail est vrai et le cadre est faux. Une fois qu'on a vu le plateau, on ne voit plus que lui." } },
+    { en: { q: "What can travel around the world while staying in a corner?",
+            a: "A stamp", opts: ["A stamp", "The wind", "A shadow", "A satellite"],
+            why: "'Corner' is doing two jobs — a place to stay and a place on an envelope." },
+      fr: { q: "Qu'est-ce qui peut faire le tour du monde en restant dans un coin ?",
+            a: "Un timbre", opts: ["Un timbre", "Le vent", "Une ombre", "Un satellite"],
+            why: "« Coin » a deux sens : un endroit où l'on reste, et le coin d'une enveloppe." } },
+    /* "Forward I am heavy, backward I am not" was an English word-play (ton /
+       not) with no French form. Replaced 17 Sep 2026 — the panel's finding
+       and the standing rule agree: every puzzle exists in every live language. */
+    { en: { q: "If you have it, you want to share it. If you share it, you no longer have it. What is it?",
+            a: "A secret", opts: ["A secret", "A cold", "A photograph", "Good news"],
+            why: "The two halves describe the same act from two sides. The only thing sharing destroys is the fact that nobody else knows." },
+      fr: { q: "Si tu l'as, tu veux le partager. Si tu le partages, tu ne l'as plus. Qu'est-ce que c'est ?",
+            a: "Un secret", opts: ["Un secret", "Un rhume", "Un souvenir", "Un potin"],
+            why: "Les deux moitiés décrivent le même geste vu des deux côtés. La seule chose que le partage détruit, c'est le fait que personne d'autre ne le sache." } },
+    /* --- added 17 Sep 2026 --- */
+    { en: { q: "Two fathers and two sons go fishing. Each catches exactly one fish, yet only three fish are caught. How?",
+            a: "A grandfather, his son and his grandson",
+            opts: ["A grandfather, his son and his grandson", "A father and his two sons", "Two brothers and their father", "Four friends who share a boat"],
+            why: "'Two fathers' and 'two sons' describe three people, because the man in the middle is both a father and a son." },
+      fr: { q: "Deux pères et deux fils vont à la pêche. Chacun attrape exactement un poisson, et pourtant il n'y a que trois poissons en tout. Comment ?",
+            a: "Un grand-père, son fils et son petit-fils",
+            opts: ["Un grand-père, son fils et son petit-fils", "Un père et ses deux fils", "Deux frères et leur père", "Quatre amis dans le même bateau"],
+            why: "« Deux pères » et « deux fils » décrivent trois personnes, parce que l'homme du milieu est à la fois père et fils." } },
+    { en: { q: "You are running a race on a straight course and you overtake the runner in last place. What position are you in now?",
+            a: "It cannot happen",
+            opts: ["It cannot happen", "Last", "Second to last", "First"],
+            why: "To overtake someone you have to be behind them, and nobody is behind the person in last place. On a straight course there is no way round it: you were not in the race." },
+      fr: { q: "Pendant une course en ligne droite, tu doubles le dernier coureur. À quelle place es-tu maintenant ?",
+            a: "C'est impossible",
+            opts: ["C'est impossible", "Dernière", "Avant-dernière", "Première"],
+            why: "Pour doubler quelqu'un, il faut être derrière lui, et personne n'est derrière le dernier. En ligne droite, pas d'échappatoire : tu n'étais pas dans la course." } },
+    /* the coin puzzle ("two coins add up to 30, one is not a 20") was replaced
+       17 Sep: with four options on screen, "two 15s" also fits every word of
+       it — a panel finding. This one has one answer in both languages. */
+    { en: { q: "An explorer builds a hut whose every window looks south. One morning a bear ambles past. What colour is the bear?",
+            a: "White", opts: ["White", "Brown", "Black", "You can't tell"],
+            why: "Every window can look south only at the North Pole, where every direction is south. The only bears there are polar bears." },
+      fr: { q: "Un explorateur construit une cabane dont chaque fenêtre donne au sud. Un matin, un ours passe devant. De quelle couleur est l'ours ?",
+            a: "Blanc", opts: ["Blanc", "Brun", "Noir", "On ne peut pas savoir"],
+            why: "Toutes les fenêtres ne peuvent donner au sud qu'au pôle Nord, où toutes les directions sont le sud. Les seuls ours qui y vivent sont les ours polaires." } },
+    { en: { q: "In a shop, a customer asks: \"How much for one?\" \"Twenty.\" \"And for twelve?\" \"Forty.\" \"And for a hundred and twelve?\" \"Sixty.\" What is she buying?",
+            a: "House numbers", opts: ["House numbers", "Eggs", "Stamps", "Bricks"],
+            why: "The price is twenty per digit: one digit, two digits, three digits. She is buying the numbers for her front door." },
+      fr: { q: "Dans une boutique, une cliente demande : « Combien pour un ? » « Vingt. » « Et pour douze ? » « Quarante. » « Et pour cent douze ? » « Soixante. » Qu'achète-t-elle ?",
+            a: "Des numéros de maison", opts: ["Des numéros de maison", "Des œufs", "Des timbres", "Des briques"],
+            why: "Le prix est de vingt par chiffre : un chiffre, deux chiffres, trois chiffres. Elle achète les chiffres de sa porte d'entrée." } },
+    { en: { q: "A rope ladder hangs over the side of a ship, its bottom rung just touching the water. The rungs are 30 cm apart. The tide rises 90 cm. How many rungs are now under water?",
+            a: "None", opts: ["None", "Three", "Two", "One"],
+            why: "The ladder is attached to the ship, and the ship floats. Everything rises together. The arithmetic was a decoy." },
+      fr: { q: "Une échelle de corde pend sur le flanc d'un navire, le barreau du bas effleurant l'eau. Les barreaux sont espacés de 30 cm. La marée monte de 90 cm. Combien de barreaux sont maintenant sous l'eau ?",
+            a: "Aucun", opts: ["Aucun", "Trois", "Deux", "Un"],
+            why: "L'échelle est accrochée au navire, et le navire flotte. Tout monte ensemble. Le calcul était un leurre." } },
+    { en: { q: "What gets wetter the more it dries?",
+            a: "A towel", opts: ["A towel", "A raincoat", "A river", "The rain"],
+            why: "'Dries' is doing two jobs: what the towel does to you, and what happens to the towel." },
+      fr: { q: "Qu'est-ce qui se mouille en séchant ?",
+            a: "Une serviette", opts: ["Une serviette", "Un imperméable", "Une rivière", "La pluie"],
+            why: "« Sécher » a deux sens : ce que la serviette te fait, et ce qui arrive à la serviette." } },
+    { en: { q: "A bus driver goes the wrong way down a one-way street, passes three police officers, and none of them stops him. Why?",
+            a: "He was walking", opts: ["He was walking", "The bus was empty", "It was the middle of the night", "The street had just changed direction"],
+            why: "'Bus driver' is his job, not what he was doing. Nothing says he was driving." },
+      fr: { q: "Un chauffeur de bus prend une rue à sens unique à contresens, passe devant trois policiers, et aucun ne l'arrête. Pourquoi ?",
+            a: "Il est à pied", opts: ["Il est à pied", "Le bus est vide", "C'est en pleine nuit", "La rue vient de changer de sens"],
+            why: "« Chauffeur de bus » est son métier, pas ce qu'il est en train de faire. Rien ne dit qu'il conduit." } },
+    { en: { q: "Before Mount Everest was measured and given that name, what was the highest mountain on Earth?",
+            a: "Mount Everest", opts: ["Mount Everest", "K2", "Kilimanjaro", "Nobody can know"],
+            why: "Measuring a mountain does not make it taller. It was there, and it was the highest, long before the survey of 1856 — the people living beside it already called it Chomolungma and Sagarmatha." },
+      fr: { q: "Avant que l'Everest ne soit mesuré et ne reçoive ce nom, quelle était la plus haute montagne du monde ?",
+            a: "L'Everest", opts: ["L'Everest", "Le K2", "Le Kilimandjaro", "Personne ne peut le savoir"],
+            why: "Mesurer une montagne ne la rend pas plus haute. Elle était là, et elle était la plus haute, bien avant le relevé de 1856 — les peuples qui vivent à ses pieds l'appelaient déjà Chomolungma et Sagarmatha." } },
+    { en: { q: "A man looks at a portrait and says: \"I have no brothers or sisters, but that man's father is my father's son.\" Who is in the portrait?",
+            a: "His son", opts: ["His son", "Himself", "His father", "His nephew"],
+            why: "'My father's son', for a man with no siblings, is the man himself. So the man in the portrait is someone whose father is the speaker — his son." },
+      fr: { q: "Un homme regarde un portrait et dit : « Je n'ai ni frère ni sœur, mais le père de cet homme est le fils de mon père. » Qui est sur le portrait ?",
+            a: "Son fils", opts: ["Son fils", "Lui-même", "Son père", "Son neveu"],
+            why: "« Le fils de mon père », pour un homme sans frère ni sœur, c'est lui-même. L'homme du portrait a donc pour père celui qui parle — c'est son fils." } },
+    { en: { q: "Three switches in a corridor control one light bulb in a closed room. You may do what you like with the switches, but you may open the door only once. How do you find out which switch works the bulb?",
+            a: "Feel whether the bulb is warm", opts: ["Feel whether the bulb is warm", "Listen for a click", "Look under the door", "It cannot be done with one look"],
+            why: "Turn the first switch on for a few minutes, then off; turn the second on; open the door. Lit means the second switch, warm means the first, cold and dark means the third. The bulb gives two kinds of evidence, and everyone looks for only one." },
+      fr: { q: "Trois interrupteurs dans un couloir commandent une seule ampoule dans une pièce fermée. Tu peux faire ce que tu veux avec les interrupteurs, mais tu ne peux ouvrir la porte qu'une seule fois. Comment savoir quel interrupteur commande l'ampoule ?",
+            a: "Toucher l'ampoule pour voir si elle est chaude", opts: ["Toucher l'ampoule pour voir si elle est chaude", "Écouter s'il y a un déclic", "Regarder sous la porte", "Impossible en un seul coup d'œil"],
+            why: "Allume le premier interrupteur quelques minutes, puis éteins-le ; allume le deuxième ; ouvre la porte. Allumée : c'est le deuxième. Chaude : c'est le premier. Froide et éteinte : c'est le troisième. L'ampoule donne deux sortes d'indices, et tout le monde n'en cherche qu'une." } }
   ];
+
+  function makeHand(bank, familyKey, trainsEn, trainsFr) {
+    return function (seed, lang) {
+      var r = rng(seed), fr = FR(lang);
+      var idx = Math.floor(r() * bank.length);
+      var item = bank[idx], t = fr ? item.fr : item.en;
+      /* the order is drawn once, on indices, so both languages show the same
+         choices in the same places */
+      var order = shuffle(r, [0, 1, 2, 3]);
+      var options = order.map(function (i) { return t.opts[i]; });
+      var answer = t.band !== undefined ? t.band : t.a;
+      return { family: familyKey, prompt: t.q, show: "", options: options, answer: answer,
+               explain: t.how || t.why, trains: fr ? trainsFr : trainsEn, handWrittenIndex: idx };
+    };
+  }
 
   /* ---------------------------------------------------------- the families */
   var FAMILIES = [
-    { key: "sequences", name: "Sequences and patterns", icon: "🔢",
-      blurb: "Work out the rule, then continue it.", infinite: true, make: makeSequence },
-    { key: "logic", name: "Logic and deduction", icon: "🧩",
-      blurb: "Some always tell the truth, some always lie. Work out which.", infinite: true, make: makeKnights },
-    { key: "spatial", name: "Spatial reasoning", icon: "🧭",
-      blurb: "Turn it in your head.", infinite: true, make: makeClock },
-    { key: "memory", name: "Working memory", icon: "🧠",
-      blurb: "Hold a few things at once, then answer.", infinite: true, make: makeMemory },
-    { key: "attention", name: "Attention", icon: "👁",
-      blurb: "One of these is not like the others.", infinite: true, make: makeOddOne },
-    { key: "estimation", name: "Estimation", icon: "📐",
-      blurb: "No looking it up. Build the answer out of what you already know.", infinite: false,
-      make: function (seed) {
-        var r = rng(seed), f = FERMI[Math.floor(r() * FERMI.length)];
-        return { family: "estimation", prompt: f.q, show: "", options: shuffle(r, f.opts),
-                 answer: f.band, explain: f.how, trains: "getting near the right answer with no data" };
-      } },
-    { key: "lateral", name: "Lateral thinking", icon: "💡",
-      blurb: "The answer is obvious — afterwards.", infinite: false,
-      make: function (seed) {
-        var r = rng(seed), f = LATERAL[Math.floor(r() * LATERAL.length)];
-        return { family: "lateral", prompt: f.q, show: "", options: shuffle(r, f.opts),
-                 answer: f.a, explain: f.why, trains: "letting go of the first reading" };
-      } }
+    { key: "sequences", name: "Sequences and patterns", nameFr: "Suites et motifs", icon: "🔢",
+      blurb: "Work out the rule, then continue it.", blurbFr: "Trouve la règle, puis continue-la.", infinite: true, make: makeSequence },
+    { key: "logic", name: "Logic and deduction", nameFr: "Logique et déduction", icon: "🧩",
+      blurb: "Some always tell the truth, some always lie. Work out which.", blurbFr: "Certains disent toujours la vérité, d'autres mentent toujours. À toi de voir qui est qui.", infinite: true, make: makeKnights },
+    { key: "spatial", name: "Spatial reasoning", nameFr: "Raisonnement spatial", icon: "🕰",
+      blurb: "Turn it in your head.", blurbFr: "Fais-le tourner dans ta tête.", infinite: true, make: makeClock },
+    { key: "memory", name: "Working memory", nameFr: "Mémoire de travail", icon: "🧠",
+      blurb: "Hold a few things at once, then answer.", blurbFr: "Garde plusieurs choses en tête, puis réponds.", infinite: true, make: makeMemory },
+    { key: "attention", name: "Attention", nameFr: "Attention", icon: "👁",
+      blurb: "One of these is not like the others.", blurbFr: "L'un de ces éléments n'est pas comme les autres.", infinite: true, make: makeOddOne },
+    { key: "deduction", name: "Clues and conclusions", nameFr: "Indices et conclusions", icon: "🔍",
+      blurb: "Two clues, three things. Sometimes the answer is that it cannot be told.", blurbFr: "Deux indices, trois objets. Parfois, la réponse est qu'on ne peut pas savoir.", infinite: true, make: makeOrdering },
+    { key: "arithmetic", name: "Mental arithmetic", nameFr: "Calcul mental", icon: "➕",
+      blurb: "A short chain of steps, held in your head.", blurbFr: "Une courte suite d'étapes, gardée en tête.", infinite: true, make: makeChain },
+    { key: "calendar", name: "Days of the week", nameFr: "Jours de la semaine", icon: "📅",
+      blurb: "Count forward or back through the week.", blurbFr: "Compte en avant ou en arrière dans la semaine.", infinite: true, make: makeDays },
+    { key: "sets", name: "Two groups", nameFr: "Deux groupes", icon: "⭕",
+      blurb: "Some people are in both. Do not count them twice.", blurbFr: "Certains sont dans les deux. Ne les compte pas deux fois.", infinite: true, make: makeGroups },
+    { key: "direction", name: "Which way", nameFr: "Quelle direction", icon: "🧭",
+      blurb: "Turn a few times. Which way are you facing?", blurbFr: "Tourne quelques fois. Dans quelle direction regardes-tu ?", infinite: true, make: makeCompass },
+    { key: "estimation", name: "Estimation", nameFr: "Estimation", icon: "📐",
+      blurb: "No looking it up. Build the answer out of what you already know.", blurbFr: "Pas question de chercher : construis la réponse à partir de ce que tu sais déjà.", infinite: false,
+      make: makeHand(FERMI, "estimation", "getting near the right answer with no data", "s'approcher de la bonne réponse sans aucune donnée") },
+    { key: "lateral", name: "Lateral thinking", nameFr: "Pensée latérale", icon: "💡",
+      blurb: "The answer is obvious — afterwards.", blurbFr: "La réponse est évidente — après coup.", infinite: false,
+      make: makeHand(LATERAL, "lateral", "letting go of the first reading", "renoncer à sa première lecture") }
   ];
 
   var BY_KEY = {};
@@ -426,12 +892,12 @@
 
   /* A set of five, one seed, mixed across families — the same shape as the
      daily five, so the reader learns one thing and not two. */
-  function makeSet(seed, howMany) {
+  function makeSet(seed, howMany, lang) {
     var n = howMany || 5, r = rng(seed), out = [];
     var order = shuffle(r, FAMILIES.map(function (f) { return f.key; }));
     for (var i = 0; i < n; i++) {
       var key = order[i % order.length];
-      out.push(BY_KEY[key].make((seed * 7919 + i * 104729) >>> 0));
+      out.push(BY_KEY[key].make((seed * 7919 + i * 104729) >>> 0, lang));
     }
     return out;
   }
@@ -444,10 +910,12 @@
                        Date.UTC(2026, 0, 1)) / 86400000);
   }
 
+  var infinite = FAMILIES.filter(function (f) { return f.infinite; }).length;
   window.CURIO_GYM = {
     families: FAMILIES,
     byKey: BY_KEY,
-    make: function (key, seed) { return BY_KEY[key] ? BY_KEY[key].make(seed >>> 0) : null; },
+    languages: ["en", "fr"],
+    make: function (key, seed, lang) { return BY_KEY[key] ? BY_KEY[key].make(seed >>> 0, lang || "en") : null; },
     makeSet: makeSet,
     seedForDay: seedForDay,
     /* THE ONLY THREE THINGS QPIO MAY SAY ABOUT THIS SECTION.
@@ -461,6 +929,7 @@
                  "improves memory in daily life", "transfers to work or study",
                  "any medical or cognitive-health claim"]
     },
-    counts: { generated: 5, handWritten: FERMI.length + LATERAL.length }
+    counts: { families: FAMILIES.length, generated: infinite, handWritten: FERMI.length + LATERAL.length,
+              estimation: FERMI.length, lateral: LATERAL.length }
   };
 })();
