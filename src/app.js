@@ -949,11 +949,11 @@
         return false;
       });
       var img = slug ? IM[slug] : null;
-      if (img) peekImgs.push(img.u);
+      if (img) peekImgs.push(picURL(img.u));
       var c = el(
         '<div class="dcard dcard-sm">' +
           '<div class="dcard-art">' +
-            (img ? '<img src="' + esc(img.u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
+            (img ? '<img src="' + esc(picURL(img.u)) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
             '<span class="dcard-wash" aria-hidden="true"></span>' +
           '</div>' +
           '<div class="dcard-body">' +
@@ -1165,9 +1165,25 @@
     Africa: "Great_Zimbabwe", Americas: "Machu_Picchu", Asia: "Terracotta_Army",
     Europe: "Eiffel_Tower", MiddleEast: "Petra", Global: "Silk_Road"
   };
+  // THE FLAGS TRAVEL WITH THE APP. CEO, 21 Sep 2026: "when off line the flags
+  // don't appear, the flags should be pre-loaded in the app." A picture record
+  // keeps its Wikimedia Commons address — that is where its licence and credit
+  // are checked, and where the credit line links — but a flag is DRAWN from the
+  // copy the app carries (img/flags/, listed in src/flags.js, pre-loaded by the
+  // worker on install), so it is there with no network at all. A picture not in
+  // the map is served exactly as before.
+  function picURL(u) {
+    var F = window.CURIO_FLAGS;
+    if (!u || !F) return u;
+    var m = /\/commons\/(?:thumb\/)?[0-9a-f]\/[0-9a-f]{2}\/([^/?#]+)/.exec(u);
+    if (!m) return u;
+    var local = null;
+    try { local = F["File:" + decodeURIComponent(m[1])]; } catch (e) { local = null; }
+    return local || u;
+  }
   function pickArt(key) {
     var im = (window.CURIO_IMAGES || {})[PICK_ART[key]];
-    return im ? im.u : null;
+    return im ? picURL(im.u) : null;
   }
   // One selectable tile. Same role and keyboard behaviour a chip had.
   function pickTile(key, label, pressed) {
@@ -1186,7 +1202,7 @@
     if (!im || !node) return node;
     node.classList.add("has-art");
     node.insertBefore(el('<span class="mode-wash" aria-hidden="true"></span>'), node.firstChild);
-    node.insertBefore(el('<img class="mode-art" src="' + esc(im.u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">'), node.firstChild);
+    node.insertBefore(el('<img class="mode-art" src="' + esc(picURL(im.u)) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">'), node.firstChild);
     return node;
   }
 
@@ -1912,14 +1928,14 @@
     var dq = dailyQuestions();
     dq.forEach(function (q) {
       var pic = IM[GOL.entityOf(q)];
-      if (pic && pic.u) urls.push(pic.u);
+      if (pic && pic.u) urls.push(picURL(pic.u));
     });
     var D = window.CURIO_DISCOVERY;
     if (D) {
       var seen = dq.map(function (q) { return { id: GOL.entityOf(q) }; });
       D.shelves(seen, 8).forEach(function (S) {
         var art = S.items[0] && S.items[0].image;
-        if (art) urls.push(art);
+        if (art) urls.push(picURL(art));
       });
     }
     return urls;
@@ -2089,7 +2105,12 @@
           '<div class="qart' + (q.img.fit === "contain" ? " is-contain" : "") +
               (isGen ? " is-generated" : "") + ' is-loading">' +
             '<span class="qart-wait" aria-hidden="true">⏳</span>' +
-            '<img src="' + esc(q.img.u) + '" alt="' +
+            '<img src="' + esc(picURL(q.img.u)) + '"' +
+              // the Commons address stays on the element: if the bundled copy
+              // cannot be read (the new worker not yet installed, then no
+              // network), the picture falls back to where it always came from
+              (picURL(q.img.u) !== q.img.u ? ' data-orig="' + esc(q.img.u) + '"' : '') +
+              ' alt="' +
               esc(isGen ? (t("AI-generated illustration") + ". " + alt) : alt) + '" decoding="async" referrerpolicy="no-referrer">' +
             (isGen ? '<span class="qart-ai">◆ ' + esc(t("AI generated")) + '</span>' : '') +
           '</div>' +
@@ -2129,6 +2150,16 @@
         var qim = qa.querySelector("img");
         var qaDone = function () { qa.classList.remove("is-loading"); };
         var qaFail = function () {
+          // A bundled copy that would not load: one try at the original
+          // Commons address before giving up (see picURL).
+          var orig = qim.getAttribute("data-orig");
+          if (orig && qim.getAttribute("src") !== orig) {
+            qim.removeAttribute("data-orig");
+            qim.addEventListener("load", qaDone, { once: true });
+            qim.addEventListener("error", qaFail, { once: true });
+            qim.setAttribute("src", orig);
+            return;
+          }
           qa.classList.remove("is-loading");
           qa.classList.add("is-failed");          // quiet placeholder, no broken glyph
         };
@@ -2207,7 +2238,7 @@
         var nq = cfg.questions[idx + 1];
         if (nq.img && nq.img.u) {
           var W = imageWarmer();
-          if (W) W.start([nq.img.u]);
+          if (W) W.start([picURL(nq.img.u)]);
         }
       }
       var correct = i === q.answer;
@@ -2647,7 +2678,7 @@
       var artHtml = pic
         ? '<a class="topic-art has-pic" href="' + srcLink0(pic.p) + '" target="_blank" rel="noopener" ' +
             'title="' + esc(tf("Photo: {by} · {lic}", { by: pic.by || "Wikimedia Commons", lic: pic.lic || "" })) + '">' +
-            '<img src="' + esc(pic.u) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' +
+            '<img src="' + esc(picURL(pic.u)) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' +
             '<span class="topic-fallback" aria-hidden="true">' + art + '</span>' +
           '</a>'
         : '<div class="topic-art" aria-hidden="true"><span class="topic-emoji">' + art + '</span></div>';
@@ -2791,7 +2822,7 @@
     racks.forEach(function (S) {
       // The door wears the first item's photograph — a real thing behind it,
       // visible before you commit.
-      var art = (S.items[0] && S.items[0].image) || null;
+      var art = picURL((S.items[0] && S.items[0].image) || null);
       var d = el(
         '<button class="door' + (art ? " has-art" : "") + '">' +
           (art ? '<img class="door-art" src="' + esc(art) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
@@ -2863,7 +2894,7 @@
     var node = el(
       '<div class="dcard dcard-' + (size || "sm") + '" data-id="' + esc(it.id) + '">' +
         '<div class="dcard-art">' +
-          (it.image ? '<img src="' + esc(it.image) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
+          (it.image ? '<img src="' + esc(picURL(it.image)) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '') +
           '<span class="dcard-wash" aria-hidden="true"></span>' +
         '</div>' +
         '<div class="dcard-body">' +

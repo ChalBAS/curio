@@ -449,6 +449,73 @@
       });
     } },
 
+  /* THE FLAGS TRAVEL WITH THE APP. CEO, 21 Sep 2026: "when off line the flags
+     don't appear, the flags should be pre-loaded in the app." Three things
+     must hold on the build under test: every flag question draws from a copy
+     the app carries, every copy is really served, and the worker has put every
+     copy in its own store — which is what "there with no network" means. The
+     store fills during the worker's install, so the last check polls. */
+  { id: "flags", title: "Every flag is bundled with the app and pre-loaded for offline",
+    run: function (w, s, lang) {
+      var F = w.CURIO_FLAGS || {};
+      var paths = Object.keys(F).map(function (k) { return F[k]; });
+      s.log(lang, "flags · the map of bundled flags is loaded", paths.length > 0, paths.length + " flags");
+      var fileOf = function (u) { var m = /\/commons\/(?:thumb\/)?[0-9a-f]\/[0-9a-f]{2}\/([^/?#]+)/.exec(u || ""); return m ? "File:" + decodeURIComponent(m[1]) : null; };
+      /* a flag: a Commons drawing (.svg) whose title says flag — the bundler's and the gate's rule */
+      var isFlag = function (f) { return !!f && /flag/i.test(f) && /\.svg$/i.test(f); };
+      var flagQs = (w.CURIO_QUESTIONS || []).filter(function (q) { return q.img && q.img.u && isFlag(fileOf(q.img.u)); });
+      var unmapped = flagQs.filter(function (q) { return !F[fileOf(q.img.u)]; });
+      s.log(lang, "flags · every flag question has a bundled copy", flagQs.length > 0 && unmapped.length === 0,
+            flagQs.length + " flag questions" + (unmapped.length ? ", " + unmapped.length + " without a copy" : ""));
+      /* A query string makes the worker pass the request straight to the
+         network, so this asks the BUILD, not the store — and the edge answers
+         a path it lacks with the app page and a 200, so the answer must be a
+         picture, not merely "ok". */
+      var stamp = "?probe=" + Date.now();
+      var isPic = function (r) { return r.ok && /^image\//.test(r.headers.get("content-type") || ""); };
+      return Promise.all(paths.map(function (p) {
+        return fetch("/" + p + stamp, { cache: "no-store" }).then(function (r) { return isPic(r) ? null : p; }).catch(function () { return p; });
+      })).then(function (bad) {
+        bad = bad.filter(Boolean);
+        s.log(lang, "flags · every bundled copy is served by this build", bad.length === 0, bad.length ? bad.slice(0, 3).join(", ") : paths.length + " files, all pictures");
+        if (!w.caches) { s.log(lang, "flags · the worker holds every flag for offline", false, "no cache storage in this browser"); return; }
+        /* The store fills during the worker's install, which on a first visit
+           follows the whole precache. So: while a worker is still installing or
+           waiting, keep polling (up to 90 s); once none is, allow 20 s. */
+        var t0 = Date.now();
+        var installing = function () {
+          return (w.navigator.serviceWorker && w.navigator.serviceWorker.getRegistration ? w.navigator.serviceWorker.getRegistration() : Promise.resolve(null))
+            .then(function (reg) { return !!(reg && (reg.installing || reg.waiting)); }).catch(function () { return false; });
+        };
+        return new Promise(function (resolve) {
+          (function tick() {
+            w.caches.open("qpio-flags").then(function (c) {
+              return c.keys().then(function (keys) {
+                var held = {};
+                keys.forEach(function (r) { held[new URL(r.url).pathname] = r; });
+                var missing = paths.filter(function (p) { return !held["/" + p]; });
+                if (missing.length) {
+                  return installing().then(function (busy) {
+                    var elapsed = Date.now() - t0;
+                    if ((busy && elapsed <= 90000) || (!busy && elapsed <= 20000)) { setTimeout(tick, 500); return; }
+                    s.log(lang, "flags · the worker holds every flag for offline", false, missing.length + " of " + paths.length + " not in the store after " + Math.round(elapsed / 1000) + " s" + (busy ? " (a worker is still installing)" : ""));
+                    resolve();
+                  });
+                }
+                /* what is held must be a picture too, not the page stored under a flag's name */
+                return Promise.all(paths.map(function (p) { return c.match(held["/" + p]).then(function (r) { return r && isPic(r) ? null : p; }); })).then(function (notPic) {
+                  notPic = notPic.filter(Boolean);
+                  s.log(lang, "flags · the worker holds every flag for offline", notPic.length === 0,
+                        notPic.length ? notPic.length + " stored entries are not pictures: " + notPic.slice(0, 2).join(", ") : paths.length + " in the store, all pictures");
+                  resolve();
+                });
+              });
+            }).catch(function (e) { s.log(lang, "flags · the worker holds every flag for offline", false, String(e)); resolve(); });
+          })();
+        });
+      });
+    } },
+
   { id: "factorfake", title: "Fact or Fake runs a round and cites a source",
     run: function (w, s, lang) {
       // Fact or Fake lives on the Train tab beside Quick-Fire and Brain Gym —
