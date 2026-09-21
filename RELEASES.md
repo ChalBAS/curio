@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v96** at uat.qpio.app |
+| On UAT | **v98** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-15 |
+| Generated | 2026-09-21 |
 
-> ⏳ **Awaiting your sign-off:** v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -36,14 +36,30 @@ not by omission.*
 
 ---
 
+## v98 — ⏳ on UAT
+
+2026-09-21 · 0 questions · sign-off: **no release issue**
+
+- `7cf62bd` v98: the eight new city packs repaired, French whole again, nothing dated
+
+## v97 — ⏳ on UAT
+
+2026-09-21 · 0 questions · sign-off: **no release issue**
+
+- `830a60f` v97: Brain Gym in both languages, twelve kinds; eight city packs
+- `5af0bba` The sign-off ticket describes the suite as it now is
+
 ## v96 — ⏳ on UAT
 
-2026-09-12 · 0 questions · sign-off: **rejected**, [#85](https://github.com/ChalBAS/curio-hq/issues/85)
+2026-09-12 → 2026-09-21 · 0 questions · sign-off: **rejected**, [#85](https://github.com/ChalBAS/curio-hq/issues/85)
 
 - `e65d95e` The 1,208 questions that were written and never shipped
 - `e802aae` v96 enters the register awaiting your sign-off
 - `334958f` The books and places that were found and never shown
 - `60efe47` The link test knew four book sites; the pipeline uses six
+- `75e11ae` state: generated release record and chosen-video file, daily sync output of 15 Sep
+- `8c22348` Brain Gym in both languages with twelve kinds of exercise, and eight city packs
+- `52b2b26` Brain Gym: the re-read of the replaced puzzles, applied
 
 ## v95 — ⏳ on UAT
 

@@ -1,12 +1,14 @@
 {
- "generated": "2026-09-15",
+ "generated": "2026-09-21",
  "live": {
   "production": 76,
-  "uat": 96,
+  "uat": 98,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  98,
+  97,
   94,
   93,
   92,
@@ -67,11 +69,54 @@
  ],
  "releases": [
   {
+   "version": 98,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-21",
+   "to": "2026-09-21",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "7cf62bd",
+     "date": "2026-09-21",
+     "subject": "v98: the eight new city packs repaired, French whole again, nothing dated"
+    }
+   ]
+  },
+  {
+   "version": 97,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-21",
+   "to": "2026-09-21",
+   "questions": 0,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "830a60f",
+     "date": "2026-09-21",
+     "subject": "v97: Brain Gym in both languages, twelve kinds; eight city packs"
+    },
+    {
+     "sha": "5af0bba",
+     "date": "2026-09-21",
+     "subject": "The sign-off ticket describes the suite as it now is"
+    }
+   ]
+  },
+  {
    "version": 96,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-09-12",
-   "to": "2026-09-12",
+   "to": "2026-09-21",
    "questions": 0,
    "signoff": {
     "status": "REJECTED",
@@ -101,6 +146,21 @@
      "sha": "60efe47",
      "date": "2026-09-12",
      "subject": "The link test knew four book sites; the pipeline uses six"
+    },
+    {
+     "sha": "75e11ae",
+     "date": "2026-09-17",
+     "subject": "state: generated release record and chosen-video file, daily sync output of 15 Sep"
+    },
+    {
+     "sha": "8c22348",
+     "date": "2026-09-21",
+     "subject": "Brain Gym in both languages with twelve kinds of exercise, and eight city packs"
+    },
+    {
+     "sha": "52b2b26",
+     "date": "2026-09-21",
+     "subject": "Brain Gym: the re-read of the replaced puzzles, applied"
     }
    ]
   },
