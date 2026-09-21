@@ -146,7 +146,34 @@ try {
   else if (absent.length) fail('bundled flag files missing on disk', absent.slice(0, 6).join(', '));
   else if (notPreloaded.length || extra.length) fail('sw.js FLAGS list disagrees with src/flags.js', (notPreloaded.length + extra.length) + ' entries differ — run curio-hq/tools/bundle_flags.js');
   else pass('every flag travels with the app', cited.size + ' Commons flag files cited; ' + mapped.length + ' bundled, mapped and pre-loaded by the worker');
+  /* and every city pack's own picture: on disk, and in the worker's pre-load list (CEO, 21 Sep 2026: blank travel cards) */
+  vm.runInContext(read(path.join(SRC, 'citypacks.js')), sb, { filename: 'citypacks.js' });
+  const packs = sb.window.CURIO_CITYPACKS || [];
+  const swCities = new Set([...sw.matchAll(/"\.\/(img\/cities\/[^"]+)"/g)].map(m => m[1]));
+  const noPic = packs.filter(p => !(p.pic && p.pic.u)).map(p => p.city);
+  const picAbsent = packs.filter(p => p.pic && p.pic.u && !fs.existsSync(path.join(ROOT, p.pic.u))).map(p => p.city);
+  const picNotPreloaded = packs.filter(p => p.pic && p.pic.u && !swCities.has(p.pic.u)).map(p => p.city);
+  if (noPic.length) fail('city packs with no picture of their own', noPic.join(', ') + ' — run curio-hq/tools/city_pictures.js');
+  else if (picAbsent.length) fail('city pictures missing on disk', picAbsent.join(', '));
+  else if (picNotPreloaded.length) fail('city pictures not in the worker pre-load list', picNotPreloaded.join(', ') + ' — run curio-hq/tools/bundle_flags.js');
+  else pass('every city pack carries its picture', packs.length + ' packs, each with a licence-checked picture copied into the app and pre-loaded');
 } catch (e) { fail('bundled-flags check could not run', e.message); }
+
+/* NO PICTURE, NO QUESTION. CEO, 21 Sep 2026: "that can NEVER happen, as per
+ * our workflow, this should be automatic rejection." Every question the app
+ * ships must have a picture to draw on its card: the one on its row, or its
+ * subject's in the registry. The publisher refuses to write such a row; this
+ * refuses to release one that got through anyway. */
+try {
+  const vm = require('vm');
+  const sb = { window: {} }; vm.createContext(sb);
+  for (const f of ['questions.js', 'entities.img.js']) vm.runInContext(read(path.join(SRC, f)), sb, { filename: f });
+  const IMG = sb.window.CURIO_IMAGES || {};
+  const slugOf = q => { const m = /\/wiki\/([^"#?]+)/.exec(q.src || ''); if (!m) return null; try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; } };
+  const bare = (sb.window.CURIO_QUESTIONS || []).filter(q => !(q.img && q.img.u) && !(slugOf(q) && IMG[slugOf(q)] && IMG[slugOf(q)].u));
+  if (bare.length) fail('questions with no picture to show', bare.length + ' — ' + bare.slice(0, 8).map(q => q.id + ' (' + (slugOf(q) || '?') + ')').join(', ') + (bare.length > 8 ? ' …' : ''));
+  else pass('every question has a picture', (sb.window.CURIO_QUESTIONS || []).length + ' questions, each with a picture on its row or in the registry');
+} catch (e) { fail('picture check could not run', e.message); }
 
 /* ---------- 3. the banks ---------- */
 head('3 · Content integrity');

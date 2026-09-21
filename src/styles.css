@@ -565,6 +565,11 @@ body {
 /* Portrait or square images (Nepal, Switzerland): height caps first, width
    follows — width:auto stops the border stretching past the visible image. */
 .qart.is-contain img { width: auto; max-width: 100%; }
+/* A city pack's own picture opens its page: a wide photograph, cropped to a
+   band rather than scaled to fit, so the page starts with the place. */
+.qart.cityhero { margin: 0 0 4px; }
+.qart.cityhero img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; }
+@media (min-width: 560px) { .qart.cityhero img { height: 240px; } }
 /* THE AI MARK. A generated illustration is labelled ON the picture, not only
    under it - the picture is what gets screenshotted and shared, and a caption
    does not travel with it. Sits top-right, readable on any image because it

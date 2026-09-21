@@ -56,14 +56,18 @@ const FREE = /^(public domain|cc0|cc[ -]by|fal\b|godl-india)/i;
 /* ---- load exactly what the app ships ---- */
 const sandbox = { window: {} };
 vm.createContext(sandbox);
-for (const f of ['entities.img.js', 'questions.js']) {
+for (const f of ['entities.img.js', 'questions.js', 'citypacks.js']) {
   vm.runInContext(fs.readFileSync(path.join(ROOT, 'src', f), 'utf8'), sandbox, { filename: f });
 }
 const IM = sandbox.window.CURIO_IMAGES || {};
 const Q = sandbox.window.CURIO_QUESTIONS || [];
+const PACKS = sandbox.window.CURIO_CITYPACKS || [];
 
 const pics = [];
 Object.entries(IM).forEach(([k, v]) => pics.push({ where: 'subject "' + k + '"', u: v.u, by: v.by, lic: v.lic, page: v.p, gen: v.gen === true }));
+/* a city pack's picture is a Commons file copied into the app (tools/city_pictures.js keeps the
+   Commons address in `orig`); it is checked against Commons like every other Commons picture */
+PACKS.forEach(p => { if (p.pic && p.pic.u) pics.push({ where: 'city "' + p.city + '"', u: p.pic.orig || p.pic.u, by: p.pic.by, lic: p.pic.lic, page: p.pic.p, gen: false }); });
 /* gen was hardcoded false here, so a picture carried on a QUESTION could never
    be declared AI-generated — the disclosure this tool exists to enforce was
    impossible to satisfy on the only rows where it came up. It now reads the

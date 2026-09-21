@@ -1,6 +1,6 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-09-11T17:58:46.809Z",
+ "generated": "2026-09-21T11:25:07.510Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",
@@ -9,7 +9,7 @@
   "added": 0,
   "changedEn": 0,
   "changedFr": 0,
-  "carriedBecauseShipped": 22,
+  "carriedBecauseShipped": 32,
   "ungoverned": 12,
   "unruled": 1956
  },
@@ -1479,8 +1479,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS",
    "factChecked": true,
@@ -1488,7 +1488,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q099": {
    "governed": true,
@@ -6191,8 +6192,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -6200,7 +6201,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q413": {
    "governed": true,
@@ -6416,8 +6418,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -6425,7 +6427,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q428": {
    "governed": true,
@@ -7453,8 +7456,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -7462,14 +7465,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q497": {
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -7477,7 +7481,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q498": {
    "governed": true,
@@ -8758,8 +8763,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -8767,7 +8772,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q584": {
    "governed": true,
@@ -8818,8 +8824,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -8827,7 +8833,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q588": {
    "governed": true,
@@ -9883,8 +9890,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -9892,7 +9899,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q659": {
    "governed": true,
@@ -10243,8 +10251,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -10252,7 +10260,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q683": {
    "governed": true,
@@ -11143,8 +11152,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -11152,7 +11161,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q743": {
    "governed": true,

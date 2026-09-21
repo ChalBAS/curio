@@ -449,6 +449,22 @@
     return (SUB_EMOJI[v] || "✨") + " " + t(v);
   }
 
+  // EVERY QUESTION CARRIES A PICTURE. CEO, 21 Sep 2026: "I have questions in
+  // the daily quiz that don't have pictures — that can NEVER happen." The
+  // pipeline clears a picture for every question, but for most of the bank the
+  // picture is the SUBJECT's, in the registry (entities.img.js), and the card
+  // only ever drew the picture written on the row — so 928 questions were shown
+  // bare. The subject's picture is that question's picture: same licence, same
+  // credit, same file page, described by the subject's name.
+  function subjectPicture(q) {
+    var GO = window.CURIO_GO, IM = window.CURIO_IMAGES || {};
+    var slug = GO && GO.entityOf ? GO.entityOf(q) : null;
+    var im = slug ? IM[slug] : null;
+    if (!im || !im.u) return undefined;
+    var name = (GO.titleOf ? GO.titleOf(slug) : slug.replace(/_/g, " "));
+    return { u: im.u, by: im.by, lic: im.lic, p: im.p, gen: im.gen === true || undefined,
+             alt: im.alt || name, alt_fr: im.alt_fr || (QLANG === "fr" ? name : undefined), subject: slug };
+  }
   // For each question, shuffle the option display order deterministically per session.
   function withShuffledOptions(q, seed) {
     var order = shuffledIndices(q.options.length, seed);
@@ -458,7 +474,7 @@
     // here is silently dropped on the way to the screen — which is how the flag
     // pictures vanished the first time they shipped. Keep it exhaustive.
     return { id: qid(q), q: q.q, cat: q.cat, region: q.region, sub: q.sub, theme: q.theme,
-             diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, img: q.img,
+             diff: q.diff, fact: q.fact, src: q.src, deeper: q.deeper, img: (q.img && q.img.u) ? q.img : subjectPicture(q),
              intelligence: q.intelligence,
              options: opts, answer: ans };
   }
@@ -941,14 +957,21 @@
     var IM = window.CURIO_IMAGES || {};
     var peekImgs = [];
     packs.forEach(function (p) {
-      // Reuse the city's own question source for a photograph where we have one.
-      var slug = null;
-      (p.questions || []).some(function (q) {
-        var s = window.CURIO_GO && window.CURIO_GO.entityOf(q);
-        if (s && IM[s]) { slug = s; return true; }
-        return false;
-      });
-      var img = slug ? IM[slug] : null;
+      // The pack's own picture (chosen for the city, licence-checked, carried
+      // with the app — see curio-hq/tools/bundle_flags.js). Before 21 Sep 2026
+      // a card borrowed the photograph of whichever question subject the
+      // registry happened to hold, and the eight newest packs had none — so
+      // their cards were blank (CEO, 21 Sep 2026).
+      var img = p.pic && p.pic.u ? p.pic : null;
+      if (!img) {
+        var slug = null;
+        (p.questions || []).some(function (q) {
+          var s = window.CURIO_GO && window.CURIO_GO.entityOf(q);
+          if (s && IM[s]) { slug = s; return true; }
+          return false;
+        });
+        img = slug ? IM[slug] : null;
+      }
       if (img) peekImgs.push(picURL(img.u));
       var c = el(
         '<div class="dcard dcard-sm">' +
@@ -1929,6 +1952,9 @@
     dq.forEach(function (q) {
       var pic = IM[GOL.entityOf(q)];
       if (pic && pic.u) urls.push(picURL(pic.u));
+      // and the picture on the question card itself, so today's five are
+      // already on the device if the reader goes offline later in the day
+      if (q.img && q.img.u) urls.push(picURL(q.img.u));
     });
     var D = window.CURIO_DISCOVERY;
     if (D) {
@@ -2674,7 +2700,11 @@
       // image or the device is offline — the shelf never breaks, it just gets
       // quieter. Visual learners are a large share of any audience and
       // "accessibility is fundamental" is Charter value 5 (CEO, 2026-08-08).
-      var pic = (window.CURIO_IMAGES || {})[window.CURIO_GO.entityOf(q)];
+      // The subject's picture where the registry has one; otherwise the picture
+      // the question itself carries — the shelf used to read only the registry,
+      // so a question whose picture rides on its row got the category tile
+      // (CEO, 21 Sep 2026: Wayuu people, Guaraní people, Data compression).
+      var pic = (window.CURIO_IMAGES || {})[window.CURIO_GO.entityOf(q)] || ((q.img && q.img.u) ? q.img : null);
       var artHtml = pic
         ? '<a class="topic-art has-pic" href="' + srcLink0(pic.p) + '" target="_blank" rel="noopener" ' +
             'title="' + esc(tf("Photo: {by} · {lic}", { by: pic.by || "Wikimedia Commons", lic: pic.lic || "" })) + '">' +
@@ -3051,7 +3081,14 @@
     var node = el('<div class="grid"></div>');
     node.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Cities") + '</button><h2 style="margin:0 auto">' + (pack.emoji || "🌍") + ' ' + esc(pack.city) + '</h2><span style="width:64px"></span></div>'));
 
-    var play = el('<div class="card"><p style="margin:0 0 12px">' + esc(pack.blurb) + '</p><button class="btn block" id="playCity">' + tf("▶ Play the {city} quiz ({n})", { city: esc(pack.city), n: pack.questions.length }) + '</button></div>');
+    // The city's picture opens the page — for the readers who take in a
+    // picture before a paragraph (CEO, 21 Sep 2026). Credit under it, linking
+    // to the file page, exactly as a question's picture is credited.
+    var hero = pack.pic && pack.pic.u
+      ? '<div class="qart cityhero"><img src="' + esc(picURL(pack.pic.u)) + '" alt="' + esc(pack.city) + '" decoding="async" referrerpolicy="no-referrer"></div>' +
+        (pack.pic.by ? '<div class="qart-credit">' + (pack.pic.p ? '<a href="' + srcLink0(pack.pic.p) + '" target="_blank" rel="noopener">' : '') + esc(pack.pic.by) + (pack.pic.lic ? ' · ' + esc(pack.pic.lic) : '') + (pack.pic.p ? '</a>' : '') + '</div>' : '')
+      : '';
+    var play = el('<div class="card">' + hero + '<p style="margin:' + (hero ? '10px' : '0') + ' 0 12px">' + esc(pack.blurb) + '</p><button class="btn block" id="playCity">' + tf("▶ Play the {city} quiz ({n})", { city: esc(pack.city), n: pack.questions.length }) + '</button></div>');
     node.appendChild(play);
 
     // Key phrases

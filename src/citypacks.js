@@ -220,7 +220,14 @@ window.CURIO_CITYPACKS = [
       "Near the Colosseum, Trevi and other big sights, politely wave off strangers who slip a 'free' bracelet or rose into your hand, and buy tickets from official desks or apps rather than 'helpers' at machines.",
       "Coffee has its rhythms: Romans take a quick espresso standing at the bar (cheaper than table service), and a milky cappuccino is generally treated as a morning-only drink.",
       "A friendly 'buongiorno' when you enter a shop or bar, and 'buonasera' in the evening, is basic courtesy; locals appreciate the greeting far more than perfect grammar."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/rome.07c926be.jpg",
+      "by": "Anil Öztas",
+      "lic": "CC BY 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Rom_(IT)%2C_Kolosseum_--_2024_--_0610.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Rom_%28IT%29%2C_Kolosseum_--_2024_--_0610.jpg/960px-Rom_%28IT%29%2C_Kolosseum_--_2024_--_0610.jpg"
+    }
   },
   {
     "city": "Kyoto",
@@ -437,7 +444,14 @@ window.CURIO_CITYPACKS = [
       "In Gion, don't chase, touch, or block geiko and maiko for photos; some private lanes ban photography and can issue fines, so admire them respectfully.",
       "Carry some cash: many small temples, shrines, shops, and older eateries are cash-only, even as IC cards and contactless payments spread.",
       "Avoid bar touts in the Pontochō and Kiyamachi nightlife lanes who lead you to venues that later hit tourists with inflated bills; pick your own place and confirm prices first."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/kyoto.79d7dd10.jpg",
+      "by": "Basile Morin",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Water_reflection_of_Kinkaku-ji_Temple_a_sunny_day%2C_Kyoto%2C_Japan.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Water_reflection_of_Kinkaku-ji_Temple_a_sunny_day%2C_Kyoto%2C_Japan.jpg/960px-Water_reflection_of_Kinkaku-ji_Temple_a_sunny_day%2C_Kyoto%2C_Japan.jpg"
+    }
   },
   {
     "city": "Cairo",
@@ -654,7 +668,14 @@ window.CURIO_CITYPACKS = [
       "Haggling is expected and good-humoured in souqs like Khan el-Khalili: counter at roughly half the first price, stay friendly, and it is perfectly fine to walk away.",
       "Around the Giza pyramids, agree any camel or horse-ride price in advance, and politely refuse strangers who grab your camera or drape a scarf on you then demand cash.",
       "Ask permission before photographing people, and carry cash: many small shops, taxis and all tips are cash-only, and card acceptance is patchy outside big venues."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/cairo.fd6c7501.jpg",
+      "by": "User:Berthold Werner",
+      "lic": "CC BY 3.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Kairo_Ibn_Tulun_Moschee_BW_4.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Kairo_Ibn_Tulun_Moschee_BW_4.jpg/960px-Kairo_Ibn_Tulun_Moschee_BW_4.jpg"
+    }
   },
   {
     "city": "Mexico City",
@@ -871,7 +892,14 @@ window.CURIO_CITYPACKS = [
       "At churches like the Metropolitan Cathedral or the Basilica of Guadalupe, dress modestly (cover shoulders and knees), speak quietly, and don't wander through areas during Mass.",
       "Skip flagging random street taxis; book a licensed 'sitio' stand or use an app like Uber or Didi to avoid overcharging and safety problems.",
       "The city sits at about 2,240 m (7,350 ft), so take your first day slowly, drink plenty of water, and go easy on alcohol until you acclimatise."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/mexico_city.97ce6976.jpg",
+      "by": "Jeses",
+      "lic": "CC BY-SA 2.5",
+      "p": "https://commons.wikimedia.org/wiki/File:Mexico_City_Palacio_de_bellas_artes.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Mexico_City_Palacio_de_bellas_artes.jpg/960px-Mexico_City_Palacio_de_bellas_artes.jpg"
+    }
   },
   {
     "city": "Istanbul",
@@ -1088,7 +1116,14 @@ window.CURIO_CITYPACKS = [
       "A glass of çay (tea) or Turkish coffee is an offer of hospitality — accept it graciously, and know you're rarely expected to pay when a shopkeeper offers one.",
       "Bargaining is normal and expected in the Grand Bazaar and street markets, but not in fixed-price shops, cafés or supermarkets — stay friendly and feel free to walk away.",
       "A scam to sidestep: a friendly stranger who invites you to a bar or club, where you're later handed a hugely inflated bill; likewise decline the 'dropped' shoe-shine brush trick."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/istanbul.c1a5f2c0.jpg",
+      "by": "Arild Vågen",
+      "lic": "CC BY-SA 3.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Hagia_Sophia_Mars_2013.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/960px-Hagia_Sophia_Mars_2013.jpg"
+    }
   },
   {
     "city": "Bangkok",
@@ -1305,7 +1340,14 @@ window.CURIO_CITYPACKS = [
       "Common scam: a friendly stranger near the Grand Palace says it's 'closed today' and offers a cheap tuk-tuk gem-shop tour. It's open daily — walk on and use metered taxis or a ride app.",
       "Keep the head high and feet low: don't touch anyone's head or point your soles at people or Buddha images, and tuck your feet behind you when sitting on temple floors.",
       "Show respect to monks and the monarchy — women shouldn't touch a monk or hand items straight to one, and Thais stand for the royal anthem before films, so it's polite to join in."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/bangkok.9e5dac10.jpg",
+      "by": "Original image: Ninara from Helsinki, Finland. Edit: TSP",
+      "lic": "CC BY 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Wat_Phra_Kaew_by_Ninara_TSP_edit_crop.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Wat_Phra_Kaew_by_Ninara_TSP_edit_crop.jpg/960px-Wat_Phra_Kaew_by_Ninara_TSP_edit_crop.jpg"
+    }
   },
   {
     "city": "Cusco",
@@ -1522,7 +1564,14 @@ window.CURIO_CITYPACKS = [
       "Dress modestly and remove your hat inside churches such as the Cathedral and Santo Domingo; photography inside is often restricted or forbidden, so ask first.",
       "Use official or app-booked taxis and agree the fare before getting in; cabs rarely run meters, so settling the price up front avoids being overcharged.",
       "Always ask and offer a small tip before photographing people in traditional dress or posing with their llamas and alpacas around the Plaza de Armas."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/cusco.a7a1194f.jpg",
+      "by": "Diego Delso",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Sacsayhuam%C3%A1n%2C_Cusco%2C_Per%C3%BA%2C_2015-07-31%2C_DD_05.JPG",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Sacsayhuam%C3%A1n%2C_Cusco%2C_Per%C3%BA%2C_2015-07-31%2C_DD_05.JPG/960px-Sacsayhuam%C3%A1n%2C_Cusco%2C_Per%C3%BA%2C_2015-07-31%2C_DD_05.JPG"
+    }
   },
   {
     "city": "Marrakech",
@@ -1739,7 +1788,14 @@ window.CURIO_CITYPACKS = [
       "Always ask before photographing people or the performers on Jemaa el-Fnaa; many rely on it for a living and will expect a few dirham in return.",
       "Tipping is customary; keep small dirham coins handy for waiters, cafe staff, guides, and anyone who genuinely helps you.",
       "Ignore strangers who insist a street or sight is 'closed' and offer to lead you elsewhere, as it usually ends at a shop; a polite 'la, shukran' (no, thanks) is enough."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/marrakech.08dd10ae.jpg",
+      "by": "Baca12",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Mosqu%C3%A9e_de_la_Koutoubia_-_marakesh.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Mosqu%C3%A9e_de_la_Koutoubia_-_marakesh.jpg/960px-Mosqu%C3%A9e_de_la_Koutoubia_-_marakesh.jpg"
+    }
   },
   {
     "city": "Athens",
@@ -1956,7 +2012,14 @@ window.CURIO_CITYPACKS = [
       "Insist taxis switch on the meter (or agree the fare first), and be wary of an over-friendly stranger near Syntagma or Plaka steering you to a specific bar, where inflated-bill scams happen.",
       "Never thrust an open palm with fingers spread toward someone: the 'moutza' gesture is a serious insult in Greece.",
       "Name days can matter as much as birthdays, and early afternoon (roughly 3-5pm) is a traditional rest time, so keep the noise down in residential streets."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/athens.2c5fbb3a.jpg",
+      "by": "A.Savin",
+      "lic": "CC BY-SA 3.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Attica_06-13_Athens_50_View_from_Philopappos_-_Acropolis_Hill.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Attica_06-13_Athens_50_View_from_Philopappos_-_Acropolis_Hill.jpg/960px-Attica_06-13_Athens_50_View_from_Philopappos_-_Acropolis_Hill.jpg"
+    }
   },
   {
     "city": "Samarkand",
@@ -2173,7 +2236,14 @@ window.CURIO_CITYPACKS = [
       "Tipping is modest and optional: rounding up or leaving about 5-10% is welcome where no service charge is added, and small notes help as cards aren't accepted everywhere.",
       "Return the greeting 'Assalomu alaykum' and accept tea when hosts offer it: hospitality is a point of pride, and a hand placed over your heart is a warm way to say thanks.",
       "Agree the fare before getting into an unmetered taxi (or use the Yandex Go app), and change money at banks or official exchange desks rather than with street changers."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/samarkand.92ebd88e.jpg",
+      "by": "Bernard Gagnon",
+      "lic": "CC0",
+      "p": "https://commons.wikimedia.org/wiki/File:Registan_01.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Registan_01.jpg/960px-Registan_01.jpg"
+    }
   },
   {
     "city": "Lagos",
@@ -2390,7 +2460,14 @@ window.CURIO_CITYPACKS = [
       "Tipping is appreciated but not compulsory: 5–10% at sit-down restaurants is generous, and the service charge many Lagos restaurants add to the bill usually does not reach the waiter, so hand cash directly if service was good. Round up for drivers and give a small 'dash' (tip) to porters or anyone who helps. Carry small naira notes for markets, street food and tips; Lagos runs on bank transfers and local cards, and foreign cards are sometimes declined even in malls and hotels, so bring cash or exchange money on arrival and use ATMs only inside banks or malls.",
       "Traffic ('go-slow') shapes every plan: allow two hours for a cross-city trip and avoid the Third Mainland Bridge at rush hour. Use a ride-hailing app or a driver arranged by your hotel rather than hailing on the street; the yellow danfo minibuses are cheap and characterful but ride one with a local the first time. In jams keep phones and bags away from open windows, and stick to apps or hotel drivers after dark.",
       "Lagos is split between the Island (Ikoyi, Victoria Island, Lekki) and the Mainland (Ikeja, Yaba, Surulere): first-time visitors usually base on the Island and cross for Fela's New Afrika Shrine in Ikeja or the National Theatre in Iganmu. Ask before photographing people and never photograph military or government buildings. The Eyo masquerade procession on Lagos Island is rare; if one is on, spectators go without shoes or hats by tradition, keep off motorbikes, and follow the marshals. For a quiet morning, the Lekki Conservation Centre's canopy walkway is the city's best escape from the noise."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/lagos.f08dea45.jpg",
+      "by": "Juganutt",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Lagos_Island_and_Third_Mainland_Bridge.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Lagos_Island_and_Third_Mainland_Bridge.jpg/960px-Lagos_Island_and_Third_Mainland_Bridge.jpg"
+    }
   },
   {
     "city": "Addis Ababa",
@@ -2607,7 +2684,14 @@ window.CURIO_CITYPACKS = [
       "The Ethiopian birr is a cash currency. Easiest is to withdraw birr with a Visa or Mastercard at bank ATMs (Dashen, Awash, CBE); otherwise change money at the airport bureau or a bank, never on the street: unlicensed changing is illegal and is where tourists get counterfeit notes. Carry small notes; cards work only in bigger hotels and restaurants. Check the bill before tipping, as many restaurants already add a 10 percent service charge plus 15 percent VAT; if not, leave around ten percent. Tip guides about 100-200 birr and drivers 50-100 birr per day.",
       "Agree the fare before getting into a blue-and-white taxi, or use a ride-hailing app, Ride, Feres or Yango, for a fixed price; the apps need a phone number, so buy a SIM at the airport with your passport. The light rail is cheap on its two lines but runs fewer trains than it should and is crowded, so use it for the experience, not to be somewhere on time. Keep your phone out of sight around Meskel Square, Merkato and the bus stations, where phone snatching is common, and after dark take an app car rather than walking. The city sits at about 2,355 metres, so go slowly on your first day, drink water, and skip the beer until you have adjusted.",
       "Ethiopia runs its own clock and calendar: locals count hours from sunrise, so '1 o'clock' can mean 7 a.m., and the year is seven to eight years behind the one on your phone. When confirming any meeting or bus, say 'Ethiopian time or foreign time?'. And if someone invites you to a coffee ceremony, stay for all three cups; leaving after the first is a small slight."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/addis_ababa.d39e034b.jpg",
+      "by": "Diego Delso",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Vista_de_Ad%C3%ADs_Abeba_desde_el_monte_Entoto%2C_Etiop%C3%ADa%2C_2024-01-19%2C_DD_07.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Vista_de_Ad%C3%ADs_Abeba_desde_el_monte_Entoto%2C_Etiop%C3%ADa%2C_2024-01-19%2C_DD_07.jpg/960px-Vista_de_Ad%C3%ADs_Abeba_desde_el_monte_Entoto%2C_Etiop%C3%ADa%2C_2024-01-19%2C_DD_07.jpg"
+    }
   },
   {
     "city": "Buenos Aires",
@@ -2824,7 +2908,14 @@ window.CURIO_CITYPACKS = [
       "Tip about 10% in restaurants and cafés, in cash, left on the table or handed to the waiter, even when you pay by card, because many places cannot pass a card tip on to the staff. The 'cubierto' or 'servicio de mesa' line on the bill is a cover charge, not a tip. A small note for delivery riders, porters and hotel staff is appreciated. Taxi drivers do not expect a tip beyond rounding up.",
       "On the Subte (metro) you can simply tap a contactless Visa or Mastercard, or your phone, at the turnstiles marked 'multipago' in nearly every station, so you do not need a local card for the metro. For buses (colectivos) and suburban trains you still need a SUBE card: buy one at a kiosk or Subte station on arrival and top it up in cash or at the machines, as the local QR wallet (MODO) needs an Argentine bank account. For taxis, use a black-and-yellow radio taxi, Cabify (fully legal) or Uber/DiDi rather than an unmarked car. Money: foreign cards are widely accepted; carry a modest amount of pesos for tips, kiosks and bus top-ups. Take the arrivals-hall registered taxi or a pre-booked transfer from Ezeiza airport.",
       "If someone offers you mate, take the gourd, drink it all through the metal straw (bombilla) without stirring or touching it, and hand it straight back to the person serving; only say 'gracias' when you have had enough, because that word ends your turn. On the street, keep your phone in your pocket rather than in your hand, especially near the kerb and on buses, as motorbike snatchers are the main risk; La Boca is safe by day but stay on the Caminito blocks and leave before dark, and avoid the area around the Retiro bus terminal at night."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/buenos_aires.58a408f8.jpg",
+      "by": "The Cosmonaut",
+      "lic": "CC BY-SA 2.5 ca",
+      "p": "https://commons.wikimedia.org/wiki/File:Casa_Rosada_fa%C3%A7ade.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Casa_Rosada_fa%C3%A7ade.jpg/960px-Casa_Rosada_fa%C3%A7ade.jpg"
+    }
   },
   {
     "city": "Salvador",
@@ -3041,7 +3132,14 @@ window.CURIO_CITYPACKS = [
       "Restaurants usually add a 10% 'serviço' to the bill, so no extra tip is expected; round up for taxi drivers and street vendors if you like. Cards and the Pix phone-payment system are widely accepted, but carry small notes and coins for acarajé stalls and buses. The Elevador Lacerda charges a small fare, paid at the ticket booths at the top and bottom.",
       "Use ride-hailing apps (Uber or 99 — both work well here) after dark rather than walking between neighbourhoods, keep your phone out of sight on the street, and take only what you need to the beach. Use the Elevador Lacerda or a car to move between the upper and lower town rather than the steep connecting streets. Pelourinho is lively and patrolled in the evening on its main squares, especially Tuesday nights (Terça da Bênção); stay on those and avoid empty side streets late at night.",
       "Ordering acarajé is its own ritual: the baiana will ask 'quente ou frio?' — hot means with pepper sauce, cold means without — and fills it with vatapá, caruru, tomato salad and dried shrimp. Fridays are Oxalá's day and many Bahians wear white; you are welcome to join in. If you come for Carnival (the six days that end on Shrove Tuesday), you can buy a bloco's shirt (abadá) to walk inside its roped area, book a raised 'camarote' stand, or join the free crowd, the 'pipoca'. The main circuits are Barra–Ondina along the seafront and Campo Grande in the centre; Pelourinho has a quieter, drum-led circuit without trucks."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/salvador.96623d15.jpg",
+      "by": "Paul R. Burley",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Largo_do_Pelourinho_Salvador_2019-9754_(cropped).jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Largo_do_Pelourinho_Salvador_2019-9754_%28cropped%29.jpg/960px-Largo_do_Pelourinho_Salvador_2019-9754_%28cropped%29.jpg"
+    }
   },
   {
     "city": "Hanoi",
@@ -3258,7 +3356,14 @@ window.CURIO_CITYPACKS = [
       "Tipping is not expected at street stalls or family eateries; Hanoi tips less than the south. In sit-down restaurants without a service charge, rounding up or leaving 5–10 percent is appreciated; spas 10 percent or so; guides 100,000–300,000 đồng a day. Tip in đồng, not foreign notes, and check whether a service charge is already on the bill.",
       "Cash is đồng and the notes carry many zeros, so check the colour and the number before handing one over: the pairs that catch people out are 20,000 and 500,000 (both blue) and 10,000 and 200,000 (both brownish). QR payment is everywhere but stalls still want cash. Book cars and motorbike taxis through Grab, Xanh SM (electric, often cheaper) or Be so the fare is fixed, or use a metered taxi from Mai Linh or G7.",
       "Crossing an Old Quarter street through the stream of scooters is the Hanoi skill: wait for a gap, then walk slowly and steadily without stopping or stepping back, and riders will flow around you. Keep bags on the side away from the road, and mind scooters using the pavement."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/hanoi.028419d0.jpg",
+      "by": "Jakub Hałun",
+      "lic": "CC BY 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Main_gate_of_the_Temple_of_Literature%2C_Hanoi%2C_Vietnam%2C_20240123_0929_3068.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Main_gate_of_the_Temple_of_Literature%2C_Hanoi%2C_Vietnam%2C_20240123_0929_3068.jpg/960px-Main_gate_of_the_Temple_of_Literature%2C_Hanoi%2C_Vietnam%2C_20240123_0929_3068.jpg"
+    }
   },
   {
     "city": "Tbilisi",
@@ -3475,7 +3580,14 @@ window.CURIO_CITYPACKS = [
       "Tipping is about 10 percent in sit-down restaurants; many mid-range places add a 10-15 percent service charge, so check the bill first, and hand a cash tip directly to your server if you want to be sure it reaches them. Pay in lari: cards are accepted almost everywhere, and if a card machine or ATM offers to charge you in your home currency, decline and choose lari. For cash, the exchange booths around Rustaveli Avenue and Liberty Square give the best rates; skip the airport booths.",
       "Getting around: the Metro and city buses charge one small flat fare, with free transfers for 90 minutes. Simplest on day one is to tap a contactless bank card or phone at the gate or bus reader; or buy a Metromoney card at any metro station kiosk and top it up. For taxis use a ride-hailing app such as Bolt; the fare is fixed before you get in, so never hail on the street. Install and verify the apps before you fly, as SMS verification can fail on a foreign number once you arrive.",
       "Book a private room at the Abanotubani sulfur baths for an hour (the popular ones fill up, so reserve a day ahead); a swimsuit is optional in a private room but required in the public pools, and sulfur can stain fabric, so bring an old one plus flip-flops. The kisa scrub from an attendant is an optional extra worth adding. Tbilisi's tap water meets WHO standards and locals drink it, though in older buildings run the tap first or buy cheap bottled water. The old town is safe to walk at night; keep to the lit main lanes, as the lower lanes have dark dead ends, and watch your phone in the crowds around Shardeni Street."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/tbilisi.1bb00f0f.jpg",
+      "by": "Marcin Konsek",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:2014_Tbilisi%2C_Widoki_z_Twierdzy_Narikala_(36).jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/2014_Tbilisi%2C_Widoki_z_Twierdzy_Narikala_%2836%29.jpg/960px-2014_Tbilisi%2C_Widoki_z_Twierdzy_Narikala_%2836%29.jpg"
+    }
   },
   {
     "city": "Amman",
@@ -3692,7 +3804,14 @@ window.CURIO_CITYPACKS = [
       "Tipping is expected but modest: round up taxi fares, leave around ten percent in restaurants if service is not already added (many locals hand the waiter 10% in cash even when it is, as the service charge rarely reaches staff), and tip hotel porters and guides directly, 1–2 JOD. Cash in Jordanian dinars is still king at bakeries, markets and small eateries, so carry 1, 2 and 5 dinar notes — handing a porter a 50 creates an awkward change problem.",
       "Yellow taxis are legally required to run the meter — ask the driver to switch it on ('il-addad, law samaht') because many quote 50–100% above the metered fare to visitors — or use Careem (the dominant app in Amman, owned by Uber) or Uber to avoid negotiating. Exchange money at banks or licensed bureaux, and keep coins and small notes for the sweet shops and hummus counters downtown (al-Balad).",
       "This is the 'City of Stairs': neighbourhoods sit on steep hills linked by long public staircases, so wear proper shoes — a place that looks close on the map may be a hundred steps up. Street crime is low and walking around the Citadel, Roman Theatre, downtown and Rainbow Street is normal day and night. The region's politics can change quickly, so check your own government's travel advice before you fly, steer clear of demonstrations (usually after Friday noon prayers), and give military sites a wide berth."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/amman.1d4d0333.jpg",
+      "by": "Bernard Gagnon",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Roman_theater_of_Amman_01.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Roman_theater_of_Amman_01.jpg/960px-Roman_theater_of_Amman_01.jpg"
+    }
   },
   {
     "city": "Muscat",
@@ -3909,6 +4028,13 @@ window.CURIO_CITYPACKS = [
       "The currency is the Omani rial, divided into 1,000 baisa — notes come in 100 and 500 baisa as well as rials, so a '500' note is half a rial: read the digits carefully. Tipping is appreciated but not expected. Many restaurants add a 10% service charge that goes to the house, so leave 5–10% in cash for good service; round up at cafés; taxi drivers do not expect a tip. Bargain gently and with good humour in Muttrah Souq; cards work in malls and hotels, cash rules in the souq.",
       "Muscat's orange-and-white taxis are legally required to charge by meter (the 'Aber' fare-meter app), but many drivers still quote a flat fare — so either insist on the meter or agree the price before you get in. Easier: book through OTAXI, Marhaba or Careem, which show the fare up front (OTAXI cannot collect from the airport; use Careem, Marhaba or the airport taxi rank there). Mwasalat's red city buses cost 200–500 baisa and route 4 runs to Muttrah, but the city stretches for tens of kilometres along the coast, so most visitors hire a car. Summer heat can pass 45 °C — sightsee early, carry water and save the souq and corniche for after sunset.",
       "Muscat is a calm, low-crime city, and it expects calm in return: alcohol only inside licensed hotels and restaurants, no public displays of affection, and during Ramadan (its dates move each year) no eating, drinking or smoking in public during daylight. On Fridays Muttrah Souq opens only briefly in the morning and most shops close for midday prayers, reopening around 4–5 pm, so plan Muttrah for the evening, when the corniche fills with families."
-    ]
+    ],
+    "pic": {
+      "u": "img/cities/muscat.51bbe1be.jpg",
+      "by": "Diego Delso",
+      "lic": "CC BY-SA 4.0",
+      "p": "https://commons.wikimedia.org/wiki/File:Fuerte_de_Al_Jalali%2C_Mascate%2C_Om%C3%A1n%2C_2024-08-14%2C_DD_52.jpg",
+      "orig": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Fuerte_de_Al_Jalali%2C_Mascate%2C_Om%C3%A1n%2C_2024-08-14%2C_DD_52.jpg/960px-Fuerte_de_Al_Jalali%2C_Mascate%2C_Om%C3%A1n%2C_2024-08-14%2C_DD_52.jpg"
+    }
   }
 ];

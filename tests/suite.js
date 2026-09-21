@@ -418,7 +418,20 @@
         });
       });
       s.log(lang, "city packs · every question has four answers and a source", bad.length === 0, bad.slice(0, 3).join(", "));
-      return tab(w, "home").then(function () {
+      /* Every pack carries a picture of its own, copied into the app (CEO,
+         21 Sep 2026: "there is no images on the travel city sections"). A
+         query string makes the worker ask the network, so this tests the
+         build, and the answer must be a picture — the edge answers a missing
+         path with the app page and a 200. */
+      var noPic = packs.filter(function (p) { return !(p.pic && p.pic.u); });
+      s.log(lang, "city packs · every pack has a picture of its own", noPic.length === 0, noPic.length ? noPic.map(function (p) { return p.city; }).join(", ") : packs.length + " pictures");
+      var stampC = "?probe=" + Date.now();
+      return Promise.all(packs.filter(function (p) { return p.pic && p.pic.u; }).map(function (p) {
+        return fetch("/" + p.pic.u + stampC, { cache: "no-store" }).then(function (r) { return r.ok && /^image\//.test(r.headers.get("content-type") || "") ? null : p.city; }).catch(function () { return p.city; });
+      })).then(function (badPic) {
+        badPic = badPic.filter(Boolean);
+        s.log(lang, "city packs · every picture is served by this build", badPic.length === 0, badPic.length ? badPic.join(", ") : "all pictures");
+      }).then(function () { return tab(w, "home"); }).then(function () {
         /* The travel card on Home holds one small card per pack (#cityPeek);
            tapping one opens the pack page. Addressed by structure, not words. */
         var travel = $(w, "#modeTravel");
@@ -489,7 +502,7 @@
         };
         return new Promise(function (resolve) {
           (function tick() {
-            w.caches.open("qpio-flags").then(function (c) {
+            w.caches.open("qpio-pictures").then(function (c) {
               return c.keys().then(function (keys) {
                 var held = {};
                 keys.forEach(function (r) { held[new URL(r.url).pathname] = r; });
