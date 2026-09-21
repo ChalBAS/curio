@@ -28,7 +28,7 @@ experiments can never be mistaken for real usage data once analytics exists.
 ## The flow
 
 ```
-work  →  git push origin uat  →  UAT deploys automatically  →  CEO tests
+work  →  git push origin uat  →  wrangler deploy → UAT      →  CEO tests
                                                                   ↓
                                         rejected ──────────┐   accepted
                                                            ↓      ↓
@@ -36,6 +36,8 @@ work  →  git push origin uat  →  UAT deploys automatically  →  CEO tests
                                                                   ↓
                                                           PRODUCTION
 ```
+
+**The deploy is a command, not a hook** *(recorded 21 Sep 2026, after a pushed build sat undeployed for a day: the UAT worker's own deployment list shows only direct uploads).* `git push origin uat` publishes nothing by itself. From the `uat` branch run `npx wrangler@4.120.1 deploy --config wrangler.jsonc`, then confirm `uat.qpio.app` serves the new version number before telling the CEO it is there.
 
 **Branches.** `uat` is where work lands. `main` is production and is only ever written to
 by a merge from `uat`. Nothing is committed directly to `main` again.
