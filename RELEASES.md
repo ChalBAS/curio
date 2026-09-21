@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v98** at uat.qpio.app |
+| On UAT | **v99** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-21 |
 
-> ⏳ **Awaiting your sign-off:** v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -36,12 +36,19 @@ not by omission.*
 
 ---
 
+## v99 — ⏳ on UAT
+
+2026-09-21 · 0 questions · sign-off: **no release issue**
+
+- `65fc6b4` v99: the flags travel with the app, so they are there offline
+
 ## v98 — ⏳ on UAT
 
 2026-09-21 · 0 questions · sign-off: awaiting you, [#86](https://github.com/ChalBAS/curio-hq/issues/86)
 
 - `7cf62bd` v98: the eight new city packs repaired, French whole again, nothing dated
 - `8185a62` v98 enters the register awaiting sign-off
+- `55cb685` The register links v98 to its sign-off ticket (#86)
 
 ## v97 — ⏳ on UAT
 
