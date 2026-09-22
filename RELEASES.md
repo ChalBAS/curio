@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v100** at uat.qpio.app |
+| On UAT | **v101** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-21 |
+| Generated | 2026-09-22 |
 
-> ⏳ **Awaiting your sign-off:** v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -36,16 +36,23 @@ not by omission.*
 
 ---
 
+## v101 — ⏳ on UAT
+
+2026-09-22 · 1,968 questions · sign-off: **no release issue**
+
+- `472ee07` v101: every puzzle draws itself, four picture games, four moves with nothing to answer — and the panel's read of all of it
+
 ## v100 — ⏳ on UAT
 
-2026-09-21 · 0 questions · sign-off: awaiting you, [#88](https://github.com/ChalBAS/curio-hq/issues/88)
+2026-09-21 · 1,968 questions · sign-off: awaiting you, [#88](https://github.com/ChalBAS/curio-hq/issues/88)
 
 - `7c0cbe4` v100: every question shows its picture, every city pack has one, no picture no question
 - `c72ca78` v100 enters the register awaiting sign-off
+- `25a1eb9` The register links v100 to its sign-off ticket
 
 ## v99 — ⏳ on UAT
 
-2026-09-21 · 0 questions · sign-off: awaiting you, [#87](https://github.com/ChalBAS/curio-hq/issues/87)
+2026-09-21 · 1,968 questions · sign-off: awaiting you, [#87](https://github.com/ChalBAS/curio-hq/issues/87)
 
 - `65fc6b4` v99: the flags travel with the app, so they are there offline
 - `17de685` v99 enters the register awaiting sign-off
@@ -53,7 +60,7 @@ not by omission.*
 
 ## v98 — ⏳ on UAT
 
-2026-09-21 · 0 questions · sign-off: awaiting you, [#86](https://github.com/ChalBAS/curio-hq/issues/86)
+2026-09-21 · 1,968 questions · sign-off: awaiting you, [#86](https://github.com/ChalBAS/curio-hq/issues/86)
 
 - `7cf62bd` v98: the eight new city packs repaired, French whole again, nothing dated
 - `8185a62` v98 enters the register awaiting sign-off
@@ -61,14 +68,14 @@ not by omission.*
 
 ## v97 — ⏳ on UAT
 
-2026-09-21 · 0 questions · sign-off: **no release issue**
+2026-09-21 · 1,968 questions · sign-off: **no release issue**
 
 - `830a60f` v97: Brain Gym in both languages, twelve kinds; eight city packs
 - `5af0bba` The sign-off ticket describes the suite as it now is
 
 ## v96 — ⏳ on UAT
 
-2026-09-12 → 2026-09-21 · 0 questions · sign-off: **rejected**, [#85](https://github.com/ChalBAS/curio-hq/issues/85)
+2026-09-12 → 2026-09-21 · 1,968 questions · sign-off: **rejected**, [#85](https://github.com/ChalBAS/curio-hq/issues/85)
 
 - `e65d95e` The 1,208 questions that were written and never shipped
 - `e802aae` v96 enters the register awaiting your sign-off
@@ -80,7 +87,7 @@ not by omission.*
 
 ## v95 — ⏳ on UAT
 
-2026-09-07 → 2026-09-09 · 0 questions · sign-off: **rejected**, [#84](https://github.com/ChalBAS/curio-hq/issues/84)
+2026-09-07 → 2026-09-09 · 760 questions · sign-off: **rejected**, [#84](https://github.com/ChalBAS/curio-hq/issues/84)
 
 - `7a7f76a` Three dead Visit links replaced, and the real broken count is three
 - `070aecc` A chosen video is served exactly, and a declined one stays greyed
@@ -92,26 +99,26 @@ not by omission.*
 
 ## v94 — ⏳ on UAT
 
-2026-09-07 · 0 questions · sign-off: **no release issue**
+2026-09-07 · 760 questions · sign-off: **no release issue**
 
 - `050de52` 266 Watch doors led to an empty shelf. They are switched off.
 
 ## v93 — ⏳ on UAT
 
-2026-09-07 · 0 questions · sign-off: **no release issue**
+2026-09-07 · 760 questions · sign-off: **no release issue**
 
 - `8b4ab79` A door that opens a search box now says so
 
 ## v92 — ⏳ on UAT
 
-2026-09-07 · 0 questions · sign-off: **no release issue**
+2026-09-07 · 760 questions · sign-off: **no release issue**
 
 - `621adf3` The Visit slot is now drawn even when there is nowhere to visit
 - `6fa011f` The 147-question disagreement was one bug of mine, not a content problem
 
 ## v89 — ⏳ on UAT
 
-2026-09-06 → 2026-09-07 · 0 questions · sign-off: **no release issue**
+2026-09-06 → 2026-09-07 · 760 questions · sign-off: **no release issue**
 
 - `375038b` Pictures stop telling Wikimedia which page a reader is on
 - `0b3895c` The public API stops serving the question-bank size
@@ -119,19 +126,19 @@ not by omission.*
 
 ## v88 — ⏳ on UAT
 
-2026-09-06 · 0 questions · sign-off: **no release issue**
+2026-09-06 · 760 questions · sign-off: **no release issue**
 
 - `7ecaf18` A real privacy page, and one question asked instead of a tracker
 
 ## v87 — ⏳ on UAT
 
-2026-09-06 · 0 questions · sign-off: **no release issue**
+2026-09-06 · 760 questions · sign-off: **no release issue**
 
 - `5a57e98` Measure how each question performs, without holding anything about a person
 
 ## v86 — ⏳ on UAT
 
-2026-09-06 · 0 questions · sign-off: **no release issue**
+2026-09-06 · 760 questions · sign-off: **no release issue**
 
 - `c33c824` Questions get a permanent identity, and the two languages become one question
 - `466939b` A half-written stats blob no longer gives the reader a blank app

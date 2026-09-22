@@ -1,12 +1,13 @@
 {
- "generated": "2026-09-21",
+ "generated": "2026-09-22",
  "live": {
   "production": 76,
-  "uat": 100,
+  "uat": 101,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  101,
   100,
   99,
   98,
@@ -71,12 +72,31 @@
  ],
  "releases": [
   {
+   "version": 101,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-22",
+   "to": "2026-09-22",
+   "questions": 1968,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "472ee07",
+     "date": "2026-09-22",
+     "subject": "v101: every puzzle draws itself, four picture games, four moves with nothing to answer — and the panel's read of all of it"
+    }
+   ]
+  },
+  {
    "version": 100,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-09-21",
    "to": "2026-09-21",
-   "questions": 0,
+   "questions": 1968,
    "signoff": {
     "status": "AWAITING",
     "issue": 88,
@@ -95,6 +115,11 @@
      "sha": "c72ca78",
      "date": "2026-09-21",
      "subject": "v100 enters the register awaiting sign-off"
+    },
+    {
+     "sha": "25a1eb9",
+     "date": "2026-09-21",
+     "subject": "The register links v100 to its sign-off ticket"
     }
    ]
   },
@@ -104,7 +129,7 @@
    "branch": "uat",
    "from": "2026-09-21",
    "to": "2026-09-21",
-   "questions": 0,
+   "questions": 1968,
    "signoff": {
     "status": "AWAITING",
     "issue": 87,
@@ -137,7 +162,7 @@
    "branch": "uat",
    "from": "2026-09-21",
    "to": "2026-09-21",
-   "questions": 0,
+   "questions": 1968,
    "signoff": {
     "status": "AWAITING",
     "issue": 86,
@@ -170,7 +195,7 @@
    "branch": "uat",
    "from": "2026-09-21",
    "to": "2026-09-21",
-   "questions": 0,
+   "questions": 1968,
    "signoff": {
     "status": "NO ISSUE"
    },
@@ -194,7 +219,7 @@
    "branch": "uat",
    "from": "2026-09-12",
    "to": "2026-09-21",
-   "questions": 0,
+   "questions": 1968,
    "signoff": {
     "status": "REJECTED",
     "at": "2026-09-11T17:55:55Z",
@@ -247,7 +272,7 @@
    "branch": "uat",
    "from": "2026-09-07",
    "to": "2026-09-09",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "REJECTED",
     "at": "2026-09-11T16:34:41Z",
@@ -300,7 +325,7 @@
    "branch": "uat",
    "from": "2026-09-07",
    "to": "2026-09-07",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
    },
@@ -319,7 +344,7 @@
    "branch": "uat",
    "from": "2026-09-07",
    "to": "2026-09-07",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
    },
@@ -338,7 +363,7 @@
    "branch": "uat",
    "from": "2026-09-07",
    "to": "2026-09-07",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
    },
@@ -362,7 +387,7 @@
    "branch": "uat",
    "from": "2026-09-06",
    "to": "2026-09-07",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
    },
@@ -391,7 +416,7 @@
    "branch": "uat",
    "from": "2026-09-06",
    "to": "2026-09-06",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
    },
@@ -410,7 +435,7 @@
    "branch": "uat",
    "from": "2026-09-06",
    "to": "2026-09-06",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
    },
@@ -429,7 +454,7 @@
    "branch": "uat",
    "from": "2026-09-06",
    "to": "2026-09-06",
-   "questions": 0,
+   "questions": 760,
    "signoff": {
     "status": "NO ISSUE"
    },

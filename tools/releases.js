@@ -83,7 +83,13 @@ function versionAt(sha) {
 function questionsAt(sha) {
   const js = gitQuiet('show', sha + ':src/questions.js');
   if (!js) return null;
-  return (js.match(/\banswer:\s*\d/g) || []).length;
+  /* The bank is written by publish_to_app.js as JSON, so the key is quoted and carries no
+     space after the colon: "answer":0. The original pattern wanted `answer: 0` and had
+     silently counted ZERO since the format changed at v96 — so every release from then on
+     was recorded as carrying no questions at all, and the sign-off ticket would have told
+     him this build had none. Both forms are accepted now, and the key is anchored to the
+     start of its object entry so a field whose name merely ends in "answer" cannot count. */
+  return (js.match(/[{,]\s*"?answer"?\s*:\s*\d/g) || []).length;
 }
 
 /* ---------- 3. group consecutive commits into releases ---------- */
