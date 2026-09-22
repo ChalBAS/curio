@@ -565,6 +565,30 @@ body {
 /* Portrait or square images (Nepal, Switzerland): height caps first, width
    follows — width:auto stops the border stretching past the visible image. */
 .qart.is-contain img { width: auto; max-width: 100%; }
+/* BRAIN GYM PICTURES (21 Sep 2026). A puzzle draws its givens as inline SVG in
+   .gart; a tap puzzle's picture IS its answer grid (.gcells of .gcell buttons);
+   the twin puzzle's options are patterns (.gtile). The gym's right/wrong
+   colouring uses .good/.bad — aliases of the quiz's .correct/.wrong. */
+.gart { margin: 10px 0 4px; }
+.gart svg { width: 100%; height: auto; max-height: 34vh; display: block; }
+.gcells { grid-auto-rows: 1fr; gap: 8px; }
+.gcell { padding: 4px; aspect-ratio: 1; display: grid; place-items: center; min-width: 56px; }
+.gcell svg { width: 100%; height: 100%; }
+.gtwin { grid-template-columns: 1fr 1fr; }
+.gtile { padding: 8px; display: grid; place-items: center; }
+.gtile svg { width: 100%; max-width: 140px; height: auto; }
+.opt.good { border-color: var(--good); background: rgba(79,214,163,.14); }
+.opt.bad { border-color: var(--bad); background: rgba(255,107,129,.12); }
+.hcontrast .opt.good { background: #0d3f2c; border-color: #6fffc4; }
+.hcontrast .opt.bad { background: #48141f; border-color: #ff9db0; }
+.gpulse { animation: gpulse .6s ease 1; }
+@keyframes gpulse { 50% { transform: scale(1.08); } }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.gbar { height: 4px; background: var(--card2); border-radius: 999px; overflow: hidden; }
+.gbar > i { display: block; height: 100%; background: var(--brand); transition: width .25s linear; }
+.rmotion .gbar > i { transition: none; }
+.gpill { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 999px; background: var(--card2); color: var(--muted); margin-left: 6px; }
+.drill-off { opacity: .55; }
 /* A city pack's own picture opens its page: a wide photograph, cropped to a
    band rather than scaled to fit, so the page starts with the place. */
 .qart.cityhero { margin: 0 0 4px; }

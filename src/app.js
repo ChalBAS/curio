@@ -1255,27 +1255,54 @@
    * being smarter, nothing medical. The copy below keeps that promise, and the
    * test in curio-hq fails the build if any string on this screen breaks it.
    */
+  /* THE BRAIN GYM SCREENS — 21 Sep 2026.
+   *
+   * CEO: "we need more illustration, some people are more visual"; "games
+   * where we pay attention to details, find an object in an image, follow a
+   * ball that changes colour"; "games that don't necessarily need an answer
+   * … your non-dominant hand … bilateral coordination drills, finger
+   * opposition exercises, neurobics".
+   *
+   * Every puzzle now carries a scene (src/braingym.js) drawn by src/gymart.js;
+   * a tap puzzle's picture is its answer grid; the ball game plays a list of
+   * frames (no game loop); the routines ("Moves") live beside the puzzles,
+   * never among the day's five, and nothing about them is scored. The three
+   * permitted claims (fun, challenging, you get better at these) are the only
+   * claims on any of these screens.
+   */
+  function gymMotionOff() {
+    return settings.motion === "reduced" || !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }
+  function gymHand() { return LS.get("gym.hand", null); }
+  function eligibleDrills() {
+    var h = gymHand(), GYM = window.CURIO_GYM;
+    return (GYM.drills || []).filter(function (d) { return !(h === "one" && d.hands === "two"); });
+  }
+  function pickDayDrill() { var list = eligibleDrills(); return list[window.CURIO_GYM.seedForDay() % list.length]; }
+
   function brainGymCard() {
     var node = el(
       '<div class="card">' +
-        '<div class="emoji">\ud83e\udde0</div>' +
+        '<div class="emoji">🧠</div>' +
         '<h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3>' +
         '<p class="mini" style="margin:0 0 12px">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p>' +
-        '<div class="btnrow"><button class="btn" id="gymToday">' + t("Today\u2019s five") + '</button>' +
+        '<div class="btnrow"><button class="btn" id="gymToday">' + t("Today’s five") + '</button>' +
+        '<button class="btn ghost" id="gymMove">' + t("Today’s move") + '</button>' +
         '<button class="btn ghost" id="gymPick">' + t("Choose a kind") + '</button></div>' +
       '</div>'
     );
     node.querySelector("#gymToday").addEventListener("click", function () { startBrainGym(null); });
+    node.querySelector("#gymMove").addEventListener("click", function () { startDrill(pickDayDrill().key); });
     node.querySelector("#gymPick").addEventListener("click", brainGymPicker);
     return node;
   }
 
   function brainGymPicker() {
-    var wrap = el('<div class="grid"></div>');
+    var GYM = window.CURIO_GYM, wrap = el('<div class="grid"></div>'), motionOff = gymMotionOff() || settings.readAloud;
     wrap.appendChild(el(
       '<div class="card"><h3 style="margin:0 0 4px">' + t("Brain Gym") + '</h3>' +
-      '<p class="mini" style="margin:0">' + tf("{n} kinds. {k} of them never run out.", { n: window.CURIO_GYM.counts.families, k: window.CURIO_GYM.counts.generated }) + '</p></div>'));
-    window.CURIO_GYM.families.forEach(function (f) {
+      '<p class="mini" style="margin:0">' + tf("{n} kinds. {k} of them never run out.", { n: GYM.counts.families, k: GYM.counts.generated }) + '</p></div>'));
+    GYM.families.forEach(function (f) {
       /* A family carries its own French name and blurb, so a new kind of
          exercise cannot ship with an untranslated card. */
       var name = (QLANG === "fr" && f.nameFr) ? f.nameFr : t(f.name);
@@ -1283,16 +1310,38 @@
       var c = el(
         '<div class="card">' +
           '<div class="emoji">' + f.icon + '</div>' +
-          '<h3 style="margin:8px 0 4px">' + esc(name) + '</h3>' +
+          '<h3 style="margin:8px 0 4px">' + esc(name) + (f.maths ? '<span class="gpill">' + t("also maths") + '</span>' : '') + '</h3>' +
           '<p class="mini" style="margin:0 0 10px">' + esc(blurb) +
-            (f.infinite ? ' \u00b7 ' + t("never runs out") : ' \u00b7 ' + t("hand-written")) + '</p>' +
+            (f.infinite ? ' · ' + t("never runs out") : ' · ' + t("hand-written")) + '</p>' +
+          (f.needsMotion && motionOff ? '<p class="mini" style="margin:0 0 10px;opacity:.8">' + t("A watching game — it needs motion, which is off in your Comfort settings.") + '</p>' : '') +
           '<div class="btnrow"><button class="btn">' + t("Start") + '</button></div>' +
         '</div>');
       c.querySelector("button").addEventListener("click", function () { startBrainGym(f.key); });
       wrap.appendChild(c);
     });
-    var back = el('<div class="card"><div class="btnrow"><button class="btn ghost" id="gymBack">\u2190 ' + t("Back") + '</button></div></div>');
+    /* the routines: their own section, never one of the five */
+    wrap.appendChild(el('<div class="card"><h3 style="margin:0 0 4px">' + t("Moves — nothing to answer") + '</h3><p class="mini" style="margin:0">' + t("Moves, not puzzles. Nothing to get right.") + '</p></div>'));
+    var hand = gymHand();
+    GYM.drills.forEach(function (d) {
+      var name = (QLANG === "fr" && d.nameFr) ? d.nameFr : t(d.name);
+      var blurb = (QLANG === "fr" && d.blurbFr) ? d.blurbFr : t(d.blurb);
+      var off = hand === "one" && d.hands === "two";
+      var c = el(
+        '<div class="card' + (off ? ' drill-off' : '') + '">' +
+          '<div class="emoji">' + d.icon + '</div>' +
+          '<h3 style="margin:8px 0 4px">' + esc(name) + '</h3>' +
+          '<p class="mini" style="margin:0 0 10px">' + esc(blurb) + ' · ' + t("≈ 1 min · nothing to answer") + (d.hands === "two" ? ' · ' + t("Uses both hands") : '') + '</p>' +
+          (off ? '' : '<div class="btnrow"><button class="btn">' + t("Start") + '</button></div>') +
+        '</div>');
+      var b = c.querySelector("button");
+      if (b) b.addEventListener("click", function () { startDrill(d.key); });
+      wrap.appendChild(c);
+    });
+    var back = el('<div class="card"><div class="btnrow"><button class="btn ghost" id="gymBack">← ' + t("Back") + '</button>' +
+      (hand ? '<button class="btn ghost" id="gymHand">' + t("Change hand") + '</button>' : '') + '</div></div>');
     back.querySelector("#gymBack").addEventListener("click", function () { renderTab("games"); });
+    var hb = back.querySelector("#gymHand");
+    if (hb) hb.addEventListener("click", function () { askHand(brainGymPicker); });
     wrap.appendChild(back);
     render(wrap);
   }
@@ -1300,7 +1349,7 @@
   /* A gym round: five puzzles, one at a time, answer then explanation.
      `family` null means today's mixed five — the same five for everybody, so it
      can be talked about, which is the reason the exercises are seeded rather
-     than random. */
+     than random. `opts.only` restricts the mix (the maths four). */
   /* French typography, applied at render time rather than in the generator:
      a no-break space before ? ; : ! and inside « », so a phone never wraps a
      lone "?" onto the next line. The generator keeps plain spaces because the
@@ -1310,13 +1359,32 @@
     return String(s).replace(/ ([?;:!»])/g, " $1").replace(/« /g, "« ").replace(/(\d) (\d{3})\b/g, "$1 $2");
   }
 
-  function startBrainGym(family) {
-    var GYM = window.CURIO_GYM;
+  /* arrow keys walk a grid of buttons; Enter or Space taps the one in focus */
+  function rovingGrid(container, cols) {
+    var cells = Array.prototype.slice.call(container.querySelectorAll("button"));
+    cells.forEach(function (b, i) { b.setAttribute("tabindex", i === 0 ? "0" : "-1"); });
+    container.addEventListener("keydown", function (e) {
+      var i = cells.indexOf(document.activeElement); if (i < 0) return;
+      var j = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : e.key === "ArrowDown" ? i + cols : e.key === "ArrowUp" ? i - cols : -1;
+      if (j < 0 || j >= cells.length) return;
+      e.preventDefault(); cells[i].setAttribute("tabindex", "-1"); cells[j].setAttribute("tabindex", "0"); cells[j].focus();
+    });
+  }
+
+  function startBrainGym(family, opts) {
+    var GYM = window.CURIO_GYM, ART = window.CURIO_GYM_ART;
     var seed = GYM.seedForDay();
-    var set = family
-      ? [0, 1, 2, 3, 4].map(function (i) { return GYM.make(family, (seed * 7919 + i * 104729) >>> 0, QLANG); })
-      : GYM.makeSet(seed, 5, QLANG);
-    var idx = 0, right = 0;
+    var motionOff = gymMotionOff() || settings.readAloud;
+    var setOpts = { exclude: motionOff ? ["shells"] : [], only: opts && opts.only };
+    var five = function (fam, s) { return [0, 1, 2, 3, 4].map(function (i) { return GYM.make(fam, (s * 7919 + i * 104729) >>> 0, QLANG); }); };
+    var set = family ? five(family, seed) : GYM.makeSet(seed, 5, QLANG, setOpts);
+    var idx = 0, right = 0, mathsSeen = 0;
+
+    function labelsOf(p) { return p.sceneLabels || {}; }
+    function picture(p, o) {
+      if (!p.scene || !ART) return "";
+      return '<div class="gart" role="img" aria-label="' + esc(gymText(p.sceneText || "")) + '">' + ART.draw(p.scene, o || { motion: !motionOff }, labelsOf(p)) + '</div>';
+    }
 
     function step() {
       var p = set[idx];
@@ -1327,51 +1395,141 @@
     }
 
     function study(p) {
+      var isChange = p.scene && p.scene.kind === "change";
+      var pic = !ART || !p.scene ? "" :
+        isChange ? '<div class="gart" role="img" aria-label="' + esc(gymText(p.sceneText || "")) + '">' + ART.draw(p.scene, { which: "before" }, {}) + '</div>' :
+        p.scene.kind === "cards" ? '<div class="gart" aria-hidden="true">' + ART.draw(p.scene, {}, { words: labelsOf(p).words }) + '</div>' : picture(p);
       var node = el(
         '<div class="card">' +
-          '<div class="mini">' + t("Brain Gym") + ' \u00b7 ' + (idx + 1) + '/' + set.length + '</div>' +
-          '<h3 style="margin:10px 0 6px">' + t("Remember these") + '</h3>' +
-          '<div class="qtext" style="letter-spacing:.04em">' + fmt(gymText(p.show)) + '</div>' +
+          '<div class="mini">' + t("Brain Gym") + ' · ' + (idx + 1) + '/' + set.length + '</div>' +
+          '<h3 style="margin:10px 0 6px">' + t(isChange ? "Look carefully" : "Remember these") + '</h3>' + pic +
+          (p.show ? '<div class="qtext" style="letter-spacing:.04em">' + fmt(gymText(p.show)) + '</div>' : '') +
           '<p class="mini" style="margin:14px 0 0">' + t("Take as long as you like. They will not come back.") + '</p>' +
           '<div class="btnrow" style="margin-top:14px"><button class="btn" id="gymReady">' + t("Ready") + '</button></div>' +
         '</div>');
       node.querySelector("#gymReady").addEventListener("click", function () { p._studied = true; step(); });
       render(node);
+      if (canSpeak() && p.show) speak(p.show);
     }
 
     function ask(p) {
-      var fam = GYM.byKey[p.family];
+      var fam = GYM.byKey[p.family], isTap = p.input === "tap", isTwin = p.family === "twin", isShells = p.family === "shells";
+      var pic = "";
+      if (isTap) pic = "";                                   /* the tap grid IS the picture */
+      else if (isShells) pic = motionOff
+        ? '<p class="mini" style="margin:8px 0 0">' + t("Without the animation this becomes a step-by-step puzzle: here is each move.") + '</p>' + picture(p, { motion: false })
+        : picture(p, { motion: true });
+      else if (p.icon) pic = '<div class="emoji" aria-hidden="true">' + p.icon + '</div>';
+      else pic = picture(p);
       var html =
         '<div class="card">' +
           '<div class="mini">' + (fam ? fam.icon + ' ' + esc((QLANG === "fr" && fam.nameFr) ? fam.nameFr : t(fam.name)) : t("Brain Gym")) +
-            ' \u00b7 ' + (idx + 1) + '/' + set.length + '</div>' +
+            ' · ' + (idx + 1) + '/' + set.length + '</div>' +
+          (isTap ? '' : pic) +
           '<div class="qtext" style="margin-top:10px">' + fmt(gymText(p.prompt)) + '</div>' +
-          (p.show && !p.hide ? '<div class="qtext" style="opacity:.9;letter-spacing:.06em;margin-top:6px">' + fmt(gymText(p.show)) + '</div>' : '') +
-          '<div class="opts" id="gymOpts"></div>' +
+          (p.show && !p.hide && !isTwin ? '<div class="qtext" style="opacity:.9;letter-spacing:.06em;margin-top:6px">' + fmt(gymText(p.show)) + '</div>' : '') +
+          (isShells && p.sceneText ? '<p class="sr-only">' + esc(gymText(p.sceneText)) + '</p>' : '') +
+          '<div class="opts' + (isTap ? ' gcells' : isTwin ? ' gtwin' : '') + '" id="gymOpts"' + (isTap ? ' style="grid-template-columns:repeat(' + p.scene.cols + ',1fr)"' : '') + '></div>' +
           '<div id="gymAfter"></div>' +
         '</div>';
       var node = el(html);
       var opts = node.querySelector("#gymOpts");
-      p.options.forEach(function (o) {
-        var b = el('<button class="opt"></button>');
-        b.textContent = gymText(o);
-        b.addEventListener("click", function () { answer(node, p, o); });
-        opts.appendChild(b);
-      });
+      if (isTap && ART) {
+        var cells = p.scene.kind === "grid" ? p.scene.tiles : p.scene.after;
+        cells.forEach(function (c, i) {
+          var id = p.options[i];
+          var b = el('<button class="opt gcell" aria-label="' + esc(GYM.cellLabel(p, i, QLANG)) + '"></button>');
+          b.setAttribute("data-value", id);
+          b.innerHTML = p.scene.kind === "grid" ? ART.tile(c) : ART.objectTile(c);
+          b.addEventListener("click", function () { answer(node, p, id); });
+          opts.appendChild(b);
+        });
+        rovingGrid(opts, p.scene.cols);
+      } else {
+        p.options.forEach(function (o) {
+          var b = el('<button class="opt"></button>');
+          b.setAttribute("data-value", o);
+          if (isTwin && ART && /^[cbygv]{9}$/.test(o)) { b.className = "opt gtile"; b.innerHTML = ART.tileGrid(o); b.setAttribute("aria-label", GYM.twinLabel(o, QLANG)); }
+          else b.textContent = gymText(o);
+          b.addEventListener("click", function () { answer(node, p, o); });
+          opts.appendChild(b);
+        });
+      }
       render(node);
+      /* A tap puzzle asks the reader to FIND something in the picture, so its scene
+         description IS the answer; speaking it would hand the solution to anyone who
+         turned read-aloud on for comfort. Those readers reach the picture through the
+         per-cell labels instead. Every other family still hears its description. */
+      if (canSpeak()) speak(p.prompt + (p.sceneText && p.input !== "tap" && p.family !== "shells" ? ". " + p.sceneText : ""));
+      if (isShells && !motionOff) playShells(node, p, true);
+    }
+
+    /* the ball game: frame 0 shows the ring for a second, then the swaps play
+       one after another; the options appear when the last frame lands. One
+       "Watch again". A tick that arrives far too late (the tab was hidden)
+       jumps to the end rather than playing to an empty room. */
+    function playShells(node, p, offerAgain) {
+      var svg = node.querySelector(".gart svg"), opts = node.querySelector("#gymOpts"), after = node.querySelector("#gymAfter");
+      if (!svg) return;
+      opts.classList.add("hidden");
+      var frames = p.scene.frames, ms = p.scene.ms + p.scene.gap, k = 0, due = Date.now();
+      var apply = function (f, i) {
+        for (var b = 0; b < 3; b++) {
+          var g = svg.querySelector("#b" + b), c = svg.querySelector("#c" + b), m = svg.querySelector("#m" + b);
+          if (g) g.setAttribute("transform", "translate(" + ((f.slots[b] - b) * 100) + " 0)");
+          if (c && f.recoloured) c.setAttribute("fill", ART.PAL[1]);
+          if (m && f.recoloured) { m.setAttribute("fill", "var(--bg2)"); m.setAttribute("stroke", "none"); m.setAttribute("r", "5"); }
+        }
+        var ring = svg.querySelector("#ring"); if (ring && i >= 1) ring.parentNode.removeChild(ring);
+      };
+      var finish = function () {
+        opts.classList.remove("hidden");
+        if (offerAgain) {
+          var b = el('<button class="btn ghost" id="gymWatch" style="margin-top:8px">' + t("Watch again") + '</button>');
+          b.addEventListener("click", function () {
+            b.parentNode.removeChild(b);
+            var art = node.querySelector(".gart"); art.innerHTML = ART.draw(p.scene, { motion: true }, {});
+            playShells(node, p, false);
+          });
+          after.appendChild(b);
+        }
+      };
+      apply(frames[0], 0);
+      var tick = function () {
+        if (!svg.isConnected) return;
+        k++;
+        if (Date.now() - due > 2 * ms) k = frames.length - 1;
+        apply(frames[k], k);
+        if (k >= frames.length - 1) { finish(); return; }
+        due = Date.now() + ms; setTimeout(tick, ms);
+      };
+      due = Date.now() + 1000; setTimeout(tick, 1000);
     }
 
     function answer(node, p, chosen) {
       var correct = chosen === p.answer;
       if (correct) right++;
+      var fam = GYM.byKey[p.family];
+      if (fam && fam.maths) mathsSeen++;
       Array.prototype.forEach.call(node.querySelectorAll(".opt"), function (b) {
         b.disabled = true;
-        /* the buttons carry the typographic rendering; compare like with like */
-        if (b.textContent === gymText(p.answer)) b.classList.add("good");
-        else if (b.textContent === gymText(chosen)) b.classList.add("bad");
+        var v = b.getAttribute("data-value");
+        if (v === p.answer) { b.classList.add("good"); if (p.input === "tap") b.classList.add("gpulse"); }
+        else if (v === chosen) {
+          b.classList.add("bad");
+          /* the twin puzzle shows WHICH tile of the wrong pick differs */
+          if (p.family === "twin" && ART && /^[cbygv]{9}$/.test(v)) {
+            var d = -1, n = 0, i; for (i = 0; i < 9; i++) if (v.charAt(i) !== p.answer.charAt(i)) { d = i; n++; }
+            b.innerHTML = ART.tileGrid(v, { mark: n === 1 ? [d] : [] });
+          }
+        }
       });
+      var w = node.querySelector("#gymWatch"); if (w) w.parentNode.removeChild(w);
+      if (p.family === "shells") {
+        var svg = node.querySelector(".gart svg");
+        if (svg && svg.querySelector("#b0")) svg.insertAdjacentHTML("beforeend", '<circle cx="' + (60 + (Number(p.answer) - 1) * 100) + '" cy="56" r="29" fill="none" stroke="var(--good)" stroke-width="3"/>');
+      }
       var after = node.querySelector("#gymAfter");
-      var fam = window.CURIO_GYM.byKey[p.family];
       after.appendChild(el(
         '<div class="reveal" style="margin-top:12px">' +
           '<div>' + fmt(gymText(p.explain)) + '</div>' +
@@ -1395,24 +1553,144 @@
           '<div class="sub">' + t("These get easier with practice — that is the only promise Qpio makes about them.") + '</div>' +
           '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
             '<button class="btn" id="gymAgain">' + t("Another five") + '</button>' +
+            '<button class="btn ghost" id="gymDrill">' + t("Finish with a drill") + '</button>' +
             '<button class="btn ghost" id="gymKinds">' + t("Choose a kind") + '</button>' +
-            '<button class="btn ghost" id="gymHome">\ud83c\udfe0 ' + t("Home") + '</button>' +
+            '<button class="btn ghost" id="gymHome">🏠 ' + t("Home") + '</button>' +
           '</div>' +
+          (mathsSeen >= 3 ? '<div class="btnrow" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="gymMaths">' + t("Want the facts behind the numbers? Mathematics quiz") + '</button></div>' : '') +
         '</div>');
       node.querySelector("#gymAgain").addEventListener("click", function () {
         /* A different five, from a seed nobody has to remember. */
-        var GYM2 = window.CURIO_GYM;
-        var s2 = (GYM2.seedForDay() * 31 + Math.floor(Date.now() / 60000)) >>> 0;
-        set = family ? [0, 1, 2, 3, 4].map(function (i) { return GYM2.make(family, (s2 * 7919 + i * 104729) >>> 0, QLANG); })
-                     : GYM2.makeSet(s2, 5, QLANG);
-        idx = 0; right = 0; step();
+        var s2 = (GYM.seedForDay() * 31 + Math.floor(Date.now() / 60000)) >>> 0;
+        set = family ? five(family, s2) : GYM.makeSet(s2, 5, QLANG, setOpts);
+        idx = 0; right = 0; mathsSeen = 0; step();
       });
+      node.querySelector("#gymDrill").addEventListener("click", function () { startDrill(pickDayDrill().key); });
       node.querySelector("#gymKinds").addEventListener("click", brainGymPicker);
       node.querySelector("#gymHome").addEventListener("click", goHome);
+      var m = node.querySelector("#gymMaths");
+      if (m) m.addEventListener("click", function () { LS.set("lastCat", "Science"); renderTab("train"); });
       render(node);
     }
 
     step();
+  }
+
+  /* ---------------------------------------------------------- the routines */
+  function askHand(then) {
+    var node = el(
+      '<div class="card">' +
+        '<h3 style="margin:0 0 6px">' + t("Which hand do you write with?") + '</h3>' +
+        '<p class="mini" style="margin:0 0 12px">' + t("So the moves know which is your other hand. Kept on this device only.") + '</p>' +
+        '<div class="btnrow">' +
+          '<button class="btn" data-h="left">' + t("Left") + '</button>' +
+          '<button class="btn" data-h="right">' + t("Right") + '</button>' +
+          '<button class="btn ghost" data-h="one">' + t("I use one hand") + '</button>' +
+        '</div>' +
+      '</div>');
+    Array.prototype.forEach.call(node.querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () { LS.set("gym.hand", b.getAttribute("data-h")); then(); });
+    });
+    render(node);
+  }
+
+  function startDrill(key) {
+    var GYM = window.CURIO_GYM;
+    if (!gymHand()) { askHand(function () { startDrill(key); }); return; }
+    var d = GYM.makeDrill(key, GYM.seedForDay(), QLANG);
+    if (d) runDrill(d);
+  }
+
+  /* A routine: timed steps, a picture for each, Next always works, Done always
+     visible. Nothing is written anywhere. The interval stops itself when the
+     card leaves the page, so render() needs no teardown. */
+  function runDrill(d) {
+    var ART = window.CURIO_GYM_ART, GYM = window.CURIO_GYM;
+    var i = 0, elapsed = 0, paused = false, last = Date.now(), timer = null, frameTimer = null, motion = !gymMotionOff();
+    var node = el(
+      '<div class="card">' +
+        '<div class="mini">' + esc(d.title) + ' · ' + t("Moves — nothing to answer") + '</div>' +
+        '<div class="gart" id="drillArt" aria-hidden="true" style="touch-action:none"></div>' +
+        '<div class="qtext" id="drillText" aria-live="polite" style="margin-top:10px"></div>' +
+        '<div class="gbar" style="margin-top:12px"><i id="drillBar" style="width:0"></i></div>' +
+        '<div class="mini" id="drillMeta" style="margin-top:6px"></div>' +
+        '<p class="mini" style="margin:8px 0 0;opacity:.75">' + esc(gymText(d.safety)) + '</p>' +
+        '<div class="btnrow" style="margin-top:14px">' +
+          '<button class="btn ghost" id="drillNext">' + t("Next step") + '</button>' +
+          '<button class="btn ghost" id="drillPause">' + t("Pause") + '</button>' +
+          '<button class="btn" id="drillDone">' + t("Done") + '</button>' +
+        '</div>' +
+      '</div>');
+    var textNode = node.querySelector("#drillText"), artNode = node.querySelector("#drillArt"), bar = node.querySelector("#drillBar"), meta = node.querySelector("#drillMeta");
+    function stopFrames() { if (frameTimer) { clearInterval(frameTimer); frameTimer = null; } }
+    function handFrames(scene) {
+      var order = scene.order, orderR = scene.orderRight || null, k = 0;
+      var light = function () {
+        var f = order[k % order.length], fr2 = orderR ? orderR[k % orderR.length] : null, j;
+        for (j = 0; j <= 4; j++) {
+          var a = artNode.querySelector("#f" + j) || null, L = artNode.querySelector("#Lf" + j), R = artNode.querySelector("#Rf" + j);
+          if (a) a.setAttribute("fill", j === f ? "var(--brand)" : "var(--card2)");
+          if (L) L.setAttribute("fill", j === f ? "var(--brand)" : "var(--card2)");
+          if (R) R.setAttribute("fill", j === fr2 ? "var(--brand)" : "var(--card2)");
+        }
+        k++;
+      };
+      light(); frameTimer = setInterval(light, Math.round((scene.beat || 1) * 1000));
+    }
+    function dotFrames(scene) {
+      var k = 0;
+      var light = function () { var lit = (k * 4 + 1) % 9, j; for (j = 0; j < 9; j++) { var dd = artNode.querySelector("#d" + j); if (dd) dd.setAttribute("fill", j === lit ? "var(--brand)" : "var(--card2)"); } k++; };
+      light(); frameTimer = setInterval(light, Math.round((scene.beat || 1.5) * 1000));
+    }
+    function show() {
+      var s = d.steps[i]; elapsed = 0; last = Date.now(); stopFrames();
+      textNode.textContent = gymText(s.text) + (s.scene && !motion && (s.scene.kind === "path" || s.scene.kind === "dotgrid") ? " " + t("Follow the numbers.") : "");
+      artNode.innerHTML = s.scene && ART ? ART.draw(s.scene, { motion: motion }, {}) : "";
+      if (s.scene && s.scene.kind === "hand" && motion) handFrames(s.scene);
+      if (s.scene && s.scene.kind === "dotgrid" && motion) dotFrames(s.scene);
+      if (canSpeak()) speak(s.text);
+      paint();
+    }
+    function paint() {
+      var s = d.steps[i];
+      meta.textContent = tf("step {a} of {b}", { a: i + 1, b: d.steps.length }) + " · " + Math.max(0, Math.ceil(s.seconds - elapsed)) + " s";
+      bar.style.width = Math.min(100, 100 * elapsed / s.seconds) + "%";
+    }
+    function next() { if (i + 1 < d.steps.length) { i++; show(); } else end(); }
+    function onVis() { if (document.hidden && !paused) { paused = true; node.querySelector("#drillPause").textContent = t("Resume"); } }
+    function end() {
+      clearInterval(timer); stopFrames(); document.removeEventListener("visibilitychange", onVis);
+      var res = el(
+        '<div class="card result">' +
+          '<h2>' + t("Done. That was a routine, not a test.") + '</h2>' +
+          '<div class="sub">' + t("This one trains") + ' ' + esc(gymText(d.trains)) + '</div>' +
+          '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
+            '<button class="btn" id="drillAnother">' + t("Another move") + '</button>' +
+            '<button class="btn ghost" id="drillKinds">' + t("Choose a kind") + '</button>' +
+            '<button class="btn ghost" id="drillHome">🏠 ' + t("Home") + '</button>' +
+          '</div>' +
+        '</div>');
+      res.querySelector("#drillAnother").addEventListener("click", function () {
+        var list = eligibleDrills(), k = 0, j; for (j = 0; j < list.length; j++) if (list[j].key === d.family) k = j;
+        startDrill(list[(k + 1) % list.length].key);
+      });
+      res.querySelector("#drillKinds").addEventListener("click", brainGymPicker);
+      res.querySelector("#drillHome").addEventListener("click", goHome);
+      render(res);
+    }
+    node.querySelector("#drillNext").addEventListener("click", next);
+    node.querySelector("#drillPause").addEventListener("click", function () { paused = !paused; last = Date.now(); this.textContent = paused ? t("Resume") : t("Pause"); });
+    node.querySelector("#drillDone").addEventListener("click", end);
+    document.addEventListener("visibilitychange", onVis);
+    timer = setInterval(function () {
+      if (!node.isConnected) { clearInterval(timer); stopFrames(); document.removeEventListener("visibilitychange", onVis); return; }
+      if (paused) { last = Date.now(); return; }
+      var now = Date.now(); elapsed += (now - last) / 1000; last = now;
+      if (elapsed >= d.steps[i].seconds) { next(); return; }
+      paint();
+    }, 250);
+    render(node);
+    show();
   }
 
   function statsTabView() { // mobile Stats: brain map · leaderboard · big numbers
