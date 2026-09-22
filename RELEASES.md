@@ -38,9 +38,11 @@ not by omission.*
 
 ## v101 — ⏳ on UAT
 
-2026-09-22 · 1,968 questions · sign-off: **no release issue**
+2026-09-22 · 1,968 questions · sign-off: awaiting you, [#89](https://github.com/ChalBAS/curio-hq/issues/89)
 
 - `472ee07` v101: every puzzle draws itself, four picture games, four moves with nothing to answer — and the panel's read of all of it
+- `ea694ff` The release record said every build since v96 carried no questions
+- ⚠️ commit message names a different version: ea694ff
 
 ## v100 — ⏳ on UAT
 

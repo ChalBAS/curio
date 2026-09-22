@@ -79,14 +79,25 @@
    "to": "2026-09-22",
    "questions": 1968,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 89,
+    "issues": [
+     89
+    ]
    },
-   "messageClash": [],
+   "messageClash": [
+    "ea694ff"
+   ],
    "commits": [
     {
      "sha": "472ee07",
      "date": "2026-09-22",
      "subject": "v101: every puzzle draws itself, four picture games, four moves with nothing to answer — and the panel's read of all of it"
+    },
+    {
+     "sha": "ea694ff",
+     "date": "2026-09-22",
+     "subject": "The release record said every build since v96 carried no questions"
     }
    ]
   },
