@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v101** at uat.qpio.app |
+| On UAT | **v102** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-23 |
 
-> ⏳ **Awaiting your sign-off:** v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -35,6 +35,13 @@ regime with no second party to sign, and is marked **pre-process** — unsigned 
 not by omission.*
 
 ---
+
+## v102 — ⏳ on UAT
+
+2026-09-23 · 1,968 questions · sign-off: **no release issue**
+
+- `1988b15` v102: the list puzzle hides its list, pictures before the page, a pace for the moves, a Gym Vault, ways to hold a list, videos inside Qpio, and the golden source on screen
+- `bf63986` The live suite tests what v102 changed on purpose
 
 ## v101 — ⏳ on UAT
 

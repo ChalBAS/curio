@@ -2,11 +2,12 @@
  "generated": "2026-09-23",
  "live": {
   "production": 76,
-  "uat": 101,
+  "uat": 102,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  102,
   101,
   100,
   99,
@@ -71,6 +72,30 @@
   }
  ],
  "releases": [
+  {
+   "version": 102,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-23",
+   "to": "2026-09-23",
+   "questions": 1968,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "1988b15",
+     "date": "2026-09-23",
+     "subject": "v102: the list puzzle hides its list, pictures before the page, a pace for the moves, a Gym Vault, ways to hold a list, videos inside Qpio, and the golden source on screen"
+    },
+    {
+     "sha": "bf63986",
+     "date": "2026-09-23",
+     "subject": "The live suite tests what v102 changed on purpose"
+    }
+   ]
+  },
   {
    "version": 101,
    "state": "ON UAT",
