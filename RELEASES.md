@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v102** at uat.qpio.app |
+| On UAT | **v103** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-23 |
 
-> ⏳ **Awaiting your sign-off:** v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -36,6 +36,12 @@ not by omission.*
 
 ---
 
+## v103 — ⏳ on UAT
+
+2026-09-24 · 1,968 questions · sign-off: **no release issue**
+
+- `4289dd1` v103: the hand routines say which hand comes next, show a real-looking person doing the move, and give time to put the phone down
+
 ## v102 — ⏳ on UAT
 
 2026-09-23 · 1,968 questions · sign-off: awaiting you, [#90](https://github.com/ChalBAS/curio-hq/issues/90)
@@ -43,6 +49,7 @@ not by omission.*
 - `1988b15` v102: the list puzzle hides its list, pictures before the page, a pace for the moves, a Gym Vault, ways to hold a list, videos inside Qpio, and the golden source on screen
 - `bf63986` The live suite tests what v102 changed on purpose
 - `0487b24` v102 enters the register awaiting sign-off
+- `9058304` The register links v102 to its sign-off ticket (#90)
 
 ## v101 — ⏳ on UAT
 

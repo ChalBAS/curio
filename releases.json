@@ -2,11 +2,12 @@
  "generated": "2026-09-23",
  "live": {
   "production": 76,
-  "uat": 102,
+  "uat": 103,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  103,
   102,
   101,
   100,
@@ -73,6 +74,25 @@
  ],
  "releases": [
   {
+   "version": 103,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-24",
+   "to": "2026-09-24",
+   "questions": 1968,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "4289dd1",
+     "date": "2026-09-24",
+     "subject": "v103: the hand routines say which hand comes next, show a real-looking person doing the move, and give time to put the phone down"
+    }
+   ]
+  },
+  {
    "version": 102,
    "state": "ON UAT",
    "branch": "uat",
@@ -102,6 +122,11 @@
      "sha": "0487b24",
      "date": "2026-09-23",
      "subject": "v102 enters the register awaiting sign-off"
+    },
+    {
+     "sha": "9058304",
+     "date": "2026-09-23",
+     "subject": "The register links v102 to its sign-off ticket (#90)"
     }
    ]
   },
