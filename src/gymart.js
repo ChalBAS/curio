@@ -33,7 +33,8 @@
   }
   var CLOSE = "</svg>";
   function text(x, y, s, size, extra) {
-    return '<text x="' + x + '" y="' + y + '" text-anchor="middle" dominant-baseline="central" font-size="' + (size || 14) + '" fill="var(--ink)"' + (extra ? " " + extra : "") + ">" + esc(s) + "</text>";
+    /* the caller's fill wins: a repeated attribute keeps the FIRST, so the default must not come before it */
+    return '<text x="' + x + '" y="' + y + '" text-anchor="middle" dominant-baseline="central" font-size="' + (size || 14) + '"' + (/\bfill=/.test(extra || "") ? "" : ' fill="var(--ink)"') + (extra ? " " + extra : "") + ">" + esc(s) + "</text>";
   }
   function rect(x, y, w, h, extra) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="8" ' + (extra || 'fill="var(--card2)" stroke="var(--line)"') + "/>"; }
   var DEG = Math.PI / 180;
@@ -95,14 +96,16 @@
     wave: poly(function (u) { return [fmt(30 + 260 * u), fmt(80 - 45 * Math.sin(u * 2 * Math.PI * 1.5))]; }, 48, false)
   };
   function pathD(pts) { var d = "", i; for (i = 0; i < pts.length; i++) d += (i ? " L" : "M") + pts[i][0] + " " + pts[i][1]; return d; }
-  function guidePath(shape, dir, lap, motion, ox, oy, scale) {
+  function guidePath(shape, dir, lap, motion, ox, oy, scale, speed) {
     var pts = (PATHS[shape] || PATHS.circle).slice();
     if (dir === -1) pts.reverse();
     if (scale !== 1 || ox || oy) pts = pts.map(function (p) { return [fmt(ox + p[0] * scale), fmt(oy + p[1] * scale)]; });
     var d = pathD(pts), id = "gp" + shape + (dir === -1 ? "r" : "") + (ox || 0);
     var out = '<path id="' + id + '" d="' + d + '" fill="none" stroke="var(--line)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
     if (motion) {
-      out += '<circle r="9" fill="var(--brand)"><animateMotion dur="' + (lap || 8) + 's" repeatCount="indefinite"><mpath href="#' + id + '"/></animateMotion></circle>';
+      /* the reader's pace (22 Sep 2026): 0.5 means half as fast, so each lap takes twice as long */
+      var lapS = fmt((lap || 8) / (speed > 0 ? speed : 1));
+      out += '<circle r="9" fill="var(--brand)"><animateMotion dur="' + lapS + 's" repeatCount="indefinite"><mpath href="#' + id + '"/></animateMotion></circle>';
     } else {
       /* six numbered arrowheads along the way, in the direction of travel */
       var n = 6, i;
@@ -188,7 +191,9 @@
       for (i = 0; i < nn; i++) {
         var r0 = Math.floor(i / per), c0 = i % per, inRow = Math.min(per, nn - r0 * per), xx = (320 - (cw * inRow + 6 * (inRow - 1))) / 2 + c0 * (cw + 6), yy = 4 + r0 * (ch + 8);
         var word = labels.words ? labels.words[i] : (scene.anchorIdx === i && labels.anchor ? labels.anchor : null);
-        out += rect(xx, yy, cw, ch, word ? undefined : 'fill="none" stroke="var(--line)" stroke-dasharray="4 3"');
+        /* the card the question asks about is outlined in the brand colour; its word is still gone */
+        var asked = !labels.words && scene.posAsked === i + 1;
+        out += rect(xx, yy, cw, ch, word ? undefined : asked ? 'fill="none" stroke="var(--brand)" stroke-width="2.5"' : 'fill="none" stroke="var(--line)" stroke-dasharray="4 3"');
         out += word ? text(xx + cw / 2, yy + ch / 2, word, word.length > 7 ? 10 : 12, 'font-weight="700"') : text(xx + cw / 2, yy + ch / 2, i + 1, 13, 'fill="var(--muted)"');
       }
       return out + CLOSE;
@@ -301,8 +306,8 @@
     }
 
     /* a guide path with a travelling dot (or numbered arrowheads without motion) */
-    if (k === "path") return open(320, 160) + guidePath(scene.shape, scene.dir, scene.lap, opts.motion !== false, 0, 0, 1) + CLOSE;
-    if (k === "path2") return open(320, 160) + guidePath(scene.left, scene.dirL, scene.lapL, opts.motion !== false, 0, 40, 0.5) + '<line x1="160" y1="10" x2="160" y2="150" stroke="var(--line)"/>' + guidePath(scene.right, scene.dirR, scene.lapR, opts.motion !== false, 160, 40, 0.5) + CLOSE;
+    if (k === "path") return open(320, 160) + guidePath(scene.shape, scene.dir, scene.lap, opts.motion !== false, 0, 0, 1, opts.speed) + CLOSE;
+    if (k === "path2") return open(320, 160) + guidePath(scene.left, scene.dirL, scene.lapL, opts.motion !== false, 0, 40, 0.5, opts.speed) + '<line x1="160" y1="10" x2="160" y2="150" stroke="var(--line)"/>' + guidePath(scene.right, scene.dirR, scene.lapR, opts.motion !== false, 160, 40, 0.5, opts.speed) + CLOSE;
 
     /* a hand (or two), the lit finger set by the frame player */
     if (k === "hand") {

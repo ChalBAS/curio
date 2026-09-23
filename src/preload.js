@@ -31,6 +31,8 @@
     var state = {};      // url → "loading" | "done" | "failed"
     var pending = 0;     // count of "loading"
     var waiters = [];    // whenSettled callbacks still owed an answer
+    var images = {};     // url → the Image that fetched it, kept so a screen can show the decoded picture itself
+    var urlWaiters = {}; // url → whenReady callbacks waiting on that one picture
 
     // Warm a batch. A URL already known — in flight, done or failed — is
     // never fetched twice: rapid navigation (answer, Next, answer, Next)
@@ -47,7 +49,17 @@
         // on and the pre-fetch quietly keeps sending it - a fix that looks
         // complete and is not, which is worse than no fix at all.
         try { im.referrerPolicy = "no-referrer"; } catch (e3) { /* older engines ignore it */ }
-        im.onload = function () { settle(u, true); };
+        images[u] = im;
+        /* READY MEANS DECODED, NOT MERELY FETCHED (22 Sep 2026). A picture that has
+           arrived still has to be decoded before it can be painted, and a card that
+           appears before that happens shows the picture a beat late. decode() is
+           where the engine supports it; a rejected decode still counts as arrived. */
+        im.onload = function () {
+          var d = null;
+          try { d = typeof im.decode === "function" ? im.decode() : null; } catch (e4) { d = null; }
+          if (d && typeof d.then === "function") d.then(function () { settle(u, true); }, function () { settle(u, true); });
+          else settle(u, true);
+        };
         im.onerror = function () { settle(u, false); };
         try { im.src = u; } catch (e2) { settle(u, false); }
       });
@@ -57,6 +69,8 @@
       if (state[u] !== "loading") return;           // duplicate event — already settled
       state[u] = okLoad ? "done" : "failed";
       pending--;
+      var mine = urlWaiters[u] || []; delete urlWaiters[u];
+      mine.forEach(function (w) { fire(w, okLoad); });
       if (pending === 0) {
         var owed = waiters; waiters = [];
         owed.forEach(function (w) { fire(w, true); });
@@ -92,10 +106,34 @@
       };
     }
 
+    /* Wait for ONE picture: cb(true) when it is decoded, cb(false) when it failed or
+       capMs passed first. Starts the fetch if nobody has. Settled pictures answer at
+       once, synchronously, so a ready card never waits a tick. Returns a cancel. */
+    function whenReady(u, capMs, cb) {
+      var w = { cb: cb, fired: false, timer: null };
+      if (!u) { fire(w, false); return function () {}; }
+      if (!state[u]) start([u]);
+      if (state[u] === "done" || state[u] === "failed") { fire(w, state[u] === "done"); return function () {}; }
+      (urlWaiters[u] = urlWaiters[u] || []).push(w);
+      w.timer = setT(function () {
+        var list = urlWaiters[u] || [], i = list.indexOf(w);
+        if (i !== -1) list.splice(i, 1);
+        fire(w, false);
+      }, capMs);
+      return function cancel() {
+        var list = urlWaiters[u] || [], i = list.indexOf(w);
+        if (i !== -1) list.splice(i, 1);
+        if (w.timer !== null) { clearT(w.timer); w.timer = null; }
+        w.fired = true;
+      };
+    }
+
     function idle() { return pending === 0; }
     function stateOf(u) { return state[u] || null; }
+    /* the decoded picture itself, for a screen to show instead of a fresh <img> that would decode again */
+    function imageFor(u) { return state[u] === "done" ? (images[u] || null) : null; }
 
-    return { start: start, whenSettled: whenSettled, idle: idle, stateOf: stateOf };
+    return { start: start, whenSettled: whenSettled, whenReady: whenReady, idle: idle, stateOf: stateOf, imageFor: imageFor };
   }
 
   window.CURIO_PRELOAD = { create: create };

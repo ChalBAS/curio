@@ -136,6 +136,80 @@ console.log('\x1b[1m\nBad input — never counted, never waited on\x1b[0m');
   is('no list at all is a no-op', r.P.idle(), true);
 })();
 
-console.log('');
-if (failed) { console.log('\x1b[31m' + failed + ' failing\x1b[0m'); process.exit(1); }
-console.log('\x1b[32mall green\x1b[0m');
+/* 22 Sep 2026 — "the image need to be preloaded before the page appear". A question
+   now waits for ITS OWN picture, and "ready" means decoded, not merely fetched. */
+console.log('\x1b[1m\nOne picture at a time — whenReady and imageFor\x1b[0m');
+(function () {
+  const r = rig();
+  let got = null;
+  r.P.whenReady('q1.jpg', 3000, (v) => { got = v; });
+  is('waiting on an unknown picture starts its fetch', r.imgs.length, 1);
+  is('and does not answer before it arrives', got, null);
+  r.load(0);
+  is('arrival answers the waiter with true', got, true);
+  ok('the decoded picture is handed back', r.P.imageFor('q1.jpg') === r.imgs[0]);
+  let again = null;
+  r.P.whenReady('q1.jpg', 3000, (v) => { again = v; });
+  is('a ready picture answers at once, synchronously', again, true);
+  is('and is never fetched twice', r.imgs.length, 1);
+})();
+(function () {
+  const r = rig();
+  let got = null;
+  r.P.start(['a.jpg', 'b.jpg']);
+  r.P.whenReady('b.jpg', 3000, (v) => { got = v; });
+  r.load(1);
+  is('a wait on one picture ignores the others still loading', got, true);
+  is('the round is not idle while another picture loads', r.P.idle(), false);
+})();
+(function () {
+  const r = rig();
+  let got = null;
+  r.P.whenReady('slow.jpg', 3000, (v) => { got = v; });
+  const t = r.timers.find(x => x.ms === 3000);
+  t.fn();
+  is('the cap releases the question with false', got, false);
+  r.load(0);
+  is('a late arrival does not answer twice', got, false);
+  ok('but the picture is still kept for next time', r.P.imageFor('slow.jpg') === r.imgs[0]);
+})();
+(function () {
+  const r = rig();
+  let got = null;
+  r.P.whenReady('dead.jpg', 3000, (v) => { got = v; });
+  r.imgs[0].onerror();
+  is('a failed picture releases the question with false', got, false);
+  is('and there is no decoded picture to hand back', r.P.imageFor('dead.jpg'), null);
+})();
+(function () {
+  const r = rig();
+  let got = null;
+  const cancel = r.P.whenReady('left.jpg', 3000, (v) => { got = v; });
+  cancel();
+  r.load(0);
+  is('a cancelled wait never fires (the reader left the round)', got, null);
+})();
+
+/* decode(): arrival alone is not ready */
+(function () {
+  let resolveDecode;
+  const imgs = [];
+  const P = PRE.create({
+    image: () => { const im = { src: null, onload: null, onerror: null, decode: () => new Promise(res => { resolveDecode = res; }) }; imgs.push(im); return im; },
+    setTimeout: () => 0, clearTimeout: () => {}
+  });
+  let got = null;
+  P.whenReady('big.jpg', 3000, (v) => { got = v; });
+  imgs[0].onload();
+  is('arrived but not decoded is not ready', got, null);
+  is('and not handed back yet', P.imageFor('big.jpg'), null);
+  resolveDecode();
+  return new Promise(res => setImmediate(res)).then(() => {
+    is('decoded is ready', got, true);
+    ok('and the decoded picture is handed back', P.imageFor('big.jpg') === imgs[0]);
+  });
+})().then(function () {
+  console.log('');
+  if (failed) { console.log('\x1b[31m' + failed + ' failing\x1b[0m'); process.exit(1); }
+  console.log('\x1b[32mall green\x1b[0m');
+});

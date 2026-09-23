@@ -1,6 +1,6 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-09-21T11:25:07.510Z",
+ "generated": "2026-09-23T12:08:21.818Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",

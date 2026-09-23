@@ -1,15 +1,15 @@
 {
- "generated": "2026-09-07T04:25:28.400Z",
- "shipped": 760,
+ "generated": "2026-09-23T12:08:39.363Z",
+ "shipped": 1968,
  "golden": 2000,
- "matched": 748,
- "shippedOnly": 12,
- "goldenOnly": 1252,
+ "matched": 990,
+ "shippedOnly": 978,
+ "goldenOnly": 1010,
  "goldenOnlyByStatus": {
-  "LIVE UAT": 1,
-  "NOT LIVE": 1251
+  "LIVE UAT": 3,
+  "NOT LIVE": 1007
  },
- "mintedThisRun": 0,
+ "mintedThisRun": 966,
  "pairingBreaks": [],
  "goldenDuplicateText": [],
  "metaDriftRows": 0,
@@ -17,10 +17,22 @@
  "collisions": [],
  "shippedOnlySample": [
   {
+   "i": 109,
+   "text": "Which part of the cell holds most of its DNA, packed into chromosomes?",
+   "cat": "Science",
+   "legacy": "q1s1szdi"
+  },
+  {
    "i": 204,
    "text": "Which artist painted 'The Starry Night' from memory during his stay at the Saint",
    "cat": "Arts",
    "legacy": "q18k67sv"
+  },
+  {
+   "i": 541,
+   "text": "What is a flying buttress's main structural job in a Gothic cathedral?",
+   "cat": "Arts",
+   "legacy": "quglsh7"
   },
   {
    "i": 749,
@@ -87,31 +99,13 @@
    "text": "Hatshepsut was sometimes depicted with the traditional male body and clothing of",
    "cat": "History",
    "legacy": "q1m2b92t"
+  },
+  {
+   "i": 780,
+   "text": "According to the American Heart Association, a normal resting adult heart rate i",
+   "cat": "Science",
+   "legacy": "qa0lj28"
   }
  ],
- "written": true,
- "supersededMints": 67,
- "supersededMintsSample": [
-  {
-   "from": "X0002",
-   "to": "Q264"
-  },
-  {
-   "from": "X0003",
-   "to": "Q265"
-  },
-  {
-   "from": "X0004",
-   "to": "Q266"
-  },
-  {
-   "from": "X0005",
-   "to": "Q267"
-  },
-  {
-   "from": "X0006",
-   "to": "Q268"
-  }
- ],
- "legacyMapEntries": 1520
+ "written": false
 }

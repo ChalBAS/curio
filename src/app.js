@@ -486,8 +486,97 @@
     return '<a class="srclink" href="' + esc(url) + '" target="_blank" rel="noopener">' + t("📖 Check the source ↗") + '</a>';
   }
 
+  /* ---------- a video, played inside Qpio (22 Sep 2026) ----------
+     CEO: "we need to block browsing further, because we don't want youtube suggesting
+     inappropriate video on the back of the video we suggested."
+     A Watch door used to open youtube.com in a new tab: the whole site, its suggestions,
+     its autoplay. It now plays ONE video here, in YouTube's privacy-enhanced player, and
+       - rel=0: when a video ends YouTube may suggest only the same channel's videos;
+       - the player is REMOVED the moment the video ends, before its end screen can offer
+         anything, and our own "Watch again / Back to Qpio" takes its place;
+       - no fullscreen (fs=0, and the frame is not allowed it) and no picture-in-picture,
+         so the video cannot leave this sheet;
+       - the referrer is the origin only (YouTube will not play without one: error 153).
+     WHAT YOUTUBE'S OWN RULES DO NOT LET US REMOVE: the title, the logo and "More videos"
+     inside the player stay clickable and open youtube.com. Disabling them breaks YouTube's
+     developer policy (III.I, "must not remove, obscure, alter, or disable any links that
+     appear in YouTube players"), which could get the app's videos blocked. That trade is
+     the founder's decision, recorded in curio-hq/11-Backlog/BACKLOG.md.
+     The player is driven through YouTube's message channel, NOT by loading YouTube's
+     script into this page: their code runs in their frame, never in ours. */
+  var YT_ORIGIN = "https://www.youtube-nocookie.com";
+  function openVideo(door) {
+    if (!door || !door.video || !/^[A-Za-z0-9_-]{11}$/.test(door.video)) return;
+    /* the Gate 5 door instrument still counts the tap, when it is switched on */
+    var D = window.QPIO_DOORS, via = D && D.href ? D.href("watch", door.slot || "lead", "https://www.youtube.com/watch?v=" + door.video) : null;
+    if (via) { try { fetch(via, { mode: "no-cors", redirect: "manual", keepalive: true }); } catch (e0) {} }
+    var src = YT_ORIGIN + "/embed/" + door.video + "?rel=0&fs=0&playsinline=1&iv_load_policy=3&modestbranding=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
+    var prevFocus = document.activeElement;
+    var sheet = el('<div class="vsheet" role="dialog" aria-modal="true" aria-label="' + esc(t("Video")) + '">' +
+      '<div class="vbox">' +
+        '<div class="vhead"><span class="vtitle">' + esc(door.title || "") + '</span>' +
+          '<button type="button" class="btn ghost vclose" aria-label="' + esc(t("Close the video")) + '">\u2715</button></div>' +
+        '<div class="vframe"><iframe title="' + esc(door.title || t("Video")) + '" src="' + esc(src) + '" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media"></iframe></div>' +
+        '<p class="mini vnote">' + esc(door.chosen ? t("Chosen for this question. It plays here, inside Qpio.") : t("It plays here, inside Qpio.")) + '</p>' +
+      '</div></div>');
+    var frame = sheet.querySelector("iframe"), heard = false, knocks = 0, knocker = null;
+    function post(o) { try { frame.contentWindow.postMessage(JSON.stringify(o), YT_ORIGIN); } catch (e1) {} }
+    function stop() { window.removeEventListener("message", onMsg); if (knocker) { clearInterval(knocker); knocker = null; } }
+    function close() {
+      stop(); document.removeEventListener("keydown", onKey);
+      if (sheet.parentNode) sheet.parentNode.removeChild(sheet);   /* removing the frame stops the video */
+      if (prevFocus && prevFocus.focus) { try { prevFocus.focus(); } catch (e2) {} }
+    }
+    /* the end: the player goes, and nothing YouTube would have suggested is ever drawn */
+    function ended() {
+      stop();
+      var box = sheet.querySelector(".vframe");
+      box.innerHTML = '<div class="vdone"><p>' + esc(t("That was the video.")) + '</p><div class="btnrow" style="justify-content:center">' +
+        '<button type="button" class="btn" data-a="again">' + esc(t("Watch again")) + '</button>' +
+        '<button type="button" class="btn ghost" data-a="back">' + esc(t("Back to Qpio")) + '</button></div></div>';
+      box.querySelector('[data-a="again"]').addEventListener("click", function () { close(); openVideo(door); });
+      box.querySelector('[data-a="back"]').addEventListener("click", close);
+      box.querySelector('[data-a="back"]').focus();
+    }
+    function onMsg(e) {
+      if (e.origin !== YT_ORIGIN || e.source !== frame.contentWindow) return;   /* only this player may speak */
+      var m; try { m = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (x) { return; }
+      if (!m || typeof m !== "object") return;
+      if (!heard) { heard = true; if (knocker) { clearInterval(knocker); knocker = null; } post({ event: "command", func: "addEventListener", args: ["onStateChange"] }); }
+      var state = m.event === "onStateChange" ? m.info : (m.event === "infoDelivery" && m.info ? m.info.playerState : undefined);
+      if (state === 0) ended();
+    }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    /* knock until the player answers, as YouTube's own script does */
+    frame.addEventListener("load", function () {
+      post({ event: "listening", id: "qpio-video", channel: "widget" });
+      knocker = setInterval(function () { if (heard || ++knocks > 20) { clearInterval(knocker); knocker = null; return; } post({ event: "listening", id: "qpio-video", channel: "widget" }); }, 250);
+    });
+    window.addEventListener("message", onMsg);
+    document.addEventListener("keydown", onKey);
+    sheet.addEventListener("click", function (e) { if (e.target === sheet) close(); });
+    sheet.querySelector(".vclose").addEventListener("click", close);
+    document.body.appendChild(sheet);
+    sheet.querySelector(".vclose").focus();
+  }
+  /* ONE handler for every video door on every screen, caught before any card below it
+     can open anything else: a tap on a video never leaves Qpio */
+  document.addEventListener("click", function (e) {
+    var b = e.target && e.target.closest ? e.target.closest("[data-video]") : null;
+    if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    openVideo({ video: b.getAttribute("data-video"), title: b.getAttribute("data-title") || "", chosen: b.getAttribute("data-chosen") === "1", slot: b.getAttribute("data-slot") || "lead" });
+  }, true);
+
   // ---------- QPIO Cultural Resource Network (P1 UI Integration) ----------
   function renderQuestionResourcesHtml(q) {
+    /* HIDDEN, 22 Sep 2026. This box chose its three "Verified" items by category, region
+       and keyword - never by the question - so the Great Pyramid showed a Tetepeku figure,
+       the Rosetta Stone an essay on African women's history, the nearest star a V&A
+       sculpture: 2,562 cards on 861 questions, none of them in the golden source. The CEO,
+       the same day: "Why are we still see the wrong information." It returns when the
+       inventory carries resources per question, the way it carries the book and the place. */
+    return "";
     if (!window.CurioResourceNetwork || !window.CurioResourceNetwork.findResourcesForQuestion) return "";
     var matches = window.CurioResourceNetwork.findResourcesForQuestion(q, 3);
     if (!matches || !matches.length) return ""; // Restraint: hide section when no relevant matches exist
@@ -1280,6 +1369,95 @@
   }
   function pickDayDrill() { var list = eligibleDrills(); return list[window.CURIO_GYM.seedForDay() % list.length]; }
 
+  /* THE GYM VAULT (CEO, 22 Sep 2026: "adding that exercise into a vault so the person can come
+     back to it until they master it, they will be able to keep maximum 3, in their Gym Vault").
+     Not the question vault - that one brings missed QUESTIONS back on its own schedule. This one
+     holds KINDS the reader chose to work on, a puzzle family or a routine, three at most, and
+     nothing is pushed out to make room: a full vault asks which one to take out. Mastery is the
+     reader's call - "I have it" takes a kind out and counts it; a perfect round of a kept puzzle
+     suggests it, and nothing leaves on its own. Kept on the device, like every other record here. */
+  var GYM_VAULT_MAX = 3;
+  function gymVault() { var v = LS.get("gym.vault", []); return Array.isArray(v) ? v.filter(function (x) { return x && x.key; }) : []; }
+  function saveGymVault(v) { LS.set("gym.vault", v.slice(0, GYM_VAULT_MAX)); }
+  function gymVaultHas(key) { return gymVault().some(function (x) { return x.key === key; }); }
+  function gymVaultAdd(kind, key) {
+    var v = gymVault();
+    if (v.some(function (x) { return x.key === key; })) return "have";
+    if (v.length >= GYM_VAULT_MAX) return "full";
+    v.push({ kind: kind, key: key, added: todayKey(), times: 0 }); saveGymVault(v); return "added";
+  }
+  function gymVaultRemove(key, mastered) {
+    saveGymVault(gymVault().filter(function (x) { return x.key !== key; }));
+    if (mastered) LS.set("gym.mastered", (Number(LS.get("gym.mastered", 0)) || 0) + 1);
+  }
+  function gymVaultPractised(key) {
+    var v = gymVault(), hit = false;
+    v.forEach(function (x) { if (x.key === key) { x.times = (x.times || 0) + 1; hit = true; } });
+    if (hit) saveGymVault(v);
+  }
+  function gymKindOf(kind, key) {
+    var GYM = window.CURIO_GYM, f = kind === "drill" ? (GYM.drills || []).filter(function (d) { return d.key === key; })[0] : GYM.byKey[key];
+    if (!f) return null;
+    return { icon: f.icon, name: (QLANG === "fr" && f.nameFr) ? f.nameFr : t(f.name) };
+  }
+  function gymVaultPractise(item) {
+    if (item.kind === "drill") startDrill(item.key);
+    else startBrainGym(item.key, { practice: true });
+  }
+  /* the button every exercise carries; afterwards() redraws whatever screen it sits on */
+  function gymVaultButton(kind, key, afterwards) {
+    var have = gymVaultHas(key);
+    var b = el('<button class="btn ghost gvkeep"' + (have ? ' aria-pressed="true"' : '') + '>' + (have ? "\u2713 " + t("In your Gym Vault") : "\ud83d\udddd\ufe0f " + t("Keep in my Gym Vault")) + '</button>');
+    b.addEventListener("click", function () {
+      if (gymVaultHas(key)) return;
+      var r = gymVaultAdd(kind, key);
+      if (r === "full") { gymVaultFull(kind, key, afterwards); return; }
+      b.setAttribute("aria-pressed", "true"); b.textContent = "\u2713 " + t("In your Gym Vault");
+      /* the vault shown above counts what it holds - redraw it in place, not the whole page */
+      /* the vault on THIS screen: other tabs keep their screens alive but hidden, and theirs is not the one to redraw */
+      var up = b.parentNode, shown = null;
+      while (up && up !== document && !(shown = up.querySelector(".gvault"))) up = up.parentNode;
+      if (shown && shown.parentNode) shown.parentNode.replaceChild(gymVaultCard(afterwards), shown);
+    });
+    return b;
+  }
+  /* a full vault asks, it never evicts */
+  function gymVaultFull(kind, key, afterwards) {
+    var incoming = gymKindOf(kind, key);
+    var node = el('<div class="card"><h3 style="margin:0 0 6px">' + t("Your Gym Vault holds three.") + '</h3>' +
+      '<p class="mini" style="margin:0 0 12px">' + tf("To keep {name}, take one out.", { name: incoming ? incoming.name : "" }) + '</p><div class="gvlist"></div>' +
+      '<div class="btnrow" style="margin-top:12px"><button class="btn ghost" id="gvCancel">' + t("Keep them all") + '</button></div></div>');
+    var list = node.querySelector(".gvlist");
+    gymVault().forEach(function (item) {
+      var k = gymKindOf(item.kind, item.key); if (!k) return;
+      var row = el('<div class="gvrow"><span>' + k.icon + ' ' + esc(k.name) + '</span><button class="btn ghost">' + t("Take out") + '</button></div>');
+      row.querySelector("button").addEventListener("click", function () {
+        gymVaultRemove(item.key, false); gymVaultAdd(kind, key);
+        (afterwards || brainGymPicker)();
+      });
+      list.appendChild(row);
+    });
+    node.querySelector("#gvCancel").addEventListener("click", function () { (afterwards || brainGymPicker)(); });
+    render(node);
+  }
+  /* the vault itself, at the top of the Brain Gym: what is kept, how often it was practised */
+  function gymVaultCard(afterwards) {
+    var v = gymVault(), mastered = Number(LS.get("gym.mastered", 0)) || 0;
+    var node = el('<div class="card gvault"><h3 style="margin:0 0 4px">\ud83d\udddd\ufe0f ' + t("Your Gym Vault") + ' <span class="mini">' + v.length + '/' + GYM_VAULT_MAX + '</span></h3>' +
+      '<p class="mini" style="margin:0 0 10px">' + (v.length ? t("Come back to these until you have them.") : t("Keep up to three kinds here, to come back to until you have them.")) +
+        (mastered ? ' \u00b7 ' + tf("Mastered so far: {n}", { n: mastered }) : '') + '</p><div class="gvlist"></div></div>');
+    var list = node.querySelector(".gvlist");
+    v.forEach(function (item) {
+      var k = gymKindOf(item.kind, item.key); if (!k) return;
+      var row = el('<div class="gvrow"><span>' + k.icon + ' ' + esc(k.name) + ' <span class="mini">' + tf("practised {n}\u00d7", { n: item.times || 0 }) + '</span></span>' +
+        '<span class="btnrow"><button class="btn" data-a="go">' + t("Practise") + '</button><button class="btn ghost" data-a="done">' + t("I have it") + '</button></span></div>');
+      row.querySelector('[data-a="go"]').addEventListener("click", function () { gymVaultPractise(item); });
+      row.querySelector('[data-a="done"]').addEventListener("click", function () { gymVaultRemove(item.key, true); (afterwards || brainGymPicker)(); });
+      list.appendChild(row);
+    });
+    return node;
+  }
+
   function brainGymCard() {
     var node = el(
       '<div class="card">' +
@@ -1294,6 +1472,7 @@
     node.querySelector("#gymToday").addEventListener("click", function () { startBrainGym(null); });
     node.querySelector("#gymMove").addEventListener("click", function () { startDrill(pickDayDrill().key); });
     node.querySelector("#gymPick").addEventListener("click", brainGymPicker);
+    if (gymVault().length) node.appendChild(gymVaultCard(function () { renderTab("games"); }));
     return node;
   }
 
@@ -1302,6 +1481,7 @@
     wrap.appendChild(el(
       '<div class="card"><h3 style="margin:0 0 4px">' + t("Brain Gym") + '</h3>' +
       '<p class="mini" style="margin:0">' + tf("{n} kinds. {k} of them never run out.", { n: GYM.counts.families, k: GYM.counts.generated }) + '</p></div>'));
+    wrap.appendChild(gymVaultCard(brainGymPicker));
     GYM.families.forEach(function (f) {
       /* A family carries its own French name and blurb, so a new kind of
          exercise cannot ship with an untranslated card. */
@@ -1317,6 +1497,12 @@
           '<div class="btnrow"><button class="btn">' + t("Start") + '</button></div>' +
         '</div>');
       c.querySelector("button").addEventListener("click", function () { startBrainGym(f.key); });
+      c.querySelector(".btnrow").appendChild(gymVaultButton("puzzle", f.key, brainGymPicker));
+      if (f.key === "memory") {
+        var wb = el('<button class="btn ghost">' + t("Ways to hold a list") + '</button>');
+        wb.addEventListener("click", function () { holdWaysPage(brainGymPicker); });
+        c.querySelector(".btnrow").appendChild(wb);
+      }
       wrap.appendChild(c);
     });
     /* the routines: their own section, never one of the five */
@@ -1335,6 +1521,7 @@
         '</div>');
       var b = c.querySelector("button");
       if (b) b.addEventListener("click", function () { startDrill(d.key); });
+      if (b) c.querySelector(".btnrow").appendChild(gymVaultButton("drill", d.key, brainGymPicker));
       wrap.appendChild(c);
     });
     var back = el('<div class="card"><div class="btnrow"><button class="btn ghost" id="gymBack">← ' + t("Back") + '</button>' +
@@ -1377,10 +1564,14 @@
     var motionOff = gymMotionOff() || settings.readAloud;
     var setOpts = { exclude: motionOff ? ["shells"] : [], only: opts && opts.only };
     var five = function (fam, s) { return [0, 1, 2, 3, 4].map(function (i) { return GYM.make(fam, (s * 7919 + i * 104729) >>> 0, QLANG); }); };
+    /* practising from the Gym Vault deals a FRESH five each time - the day's five again would
+       teach the answers, not the kind */
+    if (opts && opts.practice) seed = (seed * 31 + Math.floor(Date.now() / 1000)) >>> 0;
     var set = family ? five(family, seed) : GYM.makeSet(seed, 5, QLANG, setOpts);
     var idx = 0, right = 0, mathsSeen = 0;
 
-    function labelsOf(p) { return p.sceneLabels || {}; }
+    /* at question time a hidden list stays hidden - the rule lives in the gym module */
+    function labelsOf(p) { return GYM.questionLabels ? GYM.questionLabels(p) : {}; }
     function picture(p, o) {
       if (!p.scene || !ART) return "";
       return '<div class="gart" role="img" aria-label="' + esc(gymText(p.sceneText || "")) + '">' + ART.draw(p.scene, o || { motion: !motionOff }, labelsOf(p)) + '</div>';
@@ -1398,16 +1589,25 @@
       var isChange = p.scene && p.scene.kind === "change";
       var pic = !ART || !p.scene ? "" :
         isChange ? '<div class="gart" role="img" aria-label="' + esc(gymText(p.sceneText || "")) + '">' + ART.draw(p.scene, { which: "before" }, {}) + '</div>' :
-        p.scene.kind === "cards" ? '<div class="gart" aria-hidden="true">' + ART.draw(p.scene, {}, { words: labelsOf(p).words }) + '</div>' : picture(p);
+        p.scene.kind === "cards" ? '<div class="gart" aria-hidden="true">' + ART.draw(p.scene, {}, { words: (p.sceneLabels || {}).words }) + '</div>' : picture(p);
       var node = el(
         '<div class="card">' +
           '<div class="mini">' + t("Brain Gym") + ' · ' + (idx + 1) + '/' + set.length + '</div>' +
           '<h3 style="margin:10px 0 6px">' + t(isChange ? "Look carefully" : "Remember these") + '</h3>' + pic +
           (p.show ? '<div class="qtext" style="letter-spacing:.04em">' + fmt(gymText(p.show)) + '</div>' : '') +
           '<p class="mini" style="margin:14px 0 0">' + t("Take as long as you like. They will not come back.") + '</p>' +
+          /* one way to hold the list, suggested on every list puzzle; pinned when the round is a Try-it */
+          (p.sceneLabels && p.sceneLabels.words ? (function () {
+            var w = (opts && opts.way && GYM.holdWays.filter(function (x) { return x.id === opts.way; })[0]) || GYM.holdWayFor(p);
+            var L = QLANG === "fr" ? "fr" : "en";
+            return '<p class="holdway"><b>' + esc(t("A way to hold it:")) + '</b> ' + esc(gymText(w.tip[L])) +
+              ' <button class="linkish" id="gymWays">' + t("More ways") + '</button></p>';
+          })() : '') +
           '<div class="btnrow" style="margin-top:14px"><button class="btn" id="gymReady">' + t("Ready") + '</button></div>' +
         '</div>');
       node.querySelector("#gymReady").addEventListener("click", function () { p._studied = true; step(); });
+      var mw = node.querySelector("#gymWays");
+      if (mw) mw.addEventListener("click", function () { holdWaysPage(function () { render(node); }); });
       render(node);
       if (canSpeak() && p.show) speak(p.show);
     }
@@ -1557,6 +1757,7 @@
             '<button class="btn ghost" id="gymKinds">' + t("Choose a kind") + '</button>' +
             '<button class="btn ghost" id="gymHome">🏠 ' + t("Home") + '</button>' +
           '</div>' +
+          (family ? '<div class="btnrow gvend" style="justify-content:center;margin-top:10px"></div>' : '') +
           (mathsSeen >= 3 ? '<div class="btnrow" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="gymMaths">' + t("Want the facts behind the numbers? Mathematics quiz") + '</button></div>' : '') +
         '</div>');
       node.querySelector("#gymAgain").addEventListener("click", function () {
@@ -1570,10 +1771,45 @@
       node.querySelector("#gymHome").addEventListener("click", goHome);
       var m = node.querySelector("#gymMaths");
       if (m) m.addEventListener("click", function () { LS.set("lastCat", "Science"); renderTab("train"); });
+      var gv = node.querySelector(".gvend");
+      if (gv) {
+        if (gymVaultHas(family)) {
+          gymVaultPractised(family);
+          if (right === set.length) {
+            gv.appendChild(el('<p class="mini" style="margin:0 0 6px;width:100%;text-align:center">' + t("Five out of five. If you have it, take it out of your Gym Vault.") + '</p>'));
+            var got = el('<button class="btn ghost">' + t("I have it") + '</button>');
+            got.addEventListener("click", function () { gymVaultRemove(family, true); got.disabled = true; got.textContent = "\u2713 " + t("Taken out"); });
+            gv.appendChild(got);
+          }
+        } else gv.appendChild(gymVaultButton("puzzle", family, brainGymPicker));
+      }
       render(node);
     }
 
     step();
+  }
+
+  /* WAYS TO HOLD A LIST - the page (CEO, 22 Sep 2026: "add techniques to memorize list of
+     words, or perform those exercises"). Each way says what to do and where it comes from, and
+     "Try it" plays a round of list puzzles with that way pinned on the study screen. */
+  function holdWaysPage(back) {
+    var GYM = window.CURIO_GYM, L = QLANG === "fr" ? "fr" : "en";
+    var wrap = el('<div class="grid"></div>');
+    wrap.appendChild(el('<div class="card"><h3 style="margin:0 0 4px">' + t("Ways to hold a list") + '</h3>' +
+      '<p class="mini" style="margin:0">' + t("Four ways to hold a short list. Try one on a round.") + '</p></div>'));
+    GYM.holdWays.forEach(function (w) {
+      var c = el('<div class="card holdwaycard">' +
+        '<h3 style="margin:0 0 6px">' + esc(w.name[L]) + '</h3>' +
+        '<p style="margin:0 0 8px">' + esc(gymText(w.how[L])) + '</p>' +
+        '<p class="mini" style="margin:0 0 10px"><b>' + t("Its history") + '</b> \u00b7 ' + esc(gymText(w.origin[L])) + '</p>' +
+        '<div class="btnrow"><button class="btn">' + t("Try it") + '</button></div></div>');
+      c.querySelector("button").addEventListener("click", function () { startBrainGym("memory", { practice: true, way: w.id }); });
+      wrap.appendChild(c);
+    });
+    var b = el('<div class="card"><div class="btnrow"><button class="btn ghost">\u2190 ' + t("Back") + '</button></div></div>');
+    b.querySelector("button").addEventListener("click", function () { (back || brainGymPicker)(); });
+    wrap.appendChild(b);
+    render(wrap);
   }
 
   /* ---------------------------------------------------------- the routines */
@@ -1607,10 +1843,22 @@
   function runDrill(d) {
     var ART = window.CURIO_GYM_ART, GYM = window.CURIO_GYM;
     var i = 0, elapsed = 0, paused = false, last = Date.now(), timer = null, frameTimer = null, motion = !gymMotionOff();
+    /* PACE (CEO, 22 Sep 2026: "an option to slow down, several speeds so the user can follow").
+       Every moving cue - the dot along its path, the two dots at once, the finger beat, the
+       lit dot - runs at the chosen pace. The step's own clock is unchanged, so a slower pace
+       means fewer laps, not a longer routine. Remembered between visits; changeable mid-step
+       without restarting it. With motion off there is nothing moving, so no pace to choose. */
+    var PACES = [[1, "Normal"], [0.75, "Slower"], [0.5, "Slow"], [0.3, "Very slow"]];
+    var speed = Number(settings.drillSpeed) || 1;
+    if (!PACES.some(function (p) { return p[0] === speed; })) speed = 1;
+    var moving = motion && d.steps.some(function (s) { return s.scene && /^(path|path2|hand|dotgrid)$/.test(s.scene.kind); });
     var node = el(
       '<div class="card">' +
         '<div class="mini">' + esc(d.title) + ' · ' + t("Moves — nothing to answer") + '</div>' +
         '<div class="gart" id="drillArt" aria-hidden="true" style="touch-action:none"></div>' +
+        (moving ? '<div class="dpace" role="group" aria-label="' + esc(t("Pace")) + '"><span class="mini">' + t("Pace") + '</span>' +
+          PACES.map(function (p) { return '<button class="btn ghost dpace-b" data-pace="' + p[0] + '" aria-pressed="' + (p[0] === speed) + '">' + t(p[1]) + '</button>'; }).join("") +
+        '</div>' : '') +
         '<div class="qtext" id="drillText" aria-live="polite" style="margin-top:10px"></div>' +
         '<div class="gbar" style="margin-top:12px"><i id="drillBar" style="width:0"></i></div>' +
         '<div class="mini" id="drillMeta" style="margin-top:6px"></div>' +
@@ -1635,19 +1883,24 @@
         }
         k++;
       };
-      light(); frameTimer = setInterval(light, Math.round((scene.beat || 1) * 1000));
+      light(); frameTimer = setInterval(light, Math.round((scene.beat || 1) * 1000 / speed));
     }
     function dotFrames(scene) {
       var k = 0;
       var light = function () { var lit = (k * 4 + 1) % 9, j; for (j = 0; j < 9; j++) { var dd = artNode.querySelector("#d" + j); if (dd) dd.setAttribute("fill", j === lit ? "var(--brand)" : "var(--card2)"); } k++; };
-      light(); frameTimer = setInterval(light, Math.round((scene.beat || 1.5) * 1000));
+      light(); frameTimer = setInterval(light, Math.round((scene.beat || 1.5) * 1000 / speed));
     }
-    function show() {
-      var s = d.steps[i]; elapsed = 0; last = Date.now(); stopFrames();
-      textNode.textContent = gymText(s.text) + (s.scene && !motion && (s.scene.kind === "path" || s.scene.kind === "dotgrid") ? " " + t("Follow the numbers.") : "");
-      artNode.innerHTML = s.scene && ART ? ART.draw(s.scene, { motion: motion }, {}) : "";
+    /* the picture and its moving cue, redrawable on its own when the pace changes */
+    function drawStep() {
+      var s = d.steps[i]; stopFrames();
+      artNode.innerHTML = s.scene && ART ? ART.draw(s.scene, { motion: motion, speed: speed }, {}) : "";
       if (s.scene && s.scene.kind === "hand" && motion) handFrames(s.scene);
       if (s.scene && s.scene.kind === "dotgrid" && motion) dotFrames(s.scene);
+    }
+    function show() {
+      var s = d.steps[i]; elapsed = 0; last = Date.now();
+      textNode.textContent = gymText(s.text) + (s.scene && !motion && (s.scene.kind === "path" || s.scene.kind === "dotgrid") ? " " + t("Follow the numbers.") : "");
+      drawStep();
       if (canSpeak()) speak(s.text);
       paint();
     }
@@ -1669,7 +1922,15 @@
             '<button class="btn ghost" id="drillKinds">' + t("Choose a kind") + '</button>' +
             '<button class="btn ghost" id="drillHome">🏠 ' + t("Home") + '</button>' +
           '</div>' +
+          '<div class="btnrow gvend" style="justify-content:center;margin-top:10px"></div>' +
         '</div>');
+      var gvd = res.querySelector(".gvend");
+      if (gymVaultHas(d.family)) {
+        gymVaultPractised(d.family);
+        var gotD = el('<button class="btn ghost">' + t("I have it") + '</button>');
+        gotD.addEventListener("click", function () { gymVaultRemove(d.family, true); gotD.disabled = true; gotD.textContent = "\u2713 " + t("Taken out"); });
+        gvd.appendChild(gotD);
+      } else gvd.appendChild(gymVaultButton("drill", d.family, brainGymPicker));
       res.querySelector("#drillAnother").addEventListener("click", function () {
         var list = eligibleDrills(), k = 0, j; for (j = 0; j < list.length; j++) if (list[j].key === d.family) k = j;
         startDrill(list[(k + 1) % list.length].key);
@@ -1679,6 +1940,14 @@
       render(res);
     }
     node.querySelector("#drillNext").addEventListener("click", next);
+    Array.prototype.forEach.call(node.querySelectorAll(".dpace-b"), function (b) {
+      b.addEventListener("click", function () {
+        speed = Number(b.getAttribute("data-pace")) || 1;
+        settings.drillSpeed = speed; saveSettings();
+        Array.prototype.forEach.call(node.querySelectorAll(".dpace-b"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        drawStep();   /* the same step, the same clock, the new pace */
+      });
+    });
     node.querySelector("#drillPause").addEventListener("click", function () { paused = !paused; last = Date.now(); this.textContent = paused ? t("Resume") : t("Pause"); });
     node.querySelector("#drillDone").addEventListener("click", end);
     document.addEventListener("visibilitychange", onVis);
@@ -2334,11 +2603,33 @@
                               marks: marks, ids: deckIds, at: todayKey() });
     }
 
+    /* THE PICTURE BEFORE THE PAGE (CEO, 22 Sep 2026: "the image need to be preloaded before
+       the page appear"). Every picture this round will show is fetched now, at the start -
+       not one question ahead - and each question waits for its own picture, fetched AND
+       decoded, before it appears. Capped: a picture that has not come in PICTURE_WAIT_MS is
+       not allowed to hold the round hostage, and offline nothing waits at all. */
+    var PICTURE_WAIT_MS = 3000;
+    var roundPics = cfg.questions.map(function (qq) { return qq && qq.img && qq.img.u ? picURL(qq.img.u) : null; });
+    var PW = navigator.onLine === false ? null : imageWarmer();
+    if (PW) PW.start(roundPics.filter(Boolean));
+
     var node = el('<div class="card"></div>');
     render(node);
     show();
 
     function show() {
+      var u = roundPics[idx];
+      var st = u && PW ? PW.stateOf(u) : "done";
+      if (st === "done" || st === "failed") { paint(); return; }
+      /* not ready: the answered card stays where it is and Next says it is working;
+         on the first question, a quiet sand-timer holds the empty card */
+      var nb = node.querySelector("#next");
+      if (nb) { nb.disabled = true; nb.setAttribute("aria-busy", "true"); nb.textContent = "⏳"; }
+      else if (!node.firstChild) node.appendChild(el('<div class="qwait" role="status" aria-label="' + esc(t("Loading the picture")) + '">⏳</div>'));
+      PW.whenReady(u, PICTURE_WAIT_MS, function () { if (node.isConnected) paint(); });
+    }
+
+    function paint() {
       answered = false;
       node._qShownAt = Date.now();   // stopwatch for the ⚡ speed chip
       if (node._fit) { window.removeEventListener("resize", node._fit); node._fit = null; }
@@ -2450,6 +2741,17 @@
       // The sand-timer's exit (issue #1). A cache hit — the preloaded common
       // case — settles synchronously here, so the timer never even flashes.
       var qa = body.querySelector(".qart");
+      /* Show the picture that was already decoded, not a fresh copy that decodes again
+         after the card is on screen (22 Sep 2026). Only when that element is free. */
+      if (qa && PW) {
+        var decoded = PW.imageFor(roundPics[idx]), fresh = qa.querySelector("img");
+        if (decoded && fresh && !decoded.parentNode) {
+          decoded.alt = fresh.alt;
+          try { decoded.referrerPolicy = "no-referrer"; } catch (e5) {}
+          if (fresh.getAttribute("data-orig")) decoded.setAttribute("data-orig", fresh.getAttribute("data-orig"));
+          fresh.parentNode.replaceChild(decoded, fresh);
+        }
+      }
       if (qa) {
         var qim = qa.querySelector("img");
         var qaDone = function () { qa.classList.remove("is-loading"); };
@@ -2632,6 +2934,8 @@
         // A slot with nothing behind it is not a link that does nothing — it is
         // an element that was never a link, so nothing about it invites a tap
         // that cannot be answered.
+        /* a video door plays inside Qpio; every other door opens its page */
+        if (d.on && d.video) return '<button type="button" class="gf-link" data-video="' + esc(d.video) + '" data-title="' + esc(d.title || "") + '" data-chosen="' + (d.chosen ? "1" : "0") + '" data-slot="lead">' + inner + '</button>';
         return d.on
           ? '<a class="gf-link" href="' + doorHref(d.kind, "lead", d.url) + '" target="_blank" rel="noopener">' + inner + '</a>'
           : '<span class="gf-link is-off" aria-disabled="true" title="' + esc(t("Nothing here yet")) +
@@ -2656,7 +2960,9 @@
         // where it leads — and Next LAST, at the bottom. Next used to sit above
         // the go-further link, so the one thing the whole product exists for
         // was below the button that skips past it.
-        fmt(q.fact) + srcLink(q.src) + renderQuestionResourcesHtml(q) +
+        /* the golden source in the reader's language: a French reader was always sent to
+           English Wikipedia by this button, whatever the inventory held (22 Sep 2026) */
+        fmt(q.fact) + srcLink(window.CURIO_GO && window.CURIO_GO.sourceUrl ? window.CURIO_GO.sourceUrl(q) : q.src) + renderQuestionResourcesHtml(q) +
         '<div class="deeperbox"></div>' +
         '</div>' +
         // Outside the fact box on purpose. The fact is the only part whose
@@ -3036,7 +3342,11 @@
         var inner = '<span class="way-ico" aria-hidden="true">' + d.icon + '</span>' +
                     '<span class="way-txt">' + label + '</span>';
         var a;
-        if (d.on) {
+        if (d.on && d.video) {
+          /* a video plays inside Qpio (the document-level handler catches the tap first) */
+          a = el('<button type="button" class="way" data-video="' + esc(d.video) + '" data-title="' + esc(d.title || "") + '" data-chosen="' + (d.chosen ? "1" : "0") + '" data-slot="' + esc(slotName) + '"' +
+                 (d.title ? ' title="' + esc(d.title) + '"' : '') + '>' + inner + '</button>');
+        } else if (d.on) {
           a = el('<a class="way" href="' + doorHref(d.kind, slotName, d.url) + '" target="_blank" rel="noopener"' +
                  (d.title ? ' title="' + esc(d.title + (d.sub ? " · " + d.sub : "")) + '"' : '') +
                  '>' + inner + '</a>');
@@ -3073,6 +3383,8 @@
           // edit away from coming back.
           var hit = e && e.target && e.target.closest ? e.target.closest(".is-off") : null;
           if (hit && node.contains(hit)) return;
+          /* the card's best door is a video: it plays here too, never on youtube.com */
+          if (primary.video) { openVideo({ video: primary.video, title: primary.title || "", chosen: primary.chosen, slot: slotName }); return; }
           // Raw URL, not the attribute-escaped one — window.open is not HTML.
           var D = window.QPIO_DOORS;
           var via = D && D.href ? D.href(primary.kind, slotName, primary.url) : null;

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-22",
+ "generated": "2026-09-23",
  "live": {
   "production": 76,
   "uat": 101,
@@ -98,6 +98,11 @@
      "sha": "ea694ff",
      "date": "2026-09-22",
      "subject": "The release record said every build since v96 carried no questions"
+    },
+    {
+     "sha": "f239ab3",
+     "date": "2026-09-22",
+     "subject": "The register links v101 to its sign-off ticket (#89)"
     }
    ]
   },

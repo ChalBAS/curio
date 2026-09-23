@@ -16,7 +16,24 @@
 // language at all - a performance, a demonstration - so it serves every reader,
 // including languages not added yet. A reader gets pick[theirLanguage] first,
 // then their "any" video, and only then falls back to a search in their language.
-window.CURIO_WATCH_CHOSEN = {};
+window.CURIO_WATCH_CHOSEN = {
+ "Q181": {
+  "en": "https://www.youtube.com/watch?v=FTZR6iPJaoc"
+ },
+ "Q123": {
+  "en": "https://www.youtube.com/watch?v=0RRVV4Diomg"
+ },
+ "Q348": {
+  "en": "https://www.youtube.com/watch?v=wXB-V_Keiu8"
+ },
+ "Q315": {
+  "en": "https://www.youtube.com/watch?v=d5OsCUOwRLE"
+ },
+ "Q191": {
+  "en": "https://youtu.be/zCx7_VzR1Ho",
+  "fr": "https://youtu.be/pW-4JUCTBtg"
+ }
+};
 // qid -> the languages where he looked at the candidates and said none of them
 // were good enough. Greyed on purpose IN THAT LANGUAGE, which is not the same as
 // greyed everywhere and not the same as never looked at.

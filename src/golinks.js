@@ -195,6 +195,15 @@
     ]
   };
 
+  /* the 11-character id of a YouTube video, from any of its address forms */
+  function ytId(u) {
+    var m = String(u || "").match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : null;
+  }
+  /* the channels this file trusts, by the name a reader sees - read by
+     curio-hq/tools/publish_to_app.js, so the pipeline and the screen share ONE list */
+  function vettedChannels(lang) { return (WATCH_CHANNELS[lang] || []).map(function (c) { return c.name; }); }
+
   function watchUrl(title, cat) {
     var lang = window.QLANG === "fr" ? "fr" : "en";
     var list = WATCH_CHANNELS[lang] || WATCH_CHANNELS.en;
@@ -292,6 +301,13 @@
   // A French reader should land on the French article. Same lookup, and it
   // closes the long-standing defect of the French bank citing English sources.
   function sourceUrl(q) {
+    /* THE GOLDEN SOURCE FIRST (22 Sep 2026). The inventory holds the article in each
+       language - Wikipedia's own link from the English page to the French one - and
+       the subject-keyed French title table below is missing 995 of them, which sent
+       French readers to English Wikipedia. The table stays only as the fallback. */
+    var gl = window.QLANG === "fr" ? "fr" : "en";
+    var gb = window.CURIO_DOORS_BANK && q && q.id ? window.CURIO_DOORS_BANK[q.id] : null;
+    if (gb && gb.src && gb.src[gl]) return gb.src[gl];
     var slug = entityOf(q);
     if (window.QLANG === "fr" && slug) {
       var f = frTitle(slug);
@@ -374,8 +390,11 @@
          and "here is the book" */
       read:   cb && cb.none ? { title: "", sub: "", url: null }
             : cb && cb.u ? { title: cb.t || title, sub: cb.a || "", url: cb.u, chosen: true }
-            : book ? { title: book.t, sub: book.a || "", url: readUrl(title, slug) }
+            /* the golden source for THIS question, then the August subject table only where the
+               inventory holds nothing - the order the comment above always said, and the code
+               did not do until 22 Sep 2026 */
             : bb && bb.u ? { title: bb.t || title, sub: bb.a || "", url: bb.u }
+            : book ? { title: book.t, sub: book.a || "", url: readUrl(title, slug) }
             : { title: title, sub: "", url: readUrl(title, slug) },
       visit:  cv && cv.none ? { title: "", sub: "", url: null }
             : cv && cv.url ? { title: cv.where || "", sub: cv.city || "", url: cv.url, chosen: true }
@@ -425,7 +444,7 @@
               sub: (typeof pick !== "string" && !pick[wlang] && pick.any)
                 ? "chosen for this question — no narration"
                 : "chosen for this question",
-              url: url, search: false
+              url: url, video: ytId(url), chosen: true, search: false
             };
           }
         }
@@ -439,11 +458,23 @@
           return { title: "", sub: "", url: null, search: false };
         }
 
-        var emptyList = window.CURIO_WATCH_EMPTY;
-        var known = emptyList && emptyList.indexOf && q && q.id && emptyList.indexOf(q.id) !== -1;
-        if (known) return { title: "", sub: "", url: null, search: true };
-        return { title: watchChannel(cat) || title, sub: "search their channel",
-                 url: watchUrl(title, cat), search: true };
+        /* THE INVENTORY'S VIDEO FOR THIS QUESTION, AND NEVER A SEARCH (22 Sep 2026).
+         *
+         * CEO: "we need to block browsing further, because we don't want youtube
+         * suggesting inappropriate video on the back of the video we suggested".
+         * A channel search is the full YouTube site - its suggestions, its autoplay,
+         * its search box - and it is not in the golden source at all. So a Watch door
+         * now opens only a single video, played inside Qpio, from
+         * curio-hq/tools/publish_to_app.js: his pick where he made one, otherwise the
+         * best-ranked candidate the inventory found on a channel this file already
+         * trusts (WATCH_CHANNELS). No such video: the door is greyed, honestly. */
+        var wb = window.CURIO_DOORS_BANK && q && q.id ? window.CURIO_DOORS_BANK[q.id] : null;
+        var bw = wb && wb.watch ? (wb.watch[wlang] || wb.watch.any) : null;
+        if (bw && bw.id) {
+          return { title: bw.t || title, sub: bw.by === "founder" ? "chosen for this question" : (bw.ch || ""),
+                   url: "https://www.youtube.com/watch?v=" + bw.id, video: bw.id, chosen: bw.by === "founder", search: false };
+        }
+        return { title: "", sub: "", url: null, search: false };
       })(),
       source: { title: "", sub: "", url: src }
     };
@@ -454,7 +485,9 @@
         kind: s.kind, icon: s.icon, label: s.label,
         title: d.title, sub: d.sub, url: d.url, on: !!d.url,
         /* True when the door opens a search rather than the thing itself. */
-        search: !!d.search
+        search: !!d.search,
+        /* a Watch door with a video plays it inside Qpio (app.js openVideo) */
+        video: d.video || null, chosen: !!d.chosen
       };
     });
   }
@@ -539,7 +572,7 @@
   window.CURIO_GO = {
     places: PLACES, goFor: goFor, primaryOf: primaryOf, entityOf: entityOf,
     titleOf: titleOf, sourceUrl: sourceUrl, readUrl: readUrl, watchUrl: watchUrl,
-    watchChannel: watchChannel,
+    watchChannel: watchChannel, ytId: ytId, vettedChannels: vettedChannels,
     lanesFor: lanesFor, surprise: surprise
   };
 })();

@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v101** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-22 |
+| Generated | 2026-09-23 |
 
 > ⏳ **Awaiting your sign-off:** v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -42,6 +42,7 @@ not by omission.*
 
 - `472ee07` v101: every puzzle draws itself, four picture games, four moves with nothing to answer — and the panel's read of all of it
 - `ea694ff` The release record said every build since v96 carried no questions
+- `f239ab3` The register links v101 to its sign-off ticket (#89)
 - ⚠️ commit message names a different version: ea694ff
 
 ## v100 — ⏳ on UAT

@@ -282,6 +282,89 @@
     ["anchor", "ancre"], ["willow", "saule"], ["amber", "ambre"], ["quarry", "carrière"],
     ["thistle", "chardon"], ["beacon", "balise"], ["orchard", "verger"], ["flint", "silex"]
   ];
+  /* WAYS TO HOLD A LIST (22 Sep 2026). Written from their sources by the content function in
+     curio-hq/03-Engine/question-intelligence/content/memory-techniques.json and copied here
+     verbatim - tools/test_braingym.js fails the build if the two ever differ. Instructions only:
+     what to do with a list, and where the way comes from. No claim about what it does to you. */
+  var HOLD_WAYS = [
+    {
+      "id": "story",
+      "name": {
+        "en": "The story chain",
+        "fr": "L'histoire en chaîne"
+      },
+      "how": {
+        "en": "Join the words, in order, into one short, silly story: a kettle sneezes out a feather, which tickles a violin, which drops a pebble… To answer, replay the story from the start.",
+        "fr": "Relie les mots, dans l'ordre, en une petite histoire loufoque : une bouilloire éternue et projette une plume, qui chatouille un violon, qui lâche un galet… Pour répondre, déroule l'histoire depuis le début."
+      },
+      "tip": {
+        "en": "Link the words into one silly story, in order.",
+        "fr": "Relie les mots en une histoire loufoque, dans l'ordre."
+      },
+      "origin": {
+        "en": "In 1969, psychologists Gordon Bower and Michal Clark asked some of the people in their study to weave each list of ten words into a story.",
+        "fr": "En 1969, les psychologues Gordon Bower et Michal Clark ont demandé à une partie des participants de leur étude d'inventer une histoire autour de chaque liste de dix mots."
+      }
+    },
+    {
+      "id": "journey",
+      "name": {
+        "en": "The journey (method of loci)",
+        "fr": "Le parcours (méthode des lieux)"
+      },
+      "how": {
+        "en": "Picture a walk through your home and leave one word at each stop: a kettle on the doormat, a feather on the stairs… To answer, walk it again: the third stop is word number 3.",
+        "fr": "Imagine une promenade dans ta maison et dépose un mot à chaque étape : une bouilloire sur le paillasson, une plume dans l'escalier… Pour répondre, refais la promenade : la troisième étape, c'est le mot numéro 3."
+      },
+      "tip": {
+        "en": "Walk through your home in your mind, leaving one word at each stop.",
+        "fr": "Traverse ta maison en pensée et dépose un mot à chaque étape."
+      },
+      "origin": {
+        "en": "Roman writers on public speaking described placing pictures along a row of imagined places, and Cicero told of the Greek poet Simonides using this method. Other peoples tie knowledge to places in their own traditions, some of it sacred and not open to everyone, such as Aboriginal Australian songlines and the lukasa boards used by Luba historians in today's DR Congo.",
+        "fr": "Dans leurs traités d'éloquence, des auteurs romains ont décrit comment placer des images le long d'une suite de lieux imaginés, et Cicéron raconte que le poète grec Simonide s'en était servi. D'autres peuples rattachent le savoir à des lieux dans leurs propres traditions, parfois sacrées et réservées à quelques-uns, comme les chants des pistes (songlines) des Aborigènes d'Australie ou les planchettes lukasa des historiens luba, dans l'actuelle RD Congo."
+      }
+    },
+    {
+      "id": "chunking",
+      "name": {
+        "en": "Small groups (chunking)",
+        "fr": "Petits paquets (chunking)"
+      },
+      "how": {
+        "en": "Split the list into pairs (kettle-feather, violin-pebble, tulip-ladder) and say each pair in one breath. To answer, count by pairs: word number 3 starts the second pair.",
+        "fr": "Coupe la liste en paquets de deux (bouilloire-plume, violon-galet, tulipe-échelle) et dis chaque paquet d'une traite. Pour répondre, compte par paquet : le mot numéro 3 ouvre le deuxième paquet."
+      },
+      "tip": {
+        "en": "Split the words into pairs and say each pair in one breath.",
+        "fr": "Coupe la liste en paquets de deux et dis chaque paquet d'une traite."
+      },
+      "origin": {
+        "en": "The psychologist George A. Miller called such small groups \"chunks\" in a well-known 1956 paper.",
+        "fr": "Le psychologue George A. Miller a appelé ces petits groupes des « chunks » dans un article célèbre de 1956."
+      }
+    },
+    {
+      "id": "pictures",
+      "name": {
+        "en": "Vivid pictures",
+        "fr": "Images frappantes"
+      },
+      "how": {
+        "en": "Turn each word into a huge, funny or strange picture: a kettle as big as a house, a tulip wearing a crown. Line the pictures up in the order the words came and, to answer, count along the line.",
+        "fr": "Transforme chaque mot en une image énorme, drôle ou bizarre : une bouilloire grande comme une maison, une tulipe coiffée d'une couronne. Aligne ces images dans l'ordre des mots et, pour répondre, compte-les une à une."
+      },
+      "tip": {
+        "en": "Make each word a big, strange picture, then line them up.",
+        "fr": "Fais de chaque mot une image énorme et bizarre, puis aligne-les."
+      },
+      "origin": {
+        "en": "A Roman handbook on public speaking, written in the late 80s BCE, advised making mental pictures striking, beautiful, ugly or funny.",
+        "fr": "Un traité romain d'éloquence, écrit au Ier siècle avant notre ère, conseillait de rendre les images mentales frappantes, belles, laides ou drôles."
+      }
+    }
+  ];
+
   function makeMemory(seed, lang) {
     var r = rng(seed), fr = FR(lang), w = fr ? 1 : 0;
     var n = int(r, 5, 7);
@@ -307,7 +390,9 @@
     }
     var words = list.map(function (p) { return p[w]; });
     var answer = words[answerIdx];
-    var wrongs = shuffle(r, words.filter(function (x) { return x !== answer; })).slice(0, 3);
+    /* the word the question names is never offered: "what came after X?" answered "X" is no choice at all */
+    var named = kind === 1 ? words[anchor] : null;
+    var wrongs = shuffle(r, words.filter(function (x) { return x !== answer && x !== named; })).slice(0, 3);
     return {
       family: "memory", form: ["position", "after", "first"][kind],
       /* the words as cards while studying; the same cards empty and numbered when asked */
@@ -1249,9 +1334,10 @@
       blurb: "Some always tell the truth, some always lie. Work out which.", blurbFr: "Certains disent toujours la vérité, d'autres mentent toujours. À toi de voir qui est qui.", infinite: true, make: makeKnights },
     { key: "spatial", name: "Spatial reasoning", nameFr: "Raisonnement spatial", icon: "🕰",
       blurb: "Turn it in your head.", blurbFr: "Fais-le tourner dans ta tête.", infinite: true, make: makeClock },
-    { key: "memory", name: "Working memory", nameFr: "Mémoire de travail", icon: "🧠",
+    /* named for what the reader does - the claims standard bars "memory" and "attention" (C, ruled 11 Aug 2026) */
+    { key: "memory", name: "Hold a list", nameFr: "Garder une liste en tête", icon: "📝",
       blurb: "Hold a few things at once, then answer.", blurbFr: "Garde plusieurs choses en tête, puis réponds.", infinite: true, make: makeMemory },
-    { key: "attention", name: "Attention", nameFr: "Attention", icon: "👁",
+    { key: "attention", name: "Odd one out", nameFr: "Lequel ne va pas ?", icon: "🔎",
       blurb: "One of these is not like the others.", blurbFr: "L'un de ces éléments n'est pas comme les autres.", infinite: true, make: makeOddOne },
     { key: "deduction", name: "Clues and conclusions", nameFr: "Indices et conclusions", icon: "🔍",
       blurb: "Two clues, three things. Sometimes the answer is that it cannot be told.", blurbFr: "Deux indices, trois objets. Parfois, la réponse est qu'on ne peut pas savoir.", infinite: true, make: makeOrdering },
@@ -1326,6 +1412,27 @@
     makeDrill: function (key, seed, lang) { return DRILL_BY_KEY[key] ? DRILL_BY_KEY[key].make(seed >>> 0, lang || "en") : null; },
     neuroBank: NEURO,
     /* what a tap cell or a twin option says to a screen reader, in the reader's language */
+    /* What a QUESTION screen may draw. A puzzle that hides its list (hide: true) shows
+       the words while the reader studies and must never show them again when asked -
+       so the words are stripped here, and only the anchor the prompt already names is
+       kept. The study screen reads sceneLabels itself; every drawing made at question
+       time goes through this, and the build checks it. (22 Sep 2026: the question
+       screen passed the full labels, and every memory puzzle showed its own answer.) */
+    holdWays: HOLD_WAYS,
+    /* the way suggested on a given list puzzle: fixed by its words, so the same puzzle always
+       suggests the same way, and a round of five meets several */
+    holdWayFor: function (p) {
+      var s = JSON.stringify(p && p.scene || {}) + "|" + (p && p.options ? p.options.indexOf(p.answer) : 0), h = 0, i;
+      for (i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+      return HOLD_WAYS[h % HOLD_WAYS.length];
+    },
+    questionLabels: function (p) {
+      var l = p && p.sceneLabels ? p.sceneLabels : {};
+      if (!p || !p.hide) return l;
+      var out = {}, k;
+      for (k in l) if (Object.prototype.hasOwnProperty.call(l, k) && k !== "words") out[k] = l[k];
+      return out;
+    },
     cellLabel: function (p, i, lang) {
       var fr = lang === "fr", id = p.options[i], what;
       if (p.scene.kind === "grid") what = tileWords(p.scene.tiles[i], fr);
