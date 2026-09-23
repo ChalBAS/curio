@@ -429,6 +429,49 @@
       });
     } },
 
+  /* v103. CEO, 23 Sep 2026: "The hand games needs transitions before switching
+     hands or going from one hand to 2. when presenting the exercise a short video
+     will be useful." A video path the edge does not have comes back as the app's
+     own page with a 200, so this asks for the first bytes and reads what came back.
+     An iPhone plays a video only if the server answers a request for a piece of it. */
+  { id: "moves", title: "Hand routines pause to change hands and open on a demo",
+    run: function (w, s, lang) {
+      var G = w.CURIO_GYM;
+      if (!G || !G.makeDrill) { s.log(lang, "moves · the routines are loaded", false, "no CURIO_GYM"); return Promise.resolve(); }
+      var missing = [], demos = [], photos = [];
+      ["hands", "fingers", "bilateral"].forEach(function (k) {
+        var d = G.makeDrill(k, 7919, lang), prev = null;
+        if (!d) { missing.push(k + ": no routine"); return; }
+        d.steps.forEach(function (st) {
+          if (!st.hands) return;
+          if ((!prev || prev !== st.hands || st.swap) && !st.before) missing.push(k + "/" + st.id);
+          if (st.before && st.before.photo && photos.indexOf(st.before.photo) < 0) photos.push(st.before.photo);
+          prev = st.hands;
+        });
+        /* a routine opens on a video of the move, or - thumb to each finger, where no generated
+           video showed the move truly - on a photo of the pose */
+        if (d.demo && d.demo.photo) { if (photos.indexOf(d.demo.src) < 0) photos.push(d.demo.src); }
+        else if (d.demo) demos.push(d.demo);
+        else missing.push(k + ": no demo");
+      });
+      s.log(lang, "moves · the first hand and every change of hands are announced, every routine opens on a demo", missing.length === 0, missing.length ? missing.join(", ") : "3 routines");
+      s.log(lang, "moves · two routines open on a video", demos.length === 2, demos.length + " videos");
+      return Promise.all(demos.map(function (d) {
+        return fetch("/" + d.src + "?probe=" + Date.now(), { cache: "no-store", headers: { Range: "bytes=0-1023" } }).then(function (r) {
+          return r.status === 206 && /^video\/mp4/.test(r.headers.get("content-type") || "") ? null : d.src + " (" + r.status + " " + r.headers.get("content-type") + ")";
+        }).catch(function (e) { return d.src + " " + e; });
+      })).then(function (r) {
+        var bad = r.filter(Boolean);
+        s.log(lang, "moves · every video is served by this build, a piece at a time", bad.length === 0, bad.length ? bad.join(", ") : demos.length + " videos");
+        return Promise.all(photos.map(function (p) {
+          return fetch("/" + p + "?probe=" + Date.now(), { cache: "no-store" }).then(function (x) { return x.ok && /^image\//.test(x.headers.get("content-type") || "") ? null : p; }).catch(function () { return p; });
+        }));
+      }).then(function (r) {
+        var bad = r.filter(Boolean);
+        s.log(lang, "moves · every pause photo is served by this build", photos.length > 0 && bad.length === 0, bad.length ? bad.join(", ") : photos.length + " photos");
+      });
+    } },
+
   /* The city packs shipped with no acceptance check of their own. Eight more
      arrived on 17 Sep 2026; a pack that renders empty, or in the wrong
      language, is exactly the kind of thing only a reader would notice. */

@@ -119,15 +119,31 @@
     return out;
   }
 
+  /* a shape's outline alone - no dot, no numbers - for the picture of a swap */
+  function outline(shape, ox, oy, scale) {
+    var pts = (PATHS[shape] || PATHS.circle).map(function (p) { return [fmt(ox + p[0] * scale), fmt(oy + p[1] * scale)]; });
+    return '<path d="' + pathD(pts) + '" fill="none" stroke="var(--brand)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+  }
+
   /* ---------------------------------------------------------- a hand */
   function hand(id, x, y, side, lit) {
-    /* palm plus five fingers; index..little are f1..f4 (left to right on a right hand), thumb is f0 */
+    /* palm plus five fingers; index..little are f1..f4 (left to right on a right hand), thumb is f0.
+       A TOUCH (v103; the panel: "the thumb never moves, so the move itself is not shown"): when
+       a finger is lit it bends down and the thumb swings across the palm to meet its tip, with
+       a dot where they meet. Drawn, so it cannot show the wrong finger. */
     var mirror = side === "L" ? 'transform="translate(' + (x * 2 + 130) + ' 0) scale(-1 1)"' : "";
     var out = '<g ' + mirror + '>' + '<g transform="translate(' + x + ' ' + y + ')">';
     out += '<rect x="20" y="60" width="90" height="70" rx="18" fill="var(--card2)" stroke="var(--line)"/>';
-    var fx = [26, 48, 70, 92], fh = [50, 62, 58, 44], i;
-    for (i = 0; i < 4; i++) out += '<rect id="' + id + "f" + (i + 1) + '" x="' + fx[i] + '" y="' + (66 - fh[i]) + '" width="18" height="' + fh[i] + '" rx="9" fill="' + (lit === i + 1 ? "var(--brand)" : "var(--card2)") + '" stroke="var(--line)"/>';
-    out += '<rect id="' + id + 'f0" x="0" y="70" width="18" height="46" rx="9" fill="' + (lit === 0 ? "var(--brand)" : "var(--card2)") + '" stroke="var(--line)" transform="rotate(-40 9 116)"/>';
+    var fx = [26, 48, 70, 92], fh = [50, 62, 58, 44], i, touch = lit >= 1 && lit <= 4;
+    /* the thumb first, so the lit finger lies over its tip and stays visible */
+    var tx = touch ? fx[lit - 1] + 9 : 0, ty = touch ? 66 - Math.round(fh[lit - 1] / 2) + 9 : 0;
+    if (touch) out += '<line x1="12" y1="110" x2="' + tx + '" y2="' + ty + '" stroke="var(--line)" stroke-width="20" stroke-linecap="round"/>' +
+                      '<line id="' + id + 'f0" x1="12" y1="110" x2="' + tx + '" y2="' + ty + '" stroke="var(--card2)" stroke-width="17" stroke-linecap="round"/>';
+    for (i = 0; i < 4; i++) {
+      var h = touch && lit === i + 1 ? Math.round(fh[i] / 2) : fh[i];
+      out += '<rect id="' + id + "f" + (i + 1) + '" x="' + fx[i] + '" y="' + (66 - h) + '" width="18" height="' + h + '" rx="9" fill="' + (lit === i + 1 ? "var(--brand)" : "var(--card2)") + '" stroke="var(--line)"/>';
+    }
+    if (!touch) out += '<rect id="' + id + 'f0" x="0" y="70" width="18" height="46" rx="9" fill="' + (lit === 0 ? "var(--brand)" : "var(--card2)") + '" stroke="var(--line)" transform="rotate(-40 9 116)"/>';
     return out + "</g></g>";
   }
 
@@ -311,10 +327,21 @@
 
     /* a hand (or two), the lit finger set by the frame player */
     if (k === "hand") {
-      out = open(320, 150);
-      if (scene.side === "both") out += hand("L", 10, 8, "L", scene.lit === undefined ? -1 : scene.lit) + hand("R", 180, 8, "R", scene.lit === undefined ? -1 : scene.litRight === undefined ? -1 : scene.litRight);
-      else out += hand("", 95, 8, scene.side, scene.lit === undefined ? -1 : scene.lit);
+      /* two hands sit apart, so the resting thumbs do not meet in the middle (read as "press your thumbs together") */
+      if (scene.side === "both") out = open(340, 150) + hand("L", 0, 8, "L", scene.lit === undefined ? -1 : scene.lit) + hand("R", 210, 8, "R", scene.lit === undefined ? -1 : scene.litRight === undefined ? -1 : scene.litRight);
+      else out = open(320, 150) + hand("", 95, 8, scene.side, scene.lit === undefined ? -1 : scene.lit);
       return out + CLOSE;
+    }
+
+    /* A SWAP OF SHAPES (v103). Each side shows the shape that hand draws next, a two-way arrow
+       between them. The hands themselves are announced in words and shown in a photograph
+       (CEO, 23 Sep 2026: "not these schema, we don't know if the hand is palm face up or
+       down"), so no hand is drawn here. */
+    if (k === "switch") {
+      var AW = 'stroke="var(--brand)" stroke-width="4" stroke-linecap="round"';
+      return open(320, 160) + outline(scene.left, 0, 40, 0.5) + outline(scene.right, 160, 40, 0.5) +
+        '<path d="M146 14 H166" ' + AW + '/><path d="M174 14 L164 7 L164 21 Z" fill="var(--brand)"/>' +
+        '<path d="M174 32 H154" ' + AW + '/><path d="M146 32 L156 25 L156 39 Z" fill="var(--brand)"/>' + CLOSE;
     }
 
     /* six numbered dots to tap in order; a 3 × 3 grid of dots with one lit */

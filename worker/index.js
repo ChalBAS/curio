@@ -165,12 +165,46 @@ async function stats(request, env, url) {
     return new Response(JSON.stringify({ languages: 2, lang, sample }), { headers: cors });
 }
 
+/* The whole file from the asset layer, then the piece asked for: 206 with its
+   Content-Range, 416 for a piece past the end, the whole file for no Range.
+   Each video is under 100 KB, so holding one in memory costs nothing. A path
+   the asset layer does not have comes back as the app's own page, which must
+   never be sent as a video - that is a 404. */
+async function serveVideo(request, env, url) {
+  const res = await env.ASSETS.fetch(new Request(url.origin + url.pathname));
+  const type = res.headers.get("content-type") || "";
+  if (res.status !== 200 || !/^video\//.test(type)) return new Response("Not found", { status: 404 });
+  const buf = await res.arrayBuffer(), size = buf.byteLength;
+  const head = request.method === "HEAD";
+  const base = { "content-type": type, "accept-ranges": "bytes", "cache-control": "public, max-age=86400" };
+  const m = /^bytes=(\d*)-(\d*)$/.exec((request.headers.get("range") || "").trim());
+  if (!m || (m[1] === "" && m[2] === "")) {
+    return new Response(head ? null : buf, { status: 200, headers: { ...base, "content-length": String(size) } });
+  }
+  let start, end;
+  if (m[1] === "") { const n = Math.min(Number(m[2]), size); start = size - n; end = size - 1; }
+  else { start = Number(m[1]); end = m[2] === "" ? size - 1 : Math.min(Number(m[2]), size - 1); }
+  if (!(start >= 0) || start >= size || start > end) {
+    return new Response(null, { status: 416, headers: { ...base, "content-range": "bytes */" + size } });
+  }
+  return new Response(head ? null : buf.slice(start, end + 1), {
+    status: 206,
+    headers: { ...base, "content-range": "bytes " + start + "-" + end + "/" + size, "content-length": String(end - start + 1) }
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const kind = classify(request.headers.get("user-agent"));
 
     if (url.pathname === "/api/stats") return stats(request, env, url);
+
+    // A DEMO VIDEO, A PIECE AT A TIME (v103). An iPhone plays a video only if the
+    // server answers a request for part of it with that part. The asset layer
+    // always sends the whole file (checked on uat.qpio.app, 23 Sep 2026), so the
+    // routine demos - "/img/gen/moves/*" in run_worker_first - are cut here.
+    if (/^\/img\/gen\/moves\/[\w-]+\.mp4$/.test(url.pathname)) return serveVideo(request, env, url);
 
     // robots.txt is generated here rather than shipped as a file, so the
     // disallow list and the block list can never drift apart — they are the

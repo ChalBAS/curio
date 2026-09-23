@@ -2,7 +2,7 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v102";
+const CACHE = "qpio-v103";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
 const NUDGE_CACHE = "qpio-nudge";
@@ -139,43 +139,43 @@ const FLAGS = [
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=102",
-  "./brand/qpio-mark-96.png?v=102",
-  "./brand/icons/qpio-icon-96.png?v=102",
-  "./brand/qpio-lockup-header.png?v=102",
-  "./src/i18n.js?v=102",
-  "./src/questions.fr.js?v=102",
-  "./src/qid.legacy.js?v=102",
-  "./src/content.version.js?v=102",
-  "./src/measure.js?v=102",
-  "./src/truthlab.fr.js?v=102",
-  "./src/app.js?v=102",
-  "./src/questions.js?v=102",
-  "./src/truthlab.js?v=102",
-  "./src/citypacks.js?v=102",
-  "./src/citypacks.fr.js?v=102",
-  "./src/entities.fr.js?v=102",
-  "./src/entities.img.js?v=102",
-  "./src/flags.js?v=102",
-  "./src/entities.meta.js?v=102",
-  "./src/country.js?v=102",
-  "./src/links.read.js?v=102",
-  "./src/golinks.js?v=102",
-  "./src/doors.js?v=102",
-  "./src/hooks.js?v=102",
-  "./src/gymart.js?v=102",
-  "./src/braingym.js?v=102",
-  "./src/watch.chosen.js?v=102",
-  "./src/doors.chosen.js?v=102",
-  "./src/doors.bank.js?v=102",
-  "./src/watch.empty.js?v=102",
-  "./src/hooks.q.js?v=102",
-  "./src/discovery.js?v=102",
-  "./src/daily.overrides.js?v=102",
-  "./src/resources.js?v=102",
-  "./src/intelligence.js?v=102",
-  "./src/intelligence.corpus.js?v=102",
-  "./src/preload.js?v=102",
+  "./src/styles.css?v=103",
+  "./brand/qpio-mark-96.png?v=103",
+  "./brand/icons/qpio-icon-96.png?v=103",
+  "./brand/qpio-lockup-header.png?v=103",
+  "./src/i18n.js?v=103",
+  "./src/questions.fr.js?v=103",
+  "./src/qid.legacy.js?v=103",
+  "./src/content.version.js?v=103",
+  "./src/measure.js?v=103",
+  "./src/truthlab.fr.js?v=103",
+  "./src/app.js?v=103",
+  "./src/questions.js?v=103",
+  "./src/truthlab.js?v=103",
+  "./src/citypacks.js?v=103",
+  "./src/citypacks.fr.js?v=103",
+  "./src/entities.fr.js?v=103",
+  "./src/entities.img.js?v=103",
+  "./src/flags.js?v=103",
+  "./src/entities.meta.js?v=103",
+  "./src/country.js?v=103",
+  "./src/links.read.js?v=103",
+  "./src/golinks.js?v=103",
+  "./src/doors.js?v=103",
+  "./src/hooks.js?v=103",
+  "./src/gymart.js?v=103",
+  "./src/braingym.js?v=103",
+  "./src/watch.chosen.js?v=103",
+  "./src/doors.chosen.js?v=103",
+  "./src/doors.bank.js?v=103",
+  "./src/watch.empty.js?v=103",
+  "./src/hooks.q.js?v=103",
+  "./src/discovery.js?v=103",
+  "./src/daily.overrides.js?v=103",
+  "./src/resources.js?v=103",
+  "./src/intelligence.js?v=103",
+  "./src/intelligence.corpus.js?v=103",
+  "./src/preload.js?v=103",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",
@@ -272,6 +272,11 @@ self.addEventListener("fetch", (e) => {
   // (/doors/ and /go/ must also stay absent from the ASSETS precache above.)
   const p = new URL(req.url).pathname;
   if (p.startsWith("/go/") || p.startsWith("/doors/")) return;
+
+  // A demo video (v103): never through a cache. A browser asks for a video in
+  // byte ranges, and a whole file from the cache answering a range request stops
+  // it playing on an iPhone. It is fetched only when a routine shows it.
+  if (/\.mp4$/.test(p)) return;
 
   // A bundled flag: from its own store, which install filled. A miss (the
   // install could not fetch that one) is fetched and kept, so it is there next

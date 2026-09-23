@@ -68,7 +68,10 @@
       "/src/entities.meta.js",
       "/src/entities.fr.js",
       "/robots.txt",
-      "/api/*"
+      "/api/*",
+      // v103: the routine demo videos, cut into the pieces an iPhone asks for
+      // (worker/index.js serveVideo). One invocation per video a reader opens.
+      "/img/gen/moves/*"
     ],
     "not_found_handling": "single-page-application"
   },
