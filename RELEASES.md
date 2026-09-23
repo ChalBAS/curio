@@ -38,9 +38,10 @@ not by omission.*
 
 ## v103 — ⏳ on UAT
 
-2026-09-24 · 1,968 questions · sign-off: **no release issue**
+2026-09-24 · 1,968 questions · sign-off: awaiting you, [#91](https://github.com/ChalBAS/curio-hq/issues/91)
 
 - `4289dd1` v103: the hand routines say which hand comes next, show a real-looking person doing the move, and give time to put the phone down
+- `f317bb9` v103 enters the register awaiting sign-off
 
 ## v102 — ⏳ on UAT
 

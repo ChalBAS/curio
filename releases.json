@@ -81,7 +81,11 @@
    "to": "2026-09-24",
    "questions": 1968,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 91,
+    "issues": [
+     91
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -89,6 +93,11 @@
      "sha": "4289dd1",
      "date": "2026-09-24",
      "subject": "v103: the hand routines say which hand comes next, show a real-looking person doing the move, and give time to put the phone down"
+    },
+    {
+     "sha": "f317bb9",
+     "date": "2026-09-24",
+     "subject": "v103 enters the register awaiting sign-off"
     }
    ]
   },
