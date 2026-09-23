@@ -55,6 +55,16 @@
 
   // Poll rather than sleep a fixed time: a slow phone must not fail a test that
   // a fast laptop passes.
+  /* after Next: the next question (new text, live options) or the results screen. v102 holds a
+     question until its picture is ready, capped at 3 s, so a fixed short wait is not enough. */
+  function nextQuestion(w, prevText) {
+    return until(function () {
+      if ($(w, ".card.result") || $(w, ".shelf") || $(w, ".topic")) return true;
+      var q = $(w, ".qtext"), o = $(w, ".opts button:not([disabled])");
+      return q && o.length && q.textContent !== prevText;
+    }, 4500).catch(function () { return null; });
+  }
+
   function until(fn, timeout, step) {
     timeout = timeout || 6000; step = step || 80;
     var t0 = Date.now();
@@ -150,8 +160,9 @@
               if (next) shots.push({ next: next.getBoundingClientRect().bottom, usable: usable(w),
                                      gf: live ? live.getBoundingClientRect().bottom : null });
               if (!next) return Promise.resolve();
+              var before = ($(w, ".qtext") || {}).textContent;
               next.click();
-              return wait(380).then(function () { return step(n + 1); });
+              return nextQuestion(w, before).then(function () { return step(n + 1); });
             });
           })(0);
         }).then(function () {
@@ -183,7 +194,8 @@
             var go = $(w, "#startQuick");
             if (!go) return Promise.resolve();
             go.click(); rounds++;
-            return wait(420).then(function () {
+            /* the first question now waits for its picture too (v102) */
+            return until(function () { return $(w, ".qtext") && $$(w, ".opts button:not([disabled])").length; }, 4500).catch(function () { return null; }).then(function () {
               return (function step(n) {
                 if (n > 14) return Promise.resolve();
                 var qt = $(w, ".qtext");
@@ -197,8 +209,9 @@
                 return wait(300).then(function () {
                   var next = $(w, "#next");
                   if (!next) return Promise.resolve();
+                  var before = ($(w, ".qtext") || {}).textContent;
                   next.click();
-                  return wait(300).then(function () { return step(n + 1); });
+                  return nextQuestion(w, before).then(function () { return step(n + 1); });
                 });
               })(0);
             }).then(function () {
@@ -300,7 +313,7 @@
       var HOST = { read: /openlibrary\.org|archive\.org|gutenberg\.org|worldcat\.org|books\.google\.[a-z.]+|wikipedia\.org\/wiki\/Special:BookSources/i,
                    source: /wikipedia\.org/i,
                    watch: /youtube\.com|youtu\.be|vimeo\.com/i };
-      var wrongKind = [], notALink = [], greyOpened = [], greyIsLink = [];
+      var wrongKind = [], notALink = [], greyOpened = [], greyIsLink = [], videoLeaves = [], videosPlayed = 0;
 
       var auditDoors = function (where) {
         $$(w, ".way, .gf-link").forEach(function (d) {
@@ -314,7 +327,23 @@
             if (opened.length > before) greyOpened.push(where + ": " + (d.textContent || "").trim().slice(0, 40) + " → " + opened[opened.length - 1].slice(0, 60));
             return;
           }
+          /* A VIDEO DOOR PLAYS INSIDE QPIO (v102, CEO 22 Sep: "block browsing further"). It is a
+             button with a video id - never a link, never a new tab, and it opens the in-app player. */
+          var vid = d.getAttribute("data-video");
+          if (vid) {
+            if (!/^[A-Za-z0-9_-]{11}$/.test(vid)) { notALink.push(where + ": a video door without a video - " + vid); return; }
+            if (href) { videoLeaves.push(where + ": a video door is a link to " + href.slice(0, 60)); return; }
+            var before2 = opened.length;
+            d.click();
+            var sheet = $(w, ".vsheet"), fr = sheet && sheet.querySelector("iframe");
+            if (opened.length > before2) videoLeaves.push(where + ": tapping the video opened " + opened[opened.length - 1].slice(0, 60));
+            else if (!fr || !/^https:\/\/www\.youtube-nocookie\.com\/embed\/[A-Za-z0-9_-]{11}\?/.test(fr.getAttribute("src") || "") || !/rel=0/.test(fr.getAttribute("src"))) videoLeaves.push(where + ": no in-app player opened");
+            else videosPlayed++;
+            var close = sheet && sheet.querySelector(".vclose"); if (close) close.click();
+            return;
+          }
           if (!href || !/^https?:\/\//i.test(href)) { notALink.push(where + ": " + (href || "(none)")); return; }
+          if (/youtube\.com\/(@[^/]+\/)?search|results\?search_query/i.test(href)) videoLeaves.push(where + ": a Watch door is a YouTube search - " + href.slice(0, 60));
           // The door's own word decides where it is allowed to lead. Read by
           // its icon rather than its label, so this works in every language.
           var word = d.textContent || "";
@@ -340,8 +369,9 @@
               auditDoors("answer " + (n + 1));
               var next = $(w, "#next");
               if (!next) return Promise.resolve();
+              var before = ($(w, ".qtext") || {}).textContent;
               next.click();
-              return wait(380).then(function () { return step(n + 1); });
+              return nextQuestion(w, before).then(function () { return step(n + 1); });
             });
           })(0);
         }).then(function () {
@@ -357,6 +387,8 @@
                 greyIsLink.length ? greyIsLink.length + " greyed doors carry an address" : "none carries an address");
           s.log(lang, "doors · every live door is a real address", notALink.length === 0,
                 notALink.length ? notALink.length + " are not — " + notALink[0] : "all http(s)");
+          s.log(lang, "doors · a video plays inside Qpio and never opens YouTube", videoLeaves.length === 0,
+                videoLeaves.length ? videoLeaves.length + " left - " + videoLeaves[0] : videosPlayed + " video door(s) played in-app, none opened a tab");
           s.log(lang, "doors · a door leads where its word promises", wrongKind.length === 0,
                 wrongKind.length ? wrongKind.length + " do not — " + wrongKind[0] : "read and watch doors checked");
         }).then(function () { w.open = realOpen; }, function (e) { w.open = realOpen; throw e; });
