@@ -38,10 +38,11 @@ not by omission.*
 
 ## v102 — ⏳ on UAT
 
-2026-09-23 · 1,968 questions · sign-off: **no release issue**
+2026-09-23 · 1,968 questions · sign-off: awaiting you, [#90](https://github.com/ChalBAS/curio-hq/issues/90)
 
 - `1988b15` v102: the list puzzle hides its list, pictures before the page, a pace for the moves, a Gym Vault, ways to hold a list, videos inside Qpio, and the golden source on screen
 - `bf63986` The live suite tests what v102 changed on purpose
+- `0487b24` v102 enters the register awaiting sign-off
 
 ## v101 — ⏳ on UAT
 
