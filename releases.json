@@ -84,7 +84,11 @@
    "to": "2026-09-24",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 94,
+    "issues": [
+     94
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -92,6 +96,11 @@
      "sha": "0fe1214",
      "date": "2026-09-24",
      "subject": "v106: the section is Qpio Gym (D-091)"
+    },
+    {
+     "sha": "756cb7c",
+     "date": "2026-09-24",
+     "subject": "Releases record: v106 on UAT"
     }
    ]
   },

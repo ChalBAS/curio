@@ -38,9 +38,10 @@ not by omission.*
 
 ## v106 — ⏳ on UAT
 
-2026-09-24 · 1,983 questions · sign-off: **no release issue**
+2026-09-24 · 1,983 questions · sign-off: awaiting you, [#94](https://github.com/ChalBAS/curio-hq/issues/94)
 
 - `0fe1214` v106: the section is Qpio Gym (D-091)
+- `756cb7c` Releases record: v106 on UAT
 
 ## v105 — ⏳ on UAT
 
