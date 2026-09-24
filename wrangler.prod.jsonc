@@ -71,7 +71,9 @@
       "/api/*",
       // v103: the routine demo videos, cut into the pieces an iPhone asks for
       // (worker/index.js serveVideo). One invocation per video a reader opens.
-      "/img/gen/moves/*"
+      "/img/gen/moves/*",
+      // every version of the terms at an address that never changes (/terms/v1 …)
+      "/terms/*"
     ],
     "not_found_handling": "single-page-application"
   },

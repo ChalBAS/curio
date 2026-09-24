@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<!--
+  Qpio — terms of use.
+  © 2026 Qpio. All rights reserved.
+
+  Qpio: Terms of use. Draft 1, 25 September 2026.
+  A change that matters to readers (naming the company is one) needs a new
+  version, this page kept as terms-v<old>.html, a line under "Earlier
+  versions", and the agreement screen shown again in the app. The steps are
+  at the top of src/terms.js.
+
+  THE VERSION IS CHECKED AGAINST THE CODE. data-terms-version on both sections
+  below must equal TERMS_VERSION in src/terms.js, and the date printed in both
+  languages must equal TERMS_DATE (tools/terms.test.js). The app asks again, on
+  every device, when the version changes - and only then.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of use — Qpio</title>
+<meta name="robots" content="index, follow">
+<style>
+  :root {
+    --ink: #14161a; --dim: #5b6470; --line: #e3e6ea; --bg: #fbfbfc;
+    --accent: #1f6feb; --warn: #8a5a00; --ok: #1a7f4b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8eaed; --dim: #9aa3ae; --line: #2a2f36; --bg: #14161a; --accent: #79a9ff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.15rem 5rem; }
+  h1 { font-size: 1.7rem; line-height: 1.25; margin: .4rem 0 .2rem; }
+  h2 { font-size: 1.18rem; margin: 2.4rem 0 .5rem; }
+  h3 { font-size: 1rem; margin: 1.5rem 0 .35rem; }
+  p, li { color: var(--ink); }
+  .lede { font-size: 1.05rem; color: var(--dim); margin-top: 0; }
+  table { border-collapse: collapse; width: 100%; margin: .8rem 0 1.2rem; font-size: .94rem; }
+  th, td { text-align: left; vertical-align: top; padding: .5rem .6rem; border-bottom: 1px solid var(--line); }
+  th { font-weight: 600; }
+  code { font: .88em ui-monospace, SFMono-Regular, Menlo, monospace; opacity: .85; }
+  .note { background: rgba(127,127,127,.07); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; margin: 1.2rem 0; }
+  .foot { color: var(--dim); font-size: .9rem; margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  a { color: var(--accent); }
+  .switch { display: flex; gap: .6rem; align-items: center; margin: .8rem 0 0; }
+  button { font: inherit; padding: .55rem 1rem; border-radius: 8px; border: 1px solid var(--line);
+    background: transparent; color: var(--ink); cursor: pointer; }
+  button.on { border-color: var(--accent); color: var(--accent); }
+  #optState { font-size: .93rem; color: var(--dim); }
+  [hidden] { display: none !important; }
+  .langbar { display: flex; gap: .5rem; justify-content: flex-end; margin-bottom: 1rem; }
+  .back { display: inline-block; padding: .5rem 0; text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+
+<div class="langbar">
+  <button id="btnEn" class="on" type="button">English</button>
+  <button id="btnFr" type="button">Français</button>
+</div>
+
+<!-- ============================================================ ENGLISH -->
+<section id="en" data-terms-version="1">
+
+<p><a href="/" class="back">← Back to Qpio</a></p>
+<h1>Terms of use</h1>
+<p class="lede">The rules for using Qpio, in plain words.</p>
+
+<div class="note">
+<p><strong>Draft 1, 25 September 2026.</strong> This is a draft for the test version of Qpio. A lawyer has not checked it yet, and it may change before Qpio opens to the public. If it changes in a way that matters to you, Qpio will ask you to agree again.</p>
+</div>
+
+<h2>The short version</h2>
+<ul>
+  <li>Qpio is free to use, and you do not need an account.</li>
+  <li>Your progress is kept on your device, not by Qpio.</li>
+  <li>Use Qpio to learn, play and teach. Do not copy its questions into another product, or use them to train AI.</li>
+  <li>The questions are for learning. They are not professional advice, and mistakes can happen.</li>
+  <li>In Qpio Gym, only do moves that feel comfortable, and stop if anything hurts.</li>
+  <li>Videos are played by YouTube, and YouTube's own terms apply.</li>
+  <li>Nothing in these terms takes away your rights as a consumer.</li>
+</ul>
+<p>The rest of this page gives the detail. If you are under 18, please read it with a parent or carer. There is also a <a href="#kids">short version for younger readers</a>.</p>
+
+<h2>Who runs Qpio</h2>
+<p>Qpio will be run by a company that is not set up yet. Its name will appear here once it is.</p>
+<p>When the company is set up, these terms will give its name, its address and a way to write to it, and Qpio will ask you to agree to them again before you carry on.</p>
+<p>Qpio does not yet have an address you can write to.</p>
+
+<h2>Agreeing to these terms</h2>
+<ul>
+  <li>To use Qpio, you need to agree to these terms and to Qpio's privacy notice. You do this on the screen Qpio shows before you start, by ticking the box and tapping Start. If these terms change in a way that matters to you, Qpio asks again, and you tick the box and tap Carry on.</li>
+  <li>You can read these terms and the privacy notice before you agree, and at any time afterwards. You can save or print this page.</li>
+  <li>Qpio remembers that you agreed only on this device. It keeps which version of these terms and of the privacy notice you agreed to, each with its date, the language you read them in, and the day you agreed. None of this is sent to Qpio.</li>
+  <li>If you delete everything on this device, clear this site's data, or use another device or browser, Qpio will ask you again.</li>
+  <li>If your browser does not let Qpio keep anything, Qpio cannot remember your answer and will ask each time you open it.</li>
+</ul>
+
+<h2>What Qpio is</h2>
+<p>Qpio is a curiosity quiz: five questions a day, other games, Qpio Gym, videos, pictures, and links to books, places and sources.</p>
+<ul>
+  <li><strong>Free.</strong> Qpio is free to use, and there is nothing to buy in it today. If Qpio ever charges for something, it will be for optional extras. The questions, the explanations and the sources stay free, and you will always see a price before you pay anything.</li>
+  <li><strong>No account.</strong> Your progress, your settings and anything you save are kept in this browser, on this device. Qpio cannot see them and cannot get them back for you. To move your progress to another device, use your backup code, in Settings.</li>
+  <li><strong>Still being built.</strong> We may add, change or remove features, for example to improve the questions, fix a problem, keep Qpio secure or follow the law. If we ever stop running Qpio, we will say so in the app in good time, so you can save a copy of what is on your device.</li>
+</ul>
+
+<h2>The questions</h2>
+<ul>
+  <li>Questions are written and checked against published sources. Answers show a source you can open and check yourself.</li>
+  <li>Mistakes can still happen. Facts about places, such as opening times, prices and rules, can change: check with the place before you go.</li>
+  <li>Qpio is for learning and fun. It is not professional advice of any kind, whether medical, legal, financial, travel or anything else. Do not rely on it where a mistake could harm you or cost you money.</li>
+  <li>If you think something is wrong, we want to know. The way to tell us will appear under “Who runs Qpio” once Qpio has an address.</li>
+</ul>
+
+<h2>Qpio Gym</h2>
+<p>Qpio Gym has daily puzzles, short moves for your hands and fingers, and small everyday things to do a different way, such as crossing your arms the other way round or tapping your foot while you count. The moves are meant to be done sitting down.</p>
+<ul>
+  <li>Only do what feels comfortable. Go gently, and stop if anything hurts.</li>
+  <li>If you have an injury or a condition that affects how you move, for example your hands, wrists, arms, shoulders, legs or feet, ask a doctor before doing the moves.</li>
+  <li>Do the moves sitting down, never while walking, cycling or driving.</li>
+  <li>Younger children should have a grown-up nearby.</li>
+  <li>Qpio Gym is for fun and practice. It is not a treatment, a therapy or medical advice.</li>
+</ul>
+
+<h2>Videos, pictures and links</h2>
+<p><strong>Videos.</strong> Qpio uses YouTube API Services to play videos inside the app. By using Qpio, you agree to be bound by the <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">YouTube Terms of Service</a>. What YouTube receives when a video plays is covered by the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. Qpio chooses which videos to show, but does not make them.</p>
+<p><strong>Pictures.</strong> Most question pictures come from Wikimedia Commons. Each one stays under its own licence, chosen by the person who made it, and does not belong to Qpio. Some illustrations are generated by AI, and they are labelled that way.</p>
+<p><strong>Links.</strong> Qpio links to books, places, museums, sources and other websites. Other people run them, under their own terms and privacy rules, and Qpio does not control them. A link does not mean they support Qpio, or that Qpio agrees with everything they say. Qpio earns nothing from its links today. If a link ever earns Qpio money, it will say so next to the link, and that will never change which links you are shown.</p>
+
+<h2>Using Qpio fairly</h2>
+<p>You are welcome to use Qpio on your own, with your family, or in a class, library, museum or club.</p>
+<p>Please do not:</p>
+<ul>
+  <li>copy Qpio's questions, or a large part of them, into another app, product, dataset or service;</li>
+  <li>use Qpio's content to train, fine-tune or test an AI model;</li>
+  <li>try to break, overload or attack Qpio, or send it false information on purpose;</li>
+  <li>use Qpio's name or logo in a way that suggests Qpio supports something it does not.</li>
+</ul>
+<p>Qpio may block activity that attacks or overloads it.</p>
+<p>A tip: your name on the leaderboard is only shown on this device, but do not use your full real name, and choose one that is kind.</p>
+
+<h2>Qpio's content and name</h2>
+<p>Qpio's questions, answers, explanations and translations, and its name, logo and icons, are Qpio's work and are protected by copyright and other laws. Facts themselves belong to nobody: what is protected is the way Qpio chooses, writes and arranges them.</p>
+<p>You may quote a question or a fact in a lesson, a post, a video or an article, with credit to Qpio and a link back. For anything more, Qpio's <a href="/CONTENT-LICENCE.md">content licence</a> says what needs permission. Qpio reserves its rights over text and data mining (see <a href="/ai.txt">ai.txt</a>). The app's source code has its own licence, published with the code.</p>
+
+<h2>Your privacy</h2>
+<p>How Qpio handles information is explained in its privacy notice, <a href="/privacy">Privacy &amp; your data</a>. To use Qpio, you agree to that notice as well as to these terms, because YouTube asks this of every app that plays its videos.</p>
+<p>Agreeing to these terms and to the notice does not mean agreeing to any use of your data. You can switch off Qpio's counting at any time in Settings › Privacy &amp; your data, and everything else keeps working.</p>
+
+<h2>What we can and cannot promise</h2>
+<ul>
+  <li>We work to keep Qpio running and correct, but we cannot promise that it will always be available, work on every device, or be free of mistakes.</li>
+  <li>Qpio cannot recover anything lost from your device. If your progress matters to you, keep your backup code somewhere safe.</li>
+  <li>We are not responsible for losses nobody could reasonably have expected, or for problems caused by other services, such as YouTube or your browser, or by events outside our control.</li>
+  <li><strong>Nothing in these terms limits your rights as a consumer under the law of the country where you live, or our responsibility for death or personal injury caused by our negligence, for fraud, or for anything else the law does not allow us to limit.</strong></li>
+</ul>
+
+<h2>Changes to these terms</h2>
+<ul>
+  <li>We may change these terms when Qpio changes, when the law changes, or when the company that will run Qpio is set up.</li>
+  <li>Small corrections, such as a typo, are made on this page with a new date.</li>
+  <li>If a change matters to you, Qpio will show you in a few lines what has changed, and ask you to agree again before you carry on. Naming the company that will run Qpio is one of those changes.</li>
+  <li>If you do not agree to the new terms, you can stop using Qpio. You can still save a copy of what is on your device, or delete it.</li>
+  <li>Every version is kept at its own address, which never changes. This one is at <a href="/terms/v1">/terms/v1</a>. Earlier versions are listed at the end of this page, with the dates they applied.</li>
+</ul>
+
+<h2>Stopping</h2>
+<p>You can stop using Qpio whenever you like. To remove what Qpio keeps on your device, use “Delete everything on this device” in Settings › Privacy &amp; your data, or clear this site's data in your browser. If you come back, Qpio will ask you to agree to these terms again.</p>
+
+<h2>Languages</h2>
+<p>These terms are written in English and in French. Both versions say the same thing, and both are valid.</p>
+
+<h2>Which law applies</h2>
+<div class="note">
+<p><strong>Not written yet.</strong> This part depends on the country where the company that will run Qpio is set up. It will be written with a lawyer.</p>
+<p>Whatever it says, if you use Qpio as a consumer, you keep the protection that the law of the country where you live gives you, including any right to go to court there.</p>
+</div>
+
+<h2 id="kids">For younger readers</h2>
+<p>The short version, to read with a grown-up who looks after you:</p>
+<ul>
+  <li>Qpio is free, and you don't need an account.</li>
+  <li>Your progress is kept on this device.</li>
+  <li>If you type a name, don't use your full real name, and choose one that is kind.</li>
+  <li>In Qpio Gym, only do moves that feel comfortable. Stop if anything hurts, and tell a grown-up.</li>
+  <li>Videos come from YouTube. Watch with a grown-up nearby.</li>
+  <li>Found a mistake, or something you didn't like? Tell a grown-up.</li>
+</ul>
+
+<h2>Earlier versions</h2>
+<p>This is the first version. There are no earlier ones.</p>
+
+<p class="foot">Draft 1, 25 September 2026. Qpio will be run by a company that is not set up yet. Its name will appear here once it is.</p>
+
+</section>
+
+<!-- ============================================================= FRANÇAIS -->
+<section id="fr" data-terms-version="1" hidden>
+
+<p><a href="/" class="back">← Retour à Qpio</a></p>
+<h1>Conditions d’utilisation</h1>
+<p class="lede">Les règles pour utiliser Qpio, en mots simples.</p>
+
+<div class="note">
+<p><strong>Projet n°&nbsp;1, 25&nbsp;septembre 2026.</strong> Ce texte est un projet pour la version de test de Qpio. Aucun avocat ne l’a encore relu, et il peut changer avant l’ouverture de Qpio au public. S’il change d’une façon qui compte pour vous, Qpio vous redemandera votre accord.</p>
+</div>
+
+<h2>En bref</h2>
+<ul>
+  <li>Qpio est gratuit, et vous n’avez pas besoin de compte.</li>
+  <li>Votre progression est gardée sur votre appareil, pas par Qpio.</li>
+  <li>Utilisez Qpio pour apprendre, jouer et enseigner. Ne copiez pas ses questions dans un autre produit, et ne les utilisez pas pour entraîner une IA.</li>
+  <li>Les questions servent à apprendre. Ce ne sont pas des conseils professionnels, et des erreurs peuvent arriver.</li>
+  <li>Dans Qpio Gym, ne faites que les mouvements qui vous conviennent, et arrêtez si quelque chose fait mal.</li>
+  <li>Les vidéos sont lues par YouTube, et les conditions de YouTube s’appliquent.</li>
+  <li>Rien dans ces conditions ne vous retire vos droits de consommateur.</li>
+</ul>
+<p>La suite de cette page donne le détail. Si vous avez moins de 18&nbsp;ans, lisez-la avec un parent ou un adulte qui s’occupe de vous. Il existe aussi une <a href="#kids-fr">version courte pour les plus jeunes</a>.</p>
+
+<h2>Qui exploite Qpio</h2>
+<p>Qpio sera exploité par une société qui n’est pas encore créée. Son nom apparaîtra ici dès qu’elle le sera.</p>
+<p>Une fois la société créée, ces conditions donneront son nom, son adresse et un moyen de lui écrire, et Qpio vous redemandera votre accord avant que vous continuiez.</p>
+<p>Qpio n’a pas encore d’adresse à laquelle vous pouvez écrire.</p>
+
+<h2>Accepter ces conditions</h2>
+<ul>
+  <li>Pour utiliser Qpio, vous devez accepter ces conditions et la politique de confidentialité de Qpio. Vous le faites sur l’écran que Qpio affiche avant de commencer, en cochant la case puis en touchant «&nbsp;Commencer&nbsp;». Si ces conditions changent d’une façon qui compte pour vous, Qpio vous redemande votre accord&nbsp;: vous cochez la case et touchez «&nbsp;Continuer&nbsp;».</li>
+  <li>Vous pouvez lire ces conditions et la politique de confidentialité avant d’accepter, et à tout moment ensuite. Vous pouvez enregistrer ou imprimer cette page.</li>
+  <li>Qpio se souvient de votre accord uniquement sur cet appareil. Il garde la version de ces conditions et celle de la politique de confidentialité que vous avez acceptées, chacune avec sa date, la langue dans laquelle vous les avez lues et le jour de votre accord. Rien de cela n’est envoyé à Qpio.</li>
+  <li>Si vous effacez tout sur cet appareil, supprimez les données de ce site, ou utilisez un autre appareil ou un autre navigateur, Qpio vous redemandera votre accord.</li>
+  <li>Si votre navigateur ne laisse Qpio rien garder, Qpio ne peut pas se souvenir de votre réponse et vous la redemandera à chaque ouverture.</li>
+</ul>
+
+<h2>Ce qu’est Qpio</h2>
+<p>Qpio est un quiz de curiosité&nbsp;: cinq questions par jour, d’autres jeux, Qpio Gym, des vidéos, des images, et des liens vers des livres, des lieux et des sources.</p>
+<ul>
+  <li><strong>Gratuit.</strong> Qpio est gratuit, et il n’y a rien à y acheter aujourd’hui. Si Qpio fait un jour payer quelque chose, ce sera pour des options facultatives. Les questions, les explications et les sources restent gratuites, et vous verrez toujours le prix avant de payer quoi que ce soit.</li>
+  <li><strong>Pas de compte.</strong> Votre progression, vos réglages et ce que vous gardez sont conservés dans ce navigateur, sur cet appareil. Qpio ne peut ni les voir ni vous les rendre. Pour transférer votre progression sur un autre appareil, utilisez votre code de sauvegarde, dans les Réglages.</li>
+  <li><strong>Encore en construction.</strong> Nous pouvons ajouter, modifier ou retirer des fonctions, par exemple pour améliorer les questions, corriger un problème, protéger Qpio ou respecter la loi. Si nous arrêtons un jour Qpio, nous le dirons dans l’app suffisamment à l’avance pour que vous puissiez enregistrer une copie de ce qui est sur votre appareil.</li>
+</ul>
+
+<h2>Les questions</h2>
+<ul>
+  <li>Les questions sont écrites et vérifiées à partir de sources publiées. Les réponses indiquent une source que vous pouvez ouvrir et vérifier vous-même.</li>
+  <li>Des erreurs peuvent quand même arriver. Les informations sur les lieux, comme les horaires, les prix ou les règles, peuvent changer&nbsp;: vérifiez auprès du lieu avant d’y aller.</li>
+  <li>Qpio sert à apprendre et à s’amuser. Ce n’est pas un conseil professionnel, qu’il soit médical, juridique, financier, de voyage ou autre. Ne vous y fiez pas quand une erreur pourrait vous nuire ou vous coûter de l’argent.</li>
+  <li>Si vous pensez que quelque chose est faux, nous voulons le savoir. Le moyen de nous le dire apparaîtra dans «&nbsp;Qui exploite Qpio&nbsp;» dès que Qpio aura une adresse.</li>
+</ul>
+
+<h2>Qpio Gym</h2>
+<p>Qpio Gym propose des énigmes du jour, de courts mouvements des mains et des doigts, et de petits gestes de tous les jours à faire autrement, comme croiser les bras dans l’autre sens ou taper du pied en comptant. Les mouvements sont prévus pour être faits assis.</p>
+<ul>
+  <li>Ne faites que ce qui vous convient. Allez-y doucement, et arrêtez si quelque chose fait mal.</li>
+  <li>Si vous avez une blessure ou un problème de santé qui gêne vos mouvements, par exemple aux mains, aux poignets, aux bras, aux épaules, aux jambes ou aux pieds, demandez l’avis d’un médecin avant de faire les mouvements.</li>
+  <li>Faites les mouvements assis, jamais en marchant, à vélo ou en conduisant.</li>
+  <li>Les jeunes enfants devraient avoir un adulte à côté d’eux.</li>
+  <li>Qpio Gym sert à s’amuser et à s’exercer. Ce n’est ni un traitement, ni une thérapie, ni un avis médical.</li>
+</ul>
+
+<h2>Vidéos, images et liens</h2>
+<p><strong>Vidéos.</strong> Qpio utilise les services d’API de YouTube pour lire des vidéos dans l’app. En utilisant Qpio, vous acceptez d’être lié par les <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">Conditions d’utilisation de YouTube</a>. Ce que YouTube reçoit quand une vidéo est lue relève des <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Règles de confidentialité de Google</a>. Qpio choisit les vidéos montrées, mais ne les réalise pas.</p>
+<p><strong>Images.</strong> La plupart des images des questions viennent de Wikimedia Commons. Chacune reste sous sa propre licence, choisie par la personne qui l’a créée, et n’appartient pas à Qpio. Certaines illustrations sont générées par IA, et elles sont signalées comme telles.</p>
+<p><strong>Liens.</strong> Qpio propose des liens vers des livres, des lieux, des musées, des sources et d’autres sites. D’autres les gèrent, selon leurs propres conditions et règles de confidentialité, et Qpio ne les contrôle pas. Un lien ne veut pas dire que ces sites soutiennent Qpio, ni que Qpio approuve tout ce qu’ils disent. Aujourd’hui, Qpio ne gagne rien avec ses liens. Si un lien rapporte un jour de l’argent à Qpio, ce sera indiqué à côté du lien, et cela ne changera jamais les liens qui vous sont proposés.</p>
+
+<h2>Utiliser Qpio correctement</h2>
+<p>Vous pouvez utiliser Qpio pour vous-même, en famille, ou dans une classe, une bibliothèque, un musée ou un club.</p>
+<p>Merci de ne pas&nbsp;:</p>
+<ul>
+  <li>copier les questions de Qpio, ou une grande partie d’entre elles, dans une autre app, un autre produit, un jeu de données ou un autre service&nbsp;;</li>
+  <li>utiliser le contenu de Qpio pour entraîner, affiner ou tester un modèle d’IA&nbsp;;</li>
+  <li>essayer de casser, de surcharger ou d’attaquer Qpio, ou lui envoyer volontairement de fausses informations&nbsp;;</li>
+  <li>utiliser le nom ou le logo de Qpio d’une façon qui laisse croire que Qpio soutient quelque chose qu’il ne soutient pas.</li>
+</ul>
+<p>Qpio peut bloquer ce qui l’attaque ou le surcharge.</p>
+<p>Un conseil&nbsp;: votre nom au classement ne s’affiche que sur cet appareil, mais n’utilisez pas votre vrai nom complet, et choisissez un nom qui ne blesse personne.</p>
+
+<h2>Le contenu et le nom de Qpio</h2>
+<p>Les questions, réponses, explications et traductions de Qpio, ainsi que son nom, son logo et ses icônes, sont le travail de Qpio et sont protégés par le droit d’auteur et d’autres lois. Les faits eux-mêmes n’appartiennent à personne&nbsp;: ce qui est protégé, c’est la façon dont Qpio les choisit, les rédige et les organise.</p>
+<p>Vous pouvez citer une question ou un fait dans un cours, une publication, une vidéo ou un article, en mentionnant Qpio avec un lien vers l’app. Pour tout le reste, la <a href="/CONTENT-LICENCE.md">licence du contenu</a> de Qpio (en anglais) précise ce qui demande une autorisation. Qpio se réserve ses droits sur la fouille de textes et de données (voir <a href="/ai.txt">ai.txt</a>). Le code source de l’app a sa propre licence, publiée avec le code.</p>
+
+<h2>Votre vie privée</h2>
+<p>La façon dont Qpio traite les informations est expliquée dans sa politique de confidentialité, <a href="/privacy">Confidentialité et vos données</a>. Pour utiliser Qpio, vous acceptez cette politique en plus de ces conditions, parce que YouTube le demande à toute app qui lit ses vidéos.</p>
+<p>Accepter ces conditions et cette politique ne veut pas dire accepter une quelconque utilisation de vos données. Vous pouvez désactiver le comptage de Qpio à tout moment dans «&nbsp;Réglages › Confidentialité et tes données&nbsp;», et tout le reste continue de fonctionner.</p>
+
+<h2>Ce que nous pouvons promettre, et ce que nous ne pouvons pas</h2>
+<ul>
+  <li>Nous faisons en sorte que Qpio fonctionne et soit juste, mais nous ne pouvons pas promettre qu’il sera toujours disponible, qu’il marchera sur tous les appareils, ni qu’il sera sans erreur.</li>
+  <li>Qpio ne peut rien récupérer de ce qui est perdu sur votre appareil. Si votre progression compte pour vous, gardez votre code de sauvegarde en lieu sûr.</li>
+  <li>Nous ne sommes pas responsables des pertes que personne ne pouvait raisonnablement prévoir, ni des problèmes causés par d’autres services, comme YouTube ou votre navigateur, ou par des événements indépendants de notre volonté.</li>
+  <li><strong>Rien dans ces conditions ne limite vos droits de consommateur selon la loi du pays où vous vivez, ni notre responsabilité en cas de décès ou de dommage corporel causé par notre négligence, en cas de fraude, ou pour tout ce que la loi ne nous permet pas de limiter.</strong></li>
+</ul>
+
+<h2>Modifications de ces conditions</h2>
+<ul>
+  <li>Nous pouvons modifier ces conditions quand Qpio change, quand la loi change, ou quand la société qui exploitera Qpio sera créée.</li>
+  <li>Les petites corrections, comme une faute de frappe, sont faites sur cette page, avec une nouvelle date.</li>
+  <li>Si un changement compte pour vous, Qpio vous montrera en quelques lignes ce qui a changé, et vous redemandera votre accord avant que vous continuiez. Donner le nom de la société qui exploitera Qpio est l’un de ces changements.</li>
+  <li>Si vous n’acceptez pas les nouvelles conditions, vous pouvez arrêter d’utiliser Qpio. Vous pourrez quand même enregistrer une copie de ce qui est sur votre appareil, ou l’effacer.</li>
+  <li>Chaque version est conservée à sa propre adresse, qui ne change jamais. Celle-ci se trouve à <a href="/terms/v1">/terms/v1</a>. Les versions précédentes sont listées à la fin de cette page, avec les dates où elles s’appliquaient.</li>
+</ul>
+
+<h2>Arrêter</h2>
+<p>Vous pouvez arrêter d’utiliser Qpio quand vous voulez. Pour effacer ce que Qpio garde sur votre appareil, utilisez «&nbsp;Tout effacer sur cet appareil&nbsp;» dans «&nbsp;Réglages › Confidentialité et tes données&nbsp;», ou supprimez les données de ce site dans votre navigateur. Si vous revenez, Qpio vous redemandera d’accepter ces conditions.</p>
+
+<h2>Langues</h2>
+<p>Ces conditions sont rédigées en anglais et en français. Les deux versions disent la même chose et ont la même valeur.</p>
+
+<h2>Loi applicable</h2>
+<div class="note">
+<p><strong>Pas encore rédigé.</strong> Cette partie dépend du pays où sera créée la société qui exploitera Qpio. Elle sera rédigée avec un avocat.</p>
+<p>Quoi qu’elle dise, si vous utilisez Qpio en tant que consommateur, vous gardez la protection que vous donne la loi du pays où vous vivez, y compris tout droit d’y saisir la justice.</p>
+</div>
+
+<h2 id="kids-fr">Pour les plus jeunes</h2>
+<p>La version courte, à lire avec un adulte qui s’occupe de toi&nbsp;:</p>
+<ul>
+  <li>Qpio est gratuit, et tu n’as pas besoin de compte.</li>
+  <li>Ta progression est gardée sur cet appareil.</li>
+  <li>Si tu tapes un nom, n’utilise pas ton vrai nom complet, et choisis un nom gentil.</li>
+  <li>Dans Qpio Gym, ne fais que les mouvements qui te conviennent. Arrête si quelque chose fait mal, et dis-le à un adulte.</li>
+  <li>Les vidéos viennent de YouTube. Regarde-les avec un adulte à côté.</li>
+  <li>Tu as trouvé une erreur, ou quelque chose qui ne t’a pas plu&nbsp;? Dis-le à un adulte.</li>
+</ul>
+
+<h2>Versions précédentes</h2>
+<p>Ceci est la première version. Il n’y en a pas de précédente.</p>
+
+<p class="foot">Projet n°&nbsp;1, 25&nbsp;septembre 2026. Qpio sera exploité par une société qui n’est pas encore créée. Son nom apparaîtra ici dès qu’elle le sera.</p>
+
+</section>
+
+<script>
+/* Language and the way back: this page's only moving parts. */
+(function () {
+  "use strict";
+  /* BACK TO THE APP WITHOUT PILING UP HISTORY. Opened from inside Qpio (the
+   * agreement screen or Settings), the link steps back to where the reader was;
+   * opened from anywhere else, it is a plain link to the app. */
+  if ((document.referrer || "").indexOf(location.origin + "/") === 0) {
+    Array.prototype.forEach.call(document.querySelectorAll("a.back"), function (a) {
+      a.addEventListener("click", function (e) { e.preventDefault(); history.back(); });
+    });
+  }
+  /* Links to the younger readers' version scroll without adding a history
+   * step, so Back still returns to the app in one tap. */
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="#kids"]'), function (a) {
+    a.addEventListener("click", function (e) {
+      var k = document.getElementById(a.getAttribute("href").slice(1));
+      if (k) { e.preventDefault(); k.scrollIntoView(); }
+    });
+  });
+  /* The reader lands in the language they use the app in, and can switch. */
+  var en = document.getElementById("en"), fr = document.getElementById("fr");
+  var bEn = document.getElementById("btnEn"), bFr = document.getElementById("btnFr");
+  function show(l) {
+    en.hidden = l !== "en"; fr.hidden = l !== "fr";
+    bEn.className = l === "en" ? "on" : ""; bFr.className = l === "fr" ? "on" : "";
+    document.documentElement.lang = l;
+  }
+  bEn.addEventListener("click", function () { show("en"); });
+  bFr.addEventListener("click", function () { show("fr"); });
+  var pref = null;
+  try { pref = localStorage.getItem("curio.lang"); } catch (e) {}
+  if (pref !== "en" && pref !== "fr") {
+    pref = (navigator.language || "").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  show(pref);
+  /* /terms#kids (linked from the agreement screen in Kids mode) opens the
+   * version for younger readers, in the reader's language. */
+  if (/^#kids/.test(location.hash)) {
+    var k = document.getElementById(pref === "fr" ? "kids-fr" : "kids");
+    if (k) k.scrollIntoView();
+  }
+})();
+</script>
+</main>
+</body>
+</html>

@@ -14,9 +14,11 @@ Disallow: /brand/
 # Source code is separately MIT-licensed and is not covered by this reservation.
 # See /LICENSE.
 
-# Licensing enquiries: hello@qpio.app
+# Licensing enquiries: Qpio does not yet have an address you can write to.
+# One will be given here, in /CONTENT-LICENCE.md and in the terms of use at
+# /terms once it exists.
 #
-# (Was QpioCorp@mail.com, which is not a real address and never was. A
-# reservation of rights whose contact bounces is materially weaker than one
-# that can be answered - the whole point of naming an address is that a
-# licensee has somewhere to ask.)
+# (25 Sep 2026: an address at qpio.app was listed here, but qpio.app has no mail
+# record, so mail to it is not expected to arrive. The terms of use, /privacy and the
+# content licence all say there is no address yet; this file now says the
+# same, rather than naming one that nobody can reach.)

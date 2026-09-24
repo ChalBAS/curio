@@ -336,6 +336,52 @@
       "Qpio will be run by a company that is not set up yet. Its name will appear here once it is.":
         "Qpio sera exploité par une société qui n’est pas encore créée. Son nom apparaîtra ici dès qu’elle le sera.",
       "Read the full privacy page": "Lire la page de confidentialité complète",
+
+      // --- the agreement screen, before anything else (terms of use, 24 Sep 2026) ---
+      "Before you start": "Avant de commencer",
+      "Qpio is free. To use it, you need to agree to its {terms} and its privacy notice.":
+        "Qpio est gratuit. Pour l’utiliser, tu dois accepter ses {terms} et sa politique de confidentialité.",
+      "The {privacy} explains what stays on this device, and what Qpio counts, with no name or identifier attached, to improve the questions and see how Qpio is used. You can switch the counting off here, or at any time in Settings › Privacy & your data.":
+        "La {privacy} explique ce qui reste sur cet appareil, et ce que Qpio compte, sans nom ni identifiant, pour améliorer les questions et voir comment Qpio est utilisé. Tu peux désactiver le comptage ici, ou à tout moment dans Réglages › Confidentialité et tes données.",
+      "The {privacy} explains what stays on this device, and what Qpio counts, with no name or identifier attached, to improve the questions and see how Qpio is used. You can switch the counting off at any time in Settings › Privacy & your data.":
+        "La {privacy} explique ce qui reste sur cet appareil, et ce que Qpio compte, sans nom ni identifiant, pour améliorer les questions et voir comment Qpio est utilisé. Tu peux désactiver le comptage à tout moment dans Réglages › Confidentialité et tes données.",
+      "Switch counting off": "Désactiver le comptage",
+      "Switch counting back on": "Réactiver le comptage",
+      "The {privacy} explains what stays on this device. Rounds played in Kids mode are not counted.":
+        "La {privacy} explique ce qui reste sur cet appareil. Les parties jouées en mode enfants ne sont pas comptées.",
+      "Terms of use": "Conditions d’utilisation",
+      "Privacy notice": "Politique de confidentialité",
+      "I agree to the Terms of use and the Privacy notice.":
+        "J’accepte les Conditions d’utilisation et la Politique de confidentialité.",
+      "Tick the box first to start.": "Coche d’abord la case pour commencer.",
+      "Tick the box first to carry on.": "Coche d’abord la case pour continuer.",
+      "Under 18? Please read these with a parent or carer.":
+        "Tu as moins de 18 ans ? Lis-les avec un parent ou un adulte qui s’occupe de toi.",
+      "For grown-ups: please read these rules with the child before they tick the box.":
+        "Pour les adultes : merci de lire ces règles avec l’enfant avant qu’il coche la case.",
+      "Ask a grown-up who looks after you to read these rules with you.":
+        "Demande à un adulte qui s’occupe de toi de lire ces règles avec toi.",
+      "The short version for younger readers": "La version courte pour les plus jeunes",
+      "Your browser is blocking storage on this site, so Qpio can't remember that you agreed. It will ask again each time you open it.":
+        "Ton navigateur bloque le stockage sur ce site : Qpio ne peut pas se souvenir de ton accord. Il te le redemandera à chaque ouverture.",
+      "Qpio's rules have changed": "Les règles de Qpio ont changé",
+      "What has changed:": "Ce qui a changé :",
+      "Please read the new {terms}. To keep using Qpio, tick the box below.":
+        "Lis les nouvelles {terms}. Pour continuer à utiliser Qpio, coche la case ci-dessous.",
+      "Carry on": "Continuer",
+      "Not now": "Pas maintenant",
+      "Qpio can't be used until you agree to the new rules. Your progress stays on this device, and you can still save a copy of it or delete it here:":
+        "Qpio ne peut pas être utilisé tant que tu n’as pas accepté les nouvelles règles. Ta progression reste sur cet appareil, et tu peux quand même en enregistrer une copie ou tout effacer ici :",
+      "Back to the new rules": "Revenir aux nouvelles règles",
+      "Ask a grown-up who looks after you to read the new rules with you.":
+        "Demande à un adulte qui s’occupe de toi de lire les nouvelles règles avec toi.",
+      "Terms of use you agreed to": "Conditions d’utilisation acceptées",
+      "{version}, on {date}": "{version}, le {date}",
+      "To keep a copy of what is on this device, tap Save a copy above first.":
+        "Pour garder une copie de ce qui est sur cet appareil, touche d’abord « Enregistrer une copie » plus haut.",
+      "your agreement to the Terms of use, so Qpio will ask again": "ton accord aux Conditions d’utilisation : Qpio te le redemandera",
+      "Have a grown-up nearby.": "Demande à un adulte de rester près de toi.",
+      "Draft 1": "Projet n° 1",
       "Kids mode shows only questions written for ages 8 to 12.":
         "Le mode enfants ne propose que des questions écrites pour les 8 à 12 ans.",
       "It will place you on your country's board when contests start. Until then it stays on this device and is not sent to Qpio. The country Qpio counts comes from your internet connection, not from this choice.":
@@ -737,8 +783,8 @@
       "The same five for everyone, everywhere. Every answer teaches you something worth knowing. Questions you miss can come back later so you have another chance to learn them.":
         "Les mêmes pour tout le monde, partout. Chaque réponse t’apprend quelque chose qui vaut la peine d’être su. Les questions que tu rates peuvent revenir plus tard, pour te laisser une autre chance de les apprendre.",
       "Made for the way you learn.": "Conçu pour ta façon d’apprendre.",
-      "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device — copy your backup code before you change phone.":
-        "Désactive le chrono, active le texte adapté à la dyslexie, la lecture à voix haute ou le contraste élevé — tout est gratuit, tout est dans les Réglages. Il y a aussi un mode enfants, qui ne demande jamais rien. Ta progression est pour l’instant conservée sur cet appareil — copie ton code de sauvegarde avant de changer de téléphone.",
+      "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, with nothing to buy and no account. Your progress is currently stored on this device — copy your backup code before you change phone.":
+        "Désactive le chrono, active le texte adapté à la dyslexie, la lecture à voix haute ou le contraste élevé — tout est gratuit, tout est dans les Réglages. Il y a aussi un mode enfants, sans rien à acheter et sans compte. Ta progression est pour l’instant conservée sur cet appareil — copie ton code de sauvegarde avant de changer de téléphone.",
       "Play today's challenge ▶": "Jouer au défi du jour ▶",
       "Skip": "Passer"
     }

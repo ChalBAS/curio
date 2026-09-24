@@ -79,8 +79,23 @@
     });
   }
 
-  Suite.prototype.boot = function (lang) {
+  /* THE AGREEMENT COMES FIRST (24 Sep 2026). A fresh profile opens on the
+     terms screen and nothing else works until it is accepted, so every journey
+     starts by accepting it the way a reader does: tick the box, tap Start.
+     Addressed by id, never by its words. A journey with `gate: true` is booted
+     WITHOUT accepting, so it can check that the screen really blocks the app. */
+  function acceptGate(w) {
+    return until(function () { return $(w, "#termsGate #tgAgree") && $(w, "#tgStart"); }, 8000).then(function () {
+      var box = $(w, "#tgAgree");
+      if (!box.checked) box.click();
+      $(w, "#tgStart").click();
+      return until(function () { var v = $(w, "#tabView"); return !$(w, "#termsGate") && v && v.children.length; }, 6000);
+    });
+  }
+
+  Suite.prototype.boot = function (lang, j) {
     var self = this;
+    j = j || {};
     return new Promise(function (resolve, reject) {
       var f = self.frame;
       f.onload = function () {
@@ -91,14 +106,17 @@
         w.addEventListener("error", function (e) { w.__errs.push(String(e.message)); });
         w.addEventListener("unhandledrejection", function (e) { w.__errs.push("promise: " + e.reason); });
         until(function () { return w.CURIO_QUESTIONS && w.document.querySelector(".tabbar"); }, 12000)
+          .then(function () { return j.gate ? until(function () { return $(w, "#termsGate"); }, 8000) : acceptGate(w); })
           .then(function () { resolve(w); }).catch(reject);
       };
       // A fresh profile per language, and a cache-buster so the run always
-      // tests the deployed build rather than a cached one.
+      // tests the deployed build rather than a cached one. A fresh profile has
+      // never agreed to the terms, so the agreement screen is always there.
       try {
         localStorage.clear();
         localStorage.setItem("curio.lang", lang);
         localStorage.setItem("curio.onboarded", "1");
+        Object.keys(j.store || {}).forEach(function (k) { localStorage.setItem(k, j.store[k]); });
       } catch (e) {}
       f.src = "/?uat=" + Date.now();
     });
@@ -124,6 +142,152 @@
       s.log(lang, "boot · question bank loaded", w.CURIO_QUESTIONS.length > 0, w.CURIO_QUESTIONS.length + " questions");
       s.log(lang, "boot · language resolved", w.QLANG === lang, "QLANG=" + w.QLANG + " expected " + lang);
       s.log(lang, "boot · four tabs", $$(w, ".tabbar button").length === 4, $$(w, ".tabbar button").length + " tabs");
+      return Promise.resolve();
+    } },
+
+  /* Founder, 24 Sep 2026: "I need the app to only work if the user acknowledges."
+     Booted WITHOUT accepting (gate: true): the screen must be the only thing
+     there, must not give way to a link, to Start with the box empty, or to
+     anything but tick-and-Start, and must then keep only what it says. */
+  { id: "gate", title: "The terms screen blocks the app until it is accepted", gate: true,
+    run: function (w, s, lang) {
+      var g = $(w, "#termsGate");
+      s.log(lang, "gate · shown before anything else", !!g, g ? "" : "no agreement screen on a fresh profile");
+      if (!g) return Promise.resolve();
+      var act = w.document.activeElement || {};
+      s.log(lang, "gate · its title has the focus", act.id === "tgTitle", "focus on " + (act.id || act.tagName));
+      var view = $(w, "#tabView");
+      var nothing = function () {
+        return (!view || view.children.length === 0) && !$(w, ".qtext") && !$(w, ".onb") && $(w, ".tabbar").classList.contains("hidden");
+      };
+      s.log(lang, "gate · nothing behind it: no tab, no round, no welcome screens, no tab bar", nothing(),
+            view ? view.children.length + " nodes in the tab view" : "");
+      s.log(lang, "gate · the box is not ticked for the reader", $(w, "#tgAgree").checked === false);
+      s.log(lang, "gate · counting is shut until the reader agrees", !!w.QpioMeasure && w.QpioMeasure.agreed() === false);
+      s.log(lang, "gate · no sideways scroll inside it", g.scrollWidth <= g.clientWidth + 1, g.scrollWidth + " / " + g.clientWidth + " px");
+      w.location.hash = "stats";                 // a link straight to a tab
+      return wait(300).then(function () {
+        s.log(lang, "gate · a link to a tab opens nothing behind it", nothing() && !!$(w, "#termsGate"));
+        $(w, "#tgStart").click();                // Start with the box empty
+        return wait(250);
+      }).then(function () {
+        var hint = $(w, "#tgHint");
+        s.log(lang, "gate · Start with the box empty says what to do, and does not open Qpio",
+              !!$(w, "#termsGate") && nothing() && !!hint && hint.textContent.trim().length > 0 && w.localStorage.getItem("curio.terms") === null);
+        $(w, "#tgAgree").click();
+        $(w, "#tgStart").click();
+        return until(function () { return !$(w, "#termsGate") && view.children.length; }, 6000).catch(function () { return null; });
+      }).then(function () {
+        var rec = null;
+        try { rec = JSON.parse(w.localStorage.getItem("curio.terms")); } catch (e) {}
+        s.log(lang, "gate · tick and Start opens Qpio", !$(w, "#termsGate") && view.children.length > 0 && !$(w, ".tabbar").classList.contains("hidden"));
+        s.log(lang, "gate · the agreement is kept on this device: terms version and date, privacy notice, language, day, nothing else",
+              !!rec && rec.terms === w.QpioTerms.VERSION && rec.termsDate === w.QpioTerms.DATE && rec.privacy === w.QpioTerms.PRIVACY_VERSION &&
+              rec.lang === lang && /^\d{4}-\d{2}-\d{2}$/.test(rec.at) && Object.keys(rec).length === 5, JSON.stringify(rec));
+        s.log(lang, "gate · counting opens once the reader agrees", w.QpioMeasure.agreed() === true);
+        var f = w.document.activeElement || {};
+        s.log(lang, "gate · after agreeing, focus is on a heading the reader can see, not on the page",
+              (/^H[1-4]$/.test(f.tagName || "") || /qtext/.test(f.className || "")) && !!view.contains(f) && f.getClientRects().length > 0, "focus on " + (f.tagName || "?") + " " + (f.textContent || "").slice(0, 40));
+      });
+    } },
+
+  /* A device that already played (every tester moving up from v107) but never
+     agreed: the same screen as a change, so it can still leave with its data. */
+  { id: "gatereturn", title: "A device with progress but no agreement can say Not now", gate: true,
+    run: function (w, s, lang) {
+      s.log(lang, "gate return · Carry on and Not now are offered", !!$(w, "#tgStart") && !!$(w, "#tgNotNow"));
+      return Promise.resolve();
+    } },
+
+  /* A new reader: the first-launch screen, the counting switch beside the line
+     that explains it, then the welcome screens with the focus on their title. */
+  { id: "gatenew", title: "A new reader can switch counting off before agreeing, then lands on the welcome screen", gate: true,
+    store: { "curio.onboarded": "false" },
+    run: function (w, s, lang) {
+      s.log(lang, "gate new · first launch: Start, and no Not now", !!$(w, "#tgStart") && !$(w, "#tgNotNow"));
+      var sw = $(w, "#tgCount");
+      s.log(lang, "gate new · the counting switch is on the screen", !!sw);
+      if (!sw) return Promise.resolve();
+      var label0 = sw.textContent;
+      sw.click();
+      return wait(150).then(function () {
+        s.log(lang, "gate new · the switch turns counting off, and says so", w.localStorage.getItem("curio.measure.off") === "true" &&
+              w.QpioMeasure.isOff() === true && sw.textContent !== label0 && $(w, "#tgCountSt").textContent.trim().length > 0);
+        s.log(lang, "gate new · switching off opened nothing", !!$(w, "#termsGate") && w.QpioMeasure.agreed() === false);
+        sw.click();
+        return wait(150);
+      }).then(function () {
+        s.log(lang, "gate new · and back on", w.QpioMeasure.isOff() === false && sw.textContent === label0);
+        $(w, "#tgAgree").click();
+        $(w, "#tgStart").click();
+        return until(function () { return !$(w, "#termsGate") && $(w, ".onb"); }, 6000).catch(function () { return null; });
+      }).then(function () {
+        var f = w.document.activeElement || {};
+        s.log(lang, "gate new · agreeing opens the welcome screens", !$(w, "#termsGate") && !!$(w, ".onb"));
+        s.log(lang, "gate new · focus is on the welcome screen's title", !!f.classList && f.classList.contains("onb-title") && f.getClientRects().length > 0,
+              "focus on " + (f.tagName || "?") + (f.className ? "." + f.className : ""));
+      });
+    } },
+
+  /* Not now > Delete everything, at 320px with Extra large text: the two
+     confirmation buttons wrap whole, like the Privacy screen's, never a word
+     split across lines. */
+  { id: "gatedel", title: "The delete confirmation behind Not now fits 320px with Extra large text", gate: true,
+    sizes: [{ w: 320, h: 640, name: "320px, Extra large text" }],
+    store: { "curio.settings": JSON.stringify({ textSize: "xl" }), "curio.terms": JSON.stringify({ terms: "0", at: "2026-01-01" }) },
+    run: function (w, s, lang) {
+      var nn = $(w, "#tgNotNow");
+      s.log(lang, "gate del · Not now is offered after a change", !!nn);
+      if (!nn) return Promise.resolve();
+      nn.click();
+      return wait(250).then(function () {
+        var del = $(w, "#pvDel");
+        s.log(lang, "gate del · Delete everything is offered behind Not now", !!del);
+        if (!del) return;
+        del.click();
+        return wait(250).then(function () {
+          var yes = $(w, "#pvDelYes"), no = $(w, "#pvDelNo"), g = $(w, "#termsGate");
+          /* A word split across two lines has two boxes. Wrapping BETWEEN words
+             is fine at this size; a word broken inside is the defect. */
+          var split = function (b) {
+            var bad = null;
+            [].slice.call(b ? b.childNodes : []).forEach(function (n) {
+              if (n.nodeType !== 3) return;
+              var re = /\S+/g, m;
+              while ((m = re.exec(n.data))) {
+                var r = w.document.createRange();
+                r.setStart(n, m.index); r.setEnd(n, m.index + m[0].length);
+                if (r.getClientRects().length > 1) bad = m[0];
+              }
+            });
+            return bad;
+          };
+          var sy = split(yes), sn = split(no);
+          s.log(lang, "gate del · the confirmation buttons keep every word whole", !!yes && !!no && !sy && !sn,
+                (sy || sn) ? "split: " + (sy || sn) : Math.round(yes ? yes.getBoundingClientRect().width : 0) + " / " + Math.round(no ? no.getBoundingClientRect().width : 0) + " px wide");
+          s.log(lang, "gate del · no sideways scroll", g.scrollWidth <= g.clientWidth + 1, g.scrollWidth + " / " + g.clientWidth + " px");
+          if (no) no.click();   // keep everything: this journey never deletes
+        });
+      });
+    } },
+
+  /* The narrowest phone with the largest text: the screen must still fit, with
+     no sideways scroll, and the box and Start must stay big enough to tap. */
+  { id: "gatexl", title: "The terms screen fits 320px with Extra large text", gate: true,
+    sizes: [{ w: 320, h: 640, name: "320px, Extra large text" }],
+    store: { "curio.settings": JSON.stringify({ textSize: "xl" }) },
+    run: function (w, s, lang) {
+      var g = $(w, "#termsGate");
+      if (!g) { s.log(lang, "gate xl · shown", false, "no agreement screen"); return Promise.resolve(); }
+      s.log(lang, "gate xl · Extra large text is on", w.document.documentElement.classList.contains("fs-xl"));
+      var gr = g.getBoundingClientRect();
+      var over = [].slice.call(g.querySelectorAll("*")).filter(function (n) { return n.getBoundingClientRect().right > gr.right + 1; });
+      s.log(lang, "gate xl · no sideways scroll", g.scrollWidth <= g.clientWidth + 1, g.scrollWidth + " / " + g.clientWidth + " px");
+      s.log(lang, "gate xl · nothing sticks out past the right edge", over.length === 0,
+            over.slice(0, 2).map(function (n) { return n.tagName + (n.id ? "#" + n.id : ""); }).join(", "));
+      var box = $(w, ".tg-agree"), start = $(w, "#tgStart");
+      s.log(lang, "gate xl · the box and Start are at least 44px tall",
+            box.getBoundingClientRect().height >= 44 && start.getBoundingClientRect().height >= 44);
       return Promise.resolve();
     } },
 
@@ -690,13 +854,13 @@
           // A layout-sensitive journey runs once per screen; everything else
           // runs once. Re-booting per size is deliberate — a resized iframe
           // does not re-run the media queries the app read at first paint.
-          var sizes = j.perSize ? SIZES : [null];
+          var sizes = j.sizes || (j.perSize ? SIZES : [null]);
           return q.then(function () {
             return sizes.reduce(function (p2, size) {
               return p2.then(function () {
                 self.size = size;
                 if (size) { self.frame.style.width = size.w + "px"; self.frame.style.height = size.h + "px"; }
-                return self.boot(lang.code).then(function (w) {
+                return self.boot(lang.code, j).then(function (w) {
                   return Promise.resolve()
                     .then(function () { return j.run(w, self, lang.code); })
                     .catch(function (e) { self.log(lang.code, j.id + " · journey crashed", false, String(e.message || e)); });

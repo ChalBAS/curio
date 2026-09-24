@@ -26,7 +26,9 @@ The source code is separate and is MIT-licensed — see [LICENSE](LICENSE).
 - Any use of the Qpio name, logo or wordmark that suggests we endorse or are
   connected to something we are not.
 
-Ask: **QpioCorp@mail.com**. We say yes to most things.
+Qpio does not yet have an address you can write to, so there is no way to ask
+yet. One will be given here, and in the terms of use at `/terms`, once it
+exists. We expect to say yes to most things.
 
 ## Machine use
 
@@ -47,8 +49,8 @@ article — not our text.
 
 ## Found a mistake, or want to use something?
 
-Open an issue, or write to **QpioCorp@mail.com**. Corrections are always welcome
-and always free.
+Corrections are always welcome and always free. The way to send one will be
+given here, and in the terms of use at `/terms`, once Qpio has an address.
 
 ---
 

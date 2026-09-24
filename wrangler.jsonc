@@ -34,7 +34,7 @@
     // a 200 and never redirects â€” a silent failure that looks like a zero tap
     // rate. Removing these two entries and deploying is the server-side KILL
     // SWITCH: the counter dies, the product does not.
-    "run_worker_first": ["/src/*", "/robots.txt", "/api/*", "/doors/*", "/go/*", "/s/*", "/m", "/img/gen/moves/*"],
+    "run_worker_first": ["/src/*", "/robots.txt", "/api/*", "/doors/*", "/go/*", "/s/*", "/m", "/img/gen/moves/*", "/terms/*"],
     // A missing path serves index.html â€” the app is a single-page shell and its
     // routes are hashes, so a deep link must not 404.
     "not_found_handling": "single-page-application"

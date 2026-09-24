@@ -1304,7 +1304,13 @@
     return b;
   }
 
-  var SAFETY = { en: "Go gently. Stop if anything hurts.", fr: "Vas-y doucement. Arrête si quelque chose fait mal." };
+  /* SHOWN ON EVERY ROUTINE, not only in the terms of use (25 Sep 2026): sit down, go gently,
+     and a doctor first for anyone whose moving is affected. The terms say the same; the Kids
+     line about a grown-up nearby is added by app.js, which knows the mode. */
+  var SAFETY = {
+    en: "Do these sitting down. Go gently, and stop if anything hurts. If an injury or a health condition affects how you move, ask a doctor first.",
+    fr: "Fais-les assis. Vas-y doucement, et arrête si quelque chose fait mal. Si une blessure ou un problème de santé gêne tes mouvements, demande d'abord l'avis d'un médecin."
+  };
   function drillTotal(steps) { return steps.reduce(function (a, s) { return a + s.seconds; }, 0); }
 
   function makeHandsDrill(seed, lang) {

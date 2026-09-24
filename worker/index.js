@@ -43,6 +43,10 @@ const AI_CRAWLERS = [
 // Search crawlers that make Qpio findable. Never blocked — they index the page,
 // they do not build models from it, and being invisible to them would cost more
 // than the bank is worth.
+// The version of the terms of use that /terms shows. Must equal TERMS_VERSION
+// in src/terms.js (tools/terms.test.js); every earlier one is terms-v<N>.html.
+const TERMS_CURRENT = 1;
+
 const SEARCH_CRAWLERS = ["googlebot", "bingbot", "duckduckbot", "slurp", "baiduspider", "yandexbot"];
 
 // The assets worth protecting: the question bank, the app logic, the content
@@ -257,6 +261,23 @@ export default {
     // rather than in the UAT wrapper so production carries it too.
     if (url.pathname === "/privacy" || url.pathname === "/privacy/") {
       return env.ASSETS.fetch(new Request(url.origin + "/privacy.html", request));
+    }
+    // /terms, the terms of use, by the same rule: the agreement screen links
+    // here, and a reader must never be asked to agree to a page that answers
+    // with the app instead of the terms (24 Sep 2026).
+    if (url.pathname === "/terms" || url.pathname === "/terms/") {
+      return env.ASSETS.fetch(new Request(url.origin + "/terms.html", request));
+    }
+    // EVERY VERSION AT AN ADDRESS THAT NEVER CHANGES (25 Sep 2026): /terms/v1,
+    // /terms/v2 and so on. "The block is enough" rests on keeping every version
+    // readers agreed to, where anyone can read it. The current version is
+    // terms.html; a replaced one is kept word for word as terms-v<N>.html.
+    // A version that does not exist yet is a 404, never the app.
+    const termsV = /^\/terms\/v([1-9][0-9]*)\/?$/.exec(url.pathname);
+    if (termsV) {
+      const n = Number(termsV[1]);
+      if (n > TERMS_CURRENT) return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+      return env.ASSETS.fetch(new Request(url.origin + (n === TERMS_CURRENT ? "/terms.html" : "/terms-v" + n + ".html"), request));
     }
 
     const res = await env.ASSETS.fetch(request);

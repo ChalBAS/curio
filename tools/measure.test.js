@@ -144,6 +144,14 @@ function check(name, ok, detail) {
   /* Every send is counted here, so "sends nothing" is observed, not inferred. */
   let beacons = 0;
   global.navigator.sendBeacon = () => { beacons++; return true; };
+  /* The reader here has agreed to the terms: measure.js sends nothing before
+   * that (tools/terms.test.js proves it), so without this every send below
+   * would be refused for the wrong reason. terms.js loads first, as in
+   * index.html. */
+  require(path.resolve(__dirname, '..', 'src', 'terms.js'));
+  global.window.QpioTerms.accept();
+  check('the reader in these checks has agreed to the terms', global.window.QpioTerms.accepted() === true &&
+    JSON.parse(store['curio.terms']).terms === global.window.QpioTerms.VERSION);
   require(path.resolve(__dirname, '..', 'src', 'measure.js'));
   const M = global.window.QpioMeasure;
   const C = M._internals;

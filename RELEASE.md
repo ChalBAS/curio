@@ -83,6 +83,13 @@ A build is accepted when all of these are true on a real phone, not a simulator:
    is the new one.
 8. Nothing in the browser console is red.
 
+**When the terms or the agreement screen change** (`terms.html`, `src/terms.js`, or the
+`TERMS` block in `src/app.js`): before the release is signed off, take screenshots of the
+agreement screen in English and French, first launch and "rules have changed", and attach
+them to that release's issue in curio-hq. Together with the terms kept at `/terms/v<N>`,
+they show what every reader agreed to and how the screen asked, which is the whole record
+Qpio keeps: nothing about who agreed is stored on Qpio's side.
+
 **Should pass — a failure is logged, and may still ship with the CEO's explicit call**
 9. Every new question's source opens and supports the fact.
 10. Sub-topics have enough questions to fill a round.

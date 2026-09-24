@@ -2,7 +2,7 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v107";
+const CACHE = "qpio-v108";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
 const NUDGE_CACHE = "qpio-nudge";
@@ -136,49 +136,52 @@ const FLAGS = [
   "./img/cities/tbilisi.1bb00f0f.jpg"
 ];
 // FLAGS:end
-// "./privacy" is the full privacy page, precached so it opens offline too. The
-// shell handler below keeps it under its own key, never under the app's.
+// "./privacy" is the full privacy page and "./terms" the terms of use, both
+// precached so they open offline too: the agreement screen links to them before
+// anything else in the app works. The shell handler below keeps each under its
+// own key, never under the app's.
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=107",
-  "./brand/qpio-mark-96.png?v=107",
-  "./brand/icons/qpio-icon-96.png?v=107",
-  "./brand/qpio-lockup-header.png?v=107",
-  "./src/i18n.js?v=107",
-  "./src/questions.fr.js?v=107",
-  "./src/qid.legacy.js?v=107",
-  "./src/content.version.js?v=107",
-  "./src/measure.js?v=107",
-  "./src/privacy.js?v=107",
-  "./src/truthlab.fr.js?v=107",
-  "./src/app.js?v=107",
-  "./src/questions.js?v=107",
-  "./src/truthlab.js?v=107",
-  "./src/citypacks.js?v=107",
-  "./src/citypacks.fr.js?v=107",
-  "./src/entities.fr.js?v=107",
-  "./src/entities.img.js?v=107",
-  "./src/flags.js?v=107",
-  "./src/entities.meta.js?v=107",
-  "./src/country.js?v=107",
-  "./src/links.read.js?v=107",
-  "./src/golinks.js?v=107",
-  "./src/doors.js?v=107",
-  "./src/hooks.js?v=107",
-  "./src/gymart.js?v=107",
-  "./src/braingym.js?v=107",
-  "./src/watch.chosen.js?v=107",
-  "./src/doors.chosen.js?v=107",
-  "./src/doors.bank.js?v=107",
-  "./src/watch.empty.js?v=107",
-  "./src/hooks.q.js?v=107",
-  "./src/discovery.js?v=107",
-  "./src/daily.overrides.js?v=107",
-  "./src/resources.js?v=107",
-  "./src/intelligence.js?v=107",
-  "./src/intelligence.corpus.js?v=107",
-  "./src/preload.js?v=107",
+  "./src/styles.css?v=108",
+  "./brand/qpio-mark-96.png?v=108",
+  "./brand/icons/qpio-icon-96.png?v=108",
+  "./brand/qpio-lockup-header.png?v=108",
+  "./src/i18n.js?v=108",
+  "./src/questions.fr.js?v=108",
+  "./src/qid.legacy.js?v=108",
+  "./src/content.version.js?v=108",
+  "./src/terms.js?v=108",
+  "./src/measure.js?v=108",
+  "./src/privacy.js?v=108",
+  "./src/truthlab.fr.js?v=108",
+  "./src/app.js?v=108",
+  "./src/questions.js?v=108",
+  "./src/truthlab.js?v=108",
+  "./src/citypacks.js?v=108",
+  "./src/citypacks.fr.js?v=108",
+  "./src/entities.fr.js?v=108",
+  "./src/entities.img.js?v=108",
+  "./src/flags.js?v=108",
+  "./src/entities.meta.js?v=108",
+  "./src/country.js?v=108",
+  "./src/links.read.js?v=108",
+  "./src/golinks.js?v=108",
+  "./src/doors.js?v=108",
+  "./src/hooks.js?v=108",
+  "./src/gymart.js?v=108",
+  "./src/braingym.js?v=108",
+  "./src/watch.chosen.js?v=108",
+  "./src/doors.chosen.js?v=108",
+  "./src/doors.bank.js?v=108",
+  "./src/watch.empty.js?v=108",
+  "./src/hooks.q.js?v=108",
+  "./src/discovery.js?v=108",
+  "./src/daily.overrides.js?v=108",
+  "./src/resources.js?v=108",
+  "./src/intelligence.js?v=108",
+  "./src/intelligence.corpus.js?v=108",
+  "./src/preload.js?v=108",
   // The list puzzle's sixteen pictures (24 Sep 2026): a word always comes with
   // its picture, offline too. Generated, so kept under img/gen/ (marked as AI
   // wherever shown); ~300 KB together. curio-hq/tools/test_braingym.js fails the
@@ -205,13 +208,15 @@ const ASSETS = [
   "./brand/icons/qpio-icon-512-maskable.png",
   "./icons/apple-touch-icon.png",
   "./icons/favicon-32.png",
-  "./privacy"
+  "./privacy",
+  "./terms"
 ];
 
 // Best effort, never a reason to fail the install: a host that does not serve
-// /privacy (a plain local server answers 404) would otherwise get no worker at
-// all, and so no offline app. Every other entry above is the release itself.
-const OPTIONAL = ["./privacy"];
+// /privacy or /terms (a plain local server answers 404) would otherwise get no
+// worker at all, and so no offline app. Every other entry above is the release
+// itself.
+const OPTIONAL = ["./privacy", "./terms"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -354,11 +359,13 @@ self.addEventListener("fetch", (e) => {
   // EACH PAGE UNDER ITS OWN NAME (24 Sep 2026). Every navigation used to be
   // stored as "./index.html", so opening /privacy overwrote the cached app:
   // an installed app launched offline then opened the privacy page and had no
-  // way back. Now /privacy is kept as "./privacy", the app as "./index.html",
-  // and any other page is served but never stored over either of them.
+  // way back. Now /privacy is kept as "./privacy", /terms as "./terms", the
+  // app as "./index.html", and any other page is served but never stored over
+  // any of them.
   if (isShell(req)) {
     const path = new URL(req.url).pathname;
     const key = (path === "/privacy" || path === "/privacy/") ? "./privacy"
+              : (path === "/terms" || path === "/terms/") ? "./terms"
               : (path === "/" || path.endsWith("/index.html")) ? "./index.html" : null;
     e.respondWith(fetch(req, { cache: "no-store" })
       .then((res) => { if (key && res && res.status === 200) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(key, copy)); } return res; })

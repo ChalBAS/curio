@@ -82,6 +82,13 @@
   function isOff() { if (!WRITABLE) return true; try { return JSON.parse(localStorage.getItem(OFF_KEY)) === true; } catch (e) { return true; } }
   function halt() { halted = true; live = null; }
 
+  /* NOTHING BEFORE THE AGREEMENT (24 Sep 2026). Qpio cannot be used until the
+   * reader agrees to its terms on the screen app.js shows first, and that
+   * includes this file: before then no round is opened, nothing is sent, and a
+   * round left waiting from an earlier visit stays where it is until they
+   * agree. It fails closed: if src/terms.js did not load, nothing is sent. */
+  function agreed() { try { return !!(window.QpioTerms && window.QpioTerms.accepted()); } catch (e) { return false; } }
+
   /* ---------------------------------------------------------------- the day */
   /* THE READER'S OWN DAY, NOT THE SERVER'S. Qpio serves one set of five per
    * content day, and a reader in Auckland meets the same five as a reader in
@@ -173,7 +180,7 @@
 
   /* ----------------------------------------------------------------- sending */
   function send(payload) {
-    if (halted) return false;
+    if (halted || !agreed()) return false;
     var body = JSON.stringify(payload);
     /* sendBeacon survives the page being closed, which is exactly when a round
      * ends. Its queue can be full, and it says so — that is a real failure and
@@ -214,6 +221,7 @@
   }
 
   function flush() {
+    if (!agreed()) return;              // not even the clean-up: nothing runs before the agreement
     if (isOff()) { LSset(QUEUE_KEY, []); return; }
     var q = LSget(QUEUE_KEY, []);
     if (!Array.isArray(q) || !q.length) return;
@@ -241,7 +249,7 @@
    * here rather than sent for the server to refuse — a refusal costs a request
    * and tells us nothing we could not see locally. */
   function round(r) {
-    if (isOff() || halted || !r || (r.mode === "kids" && !KIDS_COUNTED) ||
+    if (!agreed() || isOff() || halted || !r || (r.mode === "kids" && !KIDS_COUNTED) ||
         !Array.isArray(r.questions) || !r.questions.length) return false;
 
     var qs = [];
@@ -306,7 +314,7 @@
   var live = null;
 
   function begin(r) {
-    if (isOff() || halted || !r || (r.mode === "kids" && !KIDS_COUNTED) ||
+    if (!agreed() || isOff() || halted || !r || (r.mode === "kids" && !KIDS_COUNTED) ||
         !Array.isArray(r.questions) || !r.questions.length) { live = null; return; }
     live = {
       surface: r.surface || "daily",
@@ -388,6 +396,7 @@
     isOff: isOff,
     setOptOut: setOptOut,
     halt: halt,
+    agreed: agreed,
     kidsCounted: KIDS_COUNTED,
     storable: WRITABLE,
     /* exposed for the tests, which check the parts rather than the network */
@@ -396,6 +405,7 @@
   };
 
   /* Anything stranded by a closed tab or a dropped connection goes on the next
-   * visit, not never. */
+   * visit, not never - once the reader has agreed to the terms. Before that,
+   * flush() does nothing, and app.js calls it again the moment they agree. */
   try { flush(); } catch (e) { /* measurement must never stop the app loading */ }
 })();

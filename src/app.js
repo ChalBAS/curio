@@ -734,8 +734,13 @@
   function fmt(s2) { return settings.anchors ? anchorize(s2) : esc(s2); }
 
   // ---------- FEAT-027: surfaces & tab shell ----------
+  // appOpen: false until the reader has agreed to the terms (TERMS:begin). Until
+  // then nothing renders: not a tab, not the welcome screens, not a round, even
+  // if something asks (a hash change, the Home button, a deep link).
+  var appOpen = false;
   // render(node) = play surface: goes to the overlay, shown above tab content.
   function render(node) {
+    if (!appOpen) return;
     hushed();
     playLayer.innerHTML = "";
     playLayer.appendChild(node);
@@ -843,6 +848,7 @@
     }
   }
   function route() {
+    if (!appOpen) return;   // behind the agreement screen nothing renders
     // #daily is a COMMAND, not a tab: the notification tap must land inside
     // today's challenge whether the app was closed (boot handles it) or open
     // in a background tab (hashchange lands here without a reload).
@@ -1962,7 +1968,9 @@
         '<div class="qtext" id="drillText" aria-live="polite" style="margin-top:10px"></div>' +
         '<div class="gbar" style="margin-top:12px"><i id="drillBar" style="width:0"></i></div>' +
         '<div class="mini" id="drillMeta" style="margin-top:6px"></div>' +
-        '<p class="mini" style="margin:8px 0 0;opacity:.75">' + esc(gymText(d.safety)) + '</p>' +
+        '<p class="mini" style="margin:8px 0 0;opacity:.75">' + esc(gymText(d.safety)) +
+          // Kids mode: the terms' "younger children should have a grown-up nearby", here too.
+          (settings.ageMode === "kids" ? " " + t("Have a grown-up nearby.") : "") + '</p>' +
         '<div class="btnrow" style="margin-top:14px">' +
           '<button class="btn ghost" id="drillNext">' + t("Next step") + '</button>' +
           '<button class="btn ghost" id="drillPause">' + t("Pause") + '</button>' +
@@ -2756,7 +2764,9 @@
     wrap.appendChild(pvRightsCard(kids));
     // Same window on purpose: a new tab can have separate storage on an
     // installed iPhone app, and the switch there would then govern nothing.
-    wrap.appendChild(el('<div class="card"><a class="rowlink" href="/privacy"><span>' + t("Read the full privacy page") + '</span><span class="chev" aria-hidden="true">›</span></a></div>'));
+    // The terms of use sit beside it, reached the same way (24 Sep 2026).
+    wrap.appendChild(el('<div class="card"><a class="rowlink" href="/privacy"><span>' + t("Read the full privacy page") + '</span><span class="chev" aria-hidden="true">›</span></a>' +
+      '<a class="rowlink" href="/terms" style="margin-top:8px"><span>' + t("Terms of use") + '</span><span class="chev" aria-hidden="true">›</span></a></div>'));
     return wrap;
   }
 
@@ -2792,7 +2802,7 @@
   // Keys the list names on a line of its own; anything else Qpio keeps is
   // counted on the last line, so nothing is left out of the picture.
   var PV_LISTED = ["playerName", "leaderboard", "country", "discovery", "vault", "stats", "streak", "hiscore",
-    "gym.vault", "gym.day", "gym.day.kids", "qseen2", "settings", "lang", "nudge", "nudgeHour", "measure.off", "firstweek", "mq", "mhealth"];
+    "gym.vault", "gym.day", "gym.day.kids", "qseen2", "settings", "lang", "nudge", "nudgeHour", "measure.off", "firstweek", "mq", "mhealth", "terms"];
   function pvRow(label, value) { return '<div><dt>' + label + '</dt><dd>' + esc(value) + '</dd></div>'; }
 
   // Built each time the panel opens, so every value is what is stored now.
@@ -2839,6 +2849,9 @@
     if (!Array.isArray(led)) led = [];
     rows.push(pvRow(t("Questions seen in the last 45 days"), led.filter(function (e) { return e && today - e.d < QF_PRUNE_DAYS; }).length));
     rows.push(pvRow(t("Your settings"), t("text size, timer, reading aids, age mode and language")));
+    // The agreement to the terms (src/terms.js): which version, and the day.
+    var tr = window.QpioTerms ? QpioTerms.read() : null;
+    rows.push(pvRow(t("Terms of use you agreed to"), tr ? tf("{version}, on {date}", { version: termsName(tr.terms), date: termsDay(tr.at) }) : t("none")));
     rows.push(pvRow(t("Daily reminder"), (LS.get("nudge", false) && notifyState() === "granted") ? tf("on, from {h}:00", { h: LS.get("nudgeHour", 8) }) : t("off")));
     rows.push(pvRow(t("Counting"), (window.QpioMeasure && !QpioMeasure.isOff()) ? t("on") : t("off")));
     var ws = window.QpioPrivacy ? QpioPrivacy.weekStart(LS.get("firstweek", null)) : null;
@@ -2965,7 +2978,15 @@
     if (!canStore || !window.QpioPrivacy) save.disabled = true;
     save.addEventListener("click", function () { pvSave(node.querySelector("#pvSaveMsg"), node.querySelector("#pvSaveFb")); });
 
-    var del = node.querySelector("#pvDel"), panel = node.querySelector("#pvConfirm");
+    pvDeleteWire(node.querySelector("#pvDel"), node.querySelector("#pvConfirm"));
+    return node;
+  }
+
+  // The confirmation behind every "Delete everything on this device" button:
+  // the Privacy screen, and the "Not now" screen shown when the terms change.
+  // onGate: the "Not now" screen, where Settings cannot be reached, so the way
+  // to keep a copy is the Save a copy button on that same screen.
+  function pvDeleteWire(del, panel, onGate) {
     function closePanel() {
       panel.hidden = true; panel.innerHTML = "";
       del.setAttribute("aria-expanded", "false");
@@ -2983,9 +3004,11 @@
           '<li>' + t("your name, country and settings, including language") + '</li>' +
           '<li>' + t("your daily reminder, which will stop") + '</li>' +
           '<li>' + t("the pictures kept so they load faster") + '</li>' +
+          '<li>' + t("your agreement to the Terms of use, so Qpio will ask again") + '</li>' +
         '</ul>' +
         pvLine(t("This cannot be undone. Qpio has no copy that could bring it back.")) +
-        pvLine(t("To keep your progress, copy your backup code in Settings first.")) +
+        (onGate ? pvLine(t("To keep a copy of what is on this device, tap Save a copy above first."))
+                : pvLine(t("To keep your progress, copy your backup code in Settings first."))) +
         (off ? pvLine(t("Counting stays off.")) : '') +
         (kidsNow ? pvLine(t("Kids mode stays on.")) : '') +
         // notifyState(), not Notification.permission, which throws in iPhone
@@ -3008,7 +3031,6 @@
     panel.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !panel.hidden && !WIPING) { e.preventDefault(); closePanel(); }
     });
-    return node;
   }
 
   // ---- 3. Counting ----
@@ -4707,7 +4729,7 @@
         text: t("One tap, and it helps us know where to put our effort. It is kept as a single word — no link to you, and nothing follows you around."),
         pick: "discovery" },
       { emoji: "⚙️", title: t("Made for the way you learn."),
-        text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device — copy your backup code before you change phone.") }
+        text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, with nothing to buy and no account. Your progress is currently stored on this device — copy your backup code before you change phone.") }
     ];
     var s = slides[step];
     var dots = slides.map(function (_, i) {
@@ -4804,26 +4826,258 @@
     if (sk) sk.addEventListener("click", function () { finish(false); });
   }
 
+  /* TERMS:begin */
+  // ---------- the agreement: nothing in Qpio works until the reader agrees ----------
+  //
+  // Founder, 24 Sep 2026: "Most app require the user to acknowledge of the term
+  // and privacy rules. they can't use the app unless they agree. I need the app
+  // to only work if the user acknowledges."
+  //
+  // This screen comes before everything: before the welcome screens, before any
+  // tab, before a deep link or a notification tap opens a round. Behind it
+  // nothing renders (render() and route() refuse while appOpen is false), no
+  // round is counted (measure.js asks QpioTerms before it opens or sends one),
+  // and no reminder fires (hushTermsNudge below; the page's own nudge starts
+  // only in openApp). The service worker still installs, so Qpio and the two
+  // pages this screen links to open offline.
+  //
+  // ONE CLEAR TAP. The box is never ticked for the reader, its label says what
+  // agreeing means, and Start with the box empty says what to do rather than
+  // doing nothing. The links open the full texts in this window (a new tab can
+  // have separate storage in an installed iPhone app); their Back link returns
+  // here. What is kept, and why only here: src/terms.js.
+  //
+  // Every sentence is a literal t() call, so the French check sees every line
+  // (tools/terms.test.js checks this block the way privacy.test.js checks its own).
+
+  // The name each version goes by, as terms.html names it (the Privacy screen
+  // shows it under "See what is stored").
+  var TERMS_NAMES = { "1": t("Draft 1") };
+  // For a version that asks again: the two lines saying what changed, written in
+  // both languages with the new terms.html, as literal t() calls. Empty for the
+  // first version: nobody can have agreed to an earlier one.
+  var TERMS_CHANGES = {};
+  function termsName(v) { return TERMS_NAMES[v] || String(v); }
+  function termsDay(at) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(at || "");
+    return m ? pvDate(new Date(+m[1], +m[2] - 1, +m[3])) : String(at || "");
+  }
+  function termsAccepted() { try { return !!(window.QpioTerms && QpioTerms.accepted()); } catch (e) { return false; } }
+
+  // The service worker's daily wake reads the reminder queue, not this page, so
+  // behind the agreement the queue is switched off (never created, never
+  // deleted). openApp() writes it back from the reader's own settings.
+  function hushTermsNudge() {
+    try {
+      if (!("caches" in window)) return;
+      caches.has(NUDGE_CACHE).then(function (has) {
+        if (!has) return;
+        return caches.open(NUDGE_CACHE).then(function (c) {
+          return c.put(NUDGE_URL, new Response(JSON.stringify({ v: 2, on: false, hour: LS.get("nudgeHour", 8), days: {} }),
+            { headers: { "Content-Type": "application/json" } }));
+        });
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  var termsGateEl = null, termsShielded = [];
+  // While the screen is up, everything else on the page is out of reach: not
+  // announced by a screen reader, not reachable by keyboard, not scrolled.
+  function termsShield(on) {
+    document.documentElement.classList.toggle("tg-open", on);
+    if (on) {
+      Array.prototype.forEach.call(document.body.children || [], function (n) {
+        if (n === termsGateEl || n.tagName === "SCRIPT" || n.hasAttribute("inert")) return;
+        n.setAttribute("inert", ""); n.setAttribute("aria-hidden", "true");
+        termsShielded.push(n);
+      });
+    } else {
+      termsShielded.forEach(function (n) { n.removeAttribute("inert"); n.removeAttribute("aria-hidden"); });
+      termsShielded = [];
+    }
+  }
+
+  function termsGate() {
+    var T = window.QpioTerms;
+    var changed = !!T && T.state() === "changed";
+    // A device that used Qpio before it had terms (every tester moving up from
+    // v107) has progress but no agreement. It gets the same screen as a change,
+    // with Not now, so its reader can still save a copy or delete it.
+    var again = changed || (!!T && T.state() === "new" && !!LS.get("onboarded", false));
+    var kids = settings.ageMode === "kids";
+    // The Kids line says Kids rounds are not counted, so it is only shown while
+    // that is what measure.js does.
+    var kidsQuiet = kids && !(window.QpioMeasure && QpioMeasure.kidsCounted);
+    // The switch for the counting sits beside the line that explains it, so a
+    // reader can object before anything is ever counted. Not where there is
+    // nothing to switch: Kids rounds that are not counted, or a browser that
+    // cannot keep the choice (measure.js sends nothing there).
+    var canSwitch = !kidsQuiet && !!window.QpioMeasure && QpioMeasure.storable;
+    var blocked = !(T ? T.canStore() : pvCanStore());
+    var aTerms = '<a href="/terms">' + t("Terms of use") + '</a>';
+    var aPrivacy = '<a href="/privacy">' + t("Privacy notice") + '</a>';
+    var what = (T && TERMS_CHANGES[T.VERSION]) || [];
+
+    tabBar.classList.add("hidden");
+    hushTermsNudge();
+    termsGateEl = el('<div class="tgate" id="termsGate" role="dialog" aria-modal="true" aria-labelledby="tgTitle"></div>');
+    document.body.appendChild(termsGateEl);
+    termsShield(true);
+    var card = null;
+    // Each view is built whole, then put in place of the one before.
+    function show(html) {
+      card = el('<div class="card tg">' + html + '</div>');
+      termsGateEl.innerHTML = "";
+      termsGateEl.appendChild(card);
+    }
+
+    function p(html, cls) { return '<p' + (cls ? ' class="' + cls + '"' : '') + '>' + html + '</p>'; }
+    function kidsLines(childLine) {
+      return kids ? p(childLine, "tg-lead") +
+        p(t("For grown-ups: please read these rules with the child before they tick the box.")) +
+        p('<a href="/terms#kids">' + t("The short version for younger readers") + '</a>') : "";
+    }
+    // What is counted, said no more strongly than /privacy says it: no name or
+    // identifier is attached, but a total can sometimes describe one person, so
+    // it is never called anonymous here.
+    function privacyLine() {
+      return p(kidsQuiet
+        ? tf("The {privacy} explains what stays on this device. Rounds played in Kids mode are not counted.", { privacy: aPrivacy })
+        : canSwitch
+          ? tf("The {privacy} explains what stays on this device, and what Qpio counts, with no name or identifier attached, to improve the questions and see how Qpio is used. You can switch the counting off here, or at any time in Settings › Privacy & your data.", { privacy: aPrivacy })
+          : tf("The {privacy} explains what stays on this device, and what Qpio counts, with no name or identifier attached, to improve the questions and see how Qpio is used. You can switch the counting off at any time in Settings › Privacy & your data.", { privacy: aPrivacy })) +
+        (canSwitch ? '<div class="tg-count"><button class="btn ghost" type="button" id="tgCount"></button>' +
+          '<p class="mini" id="tgCountSt" role="status"></p></div>' : "");
+    }
+    // The same key the Privacy screen's switch writes; nothing is sent either way.
+    function wireCount() {
+      var b = card.querySelector("#tgCount"), st = card.querySelector("#tgCountSt"), M = window.QpioMeasure;
+      if (!b || !M) return;
+      function paint(said) {
+        var off = M.isOff();
+        b.textContent = off ? t("Switch counting back on") : t("Switch counting off");
+        st.textContent = off ? t("Counting is off. Nothing more is sent from this device, and anything waiting to be sent has been cleared.")
+                             : (said ? t("Counting is on.") : "");
+      }
+      b.addEventListener("click", function () { M.setOptOut(!M.isOff()); paint(true); });
+      paint(false);
+    }
+    function focusTitle() { var h = card.querySelector("#tgTitle"); if (h) h.focus(); }
+
+    function paintRules() {
+      var body = again
+        ? '<h1 id="tgTitle" tabindex="-1">' + t("Qpio's rules have changed") + '</h1>' +
+          kidsLines(t("Ask a grown-up who looks after you to read the new rules with you.")) +
+          // What changed is only said to a reader who agreed to the version before.
+          (changed && what.length ? p(t("What has changed:")) + '<ul>' + what.map(function (w) { return '<li>' + w + '</li>'; }).join("") + '</ul>' : "") +
+          p(tf("Please read the new {terms}. To keep using Qpio, tick the box below.", { terms: aTerms })) +
+          privacyLine()
+        : '<h1 id="tgTitle" tabindex="-1">' + t("Before you start") + '</h1>' +
+          kidsLines(t("Ask a grown-up who looks after you to read these rules with you.")) +
+          p(tf("Qpio is free. To use it, you need to agree to its {terms} and its privacy notice.", { terms: aTerms })) +
+          privacyLine();
+      show(body +
+        p(t("Under 18? Please read these with a parent or carer."), "mini") +
+        (blocked ? p(t("Your browser is blocking storage on this site, so Qpio can't remember that you agreed. It will ask again each time you open it."), "mini") : "") +
+        // Plain text in the label: the links stay outside it, so a tap on a link
+        // never ticks the box, and a tap on the words always does. Both texts
+        // are agreed to: the founder's words name both, and YouTube's rules ask
+        // every app that plays its videos for agreement to a privacy policy.
+        '<label class="tg-agree"><input type="checkbox" id="tgAgree" aria-describedby="tgHint"><span>' +
+          t("I agree to the Terms of use and the Privacy notice.") + '</span></label>' +
+        '<div class="btnrow">' +
+          '<button class="btn" type="button" id="tgStart">' + (again ? t("Carry on") : t("Start")) + '</button>' +
+          (again ? '<button class="btn ghost" type="button" id="tgNotNow">' + t("Not now") + '</button>' : '') +
+        '</div>' +
+        '<p class="tg-hint" id="tgHint" role="alert"></p>');
+      var box = card.querySelector("#tgAgree"), hint = card.querySelector("#tgHint");
+      box.addEventListener("change", function () { if (box.checked) hint.textContent = ""; });
+      card.querySelector("#tgStart").addEventListener("click", function () {
+        if (!box.checked) { hint.textContent = again ? t("Tick the box first to carry on.") : t("Tick the box first to start."); box.focus(); return; }
+        termsAgree();
+      });
+      var nn = card.querySelector("#tgNotNow");
+      if (nn) nn.addEventListener("click", paintNotNow);
+      wireCount();
+      focusTitle();
+    }
+
+    // "Not now" after a change: Qpio stays closed, and the reader can still take
+    // their progress away or delete it, with the same buttons as the Privacy screen.
+    function paintNotNow() {
+      var canStore = pvCanStore();
+      show('<h1 id="tgTitle" tabindex="-1">' + t("Qpio's rules have changed") + '</h1>' +
+        p(t("Qpio can't be used until you agree to the new rules. Your progress stays on this device, and you can still save a copy of it or delete it here:")) +
+        '<div class="btnrow"><button class="btn" type="button" id="tgSave">' + t("Save a copy") + '</button></div>' +
+        '<div class="mini" id="tgSaveMsg" role="status"></div><div id="tgSaveFb"></div>' +
+        '<div class="btnrow" style="margin-top:14px"><button class="btn ghost" type="button" id="pvDel" aria-expanded="false" aria-controls="pvConfirm" style="color:var(--bad);border-color:var(--bad)">' + t("Delete everything on this device") + '</button></div>' +
+        '<div class="pv-confirm" id="pvConfirm" role="group" aria-labelledby="pvDelT" hidden></div>' +
+        '<div class="btnrow" style="margin-top:14px"><button class="btn ghost" type="button" id="tgBack">' + t("Back to the new rules") + '</button></div>');
+      pvPrefetch();
+      var save = card.querySelector("#tgSave");
+      if (!canStore || !window.QpioPrivacy) save.disabled = true;
+      save.addEventListener("click", function () { pvSave(card.querySelector("#tgSaveMsg"), card.querySelector("#tgSaveFb")); });
+      pvDeleteWire(card.querySelector("#pvDel"), card.querySelector("#pvConfirm"), true);
+      card.querySelector("#tgBack").addEventListener("click", paintRules);
+      focusTitle();
+    }
+
+    paintRules();
+  }
+
+  function termsAgree() {
+    try { if (window.QpioTerms) QpioTerms.accept(); } catch (e) {}
+    termsShield(false);
+    if (termsGateEl && termsGateEl.parentNode) termsGateEl.parentNode.removeChild(termsGateEl);
+    termsGateEl = null;
+    tabBar.classList.remove("hidden");
+    // A round left waiting from an earlier visit goes now, not at the next launch.
+    try { if (window.QpioMeasure) QpioMeasure.flush(); } catch (e) {}
+    openApp();
+    // Focus lands on what the reader now sees: the welcome screen, the round a
+    // deep link opened, or the tab. The layer is chosen first: #tabView comes
+    // first in the page, so one selector over both found its hidden heading and
+    // focus fell to <body>. Any level of heading (the Stats tab starts with an
+    // h3); a round has none, so its question.
+    var layer = playShown ? playLayer : tabView;
+    var h = layer && layer.querySelector("h1, h2, h3, h4, .qtext");
+    if (h) { if (!h.hasAttribute("tabindex")) h.setAttribute("tabindex", "-1"); h.focus(); }
+  }
+  /* TERMS:end */
+
   // ---------- boot ----------
+  // Only what the agreement screen itself needs runs before the reader agrees:
+  // their text size and contrast, and the shell it sits on. Everything else is
+  // in openApp().
   applySettings();
-  pruneVault();
   buildShell();
-  var homeBtn = document.getElementById("homeBtn");
-  if (homeBtn) homeBtn.addEventListener("click", goHome);
-  scheduleDailyNudge();
-  window.addEventListener("hashchange", route);
   // Another tab ran "Delete everything on this device". Halt first, so this
   // tab's pagehide cannot send its open round or write firstweek and mhealth
   // back, then restart on the empty storage.
   window.addEventListener("storage", function (e) { if (e.key === "qpio.wiped" && e.newValue) { WIPING = true; try { QpioMeasure.halt(); } catch (x) {} location.replace("/"); } });
-  if (mqDesk.addEventListener) mqDesk.addEventListener("change", onViewportChange);
-  else if (mqDesk.addListener) mqDesk.addListener(onViewportChange); // older Safari/WebViews
-  var bootHash = (location.hash || "").replace(/^#/, "");
-  route();   // tab content always rendered underneath any overlay
-  if (!LS.get("onboarded", false)) {
-    tabBar.classList.add("hidden");   // no tab bar until onboarded (spec §4)
-    onboardingView(0);                // renders in the overlay; final button starts the daily
-  } else if (bootHash === "daily") {
-    startDaily();                     // deep entry (Charter M1): straight into today's first question
+
+  function openApp() {
+    if (appOpen) return;
+    appOpen = true;
+    pruneVault();
+    var homeBtn = document.getElementById("homeBtn");
+    if (homeBtn) homeBtn.addEventListener("click", goHome);
+    scheduleDailyNudge();
+    window.addEventListener("hashchange", route);
+    if (mqDesk.addEventListener) mqDesk.addEventListener("change", onViewportChange);
+    else if (mqDesk.addListener) mqDesk.addListener(onViewportChange); // older Safari/WebViews
+    // Read now, not at load: a notification tap that waited behind the
+    // agreement screen still lands in today's round once the reader agrees.
+    var bootHash = (location.hash || "").replace(/^#/, "");
+    route();   // tab content always rendered underneath any overlay
+    if (!LS.get("onboarded", false)) {
+      tabBar.classList.add("hidden");   // no tab bar until onboarded (spec §4)
+      onboardingView(0);                // renders in the overlay; final button starts the daily
+    } else if (bootHash === "daily") {
+      startDaily();                     // deep entry (Charter M1): straight into today's first question
+    }
   }
+
+  if (termsAccepted()) openApp();
+  else termsGate();                     // the first thing a reader sees, until they agree
 })();
