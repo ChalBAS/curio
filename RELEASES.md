@@ -38,11 +38,12 @@ not by omission.*
 
 ## v108 — ⏳ on UAT
 
-2026-09-25 · 1,983 questions · sign-off: **no release issue**
+2026-09-25 · 1,983 questions · sign-off: awaiting you, [#95](https://github.com/ChalBAS/curio-hq/issues/95)
 
 - `92494b3` v108: Qpio works only after the reader accepts the terms
 - `7b6b12f` Terms: /terms/v1 stays at its own address (no redirect to /terms)
 - `46f3c28` terms.test: the worker asks for the extensionless terms path
+- `df0864b` Releases record: v108 on UAT
 - ⚠️ commit message names a different version: 7b6b12f
 
 ## v107 — ⏳ on UAT

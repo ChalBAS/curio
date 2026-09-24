@@ -86,7 +86,11 @@
    "to": "2026-09-25",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 95,
+    "issues": [
+     95
+    ]
    },
    "messageClash": [
     "7b6b12f"
@@ -106,6 +110,11 @@
      "sha": "46f3c28",
      "date": "2026-09-25",
      "subject": "terms.test: the worker asks for the extensionless terms path"
+    },
+    {
+     "sha": "df0864b",
+     "date": "2026-09-25",
+     "subject": "Releases record: v108 on UAT"
     }
    ]
   },
