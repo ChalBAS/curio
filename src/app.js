@@ -545,7 +545,6 @@
         '<div class="vhead"><span class="vtitle">' + esc(door.title || "") + '</span>' +
           '<button type="button" class="btn ghost vclose" aria-label="' + esc(t("Close the video")) + '">\u2715</button></div>' +
         '<div class="vframe"><iframe title="' + esc(door.title || t("Video")) + '" src="' + esc(src) + '" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media"></iframe></div>' +
-        '<p class="mini vnote">' + esc(door.chosen ? t("Chosen for this question. It plays here, inside Qpio.") : t("It plays here, inside Qpio.")) + '</p>' +
       '</div></div>');
     var frame = sheet.querySelector("iframe"), heard = false, knocks = 0, knocker = null;
     function post(o) { try { frame.contentWindow.postMessage(JSON.stringify(o), YT_ORIGIN); } catch (e1) {} }
@@ -2475,11 +2474,13 @@
 
   function settingsTabView() { // mobile Settings: comfort content, no back header
     var wrap = el('<div class="grid"></div>');
+    /* Privacy first (24 Sep 2026): at the bottom, under the long Comfort card, the founder
+       could not find it. */
+    wrap.appendChild(privacyEntryCard());
     wrap.appendChild(nudgeCard());
     wrap.appendChild(countryCard());
     wrap.appendChild(backupCard());
     wrap.appendChild(comfortView(true));
-    wrap.appendChild(privacyEntryCard());
     return wrap;
   }
 

@@ -424,8 +424,6 @@
       "Ways to hold a list": "Pour garder une liste en t\u00eate",
       "Video": "Vid\u00e9o",
       "Close the video": "Fermer la vid\u00e9o",
-      "Chosen for this question. It plays here, inside Qpio.": "Choisie pour cette question. Elle se joue ici, dans Qpio.",
-      "It plays here, inside Qpio.": "Elle se joue ici, dans Qpio.",
       "That was the video.": "C\u2019\u00e9tait la vid\u00e9o.",
       "Back to Qpio": "Retour \u00e0 Qpio",
       "Four ways to hold a short list. Try one the next time a list comes up.":
