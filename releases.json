@@ -2,11 +2,12 @@
  "generated": "2026-09-24",
  "live": {
   "production": 76,
-  "uat": 104,
+  "uat": 105,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  105,
   104,
   103,
   102,
@@ -74,6 +75,25 @@
   }
  ],
  "releases": [
+  {
+   "version": 105,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-24",
+   "to": "2026-09-24",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "f812889",
+     "date": "2026-09-24",
+     "subject": "v105: Privacy & your data in Settings; Brain Gym once a day, one message, pictures"
+    }
+   ]
+  },
   {
    "version": 104,
    "state": "ON UAT",
