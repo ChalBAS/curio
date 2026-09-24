@@ -2,11 +2,12 @@
  "generated": "2026-09-24",
  "live": {
   "production": 76,
-  "uat": 103,
+  "uat": 104,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  104,
   103,
   102,
   101,
@@ -73,6 +74,25 @@
   }
  ],
  "releases": [
+  {
+   "version": 104,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-24",
+   "to": "2026-09-24",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "692bcf5",
+     "date": "2026-09-24",
+     "subject": "v104: the daily deals only from the golden source, and every card matches it"
+    }
+   ]
+  },
   {
    "version": 103,
    "state": "ON UAT",
