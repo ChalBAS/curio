@@ -1563,7 +1563,7 @@
     var node = el(
       '<div class="card">' +
         '<div class="emoji">🧠</div>' +
-        '<h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3>' +
+        '<h3 style="margin:8px 0 4px">' + t("Qpio Gym") + '</h3>' +
         '<p class="mini" style="margin:0 0 12px">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p>' +
         (done.length ? '<ul class="gdone">' + done.map(function (x) { return '<li><span aria-hidden="true">✓ </span>' + esc(x) + '</li>'; }).join("") + '</ul>' +
           '<p class="mini gnext">' + (pDone && mDone ? t("Done for today. The next set arrives tomorrow.") : t("The next set arrives tomorrow.")) + '</p>' : '') +
@@ -1675,7 +1675,7 @@
         p.scene.kind === "cards" ? '<div class="gart" aria-hidden="true">' + ART.draw(p.scene, {}, { words: (p.sceneLabels || {}).words }) + '</div>' : picture(p);
       var node = el(
         '<div class="card">' +
-          '<div class="mini">' + t("Brain Gym") + ' · ' + (idx + 1) + '/' + set.length + gymVaultNote(p.family) + '</div>' +
+          '<div class="mini">' + t("Qpio Gym") + ' · ' + (idx + 1) + '/' + set.length + gymVaultNote(p.family) + '</div>' +
           '<h3 style="margin:10px 0 6px">' + t(isChange ? "Look carefully" : "Remember these") + '</h3>' + pic +
           /* the words are on the tiles now; read-aloud still speaks the list */
           (p.show && !pics.length ? '<div class="qtext" style="letter-spacing:.04em">' + fmt(gymText(p.show)) + '</div>' : '') +
@@ -1713,7 +1713,7 @@
       var prompt = '<div class="qtext" style="margin-top:10px">' + fmt(gymText(p.prompt)) + '</div>';
       var html =
         '<div class="card">' +
-          '<div class="mini">' + (fam ? fam.icon + ' ' + esc((QLANG === "fr" && fam.nameFr) ? fam.nameFr : t(fam.name)) : t("Brain Gym")) +
+          '<div class="mini">' + (fam ? fam.icon + ' ' + esc((QLANG === "fr" && fam.nameFr) ? fam.nameFr : t(fam.name)) : t("Qpio Gym")) +
             ' · ' + (idx + 1) + '/' + set.length + gymVaultNote(p.family) + '</div>' +
           (isTap ? '' : pic) +
           /* "What came right after X?": X's picture beside the question (the question already says its word) */
@@ -2832,7 +2832,7 @@
     var gd = gymToday(), gdone = [];
     if (typeof gd.p === "number") gdone.push(tf("puzzles done, {n}/{total}", { n: gd.p, total: gd.t || 5 }));
     if (gd.m === true) gdone.push(t("move done"));
-    rows.push(pvRow(t("Brain Gym, today"), gdone.length ? gdone.join(", ") : t("nothing finished yet")));
+    rows.push(pvRow(t("Qpio Gym, today"), gdone.length ? gdone.join(", ") : t("nothing finished yet")));
     // Filtered here: the stored list is only pruned when a round marks a question seen.
     var led = seenLedger(), today = dayNumber();
     if (!Array.isArray(led)) led = [];
