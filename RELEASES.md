@@ -38,9 +38,10 @@ not by omission.*
 
 ## v105 — ⏳ on UAT
 
-2026-09-24 · 1,983 questions · sign-off: **no release issue**
+2026-09-24 · 1,983 questions · sign-off: awaiting you, [#93](https://github.com/ChalBAS/curio-hq/issues/93)
 
 - `f812889` v105: Privacy & your data in Settings; Brain Gym once a day, one message, pictures
+- `47bfcda` Releases record: v105 on UAT
 
 ## v104 — ⏳ on UAT
 

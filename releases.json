@@ -83,7 +83,11 @@
    "to": "2026-09-24",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 93,
+    "issues": [
+     93
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -91,6 +95,11 @@
      "sha": "f812889",
      "date": "2026-09-24",
      "subject": "v105: Privacy & your data in Settings; Brain Gym once a day, one message, pictures"
+    },
+    {
+     "sha": "47bfcda",
+     "date": "2026-09-24",
+     "subject": "Releases record: v105 on UAT"
     }
    ]
   },
