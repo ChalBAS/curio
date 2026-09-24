@@ -22,6 +22,12 @@
     return s;
   }
 
+  // WHERE A READER WRITES ABOUT THEIR DATA. Empty on the test site only: the
+  // Privacy screen then says there is no address yet, and no mailto appears
+  // anywhere. Production requires a working address here AND the same address
+  // on privacy.html (tools/privacy.test.js checks they match).
+  var PRIVACY_CONTACT = "";
+
   // ---------- question banks (per-language; FR falls back to EN while empty) ----------
   //
   // ONE SOURCE OF TRUTH FOR EVERYTHING THAT IS NOT WORDS.
@@ -120,9 +126,14 @@
   var VAULT_SESSION_MAX = 10;
 
   // ---------- storage ----------
+  // WIPING: set by "Delete everything on this device" (Privacy screen) and by
+  // another tab's delete. From then on LS.set writes nothing, so a Quick-Fire
+  // timer or the 60-second nudge that fires after the wipe cannot put the
+  // reader's old state back before the page restarts.
+  var WIPING = false;
   var LS = {
     get: function (k, d) { try { var v = localStorage.getItem("curio." + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
-    set: function (k, v) { try { localStorage.setItem("curio." + k, JSON.stringify(v)); } catch (e) {} }
+    set: function (k, v) { if (WIPING) return; try { localStorage.setItem("curio." + k, JSON.stringify(v)); } catch (e) {} }
   };
 
   // ---------- permanent question identity ----------
@@ -749,6 +760,14 @@
   }
 
   var TAB_IDS = ["home", "games", "stats", "settings"];
+  // A SUB-PAGE lives inside a tab: it renders into #tabView like the tab
+  // itself, and the tab bar keeps its parent highlighted. It never goes
+  // through render(), which would destroy a paused quiz.
+  var SUBPAGES = { privacy: "settings" };
+  // How the Privacy screen was opened, so Back returns the reader to exactly
+  // where they were: history.back() when the app itself opened it, Settings
+  // after a deep link. pvReturn is the id of the row or link to focus again.
+  var pvOpenedInApp = false, pvOpener = null, pvReturn = null;
   var mqDesk = window.matchMedia("(min-width: 900px)");
   function isDesktop() { return mqDesk.matches; }
   var tabView, playLayer, tabBar, resumeBar;
@@ -801,19 +820,28 @@
     }
   }
 
-  function currentTab() {
-    var h = (location.hash || "").replace(/^#/, "");
-    return TAB_IDS.indexOf(h) !== -1 ? h : "home";
-  }
+  function rawHash() { return (location.hash || "").replace(/^#/, ""); }
+  function currentTab() { var h = rawHash(); return (TAB_IDS.indexOf(h) !== -1 || SUBPAGES[h]) ? h : "home"; }
   function renderTab(tab) {
     var node;
     if (tab === "games") node = gamesTabView();
     else if (tab === "stats") node = statsTabView();
     else if (tab === "settings") node = settingsTabView();
+    else if (tab === "privacy") node = privacyView();
     else node = homeTabView();
     tabView.innerHTML = "";
     tabView.appendChild(node);
     if (!playShown) { hushed(); window.scrollTo(0, 0); }
+    // Keeping the reader's place: the Privacy screen takes focus on its title;
+    // coming back from it, focus returns to the row or link that opened it.
+    if (tab === "privacy") {
+      var pvT = document.getElementById("pvTitle");
+      if (pvT) pvT.focus();
+    } else if (pvReturn) {
+      var back = document.getElementById(pvReturn);
+      pvReturn = null;
+      if (back) { back.focus(); back.scrollIntoView({ block: "center" }); }
+    }
   }
   function route() {
     // #daily is a COMMAND, not a tab: the notification tap must land inside
@@ -824,8 +852,9 @@
       return;
     }
     var tab = currentTab();
+    var lit = SUBPAGES[tab] || tab;   // a sub-page lights its parent tab
     tabBar.querySelectorAll(".tabbtn").forEach(function (b) {
-      if (b.getAttribute("data-tab") === tab) b.setAttribute("aria-current", "page");
+      if (b.getAttribute("data-tab") === lit) b.setAttribute("aria-current", "page");
       else b.removeAttribute("aria-current");
     });
     renderTab(tab);   // activation re-render: due counts, badges, stats always fresh
@@ -956,7 +985,7 @@
         '<h1>' + t("Feed your brain today.") + '</h1>' +
         '<p>' + (prog
           ? t("You left today’s challenge part-finished. Pick it up where you stopped — it waits until tomorrow’s five arrive.")
-          : t("Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.")) + '</p>' +
+          : t("Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing.")) + '</p>' +
         '<div class="btnrow">' +
           '<button class="btn' + (prog ? " resume" : "") + '" id="startDaily">' + label + '</button>' +
           (s.count > 0 ? '<span class="streakchip">' + (s.count === 1 ? t("🔥 1 day") : tf("🔥 {n} days", { n: s.count })) + '</span>' : '') +
@@ -1203,11 +1232,14 @@
       '<div class="footer">' + t("Qpio — knowledge is free, forever.") + '<br>' +
       t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a>' +
       // A privacy page nobody can find is not transparency. One link, on every
-      // screen that carries the footer, opening a real page rather than the app
-      // shell - and it is where the reader turns the counting off.
-      ' · <a href="/privacy">' + t("Your data") + '</a></div>'
+      // screen that carries the footer, to the in-app Privacy screen - where the
+      // reader sees what is kept, saves or deletes it, and turns the counting off.
+      ' · <a href="#privacy" id="openPrivacy2">' + t("Privacy & your data") + '</a></div>'
     );
     node.querySelector("#openComfort2").addEventListener("click", function (e) { e.preventDefault(); openSettings(); });
+    // The default navigation proceeds (hash change -> route()); these only
+    // record that the app opened the screen, and from where.
+    node.querySelector("#openPrivacy2").addEventListener("click", function () { pvOpenedInApp = true; pvOpener = "openPrivacy2"; });
     return node;
   }
 
@@ -1384,7 +1416,47 @@
     var h = gymHand(), GYM = window.CURIO_GYM;
     return (GYM.drills || []).filter(function (d) { return !(h === "one" && d.hands === "two"); });
   }
-  function pickDayDrill() { var list = eligibleDrills(); return list[window.CURIO_GYM.seedForDay() % list.length]; }
+  /* TODAY'S MOVE, THE SAME FOR EVERYONE (24 Sep 2026). Picked from every move, so a reader who
+     uses one hand meets the same move as everybody else - unless that move needs two hands, when
+     the next one that does not comes instead. (Picking from the shorter list gave one-hand
+     readers a different move from everyone on most days.) */
+  function pickDayDrill() {
+    var all = window.CURIO_GYM.drills || [], ok = eligibleDrills(), k = all.length ? window.CURIO_GYM.seedForDay() % all.length : 0, j;
+    for (j = 0; j < all.length; j++) if (ok.indexOf(all[(k + j) % all.length]) !== -1) return all[(k + j) % all.length];
+    return ok[0];
+  }
+
+  /* ONCE A DAY (CEO, 24 Sep 2026, D-090: "One the daily gym brain exercise is done, we should not
+     be able to retake the test / quiz ... we need to keep things via daily releases"). Today's
+     puzzles and today's move are dealt from the day's seed, the same for everyone, and each can be
+     finished once. A finished one stays finished until the local day changes - the same day the
+     daily challenge counts, with Kids mode keeping its own record as it does there. A set left
+     part-way is not finished and can be started again the same day. The record is one small note
+     per mode, overwritten each day: the day, the puzzles' count once they are finished, and
+     whether the move was. Nothing else about the gym is kept. */
+  function gymDayKey() { return "gym.day" + (settings.ageMode === "kids" ? ".kids" : ""); }
+  function gymToday() {
+    var r = LS.get(gymDayKey(), null);
+    return r && typeof r === "object" && r.d === todayKey() ? r : { d: todayKey() };
+  }
+  function gymPuzzlesDone() { return typeof gymToday().p === "number"; }
+  function gymMoveDone() { return gymToday().m === true; }
+  /* `key` and `day` are taken when the set is dealt: a set dealt before midnight and finished
+     after it was yesterday's, and must not lock today's */
+  function gymMarkDone(key, day, fields) {
+    if (day !== todayKey()) return;
+    var r = LS.get(key, null);
+    if (!r || typeof r !== "object" || r.d !== day) r = { d: day };
+    Object.keys(fields).forEach(function (k) { r[k] = fields[k]; });
+    LS.set(key, r);
+  }
+  /* back to the Train tab and its Brain Gym card, drawn afresh (so a set just finished shows as
+     done). Setting the hash alone does nothing when the tab is already Train. */
+  function goGames() {
+    closePlay();
+    if (currentTab() === "games") route();
+    else location.hash = "games";
+  }
 
   /* THE GYM VAULT (CEO, 22 Sep 2026: "adding that exercise into a vault so the person can come
      back to it until they master it, they will be able to keep maximum 3, in their Gym Vault").
@@ -1407,19 +1479,16 @@
     saveGymVault(gymVault().filter(function (x) { return x.key !== key; }));
     if (mastered) LS.set("gym.mastered", (Number(LS.get("gym.mastered", 0)) || 0) + 1);
   }
-  function gymVaultPractised(key) {
-    var v = gymVault(), hit = false;
-    v.forEach(function (x) { if (x.key === key) { x.times = (x.times || 0) + 1; hit = true; } });
-    if (hit) saveGymVault(v);
-  }
   function gymKindOf(kind, key) {
     var GYM = window.CURIO_GYM, f = kind === "drill" ? (GYM.drills || []).filter(function (d) { return d.key === key; })[0] : GYM.byKey[key];
     if (!f) return null;
     return { icon: f.icon, name: (QLANG === "fr" && f.nameFr) ? f.nameFr : t(f.name) };
   }
-  function gymVaultPractise(item) {
-    if (item.kind === "drill") startDrill(item.key);
-    else startBrainGym(item.key, { practice: true });
+  /* The Vault after D-090 (24 Sep 2026): a saved list, no longer a way to play again - nothing
+     is replayed on demand. A kind is added from a puzzle's answer or the end of a move; when one
+     of today's puzzles or today's move is a kept kind, it says so on its own screen. */
+  function gymVaultNote(key) {
+    return gymVaultHas(key) ? ' \u00b7 <span class="gvnote">\ud83d\udddd\ufe0f ' + t("In your Gym Vault") + '</span>' : '';
   }
   /* the button every exercise carries; afterwards() redraws whatever screen it sits on */
   function gymVaultButton(kind, key, afterwards) {
@@ -1428,7 +1497,14 @@
     b.addEventListener("click", function () {
       if (gymVaultHas(key)) return;
       var r = gymVaultAdd(kind, key);
-      if (r === "full") { gymVaultFull(kind, key, afterwards); return; }
+      if (r === "full") {
+        /* the screen this button sits on comes back afterwards, showing whether it was kept */
+        gymVaultFull(kind, key, function () {
+          if (gymVaultHas(key)) { b.setAttribute("aria-pressed", "true"); b.textContent = "\u2713 " + t("In your Gym Vault"); }
+          (afterwards || goGames)();
+        });
+        return;
+      }
       b.setAttribute("aria-pressed", "true"); b.textContent = "\u2713 " + t("In your Gym Vault");
       /* the vault shown above counts what it holds - redraw it in place, not the whole page */
       /* the vault on THIS screen: other tabs keep their screens alive but hidden, and theirs is not the one to redraw */
@@ -1450,117 +1526,75 @@
       var row = el('<div class="gvrow"><span>' + k.icon + ' ' + esc(k.name) + '</span><button class="btn ghost">' + t("Take out") + '</button></div>');
       row.querySelector("button").addEventListener("click", function () {
         gymVaultRemove(item.key, false); gymVaultAdd(kind, key);
-        (afterwards || brainGymPicker)();
+        (afterwards || goGames)();
       });
       list.appendChild(row);
     });
-    node.querySelector("#gvCancel").addEventListener("click", function () { (afterwards || brainGymPicker)(); });
+    node.querySelector("#gvCancel").addEventListener("click", function () { (afterwards || goGames)(); });
     render(node);
   }
-  /* the vault itself, at the top of the Brain Gym: what is kept, how often it was practised */
+  /* the vault itself, on the Brain Gym card: what is kept, and "I have it" to take one out */
   function gymVaultCard(afterwards) {
     var v = gymVault(), mastered = Number(LS.get("gym.mastered", 0)) || 0;
-    var node = el('<div class="card gvault"><h3 style="margin:0 0 4px">\ud83d\udddd\ufe0f ' + t("Your Gym Vault") + ' <span class="mini">' + v.length + '/' + GYM_VAULT_MAX + '</span></h3>' +
-      '<p class="mini" style="margin:0 0 10px">' + (v.length ? t("Come back to these until you have them.") : t("Keep up to three kinds here, to come back to until you have them.")) +
-        (mastered ? ' \u00b7 ' + tf("Mastered so far: {n}", { n: mastered }) : '') + '</p><div class="gvlist"></div></div>');
+    var node = el('<div class="card gvault"><h3 style="margin:0 0 4px">🗝️ ' + t("Your Gym Vault") + ' <span class="mini">' + v.length + '/' + GYM_VAULT_MAX + '</span></h3>' +
+      '<p class="mini" style="margin:0 0 10px">' + t("Up to three kinds you want to keep an eye on. When one comes up in today’s puzzles or move, it is marked there.") +
+        (mastered ? ' · ' + tf("Mastered so far: {n}", { n: mastered }) : '') + '</p><div class="gvlist"></div></div>');
     var list = node.querySelector(".gvlist");
     v.forEach(function (item) {
       var k = gymKindOf(item.kind, item.key); if (!k) return;
-      var row = el('<div class="gvrow"><span>' + k.icon + ' ' + esc(k.name) + ' <span class="mini">' + tf("practised {n}\u00d7", { n: item.times || 0 }) + '</span></span>' +
-        '<span class="btnrow"><button class="btn" data-a="go">' + t("Practise") + '</button><button class="btn ghost" data-a="done">' + t("I have it") + '</button></span></div>');
-      row.querySelector('[data-a="go"]').addEventListener("click", function () { gymVaultPractise(item); });
-      row.querySelector('[data-a="done"]').addEventListener("click", function () { gymVaultRemove(item.key, true); (afterwards || brainGymPicker)(); });
+      var row = el('<div class="gvrow"><span>' + k.icon + ' ' + esc(k.name) + '</span>' +
+        '<span class="btnrow"><button class="btn ghost" data-a="done">' + t("I have it") + '</button></span></div>');
+      row.querySelector('[data-a="done"]').addEventListener("click", function () { gymVaultRemove(item.key, true); (afterwards || goGames)(); });
       list.appendChild(row);
     });
     return node;
   }
 
+  /* THE BRAIN GYM CARD (D-090, 24 Sep 2026). Today's puzzles and today's move, each once a day.
+     What is finished says so - with the plain count of the round for the puzzles - and the card
+     says when the next ones come. Nothing starts them again until the day changes: "Another
+     five", "Another move" and the kind picker are gone for free readers (a paid tier would mean
+     more exercises each day, still released daily - D-090). */
   function brainGymCard() {
+    var rec = gymToday(), pDone = typeof rec.p === "number", mDone = rec.m === true, hand = gymHand();
+    var done = [];
+    if (pDone) done.push(tf("Today’s puzzles: done — {n}/{total}", { n: rec.p, total: rec.t || 5 }));
+    if (mDone) done.push(t("Today’s move: done"));
     var node = el(
       '<div class="card">' +
         '<div class="emoji">🧠</div>' +
         '<h3 style="margin:8px 0 4px">' + t("Brain Gym") + '</h3>' +
         '<p class="mini" style="margin:0 0 12px">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p>' +
-        '<div class="btnrow"><button class="btn" id="gymToday">' + t("Today’s five") + '</button>' +
-        '<button class="btn ghost" id="gymMove">' + t("Today’s move") + '</button>' +
-        '<button class="btn ghost" id="gymPick">' + t("Choose a kind") + '</button></div>' +
+        (done.length ? '<ul class="gdone">' + done.map(function (x) { return '<li><span aria-hidden="true">✓ </span>' + esc(x) + '</li>'; }).join("") + '</ul>' +
+          '<p class="mini gnext">' + (pDone && mDone ? t("Done for today. The next set arrives tomorrow.") : t("The next set arrives tomorrow.")) + '</p>' : '') +
+        (pDone && mDone ? '' : '<div class="btnrow">' +
+          (pDone ? '' : '<button class="btn" id="gymToday">' + t("Today’s puzzles") + '</button>') +
+          (mDone ? '' : '<button class="btn' + (pDone ? '' : ' ghost') + '" id="gymMove">' + t("Today’s move") + '</button>') +
+        '</div>') +
+        /* the one place to change it, now that the kind picker is gone */
+        (hand ? '<p class="mini" style="margin:12px 0 0"><button class="linkish" id="gymHand">' + t("Change hand") + '</button></p>' : '') +
       '</div>'
     );
-    node.querySelector("#gymToday").addEventListener("click", function () { startBrainGym(null); });
-    node.querySelector("#gymMove").addEventListener("click", function () { startDrill(pickDayDrill().key); });
-    node.querySelector("#gymPick").addEventListener("click", brainGymPicker);
-    if (gymVault().length) node.appendChild(gymVaultCard(function () { renderTab("games"); }));
+    var tb = node.querySelector("#gymToday"); if (tb) tb.addEventListener("click", function () { startBrainGym(); });
+    var mb = node.querySelector("#gymMove"); if (mb) mb.addEventListener("click", function () { startDrill(); });
+    var hb = node.querySelector("#gymHand"); if (hb) hb.addEventListener("click", function () { askHand(goGames); });
+    if (gymVault().length) node.appendChild(gymVaultCard(goGames));
     return node;
   }
 
-  function brainGymPicker() {
-    var GYM = window.CURIO_GYM, wrap = el('<div class="grid"></div>'), motionOff = gymMotionOff() || settings.readAloud;
-    wrap.appendChild(el(
-      '<div class="card"><h3 style="margin:0 0 4px">' + t("Brain Gym") + '</h3>' +
-      '<p class="mini" style="margin:0">' + tf("{n} kinds. {k} of them never run out.", { n: GYM.counts.families, k: GYM.counts.generated }) + '</p></div>'));
-    wrap.appendChild(gymVaultCard(brainGymPicker));
-    GYM.families.forEach(function (f) {
-      /* A family carries its own French name and blurb, so a new kind of
-         exercise cannot ship with an untranslated card. */
-      var name = (QLANG === "fr" && f.nameFr) ? f.nameFr : t(f.name);
-      var blurb = (QLANG === "fr" && f.blurbFr) ? f.blurbFr : t(f.blurb);
-      var c = el(
-        '<div class="card">' +
-          '<div class="emoji">' + f.icon + '</div>' +
-          '<h3 style="margin:8px 0 4px">' + esc(name) + (f.maths ? '<span class="gpill">' + t("also maths") + '</span>' : '') + '</h3>' +
-          '<p class="mini" style="margin:0 0 10px">' + esc(blurb) +
-            (f.infinite ? ' · ' + t("never runs out") : ' · ' + t("hand-written")) + '</p>' +
-          (f.needsMotion && motionOff ? '<p class="mini" style="margin:0 0 10px;opacity:.8">' + t("A watching game — it needs motion, which is off in your Comfort settings.") + '</p>' : '') +
-          '<div class="btnrow"><button class="btn">' + t("Start") + '</button></div>' +
-        '</div>');
-      c.querySelector("button").addEventListener("click", function () { startBrainGym(f.key); });
-      c.querySelector(".btnrow").appendChild(gymVaultButton("puzzle", f.key, brainGymPicker));
-      if (f.key === "memory") {
-        var wb = el('<button class="btn ghost">' + t("Ways to hold a list") + '</button>');
-        wb.addEventListener("click", function () { holdWaysPage(brainGymPicker); });
-        c.querySelector(".btnrow").appendChild(wb);
-      }
-      wrap.appendChild(c);
-    });
-    /* the routines: their own section, never one of the five */
-    wrap.appendChild(el('<div class="card"><h3 style="margin:0 0 4px">' + t("Moves — nothing to answer") + '</h3><p class="mini" style="margin:0">' + t("Moves, not puzzles. Nothing to get right.") + '</p></div>'));
-    var hand = gymHand();
-    GYM.drills.forEach(function (d) {
-      var name = (QLANG === "fr" && d.nameFr) ? d.nameFr : t(d.name);
-      var blurb = (QLANG === "fr" && d.blurbFr) ? d.blurbFr : t(d.blurb);
-      var off = hand === "one" && d.hands === "two";
-      var c = el(
-        '<div class="card' + (off ? ' drill-off' : '') + '">' +
-          '<div class="emoji">' + d.icon + '</div>' +
-          '<h3 style="margin:8px 0 4px">' + esc(name) + '</h3>' +
-          '<p class="mini" style="margin:0 0 10px">' + esc(blurb) + ' · ' + t("≈ 1 min · nothing to answer") + (d.hands === "two" ? ' · ' + t("Uses both hands") : '') + '</p>' +
-          (off ? '' : '<div class="btnrow"><button class="btn">' + t("Start") + '</button></div>') +
-        '</div>');
-      var b = c.querySelector("button");
-      if (b) b.addEventListener("click", function () { startDrill(d.key); });
-      if (b) c.querySelector(".btnrow").appendChild(gymVaultButton("drill", d.key, brainGymPicker));
-      wrap.appendChild(c);
-    });
-    var back = el('<div class="card"><div class="btnrow"><button class="btn ghost" id="gymBack">← ' + t("Back") + '</button>' +
-      (hand ? '<button class="btn ghost" id="gymHand">' + t("Change hand") + '</button>' : '') + '</div></div>');
-    back.querySelector("#gymBack").addEventListener("click", function () { renderTab("games"); });
-    var hb = back.querySelector("#gymHand");
-    if (hb) hb.addEventListener("click", function () { askHand(brainGymPicker); });
-    wrap.appendChild(back);
-    render(wrap);
-  }
-
-  /* A gym round: five puzzles, one at a time, answer then explanation.
-     `family` null means today's mixed five — the same five for everybody, so it
-     can be talked about, which is the reason the exercises are seeded rather
-     than random. `opts.only` restricts the mix (the maths four). */
+  /* A gym round: today's five puzzles, one at a time, answer then explanation - the same five for
+     everybody, so they can be talked about, which is the reason the exercises are seeded rather
+     than random. Once a day (D-090): finished, they wait for tomorrow. */
   /* French typography, applied at render time rather than in the generator:
      a no-break space before ? ; : ! and inside « », so a phone never wraps a
-     lone "?" onto the next line. The generator keeps plain spaces because the
-     independent solvers read its text with ordinary regexes. */
+     lone "?" onto the next line; and the typographic apostrophe, so a lead-in
+     written with ’ ("Tu viens de t’exercer à") and the generator's text after it
+     do not mix two kinds in one sentence. The generator keeps plain spaces and
+     straight apostrophes because the independent solvers read its text with
+     ordinary regexes. */
   function gymText(s) {
     if (QLANG !== "fr" || !s) return s;
-    return String(s).replace(/ ([?;:!»])/g, " $1").replace(/« /g, "« ").replace(/(\d) (\d{3})\b/g, "$1 $2");
+    return String(s).replace(/ ([?;:!»])/g, " $1").replace(/« /g, "« ").replace(/(\d) (\d{3})\b/g, "$1 $2").replace(/'/g, "’");
   }
 
   /* arrow keys walk a grid of buttons; Enter or Space taps the one in focus */
@@ -1575,16 +1609,43 @@
     });
   }
 
-  function startBrainGym(family, opts) {
+  /* THE LIST PUZZLE'S PICTURES (CEO, 24 Sep 2026: "better to use a picture of the object because
+     if someone doesn't know the word they can picture it, and place it in their home in their mind
+     map"). Built in HTML: the drawings may not carry pictures. The word is always written under
+     its picture. They are generated, so they are marked: a small ◆ on each word line and one line
+     under each group - which a screen reader hears once, before the words, rather than on every
+     tile. Which pictures a screen may show is decided in the gym module (studyPictures while
+     studying, questionPictures when asked) and nowhere else. If a picture cannot load, its word
+     stands alone. */
+  function memLegend(where) {
+    return where === "sr" ? '<p class="sr-only mlegend">' + esc(t("Illustrations generated by AI")) + '</p>'
+                          : '<p class="mlegend" aria-hidden="true">◆ ' + esc(t("Illustrations generated by AI")) + '</p>';
+  }
+  function memWatch(node) {
+    Array.prototype.forEach.call(node.querySelectorAll(".mpic img"), function (img) {
+      var gone = false;
+      var fail = function () {
+        if (gone) return; gone = true;
+        var tile = img.closest(".mtile, .mopt, .manchor");
+        if (tile) tile.classList.add("noimg");
+        /* on the study screen the word line was silent (the picture carried the word); now it speaks */
+        var w = tile && tile.classList.contains("mtile") ? tile.querySelector(".mword") : null;
+        if (w) w.removeAttribute("aria-hidden");
+        if (img.parentNode) img.parentNode.removeChild(img);
+        /* no picture left, no line about pictures */
+        if (!node.querySelector(".mpic img")) Array.prototype.forEach.call(node.querySelectorAll(".mlegend"), function (x) { x.hidden = true; });
+      };
+      img.addEventListener("error", fail);
+      if (img.complete && img.getAttribute("src") && !img.naturalWidth) fail();
+    });
+  }
+
+  function startBrainGym() {
     var GYM = window.CURIO_GYM, ART = window.CURIO_GYM_ART;
-    var seed = GYM.seedForDay();
+    if (gymPuzzlesDone()) { goGames(); return; }
+    var seed = GYM.seedForDay(), dayRec = gymDayKey(), day = todayKey();
     var motionOff = gymMotionOff() || settings.readAloud;
-    var setOpts = { exclude: motionOff ? ["shells"] : [], only: opts && opts.only };
-    var five = function (fam, s) { return [0, 1, 2, 3, 4].map(function (i) { return GYM.make(fam, (s * 7919 + i * 104729) >>> 0, QLANG); }); };
-    /* practising from the Gym Vault deals a FRESH five each time - the day's five again would
-       teach the answers, not the kind */
-    if (opts && opts.practice) seed = (seed * 31 + Math.floor(Date.now() / 1000)) >>> 0;
-    var set = family ? five(family, seed) : GYM.makeSet(seed, 5, QLANG, setOpts);
+    var set = GYM.makeSet(seed, 5, QLANG, { exclude: motionOff ? ["shells"] : [] });
     var idx = 0, right = 0, mathsSeen = 0;
 
     /* at question time a hidden list stays hidden - the rule lives in the gym module */
@@ -1604,24 +1665,31 @@
 
     function study(p) {
       var isChange = p.scene && p.scene.kind === "change";
+      var pics = GYM.studyPictures ? GYM.studyPictures(p) : [];
       var pic = !ART || !p.scene ? "" :
         isChange ? '<div class="gart" role="img" aria-label="' + esc(gymText(p.sceneText || "")) + '">' + ART.draw(p.scene, { which: "before" }, {}) + '</div>' :
+        pics.length ? '<div class="mwrap">' + memLegend("sr") + '<ol class="mgrid" role="list">' + pics.map(function (x) {
+            return '<li class="mtile"><span class="mpic"><img src="' + esc(x.src) + '" alt="' + esc(x.word) + '" decoding="async"></span>' +
+              '<span class="mword" aria-hidden="true">' + x.n + ' · ' + esc(x.word) + ' <span class="mai">◆</span></span></li>';
+          }).join("") + '</ol>' + memLegend() + '</div>' :
         p.scene.kind === "cards" ? '<div class="gart" aria-hidden="true">' + ART.draw(p.scene, {}, { words: (p.sceneLabels || {}).words }) + '</div>' : picture(p);
       var node = el(
         '<div class="card">' +
-          '<div class="mini">' + t("Brain Gym") + ' · ' + (idx + 1) + '/' + set.length + '</div>' +
+          '<div class="mini">' + t("Brain Gym") + ' · ' + (idx + 1) + '/' + set.length + gymVaultNote(p.family) + '</div>' +
           '<h3 style="margin:10px 0 6px">' + t(isChange ? "Look carefully" : "Remember these") + '</h3>' + pic +
-          (p.show ? '<div class="qtext" style="letter-spacing:.04em">' + fmt(gymText(p.show)) + '</div>' : '') +
-          '<p class="mini" style="margin:14px 0 0">' + t("Take as long as you like. They will not come back.") + '</p>' +
-          /* one way to hold the list, suggested on every list puzzle; pinned when the round is a Try-it */
+          /* the words are on the tiles now; read-aloud still speaks the list */
+          (p.show && !pics.length ? '<div class="qtext" style="letter-spacing:.04em">' + fmt(gymText(p.show)) + '</div>' : '') +
+          '<p class="mini" style="margin:14px 0 0">' + (isChange ? t("Take as long as you like.") : t("Take as long as you like. The list will not come back.")) + '</p>' +
+          /* one way to hold the list, suggested on every list puzzle */
           (p.sceneLabels && p.sceneLabels.words ? (function () {
-            var w = (opts && opts.way && GYM.holdWays.filter(function (x) { return x.id === opts.way; })[0]) || GYM.holdWayFor(p);
+            var w = GYM.holdWayFor(p);
             var L = QLANG === "fr" ? "fr" : "en";
-            return '<p class="holdway"><b>' + esc(t("A way to hold it:")) + '</b> ' + esc(gymText(w.tip[L])) +
+            return '<p class="holdway"><b>' + esc(t("One way people do this:")) + '</b> ' + esc(gymText(w.tip[L])) +
               ' <button class="linkish" id="gymWays">' + t("More ways") + '</button></p>';
           })() : '') +
           '<div class="btnrow" style="margin-top:14px"><button class="btn" id="gymReady">' + t("Ready") + '</button></div>' +
         '</div>');
+      memWatch(node);
       node.querySelector("#gymReady").addEventListener("click", function () { p._studied = true; step(); });
       var mw = node.querySelector("#gymWays");
       if (mw) mw.addEventListener("click", function () { holdWaysPage(function () { render(node); }); });
@@ -1631,6 +1699,10 @@
 
     function ask(p) {
       var fam = GYM.byKey[p.family], isTap = p.input === "tap", isTwin = p.family === "twin", isShells = p.family === "shells";
+      /* a list puzzle asks with pictures: the four answers, and the word the question names -
+         only what questionPictures allows, never the rest of the list */
+      var qpics = GYM.questionPictures ? GYM.questionPictures(p) : [], isPics = qpics.length > 0;
+      var anchor = qpics.filter(function (x) { return x.anchor; })[0];
       var pic = "";
       if (isTap) pic = "";                                   /* the tap grid IS the picture */
       else if (isShells) pic = motionOff
@@ -1638,15 +1710,20 @@
         : picture(p, { motion: true });
       else if (p.icon) pic = '<div class="emoji" aria-hidden="true">' + p.icon + '</div>';
       else pic = picture(p);
+      var prompt = '<div class="qtext" style="margin-top:10px">' + fmt(gymText(p.prompt)) + '</div>';
       var html =
         '<div class="card">' +
           '<div class="mini">' + (fam ? fam.icon + ' ' + esc((QLANG === "fr" && fam.nameFr) ? fam.nameFr : t(fam.name)) : t("Brain Gym")) +
-            ' · ' + (idx + 1) + '/' + set.length + '</div>' +
+            ' · ' + (idx + 1) + '/' + set.length + gymVaultNote(p.family) + '</div>' +
           (isTap ? '' : pic) +
-          '<div class="qtext" style="margin-top:10px">' + fmt(gymText(p.prompt)) + '</div>' +
+          /* "What came right after X?": X's picture beside the question (the question already says its word) */
+          (anchor ? '<div class="mq">' + prompt + '<span class="manchor" aria-hidden="true"><span class="mpic"><img src="' + esc(anchor.src) + '" alt="" decoding="async"></span>' +
+            '<span class="mword">' + esc(anchor.word) + ' <span class="mai">◆</span></span></span></div>' : prompt) +
           (p.show && !p.hide && !isTwin ? '<div class="qtext" style="opacity:.9;letter-spacing:.06em;margin-top:6px">' + fmt(gymText(p.show)) + '</div>' : '') +
           (isShells && p.sceneText ? '<p class="sr-only">' + esc(gymText(p.sceneText)) + '</p>' : '') +
-          '<div class="opts' + (isTap ? ' gcells' : isTwin ? ' gtwin' : '') + '" id="gymOpts"' + (isTap ? ' style="grid-template-columns:repeat(' + p.scene.cols + ',1fr)"' : '') + '></div>' +
+          (isPics ? memLegend("sr") : '') +
+          '<div class="opts' + (isTap ? ' gcells' : isTwin ? ' gtwin' : isPics ? ' mopts' : '') + '" id="gymOpts"' + (isTap ? ' style="grid-template-columns:repeat(' + p.scene.cols + ',1fr)"' : '') + '></div>' +
+          (isPics ? memLegend() : '') +
           '<div id="gymAfter"></div>' +
         '</div>';
       var node = el(html);
@@ -1666,12 +1743,16 @@
         p.options.forEach(function (o) {
           var b = el('<button class="opt"></button>');
           b.setAttribute("data-value", o);
+          var mp = isPics ? qpics.filter(function (x) { return !x.anchor && x.word === o; })[0] : null;
           if (isTwin && ART && /^[cbygv]{9}$/.test(o)) { b.className = "opt gtile"; b.innerHTML = ART.tileGrid(o); b.setAttribute("aria-label", GYM.twinLabel(o, QLANG)); }
+          /* a picture and its word; the button's name is the word */
+          else if (mp) { b.className = "opt mopt"; b.innerHTML = '<span class="mpic"><img src="' + esc(mp.src) + '" alt="" decoding="async"></span><span class="mword">' + esc(o) + ' <span class="mai" aria-hidden="true">◆</span></span>'; }
           else b.textContent = gymText(o);
           b.addEventListener("click", function () { answer(node, p, o); });
           opts.appendChild(b);
         });
       }
+      if (isPics) memWatch(node);
       render(node);
       /* A tap puzzle asks the reader to FIND something in the picture, so its scene
          description IS the answer; speaking it would hand the solution to anyone who
@@ -1731,9 +1812,13 @@
       Array.prototype.forEach.call(node.querySelectorAll(".opt"), function (b) {
         b.disabled = true;
         var v = b.getAttribute("data-value");
-        if (v === p.answer) { b.classList.add("good"); if (p.input === "tap") b.classList.add("gpulse"); }
+        /* ✓ and ✗ on a picture answer too, not only its colour */
+        var mark = function (m) { if (b.classList.contains("mopt")) b.insertAdjacentHTML("beforeend", '<span class="mmark" aria-hidden="true">' + m + '</span>'); };
+        if (v === p.answer) { b.classList.add("good"); mark("✓"); if (p.input === "tap") b.classList.add("gpulse"); }
         else if (v === chosen) {
-          b.classList.add("bad");
+          /* the honest "I lost it" in the ball game is not a wrong guess: grey, never red */
+          if (p.lostOption && v === p.lostOption) { b.classList.add("lost"); return; }
+          b.classList.add("bad"); mark("✗");
           /* the twin puzzle shows WHICH tile of the wrong pick differs */
           if (p.family === "twin" && ART && /^[cbygv]{9}$/.test(v)) {
             var d = -1, n = 0, i; for (i = 0; i < 9; i++) if (v.charAt(i) !== p.answer.charAt(i)) { d = i; n++; }
@@ -1746,60 +1831,46 @@
         var svg = node.querySelector(".gart svg");
         if (svg && svg.querySelector("#b0")) svg.insertAdjacentHTML("beforeend", '<circle cx="' + (60 + (Number(p.answer) - 1) * 100) + '" cy="56" r="29" fill="none" stroke="var(--good)" stroke-width="3"/>');
       }
+      /* the last answer finishes today's puzzles: from here they wait for tomorrow (D-090) */
+      if (idx + 1 >= set.length) gymMarkDone(dayRec, day, { p: right, t: set.length });
       var after = node.querySelector("#gymAfter");
       after.appendChild(el(
         '<div class="reveal" style="margin-top:12px">' +
           '<div>' + fmt(gymText(p.explain)) + '</div>' +
-          (fam ? '<div class="mini" style="margin-top:8px;opacity:.75">' + t("This one trains") + ' ' + fmt(gymText(p.trains)) + '</div>' : '') +
+          (fam ? '<div class="mini" style="margin-top:8px;opacity:.75">' + t("Here you practise") + ' ' + fmt(gymText(p.trains)) + '.</div>' : '') +
         '</div>'));
       var row = el('<div class="btnrow" style="margin-top:14px"></div>');
       var b = el('<button class="btn"></button>');
-      b.textContent = idx + 1 < set.length ? t("Next") : t("See how you did");
+      b.textContent = idx + 1 < set.length ? t("Next") : t("Finish");
       b.addEventListener("click", function () { idx++; idx < set.length ? step() : done(); });
       row.appendChild(b);
+      /* the one place a puzzle's kind can be kept, now that the kind picker is gone */
+      if (fam && !gymVaultHas(p.family)) row.appendChild(gymVaultButton("puzzle", p.family, function () { render(node); }));
       after.appendChild(row);
     }
 
     function done() {
-      /* NO SCORE LANGUAGE THAT SOUNDS LIKE A MEASUREMENT OF THE READER.
-         Five out of five is a fact about five puzzles, not about a mind. */
+      /* WHAT HAPPENED, THEN WHAT COMES NEXT (messaging.md, 24 Sep 2026: describe the round, never
+         the person). The count is a plain count of five puzzles; one main button - today's move
+         if it is still to do, otherwise Home - and Home beside it. */
+      var moveLeft = !gymMoveDone();
       var node = el(
         '<div class="card result">' +
           '<div class="scorebig">' + right + '/' + set.length + '</div>' +
-          '<h2>' + t("That is five puzzles, not a verdict on you.") + '</h2>' +
-          '<div class="sub">' + t("These get easier with practice — that is the only promise Qpio makes about them.") + '</div>' +
+          '<h2>' + t("Five puzzles done.") + '</h2>' +
+          '<div class="sub">' + (moveLeft ? t("The next set arrives tomorrow.") : t("Done for today. The next set arrives tomorrow.")) + '</div>' +
           '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
-            '<button class="btn" id="gymAgain">' + t("Another five") + '</button>' +
-            '<button class="btn ghost" id="gymDrill">' + t("Finish with a drill") + '</button>' +
-            '<button class="btn ghost" id="gymKinds">' + t("Choose a kind") + '</button>' +
-            '<button class="btn ghost" id="gymHome">🏠 ' + t("Home") + '</button>' +
+            (moveLeft ? '<button class="btn" id="gymDrill">' + t("Today’s move") + '</button>' : '') +
+            '<button class="btn' + (moveLeft ? ' ghost' : '') + '" id="gymHome">🏠 ' + t("Home") + '</button>' +
           '</div>' +
-          (family ? '<div class="btnrow gvend" style="justify-content:center;margin-top:10px"></div>' : '') +
           (mathsSeen >= 3 ? '<div class="btnrow" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="gymMaths">' + t("Want the facts behind the numbers? Mathematics quiz") + '</button></div>' : '') +
         '</div>');
-      node.querySelector("#gymAgain").addEventListener("click", function () {
-        /* A different five, from a seed nobody has to remember. */
-        var s2 = (GYM.seedForDay() * 31 + Math.floor(Date.now() / 60000)) >>> 0;
-        set = family ? five(family, s2) : GYM.makeSet(s2, 5, QLANG, setOpts);
-        idx = 0; right = 0; mathsSeen = 0; step();
-      });
-      node.querySelector("#gymDrill").addEventListener("click", function () { startDrill(pickDayDrill().key); });
-      node.querySelector("#gymKinds").addEventListener("click", brainGymPicker);
+      var md = node.querySelector("#gymDrill");
+      if (md) md.addEventListener("click", function () { startDrill(); });
       node.querySelector("#gymHome").addEventListener("click", goHome);
+      /* the Train tab, where the Mathematics quiz is (this used to open a tab that does not exist) */
       var m = node.querySelector("#gymMaths");
-      if (m) m.addEventListener("click", function () { LS.set("lastCat", "Science"); renderTab("train"); });
-      var gv = node.querySelector(".gvend");
-      if (gv) {
-        if (gymVaultHas(family)) {
-          gymVaultPractised(family);
-          if (right === set.length) {
-            gv.appendChild(el('<p class="mini" style="margin:0 0 6px;width:100%;text-align:center">' + t("Five out of five. If you have it, take it out of your Gym Vault.") + '</p>'));
-            var got = el('<button class="btn ghost">' + t("I have it") + '</button>');
-            got.addEventListener("click", function () { gymVaultRemove(family, true); got.disabled = true; got.textContent = "\u2713 " + t("Taken out"); });
-            gv.appendChild(got);
-          }
-        } else gv.appendChild(gymVaultButton("puzzle", family, brainGymPicker));
-      }
+      if (m) m.addEventListener("click", function () { LS.set("lastCat", "Science"); goGames(); });
       render(node);
     }
 
@@ -1807,24 +1878,22 @@
   }
 
   /* WAYS TO HOLD A LIST - the page (CEO, 22 Sep 2026: "add techniques to memorize list of
-     words, or perform those exercises"). Each way says what to do and where it comes from, and
-     "Try it" plays a round of list puzzles with that way pinned on the study screen. */
+     words, or perform those exercises"). Each way says what to do and where it comes from. It
+     no longer starts a round of its own (D-090): the next list in today's puzzles is the place
+     to try one. */
   function holdWaysPage(back) {
     var GYM = window.CURIO_GYM, L = QLANG === "fr" ? "fr" : "en";
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(el('<div class="card"><h3 style="margin:0 0 4px">' + t("Ways to hold a list") + '</h3>' +
-      '<p class="mini" style="margin:0">' + t("Four ways to hold a short list. Try one on a round.") + '</p></div>'));
+      '<p class="mini" style="margin:0">' + t("Four ways to hold a short list. Try one the next time a list comes up.") + '</p></div>'));
     GYM.holdWays.forEach(function (w) {
-      var c = el('<div class="card holdwaycard">' +
+      wrap.appendChild(el('<div class="card holdwaycard">' +
         '<h3 style="margin:0 0 6px">' + esc(w.name[L]) + '</h3>' +
         '<p style="margin:0 0 8px">' + esc(gymText(w.how[L])) + '</p>' +
-        '<p class="mini" style="margin:0 0 10px"><b>' + t("Its history") + '</b> \u00b7 ' + esc(gymText(w.origin[L])) + '</p>' +
-        '<div class="btnrow"><button class="btn">' + t("Try it") + '</button></div></div>');
-      c.querySelector("button").addEventListener("click", function () { startBrainGym("memory", { practice: true, way: w.id }); });
-      wrap.appendChild(c);
+        '<p class="mini" style="margin:0"><b>' + t("Its history") + '</b> · ' + esc(gymText(w.origin[L])) + '</p></div>'));
     });
-    var b = el('<div class="card"><div class="btnrow"><button class="btn ghost">\u2190 ' + t("Back") + '</button></div></div>');
-    b.querySelector("button").addEventListener("click", function () { (back || brainGymPicker)(); });
+    var b = el('<div class="card"><div class="btnrow"><button class="btn ghost">← ' + t("Back") + '</button></div></div>');
+    b.querySelector("button").addEventListener("click", function () { (back || goGames)(); });
     wrap.appendChild(b);
     render(wrap);
   }
@@ -1847,19 +1916,24 @@
     render(node);
   }
 
-  function startDrill(key) {
+  /* today's move: once a day, like today's puzzles (D-090). The hand is asked first, so the move
+     is picked knowing it - a two-hand move is never dealt to a reader who uses one hand. */
+  function startDrill() {
     var GYM = window.CURIO_GYM;
-    if (!gymHand()) { askHand(function () { startDrill(key); }); return; }
-    var d = GYM.makeDrill(key, GYM.seedForDay(), QLANG);
+    if (gymMoveDone()) { goGames(); return; }
+    if (!gymHand()) { askHand(startDrill); return; }
+    var d = GYM.makeDrill(pickDayDrill().key, GYM.seedForDay(), QLANG);
     if (d) runDrill(d);
   }
 
   /* A routine: timed steps, a picture for each, Next always works, Done always
-     visible. Nothing is written anywhere. The interval stops itself when the
-     card leaves the page, so render() needs no teardown. */
+     visible. Nothing is written anywhere but the day's "move done" (D-090). The
+     interval stops itself when the card leaves the page, so render() needs no
+     teardown. */
   function runDrill(d) {
     var ART = window.CURIO_GYM_ART, GYM = window.CURIO_GYM;
     var i = 0, elapsed = 0, paused = false, last = Date.now(), timer = null, frameTimer = null, motion = !gymMotionOff();
+    var dayRec = gymDayKey(), day = todayKey();
     /* PACE (CEO, 22 Sep 2026: "an option to slow down, several speeds so the user can follow").
        Every moving cue - the dot along its path, the two dots at once, the finger beat, the
        lit dot - runs at the chosen pace. The step's own clock is unchanged, so a slower pace
@@ -1874,11 +1948,13 @@
        what changes, a picture of it, and a 3-2-1 that stretches with the pace. The step's
        own clock waits for it. "Start now" skips it; Pause holds it. */
     var trans = null, readyAt = -1;   /* the step whose transition has been shown; the data is never marked */
+    /* a step's own clip that could not load, so its icon shows instead for the rest of the move */
+    var failedDemo = {};
     /* every photo a pause will show is fetched now, so it is there the moment the pause starts */
     d.steps.forEach(function (st) { if (st.before && st.before.photo) { var im = new Image(); im.decoding = "async"; im.src = st.before.photo; } });
     var node = el(
       '<div class="card">' +
-        '<div class="mini">' + esc(d.title) + ' · ' + t("Moves — nothing to answer") + '</div>' +
+        '<div class="mini">' + esc(d.title) + ' · ' + t("Moves — nothing to answer") + gymVaultNote(d.family) + '</div>' +
         '<div class="gdemo" id="drillDemo" hidden></div>' +
         '<div class="gart" id="drillArt" aria-hidden="true" style="touch-action:none"></div>' +
         (moving ? '<div class="dpace" role="group" aria-label="' + esc(t("Pace")) + '"><span class="mini">' + t("Pace") + '</span>' +
@@ -1896,31 +1972,35 @@
       '</div>');
     var textNode = node.querySelector("#drillText"), artNode = node.querySelector("#drillArt"), bar = node.querySelector("#drillBar"), meta = node.querySelector("#drillMeta"), nextBtn = node.querySelector("#drillNext"), demoNode = node.querySelector("#drillDemo");
     /* THE DEMO (CEO, 23 Sep 2026: "when presenting the exercise a short video will be useful
-       remember some people are more visual like me"). A few seconds of the move on the
-       routine's first screen, at the reader's pace. Generated by AI, so marked as such on the
-       picture, under it and for a screen reader, like every generated picture in Qpio.
-       Fetched only when shown; with motion off it waits for a tap. */
-    function showDemo(demo) {
+       remember some people are more visual like me"). A few seconds of the move, at the reader's
+       pace: on the routine's first screen, and on any step that carries its own clip (an item of
+       "A small thing, differently", 24 Sep 2026). Generated by AI, so marked as such on the
+       picture, under it and for a screen reader, like every generated picture in Qpio. Fetched
+       only when shown; with motion off it waits for a tap. Tapping the clip pauses it and
+       tapping again plays it. `onFail` runs if the clip cannot load (the worker keeps no videos,
+       so offline it never can): the step then shows its own icon. */
+    function showDemo(demo, onFail) {
       var v = demoNode.querySelector("video");
-      if (!demo) { if (v) v.pause(); demoNode.innerHTML = ""; demoNode.hidden = true; return; }
-      if (v) { v.playbackRate = speed; return; }
+      if (!demo) { if (v) v.pause(); demoNode.innerHTML = ""; demoNode.hidden = true; demoNode.removeAttribute("data-src"); return; }
+      if (demoNode.getAttribute("data-src") === demo.src) { if (v) v.playbackRate = speed; return; }
+      if (v) v.pause();
+      demoNode.setAttribute("data-src", demo.src);
       demoNode.hidden = false;
-      /* a photograph where no generated video showed the move truly (thumb to each finger):
+      /* a still where no generated video showed the move truly (thumb to each finger):
          the same mark, the same sentence, the same words for a screen reader */
       if (demo.photo) {
-        if (demoNode.querySelector("img")) return;
         demoNode.innerHTML =
           '<div class="gdemo-box"><img src="' + esc(demo.src) + '" alt="' + esc(t("AI-generated illustration") + ". " + demo.alt) + '" decoding="async">' +
           '<span class="qart-ai" aria-hidden="true">◆ ' + esc(t("AI generated")) + '</span></div>' +
           (demo.note ? '<div class="gdemo-note">' + esc(gymText(demo.note)) + '</div>' : "") +
-          '<div class="qart-credit qart-credit-ai">' + esc(t("This photo was generated by AI to show the pose. It does not show a real person.")) + '</div>';
+          '<div class="qart-credit qart-credit-ai">' + esc(t("This image was generated by AI to show the pose. It does not show a real person.")) + '</div>';
         return;
       }
       demoNode.innerHTML =
         '<div class="gdemo-box">' +
-          '<video src="' + esc(demo.src) + '" poster="' + esc(demo.poster) + '" muted loop playsinline preload="' + (motion ? "auto" : "none") + '" aria-label="' + esc(t("AI-generated video") + ". " + demo.alt) + '"></video>' +
-          '<span class="qart-ai" aria-hidden="true">\u25c6 ' + esc(t("AI-generated video")) + '</span>' +
-          (motion ? "" : '<button class="gdemo-play" aria-label="' + esc(t("Play the demo")) + '">\u25b6</button>') +
+          '<video src="' + esc(demo.src) + '" poster="' + esc(demo.poster || "") + '" muted loop playsinline tabindex="0" preload="' + (motion ? "auto" : "none") + '" aria-label="' + esc(t("AI-generated video") + ". " + demo.alt) + '"></video>' +
+          '<span class="qart-ai" aria-hidden="true">◆ ' + esc(t("AI-generated video")) + '</span>' +
+          (motion ? "" : '<button class="gdemo-play" aria-label="' + esc(t("Play the demo")) + '">▶</button>') +
         '</div>' +
         (demo.note ? '<div class="gdemo-note">' + esc(gymText(demo.note)) + '</div>' : "") +
         '<div class="qart-credit qart-credit-ai">' + esc(t("This video was generated by AI to show the move. It does not show a real person.")) + '</div>';
@@ -1929,6 +2009,10 @@
       if (motion) go();
       var pb = demoNode.querySelector(".gdemo-play");
       if (pb) pb.addEventListener("click", function () { pb.parentNode.removeChild(pb); go(); });
+      var toggle = function () { if (demoNode.querySelector(".gdemo-play")) return; if (v.paused) go(); else v.pause(); };
+      v.addEventListener("click", toggle);
+      v.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+      if (onFail) v.addEventListener("error", function () { if (demoNode.getAttribute("data-src") === demo.src) onFail(); });
     }
     function stopFrames() { if (frameTimer) { clearInterval(frameTimer); frameTimer = null; } }
     function handFrames(scene) {
@@ -1963,13 +2047,15 @@
       trans = { step: s, t: 0, per: per, count: 5, lead: 1 };
       var b = s.before;
       /* what comes next in large words, then what to do, then her photo in that pose - marked
-         as generated, like every generated picture in Qpio */
+         as generated, on the picture and in a sentence under it, like every generated picture
+         in Qpio (the claims standard, section K: never presented as a photograph) */
       textNode.innerHTML = '<span class="dtrans-label">' + esc(gymText(b.label)) + '</span>' + esc(gymText(b.text));
       artNode.innerHTML =
-        (b.photo ? '<div class="gdemo-box dtrans-photo"><img src="' + esc(b.photo) + '" alt="" decoding="async"><span class="qart-ai">\u25c6 ' + esc(t("AI generated")) + '</span></div>'
+        (b.photo ? '<div class="gdemo-box dtrans-photo"><img src="' + esc(b.photo) + '" alt="" decoding="async"><span class="qart-ai">◆ ' + esc(t("AI generated")) + '</span></div>' +
+                   '<div class="qart-credit qart-credit-ai dtrans-credit">' + esc(t("This image was generated by AI to show the pose. It does not show a real person.")) + '</div>'
                  : (b.scene && ART ? ART.draw(b.scene, { motion: false }, {}) : "")) +
         '<div class="dcount" aria-hidden="true"></div>';
-      meta.textContent = t("Get ready") + " \u00b7 " + tf("step {a} of {b}", { a: i + 1, b: d.steps.length });
+      meta.textContent = t("Get ready") + " · " + tf("step {a} of {b}", { a: i + 1, b: d.steps.length });
       bar.style.width = "0%";
       nextBtn.textContent = t("Start now");
       leadButton();
@@ -1989,7 +2075,11 @@
     }
     function show() {
       var s = d.steps[i];
-      showDemo(s.id === "intro" && d.demo);
+      /* the step's own clip, or the routine's on its first screen; while a step's own clip shows,
+         its icon steps aside - and comes back if the clip cannot load */
+      var own = s.demo && !failedDemo[s.demo.src] ? s.demo : null;
+      showDemo(own || (s.id === "intro" && d.demo), own ? function () { failedDemo[own.src] = true; showDemo(null); artNode.hidden = false; } : null);
+      artNode.hidden = !!own;
       if (s.before && readyAt !== i) { startTransition(s); return; }
       elapsed = 0; last = Date.now();
       textNode.textContent = gymText(s.text) + (s.scene && !motion && (s.scene.kind === "path" || s.scene.kind === "dotgrid") ? " " + t("Follow the numbers.") : "") + (s.still && !motion ? " " + gymText(s.still) : "");
@@ -2010,37 +2100,43 @@
     }
     function paint() {
       var s = d.steps[i];
-      if (holding()) { meta.textContent = tf("step {a} of {b}", { a: i + 1, b: d.steps.length }) + " \u00b7 " + t("tap Next step when you like"); bar.style.width = "0%"; return; }
+      if (holding()) { meta.textContent = tf("step {a} of {b}", { a: i + 1, b: d.steps.length }) + " · " + t("tap Next step when you like"); bar.style.width = "0%"; return; }
       meta.textContent = tf("step {a} of {b}", { a: i + 1, b: d.steps.length }) + " · " + Math.max(0, Math.ceil(s.seconds - elapsed)) + " s";
       bar.style.width = Math.min(100, 100 * elapsed / s.seconds) + "%";
     }
-    function next() { if (trans) { endTransition(); return; } if (i + 1 < d.steps.length) { i++; show(); } else end(); }
+    function next() { if (trans) { endTransition(); return; } if (i + 1 < d.steps.length) { i++; show(); } else end(true); }
     function onVis() { if (document.hidden && !paused) { paused = true; node.querySelector("#drillPause").textContent = t("Resume"); } }
-    function end() {
+    /* THE END OF A MOVE (messaging.md, 24 Sep 2026). Reaching the last step finishes today's move:
+       "Move done." and what it practised, nothing counted. Done tapped before the last step only
+       stops it - today's move is still there to finish, and the Brain Gym card agrees. Either
+       way, one main button for what comes next, and Home. */
+    function end(complete) {
       clearInterval(timer); stopFrames(); showDemo(null); document.removeEventListener("visibilitychange", onVis);
+      if (complete) gymMarkDone(dayRec, day, { m: true });
+      var puzzlesLeft = !gymPuzzlesDone();
       var res = el(
         '<div class="card result">' +
-          '<h2>' + t("Done. That was a routine, not a test.") + '</h2>' +
-          '<div class="sub">' + t("This one trains") + ' ' + esc(gymText(d.trains)) + '</div>' +
+          (complete
+            ? '<h2>' + t("Move done.") + '</h2>' +
+              '<div class="sub">' + t("You just practised") + ' ' + esc(gymText(d.trains)) + '.</div>' +
+              '<p class="mini" style="margin:10px 0 0">' + (puzzlesLeft ? t("The next set arrives tomorrow.") : t("Done for today. The next set arrives tomorrow.")) + '</p>'
+            : '<h2>' + t("Stopped here.") + '</h2>' +
+              '<div class="sub">' + t("Today’s move is still here if you want to finish it.") + '</div>') +
           '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
-            '<button class="btn" id="drillAnother">' + t("Another move") + '</button>' +
-            '<button class="btn ghost" id="drillKinds">' + t("Choose a kind") + '</button>' +
-            '<button class="btn ghost" id="drillHome">🏠 ' + t("Home") + '</button>' +
+            (!complete ? '<button class="btn" id="drillAgain">' + t("Today’s move") + '</button>'
+              : puzzlesLeft ? '<button class="btn" id="drillPuzzles">' + t("Today’s puzzles") + '</button>' : '') +
+            '<button class="btn' + (complete && !puzzlesLeft ? '' : ' ghost') + '" id="drillHome">🏠 ' + t("Home") + '</button>' +
           '</div>' +
           '<div class="btnrow gvend" style="justify-content:center;margin-top:10px"></div>' +
         '</div>');
       var gvd = res.querySelector(".gvend");
       if (gymVaultHas(d.family)) {
-        gymVaultPractised(d.family);
         var gotD = el('<button class="btn ghost">' + t("I have it") + '</button>');
-        gotD.addEventListener("click", function () { gymVaultRemove(d.family, true); gotD.disabled = true; gotD.textContent = "\u2713 " + t("Taken out"); });
+        gotD.addEventListener("click", function () { gymVaultRemove(d.family, true); gotD.disabled = true; gotD.textContent = "✓ " + t("Taken out"); });
         gvd.appendChild(gotD);
-      } else gvd.appendChild(gymVaultButton("drill", d.family, brainGymPicker));
-      res.querySelector("#drillAnother").addEventListener("click", function () {
-        var list = eligibleDrills(), k = 0, j; for (j = 0; j < list.length; j++) if (list[j].key === d.family) k = j;
-        startDrill(list[(k + 1) % list.length].key);
-      });
-      res.querySelector("#drillKinds").addEventListener("click", brainGymPicker);
+      } else gvd.appendChild(gymVaultButton("drill", d.family, function () { render(res); }));
+      var ag = res.querySelector("#drillAgain"); if (ag) ag.addEventListener("click", function () { startDrill(); });
+      var pz = res.querySelector("#drillPuzzles"); if (pz) pz.addEventListener("click", function () { startBrainGym(); });
       res.querySelector("#drillHome").addEventListener("click", goHome);
       render(res);
     }
@@ -2058,7 +2154,8 @@
       paused = !paused; last = Date.now(); this.textContent = paused ? t("Resume") : t("Pause");
       var dv = demoNode.querySelector("video"); if (dv && !demoNode.querySelector(".gdemo-play")) { if (paused) dv.pause(); else { var p = dv.play(); if (p && p.catch) p.catch(function () {}); } }
     });
-    node.querySelector("#drillDone").addEventListener("click", end);
+    /* Done on the last step (not in the pause before it) is the move finished; earlier, a stop */
+    node.querySelector("#drillDone").addEventListener("click", function () { end(i === d.steps.length - 1 && !trans); });
     document.addEventListener("visibilitychange", onVis);
     timer = setInterval(function () {
       if (!node.isConnected) { clearInterval(timer); stopFrames(); showDemo(null); document.removeEventListener("visibilitychange", onVis); return; }
@@ -2097,7 +2194,7 @@
       '<div class="card">' +
         '<div class="emoji">🧠</div>' +
         '<h3 style="margin:8px 0 6px">' + t("Nothing here yet — and that is the point.") + '</h3>' +
-        '<p class="mini" style="margin:0 0 14px">' + t("This page is your record, not a scoreboard. It fills itself in as you play.") + '</p>' +
+        '<p class="mini" style="margin:0 0 14px">' + t("This page is your record. It fills itself in as you play.") + '</p>' +
         '<div class="bm-row"><span class="bm-cat">🧭 ' + t("Your Brain Map") + '</span>' +
           '<span class="bm-lv">' + t("which of the six domains you know best") + '</span></div>' +
         '<div class="bm-row"><span class="bm-cat">🗝️ ' + t("Facts owned") + '</span>' +
@@ -2350,8 +2447,11 @@
       '<div class="card">' +
         '<div class="section-title" style="margin-top:0">' +
           ((cur && C.flagOf(cur)) || "🌍") + ' ' + t("The country you represent") + '</div>' +
+        // The old text said the country picks a bookshop (no code does that)
+        // and that it is "counted as a country" (the counted country comes from
+        // the internet connection). One sentence now, shared with onboarding.
         '<p class="mini" style="margin:0 0 12px">' +
-          t("Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It is kept on this device, and counted only as a country — never as a person.") +
+          t("It will place you on your country's board when contests start. Until then it stays on this device and is not sent to Qpio. The country Qpio counts comes from your internet connection, not from this choice.") +
         '</p>' +
         '<select class="cselect" id="ccSel" aria-label="' + esc(t("The country you represent")) + '">' +
           '<option value="">' + t("Prefer not to say") + '</option>' +
@@ -2379,6 +2479,7 @@
     wrap.appendChild(countryCard());
     wrap.appendChild(backupCard());
     wrap.appendChild(comfortView(true));
+    wrap.appendChild(privacyEntryCard());
     return wrap;
   }
 
@@ -2429,8 +2530,11 @@
         var bag = JSON.parse(decodeURIComponent(escape(atob(raw))));
         if (!bag || !bag.d) throw new Error("shape");
         var n = 0;
+        // Only what a backup can contain. A pasted code carrying any other
+        // curio.* key - curio.measure.off above all - would otherwise switch
+        // the counting back on behind the reader's "Counting stays off".
         Object.keys(bag.d).forEach(function (k) {
-          if (k.indexOf("curio.") === 0) { localStorage.setItem(k, bag.d[k]); n++; }
+          if (BACKUP_KEYS.indexOf(k) !== -1 || k.indexOf("curio.daily.") === 0) { localStorage.setItem(k, bag.d[k]); n++; }
         });
         msg.textContent = tf("Restored {n} items. Reopening…", { n: n });
         setTimeout(function () { location.reload(); }, 900);
@@ -2547,11 +2651,11 @@
     ], settings.contrast, function (v) { settings.contrast = v; saveSettings(); }));
 
     // "No account, no tracking — ever" was not true and the CEO ruled it out
-    // (D-064, 2026-08-14): registration is voluntary and offered, and the app
-    // does need to see how its readers get on. The honest version keeps the
-    // part that IS true and load-bearing — kids get no account interface at
-    // all, which is what makes Kids mode COPPA-clean by construction.
-    node.appendChild(segRow(t("👶 Age mode"), t("Kids mode uses kid-friendly questions only (ages ~8–12). No account is offered in Kids mode, and nothing personal is ever collected."), [
+    // (D-064, 2026-08-14). The hint now says only what the switch does: the
+    // "nothing personal is ever collected" and account wording went with the
+    // Privacy screen (24 Sep 2026), which says what is and is not kept, and
+    // "~" is gone because screen readers read it out as "tilde".
+    node.appendChild(segRow(t("👶 Age mode"), t("Kids mode shows only questions written for ages 8 to 12."), [
       { label: t("Everyone"), value: "all" }, { label: t("Kids (8–12)"), value: "kids" }
     ], settings.ageMode, function (v) { settings.ageMode = v; saveSettings(); }));
 
@@ -2567,21 +2671,459 @@
       location.reload();
     }));
 
-    node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="replayIntro">' + t("Replay the intro") + '</a> · <a href="#" id="wipe" style="color:var(--bad)">' + t("Reset all my data on this device") + '</a></div>'));
+    // Deleting everything on this device moved to Settings › Privacy & your
+    // data (24 Sep 2026), with one plain confirmation that says what goes.
+    node.appendChild(el('<div class="mini" style="margin-top:18px"><a href="#" id="replayIntro">' + t("Replay the intro") + '</a></div>'));
     node.querySelector("#replayIntro").addEventListener("click", function (e) { e.preventDefault(); onboardingView(0); });
 
     var back = node.querySelector("#back");
     if (back) back.addEventListener("click", goHome);
-    node.querySelector("#wipe").addEventListener("click", function (e) {
-      e.preventDefault();
-      if (confirm(t("Erase streaks, scores, vault and settings on this device?"))) {
-        Object.keys(localStorage).forEach(function (k) { if (k.indexOf("curio.") === 0) localStorage.removeItem(k); });
-        settings = Object.assign({}, DEFAULT_SETTINGS);
-        applySettings(); goHome();
-      }
+    return node;
+  }
+
+  /* PRIVACY:begin */
+  // ---------- Settings › Privacy & your data ----------
+  // Founder, 24 Sep 2026: a data-rights screen in Settings, like a game's
+  // "Privacy Rights" screen but written from Qpio's manifesto, with what does
+  // not apply dropped (Qpio has no ads, so there are no ad settings) - and the
+  // promise "Your curiosity is yours." shown in ONE place instead of under
+  // every screen. This is that place. On it the reader can read the promise,
+  // see, save and delete what is kept on this device, turn the counting off,
+  // see who else sees their connection, and read their rights.
+  //
+  // It is a sub-page of the Settings tab (#privacy): it renders into #tabView
+  // and never through render(), which would destroy a paused quiz.
+  //
+  // COPY RULE: every sentence here is a string literal handed straight to t or
+  // tf, one call on one line, so check_i18n.py can see it and
+  // tools/privacy.test.js can prove it. Conditional copy is two literal calls.
+  // No copy in variables, objects or src/privacy.js.
+
+  // The last card of the Settings tab.
+  function privacyEntryCard() {
+    var node = el('<div class="card"><button class="rowlink" id="openPrivacy"><span><span aria-hidden="true">🔒</span> ' + t("Privacy & your data") + '</span><span class="chev" aria-hidden="true">›</span></button><p class="mini" style="margin:8px 0 0">' + t("What is kept on this device, what Qpio counts, and your choices.") + '</p></div>');
+    node.querySelector("#openPrivacy").addEventListener("click", function () {
+      pvOpenedInApp = true; pvOpener = "openPrivacy"; location.hash = "privacy";
     });
     return node;
   }
+
+  // Back returns to where the reader came from. Opened from inside the app, that
+  // is the previous history entry (and Android's back button agrees); reached by
+  // a deep link, there is no such entry, so it goes to Settings.
+  function pvGoBack() {
+    pvReturn = pvOpener || "openPrivacy";
+    var inApp = pvOpenedInApp;
+    pvOpenedInApp = false; pvOpener = null;
+    if (inApp) history.back(); else location.hash = "settings";
+  }
+
+  function pvHead(icon, text) { return '<h3 class="section-title"><span aria-hidden="true">' + icon + '</span> ' + text + '</h3>'; }
+  function pvLine(html) { return '<p class="mini" style="margin:0 0 6px">' + html + '</p>'; }
+  function pvExt(href, label) {
+    return '<a href="' + href + '" target="_blank" rel="noopener noreferrer">' + label + '<span class="sr-only"> ' + t("(opens in a new tab)") + '</span></a>';
+  }
+  function pvBlock(html) { return el('<div>' + html + '</div>'); }
+  function pvDate(d, utc) {
+    var o = { day: "numeric", month: "long", year: "numeric" };
+    if (utc) o.timeZone = "UTC";   // a week's Monday is a calendar date, not a moment
+    var s;
+    try { s = d.toLocaleDateString(QLANG === "fr" ? "fr-FR" : "en-GB", o); } catch (e) { return todayKey(d); }
+    // French writes the first of the month "1er septembre", which the browser does not.
+    return QLANG === "fr" ? s.replace(/^1(?=\s)/, "1er") : s;
+  }
+  // The same write probe as privacy.js and measure.js. Asked here too, so a
+  // privacy.js that failed to load is not reported as blocked storage.
+  function pvCanStore() {
+    if (window.QpioPrivacy) return QpioPrivacy.canStore();
+    try { localStorage.setItem("curio.t", "1"); localStorage.removeItem("curio.t"); return true; } catch (e) { return false; }
+  }
+
+  function privacyView() {
+    var kids = settings.ageMode === "kids";
+    var wrap = el('<div class="pv grid"></div>');
+    // Back on its own row: one row overflowed at 320px with Extra large text.
+    // No .quizhead here, so the quiz-screen detection can never trigger.
+    var head = el('<div class="pv-head"><button class="btn ghost" id="pvBack">' + t("← Back") + '</button><h2 id="pvTitle" tabindex="-1">' + t("Privacy & your data") + '</h2></div>');
+    head.querySelector("#pvBack").addEventListener("click", pvGoBack);
+    wrap.appendChild(head);
+    // 1. The promise (D-087), byte for byte. The only place a reader sees it.
+    wrap.appendChild(el('<div class="card"><h3 style="margin:0 0 8px">' + t("Your curiosity is yours.") + '</h3><p class="mini" style="margin:0">' + t("Qpio collects only information that has a defined purpose for improving the product, understanding its performance, operating a feature the reader chose, or fulfilling a transaction the reader initiated. We are transparent about what we collect, we do not sell reader data, and anonymous behaviour is not turned into a personal profile.") + '</p></div>'));
+    wrap.appendChild(pvDeviceCard(kids));
+    wrap.appendChild(pvCountingCard(kids));
+    wrap.appendChild(pvServicesCard(kids));
+    wrap.appendChild(pvRightsCard(kids));
+    // Same window on purpose: a new tab can have separate storage on an
+    // installed iPhone app, and the switch there would then govern nothing.
+    wrap.appendChild(el('<div class="card"><a class="rowlink" href="/privacy"><span>' + t("Read the full privacy page") + '</span><span class="chev" aria-hidden="true">›</span></a></div>'));
+    return wrap;
+  }
+
+  // ---- 2. On this device: see, save, delete ----
+  // What the Cache API holds, read without creating anything: has() before
+  // open(), because open() creates a cache that is missing.
+  var pvAsync = { ready: false, pics: null, queue: null };
+  function pvPrefetch(done) {
+    if (!window.caches) { pvAsync.ready = true; return; }
+    try {
+      var pics = caches.has("qpio-img-v1").then(function (has) {
+        if (!has) return null;
+        return caches.open("qpio-img-v1").then(function (c) { return c.keys(); })
+          .then(function (rs) { return rs.map(function (r) { return r.url; }); });
+      }).catch(function () { return null; });
+      var queue = caches.has(NUDGE_CACHE).then(function (has) {
+        if (!has) return null;
+        return caches.open(NUDGE_CACHE).then(function (c) { return c.match(NUDGE_URL); })
+          .then(function (r) { return r ? r.json() : null; });
+      }).catch(function () { return null; });
+      Promise.all([pics, queue]).then(function (r) {
+        pvAsync.ready = true; pvAsync.pics = r[0]; pvAsync.queue = r[1];
+        if (done) done();
+      });
+    } catch (e) { pvAsync.ready = true; }
+  }
+  function pvPicsText() {
+    if (!pvAsync.ready) return "…";
+    return pvAsync.pics ? String(pvAsync.pics.length) : "0";   // a count, like the other count rows
+  }
+  function pvPaintPics() { var dd = document.getElementById("pvPics"); if (dd) dd.textContent = pvPicsText(); }
+
+  // Keys the list names on a line of its own; anything else Qpio keeps is
+  // counted on the last line, so nothing is left out of the picture.
+  var PV_LISTED = ["playerName", "leaderboard", "country", "discovery", "vault", "stats", "streak", "hiscore",
+    "gym.vault", "gym.day", "gym.day.kids", "qseen2", "settings", "lang", "nudge", "nudgeHour", "measure.off", "firstweek", "mq", "mhealth"];
+  function pvRow(label, value) { return '<div><dt>' + label + '</dt><dd>' + esc(value) + '</dd></div>'; }
+
+  // Built each time the panel opens, so every value is what is stored now.
+  function pvSeeHtml() {
+    if (!pvCanStore()) return '<p class="mini" style="margin:10px 0 6px">' + t("Your browser is blocking storage on this site, so nothing is kept here.") + '</p>';
+    var rows = [];
+    var name = LS.get("playerName", "");
+    rows.push(pvRow(t("Your name on the leaderboard"), (typeof name === "string" && name.trim()) ? name : t("not set")));
+    var board = LS.get("leaderboard", []);
+    rows.push(pvRow(t("Scores on this device's leaderboard"), Array.isArray(board) ? board.length : 0));
+    var C = window.CURIO_COUNTRY, cc = C ? C.get() : null, ccLabel = null;
+    if (C && cc) C.list().forEach(function (c) { if (c.code === cc) ccLabel = c.label; });
+    rows.push(pvRow(t("The country you represent"), ccLabel || t("not chosen")));
+    var ds = LS.get("discovery", null);
+    rows.push(pvRow(t("How you said you found Qpio"), (ds && ds !== "unknown") ? discoveryLabel(ds) : t("not answered")));
+    var vault = LS.get("vault", {});
+    rows.push(pvRow(t("Facts in your Memory Vault"), vault && typeof vault === "object" ? Object.keys(vault).length : 0));
+    var st = getStats(), n = 0, c = 0;
+    Object.keys(st.cats).forEach(function (k) { var x = st.cats[k] || {}; n += x.s || 0; c += x.c || 0; });
+    rows.push(pvRow(t("Questions answered"), tf("{n}, {c} of them correct", { n: n, c: c })));
+    // Distinct dates: an adult and a Kids record for one day count once.
+    var days = {};
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var m = /^curio\.daily\.(\d{4}-\d{2}-\d{2})(\.kids)?$/.exec(localStorage.key(i) || "");
+        if (m) days[m[1]] = true;
+      }
+    } catch (e) {}
+    var dk = Object.keys(days).sort(), d0 = dk.length ? dk[0].split("-") : null;
+    rows.push(pvRow(t("Days you played the Daily Challenge"), d0 ? tf("{n}, since {date}", { n: dk.length, date: pvDate(new Date(+d0[0], +d0[1] - 1, +d0[2])) }) : t("none")));
+    var sk = getStreak();
+    rows.push(pvRow(t("Streak"), tf("{n} now, best {b}", { n: sk.count || 0, b: sk.best || 0 })));
+    rows.push(pvRow(t("Best Quick-Fire score"), LS.get("hiscore", 0)));
+    var gv = LS.get("gym.vault", []);
+    rows.push(pvRow(t("Kinds kept in your Gym Vault"), Array.isArray(gv) ? gv.length : 0));
+    // Once a day (D-090): what of today's puzzles and move is finished, one note per mode,
+    // overwritten each day. Named here rather than counted among the small notes.
+    var gd = gymToday(), gdone = [];
+    if (typeof gd.p === "number") gdone.push(tf("puzzles done, {n}/{total}", { n: gd.p, total: gd.t || 5 }));
+    if (gd.m === true) gdone.push(t("move done"));
+    rows.push(pvRow(t("Brain Gym, today"), gdone.length ? gdone.join(", ") : t("nothing finished yet")));
+    // Filtered here: the stored list is only pruned when a round marks a question seen.
+    var led = seenLedger(), today = dayNumber();
+    if (!Array.isArray(led)) led = [];
+    rows.push(pvRow(t("Questions seen in the last 45 days"), led.filter(function (e) { return e && today - e.d < QF_PRUNE_DAYS; }).length));
+    rows.push(pvRow(t("Your settings"), t("text size, timer, reading aids, age mode and language")));
+    rows.push(pvRow(t("Daily reminder"), (LS.get("nudge", false) && notifyState() === "granted") ? tf("on, from {h}:00", { h: LS.get("nudgeHour", 8) }) : t("off")));
+    rows.push(pvRow(t("Counting"), (window.QpioMeasure && !QpioMeasure.isOff()) ? t("on") : t("off")));
+    var ws = window.QpioPrivacy ? QpioPrivacy.weekStart(LS.get("firstweek", null)) : null;
+    if (ws) rows.push(pvRow(t("When this device first played (used for counting)"), tf("week of {date}", { date: pvDate(ws, true) })));
+    var mq = LS.get("mq", []);
+    rows.push(pvRow(t("Round summaries waiting to be sent"), Array.isArray(mq) ? mq.length : 0));
+    var hasHealth = false;
+    try { hasHealth = localStorage.getItem("curio.mhealth") !== null; } catch (e) {}
+    if (hasHealth) rows.push(pvRow(t("A count of the summaries sent, and of any that could not be"), t("kept only here, never sent")));
+    if (window.caches) rows.push('<div><dt>' + t("Pictures kept so they load faster") + '</dt><dd id="pvPics">' + esc(pvPicsText()) + '</dd></div>');
+    var other = (window.QpioPrivacy ? QpioPrivacy.ownKeys(localStorage) : []).filter(function (k) {
+      return !(k.indexOf("curio.") === 0 && (k.indexOf("curio.daily.") === 0 || PV_LISTED.indexOf(k.slice(6)) !== -1));
+    });
+    rows.push(pvRow(t("Small notes that help the app work"), other.length));
+    return '<dl class="pv-list">' + rows.join("") + '</dl>';
+  }
+
+  // The build the reader is running, read the way buildShell() reads it.
+  function pvAppVersion() {
+    var s = document.querySelector('script[src*="app.js"]');
+    var m = s && /[?&]v=(\d+)/.exec(s.getAttribute("src") || "");
+    return m ? m[1] : "unknown";
+  }
+
+  // SAVE A COPY (access and portability; not a restore format). The file is
+  // built synchronously inside the tap, so iPhone Safari still counts share()
+  // as caused by the tap.
+  function pvSave(msg, fb) {
+    msg.textContent = ""; fb.innerHTML = "";
+    var now = new Date(), day = todayKey(now), name = "qpio-my-data-" + day + ".json";
+    var bag = {
+      about: tf("Everything Qpio keeps about you in this browser, on this device, saved on {date}.", { date: pvDate(now) }),
+      savedOn: day,
+      appVersion: pvAppVersion(),
+      storage: window.QpioPrivacy ? QpioPrivacy.snapshot(localStorage) : {},
+      browser: { notificationPermission: notifyState(), picturesKept: pvAsync.pics, notificationQueue: pvAsync.queue }
+    };
+    var json = JSON.stringify(bag, null, 2);
+    function fallback() {
+      msg.textContent = t("Your browser would not save the file. Here is the same text, to copy:");
+      fb.innerHTML = "";
+      var ta = el('<textarea readonly class="cselect" rows="8" style="padding:8px 12px;margin-top:8px" aria-label="' + esc(t("Your browser would not save the file. Here is the same text, to copy:")) + '"></textarea>');
+      ta.value = json;   // .value, never markup: a crafted backup code can put markup into playerName
+      var cp = el('<button class="btn ghost" style="margin-top:8px">' + t("Copy the text") + '</button>');
+      cp.addEventListener("click", function () { copy(json, msg); });
+      fb.appendChild(ta);
+      fb.appendChild(cp);
+    }
+    var file = null;
+    try { file = new File([json], name, { type: "application/json" }); } catch (e) {}
+    // iPads report a Mac user agent; the touch points give them away.
+    var ua = navigator.userAgent || "";
+    var phone = /iphone|ipad|ipod|android/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+    if (phone && file && navigator.canShare && navigator.share) {
+      var can = false;
+      try { can = navigator.canShare({ files: [file] }); } catch (e) {}
+      if (can) {
+        navigator.share({ files: [file], title: name }).catch(function (e) {
+          if (e && e.name === "AbortError") return;   // the reader closed the sheet: nothing to say
+          fallback();
+        });
+        return;
+      }
+    }
+    try {
+      var url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+      var a = document.createElement("a");
+      a.href = url; a.download = name; a.style.display = "none";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+      msg.textContent = t("Saved. Look in your downloads.");
+    } catch (e) { fallback(); }
+  }
+
+  // DELETE EVERYTHING ON THIS DEVICE (US-049): one plain confirmation that says
+  // what goes, no guilt copy, and two buttons of equal weight.
+  function pvDelete(msg, yes) {
+    if (!window.QpioPrivacy) { msg.textContent = t("Not everything could be deleted. Try again, or clear this site's data in your browser's settings."); return; }
+    yes.disabled = true;
+    WIPING = true;                       // LS.set writes nothing from here
+    closePlay();                         // removes a paused quiz from the screen
+    var t0 = Date.now();
+    QpioPrivacy.wipeDevice().then(function (res) {
+      if (res && res.failed) {           // stays on the page; a retry runs it again
+        // Saving comes back, so a reader who keeps playing does not lose the
+        // rest of the session without being told. Counting stays halted until
+        // Qpio is reopened: it errs towards sending less.
+        WIPING = false;
+        yes.disabled = false;
+        msg.textContent = t("Not everything could be deleted. Try again, or clear this site's data in your browser's settings.");
+        return;
+      }
+      // null means storage could not be reached at all: nothing could have been
+      // stored, so it counts as done. The restart waits a second so a screen
+      // reader can announce the message first.
+      msg.textContent = t("Deleted. Qpio is starting again.");
+      setTimeout(function () { location.replace("/"); }, Math.max(1000, 1000 - (Date.now() - t0)));
+    });
+  }
+
+  function pvDeviceCard(kids) {
+    var canStore = pvCanStore();
+    var node = el('<div class="card">' + pvHead("📱", t("On this device")) +
+      pvLine(t("Your progress, the facts in your Memory Vault, your settings and your leaderboard name are kept in this browser, on this device.")) +
+      '<details class="pv-more" id="pvSee"><summary>' + t("See what is stored") + '</summary><div id="pvSeeBody"></div></details>' +
+      '<div class="btnrow" style="margin-top:8px"><button class="btn" id="pvSave">' + t("Save a copy") + '</button></div>' +
+      '<p class="mini" style="margin:8px 0 6px">' + t("A file with everything listed above, in full, laid out for computers to read. To move your progress to another device, use your backup code instead.") + '</p>' +
+      '<div class="mini" id="pvSaveMsg" role="status"></div>' +
+      '<div id="pvSaveFb"></div>' +
+      '<div class="btnrow" style="margin-top:14px"><button class="btn ghost" id="pvDel" aria-expanded="false" aria-controls="pvConfirm" style="color:var(--bad);border-color:var(--bad)">' + t("Delete everything on this device") + '</button></div>' +
+      '<div class="pv-confirm" id="pvConfirm" role="group" aria-labelledby="pvDelT" hidden></div>' +
+    '</div>');
+
+    var see = node.querySelector("#pvSee"), seeBody = node.querySelector("#pvSeeBody");
+    see.addEventListener("toggle", function () {
+      if (!see.open) return;
+      seeBody.innerHTML = pvSeeHtml();
+      pvPrefetch(pvPaintPics);
+    });
+    pvPrefetch(pvPaintPics);
+
+    var save = node.querySelector("#pvSave");
+    // Without privacy.js the file would say "everything" and hold nothing.
+    if (!canStore || !window.QpioPrivacy) save.disabled = true;
+    save.addEventListener("click", function () { pvSave(node.querySelector("#pvSaveMsg"), node.querySelector("#pvSaveFb")); });
+
+    var del = node.querySelector("#pvDel"), panel = node.querySelector("#pvConfirm");
+    function closePanel() {
+      panel.hidden = true; panel.innerHTML = "";
+      del.setAttribute("aria-expanded", "false");
+      del.focus();
+    }
+    del.addEventListener("click", function () {
+      if (!panel.hidden) { closePanel(); return; }
+      var off = !!(window.QpioMeasure && QpioMeasure.isOff());
+      var kidsNow = settings.ageMode === "kids";
+      panel.innerHTML =
+        '<h3 id="pvDelT" tabindex="-1" style="margin:0 0 8px">' + t("Delete everything on this device?") + '</h3>' +
+        pvLine(t("This deletes:")) +
+        '<ul class="mini" style="margin:0 0 8px;padding-left:18px">' +
+          '<li>' + t("your progress, your Memory Vault, your streak and your scores") + '</li>' +
+          '<li>' + t("your name, country and settings, including language") + '</li>' +
+          '<li>' + t("your daily reminder, which will stop") + '</li>' +
+          '<li>' + t("the pictures kept so they load faster") + '</li>' +
+        '</ul>' +
+        pvLine(t("This cannot be undone. Qpio has no copy that could bring it back.")) +
+        pvLine(t("To keep your progress, copy your backup code in Settings first.")) +
+        (off ? pvLine(t("Counting stays off.")) : '') +
+        (kidsNow ? pvLine(t("Kids mode stays on.")) : '') +
+        // notifyState(), not Notification.permission, which throws in iPhone
+        // Safari when the app is not installed.
+        (notifyState() === "granted" ? pvLine(t("Your browser will still remember that you allowed notifications. You can remove that in your browser's settings.")) : '') +
+        (kidsNow ? pvLine(t("Unsure? Ask a grown-up first.")) : '') +
+        // Dark text on --bad: white on it fails contrast.
+        '<div class="btnrow" style="margin-top:10px">' +
+          '<button class="btn" id="pvDelYes" style="flex:1;background:var(--bad);color:#3a0d16">' + t("Delete everything") + '</button>' +
+          '<button class="btn ghost" id="pvDelNo" style="flex:1">' + t("Keep everything") + '</button>' +
+        '</div>' +
+        '<div class="mini" id="pvDelMsg" role="status" style="margin-top:8px"></div>';
+      panel.hidden = false;
+      del.setAttribute("aria-expanded", "true");
+      panel.querySelector("#pvDelT").focus();
+      panel.querySelector("#pvDelNo").addEventListener("click", closePanel);
+      var yes = panel.querySelector("#pvDelYes");
+      yes.addEventListener("click", function () { pvDelete(panel.querySelector("#pvDelMsg"), yes); });
+    });
+    panel.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !panel.hidden && !WIPING) { e.preventDefault(); closePanel(); }
+    });
+    return node;
+  }
+
+  // ---- 3. Counting ----
+  // The default is On, and the copy says so (D-089 opt-out model). The switch
+  // comes early. In Kids mode a line written for a child opens the card and
+  // the adult detail folds under "More detail for grown-ups".
+  function pvCountingCard(kids) {
+    var M = window.QpioMeasure;
+    var node = el('<div class="card">' + pvHead("📊", t("Counting, to improve the questions")) + '</div>');
+    if (!M) { node.appendChild(el(pvLine(t("Counting did not load, so nothing is being counted.")))); return node; }
+    // A browser that cannot record a "no" gets no switch: measure.js already
+    // sends nothing there, and a switch that cannot stick would be a lie. The
+    // lines about a summary being sent would be false there too, so the card
+    // says only this.
+    if (!M.storable) { node.appendChild(el(pvLine(t("Your browser is blocking storage on this site, so nothing is counted here.")))); return node; }
+
+    var l1 = pvLine(t("When you finish or leave a round, this device sends Qpio one short summary."));
+    var list = pvLine(t("The summary says:")) +
+      '<ul class="mini" style="margin:0 0 8px;padding-left:18px">' +
+        '<li>' + t("which questions you saw, in what order, and whether each answer was right") + '</li>' +
+        '<li>' + t("which game it was, such as the Daily Challenge or Quick-Fire, and whether you finished") + '</li>' +
+        '<li>' + t("the day and your language") + '</li>' +
+        '<li>' + t("whether Kids mode is on") + '</li>' +
+        '<li>' + t("the type of device, and whether Qpio is installed") + '</li>' +
+        '<li>' + t("which version of the app and of the questions you had") + '</li>' +
+        '<li>' + t("how you said you found Qpio") + '</li>' +
+        '<li>' + t("roughly how many weeks since this device first played") + '</li>' +
+      '</ul>';
+    var facts =
+      pvLine(t("Qpio adds the country your internet connection comes from. It does not use the country you picked.")) +
+      pvLine(t("The summary holds no name and no number that points back to you.")) +
+      pvLine(t("Qpio's server sees your internet address when the summary arrives. Qpio does not store it.")) +
+      pvLine(t("Only totals are kept, for 13 months."));
+    var kline = pvLine(M.kidsCounted ? t("Rounds in Kids mode are counted the same way, marked as Kids rounds.") : t("Rounds played in Kids mode are not counted."));
+    var scope = pvLine(t("This choice applies to this browser on this device."));
+
+    var sw = segRow(t("Counting"), null, [{ label: t("On"), value: true }, { label: t("Off"), value: false }], !M.isOff(), function (on) { M.setOptOut(!on); paint(); });
+    sw.querySelector(".cf-title").id = "pvCountT";
+    var box = sw.querySelector(".cats");
+    box.setAttribute("role", "group");
+    box.setAttribute("aria-labelledby", "pvCountT");
+    var stat = el('<div class="mini" id="pvCountSt" role="status" aria-live="polite"></div>');
+    // Read back after the write, so the status says what is stored, not what was tapped.
+    function paint() {
+      var off = M.isOff();
+      stat.textContent = off ? t("Counting is off. Nothing more is sent from this device, and anything waiting to be sent has been cleared.") : t("Counting is on.");
+      sw.querySelectorAll(".chip").forEach(function (b, i) { b.setAttribute("aria-pressed", ((i === 0) === !off) ? "true" : "false"); });
+    }
+    paint();
+
+    if (kids) {
+      node.appendChild(el('<p class="mini" style="margin:0 0 6px"><b>' + (M.kidsCounted ? t("When you finish a round, this device tells Qpio how the questions went. Your name is never in it. You can switch this off here, on your own or with a grown-up.") : t("Your games in Kids mode are not counted. The switch below is for Everyone mode.")) + '</b></p>'));
+      node.appendChild(sw);
+      node.appendChild(stat);
+      node.appendChild(el('<details class="pv-more"><summary>' + t("More detail for grown-ups") + '</summary>' + l1 + list + facts + kline + scope + '</details>'));
+    } else {
+      node.appendChild(pvBlock(l1 + pvLine(t("Counting is on unless you turn it off. Qpio works the same either way."))));
+      node.appendChild(sw);
+      node.appendChild(stat);
+      node.appendChild(pvBlock('<div style="margin-top:10px">' + list + facts + kline + scope + '</div>'));
+    }
+    return node;
+  }
+
+  // ---- 4. Other services ----
+  // Claims nothing about what these services do with the data: their own
+  // policies apply, and the links say whose.
+  function pvServicesCard(kids) {
+    var body =
+      pvLine(t("These services see your internet address and type of browser when they send you something. They keep their own records, under their own privacy rules.")) +
+      pvLine(t("Cloudflare delivers the app, and stores the counting totals on computers in the European Union.")) +
+      pvLine(t("Wikimedia sends most of the pictures. It is not told which Qpio page you are on.")) +
+      pvLine(t("YouTube plays a video only when you open one. It is told which video it is and that it played in Qpio, and it can store information in your browser.")) +
+      pvLine(t("Links you tap, such as Open Library, Wikipedia, UNESCO or a museum, open that site like any other visit.")) +
+      '<ul class="mini" style="margin:0 0 6px;padding-left:18px">' +
+        '<li style="padding:4px 0">' + pvExt("https://www.cloudflare.com/privacypolicy/", tf("{name} privacy policy", { name: "Cloudflare" })) + '</li>' +
+        '<li style="padding:4px 0">' + pvExt("https://foundation.wikimedia.org/wiki/Policy:Privacy_policy", tf("{name} privacy policy", { name: "Wikimedia" })) + '</li>' +
+        '<li style="padding:4px 0">' + pvExt("https://policies.google.com/privacy", tf("{name} privacy policy", { name: "Google (YouTube)" })) + '</li>' +
+      '</ul>';
+    return el('<div class="card">' + pvHead("🌐", t("Other services Qpio uses")) +
+      (kids
+        ? pvLine(t("Some pictures and videos come from other websites. Those websites can see which internet connection asked for them.")) +
+          '<details class="pv-more"><summary>' + t("More detail for grown-ups") + '</summary>' + body + '</details>'
+        : body) +
+      // In place of the game's advertising screens: there is nothing to set.
+      '<p class="mini" style="margin:10px 0 0;padding-top:10px;border-top:1px solid var(--line)">' + t("Qpio doesn't interrupt your learning with ads, so there are no advertising settings to change.") + '</p>' +
+    '</div>');
+  }
+
+  // ---- 5. Your rights, and who runs Qpio ----
+  // With PRIVACY_CONTACT empty (test site only) there is no mailto anywhere.
+  // In Kids mode an address is plain text, never a mailto, so no child's
+  // email address is ever collected.
+  function pvRightsCard(kids) {
+    var regs = '<ul class="mini" style="margin:0 0 6px;padding-left:18px">' +
+      '<li style="padding:4px 0">' + pvExt("https://www.cnil.fr", t("CNIL (France)")) + '</li>' +
+      '<li style="padding:4px 0">' + pvExt("https://ico.org.uk", t("ICO (UK)")) + '</li>' +
+      '<li style="padding:4px 0">' + pvExt("https://www.pcpd.org.hk", t("PCPD (Hong Kong)")) + '</li>' +
+    '</ul>';
+    var mail = PRIVACY_CONTACT ? '<a href="mailto:' + esc(PRIVACY_CONTACT) + '">' + esc(PRIVACY_CONTACT) + '</a>' : "";
+    var body = kids
+      ? pvLine(t("Qpio doesn't know who you are. Your progress is kept on this device, and you can see it or delete it above.")) +
+        pvLine(PRIVACY_CONTACT ? tf("If something seems wrong, tell a grown-up. They can write to us at {email}, or to the people whose job is to protect your privacy:", { email: esc(PRIVACY_CONTACT) }) : t("If something seems wrong, tell a grown-up. They can write to the people whose job is to protect your privacy:")) +
+        regs
+      : pvLine(t("Privacy laws in many countries give you rights over information about you: to see it, correct it, delete it, limit how it is used or say no to it, and to complain.")) +
+        pvLine(t("Qpio can't look you up, because nothing it keeps says who you are. So there is nothing on its side to find, correct or delete.")) +
+        pvLine(t("A total can sometimes describe one person, for example the only player from a country on a given day.")) +
+        pvLine(PRIVACY_CONTACT ? tf("If you think that applies to you, or for any other request, write to {email}. We reply within one month.", { email: mail }) : t("Qpio does not yet have an address you can write to about your data.")) +
+        pvLine(t("You can also complain to the data protection regulator where you live. For example:")) +
+        regs;
+    return el('<div class="card">' + pvHead("⚖️", t("Your rights")) + body +
+      '<h3 class="section-title" style="margin-top:16px"><span aria-hidden="true">🏢</span> ' + t("Who runs Qpio") + '</h3>' +
+      pvLine(t("Qpio will be run by a company that is not set up yet. Its name will appear here once it is.")) +
+    '</div>');
+  }
+  /* PRIVACY:end */
 
   // ---------- image preload (issue #1) ----------
   // "The refreshing speed for the images in the app is a bit slow" (CEO,
@@ -2823,7 +3365,7 @@
           '</div>' +
           (isGen
             ? '<div class="qart-credit qart-credit-ai">' +
-                esc(t("This picture was generated by AI. It illustrates the idea — it is not a photograph of the thing.")) +
+                esc(t("This image was generated by AI. It illustrates the idea — it is not a photograph of the thing.")) +
               '</div>'
             : (q.img.by ? '<div class="qart-credit">' +
                 (q.img.p ? '<a href="' + srcLink0(q.img.p) + '" target="_blank" rel="noopener">' : '') +
@@ -3275,7 +3817,8 @@
           '<div class="rs-ring" style="--pct:' + pct + '" role="img" aria-label="' +
             tf("{score} out of {total}", { score: rec.score, total: rec.total }) + '">' +
             '<div class="rs-ring-in"><b>' + rec.score + '/' + rec.total + '</b>' +
-            '<span>' + (already ? t("Today") : praise(rec.score, rec.total)) + '</span></div>' +
+            /* the round, never the reader (D-053; messaging.md, 24 Sep 2026): the count is in the ring */
+            '<span>' + t("Today") + '</span></div>' +
           '</div>' +
           // Share sits beside the marks, not at the end of the row. As a
           // sibling of .rs-meta it wrapped to a second line on a 375px screen
@@ -3700,12 +4243,14 @@
             '<div class="mini">' + tf("Facts mastered for good so far: {n} 🏅", { n: (getStats().mastered || 0) }) + '</div>' +
             '<div class="btnrow" style="justify-content:center">' +
               (vaultDue().length ? '<button class="btn" id="more">' + t("Review more") + '</button>' : '') +
+              '<button class="btn' + (vaultDue().length ? ' ghost' : '') + '" id="vrHome">🏠 ' + t("Home") + '</button>' +
             '</div>' +
           '</div>'
         );
         render(node);
         var more = node.querySelector("#more");
         if (more) more.addEventListener("click", startVaultSession);
+        node.querySelector("#vrHome").addEventListener("click", goHome);
       }
     });
   }
@@ -3768,7 +4313,7 @@
   function cityHomeView() {
     var wrap = el('<div class="grid"></div>');
     wrap.appendChild(el('<div class="quizhead" style="margin-bottom:2px"><button class="btn ghost" id="back" style="padding:8px 12px;font-size:13px">' + t("← Home") + '</button><h2 style="margin:0 auto">🧳 ' + t("Before you travel") + '</h2><span style="width:64px"></span></div>'));
-    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">' + t("Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free and offline.") + '</p>'));
+    wrap.appendChild(el('<p class="mini" style="margin:0 0 8px">' + t("Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free.") + '</p>'));
     cityCards(wrap);
     wrap.querySelector("#back").addEventListener("click", goHome);
     return wrap;
@@ -3830,17 +4375,18 @@
           var res = el(
             '<div class="card result">' +
               '<div class="scorebig">' + r.correct + '/' + r.total + '</div>' +
-              '<h2>' + praise(r.correct, r.total) + '</h2>' +
-              '<div class="sub">' + esc(pack.city) + ' · ' + t("ready for your trip 🧳") + '</div>' +
+              '<h2>' + esc(pack.city) + ' · ' + t("ready for your trip 🧳") + '</h2>' +
               '<div class="btnrow" style="justify-content:center">' +
                 '<button class="btn" id="again">' + t("Play again") + '</button>' +
                 '<button class="btn ghost" id="pack">' + tf("Back to {city}", { city: esc(pack.city) }) + '</button>' +
+                '<button class="btn ghost" id="cpHome">🏠 ' + t("Home") + '</button>' +
               '</div>' +
             '</div>'
           );
           render(res);
           res.querySelector("#again").addEventListener("click", function () { play.querySelector("#playCity").click(); });
           res.querySelector("#pack").addEventListener("click", function () { render(cityPackView(pack)); });
+          res.querySelector("#cpHome").addEventListener("click", goHome);
         }
       });
     });
@@ -3963,7 +4509,7 @@
       if (!correct) (saidTrue ? fBtn : kBtn).classList.add("wrong");
       // The explain text itself opens with "Real."/"Fake.", so the head just
       // carries the reaction + emoji to avoid doubling the verdict word.
-      var head = (correct ? t("Nice catch! ") : t("Gotcha — ")) + (st.truth ? "✅ " : "🚫 ");
+      var head = (correct ? t("Nice catch! ") : t("Not quite — ")) + (st.truth ? "✅ " : "🚫 ");
       var fact = el('<div class="fact"><b>' + head + '</b>' + fmt(st.explain) + srcLink(st.src) +
         '<div class="btnrow"><button class="btn" id="next">' + (idx + 1 < sts.length ? t("Next →") : t("See results →")) + '</button></div></div>');
       node.appendChild(fact);
@@ -3998,10 +4544,10 @@
       res.querySelector("#tlHome").addEventListener("click", goHome);
     }
   }
+  /* about the round and the fakes, never the reader (D-053; messaging.md, 24 Sep 2026) */
   function truthPraise(c, t_) {
     var r = c / t_;
-    if (r === 1) return t("Unfoolable. 🔎");
-    if (r >= 0.75) return t("Sharp eye for nonsense.");
+    if (r === 1) return t("Every fake spotted. 🔎");
     if (r >= 0.5) return t("The fakes are sneaky — that’s the point.");
     return t("Now you know the tricks. They only work once.");
   }
@@ -4025,7 +4571,7 @@
         '</div>'
       );
       render(node);
-      node.querySelector("#clearedOther").addEventListener("click", function () { renderTab("train"); });
+      node.querySelector("#clearedOther").addEventListener("click", goGames);
       node.querySelector("#clearedHome").addEventListener("click", goHome);
       return;
     }
@@ -4044,8 +4590,10 @@
     var node = el(
       '<div class="card result">' +
         '<div class="scorebig">' + r.score + '</div>' +
-        '<h2>' + (isHi ? t("🏆 New high score!") : praise(r.correct, r.total)) + '</h2>' +
-        '<div class="sub">' + tf("{c}/{t} correct", { c: r.correct, t: r.total }) + ' · ' + esc(label) + '</div>' +
+        /* the round, never the reader: a new high score says so, otherwise the topic is the heading
+           (and is not repeated under it) */
+        '<h2>' + (isHi ? t("🏆 New high score!") : esc(label)) + '</h2>' +
+        '<div class="sub">' + tf("{c}/{t} correct", { c: r.correct, t: r.total }) + (isHi ? ' · ' + esc(label) : '') + '</div>' +
         // How the number was reached, next to the number. A score nobody can
         // explain is a score nobody trusts (CEO, 2026-08-13: "We need to
         // explain how the points are calculated in the dashboard to the user").
@@ -4058,7 +4606,7 @@
             '<li>' + t("A wrong answer scores nothing — it never takes points away.") + '</li>' +
           '</ul></details>' +
         '<div class="btnrow" style="justify-content:center">' +
-          '<button class="btn ghost" id="again">' + t("Play again") + '</button>' +
+          '<button class="btn" id="again">' + t("Play again") + '</button>' +
           '<button class="btn ghost" id="qrHome">🏠 ' + t("Home") + '</button>' +
         '</div>' +
         '<div class="mini" id="msg"></div>' +
@@ -4100,15 +4648,6 @@
     return n || t("You");
   }
 
-  function praise(c, t_) {
-    var r = c / t_;
-    if (r === 1) return t("Flawless. Certified sage. 🧠");
-    if (r >= 0.8) return t("Sharp. Very sharp.");
-    if (r >= 0.6) return t("Solid work.");
-    if (r >= 0.4) return t("Room to grow — you learned something.");
-    return t("Everyone starts somewhere. Now you know more.");
-  }
-
   // ---------- onboarding (FEAT-011 / US-008): 3 cards, skippable, once ----------
   // The closed list the reader chooses from, and the only values the counter
   // will accept. Kept here beside the screen that asks, so the words a reader
@@ -4124,6 +4663,12 @@
     ["other", "Somewhere else"],
     ["dontremember", "I do not remember"]
   ];
+  // The reader's stored answer, in the words they chose it from (the Privacy
+  // screen's "See what is stored" list shows it back to them).
+  function discoveryLabel(v) {
+    for (var i = 0; i < DISCOVERY_CHOICES.length; i++) if (DISCOVERY_CHOICES[i][0] === v) return t(DISCOVERY_CHOICES[i][1]);
+    return String(v);
+  }
 
   function onboardingView(step) {
     step = step || 0;
@@ -4140,13 +4685,11 @@
       // country you represent is part of what Qpio is, not a preference.
       // Skippable in one tap; everything works without it.
       { emoji: "🌍", title: t("Which country do you represent?"),
-        // The English said only "it decides which bookshop we send you to" while
-        // the French already promised the leaderboard AND that the value never
-        // leaves the device — two languages telling a reader different things
-        // about their own data, one of them untrue. Both now say the same, and
-        // it is the sentence that survives Charter §8: counted as a country,
-        // never as a person.
-        text: t("It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It is counted as a country, never as a person — no name is ever attached to it."),
+        // ONE sentence for this slide and the Settings country card, so the two
+        // cannot drift. The old text said the country picks a bookshop, which no
+        // code does, and that it is "counted as a country" - but the country
+        // that is counted comes from the internet connection, not this choice.
+        text: t("It will place you on your country's board when contests start. Until then it stays on this device and is not sent to Qpio. The country Qpio counts comes from your internet connection, not from this choice."),
         pick: "country" },
       // ASKED ONCE, ANSWERED BY THE READER, NEVER INFERRED.
       //
@@ -4163,7 +4706,7 @@
         text: t("One tap, and it helps us know where to put our effort. It is kept as a single word — no link to you, and nothing follows you around."),
         pick: "discovery" },
       { emoji: "⚙️", title: t("Made for the way you learn."),
-        text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device.") }
+        text: t("Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device — copy your backup code before you change phone.") }
     ];
     var s = slides[step];
     var dots = slides.map(function (_, i) {
@@ -4268,6 +4811,10 @@
   if (homeBtn) homeBtn.addEventListener("click", goHome);
   scheduleDailyNudge();
   window.addEventListener("hashchange", route);
+  // Another tab ran "Delete everything on this device". Halt first, so this
+  // tab's pagehide cannot send its open round or write firstweek and mhealth
+  // back, then restart on the empty storage.
+  window.addEventListener("storage", function (e) { if (e.key === "qpio.wiped" && e.newValue) { WIPING = true; try { QpioMeasure.halt(); } catch (x) {} location.replace("/"); } });
   if (mqDesk.addEventListener) mqDesk.addEventListener("change", onViewportChange);
   else if (mqDesk.addListener) mqDesk.addListener(onViewportChange); // older Safari/WebViews
   var bootHash = (location.hash || "").replace(/^#/, "");

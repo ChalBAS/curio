@@ -429,6 +429,34 @@
       });
     } },
 
+  /* D-090, CEO 24 Sep 2026: "One the daily gym brain exercise is done, we should not be able to
+     retake the test / quiz." Today's puzzles and today's move come once a day: finished, the
+     Brain Gym card says so and offers no way to start them again; yesterday's record locks
+     nothing. Addressed by the card's element ids and the round count, never by its words. */
+  { id: "gymonce", title: "Brain Gym: today's puzzles and move come once a day",
+    run: function (w, s, lang) {
+      var d = new Date(), p2 = function (n) { return n < 10 ? "0" + n : "" + n; };
+      var today = d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate());
+      var y = new Date(Date.now() - 86400000), yesterday = y.getFullYear() + "-" + p2(y.getMonth() + 1) + "-" + p2(y.getDate());
+      var put = function (rec) { w.localStorage.setItem("curio.gym.day", JSON.stringify(rec)); };
+      put({ d: today, p: 3, t: 5, m: true });
+      return tab(w, "train").then(function () {
+        var done = $$(w, ".gdone li");
+        s.log(lang, "gym once · both finished: nothing to start again today", !$(w, "#gymToday") && !$(w, "#gymMove") && done.length === 2,
+              done.length + " done line(s)" + ($(w, "#gymToday") || $(w, "#gymMove") ? ", and a start button is still there" : ""));
+        s.log(lang, "gym once · the puzzles show the plain count of the round", done.length > 0 && /3\/5/.test(done[0].textContent), done.length ? done[0].textContent : "no done line");
+        put({ d: today, p: 3, t: 5 });
+        return tab(w, "train");
+      }).then(function () {
+        s.log(lang, "gym once · puzzles finished, move not: only the move can start", !$(w, "#gymToday") && !!$(w, "#gymMove"), "");
+        put({ d: yesterday, p: 5, t: 5, m: true });
+        return tab(w, "train");
+      }).then(function () {
+        s.log(lang, "gym once · yesterday's record locks nothing today", !!$(w, "#gymToday") && !!$(w, "#gymMove") && !$(w, ".gdone"), "");
+        w.localStorage.removeItem("curio.gym.day");
+      });
+    } },
+
   /* v103. CEO, 23 Sep 2026: "The hand games needs transitions before switching
      hands or going from one hand to 2. when presenting the exercise a short video
      will be useful." A video path the edge does not have comes back as the app's
@@ -456,6 +484,17 @@
       });
       s.log(lang, "moves · the first hand and every change of hands are announced, every routine opens on a demo", missing.length === 0, missing.length ? missing.join(", ") : "3 routines");
       s.log(lang, "moves · two routines open on a video", demos.length === 2, demos.length + " videos");
+      /* 24 Sep 2026: an item of "A small thing, differently" may carry its own clip, once the build
+         lists it (NEURO_DEMOS in braingym.js). None listed is a pass; each one listed must be served
+         like the routines' clips, and must reach the step of its item. */
+      var clips = G.neuroDemos ? G.neuroDemos(lang) : [], unshown = [];
+      clips.forEach(function (c) {
+        var seen = false, k;
+        for (k = 1; k <= 60 && !seen; k++) { var nd = G.makeDrill("neurobics", k * 104729, lang); nd.steps.forEach(function (st) { if (st.id === c.id && st.demo && st.demo.src === c.src) seen = true; }); }
+        if (!seen) unshown.push(c.id);
+      });
+      s.log(lang, "moves · every item clip the build lists is on its item's step", unshown.length === 0, unshown.length ? unshown.join(", ") : clips.length + " item clip(s) listed");
+      demos = demos.concat(clips);
       return Promise.all(demos.map(function (d) {
         return fetch("/" + d.src + "?probe=" + Date.now(), { cache: "no-store", headers: { Range: "bytes=0-1023" } }).then(function (r) {
           return r.status === 206 && /^video\/mp4/.test(r.headers.get("content-type") || "") ? null : d.src + " (" + r.status + " " + r.headers.get("content-type") + ")";

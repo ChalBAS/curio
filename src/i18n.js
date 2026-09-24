@@ -66,8 +66,8 @@
       "Free to play": "Gratuit",
       "Kids mode": "Mode enfants",
       "Feed your brain today.": "Nourris ton cerveau aujourd’hui.",
-      "Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing. Keep the streak alive.":
-        "Cinq questions. Les mêmes pour tout le monde, partout. Chaque réponse t’apprend quelque chose qui vaut la peine d’être su. Garde ta série en vie.",
+      "Five questions. Same for everyone, everywhere. Every answer teaches you something worth knowing.":
+        "Cinq questions. Les mêmes pour tout le monde, partout. Chaque réponse t’apprend quelque chose qui vaut la peine d’être su.",
       "Review today's ✓": "Revoir le défi du jour ✓",
       "Play daily challenge": "Jouer au défi du jour",
       "▶ Resume — question {n} of {total}": "▶ Reprendre — question {n} sur {total}",
@@ -167,22 +167,179 @@
       "The country you represent": "Le pays que tu représentes",
       "Which country do you represent?": "Quel pays représentes-tu ?",
       "Prefer not to say": "Je préfère ne pas le dire",
-      // The privacy page link, and the one question asked at onboarding about
-      // how someone found Qpio. The option labels are translated too: they are
-      // passed through t() from a list, so the scanner cannot see them and
-      // would otherwise leave a French reader a French screen with an English
-      // dropdown on it.
-      "Your data": "Vos données",
-      "How did you hear about Qpio?": "Comment avez-vous connu Qpio ?",
-      "One tap, and it helps us know where to put our effort. It is kept as a single word — no link to you, and nothing follows you around.": "Un seul geste, et cela nous aide à savoir où porter nos efforts. C’est gardé sous la forme d’un simple mot — aucun lien avec vous, et rien ne vous suit.",
+      // The one question asked at onboarding about how someone found Qpio.
+      // The option labels are translated too: they are passed through t() from
+      // a list, so the scanner cannot see them and would otherwise leave a
+      // French reader a French screen with an English dropdown on it.
+      "How did you hear about Qpio?": "Comment as-tu connu Qpio ?",
+      "One tap, and it helps us know where to put our effort. It is kept as a single word — no link to you, and nothing follows you around.": "Un seul geste, et cela nous aide à savoir où porter nos efforts. C’est gardé sous la forme d’un simple mot — aucun lien avec toi, et rien ne te suit.",
       "A search engine": "Un moteur de recherche",
       "Someone told me": "Quelqu’un m’en a parlé",
       "Somewhere else": "Ailleurs",
       "I do not remember": "Je ne m’en souviens plus",
-      "Used to send you to a bookshop or library that can actually reach you, and to place you on your country's board when contests start. It is kept on this device, and counted only as a country — never as a person.":
-        "Sert à t’envoyer vers une librairie ou une bibliothèque qui peut vraiment te servir, et à te placer sur le classement de ton pays quand les concours commenceront. Il est conservé sur cet appareil, et n’est compté que comme un pays — jamais comme une personne.",
-      "It decides which bookshop or library we send you to, and it is how you will appear on your country's board when contests start. It is counted as a country, never as a person — no name is ever attached to it.":
-        "Il détermine vers quelle librairie ou bibliothèque nous t’envoyons, et c’est ainsi que tu apparaîtras sur le classement de ton pays quand les concours commenceront. Il est compté comme un pays, jamais comme une personne — aucun nom n’y est jamais attaché.",
+
+      // --- Settings › Privacy & your data (24 Sep 2026) ---
+      // The promise below (D-087) is shown only on this screen. Its French has
+      // not yet been approved (open question 4 of the build spec).
+      "Privacy & your data": "Confidentialité et tes données",
+      "What is kept on this device, what Qpio counts, and your choices.":
+        "Ce qui est gardé sur cet appareil, ce que Qpio compte et tes choix.",
+      "Your curiosity is yours.": "Ta curiosité t’appartient.",
+      "Qpio collects only information that has a defined purpose for improving the product, understanding its performance, operating a feature the reader chose, or fulfilling a transaction the reader initiated. We are transparent about what we collect, we do not sell reader data, and anonymous behaviour is not turned into a personal profile.":
+        "Qpio ne collecte que les informations qui ont une finalité définie : améliorer le produit, comprendre ses performances, faire marcher une fonctionnalité choisie par le lecteur ou réaliser une transaction qu’il a initiée. Nous sommes transparents sur ce que nous collectons, nous ne vendons pas les données de nos lecteurs et les comportements anonymes ne sont pas transformés en profils personnels.",
+      "On this device": "Sur cet appareil",
+      "Your progress, the facts in your Memory Vault, your settings and your leaderboard name are kept in this browser, on this device.":
+        "Ta progression, les faits de ton Coffre de la mémoire, tes réglages et ton nom au classement sont gardés dans ce navigateur, sur cet appareil.",
+      "See what is stored": "Voir ce qui est enregistré",
+      "not set": "aucun",
+      "Scores on this device's leaderboard": "Scores au classement de cet appareil",
+      "not chosen": "non choisi",
+      "How you said you found Qpio": "Comment tu as connu Qpio",
+      "not answered": "sans réponse",
+      "Facts in your Memory Vault": "Faits dans ton Coffre de la mémoire",
+      "Questions answered": "Questions auxquelles tu as répondu",
+      "{n}, {c} of them correct": "{n}, dont {c} justes",
+      "Days you played the Daily Challenge": "Jours où tu as joué au Défi du jour",
+      "{n}, since {date}": "{n}, depuis le {date}",
+      "none": "aucun",
+      "{n} now, best {b}": "{n} en cours, record {b}",
+      "Best Quick-Fire score": "Record au Quiz éclair",
+      "Kinds kept in your Gym Vault": "Types gardés dans ton coffre du gym",
+      "Questions seen in the last 45 days": "Questions vues ces 45 derniers jours",
+      "Your settings": "Tes réglages",
+      "text size, timer, reading aids, age mode and language":
+        "taille du texte, chrono, aides à la lecture, tranche d’âge et langue",
+      "Daily reminder": "Rappel quotidien",
+      "on, from {h}:00": "activé, à partir de {h}:00",
+      "on": "activé",
+      "off": "désactivé",
+      "Counting": "Comptage",
+      "When this device first played (used for counting)": "Première partie sur cet appareil (sert au comptage)",
+      "week of {date}": "semaine du {date}",
+      "Round summaries waiting to be sent": "Résumés de parties en attente d’envoi",
+      "A count of the summaries sent, and of any that could not be": "Le nombre de résumés envoyés, et de ceux qui n’ont pas pu l’être",
+      "kept only here, never sent": "gardé ici seulement, jamais envoyé",
+      "Pictures kept so they load faster": "Images gardées pour s’afficher plus vite",
+      "Small notes that help the app work": "Petites notes qui aident l’app à fonctionner",
+      "Your browser is blocking storage on this site, so nothing is kept here.":
+        "Ton navigateur bloque le stockage sur ce site : rien n’est gardé ici.",
+      "Save a copy": "Enregistrer une copie",
+      "A file with everything listed above, in full, laid out for computers to read. To move your progress to another device, use your backup code instead.":
+        "Un fichier avec tout ce qui est listé ci-dessus, en entier, mis en forme pour être lu par un ordinateur. Pour transférer ta progression sur un autre appareil, utilise plutôt ton code de sauvegarde.",
+      "Saved. Look in your downloads.": "Enregistré. Regarde dans tes téléchargements.",
+      "Your browser would not save the file. Here is the same text, to copy:":
+        "Ton navigateur n’a pas voulu enregistrer le fichier. Voici le même texte, à copier :",
+      "Copy the text": "Copier le texte",
+      "Everything Qpio keeps about you in this browser, on this device, saved on {date}.":
+        "Tout ce que Qpio garde sur toi dans ce navigateur, sur cet appareil, enregistré le {date}.",
+      "Delete everything on this device": "Tout effacer sur cet appareil",
+      "Delete everything on this device?": "Tout effacer sur cet appareil ?",
+      "This deletes:": "Cela efface :",
+      "your progress, your Memory Vault, your streak and your scores":
+        "ta progression, ton Coffre de la mémoire, ta série et tes scores",
+      "your name, country and settings, including language": "ton nom, ton pays et tes réglages, langue comprise",
+      "your daily reminder, which will stop": "ton rappel quotidien, qui s’arrêtera",
+      "the pictures kept so they load faster": "les images gardées pour s’afficher plus vite",
+      "This cannot be undone. Qpio has no copy that could bring it back.":
+        "C’est définitif. Qpio n’en a aucune copie qui permettrait de le récupérer.",
+      "To keep your progress, copy your backup code in Settings first.":
+        "Pour garder ta progression, copie d’abord ton code de sauvegarde dans les Réglages.",
+      "Counting stays off.": "Le comptage reste désactivé.",
+      "Kids mode stays on.": "Le mode enfants reste activé.",
+      "Your browser will still remember that you allowed notifications. You can remove that in your browser's settings.":
+        "Ton navigateur se souviendra encore que tu as autorisé les notifications. Tu peux retirer cette autorisation dans ses réglages.",
+      "Unsure? Ask a grown-up first.": "Un doute ? Demande d’abord à un adulte.",
+      "Delete everything": "Tout effacer",
+      "Keep everything": "Tout garder",
+      "Deleted. Qpio is starting again.": "Effacé. Qpio redémarre.",
+      "Not everything could be deleted. Try again, or clear this site's data in your browser's settings.":
+        "Tout n’a pas pu être effacé. Réessaie, ou efface les données de ce site dans les réglages de ton navigateur.",
+      "Counting, to improve the questions": "Le comptage, pour améliorer les questions",
+      "When you finish or leave a round, this device sends Qpio one short summary.":
+        "Quand tu termines ou quittes une partie, cet appareil envoie un court résumé à Qpio.",
+      "Counting is on unless you turn it off. Qpio works the same either way.":
+        "Le comptage est activé sauf si tu le désactives. Qpio fonctionne de la même façon dans les deux cas.",
+      "The summary says:": "Le résumé indique :",
+      "which questions you saw, in what order, and whether each answer was right":
+        "quelles questions tu as vues, dans quel ordre, et si chaque réponse était juste",
+      "which game it was, such as the Daily Challenge or Quick-Fire, and whether you finished":
+        "quel jeu c’était, comme le Défi du jour ou le Quiz éclair, et si tu l’as terminé",
+      "the day and your language": "le jour et ta langue",
+      "whether Kids mode is on": "si le mode enfants est activé",
+      "the type of device, and whether Qpio is installed": "le type d’appareil, et si Qpio est installé",
+      "which version of the app and of the questions you had": "la version de l’app et celle des questions que tu avais",
+      "how you said you found Qpio": "comment tu as dit avoir connu Qpio",
+      "roughly how many weeks since this device first played":
+        "depuis combien de semaines environ cet appareil utilise Qpio",
+      "Qpio adds the country your internet connection comes from. It does not use the country you picked.":
+        "Qpio y ajoute le pays d’où vient ta connexion internet. Il n’utilise pas le pays que tu as choisi.",
+      "The summary holds no name and no number that points back to you.":
+        "Le résumé ne contient ni nom, ni numéro qui permette de remonter jusqu’à toi.",
+      "Qpio's server sees your internet address when the summary arrives. Qpio does not store it.":
+        "Le serveur de Qpio voit ton adresse internet à l’arrivée du résumé. Qpio ne la conserve pas.",
+      "Only totals are kept, for 13 months.": "Seuls des totaux sont gardés, pendant 13 mois.",
+      "Rounds played in Kids mode are not counted.": "Les parties jouées en mode enfants ne sont pas comptées.",
+      "Rounds in Kids mode are counted the same way, marked as Kids rounds.":
+        "Les parties en mode enfants sont comptées de la même façon, marquées comme parties enfants.",
+      "This choice applies to this browser on this device.": "Ce choix s’applique à ce navigateur, sur cet appareil.",
+      "Counting is on.": "Le comptage est activé.",
+      "Counting is off. Nothing more is sent from this device, and anything waiting to be sent has been cleared.":
+        "Le comptage est désactivé. Plus rien n’est envoyé depuis cet appareil, et ce qui attendait d’être envoyé a été effacé.",
+      "Your browser is blocking storage on this site, so nothing is counted here.":
+        "Ton navigateur bloque le stockage sur ce site : rien n’est compté ici.",
+      "Counting did not load, so nothing is being counted.": "Le comptage ne s’est pas chargé : rien n’est compté.",
+      "Your games in Kids mode are not counted. The switch below is for Everyone mode.":
+        "Tes parties en mode enfants ne sont pas comptées. Le bouton ci-dessous sert au mode Tout le monde.",
+      "When you finish a round, this device tells Qpio how the questions went. Your name is never in it. You can switch this off here, on your own or with a grown-up.":
+        "Quand tu finis une partie, cet appareil dit à Qpio comment les questions se sont passées. Ton nom n’y est jamais. Tu peux désactiver cela ici, seul ou avec un adulte.",
+      "More detail for grown-ups": "Plus de détails pour les adultes",
+      "Other services Qpio uses": "Les autres services utilisés par Qpio",
+      "These services see your internet address and type of browser when they send you something. They keep their own records, under their own privacy rules.":
+        "Ces services voient ton adresse internet et ton type de navigateur quand ils t’envoient quelque chose. Ils gardent leurs propres traces, selon leurs propres règles de confidentialité.",
+      "Cloudflare delivers the app, and stores the counting totals on computers in the European Union.":
+        "Cloudflare distribue l’app, et garde les totaux du comptage sur des ordinateurs situés dans l’Union européenne.",
+      "Wikimedia sends most of the pictures. It is not told which Qpio page you are on.":
+        "Wikimedia fournit la plupart des images. Il ne sait pas sur quelle page de Qpio tu es.",
+      "YouTube plays a video only when you open one. It is told which video it is and that it played in Qpio, and it can store information in your browser.":
+        "YouTube ne lit une vidéo que si tu en ouvres une. Il sait quelle vidéo c’est et qu’elle a été lue dans Qpio, et il peut enregistrer des informations dans ton navigateur.",
+      "Links you tap, such as Open Library, Wikipedia, UNESCO or a museum, open that site like any other visit.":
+        "Les liens que tu touches, comme Open Library, Wikipédia, l’UNESCO ou un musée, ouvrent ce site comme n’importe quelle visite.",
+      "{name} privacy policy": "Politique de confidentialité de {name}",
+      "(opens in a new tab)": "(s’ouvre dans un nouvel onglet)",
+      "Some pictures and videos come from other websites. Those websites can see which internet connection asked for them.":
+        "Certaines images et vidéos viennent d’autres sites. Ces sites peuvent voir quelle connexion internet les a demandées.",
+      "Qpio doesn't interrupt your learning with ads, so there are no advertising settings to change.":
+        "Qpio n’interrompt pas ton apprentissage par de la publicité : il n’y a donc aucun réglage publicitaire à changer.",
+      "Your rights": "Tes droits",
+      "Privacy laws in many countries give you rights over information about you: to see it, correct it, delete it, limit how it is used or say no to it, and to complain.":
+        "Dans de nombreux pays, les lois sur la vie privée te donnent des droits sur les informations qui te concernent : les voir, les corriger, les effacer, limiter leur usage ou t’y opposer, et porter plainte.",
+      "Qpio can't look you up, because nothing it keeps says who you are. So there is nothing on its side to find, correct or delete.":
+        "Qpio ne peut pas te retrouver, parce que rien de ce qu’il garde ne dit qui tu es. Il n’y a donc rien de son côté à retrouver, corriger ou effacer.",
+      "A total can sometimes describe one person, for example the only player from a country on a given day.":
+        "Un total peut parfois ne décrire qu’une seule personne, par exemple le seul joueur d’un pays un jour donné.",
+      "If you think that applies to you, or for any other request, write to {email}. We reply within one month.":
+        "Si tu penses que c’est ton cas, ou pour toute autre demande, écris à {email}. Nous répondons sous un mois.",
+      "Qpio does not yet have an address you can write to about your data.":
+        "Qpio n’a pas encore d’adresse à laquelle tu peux écrire au sujet de tes données.",
+      "You can also complain to the data protection regulator where you live. For example:":
+        "Tu peux aussi porter plainte auprès de l’autorité de protection des données de ton pays. Par exemple :",
+      "CNIL (France)": "la CNIL (France)",
+      "ICO (UK)": "l’ICO (Royaume-Uni)",
+      "PCPD (Hong Kong)": "le PCPD (Hong Kong)",
+      "Qpio doesn't know who you are. Your progress is kept on this device, and you can see it or delete it above.":
+        "Qpio ne sait pas qui tu es. Ta progression est gardée sur cet appareil, et tu peux la voir ou l’effacer plus haut.",
+      "If something seems wrong, tell a grown-up. They can write to the people whose job is to protect your privacy:":
+        "Si quelque chose ne va pas, parles-en à un adulte. Il peut écrire aux personnes dont le métier est de protéger ta vie privée :",
+      "If something seems wrong, tell a grown-up. They can write to us at {email}, or to the people whose job is to protect your privacy:":
+        "Si quelque chose ne va pas, parles-en à un adulte. Il peut nous écrire à {email}, ou aux personnes dont le métier est de protéger ta vie privée :",
+      "Who runs Qpio": "Qui exploite Qpio",
+      "Qpio will be run by a company that is not set up yet. Its name will appear here once it is.":
+        "Qpio sera exploité par une société qui n’est pas encore créée. Son nom apparaîtra ici dès qu’elle le sera.",
+      "Read the full privacy page": "Lire la page de confidentialité complète",
+      "Kids mode shows only questions written for ages 8 to 12.":
+        "Le mode enfants ne propose que des questions écrites pour les 8 à 12 ans.",
+      "It will place you on your country's board when contests start. Until then it stays on this device and is not sent to Qpio. The country Qpio counts comes from your internet connection, not from this choice.":
+        "Il te placera sur le classement de ton pays quand les concours commenceront. D’ici là, il reste sur cet appareil et n’est pas envoyé à Qpio. Le pays que Qpio compte vient de ta connexion internet, pas de ce choix.",
 
       // --- backup code ---
       "Your progress": "Ta progression",
@@ -234,8 +391,7 @@
 
       // --- Stats: day-one empty state ---
       "Nothing here yet — and that is the point.": "Rien ici pour l’instant — et c’est voulu.",
-      "This page is your record, not a scoreboard. It fills itself in as you play.":
-        "Cette page est ton carnet, pas un classement. Elle se remplit au fil de tes parties.",
+      "This page is your record. It fills itself in as you play.": "Cette page est ton carnet. Elle se remplit au fil de tes parties.",
       "Your Brain Map": "Ta carte du cerveau",
       "which of the six domains you know best": "lequel des six domaines tu maîtrises le mieux",
       "Facts owned": "Faits acquis",
@@ -254,17 +410,12 @@
          ships, not translated afterwards: Qpio is being built as a
          multinational company (Charter v0.11), and a screen that arrives in
          English and gets French later is a screen that arrives twice. */
-      "Today\u2019s five": "Les cinq du jour",
-      "Choose a kind": "Choisir un type",
-      "{n} kinds. {k} of them never run out.": "{n} types. {k} d\u2019entre eux sont in\u00e9puisables.",
-      "never runs out": "in\u00e9puisable",
-      "hand-written": "\u00e9crit \u00e0 la main",
+      "Today’s puzzles": "Les énigmes du jour",
       "Start": "Commencer",
       "Remember these": "Retiens ceci",
-      "Take as long as you like. They will not come back.":
-        "Prends le temps qu\u2019il te faut. La liste ne reviendra pas.",
+      "Take as long as you like. The list will not come back.": "Prends le temps qu’il te faut. La liste ne reviendra pas.",
       "Ready": "Pr\u00eat",
-      "This one trains": "Celui-ci entra\u00eene \u00e0",
+      "Here you practise": "Ici, on s’exerce à",
       "Loading the picture": "L\u2019image arrive",
       "Pace": "Rythme",
       "Get ready": "Pr\u00e9pare-toi",
@@ -275,11 +426,11 @@
       "It plays here, inside Qpio.": "Elle se joue ici, dans Qpio.",
       "That was the video.": "C\u2019\u00e9tait la vid\u00e9o.",
       "Back to Qpio": "Retour \u00e0 Qpio",
-      "Four ways to hold a short list. Try one on a round.": "Quatre fa\u00e7ons de garder une courte liste en t\u00eate. Essaie-en une sur une s\u00e9rie.",
-      "A way to hold it:": "Pour la garder en t\u00eate :",
+      "Four ways to hold a short list. Try one the next time a list comes up.":
+        "Quatre façons de garder une courte liste en tête. Essaie-en une la prochaine fois qu’une liste se présente.",
+      "One way people do this:": "Voici comment certains s’y prennent :",
       "More ways": "D\u2019autres fa\u00e7ons",
       "Its history": "Son histoire",
-      "Try it": "Essayer",
       "Slower": "Plus lent",
       "Slow": "Lent",
       "Very slow": "Tr\u00e8s lent",
@@ -291,43 +442,42 @@
       "Keep them all": "Tout garder",
       "Take out": "Retirer",
       "Taken out": "Retir\u00e9",
-      "Come back to these until you have them.": "Reviens-y jusqu\u2019\u00e0 ce qu\u2019ils soient acquis.",
-      "Keep up to three kinds here, to come back to until you have them.": "Garde ici jusqu\u2019\u00e0 trois types d\u2019exercices, pour y revenir jusqu\u2019\u00e0 ce qu\u2019ils soient acquis.",
+      "Up to three kinds you want to keep an eye on. When one comes up in today’s puzzles or move, it is marked there.":
+        "Jusqu’à trois types que tu veux garder à l’œil. Quand l’un d’eux revient dans les énigmes ou le mouvement du jour, il y est signalé.",
       "Mastered so far: {n}": "Acquis jusqu\u2019ici\u00a0: {n}",
-      "practised {n}\u00d7": "pratiqu\u00e9 {n}\u00d7",
-      "Practise": "S\u2019entra\u00eener",
       "I have it": "C\u2019est acquis",
-      "Five out of five. If you have it, take it out of your Gym Vault.": "Cinq sur cinq. Si c\u2019est acquis, retire-le de ton coffre du gym.",
-      "See how you did": "Voir ton r\u00e9sultat",
-      "Another five": "Cinq de plus",
-      "That is five puzzles, not a verdict on you.":
-        "Ce sont cinq \u00e9nigmes, pas un verdict sur toi.",
-      "These get easier with practice \u2014 that is the only promise Qpio makes about them.":
-        "\u00c7a devient plus facile avec la pratique \u2014 c\u2019est la seule promesse que Qpio fait \u00e0 leur sujet.",
+      "Finish": "Terminer",
+      "Five puzzles done.": "Cinq énigmes terminées.",
       /* ---- Brain Gym pictures, tap puzzles and moves, 21 Sep 2026 ---- */
       "Today’s move": "Le mouvement du jour",
+      "Today’s puzzles: done — {n}/{total}": "Les énigmes du jour : terminées — {n}/{total}",
+      "Today’s move: done": "Le mouvement du jour : terminé",
+      "The next set arrives tomorrow.": "La suite arrive demain.",
+      "Done for today. The next set arrives tomorrow.": "Fini pour aujourd’hui. La suite arrive demain.",
+      "You just practised": "Tu viens de t’exercer à",
+      "Stopped here.": "Arrêté ici.",
+      "Today’s move is still here if you want to finish it.": "Le mouvement du jour t’attend si tu veux le finir.",
+      "Illustrations generated by AI": "Illustrations générées par IA",
+      "Take as long as you like.": "Prends le temps qu’il te faut.",
+      "Brain Gym, today": "Gym du cerveau, aujourd’hui",
+      "puzzles done, {n}/{total}": "énigmes terminées, {n}/{total}",
+      "move done": "mouvement terminé",
+      "nothing finished yet": "rien de terminé pour l’instant",
       "Moves — nothing to answer": "Mouvements — rien à répondre",
-      "Moves, not puzzles. Nothing to get right.": "Des mouvements, pas des énigmes. Rien à réussir.",
-      "Finish with a drill": "Terminer par un mouvement",
       "Next step": "Étape suivante",
       "Pause": "Pause",
       "Resume": "Reprendre",
       "Done": "Terminé",
-      "Another move": "Un autre mouvement",
-      "Done. That was a routine, not a test.": "Terminé. C’était une routine, pas un test.",
+      "Move done.": "Mouvement terminé.",
       "Which hand do you write with?": "De quelle main écris-tu ?",
       "So the moves know which is your other hand. Kept on this device only.": "Pour que les mouvements sachent quelle est ton autre main. Gardé sur cet appareil seulement.",
       "Left": "Gauche",
       "Right": "Droite",
       "I use one hand": "J’utilise une seule main",
-      "Uses both hands": "À deux mains",
       "Change hand": "Changer de main",
-      "≈ 1 min · nothing to answer": "≈ 1 min · rien à répondre",
       "Watch again": "Revoir",
       "Without the animation this becomes a step-by-step puzzle: here is each move.": "Sans l’animation, c’est une énigme étape par étape : voici chaque mouvement.",
-      "A watching game — it needs motion, which is off in your Comfort settings.": "Un jeu d’observation — il a besoin du mouvement, désactivé dans tes réglages Confort.",
       "Look carefully": "Regarde bien",
-      "also maths": "aussi des maths",
       "Want the facts behind the numbers? Mathematics quiz": "Envie des faits derrière les chiffres ? Quiz de mathématiques",
       "step {a} of {b}": "étape {a} sur {b}",
       "Follow the numbers.": "Suis les numéros.",
@@ -474,20 +624,16 @@
       "Play the demo": "Voir la démonstration",
       "This video was generated by AI to show the move. It does not show a real person.": "Cette vidéo a été générée par IA pour montrer le geste. Aucune personne réelle n’y apparaît.",
       "Start now": "C’est parti",
-      "This photo was generated by AI to show the pose. It does not show a real person.": "Cette photo a été générée par IA pour montrer la position. Aucune personne réelle n’y apparaît.",
+      "This image was generated by AI to show the pose. It does not show a real person.":
+        "Cette image a été générée par IA pour montrer la position. Aucune personne réelle n’y apparaît.",
       "tap Next step when you like": "touche Étape suivante quand tu veux",
-      "This picture was generated by AI. It illustrates the idea — it is not a photograph of the thing.":
+      "This image was generated by AI. It illustrates the idea — it is not a photograph of the thing.":
         "Cette image a été générée par une IA. Elle illustre l’idée : ce n’est pas une photographie de la chose.",
-      "Kids mode uses kid-friendly questions only (ages ~8–12). No account is offered in Kids mode, and nothing personal is ever collected.":
-        "Le mode enfants ne propose que des questions adaptées (8–12 ans environ). Aucun compte n’y est proposé, et rien de personnel n’est jamais collecté.",
       "Everyone": "Tout le monde",
       "Kids (8–12)": "Enfants (8–12 ans)",
       "Auto follows your device language. Changing this reloads the app.":
         "Auto suit la langue de ton appareil. Changer recharge l’appli.",
       "Replay the intro": "Revoir l’intro",
-      "Reset all my data on this device": "Effacer toutes mes données sur cet appareil",
-      "Erase streaks, scores, vault and settings on this device?":
-        "Effacer les séries, les scores, le coffre et les réglages sur cet appareil ?",
 
       // --- quiz engine ---
       "← Quit": "← Quitter",
@@ -538,11 +684,6 @@
       "Copied to clipboard! 📋 Paste it anywhere.": "Copié dans le presse-papiers ! 📋 Colle-le où tu veux.",
 
       // --- praise (quiz results) ---
-      "Flawless. Certified sage. 🧠": "Sans faute. Niveau sage atteint. 🧠",
-      "Sharp. Very sharp.": "Brillant. Vraiment brillant.",
-      "Solid work.": "Du solide.",
-      "Room to grow — you learned something.": "Encore de la marge — mais tu as appris quelque chose.",
-      "Everyone starts somewhere. Now you know more.": "Tout le monde commence quelque part. Maintenant, tu en sais plus.",
 
       // --- vault session result ---
       "Vault cleared. 🗝️": "Coffre vidé. 🗝️",
@@ -553,8 +694,8 @@
 
       // --- city packs (UI chrome only — pack content stays English for now) ---
       "← Cities": "← Villes",
-      "Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free and offline.":
-        "Apprends à connaître un lieu avant d’atterrir — sa vraie histoire (pas seulement la version touristique), sa cuisine et quelques mots de la langue locale. Gratuit, hors ligne, sans pub.",
+      "Learn a place before you land — its real story (not just the tourist version), its food, and a few words of the local language. Free.":
+        "Apprends à connaître un lieu avant d’atterrir — sa vraie histoire (pas seulement la version touristique), sa cuisine et quelques mots de la langue locale. Gratuit.",
       "▶ Play the {city} quiz ({n})": "▶ Jouer au quiz {city} ({n})",
       "Key phrases": "Phrases clés",
       "Say it": "Écouter",
@@ -573,10 +714,9 @@
       "Fake — don’t fall for it": "Faux — ne te fais pas avoir",
       "Read aloud": "Lire à voix haute",
       "Nice catch! ": "Bien vu ! ",
-      "Gotcha — ": "Et non — ",
+      "Not quite — ": "Et non — ",
       "🏆 New best!": "🏆 Nouveau record !",
-      "Unfoolable. 🔎": "Impossible à berner. 🔎",
-      "Sharp eye for nonsense.": "Un œil affûté pour débusquer le faux.",
+      "Every fake spotted. 🔎": "Tous les faux repérés. 🔎",
       "The fakes are sneaky — that’s the point.": "Les faux sont sournois — c’est fait exprès.",
       "Now you know the tricks. They only work once.": "Maintenant tu connais les ficelles. Elles ne marchent qu’une fois.",
       "Every claim you just checked had a source. Real life should be so kind — so ask for one.":
@@ -595,9 +735,9 @@
         "Qpio (prononce : « ku-pio ») est gratuit. Le savoir n’est jamais derrière un paywall. Qpio n’interrompt pas ton apprentissage avec de la publicité. Quand tu veux aller plus loin, tu peux trouver des liens vers des livres, des musées, des expositions et d’autres ressources.",
       "Five questions.": "Cinq questions.",
       "The same five for everyone, everywhere. Every answer teaches you something worth knowing. Questions you miss can come back later so you have another chance to learn them.":
-        "Tout le monde reçoit les cinq mêmes questions chaque jour. Garde ta série en vie — et les faits que tu rates reviennent jusqu’à ce que tu les maîtrises pour de bon.",
+        "Les mêmes pour tout le monde, partout. Chaque réponse t’apprend quelque chose qui vaut la peine d’être su. Les questions que tu rates peuvent revenir plus tard, pour te laisser une autre chance de les apprendre.",
       "Made for the way you learn.": "Conçu pour ta façon d’apprendre.",
-      "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device.":
+      "Turn timers off, switch on dyslexia-friendly text, read-aloud or high contrast — all free, all in Settings. There is a Kids mode too, which never asks for anything at all. Your progress is currently stored on this device — copy your backup code before you change phone.":
         "Désactive le chrono, active le texte adapté à la dyslexie, la lecture à voix haute ou le contraste élevé — tout est gratuit, tout est dans les Réglages. Il y a aussi un mode enfants, qui ne demande jamais rien. Ta progression est pour l’instant conservée sur cet appareil — copie ton code de sauvegarde avant de changer de téléphone.",
       "Play today's challenge ▶": "Jouer au défi du jour ▶",
       "Skip": "Passer"

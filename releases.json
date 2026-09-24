@@ -82,7 +82,11 @@
    "to": "2026-09-24",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 92,
+    "issues": [
+     92
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -90,6 +94,11 @@
      "sha": "692bcf5",
      "date": "2026-09-24",
      "subject": "v104: the daily deals only from the golden source, and every card matches it"
+    },
+    {
+     "sha": "6a57b4a",
+     "date": "2026-09-24",
+     "subject": "Releases record: v104 on UAT"
     }
    ]
   },

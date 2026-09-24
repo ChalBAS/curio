@@ -1199,3 +1199,67 @@ button.gf-link, button.way { font: inherit; color: inherit; cursor: pointer; tex
 .gdemo-note { font-size: 13px; color: var(--ink); margin-top: 6px; }
 .dtrans-label { display: block; font-size: 30px; font-weight: 800; color: var(--brand); line-height: 1.15; margin-bottom: 6px; }
 .dtrans-photo img, .gdemo-box img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gdemo-box video { cursor: pointer; }                  /* tap the clip to pause it, tap again to play (24 Sep 2026) */
+.gdemo-box video:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.dtrans-credit { text-align: left; margin: 4px 0 0; }
+
+/* v105: once a day (D-090, 24 Sep 2026) - what of today's gym is finished, on the Brain Gym card */
+.gdone { list-style: none; margin: 0 0 4px; padding: 0; display: grid; gap: 4px; font-weight: 700; font-size: 14.5px; }
+.gdone span { color: var(--good); }
+.gnext { margin: 0 0 12px; }
+.gvnote { white-space: nowrap; }
+/* the ball game's honest "I lost it": grey, never the red of a wrong guess */
+.opt.lost { border-color: var(--muted); background: rgba(143,176,192,.12); }
+
+/* v105: the list puzzle's pictures (24 Sep 2026). Tiles built in HTML; three across only when
+   each tile would be at least 88px wide (3 x 88 + 2 gaps = 280px), otherwise two - at 360px with
+   Larger or Extra-large text (body zoom) three would squeeze them to 63-75px. The word sits under
+   its picture with its order number and a small AI mark; one legend line under the group. */
+.mwrap { container-type: inline-size; margin: 10px 0 4px; }
+.mgrid { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 440px; }
+@container (min-width: 280px) { .mgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.mtile { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.mpic { display: block; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: #f6f1e7; }
+.mpic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.mword { font-size: 13.5px; font-weight: 700; line-height: 1.25; text-align: center; overflow-wrap: anywhere; }
+.mai { color: var(--brand); font-size: .8em; font-weight: 400; }
+.mlegend { margin: 6px 0 0; font-size: 11px; font-style: italic; color: var(--muted); text-align: center; }
+/* a picture that could not load: the word stands alone, larger, and the AI mark goes with it */
+.noimg .mpic { display: none; }
+.noimg .mai { display: none; }
+.mtile.noimg .mword { font-size: 17px; padding: 20px 4px; border-radius: 10px; background: var(--card2); }
+/* the question: the word it names beside it, the four answers as pictures and words, 2 x 2 */
+.mq { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.mq .qtext { flex: 1; margin: 0; }
+.manchor { flex: none; width: 76px; display: flex; flex-direction: column; gap: 3px; }
+.manchor .mword { font-size: 12px; }
+.manchor.noimg { display: none; }                      /* the question already names it */
+.opts.mopts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 360px; margin: 14px auto 0; }
+.opt.mopt { position: relative; flex-direction: column; align-items: stretch; gap: 6px; padding: 8px; text-align: center; min-width: 0; }
+.mopt .mpic { width: 100%; max-width: 116px; margin: 0 auto; }
+.mopt .mword { font-size: 15px; }
+.mopt.noimg { justify-content: center; min-height: 64px; }
+.mopt.noimg .mword { font-size: 18px; }
+.mmark { position: absolute; top: 6px; left: 6px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 15px; font-weight: 800; }
+.opt.good .mmark { background: var(--good); color: #10321f; }
+.opt.bad .mmark { background: var(--bad); color: #3a0d16; }
+
+/* Settings › Privacy & your data (24 Sep 2026). A sub-page of the Settings tab:
+   a row that opens it, a header with Back on its own row (one row overflowed at
+   320px with Extra large text), collapsible panels, the stored-data list and
+   the delete confirmation. Chips, summaries and buttons are at least 44px. */
+.rowlink{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;min-height:48px;padding:12px 14px;background:transparent;border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);font:inherit;text-align:left;text-decoration:none;cursor:pointer}
+.rowlink:hover,.rowlink:focus-visible{border-color:var(--accent)}
+.rowlink .chev{color:var(--muted);font-size:1.3em}
+.pv-head .btn{white-space:nowrap;min-height:44px;padding:8px 12px;font-size:13px}
+.pv-head h2{margin:10px 0 0;font-size:20px;line-height:1.25}
+.pv h3.section-title{margin:0 0 10px}
+.pv .chip{min-height:44px}
+.pv-more>summary{cursor:pointer;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:12px 0}
+.pv-list{margin:10px 0 6px}
+.pv-list div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}
+.pv-list dt{color:var(--muted)} .pv-list dd{margin:0;text-align:right}
+.pv-confirm{border:1px solid var(--bad);border-radius:var(--radius);padding:14px;margin-top:12px}
+/* Links out (policies, regulators): the browser's default blue is about 1.5:1 on
+   the dark card. --accent is above 6:1 on it, and on the high-contrast card. */
+.pv a:not(.rowlink){color:var(--accent);text-underline-offset:3px}

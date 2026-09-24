@@ -125,6 +125,9 @@ function check(name, ok, detail) {
   global.localStorage = {
     getItem: k => (k in store ? store[k] : null),
     setItem: (k, v) => { store[k] = String(v); },
+    /* The module probes once, at load, that it can write AND remove - a
+     * browser that cannot record a "no" must not send. */
+    removeItem: k => { delete store[k]; },
   };
   /* Node defines navigator as a getter, so it is replaced rather than assigned. */
   Object.defineProperty(global, 'navigator', {
@@ -138,6 +141,9 @@ function check(name, ok, detail) {
   };
   global.Blob = function () {};
   global.fetch = () => Promise.resolve({});
+  /* Every send is counted here, so "sends nothing" is observed, not inferred. */
+  let beacons = 0;
+  global.navigator.sendBeacon = () => { beacons++; return true; };
   require(path.resolve(__dirname, '..', 'src', 'measure.js'));
   const M = global.window.QpioMeasure;
   const C = M._internals;
@@ -172,7 +178,7 @@ function check(name, ok, detail) {
     'the objection route is a condition of counting without asking, so it is tested like one');
   M.setOptOut(false);
 
-  M.begin({ surface: 'daily', mode: 'kids', questions: [
+  M.begin({ surface: 'daily', mode: 'adult', questions: [
     { id: 'Q001', qrev: 1, lrev: 1 }, { id: 'Q002', qrev: 1, lrev: 1 }] });
   M.mark(1, true, true);
   check('an abandoned round still reports what was shown', M.finish() !== false,
@@ -180,6 +186,61 @@ function check(name, ok, detail) {
 
   check('a round cannot be sent twice', M.finish() === false,
     'a double send would inflate every denominator and look like growth');
+
+  /* KIDS MODE SENDS NOTHING (D-007). Refused at the start, refused again at
+   * round(), and a Kids round queued by an earlier build is dropped. */
+  check('Kids mode is not counted in this build', M.kidsCounted === false,
+    'D-007; privacy.html #kidsCounting must say the same (tools/privacy.test.js)');
+  let before = beacons;
+  M.begin({ surface: 'daily', mode: 'kids', questions: [{ id: 'Q001', qrev: 1, lrev: 1 }] });
+  M.mark(1, true, true);
+  const kidsFinish = M.finish(true);
+  const kidsRound = M.round({ surface: 'daily', mode: 'kids', questions: [{ id: 'Q001', answered: true, correct: true }] });
+  check('a Kids round sends nothing', kidsFinish === false && kidsRound === false && beacons === before,
+    'refused when it opens and again at round(); no beacon left the device');
+
+  const today = C.contentDay();
+  store['curio.mq'] = JSON.stringify([
+    { d: today, mode: 'kids', q: [{ id: 'Q001' }] },
+    { d: today, mode: 'adult', q: [{ id: 'Q002' }] }]);
+  before = beacons;
+  M.flush();
+  check('a queued Kids payload is dropped by flush(), and an adult one still goes',
+    beacons === before + 1 && JSON.parse(store['curio.mq']).length === 0,
+    'rounds v104 queued in Kids mode are never sent');
+
+  /* THE DELETE STOPS THE INSTRUMENT. After halt() a round still open cannot be
+   * sent on the way out, and nothing is written back after the wipe. */
+  M.begin({ surface: 'daily', mode: 'adult', questions: [{ id: 'Q001', qrev: 1, lrev: 1 }] });
+  M.mark(1, true, true);
+  const snapBefore = JSON.stringify(store);
+  before = beacons;
+  M.halt();
+  const haltedFinish = M.finish(true);
+  M.round({ surface: 'daily', mode: 'adult', questions: [{ id: 'Q001', answered: true, correct: true }] });
+  M.setOptOut(true);
+  check('halt() then finish() sends nothing and writes nothing',
+    haltedFinish === false && beacons === before && JSON.stringify(store) === snapBefore,
+    'a Quick-Fire timer that fires after "Delete everything" changes nothing');
+
+  /* A BROWSER THAT CAN READ BUT NOT WRITE. The module is loaded again against a
+   * store whose setItem throws: it must report itself unable to store, and
+   * treat the reader as opted out, because a "no" could never be recorded. */
+  delete require.cache[require.resolve(path.resolve(__dirname, '..', 'src', 'measure.js'))];
+  global.localStorage = {
+    getItem: () => null,
+    setItem: () => { throw new Error('QuotaExceededError'); },
+    removeItem: () => {},
+  };
+  require(path.resolve(__dirname, '..', 'src', 'measure.js'));
+  const R = global.window.QpioMeasure;
+  before = beacons;
+  R.begin({ surface: 'daily', mode: 'adult', questions: [{ id: 'Q001', qrev: 1, lrev: 1 }] });
+  R.mark(1, true, true);
+  const roFinish = R.finish(true);
+  check('read-only storage: isOff() is true, storable is false, and nothing is sent',
+    R !== M && R.isOff() === true && R.storable === false && roFinish === false && beacons === before,
+    'the counting card then shows the blocked sentence instead of a switch');
 
   console.log(failures ? '\n' + failures + ' FAILED\n' : '\nAll checks passed.\n');
   process.exit(failures ? 1 : 0);

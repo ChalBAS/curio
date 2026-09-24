@@ -2,7 +2,7 @@
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
    index.html. Install fetches with cache:"reload" so the HTTP cache can
    never pin a stale asset into a new SW cache. */
-const CACHE = "qpio-v104";
+const CACHE = "qpio-v105";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
 const NUDGE_CACHE = "qpio-nudge";
@@ -136,58 +136,90 @@ const FLAGS = [
   "./img/cities/tbilisi.1bb00f0f.jpg"
 ];
 // FLAGS:end
+// "./privacy" is the full privacy page, precached so it opens offline too. The
+// shell handler below keeps it under its own key, never under the app's.
 const ASSETS = [
   "./",
   "./index.html",
-  "./src/styles.css?v=104",
-  "./brand/qpio-mark-96.png?v=104",
-  "./brand/icons/qpio-icon-96.png?v=104",
-  "./brand/qpio-lockup-header.png?v=104",
-  "./src/i18n.js?v=104",
-  "./src/questions.fr.js?v=104",
-  "./src/qid.legacy.js?v=104",
-  "./src/content.version.js?v=104",
-  "./src/measure.js?v=104",
-  "./src/truthlab.fr.js?v=104",
-  "./src/app.js?v=104",
-  "./src/questions.js?v=104",
-  "./src/truthlab.js?v=104",
-  "./src/citypacks.js?v=104",
-  "./src/citypacks.fr.js?v=104",
-  "./src/entities.fr.js?v=104",
-  "./src/entities.img.js?v=104",
-  "./src/flags.js?v=104",
-  "./src/entities.meta.js?v=104",
-  "./src/country.js?v=104",
-  "./src/links.read.js?v=104",
-  "./src/golinks.js?v=104",
-  "./src/doors.js?v=104",
-  "./src/hooks.js?v=104",
-  "./src/gymart.js?v=104",
-  "./src/braingym.js?v=104",
-  "./src/watch.chosen.js?v=104",
-  "./src/doors.chosen.js?v=104",
-  "./src/doors.bank.js?v=104",
-  "./src/watch.empty.js?v=104",
-  "./src/hooks.q.js?v=104",
-  "./src/discovery.js?v=104",
-  "./src/daily.overrides.js?v=104",
-  "./src/resources.js?v=104",
-  "./src/intelligence.js?v=104",
-  "./src/intelligence.corpus.js?v=104",
-  "./src/preload.js?v=104",
+  "./src/styles.css?v=105",
+  "./brand/qpio-mark-96.png?v=105",
+  "./brand/icons/qpio-icon-96.png?v=105",
+  "./brand/qpio-lockup-header.png?v=105",
+  "./src/i18n.js?v=105",
+  "./src/questions.fr.js?v=105",
+  "./src/qid.legacy.js?v=105",
+  "./src/content.version.js?v=105",
+  "./src/measure.js?v=105",
+  "./src/privacy.js?v=105",
+  "./src/truthlab.fr.js?v=105",
+  "./src/app.js?v=105",
+  "./src/questions.js?v=105",
+  "./src/truthlab.js?v=105",
+  "./src/citypacks.js?v=105",
+  "./src/citypacks.fr.js?v=105",
+  "./src/entities.fr.js?v=105",
+  "./src/entities.img.js?v=105",
+  "./src/flags.js?v=105",
+  "./src/entities.meta.js?v=105",
+  "./src/country.js?v=105",
+  "./src/links.read.js?v=105",
+  "./src/golinks.js?v=105",
+  "./src/doors.js?v=105",
+  "./src/hooks.js?v=105",
+  "./src/gymart.js?v=105",
+  "./src/braingym.js?v=105",
+  "./src/watch.chosen.js?v=105",
+  "./src/doors.chosen.js?v=105",
+  "./src/doors.bank.js?v=105",
+  "./src/watch.empty.js?v=105",
+  "./src/hooks.q.js?v=105",
+  "./src/discovery.js?v=105",
+  "./src/daily.overrides.js?v=105",
+  "./src/resources.js?v=105",
+  "./src/intelligence.js?v=105",
+  "./src/intelligence.corpus.js?v=105",
+  "./src/preload.js?v=105",
+  // The list puzzle's sixteen pictures (24 Sep 2026): a word always comes with
+  // its picture, offline too. Generated, so kept under img/gen/ (marked as AI
+  // wherever shown); ~300 KB together. curio-hq/tools/test_braingym.js fails the
+  // build if a picture the puzzle uses is missing from this list.
+  "./img/gen/mem/river.jpg",
+  "./img/gen/mem/lantern.jpg",
+  "./img/gen/mem/harbour.jpg",
+  "./img/gen/mem/compass.jpg",
+  "./img/gen/mem/anchor.jpg",
+  "./img/gen/mem/willow.jpg",
+  "./img/gen/mem/amber.jpg",
+  "./img/gen/mem/thistle.jpg",
+  "./img/gen/mem/orchard.jpg",
+  "./img/gen/mem/kite.jpg",
+  "./img/gen/mem/mushroom.jpg",
+  "./img/gen/mem/snail.jpg",
+  "./img/gen/mem/castle.jpg",
+  "./img/gen/mem/lighthouse.jpg",
+  "./img/gen/mem/drum.jpg",
+  "./img/gen/mem/umbrella.jpg",
   "./manifest.webmanifest",
   "./brand/icons/qpio-icon-192.png",
   "./brand/icons/qpio-icon-512.png",
   "./brand/icons/qpio-icon-512-maskable.png",
   "./icons/apple-touch-icon.png",
-  "./icons/favicon-32.png"
+  "./icons/favicon-32.png",
+  "./privacy"
 ];
+
+// Best effort, never a reason to fail the install: a host that does not serve
+// /privacy (a plain local server answers 404) would otherwise get no worker at
+// all, and so no offline app. Every other entry above is the release itself.
+const OPTIONAL = ["./privacy"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(CACHE)
-      .then((c) => Promise.all(ASSETS.map((u) => c.add(new Request(u, { cache: "reload" })))))
+      .then((c) => Promise.all(ASSETS.map((u) => {
+        const got = c.add(new Request(u, { cache: "reload" }));
+        return OPTIONAL.includes(u) ? got.catch(() => {}) : got;
+      })))
       .then(() => preloadFlags())
       .then(() => self.skipWaiting())
   );
@@ -319,18 +351,18 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
+  // EACH PAGE UNDER ITS OWN NAME (24 Sep 2026). Every navigation used to be
+  // stored as "./index.html", so opening /privacy overwrote the cached app:
+  // an installed app launched offline then opened the privacy page and had no
+  // way back. Now /privacy is kept as "./privacy", the app as "./index.html",
+  // and any other page is served but never stored over either of them.
   if (isShell(req)) {
-    e.respondWith(
-      fetch(req, { cache: "no-store" })
-        .then((res) => {
-          if (res && res.status === 200) {
-            const copy = res.clone();
-            caches.open(CACHE).then((c) => c.put("./index.html", copy));
-          }
-          return res;
-        })
-        .catch(() => caches.match("./index.html").then((hit) => hit || caches.match("./")))
-    );
+    const path = new URL(req.url).pathname;
+    const key = (path === "/privacy" || path === "/privacy/") ? "./privacy"
+              : (path === "/" || path.endsWith("/index.html")) ? "./index.html" : null;
+    e.respondWith(fetch(req, { cache: "no-store" })
+      .then((res) => { if (key && res && res.status === 200) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(key, copy)); } return res; })
+      .catch(() => caches.match(key || "./index.html").then((hit) => hit || caches.match("./index.html")).then((hit) => hit || caches.match("./"))));
     return;
   }
 

@@ -38,9 +38,10 @@ not by omission.*
 
 ## v104 — ⏳ on UAT
 
-2026-09-24 · 1,983 questions · sign-off: **no release issue**
+2026-09-24 · 1,983 questions · sign-off: awaiting you, [#92](https://github.com/ChalBAS/curio-hq/issues/92)
 
 - `692bcf5` v104: the daily deals only from the golden source, and every card matches it
+- `6a57b4a` Releases record: v104 on UAT
 
 ## v103 — ⏳ on UAT
 

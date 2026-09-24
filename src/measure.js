@@ -21,6 +21,12 @@
  *   per question: id, revision, translation revision, position, answered, correct
  *   per door tapped: question id, class, slot
  *
+ * KIDS MODE SENDS NOTHING (D-007, restored 24 Sep 2026). A round played in Kids
+ * mode is refused when it opens, refused again if it reaches round(), and a
+ * Kids round already waiting in the queue from an earlier build is dropped
+ * rather than sent. So "mode" above only ever says adult while KIDS_COUNTED
+ * below is false.
+ *
  * WHAT NEVER LEAVES IT, and could not, because nothing here reads it: any
  * identifier of any kind, any timestamp finer than the day, the questions the
  * reader has met before, their vault, their score, their streak, their answers
@@ -42,12 +48,26 @@
   var OFF_KEY = "curio.measure.off"; // the reader said no
   var HEALTH_KEY = "curio.mhealth";  // what the instrument knows about itself
   var MAX_QUEUE = 20;                 // bounded: a queue that grows without limit is a leak
+  var KIDS_COUNTED = false;   // D-007: Kids mode sends nothing. Flip only on a written CEO ruling.
+                              // privacy.html #kidsCounting data-kids-counted must match (tools/privacy.test.js).
+
+  /* A BROWSER THAT CANNOT RECORD A "NO" MUST NOT SEND. Some browsers (full
+   * storage, older private modes) let a page read storage but not write it.
+   * There, the opt-out could never be saved, so counting would carry on with
+   * no working way to stop it. Probed once, here, before anything else. */
+  var WRITABLE = (function () { try { localStorage.setItem("curio.t", "1"); localStorage.removeItem("curio.t"); return true; } catch (e) { return false; } })();
+
+  /* Set by "Delete everything on this device". From then on nothing in this
+   * file writes or sends, so a round still open, or a timer that fires late,
+   * cannot put anything back after the wipe or send it on the way out. */
+  var halted = false;
 
   function LSget(k, d) {
     try { var v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }
     catch (e) { return d; }
   }
   function LSset(k, v) {
+    if (halted) return false;
     try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; }
   }
 
@@ -59,7 +79,8 @@
    * the exemption, not a nice-to-have to add later. So it ships in the same
    * release as the counting, and it is one boolean read before anything else
    * happens. */
-  function isOff() { return LSget(OFF_KEY, false) === true; }
+  function isOff() { if (!WRITABLE) return true; try { return JSON.parse(localStorage.getItem(OFF_KEY)) === true; } catch (e) { return true; } }
+  function halt() { halted = true; live = null; }
 
   /* ---------------------------------------------------------------- the day */
   /* THE READER'S OWN DAY, NOT THE SERVER'S. Qpio serves one set of five per
@@ -152,6 +173,7 @@
 
   /* ----------------------------------------------------------------- sending */
   function send(payload) {
+    if (halted) return false;
     var body = JSON.stringify(payload);
     /* sendBeacon survives the page being closed, which is exactly when a round
      * ends. Its queue can be full, and it says so — that is a real failure and
@@ -200,6 +222,9 @@
       /* Only rounds still within the day window the server will accept. An
        * older one would be refused there anyway, and re-sending it forever
        * would be a loop that never drains. */
+      /* A Kids round queued by an earlier build (v104 counted them) is dropped,
+       * never sent, while Kids mode is not counted. */
+      if (q[i] && q[i].mode === "kids" && !KIDS_COUNTED) { note("dropped_kids"); continue; }
       var d = Date.parse((q[i] && q[i].d) + "T00:00:00Z");
       if (isNaN(d) || Math.abs(Date.now() - d) > 2 * 86400000) { note("dropped_stale"); continue; }
       send(q[i]);
@@ -216,7 +241,8 @@
    * here rather than sent for the server to refuse — a refusal costs a request
    * and tells us nothing we could not see locally. */
   function round(r) {
-    if (isOff() || !r || !Array.isArray(r.questions) || !r.questions.length) return false;
+    if (isOff() || halted || !r || (r.mode === "kids" && !KIDS_COUNTED) ||
+        !Array.isArray(r.questions) || !r.questions.length) return false;
 
     var qs = [];
     for (var i = 0; i < r.questions.length; i++) {
@@ -280,7 +306,8 @@
   var live = null;
 
   function begin(r) {
-    if (isOff() || !r || !Array.isArray(r.questions) || !r.questions.length) { live = null; return; }
+    if (isOff() || halted || !r || (r.mode === "kids" && !KIDS_COUNTED) ||
+        !Array.isArray(r.questions) || !r.questions.length) { live = null; return; }
     live = {
       surface: r.surface || "daily",
       mode: r.mode === "kids" ? "kids" : "adult",
@@ -360,6 +387,9 @@
     health: health,
     isOff: isOff,
     setOptOut: setOptOut,
+    halt: halt,
+    kidsCounted: KIDS_COUNTED,
+    storable: WRITABLE,
     /* exposed for the tests, which check the parts rather than the network */
     _internals: { contentDay: contentDay, isoWeek: isoWeek, weeksBetween: weeksBetween,
       band: band, platform: platform, appVersion: appVersion, discovery: discovery }
