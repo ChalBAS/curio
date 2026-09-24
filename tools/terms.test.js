@@ -226,7 +226,7 @@ function today() { const d = new Date(), p = n => (n < 10 ? '0' : '') + n; retur
   const workerCurrent = (/const TERMS_CURRENT = (\d+);/.exec(worker) || [])[1];
   check('the worker serves /terms/v<N>: the current version from terms.html, an earlier one from its frozen copy, a later one 404',
     workerCurrent === VERSION && /\/\^\\\/terms\\\/v\(\[1-9\]\[0-9\]\*\)\\\/\?\$\//.test(worker) &&
-    worker.includes('n === TERMS_CURRENT ? "/terms.html" : "/terms-v" + n + ".html"') && /if \(n > TERMS_CURRENT\) return new Response\("Not found", \{ status: 404/.test(worker),
+    worker.includes('n === TERMS_CURRENT ? "/terms" : "/terms-v" + n') && /if \(n > TERMS_CURRENT\) return new Response\("Not found", \{ status: 404/.test(worker),
     'TERMS_CURRENT ' + workerCurrent + ' · TERMS_VERSION ' + VERSION);
   check('terms.html gives this version\'s own address, in both languages',
     enSec.includes('<a href="/terms/v' + VERSION + '">') && frSec.includes('<a href="/terms/v' + VERSION + '">'));
