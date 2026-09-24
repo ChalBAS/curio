@@ -277,7 +277,9 @@ export default {
     if (termsV) {
       const n = Number(termsV[1]);
       if (n > TERMS_CURRENT) return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
-      return env.ASSETS.fetch(new Request(url.origin + (n === TERMS_CURRENT ? "/terms.html" : "/terms-v" + n + ".html"), request));
+      // the extensionless asset path: asking for "….html" gets a 307 to the bare
+      // path, which would move the reader off the version's own address
+      return env.ASSETS.fetch(new Request(url.origin + (n === TERMS_CURRENT ? "/terms" : "/terms-v" + n), request));
     }
 
     const res = await env.ASSETS.fetch(request);
