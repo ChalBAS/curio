@@ -2,11 +2,12 @@
  "generated": "2026-09-24",
  "live": {
   "production": 76,
-  "uat": 105,
+  "uat": 106,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  106,
   105,
   104,
   103,
@@ -76,6 +77,25 @@
  ],
  "releases": [
   {
+   "version": 106,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-24",
+   "to": "2026-09-24",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "0fe1214",
+     "date": "2026-09-24",
+     "subject": "v106: the section is Qpio Gym (D-091)"
+    }
+   ]
+  },
+  {
    "version": 105,
    "state": "ON UAT",
    "branch": "uat",
@@ -100,6 +120,11 @@
      "sha": "47bfcda",
      "date": "2026-09-24",
      "subject": "Releases record: v105 on UAT"
+    },
+    {
+     "sha": "bd7eb8c",
+     "date": "2026-09-24",
+     "subject": "Releases record refreshed after the v105 HQ sync"
     }
    ]
   },
