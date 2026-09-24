@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v106** at uat.qpio.app |
+| On UAT | **v108** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-24 |
 
-> ⏳ **Awaiting your sign-off:** v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -36,12 +36,28 @@ not by omission.*
 
 ---
 
+## v108 — ⏳ on UAT
+
+2026-09-25 · 1,983 questions · sign-off: **no release issue**
+
+- `92494b3` v108: Qpio works only after the reader accepts the terms
+- `7b6b12f` Terms: /terms/v1 stays at its own address (no redirect to /terms)
+- `46f3c28` terms.test: the worker asks for the extensionless terms path
+- ⚠️ commit message names a different version: 7b6b12f
+
+## v107 — ⏳ on UAT
+
+2026-09-24 · 1,983 questions · sign-off: **no release issue**
+
+- `ff66c67` v107: every dealt question plays a video; Privacy first in Settings
+
 ## v106 — ⏳ on UAT
 
 2026-09-24 · 1,983 questions · sign-off: awaiting you, [#94](https://github.com/ChalBAS/curio-hq/issues/94)
 
 - `0fe1214` v106: the section is Qpio Gym (D-091)
 - `756cb7c` Releases record: v106 on UAT
+- `208b2c7` Releases record refreshed after the v106 HQ sync
 
 ## v105 — ⏳ on UAT
 

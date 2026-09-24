@@ -2,11 +2,13 @@
  "generated": "2026-09-24",
  "live": {
   "production": 76,
-  "uat": 106,
+  "uat": 108,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  108,
+  107,
   106,
   105,
   104,
@@ -77,6 +79,56 @@
  ],
  "releases": [
   {
+   "version": 108,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-25",
+   "to": "2026-09-25",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [
+    "7b6b12f"
+   ],
+   "commits": [
+    {
+     "sha": "92494b3",
+     "date": "2026-09-25",
+     "subject": "v108: Qpio works only after the reader accepts the terms"
+    },
+    {
+     "sha": "7b6b12f",
+     "date": "2026-09-25",
+     "subject": "Terms: /terms/v1 stays at its own address (no redirect to /terms)"
+    },
+    {
+     "sha": "46f3c28",
+     "date": "2026-09-25",
+     "subject": "terms.test: the worker asks for the extensionless terms path"
+    }
+   ]
+  },
+  {
+   "version": 107,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-24",
+   "to": "2026-09-24",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "ff66c67",
+     "date": "2026-09-24",
+     "subject": "v107: every dealt question plays a video; Privacy first in Settings"
+    }
+   ]
+  },
+  {
    "version": 106,
    "state": "ON UAT",
    "branch": "uat",
@@ -101,6 +153,11 @@
      "sha": "756cb7c",
      "date": "2026-09-24",
      "subject": "Releases record: v106 on UAT"
+    },
+    {
+     "sha": "208b2c7",
+     "date": "2026-09-24",
+     "subject": "Releases record refreshed after the v106 HQ sync"
     }
    ]
   },
