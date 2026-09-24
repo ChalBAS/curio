@@ -1,15 +1,15 @@
 {
- "generated": "2026-09-23T12:08:39.363Z",
- "shipped": 1968,
+ "generated": "2026-09-24T03:28:27.864Z",
+ "shipped": 1983,
  "golden": 2000,
- "matched": 990,
- "shippedOnly": 978,
- "goldenOnly": 1010,
+ "matched": 991,
+ "shippedOnly": 992,
+ "goldenOnly": 1009,
  "goldenOnlyByStatus": {
-  "LIVE UAT": 3,
+  "LIVE UAT": 2,
   "NOT LIVE": 1007
  },
- "mintedThisRun": 966,
+ "mintedThisRun": 980,
  "pairingBreaks": [],
  "goldenDuplicateText": [],
  "metaDriftRows": 0,
@@ -20,7 +20,7 @@
    "i": 109,
    "text": "Which part of the cell holds most of its DNA, packed into chromosomes?",
    "cat": "Science",
-   "legacy": "q1s1szdi"
+   "legacy": "qslqh2n"
   },
   {
    "i": 204,
@@ -32,7 +32,7 @@
    "i": 541,
    "text": "What is a flying buttress's main structural job in a Gothic cathedral?",
    "cat": "Arts",
-   "legacy": "quglsh7"
+   "legacy": "q16u6jc"
   },
   {
    "i": 749,

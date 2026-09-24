@@ -274,12 +274,27 @@
   function hushed() { try { if ("speechSynthesis" in window) window.speechSynthesis.cancel(); } catch (e) {} }
 
   // ---------- question pools (age mode) ----------
+  /* THE GOLDEN SOURCE DECIDES WHAT IS DEALT (CEO, 24 Sep 2026: "Please ensure the
+     daily question are using the golden source, make no mistake"). A question is
+     dealt - in the daily five and in quick fire, both of which draw from pool() -
+     only if its bank row carries golden: 1. curio-hq/tools/publish_to_app.js sets
+     that flag on exactly the questions the inventory says qualify today: a real
+     question, complete in English and in French, not sent back, and not a contested
+     one he has not ruled on. An audit on 24 Sep found 32 shipped questions that
+     could be dealt without qualifying - 12 the inventory had never heard of, 20
+     failing one of its checks - the first of them due the next morning. A row that
+     has shipped keeps its id, so a reader's history and vault still find it, but
+     without the flag it is never dealt again. A bank with no flag at all is a build
+     error the tests refuse; the fallback below only keeps the daily from going blank
+     if one ever slipped through, and says so in the console. */
+  var GQ = Q.filter(function (x) { return x.golden === 1; });
+  if (!GQ.length) { GQ = Q; try { console.error("Qpio: no question carries the golden flag - dealing the whole bank"); } catch (e) {} }
   function pool() {
-    if (settings.ageMode !== "kids") return Q;
-    var kids = Q.filter(function (x) { return x.kids; });
+    if (settings.ageMode !== "kids") return GQ;
+    var kids = GQ.filter(function (x) { return x.kids; });
     if (kids.length >= QUICKFIRE_COUNT) return kids;
     // Fallback while the kids bank is small: pad with easy questions.
-    var easy = Q.filter(function (x) { return !x.kids && x.diff === 1; });
+    var easy = GQ.filter(function (x) { return !x.kids && x.diff === 1; });
     return kids.concat(easy);
   }
   // THE DAILY WALK. The old daily reshuffled the whole bank every day with the
@@ -306,12 +321,14 @@
   // so a repeat inside an epoch remains impossible, and paceDaily is a pure
   // function of (window, day) — identical on every device, like the walk.
   var DAILY_WINDOW = 8;
-  function dailyQuestions() {
+  function dailyQuestions(dn) {
     var p = pool();
     if (!p.length) return [];
     var W = p.length >= DAILY_WINDOW ? DAILY_WINDOW : DAILY_COUNT;
     var epochLen = Math.max(1, Math.floor(p.length / W));  // days per full deck
-    var d = dayNumber();
+    /* dn: a day number other than today's - the notification asks for the coming
+       days' first question, and it must be the one the daily will actually serve */
+    var d = dn === undefined ? dayNumber() : dn;
     var epoch = Math.floor(d / epochLen), day = d % epochLen;
     var seed = epoch * 7919 + p.length * 131 + (settings.ageMode === "kids" ? 51000 : 1);
     var order = shuffledIndices(p.length, seed);
@@ -2132,13 +2149,13 @@
   var NUDGE_CACHE = "qpio-nudge";
   var NUDGE_URL = "./nudge-queue.json";
 
+  /* The first question of that day's daily, as the daily will serve it. This used
+     to shuffle the pool with a seed of its own, so the phone notification showed a
+     question that was not in that day's five on 364 days out of 365 (the golden-
+     source audit, 24 Sep 2026). It now asks the daily itself. */
   function dailyFirstFor(offset) {
-    var p = pool();
-    if (!p.length) return null;
-    var d = new Date(Date.now() + offset * 86400000);
-    var seed = dayNumber(d) + (settings.ageMode === "kids" ? 51000 : 1);
-    var order = shuffledIndices(p.length, seed);
-    return p[order[0]] || null;
+    var qs = dailyQuestions(dayNumber(new Date(Date.now() + offset * 86400000)));
+    return qs[0] || null;
   }
 
   function primeNudge() {

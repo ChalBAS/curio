@@ -1,25 +1,25 @@
 {
-  "generated_at": "2026-09-23T16:30:26.378Z",
+  "generated_at": "2026-09-24T03:43:37.908Z",
   "totals": {
-    "questions": 1968
+    "questions": 1983
   },
   "by_level": {
-    "NONE": 1693,
-    "SENSITIVE": 275,
+    "NONE": 1698,
+    "SENSITIVE": 285,
     "CONTESTED": 0,
     "HIGHLY_CONTESTED": 0
   },
   "by_type": {
-    "COLONIAL": 119,
-    "GEOPOLITICAL": 25,
+    "COLONIAL": 122,
+    "GEOPOLITICAL": 28,
     "RELIGIOUS": 19,
     "ETHNIC": 13,
-    "RACIAL": 18,
+    "RACIAL": 19,
     "INDIGENOUS": 36,
     "WAR_ATROCITY": 26,
     "CURRENT_POLITICS": 18,
     "DISPUTED_TERRITORY": 26,
-    "OTHER": 13
+    "OTHER": 16
   },
   "flagged": [
     {
@@ -3593,6 +3593,136 @@
       "sens": "SENSITIVE",
       "sens_type": [
         "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1968,
+      "q": "Which landlocked country is the farthest from any ocean?",
+      "src": "https://en.wikipedia.org/wiki/Landlocked_country",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1969,
+      "q": "Economist Paul Collier wrote: 'If you are coastal, you serve the world; if you are landloc",
+      "src": "https://en.wikipedia.org/wiki/Landlocked_country",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1970,
+      "q": "Parabolic flight to simulate weightlessness was first proposed in 1950 by which two brothe",
+      "src": "https://en.wikipedia.org/wiki/Reduced-gravity_aircraft",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1973,
+      "q": "Zulu forces at Isandlwana in 1879 attacked along the British flanks using a traditional fo",
+      "src": "https://en.wikipedia.org/wiki/Battle_of_Isandlwana",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1974,
+      "q": "On the same day as Isandlwana, 22 January 1879, the British won which other battle of the ",
+      "src": "https://en.wikipedia.org/wiki/Battle_of_Isandlwana",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1975,
+      "q": "In Thai and Lao, the 'Mae Nam' in the Mekong's name means what?",
+      "src": "https://en.wikipedia.org/wiki/Mekong",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1977,
+      "q": "In China, the upper Mekong is officially known by what name?",
+      "src": "https://en.wikipedia.org/wiki/Mekong",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1978,
+      "q": "In which year did UNESCO inscribe candombe on its list of Intangible Cultural Heritage?",
+      "src": "https://en.wikipedia.org/wiki/Candombe",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RACIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1981,
+      "q": "Samori Ture organised his empire and justified its expansion on the principles of which fa",
+      "src": "https://en.wikipedia.org/wiki/Samori_Ture",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "COLONIAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1982,
+      "q": "Bharatanatyam was known by what name before being renamed in 1932?",
+      "src": "https://en.wikipedia.org/wiki/Bharatanatyam",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
       ],
       "perspective": "PASSED",
       "release": "LIVE",

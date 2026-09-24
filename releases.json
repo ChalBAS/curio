@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-23",
+ "generated": "2026-09-24",
  "live": {
   "production": 76,
   "uat": 103,
@@ -98,6 +98,11 @@
      "sha": "f317bb9",
      "date": "2026-09-24",
      "subject": "v103 enters the register awaiting sign-off"
+    },
+    {
+     "sha": "d51523b",
+     "date": "2026-09-24",
+     "subject": "The register links v103 to its sign-off ticket (#91)"
     }
    ]
   },

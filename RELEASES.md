@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v103** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-23 |
+| Generated | 2026-09-24 |
 
 > ⏳ **Awaiting your sign-off:** v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -42,6 +42,7 @@ not by omission.*
 
 - `4289dd1` v103: the hand routines say which hand comes next, show a real-looking person doing the move, and give time to put the phone down
 - `f317bb9` v103 enters the register awaiting sign-off
+- `d51523b` The register links v103 to its sign-off ticket (#91)
 
 ## v102 — ⏳ on UAT
 

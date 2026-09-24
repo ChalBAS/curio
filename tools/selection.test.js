@@ -73,11 +73,15 @@ function shuffledIndices(n, seed) {
 }
 function qid(q) { return QI.qid(q); }
 const DAILY_COUNT = 5, DAILY_WINDOW = 8;
+/* v104: the app deals only questions the golden source qualifies (golden: 1),
+   and falls back to the whole bank only if none carries the flag. */
 function pool(Q, kids) {
-  if (!kids) return Q;
-  const k = Q.filter(x => x.kids);
+  let G = Q.filter(x => x.golden === 1);
+  if (!G.length) G = Q;
+  if (!kids) return G;
+  const k = G.filter(x => x.kids);
   if (k.length >= 10) return k;
-  return k.concat(Q.filter(x => !x.kids && x.diff === 1));
+  return k.concat(G.filter(x => !x.kids && x.diff === 1));
 }
 function dailyIndices(Q, kids, dayNum) {
   const p = pool(Q, kids);
@@ -144,9 +148,13 @@ console.log('\n\x1b[1mPacing guardrails over 30 simulated days (full pool)\x1b[0
     const order = shuffledIndices(p.length, epoch * 7919 + p.length * 131 + 1);
     const win = [];
     for (let i = 0; i < Wd; i++) win.push(p[order[(day * Wd + i) % p.length]]);
-    const qs = dailyIndices(QEN, false, dayNum).map(ix => QEN[ix]);
+    const qs = dailyIndices(QEN, false, dayNum).map(ix => p[ix]);   // positions in the pool, not the bank
     const profs = qs.map(q => QI.profileOf(q));
-    if (profs.every(p2 => p2.role === 'trivia' || p2.role === 'anchor')) flat++;
+    const isFlat = p2 => p2.role === 'trivia' || p2.role === 'anchor';
+    /* flat only counts when the window HAD something else to deal - as the
+       check's name says. A window of eight flat cards cannot give five varied
+       ones (seen once on 24 Sep 2026, when the pool narrowed to the golden set) */
+    if (profs.every(isFlat) && !win.every(q => isFlat(QI.profileOf(q)))) flat++;
     if (profs.filter(p2 => p2.familiarity <= 2).length > 2) obscure++;
     // the daily must never drop the window's strongest continuation —
     // UNLESS keeping it would break a harder guardrail (novelty budget /

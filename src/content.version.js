@@ -11,4 +11,4 @@
 //
 // Derived from the bank itself: the row count, plus a hash of every question id
 // with its revision and its translation's revision.
-window.CURIO_CONTENT_VERSION = "1968-748a2c0f";
+window.CURIO_CONTENT_VERSION = "1983-3ee0fbc4";
