@@ -575,7 +575,14 @@
           return wait(300);
         }).then(function () {
           var opts = $$(w, "#gymOpts button");
-          s.log(lang, "brain gym · a puzzle offers four answers", opts.length === 4, opts.length + " offered");
+          /* A tap puzzle (What changed?, Spot the odd tile) answers on its own grid of
+             squares, cols x rows of them; every other puzzle offers four answers. The
+             check assumed four until 27 Sep 2026, when the day's first puzzle was a
+             3x3 "What changed?" and it failed although the app was right. */
+          var grid = $(w, "#gymOpts.gcells"), cols = grid ? (grid.style.gridTemplateColumns.match(/repeat\((\d+)/) || [])[1] : null;
+          var want = grid ? opts.length >= 4 && cols && opts.length % Number(cols) === 0 : opts.length === 4;
+          s.log(lang, "brain gym · a puzzle offers its answers (four, or a full grid of squares to tap)", want,
+                opts.length + " offered" + (grid ? " on a grid of " + cols + " columns" : ""));
           /* A French reader got English puzzles until 17 Sep 2026: the French
              lived only in the review tool. The puzzle's own words must now be
              in the reader's language — checked on the words, not the labels. */
