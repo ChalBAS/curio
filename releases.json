@@ -2,11 +2,12 @@
  "generated": "2026-09-27",
  "live": {
   "production": 76,
-  "uat": 108,
+  "uat": 109,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  109,
   108,
   107,
   106,
@@ -78,6 +79,30 @@
   }
  ],
  "releases": [
+  {
+   "version": 109,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-27",
+   "to": "2026-09-27",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "066bb35",
+     "date": "2026-09-27",
+     "subject": "v109: the daily walks one deck in a circle, so no card returns before a full pass"
+    },
+    {
+     "sha": "547761a",
+     "date": "2026-09-27",
+     "subject": "UAT suite: a tap puzzle answers on its grid, not with four buttons"
+    }
+   ]
+  },
   {
    "version": 108,
    "state": "ON UAT",
