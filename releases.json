@@ -87,7 +87,11 @@
    "to": "2026-09-27",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 96,
+    "issues": [
+     96
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -100,6 +104,11 @@
      "sha": "547761a",
      "date": "2026-09-27",
      "subject": "UAT suite: a tap puzzle answers on its grid, not with four buttons"
+    },
+    {
+     "sha": "fe2955e",
+     "date": "2026-09-27",
+     "subject": "Releases record: v109 on UAT"
     }
    ]
   },

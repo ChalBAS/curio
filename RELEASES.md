@@ -38,10 +38,11 @@ not by omission.*
 
 ## v109 — ⏳ on UAT
 
-2026-09-27 · 1,983 questions · sign-off: **no release issue**
+2026-09-27 · 1,983 questions · sign-off: awaiting you, [#96](https://github.com/ChalBAS/curio-hq/issues/96)
 
 - `066bb35` v109: the daily walks one deck in a circle, so no card returns before a full pass
 - `547761a` UAT suite: a tap puzzle answers on its grid, not with four buttons
+- `fe2955e` Releases record: v109 on UAT
 
 ## v108 — ⏳ on UAT
 
