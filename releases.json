@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-24",
+ "generated": "2026-09-27",
  "live": {
   "production": 76,
   "uat": 108,
@@ -115,6 +115,11 @@
      "sha": "df0864b",
      "date": "2026-09-25",
      "subject": "Releases record: v108 on UAT"
+    },
+    {
+     "sha": "3abf0e1",
+     "date": "2026-09-25",
+     "subject": "Releases record refreshed after the v108 HQ sync"
     }
    ]
   },

@@ -340,8 +340,15 @@
     /* dn: a day number other than today's - the notification asks for the coming
        days' first question, and it must be the one the daily will actually serve */
     var d = dn === undefined ? dayNumber() : dn;
-    var epoch = Math.floor(d / epochLen), day = d % epochLen;
-    var seed = epoch * 7919 + p.length * 131 + (settings.ageMode === "kids" ? 51000 : 1);
+    /* ONE DECK, WALKED IN A CIRCLE (27 Sep 2026). The deck used to be re-shuffled
+       at each epoch boundary, so a card dealt just before a boundary could come
+       back days after it: walking the app's own daily from 25 Sep 2026, the
+       Kids five repeated Q263 after 12 days and the adult five N1265 after 98.
+       The same deck every pass makes every card wait exactly one full pass
+       (pool / window days: adult 246, Kids 147) before it can return. A new
+       bank size still re-cuts the deck - that is the one boundary left. */
+    var day = d % epochLen;
+    var seed = p.length * 131 + (settings.ageMode === "kids" ? 51000 : 1);
     var order = shuffledIndices(p.length, seed);
     var win = [];
     for (var i = 0; i < W; i++) win.push(p[order[(day * W + i) % p.length]]);

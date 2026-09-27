@@ -88,8 +88,8 @@ function dailyIndices(Q, kids, dayNum) {
   if (!p.length) return [];
   const Wd = p.length >= DAILY_WINDOW ? DAILY_WINDOW : DAILY_COUNT;
   const epochLen = Math.max(1, Math.floor(p.length / Wd));
-  const epoch = Math.floor(dayNum / epochLen), day = dayNum % epochLen;
-  const seed = epoch * 7919 + p.length * 131 + (kids ? 51000 : 1);
+  const day = dayNum % epochLen;   // one deck walked in a circle (27 Sep 2026)
+  const seed = p.length * 131 + (kids ? 51000 : 1);
   const order = shuffledIndices(p.length, seed);
   const win = [];
   for (let i = 0; i < Wd; i++) win.push(p[order[(day * Wd + i) % p.length]]);
@@ -127,6 +127,19 @@ console.log('\n\x1b[1mNo-repeat guarantees across an epoch\x1b[0m');
   }
   is('every daily is five distinct questions (30 days)', dupes.length, 0);
 })();
+/* ACROSS A PASS BOUNDARY (27 Sep 2026): the deck is the same every pass, so a card
+   dealt on any day cannot come back before one full pass - adult and Kids alike. */
+(function () {
+  [false, true].forEach(function (kids) {
+    const p = pool(QEN, kids);
+    const L = Math.max(1, Math.floor(p.length / (p.length >= DAILY_WINDOW ? DAILY_WINDOW : DAILY_COUNT)));
+    const last = {}; let minGap = Infinity;
+    for (let d = 0; d < 2 * L + 10; d++) {
+      dailyIndices(QEN, kids, TODAY + d).forEach(ix => { if (last[ix] !== undefined) minGap = Math.min(minGap, d - last[ix]); last[ix] = d; });
+    }
+    is((kids ? 'kids' : 'adult') + ': no card returns before one full pass (' + L + ' days), across the boundary', minGap >= L, true);
+  });
+})();
 
 console.log('\n\x1b[1mKids eligibility\x1b[0m');
 (function () {
@@ -144,8 +157,8 @@ console.log('\n\x1b[1mPacing guardrails over 30 simulated days (full pool)\x1b[0
     const p = pool(QEN, false);
     const Wd = DAILY_WINDOW;
     const epochLen = Math.max(1, Math.floor(p.length / Wd));
-    const epoch = Math.floor(dayNum / epochLen), day = dayNum % epochLen;
-    const order = shuffledIndices(p.length, epoch * 7919 + p.length * 131 + 1);
+    const day = dayNum % epochLen;
+    const order = shuffledIndices(p.length, p.length * 131 + 1);
     const win = [];
     for (let i = 0; i < Wd; i++) win.push(p[order[(day * Wd + i) % p.length]]);
     const qs = dailyIndices(QEN, false, dayNum).map(ix => p[ix]);   // positions in the pool, not the bank

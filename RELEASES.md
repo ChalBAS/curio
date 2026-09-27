@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v76** at qpio.app |
 | On UAT | **v108** at uat.qpio.app |
 | Tip of `main` | v76 |
-| Generated | 2026-09-24 |
+| Generated | 2026-09-27 |
 
 > ⏳ **Awaiting your sign-off:** v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -44,6 +44,7 @@ not by omission.*
 - `7b6b12f` Terms: /terms/v1 stays at its own address (no redirect to /terms)
 - `46f3c28` terms.test: the worker asks for the extensionless terms path
 - `df0864b` Releases record: v108 on UAT
+- `3abf0e1` Releases record refreshed after the v108 HQ sync
 - ⚠️ commit message names a different version: 7b6b12f
 
 ## v107 — ⏳ on UAT
