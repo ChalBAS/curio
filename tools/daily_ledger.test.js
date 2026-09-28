@@ -9,7 +9,12 @@ const box = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'src', 'questions.js'), 'utf8'), box);
 vm.runInNewContext(fs.readFileSync(path.join(__dirname, '..', 'src', 'daily.ledger.js'), 'utf8'), box);
 const bank = Object.values(box.window).find(v => Array.isArray(v) && v.length > 100 && v[0] && v[0].id);
+/* the questions the app actually deals (app.js pool(): the golden-flagged ones; Kids mode
+   the golden Kids ones) - not the whole bank: a question kept in the bank but no longer
+   dealt would otherwise pass here and leave a hole on its day (28 Sep 2026 audit) */
 const ids = new Set((bank || []).map(q => q.id));
+const dealt = { adult: new Set((bank || []).filter(q => q.golden === 1).map(q => q.id)) };
+dealt.kids = new Set((bank || []).filter(q => q.golden === 1 && q.kids).map(q => q.id));
 const L = box.window.CURIO_DAILY_LEDGER;
 let fail = 0; const t = (ok, what) => { if (!ok) { fail++; console.log('FAIL ' + what); } };
 t(ids.size > 0, 'the bank loads');
@@ -19,11 +24,18 @@ for (const mode of ['adult', 'kids']) {
   for (const d of Object.keys(days).sort()) {
     const five = String(days[d]).split(',');
     t(five.length === 5 && new Set(five).size === 5, mode + ' ' + d + ': five different questions');
-    five.forEach(id => t(ids.has(id), mode + ' ' + d + ': ' + id + ' is in the bank'));
+    five.forEach(id => t(dealt[mode].has(id), mode + ' ' + d + ': ' + id + ' is dealt (golden' + (mode === 'kids' ? ', Kids' : '') + ')'));
     const n = Date.parse(d) / 864e5, stop = L.breaks && L.breaks[mode];
     for (const id of five) { if ((!stop || d < stop) && last[id] !== undefined && n - last[id] < L.minGapDays) rep++; last[id] = n; }
   }
   t(rep === 0, mode + ': no question returns within ' + L.minGapDays + ' days (' + rep + ' found)');
+}
+/* the order the walk takes ships with the ledger, and names only dealt questions */
+for (const mode of ['adult', 'kids']) {
+  const ord = String((L && L.order && L.order[mode]) || '').split(',').filter(Boolean);
+  t(ord.length > 0, mode + ': the ledger ships the order it walks');
+  t(ord.every(id => dealt[mode].has(id)), mode + ': every question in the order is dealt');
+  t(new Set(ord).size === ord.length, mode + ': no question twice in the order');
 }
 if (fail) { console.log('daily ledger: ' + fail + ' failed'); process.exit(1); }
 console.log('daily ledger: all checks passed');

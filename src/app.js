@@ -346,16 +346,51 @@
        each day's five are read from a published record, src/daily.ledger.js, written by
        curio-hq tools/daily_ledger.js: it deals only questions whose last day in the daily
        is at least minGapDays (365) ago, and it never rewrites a day already served. So
-       adding questions can no longer re-cut the deck and bring one back. Before launch,
-       or if a listed question has been withdrawn, the walk below is used as before. */
+       adding questions can no longer re-cut the deck and bring one back. Before launch the
+       walk below is used as before.
+       NEVER THE WALK AFTER LAUNCH (28 Sep 2026 audit): a date the ledger does not cover, or
+       a listed question since withdrawn, used to fall back to the walk, which can repeat a
+       question within weeks. Instead the gap is filled from the ledger's own order with
+       questions that appear nowhere in the ledger within minGapDays either side of the date.
+       Every phone makes the same choice from the same file. */
     var LG = window.CURIO_DAILY_LEDGER;
-    var lgDays = LG && LG[settings.ageMode === "kids" ? "kids" : "adult"];
-    var lgIds = lgDays && lgDays[new Date(d * 86400000).toISOString().slice(0, 10)];
-    if (lgIds) {
+    var lgMode = settings.ageMode === "kids" ? "kids" : "adult";
+    var lgDays = LG && LG[lgMode];
+    var lgKey = new Date(d * 86400000).toISOString().slice(0, 10);
+    if (lgDays && LG.from && lgKey >= LG.from) {
       var lgById = {};
       for (var li = 0; li < p.length; li++) lgById[qid(p[li])] = p[li];
-      var lgFive = String(lgIds).split(",").map(function (id) { return lgById[id]; }).filter(Boolean);
+      var lgFive = String(lgDays[lgKey] || "").split(",").map(function (id) { return lgById[id]; }).filter(Boolean);
       if (lgFive.length === DAILY_COUNT) return lgFive;
+      var gap = LG.minGapDays || 365, near = {}, taken = {};
+      Object.keys(lgDays).forEach(function (k) {
+        var n = Math.round(Date.parse(k + "T00:00:00Z") / 86400000);
+        if (Math.abs(n - d) < gap) String(lgDays[k]).split(",").forEach(function (id) { near[id] = 1; });
+      });
+      lgFive.forEach(function (q) { taken[qid(q)] = 1; });
+      var lgOrder = LG.order && LG.order[lgMode] ? String(LG.order[lgMode]).split(",") : p.map(qid);
+      var lastKey = Object.keys(lgDays).sort().pop();
+      if (lastKey && lgKey > lastKey) {
+        /* past the end of the ledger: walk forward from its last day under the same rule,
+           each day taking the first five in the order that have rested minGapDays */
+        var lastDay = {}, dayOf = function (k) { return Math.round(Date.parse(k + "T00:00:00Z") / 86400000); };
+        Object.keys(lgDays).forEach(function (k) { var kn = dayOf(k); String(lgDays[k]).split(",").forEach(function (id) { if (!(lastDay[id] >= kn)) lastDay[id] = kn; }); });
+        var five2 = [];
+        for (var sd = dayOf(lastKey) + 1; sd <= d && sd <= dayOf(lastKey) + 800; sd++) {
+          five2 = [];
+          for (var oi = 0; oi < lgOrder.length && five2.length < DAILY_COUNT; oi++) {
+            var oid = lgOrder[oi];
+            if (lgById[oid] && !(sd - lastDay[oid] < gap)) five2.push(oid);
+          }
+          five2.forEach(function (id) { lastDay[id] = sd; });
+        }
+        if (five2.length === DAILY_COUNT) return five2.map(function (id) { return lgById[id]; });
+      } else {
+        /* a listed question since withdrawn: fill its place, the others kept */
+        var free = lgOrder.filter(function (id) { return lgById[id] && !near[id] && !taken[id]; });
+        for (var fi = 0; lgFive.length < DAILY_COUNT && fi < free.length; fi++) lgFive.push(lgById[free[fi]]);
+        if (lgFive.length === DAILY_COUNT) return lgFive;
+      }
     }
     /* ONE DECK, WALKED IN A CIRCLE (27 Sep 2026). The deck used to be re-shuffled
        at each epoch boundary, so a card dealt just before a boundary could come
@@ -589,7 +624,7 @@
       '</div></div>');
     var frame = sheet.querySelector("iframe"), heard = false, knocks = 0, knocker = null;
     function post(o) { try { frame.contentWindow.postMessage(JSON.stringify(o), YT_ORIGIN); } catch (e1) {} }
-    function stop() { window.removeEventListener("message", onMsg); if (knocker) { clearInterval(knocker); knocker = null; } }
+    function stop() { window.removeEventListener("message", onMsg); if (knocker) { clearInterval(knocker); knocker = null; } if (typeof slowTimer !== "undefined") clearTimeout(slowTimer); }
     function close() {
       stop(); document.removeEventListener("keydown", onKey);
       if (sheet.parentNode) sheet.parentNode.removeChild(sheet);   /* removing the frame stops the video */
@@ -610,7 +645,7 @@
       if (e.origin !== YT_ORIGIN || e.source !== frame.contentWindow) return;   /* only this player may speak */
       var m; try { m = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (x) { return; }
       if (!m || typeof m !== "object") return;
-      if (!heard) { heard = true; if (knocker) { clearInterval(knocker); knocker = null; } post({ event: "command", func: "addEventListener", args: ["onStateChange"] }); }
+      if (!heard) { heard = true; if (knocker) { clearInterval(knocker); knocker = null; } if (slowNote && slowNote.parentNode) slowNote.parentNode.removeChild(slowNote); post({ event: "command", func: "addEventListener", args: ["onStateChange"] }); }
       var state = m.event === "onStateChange" ? m.info : (m.event === "infoDelivery" && m.info ? m.info.playerState : undefined);
       if (state === 0) ended();
     }
@@ -620,6 +655,20 @@
       post({ event: "listening", id: "qpio-video", channel: "widget" });
       knocker = setInterval(function () { if (heard || ++knocks > 20) { clearInterval(knocker); knocker = null; return; } post({ event: "listening", id: "qpio-video", channel: "widget" }); }, 250);
     });
+    /* WEAK SIGNAL (28 Sep 2026 audit): a phone on a network with little or no internet counts
+       as online, so the check above does not catch it and the reader got a blank player. If
+       YouTube's player has not answered within 12 seconds, say so; if it answers later, the
+       note goes. */
+    var slowNote = null;
+    var slowTimer = setTimeout(function () {
+      if (heard || !sheet.parentNode) return;
+      slowNote = el('<div class="vdone vslow"><p>' + esc(t("The video is not loading. You may be offline or on a weak connection.")) + '</p><div class="btnrow" style="justify-content:center">' +
+        '<button type="button" class="btn" data-a="retry">' + esc(t("Try again")) + '</button>' +
+        '<button type="button" class="btn ghost" data-a="back">' + esc(t("Back to Qpio")) + '</button></div></div>');
+      slowNote.querySelector('[data-a="retry"]').addEventListener("click", function () { close(); openVideo(door); });
+      slowNote.querySelector('[data-a="back"]').addEventListener("click", close);
+      sheet.querySelector(".vframe").appendChild(slowNote);
+    }, 12000);
     window.addEventListener("message", onMsg);
     document.addEventListener("keydown", onKey);
     sheet.addEventListener("click", function (e) { if (e.target === sheet) close(); });
@@ -1220,7 +1269,7 @@
       var cc = v.cc ? ' data-cc="' + QLANG + '"' : "";
       introRow.appendChild(el('<button type="button" class="btn ghost block" data-video="' + esc(v.id) + '" data-title="' + esc(v.title || "") + '" data-slot="intro"' + cc + '>\u25b6 ' + esc(t("Watch the introduction")) + mins + (v.cc ? " \u00b7 " + esc(t("subtitled")) : "") + '</button>'));
       if (v.signed && v.signed.id) introRow.appendChild(el('<button type="button" class="btn ghost block" style="margin-top:6px" data-video="' + esc(v.signed.id) + '" data-title="' + esc(v.title || "") + '" data-slot="intro"' + cc + '>\u25b6 ' + esc(t("With a sign-language interpreter")) + (v.signed.sl ? " (" + esc(v.signed.sl) + ")" : "") + '</button>'));
-      if (v.ai) introRow.appendChild(el('<div class="mini" style="margin-top:4px">\u25c6 ' + esc(t("AI-generated video")) + '</div>'));
+      if (v.ai) introRow.appendChild(el('<div class="mini" style="margin-top:4px">\u25c6 ' + esc(t("Contains AI-generated images")) + '</div>'));
     }
     var chosen = LS.get("lastCat", "All");
     var chosenSub = "All";
@@ -4003,7 +4052,7 @@
     card.appendChild(el(
       '<div class="shelf-head">' +
         '<h3>' + t("Topics you might want to know more about") + '</h3>' +
-        '<p>' + esc(settings.ageMode === "kids" ? t("School ends. Learning doesn't.") : t("School ends. Learning doesn't — though with age, it may take longer.")) + '</p>' +   /* Qpio's principle, 28 Sep 2026 (see learningCard) */
+        '<p>' + esc(t("School ends. Learning doesn't.")) + '</p>' +   /* Qpio's principle, 28 Sep 2026 (see learningCard). The card sits just under the score, so the line about age is not here: beside a low score it would read as the reason for it (28 Sep audit). It is in the Settings card. */
       '</div>'
     ));
 

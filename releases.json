@@ -89,7 +89,11 @@
    "to": "2026-09-28",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 98,
+    "issues": [
+     98
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -97,6 +101,11 @@
      "sha": "944efa9",
      "date": "2026-09-28",
      "subject": "v111: the daily keeps a record after launch; intro-video slot; the learning principle"
+    },
+    {
+     "sha": "058afe2",
+     "date": "2026-09-28",
+     "subject": "Releases record: v111 on UAT"
     }
    ]
   },

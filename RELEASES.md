@@ -38,9 +38,10 @@ not by omission.*
 
 ## v111 — ⏳ on UAT
 
-2026-09-28 · 1,983 questions · sign-off: **no release issue**
+2026-09-28 · 1,983 questions · sign-off: awaiting you, [#98](https://github.com/ChalBAS/curio-hq/issues/98)
 
 - `944efa9` v111: the daily keeps a record after launch; intro-video slot; the learning principle
+- `058afe2` Releases record: v111 on UAT
 
 ## v110 — ⏳ on UAT
 
