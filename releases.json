@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-27",
+ "generated": "2026-09-28",
  "live": {
   "production": 76,
   "uat": 109,
@@ -109,6 +109,11 @@
      "sha": "fe2955e",
      "date": "2026-09-27",
      "subject": "Releases record: v109 on UAT"
+    },
+    {
+     "sha": "1243c23",
+     "date": "2026-09-27",
+     "subject": "state: after the v109 HQ refresh"
     }
    ]
   },
