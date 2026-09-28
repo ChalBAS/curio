@@ -2,11 +2,12 @@
  "generated": "2026-09-28",
  "live": {
   "production": 76,
-  "uat": 109,
+  "uat": 110,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  110,
   109,
   108,
   107,
@@ -80,11 +81,30 @@
  ],
  "releases": [
   {
+   "version": 110,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-28",
+   "to": "2026-09-28",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "329aefb",
+     "date": "2026-09-28",
+     "subject": "v110: every question plays a video that was checked for it"
+    }
+   ]
+  },
+  {
    "version": 109,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-09-27",
-   "to": "2026-09-27",
+   "to": "2026-09-28",
    "questions": 1983,
    "signoff": {
     "status": "AWAITING",
@@ -114,6 +134,11 @@
      "sha": "1243c23",
      "date": "2026-09-27",
      "subject": "state: after the v109 HQ refresh"
+    },
+    {
+     "sha": "ff33ec9",
+     "date": "2026-09-28",
+     "subject": "state: after the 28 Sep HQ refresh"
     }
    ]
   },
