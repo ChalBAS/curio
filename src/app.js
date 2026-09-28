@@ -340,6 +340,23 @@
     /* dn: a day number other than today's - the notification asks for the coming
        days' first question, and it must be the one the daily will actually serve */
     var d = dn === undefined ? dayNumber() : dn;
+    /* THE DAILY LEDGER (28 Sep 2026, founder: "a flag to mark whether a question has
+       already been in daily quiz or not and the date, and a min period [during] which a
+       question cannot appear in the daily quiz" - for after we go live). From launch day
+       each day's five are read from a published record, src/daily.ledger.js, written by
+       curio-hq tools/daily_ledger.js: it deals only questions whose last day in the daily
+       is at least minGapDays (365) ago, and it never rewrites a day already served. So
+       adding questions can no longer re-cut the deck and bring one back. Before launch,
+       or if a listed question has been withdrawn, the walk below is used as before. */
+    var LG = window.CURIO_DAILY_LEDGER;
+    var lgDays = LG && LG[settings.ageMode === "kids" ? "kids" : "adult"];
+    var lgIds = lgDays && lgDays[new Date(d * 86400000).toISOString().slice(0, 10)];
+    if (lgIds) {
+      var lgById = {};
+      for (var li = 0; li < p.length; li++) lgById[qid(p[li])] = p[li];
+      var lgFive = String(lgIds).split(",").map(function (id) { return lgById[id]; }).filter(Boolean);
+      if (lgFive.length === DAILY_COUNT) return lgFive;
+    }
     /* ONE DECK, WALKED IN A CIRCLE (27 Sep 2026). The deck used to be re-shuffled
        at each epoch boundary, so a card dealt just before a boundary could come
        back days after it: walking the app's own daily from 25 Sep 2026, the
@@ -542,10 +559,27 @@
   var YT_ORIGIN = "https://www.youtube-nocookie.com";
   function openVideo(door) {
     if (!door || !door.video || !/^[A-Za-z0-9_-]{11}$/.test(door.video)) return;
+    /* OFFLINE (28 Sep 2026): a YouTube video cannot be saved to play later - YouTube's
+       terms forbid it - so without a connection say so plainly, instead of opening a
+       blank player. */
+    if (navigator.onLine === false) {
+      var off = el('<div class="vsheet" role="dialog" aria-modal="true" aria-label="' + esc(t("Video")) + '"><div class="vbox">' +
+        '<div class="vhead"><span class="vtitle">' + esc(door.title || "") + '</span>' +
+        '<button type="button" class="btn ghost vclose" aria-label="' + esc(t("Close the video")) + '">\u2715</button></div>' +
+        '<div class="vframe"><div class="vdone"><p>' + esc(t("This video needs an internet connection. Try again when you are back online.")) + '</p></div></div></div></div>');
+      var offClose = function () { if (off.parentNode) off.parentNode.removeChild(off); };
+      off.addEventListener("click", function (e) { if (e.target === off) offClose(); });
+      off.querySelector(".vclose").addEventListener("click", offClose);
+      document.body.appendChild(off);
+      off.querySelector(".vclose").focus();
+      return;
+    }
     /* the Gate 5 door instrument still counts the tap, when it is switched on */
     var D = window.QPIO_DOORS, via = D && D.href ? D.href("watch", door.slot || "lead", "https://www.youtube.com/watch?v=" + door.video) : null;
     if (via) { try { fetch(via, { mode: "no-cors", redirect: "manual", keepalive: true }); } catch (e0) {} }
-    var src = YT_ORIGIN + "/embed/" + door.video + "?rel=0&fs=0&playsinline=1&iv_load_policy=3&modestbranding=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin);
+    var src = YT_ORIGIN + "/embed/" + door.video + "?rel=0&fs=0&playsinline=1&iv_load_policy=3&modestbranding=1&enablejsapi=1&origin=" + encodeURIComponent(location.origin) +
+      /* subtitles on, in the reader's language, where the film carries them (intro videos) */
+      (door.cc ? "&cc_load_policy=1&cc_lang_pref=" + encodeURIComponent(door.cc) + "&hl=" + encodeURIComponent(door.cc) : "");
     var prevFocus = document.activeElement;
     var sheet = el('<div class="vsheet" role="dialog" aria-modal="true" aria-label="' + esc(t("Video")) + '">' +
       '<div class="vbox">' +
@@ -599,7 +633,7 @@
     var b = e.target && e.target.closest ? e.target.closest("[data-video]") : null;
     if (!b) return;
     e.preventDefault(); e.stopPropagation();
-    openVideo({ video: b.getAttribute("data-video"), title: b.getAttribute("data-title") || "", chosen: b.getAttribute("data-chosen") === "1", slot: b.getAttribute("data-slot") || "lead" });
+    openVideo({ video: b.getAttribute("data-video"), title: b.getAttribute("data-title") || "", chosen: b.getAttribute("data-chosen") === "1", slot: b.getAttribute("data-slot") || "lead", cc: b.getAttribute("data-cc") || "" });
   }, true);
 
   // ---------- QPIO Cultural Resource Network (P1 UI Integration) ----------
@@ -1168,11 +1202,26 @@
   }
 
   function quickfirePicker() { // category picker feeding quick-fire
-    var picker = el('<div class="card"><div class="section-title" style="margin-top:0">' + t("Quick-Fire topic") + '</div><div class="cats"></div><div class="regionrow hidden"><div class="mini" style="margin:2px 0 6px">' + t("History by region — every part of the world, on its own terms:") + '</div><div class="cats regioncats"></div></div><div class="btnrow"><button class="btn block" id="startQuick">' + t("Start Quick-Fire ⚡") + '</button></div></div>');
+    var picker = el('<div class="card"><div class="section-title" style="margin-top:0">' + t("Quick-Fire topic") + '</div><div class="cats"></div><div class="regionrow hidden"><div class="mini" style="margin:2px 0 6px">' + t("History by region — every part of the world, on its own terms:") + '</div><div class="cats regioncats"></div></div><div class="introrow hidden" style="margin-top:10px"></div><div class="btnrow"><button class="btn block" id="startQuick">' + t("Start Quick-Fire ⚡") + '</button></div></div>');
     var cats = picker.querySelector(".cats");
     var regionRow = picker.querySelector(".regionrow");
     var regionCats = picker.querySelector(".regioncats");
     var hint = picker.querySelector(".regionrow .mini");
+    var introRow = picker.querySelector(".introrow");
+    /* THE CATEGORY'S INTRO VIDEO (28 Sep 2026): shown only when a film exists for this
+       category in the reader's language (src/intro.videos.js); played inside Qpio with
+       subtitles on, and with a signer when that version exists. */
+    function buildIntro() {
+      var IV = window.CURIO_INTRO_VIDEOS || {}, v = IV[chosen] && IV[chosen][QLANG];
+      introRow.innerHTML = "";
+      introRow.classList.toggle("hidden", !(v && v.id));
+      if (!(v && v.id)) return;
+      var mins = v.seconds ? " \u00b7 " + Math.max(1, Math.round(v.seconds / 60)) + " min" : "";
+      var cc = v.cc ? ' data-cc="' + QLANG + '"' : "";
+      introRow.appendChild(el('<button type="button" class="btn ghost block" data-video="' + esc(v.id) + '" data-title="' + esc(v.title || "") + '" data-slot="intro"' + cc + '>\u25b6 ' + esc(t("Watch the introduction")) + mins + (v.cc ? " \u00b7 " + esc(t("subtitled")) : "") + '</button>'));
+      if (v.signed && v.signed.id) introRow.appendChild(el('<button type="button" class="btn ghost block" style="margin-top:6px" data-video="' + esc(v.signed.id) + '" data-title="' + esc(v.title || "") + '" data-slot="intro"' + cc + '>\u25b6 ' + esc(t("With a sign-language interpreter")) + (v.signed.sl ? " (" + esc(v.signed.sl) + ")" : "") + '</button>'));
+      if (v.ai) introRow.appendChild(el('<div class="mini" style="margin-top:4px">\u25c6 ' + esc(t("AI-generated video")) + '</div>'));
+    }
     var chosen = LS.get("lastCat", "All");
     var chosenSub = "All";
 
@@ -1180,6 +1229,7 @@
     // under History, disciplines under Science, and Countries & Flags under
     // Geography. One control, three meanings, no third row to decide about.
     function buildSubRow() {
+      buildIntro();
       var subs = subsFor(chosen);
       regionRow.classList.toggle("hidden", subs.length === 0);
       if (!subs.length) { chosenSub = "All"; return; }
@@ -2493,10 +2543,26 @@
        could not find it. */
     wrap.appendChild(privacyEntryCard());
     wrap.appendChild(nudgeCard());
+    wrap.appendChild(learningCard());
     wrap.appendChild(countryCard());
     wrap.appendChild(backupCard());
     wrap.appendChild(comfortView(true));
     return wrap;
+  }
+
+  /* LEARNING DOESN'T STOP (founder, 28 Sep 2026: "people need to know why it is important to
+     know the world and understand it and have a reminder that no matter how much you study at
+     school, you never stop learning, growing, even as an adult, you may be slower at retaining
+     information, but you never stop"). Wording, evidence and claims check: curio-hq
+     01-Charter/proposals/2026-09-28-lifelong-learning-principle.md - research puts the slowing
+     in taking things in and recalling them, so the copy says "learn and recall". Placed below
+     the reminder card so it is never followed by a reason to play more, and away from anything
+     about the brain (the claims standard). Kids mode leaves out the sentence about age. */
+  function learningCard() {
+    var kids = settings.ageMode === "kids";
+    var s = [t("Knowing the world lets you make up your own mind about it, and understand why others see it differently."), t("That doesn't stop when school does: you can keep learning at any age, and what you already know can keep growing."), kids ? null : t("With the years, new things may take longer to learn and to recall — and taking longer is not the same as stopping."), t("The Daily Challenge has no countdown, and the Quick-Fire timer can be switched off.")].filter(Boolean);
+    return el('<div class="card"><div class="section-title" style="margin-top:0">' + esc(t("Learning doesn't stop")) + '</div>' +
+      s.map(function (x) { return '<p class="mini" style="margin:0 0 6px">' + esc(x) + '</p>'; }).join("") + '</div>');
   }
 
   // Your progress lives on this device, and nowhere else. That is the honest
@@ -3937,7 +4003,7 @@
     card.appendChild(el(
       '<div class="shelf-head">' +
         '<h3>' + t("Topics you might want to know more about") + '</h3>' +
-        '<p>' + t("Curiosity doesn’t stop here.") + '</p>' +
+        '<p>' + esc(settings.ageMode === "kids" ? t("School ends. Learning doesn't.") : t("School ends. Learning doesn't — though with age, it may take longer.")) + '</p>' +   /* Qpio's principle, 28 Sep 2026 (see learningCard) */
       '</div>'
     ));
 

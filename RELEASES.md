@@ -38,9 +38,10 @@ not by omission.*
 
 ## v110 — ⏳ on UAT
 
-2026-09-28 · 1,983 questions · sign-off: **no release issue**
+2026-09-28 · 1,983 questions · sign-off: awaiting you, [#97](https://github.com/ChalBAS/curio-hq/issues/97)
 
 - `329aefb` v110: every question plays a video that was checked for it
+- `aeef53e` Releases record: v110 on UAT
 
 ## v109 — ⏳ on UAT
 
