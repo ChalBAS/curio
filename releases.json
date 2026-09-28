@@ -6,79 +6,40 @@
   "main": 76
  },
  "drift": null,
- "awaiting": [
-  112,
-  111,
-  110,
-  109,
-  108,
-  107,
-  106,
-  105,
-  104,
-  103,
-  102,
-  101,
-  100,
-  99,
-  98,
-  97,
-  94,
-  93,
-  92,
-  89,
-  88,
-  87,
-  86,
-  85,
-  84,
-  83,
-  80,
-  78,
-  77
- ],
- "rejected": [
-  {
-   "version": 96,
-   "issue": 85,
-   "at": "2026-09-11T17:55:55Z"
-  },
-  {
-   "version": 95,
-   "issue": 84,
-   "at": "2026-09-11T16:34:41Z"
-  },
-  {
-   "version": 82,
-   "issue": 73,
-   "at": "2026-08-22T08:55:20Z"
-  },
-  {
-   "version": 81,
-   "issue": 64,
-   "at": "2026-08-21T13:30:20Z"
-  }
- ],
+ "awaiting": [],
+ "rejected": [],
  "breaches": [
   {
+   "version": 76,
+   "status": "UNKNOWN"
+  },
+  {
+   "version": 76,
+   "status": "UNKNOWN"
+  },
+  {
+   "version": 75,
+   "status": "UNKNOWN"
+  },
+  {
    "version": 74,
-   "status": "NO ISSUE"
+   "status": "UNKNOWN"
   },
   {
    "version": 73,
-   "status": "REJECTED"
+   "status": "UNKNOWN"
   },
   {
    "version": 72,
-   "status": "NO ISSUE"
+   "status": "UNKNOWN"
   },
   {
    "version": 71,
-   "status": "NO ISSUE"
+   "status": "UNKNOWN"
   },
   {
    "version": 70,
-   "status": "NO ISSUE"
+   "status": "UNKNOWN"
   }
  ],
  "releases": [
@@ -90,7 +51,8 @@
    "to": "2026-09-29",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -98,6 +60,11 @@
      "sha": "8333827",
      "date": "2026-09-29",
      "subject": "v112: fixes from the independent audit of v110-v111"
+    },
+    {
+     "sha": "0488040",
+     "date": "2026-09-29",
+     "subject": "Releases record: v112 on UAT"
     }
    ]
   },
@@ -109,11 +76,8 @@
    "to": "2026-09-28",
    "questions": 1983,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 98,
-    "issues": [
-     98
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -137,11 +101,8 @@
    "to": "2026-09-28",
    "questions": 1983,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 97,
-    "issues": [
-     97
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -165,11 +126,8 @@
    "to": "2026-09-28",
    "questions": 1983,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 96,
-    "issues": [
-     96
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -208,11 +166,8 @@
    "to": "2026-09-25",
    "questions": 1983,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 95,
-    "issues": [
-     95
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [
     "7b6b12f"
@@ -253,7 +208,8 @@
    "to": "2026-09-24",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -272,11 +228,8 @@
    "to": "2026-09-24",
    "questions": 1983,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 94,
-    "issues": [
-     94
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -305,11 +258,8 @@
    "to": "2026-09-24",
    "questions": 1983,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 93,
-    "issues": [
-     93
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -338,11 +288,8 @@
    "to": "2026-09-24",
    "questions": 1983,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 92,
-    "issues": [
-     92
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -366,11 +313,8 @@
    "to": "2026-09-24",
    "questions": 1968,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 91,
-    "issues": [
-     91
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -399,11 +343,8 @@
    "to": "2026-09-23",
    "questions": 1968,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 90,
-    "issues": [
-     90
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -437,11 +378,8 @@
    "to": "2026-09-22",
    "questions": 1968,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 89,
-    "issues": [
-     89
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [
     "ea694ff"
@@ -472,11 +410,8 @@
    "to": "2026-09-21",
    "questions": 1968,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 88,
-    "issues": [
-     88
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -505,11 +440,8 @@
    "to": "2026-09-21",
    "questions": 1968,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 87,
-    "issues": [
-     87
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -538,11 +470,8 @@
    "to": "2026-09-21",
    "questions": 1968,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 86,
-    "issues": [
-     86
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -571,7 +500,8 @@
    "to": "2026-09-21",
    "questions": 1968,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -595,11 +525,8 @@
    "to": "2026-09-21",
    "questions": 1968,
    "signoff": {
-    "status": "REJECTED",
-    "at": "2026-09-11T17:55:55Z",
-    "who": "ChalBAS",
-    "issue": 85,
-    "where": "comment"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -648,11 +575,8 @@
    "to": "2026-09-09",
    "questions": 760,
    "signoff": {
-    "status": "REJECTED",
-    "at": "2026-09-11T16:34:41Z",
-    "who": "ChalBAS",
-    "issue": 84,
-    "where": "body"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -701,7 +625,8 @@
    "to": "2026-09-07",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -720,7 +645,8 @@
    "to": "2026-09-07",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -739,7 +665,8 @@
    "to": "2026-09-07",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -763,7 +690,8 @@
    "to": "2026-09-07",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -792,7 +720,8 @@
    "to": "2026-09-06",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -811,7 +740,8 @@
    "to": "2026-09-06",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -830,7 +760,8 @@
    "to": "2026-09-06",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -854,7 +785,8 @@
    "to": "2026-09-06",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -898,7 +830,8 @@
    "to": "2026-09-05",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -932,11 +865,8 @@
    "to": "2026-09-05",
    "questions": 760,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 79,
-    "issues": [
-     79
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [
     "6aaa76d"
@@ -992,11 +922,8 @@
    "to": "2026-08-22",
    "questions": 760,
    "signoff": {
-    "status": "REJECTED",
-    "at": "2026-08-22T08:55:20Z",
-    "who": "ChalBAS",
-    "issue": 73,
-    "where": "comment"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1030,11 +957,8 @@
    "to": "2026-08-21",
    "questions": 760,
    "signoff": {
-    "status": "REJECTED",
-    "at": "2026-08-21T13:30:20Z",
-    "who": "ChalBAS",
-    "issue": 64,
-    "where": "body"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1058,7 +982,8 @@
    "to": "2026-08-20",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1082,7 +1007,8 @@
    "to": "2026-08-19",
    "questions": 760,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1111,11 +1037,8 @@
    "to": "2026-08-19",
    "questions": 760,
    "signoff": {
-    "status": "AWAITING",
-    "issue": 61,
-    "issues": [
-     61
-    ]
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1144,11 +1067,8 @@
    "to": "2026-08-19",
    "questions": 760,
    "signoff": {
-    "status": "ACCEPTED",
-    "at": "2026-08-18T18:16:00Z",
-    "who": "ChalBAS",
-    "issue": 60,
-    "where": "comment"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [
     "298cef2"
@@ -1184,11 +1104,8 @@
    "to": "2026-08-19",
    "questions": 749,
    "signoff": {
-    "status": "ACCEPTED",
-    "at": "2026-08-18T18:16:00Z",
-    "who": "ChalBAS",
-    "issue": 60,
-    "where": "comment"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [
     "c22795c",
@@ -1245,11 +1162,8 @@
    "to": "2026-08-18",
    "questions": 749,
    "signoff": {
-    "status": "ACCEPTED",
-    "at": "2026-08-18T15:21:52Z",
-    "who": "ChalBAS",
-    "issue": 58,
-    "where": "comment"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [
     "35f373f"
@@ -1280,7 +1194,8 @@
    "to": "2026-08-17",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1304,11 +1219,8 @@
    "to": "2026-08-17",
    "questions": 749,
    "signoff": {
-    "status": "REJECTED",
-    "at": "2026-08-17T11:43:26Z",
-    "who": "ChalBAS",
-    "issue": 57,
-    "where": "body"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1332,7 +1244,8 @@
    "to": "2026-08-17",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1361,7 +1274,8 @@
    "to": "2026-08-14",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [
@@ -1385,7 +1299,8 @@
    "to": "2026-08-13",
    "questions": 749,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "UNKNOWN",
+    "note": "GitHub unreachable when this was generated"
    },
    "messageClash": [],
    "commits": [

@@ -12,22 +12,7 @@ commit, not from the commit message.*
 | Tip of `main` | v76 |
 | Generated | 2026-09-28 |
 
-> ⏳ **Awaiting your sign-off:** v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
-> — or **Rejected — <reason>** — in that version's release issue.
-
-> 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
-> reported defects are fixed and a new build is put up for sign-off.
-
-> 🔴 **v95 was rejected** on 2026-09-11 ([#84](https://github.com/ChalBAS/curio-hq/issues/84)). It stays on UAT until the
-> reported defects are fixed and a new build is put up for sign-off.
-
-> 🔴 **v82 was rejected** on 2026-08-22 ([#73](https://github.com/ChalBAS/curio-hq/issues/73)). It stays on UAT until the
-> reported defects are fixed and a new build is put up for sign-off.
-
-> 🔴 **v81 was rejected** on 2026-08-21 ([#64](https://github.com/ChalBAS/curio-hq/issues/64)). It stays on UAT until the
-> reported defects are fixed and a new build is put up for sign-off.
-
-> 🔴 **Reached readers without a recorded sign-off:** v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
+> 🔴 **Reached readers without a recorded sign-off:** v76 (UNKNOWN), v76 (UNKNOWN), v75 (UNKNOWN), v74 (UNKNOWN), v73 (UNKNOWN), v72 (UNKNOWN), v71 (UNKNOWN), v70 (UNKNOWN).
 > This is a process breach and is recorded rather than hidden.
 
 *Sign-off begins at v65. Everything before it shipped under the founder-only
@@ -38,27 +23,28 @@ not by omission.*
 
 ## v112 — ⏳ on UAT
 
-2026-09-29 · 1,983 questions · sign-off: **no release issue**
+2026-09-29 · 1,983 questions · sign-off: unknown
 
 - `8333827` v112: fixes from the independent audit of v110-v111
+- `0488040` Releases record: v112 on UAT
 
 ## v111 — ⏳ on UAT
 
-2026-09-28 · 1,983 questions · sign-off: awaiting you, [#98](https://github.com/ChalBAS/curio-hq/issues/98)
+2026-09-28 · 1,983 questions · sign-off: unknown
 
 - `944efa9` v111: the daily keeps a record after launch; intro-video slot; the learning principle
 - `058afe2` Releases record: v111 on UAT
 
 ## v110 — ⏳ on UAT
 
-2026-09-28 · 1,983 questions · sign-off: awaiting you, [#97](https://github.com/ChalBAS/curio-hq/issues/97)
+2026-09-28 · 1,983 questions · sign-off: unknown
 
 - `329aefb` v110: every question plays a video that was checked for it
 - `aeef53e` Releases record: v110 on UAT
 
 ## v109 — ⏳ on UAT
 
-2026-09-27 → 2026-09-28 · 1,983 questions · sign-off: awaiting you, [#96](https://github.com/ChalBAS/curio-hq/issues/96)
+2026-09-27 → 2026-09-28 · 1,983 questions · sign-off: unknown
 
 - `066bb35` v109: the daily walks one deck in a circle, so no card returns before a full pass
 - `547761a` UAT suite: a tap puzzle answers on its grid, not with four buttons
@@ -68,7 +54,7 @@ not by omission.*
 
 ## v108 — ⏳ on UAT
 
-2026-09-25 · 1,983 questions · sign-off: awaiting you, [#95](https://github.com/ChalBAS/curio-hq/issues/95)
+2026-09-25 · 1,983 questions · sign-off: unknown
 
 - `92494b3` v108: Qpio works only after the reader accepts the terms
 - `7b6b12f` Terms: /terms/v1 stays at its own address (no redirect to /terms)
@@ -79,13 +65,13 @@ not by omission.*
 
 ## v107 — ⏳ on UAT
 
-2026-09-24 · 1,983 questions · sign-off: **no release issue**
+2026-09-24 · 1,983 questions · sign-off: unknown
 
 - `ff66c67` v107: every dealt question plays a video; Privacy first in Settings
 
 ## v106 — ⏳ on UAT
 
-2026-09-24 · 1,983 questions · sign-off: awaiting you, [#94](https://github.com/ChalBAS/curio-hq/issues/94)
+2026-09-24 · 1,983 questions · sign-off: unknown
 
 - `0fe1214` v106: the section is Qpio Gym (D-091)
 - `756cb7c` Releases record: v106 on UAT
@@ -93,7 +79,7 @@ not by omission.*
 
 ## v105 — ⏳ on UAT
 
-2026-09-24 · 1,983 questions · sign-off: awaiting you, [#93](https://github.com/ChalBAS/curio-hq/issues/93)
+2026-09-24 · 1,983 questions · sign-off: unknown
 
 - `f812889` v105: Privacy & your data in Settings; Brain Gym once a day, one message, pictures
 - `47bfcda` Releases record: v105 on UAT
@@ -101,14 +87,14 @@ not by omission.*
 
 ## v104 — ⏳ on UAT
 
-2026-09-24 · 1,983 questions · sign-off: awaiting you, [#92](https://github.com/ChalBAS/curio-hq/issues/92)
+2026-09-24 · 1,983 questions · sign-off: unknown
 
 - `692bcf5` v104: the daily deals only from the golden source, and every card matches it
 - `6a57b4a` Releases record: v104 on UAT
 
 ## v103 — ⏳ on UAT
 
-2026-09-24 · 1,968 questions · sign-off: awaiting you, [#91](https://github.com/ChalBAS/curio-hq/issues/91)
+2026-09-24 · 1,968 questions · sign-off: unknown
 
 - `4289dd1` v103: the hand routines say which hand comes next, show a real-looking person doing the move, and give time to put the phone down
 - `f317bb9` v103 enters the register awaiting sign-off
@@ -116,7 +102,7 @@ not by omission.*
 
 ## v102 — ⏳ on UAT
 
-2026-09-23 · 1,968 questions · sign-off: awaiting you, [#90](https://github.com/ChalBAS/curio-hq/issues/90)
+2026-09-23 · 1,968 questions · sign-off: unknown
 
 - `1988b15` v102: the list puzzle hides its list, pictures before the page, a pace for the moves, a Gym Vault, ways to hold a list, videos inside Qpio, and the golden source on screen
 - `bf63986` The live suite tests what v102 changed on purpose
@@ -125,7 +111,7 @@ not by omission.*
 
 ## v101 — ⏳ on UAT
 
-2026-09-22 · 1,968 questions · sign-off: awaiting you, [#89](https://github.com/ChalBAS/curio-hq/issues/89)
+2026-09-22 · 1,968 questions · sign-off: unknown
 
 - `472ee07` v101: every puzzle draws itself, four picture games, four moves with nothing to answer — and the panel's read of all of it
 - `ea694ff` The release record said every build since v96 carried no questions
@@ -134,7 +120,7 @@ not by omission.*
 
 ## v100 — ⏳ on UAT
 
-2026-09-21 · 1,968 questions · sign-off: awaiting you, [#88](https://github.com/ChalBAS/curio-hq/issues/88)
+2026-09-21 · 1,968 questions · sign-off: unknown
 
 - `7c0cbe4` v100: every question shows its picture, every city pack has one, no picture no question
 - `c72ca78` v100 enters the register awaiting sign-off
@@ -142,7 +128,7 @@ not by omission.*
 
 ## v99 — ⏳ on UAT
 
-2026-09-21 · 1,968 questions · sign-off: awaiting you, [#87](https://github.com/ChalBAS/curio-hq/issues/87)
+2026-09-21 · 1,968 questions · sign-off: unknown
 
 - `65fc6b4` v99: the flags travel with the app, so they are there offline
 - `17de685` v99 enters the register awaiting sign-off
@@ -150,7 +136,7 @@ not by omission.*
 
 ## v98 — ⏳ on UAT
 
-2026-09-21 · 1,968 questions · sign-off: awaiting you, [#86](https://github.com/ChalBAS/curio-hq/issues/86)
+2026-09-21 · 1,968 questions · sign-off: unknown
 
 - `7cf62bd` v98: the eight new city packs repaired, French whole again, nothing dated
 - `8185a62` v98 enters the register awaiting sign-off
@@ -158,14 +144,14 @@ not by omission.*
 
 ## v97 — ⏳ on UAT
 
-2026-09-21 · 1,968 questions · sign-off: **no release issue**
+2026-09-21 · 1,968 questions · sign-off: unknown
 
 - `830a60f` v97: Brain Gym in both languages, twelve kinds; eight city packs
 - `5af0bba` The sign-off ticket describes the suite as it now is
 
 ## v96 — ⏳ on UAT
 
-2026-09-12 → 2026-09-21 · 1,968 questions · sign-off: **rejected**, [#85](https://github.com/ChalBAS/curio-hq/issues/85)
+2026-09-12 → 2026-09-21 · 1,968 questions · sign-off: unknown
 
 - `e65d95e` The 1,208 questions that were written and never shipped
 - `e802aae` v96 enters the register awaiting your sign-off
@@ -177,7 +163,7 @@ not by omission.*
 
 ## v95 — ⏳ on UAT
 
-2026-09-07 → 2026-09-09 · 760 questions · sign-off: **rejected**, [#84](https://github.com/ChalBAS/curio-hq/issues/84)
+2026-09-07 → 2026-09-09 · 760 questions · sign-off: unknown
 
 - `7a7f76a` Three dead Visit links replaced, and the real broken count is three
 - `070aecc` A chosen video is served exactly, and a declined one stays greyed
@@ -189,26 +175,26 @@ not by omission.*
 
 ## v94 — ⏳ on UAT
 
-2026-09-07 · 760 questions · sign-off: **no release issue**
+2026-09-07 · 760 questions · sign-off: unknown
 
 - `050de52` 266 Watch doors led to an empty shelf. They are switched off.
 
 ## v93 — ⏳ on UAT
 
-2026-09-07 · 760 questions · sign-off: **no release issue**
+2026-09-07 · 760 questions · sign-off: unknown
 
 - `8b4ab79` A door that opens a search box now says so
 
 ## v92 — ⏳ on UAT
 
-2026-09-07 · 760 questions · sign-off: **no release issue**
+2026-09-07 · 760 questions · sign-off: unknown
 
 - `621adf3` The Visit slot is now drawn even when there is nowhere to visit
 - `6fa011f` The 147-question disagreement was one bug of mine, not a content problem
 
 ## v89 — ⏳ on UAT
 
-2026-09-06 → 2026-09-07 · 760 questions · sign-off: **no release issue**
+2026-09-06 → 2026-09-07 · 760 questions · sign-off: unknown
 
 - `375038b` Pictures stop telling Wikimedia which page a reader is on
 - `0b3895c` The public API stops serving the question-bank size
@@ -216,26 +202,26 @@ not by omission.*
 
 ## v88 — ⏳ on UAT
 
-2026-09-06 · 760 questions · sign-off: **no release issue**
+2026-09-06 · 760 questions · sign-off: unknown
 
 - `7ecaf18` A real privacy page, and one question asked instead of a tracker
 
 ## v87 — ⏳ on UAT
 
-2026-09-06 · 760 questions · sign-off: **no release issue**
+2026-09-06 · 760 questions · sign-off: unknown
 
 - `5a57e98` Measure how each question performs, without holding anything about a person
 
 ## v86 — ⏳ on UAT
 
-2026-09-06 · 760 questions · sign-off: **no release issue**
+2026-09-06 · 760 questions · sign-off: unknown
 
 - `c33c824` Questions get a permanent identity, and the two languages become one question
 - `466939b` A half-written stats blob no longer gives the reader a blank app
 
 ## v85 — ⏳ on UAT
 
-2026-09-05 → 2026-09-06 · 760 questions · sign-off: **no release issue**
+2026-09-05 → 2026-09-06 · 760 questions · sign-off: unknown
 
 - `fd92eb2` v85 — a real book, a subject shelf, or no read door at all
 - `25dc0a8` v85 release record regenerated
@@ -246,7 +232,7 @@ not by omission.*
 
 ## v84 — ⏳ on UAT
 
-2026-09-05 · 760 questions · sign-off: **no release issue**
+2026-09-05 · 760 questions · sign-off: unknown
 
 - `13d2503` v84 — AI illustrations marked, every picture cleared for commercial use
 - `f148d79` v84 preflight: precache links.read.js, and correct the watch-url test
@@ -255,7 +241,7 @@ not by omission.*
 
 ## v83 — ⏳ on UAT
 
-2026-08-22 → 2026-09-05 · 760 questions · sign-off: awaiting you, [#79](https://github.com/ChalBAS/curio-hq/issues/79)
+2026-08-22 → 2026-09-05 · 760 questions · sign-off: unknown
 
 - `9e4f3ac` v83 — the v82 review fixes: phrase audio, library doors, video doors
 - `aa5c143` chore(release): v83 sealed on UAT
@@ -269,7 +255,7 @@ not by omission.*
 
 ## v82 — ⏳ on UAT
 
-2026-08-22 · 760 questions · sign-off: **rejected**, [#73](https://github.com/ChalBAS/curio-hq/issues/73)
+2026-08-22 · 760 questions · sign-off: unknown
 
 - `29ca1f8` v82 — the v81 review fix batch: warm images, open doors, spoken phrases
 - `9d8af4e` chore(release): v82 on UAT — seal + release record
@@ -278,21 +264,21 @@ not by omission.*
 
 ## v81 — ⏳ on UAT
 
-2026-08-21 · 760 questions · sign-off: **rejected**, [#64](https://github.com/ChalBAS/curio-hq/issues/64)
+2026-08-21 · 760 questions · sign-off: unknown
 
 - `f13eb29` v81 on UAT: Golden Source governance release — copy alignment, image preload, door instrument (OFF), ISBN backfill
 - `278249c` feat(release-control): CEO daily-override mechanism — window-constrained, fail-safe
 
 ## v80 — ⏳ on UAT
 
-2026-08-20 · 760 questions · sign-off: **no release issue**
+2026-08-20 · 760 questions · sign-off: unknown
 
 - `0a27993` feat(editorial): sensitivity field model, scanner + release gate 4d, 14 reviewed classifications, v80 bump
 - `0299433` chore(release): record v80 content fingerprint
 
 ## v78 — ⏳ on UAT
 
-2026-08-19 · 760 questions · sign-off: **no release issue**
+2026-08-19 · 760 questions · sign-off: unknown
 
 - `fa9c943` v78: remove 8 fabricated exhibitions from the shipped resource bank
 - `9a6c7e5` v78 on UAT: seal
@@ -300,7 +286,7 @@ not by omission.*
 
 ## v77 — ⏳ on UAT
 
-2026-08-19 · 760 questions · sign-off: awaiting you, [#61](https://github.com/ChalBAS/curio-hq/issues/61)
+2026-08-19 · 760 questions · sign-off: unknown
 
 - `2774a3d` fix(links): canonical Met Arms and Armor URL (verified live)
 - `c52de4c` v77 on UAT: seal + release record
@@ -308,7 +294,7 @@ not by omission.*
 
 ## v76 — 🟢 live
 
-2026-08-19 · 760 questions · sign-off: accepted, [#60](https://github.com/ChalBAS/curio-hq/issues/60)
+2026-08-19 · 760 questions · sign-off: unknown
 
 - `0108e73` feat(qi): Question Intelligence V1 — validator, calibration sample, tests, docs
 - `ebb1bb9` feat(crn): merge expanded global resources into app resources catalog and update integration tests
@@ -318,7 +304,7 @@ not by omission.*
 
 ## v76 — 🟢 live
 
-2026-08-18 → 2026-08-19 · 749 questions · sign-off: accepted, [#60](https://github.com/ChalBAS/curio-hq/issues/60)
+2026-08-18 → 2026-08-19 · 749 questions · sign-off: unknown
 
 - `6a4dc78` Bump to v76 — the seal gate refused new content under served v75, which is the point
 - `c22795c` v75 live: release record, corrected seal provenance, seal takes an explicit version
@@ -332,7 +318,7 @@ not by omission.*
 
 ## v75 — · shipped
 
-2026-08-17 → 2026-08-18 · 749 questions · sign-off: accepted, [#58](https://github.com/ChalBAS/curio-hq/issues/58)
+2026-08-17 → 2026-08-18 · 749 questions · sign-off: unknown
 
 - `9673a60` ﻿v75 - Next can no longer sink under the tab bar, and the app stops multiplying
 - `32a6452` Release tooling: strip the BOM gh emits so a build on UAT can never vanish from the awaiting list
@@ -341,21 +327,21 @@ not by omission.*
 
 ## v74 — · shipped
 
-2026-08-17 · 749 questions · sign-off: **no release issue**
+2026-08-17 · 749 questions · sign-off: unknown
 
 - `c772f89` ﻿v74 - the 214 questions that were on no shelf at all
 - `b902056` ﻿The watch shelf stops sending readers to an unvetted ranked list
 
 ## v73 — · shipped
 
-2026-08-17 · 749 questions · sign-off: **rejected**, [#57](https://github.com/ChalBAS/curio-hq/issues/57)
+2026-08-17 · 749 questions · sign-off: unknown
 
 - `79da924` ﻿v73 - the bot gate stops being an outage, and both languages tell the truth
 - `821f57b` Release tracker: what is DEPLOYED decides, not which branch a commit sits on
 
 ## v72 — · shipped
 
-2026-08-14 → 2026-08-17 · 749 questions · sign-off: **no release issue**
+2026-08-14 → 2026-08-17 · 749 questions · sign-off: unknown
 
 - `8432670` v72 - the app stops claiming something that was never true
 - `a964e8b` chore: align product claims to updated Charter and architecture decisions
@@ -363,14 +349,14 @@ not by omission.*
 
 ## v71 — · shipped
 
-2026-08-14 · 749 questions · sign-off: **no release issue**
+2026-08-14 · 749 questions · sign-off: unknown
 
 - `70f6b92` v71 - every question illustrated, and generation is now step 3 of the rule
 - `437f884` Release record: v71 live
 
 ## v70 — · shipped
 
-2026-08-13 · 749 questions · sign-off: **no release issue**
+2026-08-13 · 749 questions · sign-off: unknown
 
 - `7c63d85` Promote v70 to production
 - `ac4ecf5` Release record: v70 live in production

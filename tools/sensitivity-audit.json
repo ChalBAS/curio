@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T17:27:01.288Z",
+  "generated_at": "2026-09-28T23:08:58.271Z",
   "totals": {
     "questions": 1983
   },
@@ -1002,7 +1002,7 @@
     {
       "index": 764,
       "q": "Why does landlocked Bolivia maintain a navy?",
-      "src": "https://en.wikipedia.org/wiki/Landlocked_country",
+      "src": "https://en.wikipedia.org/wiki/Bolivian_Navy",
       "sens": "SENSITIVE",
       "sens_type": [
         "DISPUTED_TERRITORY"
@@ -1691,7 +1691,7 @@
     {
       "index": 1073,
       "q": "What dark labor history accompanied the Amazon rubber boom?",
-      "src": "https://en.wikipedia.org/wiki/Amazon_river_dolphin",
+      "src": "https://en.wikipedia.org/wiki/Amazon_rubber_cycle",
       "sens": "SENSITIVE",
       "sens_type": [
         "WAR_ATROCITY"
@@ -3004,7 +3004,7 @@
     {
       "index": 1326,
       "q": "Ethiopian Christian painting developed distinctive conventions within which long religious",
-      "src": "https://en.wikipedia.org/wiki/Ethiopian_Highlands",
+      "src": "https://en.wikipedia.org/wiki/Ethiopian_art",
       "sens": "SENSITIVE",
       "sens_type": [
         "RELIGIOUS"
