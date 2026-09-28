@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v111** at uat.qpio.app |
+| On UAT | **v112** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-28 |
 
-> ⏳ **Awaiting your sign-off:** v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -35,6 +35,12 @@ regime with no second party to sign, and is marked **pre-process** — unsigned 
 not by omission.*
 
 ---
+
+## v112 — ⏳ on UAT
+
+2026-09-29 · 1,983 questions · sign-off: **no release issue**
+
+- `8333827` v112: fixes from the independent audit of v110-v111
 
 ## v111 — ⏳ on UAT
 

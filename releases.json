@@ -2,11 +2,12 @@
  "generated": "2026-09-28",
  "live": {
   "production": 76,
-  "uat": 111,
+  "uat": 112,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  112,
   111,
   110,
   109,
@@ -81,6 +82,25 @@
   }
  ],
  "releases": [
+  {
+   "version": 112,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-29",
+   "to": "2026-09-29",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "8333827",
+     "date": "2026-09-29",
+     "subject": "v112: fixes from the independent audit of v110-v111"
+    }
+   ]
+  },
   {
    "version": 111,
    "state": "ON UAT",
