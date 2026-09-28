@@ -2,11 +2,12 @@
  "generated": "2026-09-28",
  "live": {
   "production": 76,
-  "uat": 110,
+  "uat": 111,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  111,
   110,
   109,
   108,
@@ -80,6 +81,25 @@
   }
  ],
  "releases": [
+  {
+   "version": 111,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-28",
+   "to": "2026-09-28",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "944efa9",
+     "date": "2026-09-28",
+     "subject": "v111: the daily keeps a record after launch; intro-video slot; the learning principle"
+    }
+   ]
+  },
   {
    "version": 110,
    "state": "ON UAT",
