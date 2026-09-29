@@ -1,0 +1,35 @@
+name: Project State Protocol
+
+on:
+  push:
+    paths:
+      - ".ai/**"
+      - "PROJECT_STATUS.md"
+      - "scripts/ai_state.py"
+      - "scripts/validate_project_state.py"
+      - "scripts/generate_project_status.py"
+      - ".github/workflows/project-state.yml"
+  pull_request:
+    paths:
+      - ".ai/**"
+      - "PROJECT_STATUS.md"
+      - "scripts/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      # Pinned to immutable commit SHAs per supply-chain policy (no @latest).
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: "3.11"
+      - name: Install jsonschema
+        run: pip install jsonschema==4.26.0
+      - name: Validate project state
+        run: python scripts/validate_project_state.py
+      - name: Verify PROJECT_STATUS.md is in sync
+        run: python scripts/generate_project_status.py --check

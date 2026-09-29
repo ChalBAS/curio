@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "id": "qpio",
+    "name": "QPIO (Curio)",
+    "repository": "ChalBAS/curio",
+    "objective": "Daily general-knowledge challenges, quick-fire quizzes and streaks. Free forever. Zero-dependency progressive web app: privacy-first (measures the pool, never the person — Charter §8), works offline on a cheap phone. Proof of concept that the AI Operating System can run a real project end to end."
+  },
+  "state": {
+    "status": "active",
+    "phase": "v76 live — Cultural Resource Network (P1/P1.5) and Question Intelligence V1 shipped",
+    "current_focus": "v76 live in production and UAT with no drift; next actionable work is the open PERF issue on question-image refresh"
+  },
+  "last_updated": {
+    "timestamp": "2026-08-19T00:00:00Z",
+    "agent": "hermes"
+  },
+  "last_completed": [
+    {
+      "id": "REL-76",
+      "summary": "v76 live everywhere (production = UAT = main = 76, drift null, nothing awaiting sign-off; 749 questions)",
+      "date": "2026-08-19",
+      "commit": "8a05999"
+    },
+    {
+      "id": "QI-V1",
+      "summary": "Question Intelligence V1 — validator, calibration sample, tests, docs",
+      "date": "2026-08-19",
+      "commit": "0108e73"
+    },
+    {
+      "id": "CRN-P1.5",
+      "summary": "Cultural Resource Network P1.5 — temporary exhibition expiration filtering and factual urgency UI",
+      "date": "2026-08-19",
+      "commit": "8e40e3d"
+    },
+    {
+      "id": "CRN-P1",
+      "summary": "Cultural Resource Network P1 — app integration, matching engine and UI (Smithsonian/BnF resources)",
+      "date": "2026-08-18",
+      "commit": "5afa12a"
+    },
+    {
+      "id": "REL-75",
+      "summary": "v75 live with corrected seal provenance (issue #58 sign-off closed)",
+      "date": "2026-08-18",
+      "commit": "c22795c"
+    }
+  ],
+  "next_actions": [
+    {
+      "id": "ISSUE-1",
+      "summary": "PERF: question images refresh slowly — measure, then fix (open issue #1)"
+    }
+  ],
+  "blockers": [],
+  "parked": [],
+  "decisions": [
+    {
+      "id": "D-RELEASE-METHOD",
+      "summary": "Three-environment release methodology (main/UAT/production with sign-off gates) — critical from first beta tester (M2)",
+      "source": "RELEASE.md"
+    },
+    {
+      "id": "D-PRIVACY",
+      "summary": "Measure the pool, never the person: no names, no emails, no ad networks, no data selling (Charter §8)",
+      "source": "README.md"
+    }
+  ],
+  "health": {
+    "tests": "passing",
+    "deployment": "verified",
+    "known_critical_issue": false
+  },
+  "pointers": {
+    "roadmap": "RELEASES.md",
+    "architecture": "docs/",
+    "status": "PROJECT_STATUS.md",
+    "decisions": "RELEASE.md"
+  }
+}
