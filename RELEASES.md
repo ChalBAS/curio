@@ -25,6 +25,12 @@ not by omission.*
 
 2026-09-29 · 1,983 questions · sign-off: accepted, [#108](https://github.com/ChalBAS/curio-hq/issues/108)
 
+- `1a29e29` Releases record: v118 in production (accepted in ChalBAS/curio-hq#108)
+
+## v118 — 🟢 live
+
+2026-09-29 · 1,983 questions · sign-off: accepted, [#108](https://github.com/ChalBAS/curio-hq/issues/108)
+
 - `b57014e` v118: Qpio Gym - today's puzzles and today's move side by side, the Gym Vault inside the move card
 - `22fd42d` Releases record: v118 on UAT
 

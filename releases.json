@@ -178,6 +178,29 @@
   {
    "version": 118,
    "state": "LIVE",
+   "branch": "uat",
+   "from": "2026-09-29",
+   "to": "2026-09-29",
+   "questions": 1983,
+   "signoff": {
+    "status": "ACCEPTED",
+    "at": "2026-09-29T15:38:45Z",
+    "who": "ChalBAS",
+    "issue": 108,
+    "where": "body"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "1a29e29",
+     "date": "2026-09-29",
+     "subject": "Releases record: v118 in production (accepted in ChalBAS/curio-hq#108)"
+    }
+   ]
+  },
+  {
+   "version": 118,
+   "state": "LIVE",
    "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
