@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v115** at uat.qpio.app |
+| On UAT | **v116** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-29 |
 
-> ⏳ **Awaiting your sign-off:** v115, v113, v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v116, v115, v113, v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -36,11 +36,19 @@ not by omission.*
 
 ---
 
-## v115 — ⏳ on UAT
+## v116 — ⏳ on UAT
 
 2026-09-29 · 1,983 questions · sign-off: **no release issue**
 
+- `dddea4c` v116: Qpio Gym puzzles by theme, never the daily's; the hand exercise stays once a day
+
+## v115 — ⏳ on UAT
+
+2026-09-29 · 1,983 questions · sign-off: awaiting you, [#103](https://github.com/ChalBAS/curio-hq/issues/103)
+
 - `bd0c85f` v115: Qpio Gym has a way back and keeps today's exercises visible; four new hand-exercise videos; the Antipodes source; his book and video choices reach the app
+- `d95941d` Releases record: v115 on UAT (sign-off: ChalBAS/curio-hq#103)
+- `e97089c` Live suite: the Gym keeps today's exercises visible once done, and looking again scores nothing (29 Sep 2026)
 
 ## v114 — ⏳ on UAT
 

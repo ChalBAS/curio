@@ -2,11 +2,12 @@
  "generated": "2026-09-29",
  "live": {
   "production": 76,
-  "uat": 115,
+  "uat": 116,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  116,
   115,
   113,
   112,
@@ -85,7 +86,7 @@
  ],
  "releases": [
   {
-   "version": 115,
+   "version": 116,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-09-29",
@@ -97,9 +98,42 @@
    "messageClash": [],
    "commits": [
     {
+     "sha": "dddea4c",
+     "date": "2026-09-29",
+     "subject": "v116: Qpio Gym puzzles by theme, never the daily's; the hand exercise stays once a day"
+    }
+   ]
+  },
+  {
+   "version": 115,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-29",
+   "to": "2026-09-29",
+   "questions": 1983,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 103,
+    "issues": [
+     103
+    ]
+   },
+   "messageClash": [],
+   "commits": [
+    {
      "sha": "bd0c85f",
      "date": "2026-09-29",
      "subject": "v115: Qpio Gym has a way back and keeps today's exercises visible; four new hand-exercise videos; the Antipodes source; his book and video choices reach the app"
+    },
+    {
+     "sha": "d95941d",
+     "date": "2026-09-29",
+     "subject": "Releases record: v115 on UAT (sign-off: ChalBAS/curio-hq#103)"
+    },
+    {
+     "sha": "e97089c",
+     "date": "2026-09-29",
+     "subject": "Live suite: the Gym keeps today's exercises visible once done, and looking again scores nothing (29 Sep 2026)"
     }
    ]
   },
