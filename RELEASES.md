@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v76** at qpio.app |
-| On UAT | **v116** at uat.qpio.app |
+| On UAT | **v117** at uat.qpio.app |
 | Tip of `main` | v76 |
 | Generated | 2026-09-29 |
 
-> ⏳ **Awaiting your sign-off:** v116, v115, v113, v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v117, v116, v115, v113, v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -36,11 +36,18 @@ not by omission.*
 
 ---
 
-## v116 — ⏳ on UAT
+## v117 — ⏳ on UAT
 
 2026-09-29 · 1,983 questions · sign-off: **no release issue**
 
+- `fbadab5` v117: the Gym as three cards on the Train page - today's puzzles, today's move, puzzles by theme
+
+## v116 — ⏳ on UAT
+
+2026-09-29 · 1,983 questions · sign-off: awaiting you, [#104](https://github.com/ChalBAS/curio-hq/issues/104)
+
 - `dddea4c` v116: Qpio Gym puzzles by theme, never the daily's; the hand exercise stays once a day
+- `48821f0` Releases record: v116 on UAT
 
 ## v115 — ⏳ on UAT
 
