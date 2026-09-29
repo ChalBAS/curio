@@ -613,13 +613,28 @@
       put({ d: today, p: 3, t: 5, m: true });
       return tab(w, "train").then(function () {
         var done = $$(w, ".gdone li");
-        s.log(lang, "gym once · both finished: nothing to start again today", !$(w, "#gymToday") && !$(w, "#gymMove") && done.length === 2,
-              done.length + " done line(s)" + ($(w, "#gymToday") || $(w, "#gymMove") ? ", and a start button is still there" : ""));
+        /* 29 Sep 2026 (CEO: "even if it is done for today it needs to stay visible until the next
+           day"): finished, both stay on the card as quiet buttons - look at the puzzles again, do
+           the move again - and D-090 still holds: looking again answers and scores nothing */
+        var tb0 = $(w, "#gymToday"), mb0 = $(w, "#gymMove");
+        s.log(lang, "gym once · both finished: both stay on the card until tomorrow, as quiet buttons", done.length === 2 && !!tb0 && !!mb0 && /ghost/.test(tb0.className) && /ghost/.test(mb0.className),
+              done.length + " done line(s)" + (tb0 && mb0 ? "" : ", a button is missing"));
         s.log(lang, "gym once · the puzzles show the plain count of the round", done.length > 0 && /3\/5/.test(done[0].textContent), done.length ? done[0].textContent : "no done line");
+        if (!tb0) return;
+        tb0.click();
+        return wait(600).then(function () {
+          var o = $$(w, "#gymOpts button");
+          s.log(lang, "gym once · looking at finished puzzles again shows the answer and takes none", o.length > 0 && o.every(function (b) { return b.disabled; }) && !!$(w, "#gymOpts .good") && !!$(w, "#gymAfter .reveal"), o.length + " options");
+          var rec = JSON.parse(w.localStorage.getItem("curio.gym.day") || "{}");
+          s.log(lang, "gym once · looking again leaves the day's score as it was", rec.p === 3 && rec.m === true, JSON.stringify(rec));
+          s.log(lang, "gym once · every Gym screen has the way back to Qpio Gym", !!$(w, "#playLayer .gymhead button"), "");
+        });
+      }).then(function () {
         put({ d: today, p: 3, t: 5 });
         return tab(w, "train");
       }).then(function () {
-        s.log(lang, "gym once · puzzles finished, move not: only the move can start", !$(w, "#gymToday") && !!$(w, "#gymMove"), "");
+        var tb1 = $(w, "#gymToday"), mb1 = $(w, "#gymMove");
+        s.log(lang, "gym once · puzzles finished, move not: the move is the main button, the puzzles can be looked at", !!tb1 && /ghost/.test(tb1.className) && !!mb1 && !/ghost/.test(mb1.className), "");
         put({ d: yesterday, p: 5, t: 5, m: true });
         return tab(w, "train");
       }).then(function () {
