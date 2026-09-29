@@ -48,6 +48,24 @@ jsFiles.forEach(f => {
 });
 if (synOk === jsFiles.length) pass('all scripts parse', synOk + ' files');
 
+/* ---------- 1b. the edge publishes only what a reader loads ----------
+ * wrangler uploads this whole folder, minus .assetsignore. On 29 Sep 2026 two
+ * agent-tool databases, CLAUDE.md, scratch notes and internal docs were found
+ * downloadable from qpio.app and uat.qpio.app because nothing named them. This
+ * check lists what a reader loads; anything else in the folder that the ignore
+ * list does not name fails the release before it can be uploaded. */
+head('1b · What the edge would publish');
+{
+  const READER_LOADS = new Set(['index.html', 'privacy.html', 'terms.html', 'sw.js', 'manifest.webmanifest',
+    'src', 'img', 'icons', 'brand', 'tests', 'ai.txt', 'robots.txt', 'favicon.ico',
+    'CONTENT-LICENCE.md', 'LICENSE', 'PICTURE-RIGHTS.md', 'CNAME']);
+  const ign = read(path.join(ROOT, '.assetsignore')).split(/\r?\n/).map(s => s.trim()).filter(s => s && !s.startsWith('#'))
+    .map(p => new RegExp('^' + p.replace(/\/$/, '').replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^/]*') + '$'));
+  const stray = fs.readdirSync(ROOT).filter(n => !READER_LOADS.has(n) && !ign.some(r => r.test(n)));
+  if (stray.length) fail('files that are not part of the app would be published', stray.join(', ') + ' — name them in .assetsignore');
+  else pass('the edge gets only what a reader loads', READER_LOADS.size + ' kinds of entry allowed');
+}
+
 /* ---------- 2. the release recipe: versions must agree ---------- */
 head('2 · Version consistency (the stale-asset class of bug)');
 const html = read(path.join(ROOT, 'index.html'));

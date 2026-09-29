@@ -26,3 +26,28 @@ README.md
 MORNING.md
 RESEARCH.md
 node_modules
+
+# LOCAL TOOLING AND WORKING NOTES (29 Sep 2026). Found publicly downloadable on
+# both qpio.app and uat.qpio.app: ruvector.db and .swarm/memory.db (agent-tool
+# memory databases from July, no secrets inside), CLAUDE.md (agent
+# instructions), scratchpad/ (commit notes), docs/ and a release note. None is
+# part of the app. The rule this list now follows: the edge gets what a reader
+# loads, and the check in tools/preflight.js fails the release if anything
+# outside that list would be uploaded.
+*.db
+*.db-shm
+*.db-wal
+.swarm
+.claude-flow
+.ai
+.github
+.nojekyll
+scripts
+scratchpad
+docs
+CLAUDE.md
+AGENTS.md
+PROJECT_STATUS.md
+RELEASE-NOTE-*.md
+package.json
+package-lock.json

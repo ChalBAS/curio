@@ -12,7 +12,7 @@ commit, not from the commit message.*
 | Tip of `main` | v76 |
 | Generated | 2026-09-29 |
 
-> ⏳ **Awaiting your sign-off:** v114, v113, v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v113, v112, v111, v110, v109, v108, v107, v106, v105, v104, v103, v102, v101, v100, v99, v98, v97, v94, v93, v92, v89, v88, v87, v86, v85, v84, v83, v80, v78, v77. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **v96 was rejected** on 2026-09-11 ([#85](https://github.com/ChalBAS/curio-hq/issues/85)). It stays on UAT until the
@@ -38,9 +38,10 @@ not by omission.*
 
 ## v114 — ⏳ on UAT
 
-2026-09-29 · 1,983 questions · sign-off: **no release issue**
+2026-09-29 · 1,983 questions · sign-off: accepted, [#102](https://github.com/ChalBAS/curio-hq/issues/102)
 
 - `e75fe85` v114: safety fixes from the second independent audit
+- `190f79c` Releases record: v114 on UAT (159/159 live checks)
 
 ## v113 — ⏳ on UAT
 

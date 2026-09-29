@@ -7,7 +7,6 @@
  },
  "drift": null,
  "awaiting": [
-  114,
   113,
   112,
   111,
@@ -92,7 +91,11 @@
    "to": "2026-09-29",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "ACCEPTED",
+    "at": "2026-09-29T08:14:59Z",
+    "who": "ChalBAS",
+    "issue": 102,
+    "where": "body"
    },
    "messageClash": [],
    "commits": [
@@ -100,6 +103,11 @@
      "sha": "e75fe85",
      "date": "2026-09-29",
      "subject": "v114: safety fixes from the second independent audit"
+    },
+    {
+     "sha": "190f79c",
+     "date": "2026-09-29",
+     "subject": "Releases record: v114 on UAT (159/159 live checks)"
     }
    ]
   },
