@@ -2,11 +2,12 @@
  "generated": "2026-09-29",
  "live": {
   "production": 76,
-  "uat": 114,
+  "uat": 115,
   "main": 76
  },
  "drift": null,
  "awaiting": [
+  115,
   113,
   112,
   111,
@@ -84,6 +85,25 @@
  ],
  "releases": [
   {
+   "version": 115,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-09-29",
+   "to": "2026-09-29",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "bd0c85f",
+     "date": "2026-09-29",
+     "subject": "v115: Qpio Gym has a way back and keeps today's exercises visible; four new hand-exercise videos; the Antipodes source; his book and video choices reach the app"
+    }
+   ]
+  },
+  {
    "version": 114,
    "state": "ON UAT",
    "branch": "uat",
@@ -108,6 +128,11 @@
      "sha": "190f79c",
      "date": "2026-09-29",
      "subject": "Releases record: v114 on UAT (159/159 live checks)"
+    },
+    {
+     "sha": "a9a46b2",
+     "date": "2026-09-29",
+     "subject": "Stop publishing non-app files; release record shows v114 accepted"
     }
    ]
   },
