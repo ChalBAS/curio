@@ -7,13 +7,10 @@ commit, not from the commit message.*
 
 | | |
 |---|---|
-| Live to readers | **v117** at qpio.app |
+| Live to readers | **v118** at qpio.app |
 | On UAT | **v118** at uat.qpio.app |
-| Tip of `main` | v117 |
+| Tip of `main` | v118 |
 | Generated | 2026-09-29 |
-
-> ⏳ **Awaiting your sign-off:** v118. Write **Accepted for production**
-> — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v116 (AWAITING), v115 (AWAITING), v113 (AWAITING), v112 (AWAITING), v111 (AWAITING), v110 (AWAITING), v109 (AWAITING), v108 (AWAITING), v107 (NO ISSUE), v106 (AWAITING), v105 (AWAITING), v104 (AWAITING), v103 (AWAITING), v102 (AWAITING), v101 (AWAITING), v100 (AWAITING), v99 (AWAITING), v98 (AWAITING), v97 (NO ISSUE), v96 (REJECTED), v95 (REJECTED), v94 (NO ISSUE), v93 (NO ISSUE), v92 (NO ISSUE), v89 (NO ISSUE), v88 (NO ISSUE), v87 (NO ISSUE), v86 (NO ISSUE), v85 (NO ISSUE), v84 (NO ISSUE), v83 (AWAITING), v82 (REJECTED), v81 (REJECTED), v80 (NO ISSUE), v78 (NO ISSUE), v77 (AWAITING), v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
 > This is a process breach and is recorded rather than hidden.
@@ -24,25 +21,21 @@ not by omission.*
 
 ---
 
-## v118 — ⏳ on UAT
+## v118 — 🟢 live
 
-2026-09-29 · 1,983 questions · sign-off: **no release issue**
+2026-09-29 · 1,983 questions · sign-off: accepted, [#108](https://github.com/ChalBAS/curio-hq/issues/108)
 
 - `b57014e` v118: Qpio Gym - today's puzzles and today's move side by side, the Gym Vault inside the move card
+- `22fd42d` Releases record: v118 on UAT
 
-## v117 — 🟢 live
-
-2026-09-29 · 1,983 questions · sign-off: accepted, [#106](https://github.com/ChalBAS/curio-hq/issues/106)
-
-- `aa527e2` Releases record: v117 in production (accepted in ChalBAS/curio-hq#106)
-
-## v117 — 🟢 live
+## v117 — · shipped
 
 2026-09-29 · 1,983 questions · sign-off: accepted, [#106](https://github.com/ChalBAS/curio-hq/issues/106)
 
 - `fbadab5` v117: the Gym as three cards on the Train page - today's puzzles, today's move, puzzles by theme
 - `edc1dd0` Releases record: v117 on UAT
 - `d109eab` Release v117 to production (merge uat -> main)
+- `aa527e2` Releases record: v117 in production (accepted in ChalBAS/curio-hq#106)
 
 ## v116 — · shipped
 

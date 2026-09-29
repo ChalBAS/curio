@@ -1,14 +1,12 @@
 {
  "generated": "2026-09-29",
  "live": {
-  "production": 117,
+  "production": 118,
   "uat": 118,
-  "main": 117
+  "main": 118
  },
  "drift": null,
- "awaiting": [
-  118
- ],
+ "awaiting": [],
  "rejected": [],
  "breaches": [
   {
@@ -179,13 +177,17 @@
  "releases": [
   {
    "version": 118,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "LIVE",
+   "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "ACCEPTED",
+    "at": "2026-09-29T15:38:45Z",
+    "who": "ChalBAS",
+    "issue": 108,
+    "where": "body"
    },
    "messageClash": [],
    "commits": [
@@ -193,35 +195,17 @@
      "sha": "b57014e",
      "date": "2026-09-29",
      "subject": "v118: Qpio Gym - today's puzzles and today's move side by side, the Gym Vault inside the move card"
-    }
-   ]
-  },
-  {
-   "version": 117,
-   "state": "LIVE",
-   "branch": "uat",
-   "from": "2026-09-29",
-   "to": "2026-09-29",
-   "questions": 1983,
-   "signoff": {
-    "status": "ACCEPTED",
-    "at": "2026-09-29T15:00:53Z",
-    "who": "ChalBAS",
-    "issue": 106,
-    "where": "body"
-   },
-   "messageClash": [],
-   "commits": [
+    },
     {
-     "sha": "aa527e2",
+     "sha": "22fd42d",
      "date": "2026-09-29",
-     "subject": "Releases record: v117 in production (accepted in ChalBAS/curio-hq#106)"
+     "subject": "Releases record: v118 on UAT"
     }
    ]
   },
   {
    "version": 117,
-   "state": "LIVE",
+   "state": "SUPERSEDED",
    "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
@@ -249,6 +233,11 @@
      "sha": "d109eab",
      "date": "2026-09-29",
      "subject": "Release v117 to production (merge uat -> main)"
+    },
+    {
+     "sha": "aa527e2",
+     "date": "2026-09-29",
+     "subject": "Releases record: v117 in production (accepted in ChalBAS/curio-hq#106)"
     }
    ]
   },
