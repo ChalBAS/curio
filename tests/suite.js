@@ -621,13 +621,10 @@
               done.length + " done line(s)" + (tb0 && mb0 ? "" : ", a button is missing"));
         /* D-101 (29 Sep 2026: "the not repeat was about the manual exercises") */
         s.log(lang, "gym once · a hand exercise done today cannot be started again", !!mb0 && mb0.disabled, "");
-        var th = $(w, "#gymThemes");
-        s.log(lang, "gym by theme · the Gym card offers puzzles by theme", !!th, "");
-        if (th) { th.click(); }
-        return wait(500).then(function () {
-          s.log(lang, "gym by theme · all sixteen themes are listed", $$(w, "#playLayer .gthemes button").length === 16, $$(w, "#playLayer .gthemes button").length + " theme(s)");
-          return tab(w, "train");
-        });
+        /* 29 Sep 2026 ("on the main page and on separate cards"): the themes sit on the Train page */
+        s.log(lang, "gym by theme · today's puzzles, today's move and the themes are three separate cards", !!$(w, "#gymThemesCard") && $$(w, ".gymcard").length >= 3 && !$(w, "#gymThemesCard #gymToday") && !$(w, "#gymThemesCard #gymMove"), $$(w, ".gymcard").length + " card(s)");
+        s.log(lang, "gym by theme · all sixteen themes are on the Train page", $$(w, "#gymThemesCard .gthemes button").length === 16, $$(w, "#gymThemesCard .gthemes button").length + " theme(s)");
+        return Promise.resolve();
       }).then(function () {
         var tb0 = $(w, "#gymToday"), done = $$(w, ".gdone li");
         s.log(lang, "gym once · the puzzles show the plain count of the round", done.length > 0 && /3\/5/.test(done[0].textContent), done.length ? done[0].textContent : "no done line");

@@ -1683,47 +1683,53 @@
     return node;
   }
 
-  /* THE BRAIN GYM CARD (D-090, 24 Sep 2026). Today's puzzles and today's move, each once a day.
-     What is finished says so - with the plain count of the round for the puzzles - and the card
-     says when the next ones come. Nothing starts them again until the day changes: "Another
-     five", "Another move" and the kind picker are gone for free readers (a paid tier would mean
-     more exercises each day, still released daily - D-090). */
+  /* THE GYM, AS SEPARATE CARDS ON THE TRAIN PAGE (CEO, 29 Sep 2026: "I want the button for puzzles
+     by themes [and] Today's puzzle ... on the main page and on separate cards"). Three cards:
+     today's puzzles (once a day, looked at again once done - D-090), today's move (once a day,
+     not repeated: "the not repeat was about the manual exercises"), and the sixteen themes, each
+     one tap from this page (D-101: never the daily's puzzles). What is done stays on its card
+     until tomorrow ("even if it is done for today it needs to stay visible until the next day"). */
   function brainGymCard() {
     var rec = gymToday(), pDone = typeof rec.p === "number", mDone = rec.m === true, hand = gymHand();
-    var done = [];
-    if (pDone) done.push(tf("Today’s puzzles: done — {n}/{total}", { n: rec.p, total: rec.t || 5 }));
-    if (mDone) done.push(t("Today’s move: done"));
-    var node = el(
-      '<div class="card">' +
-        '<div class="emoji">🧠</div>' +
-        '<h3 style="margin:8px 0 4px">' + t("Qpio Gym") + '</h3>' +
-        '<p class="mini" style="margin:0 0 12px">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p>' +
-        (done.length ? '<ul class="gdone">' + done.map(function (x) { return '<li><span aria-hidden="true">✓ </span>' + esc(x) + '</li>'; }).join("") + '</ul>' +
-          '<p class="mini gnext">' + (pDone && mDone ? t("Done for today. The next set arrives tomorrow.") : t("The next set arrives tomorrow.")) + '</p>' : '') +
-        /* WHAT IS DONE STAYS ON THE CARD UNTIL TOMORROW (CEO, 29 Sep 2026: "even if it is done for
-           today it needs to stay visible until the next day"). Finished puzzles open again to be
-           looked at, answers shown, nothing scored twice. The hand exercise comes once a day
-           and is not repeated (CEO, 29 Sep 2026: "the not repeat was about the manual
-           exercises"): done, it stays on the card as done. */
-        '<div class="btnrow">' +
-          (pDone ? '<button class="btn ghost" id="gymToday">' + t("Today’s puzzles: see them again") + '</button>'
-                 : '<button class="btn" id="gymToday">' + t("Today’s puzzles") + '</button>') +
-          (mDone ? '<button class="btn ghost" id="gymMove" disabled>✓ ' + t("Today’s move") + '</button>'
-                 : '<button class="btn' + (pDone ? '' : ' ghost') + '" id="gymMove">' + t("Today’s move") + '</button>') +
-        '</div>' +
-        /* THE GYM BY THEME (D-101): any theme, as often as the reader likes, never the daily's puzzles */
-        '<div class="btnrow" style="margin-top:10px"><button class="btn ghost" id="gymThemes">' + t("Puzzles by theme") + '</button></div>' +
-        /* the one place to change it, now that the kind picker is gone */
-        (hand ? '<p class="mini" style="margin:12px 0 0"><button class="linkish" id="gymHand">' + t("Change hand") + '</button></p>' : '') +
-      '</div>'
-    );
-    var tb = node.querySelector("#gymToday"); if (tb) tb.addEventListener("click", function () { startBrainGym(pDone); });
-    var mb = node.querySelector("#gymMove"); if (mb && !mDone) mb.addEventListener("click", function () { startDrill(); });
-    var th = node.querySelector("#gymThemes"); if (th) th.addEventListener("click", gymThemesView);
-    var hb = node.querySelector("#gymHand"); if (hb) hb.addEventListener("click", function () { askHand(goGames); });
-    if (gymVault().length) node.appendChild(gymVaultCard(goGames));
-    return node;
+    var GYM = window.CURIO_GYM, fr = QLANG === "fr", frag = document.createDocumentFragment();
+    var label = '<div class="mini" style="opacity:.8">🧠 ' + t("Qpio Gym") + '</div>';
+    var doneLine = function (s) { return '<ul class="gdone"><li><span aria-hidden="true">✓ </span>' + esc(s) + '</li></ul><p class="mini gnext">' + t("The next set arrives tomorrow.") + '</p>'; };
+    var cp = el('<div class="card gymcard">' + label +
+      '<h3 style="margin:6px 0 4px">' + t("Today’s puzzles") + '</h3>' +
+      '<p class="mini" style="margin:0 0 12px">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p>' +
+      (pDone ? doneLine(tf("Today’s puzzles: done — {n}/{total}", { n: rec.p, total: rec.t || 5 })) : '') +
+      '<div class="btnrow">' + (pDone ? '<button class="btn ghost" id="gymToday">' + t("Today’s puzzles: see them again") + '</button>'
+                                      : '<button class="btn" id="gymToday">' + t("Today’s puzzles") + '</button>') + '</div></div>');
+    cp.querySelector("#gymToday").addEventListener("click", function () { startBrainGym(pDone); });
+    frag.appendChild(cp);
+    var cm = el('<div class="card gymcard">' + label +
+      '<h3 style="margin:6px 0 4px">' + t("Today’s move") + '</h3>' +
+      '<p class="mini" style="margin:0 0 12px">' + t("One move a day, nothing to answer.") + '</p>' +
+      (mDone ? doneLine(t("Today’s move: done")) : '') +
+      '<div class="btnrow">' + (mDone ? '<button class="btn ghost" id="gymMove" disabled>✓ ' + t("Today’s move") + '</button>'
+                                      : '<button class="btn' + (pDone ? '' : ' ghost') + '" id="gymMove">' + t("Today’s move") + '</button>') + '</div>' +
+      (hand ? '<p class="mini" style="margin:12px 0 0"><button class="linkish" id="gymHand">' + t("Change hand") + '</button></p>' : '') + '</div>');
+    var mb = cm.querySelector("#gymMove"); if (mb && !mDone) mb.addEventListener("click", function () { startDrill(); });
+    var hb = cm.querySelector("#gymHand"); if (hb) hb.addEventListener("click", function () { askHand(goGames); });
+    frag.appendChild(cm);
+    var ct = el('<div class="card gymcard" id="gymThemesCard">' + label +
+      '<h3 style="margin:6px 0 4px">' + t("Puzzles by theme") + '</h3>' +
+      '<p class="mini" style="margin:0 0 12px">' + t("Five puzzles of one theme, as often as you like. Never the ones in the daily Gym.") + '</p>' +
+      '<div class="gthemes" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px"></div></div>');
+    var list = ct.querySelector(".gthemes");
+    GYM.families.forEach(function (f) {
+      var nm = fr && f.nameFr ? f.nameFr : f.name, bl = fr && f.blurbFr ? f.blurbFr : f.blurb;
+      var b = el('<button class="btn ghost" style="text-align:left;white-space:normal;padding:10px 12px"></button>');
+      b.innerHTML = '<span aria-hidden="true">' + f.icon + '</span> ' + esc(nm);
+      b.setAttribute("title", bl); b.setAttribute("aria-label", nm + ". " + bl);
+      b.addEventListener("click", function () { startBrainGym(false, f.key); });
+      list.appendChild(b);
+    });
+    frag.appendChild(ct);
+    if (gymVault().length) frag.appendChild(gymVaultCard(goGames));
+    return frag;
   }
+
 
   /* A gym round: today's five puzzles, one at a time, answer then explanation - the same five for
      everybody, so they can be talked about, which is the reason the exercises are seeded rather

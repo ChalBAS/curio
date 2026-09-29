@@ -464,6 +464,7 @@
       "Today’s puzzles, looked at again.": "Les énigmes du jour, revues.",
       "← Qpio Gym": "← Qpio Gym",
       "Puzzles by theme": "Énigmes par thème",
+      "One move a day, nothing to answer.": "Un mouvement par jour, rien à répondre.",
       "Five puzzles of one theme, as often as you like. Never the ones in the daily Gym.": "Cinq énigmes d’un même thème, autant de fois que tu veux. Jamais celles de la Gym du jour.",
       "Nothing new in this theme for now": "Rien de nouveau dans ce thème pour l’instant",
       "You have met every puzzle of this theme in the last 30 days. They come back after that. Another theme has new ones.": "Tu as vu toutes les énigmes de ce thème ces 30 derniers jours. Elles reviennent ensuite. Un autre thème en a de nouvelles.",
