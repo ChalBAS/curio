@@ -1294,3 +1294,10 @@ button.gf-link, button.way { font: inherit; color: inherit; cursor: pointer; tex
 .tg-hint{font-weight:700;margin:10px 0 0}
 .tg-hint:empty{margin:0}   /* stays in the page, so a screen reader hears it the moment it has words */
 .hcontrast .tg-agree{border-width:2px}
+
+/* Qpio Gym on the Train page (v118, 29 Sep 2026): today's puzzles and today's move side by side
+   on a wide screen, stacked on a phone; the Gym Vault inside the move card */
+.gymrow { display: grid; gap: 14px; }
+@media (min-width: 560px) { .gymrow { grid-template-columns: 1fr 1fr; align-items: stretch; } }
+.gymrow > .card { margin: 0; }
+.gvault-in { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.1); }

@@ -623,6 +623,8 @@
         s.log(lang, "gym once · a hand exercise done today cannot be started again", !!mb0 && mb0.disabled, "");
         /* 29 Sep 2026 ("on the main page and on separate cards"): the themes sit on the Train page */
         s.log(lang, "gym by theme · today's puzzles, today's move and the themes are three separate cards", !!$(w, "#gymThemesCard") && $$(w, ".gymcard").length >= 3 && !$(w, "#gymThemesCard #gymToday") && !$(w, "#gymThemesCard #gymMove"), $$(w, ".gymcard").length + " card(s)");
+        /* v117 acceptance (29 Sep 2026): the vault beside today's move, less empty space */
+        s.log(lang, "gym · today's puzzles and today's move share one row", $$(w, ".gymrow > .gymcard").length === 2, $$(w, ".gymrow > .gymcard").length + " card(s) in the row");
         s.log(lang, "gym by theme · all sixteen themes are on the Train page", $$(w, "#gymThemesCard .gthemes button").length === 16, $$(w, "#gymThemesCard .gthemes button").length + " theme(s)");
         return Promise.resolve();
       }).then(function () {

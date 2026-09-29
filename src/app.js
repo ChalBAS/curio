@@ -1701,7 +1701,6 @@
       '<div class="btnrow">' + (pDone ? '<button class="btn ghost" id="gymToday">' + t("Today’s puzzles: see them again") + '</button>'
                                       : '<button class="btn" id="gymToday">' + t("Today’s puzzles") + '</button>') + '</div></div>');
     cp.querySelector("#gymToday").addEventListener("click", function () { startBrainGym(pDone); });
-    frag.appendChild(cp);
     var cm = el('<div class="card gymcard">' + label +
       '<h3 style="margin:6px 0 4px">' + t("Today’s move") + '</h3>' +
       '<p class="mini" style="margin:0 0 12px">' + t("One move a day, nothing to answer.") + '</p>' +
@@ -1711,7 +1710,18 @@
       (hand ? '<p class="mini" style="margin:12px 0 0"><button class="linkish" id="gymHand">' + t("Change hand") + '</button></p>' : '') + '</div>');
     var mb = cm.querySelector("#gymMove"); if (mb && !mDone) mb.addEventListener("click", function () { startDrill(); });
     var hb = cm.querySelector("#gymHand"); if (hb) hb.addEventListener("click", function () { askHand(goGames); });
-    frag.appendChild(cm);
+    /* THE VAULT BESIDE TODAY'S MOVE, AND THE TWO DAILY CARDS SIDE BY SIDE (CEO, 29 Sep 2026, v117
+       acceptance: "the gym vault needs to be next to today's move of the day, the card it self
+       needs to be reorganized for less empty spaces"). On a phone they stack. */
+    if (gymVault().length) {
+      var gv = gymVaultCard(goGames);
+      gv.classList.remove("card");
+      gv.classList.add("gvault-in");
+      cm.appendChild(gv);
+    }
+    var row = el('<div class="gymrow"></div>');
+    row.appendChild(cp); row.appendChild(cm);
+    frag.appendChild(row);
     var ct = el('<div class="card gymcard" id="gymThemesCard">' + label +
       '<h3 style="margin:6px 0 4px">' + t("Puzzles by theme") + '</h3>' +
       '<p class="mini" style="margin:0 0 12px">' + t("Five puzzles of one theme, as often as you like. Never the ones in the daily Gym.") + '</p>' +
@@ -1726,7 +1736,6 @@
       list.appendChild(b);
     });
     frag.appendChild(ct);
-    if (gymVault().length) frag.appendChild(gymVaultCard(goGames));
     return frag;
   }
 
