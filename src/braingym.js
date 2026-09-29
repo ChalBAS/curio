@@ -1542,8 +1542,40 @@
                        Date.UTC(2026, 0, 1)) / 86400000);
   }
 
+  /* THE GYM BY THEME NEVER HANDS OUT THE DAILY'S PUZZLES (CEO, 29 Sep 2026: "the questions in
+     the daily gym exercise vs the gym brain should not overlap, same as the quick fire vs the
+     daily quiz. We can have similar topics but not the exact same questions, otherwise people
+     will consume things too fast and it will be boring"). A puzzle is known by what a reader
+     is shown, in English: its kind, its question, its list and its choices. dailyPrints()
+     lists the puzzles of the daily sets for a run of days; practiceSet() deals puzzles of one
+     theme from a stream of seeds of its own, skipping any the caller says to avoid. */
+  /* picture puzzles share their words and choices ("Find the odd tile", cells 1-16): the picture
+     itself, and where the answer is, tell them apart */
+  function fingerprint(p) { return p ? [p.family, p.prompt || "", p.show || "", (p.options || []).join("|"), String(p.answer), p.scene ? JSON.stringify(p.scene) : ""].join("#") : ""; }
+  function dailyPrints(fromSeed, toSeed, opts) {
+    var out = {};
+    for (var s = fromSeed; s <= toSeed; s++) makeSet(s, 5, "en", opts).forEach(function (p) { out[fingerprint(p)] = true; });
+    return out;
+  }
+  function practiceSet(key, lang, n, avoid) {
+    var f = BY_KEY[key]; if (!f) return [];
+    var base = (900000000 + FAMILIES.indexOf(f) * 1000003) >>> 0, out = [], got = {};
+    for (var k = 0; k < 900 && out.length < (n || 5); k++) {
+      var s = (base + k * 7919) >>> 0, en = f.make(s, "en"), fp = fingerprint(en);
+      if (got[fp] || (avoid && avoid(fp))) continue;
+      got[fp] = true;
+      var p = (lang || "en") === "en" ? en : f.make(s, lang);
+      p._fp = fp;
+      out.push(p);
+    }
+    return out;
+  }
+
   var infinite = FAMILIES.filter(function (f) { return f.infinite; }).length;
   window.CURIO_GYM = {
+    fingerprint: fingerprint,
+    dailyPrints: dailyPrints,
+    practiceSet: practiceSet,
     families: FAMILIES,
     byKey: BY_KEY,
     languages: ["en", "fr"],

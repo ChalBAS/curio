@@ -1702,20 +1702,24 @@
           '<p class="mini gnext">' + (pDone && mDone ? t("Done for today. The next set arrives tomorrow.") : t("The next set arrives tomorrow.")) + '</p>' : '') +
         /* WHAT IS DONE STAYS ON THE CARD UNTIL TOMORROW (CEO, 29 Sep 2026: "even if it is done for
            today it needs to stay visible until the next day"). Finished puzzles open again to be
-           looked at, answers shown, nothing scored twice (D-090 still holds: no retake); a
-           finished move can be done again, since a move has no score. */
+           looked at, answers shown, nothing scored twice. The hand exercise comes once a day
+           and is not repeated (CEO, 29 Sep 2026: "the not repeat was about the manual
+           exercises"): done, it stays on the card as done. */
         '<div class="btnrow">' +
           (pDone ? '<button class="btn ghost" id="gymToday">' + t("Today’s puzzles: see them again") + '</button>'
                  : '<button class="btn" id="gymToday">' + t("Today’s puzzles") + '</button>') +
-          (mDone ? '<button class="btn ghost" id="gymMove">' + t("Today’s move: do it again") + '</button>'
+          (mDone ? '<button class="btn ghost" id="gymMove" disabled>✓ ' + t("Today’s move") + '</button>'
                  : '<button class="btn' + (pDone ? '' : ' ghost') + '" id="gymMove">' + t("Today’s move") + '</button>') +
         '</div>' +
+        /* THE GYM BY THEME (D-101): any theme, as often as the reader likes, never the daily's puzzles */
+        '<div class="btnrow" style="margin-top:10px"><button class="btn ghost" id="gymThemes">' + t("Puzzles by theme") + '</button></div>' +
         /* the one place to change it, now that the kind picker is gone */
         (hand ? '<p class="mini" style="margin:12px 0 0"><button class="linkish" id="gymHand">' + t("Change hand") + '</button></p>' : '') +
       '</div>'
     );
     var tb = node.querySelector("#gymToday"); if (tb) tb.addEventListener("click", function () { startBrainGym(pDone); });
-    var mb = node.querySelector("#gymMove"); if (mb) mb.addEventListener("click", function () { startDrill(mDone); });
+    var mb = node.querySelector("#gymMove"); if (mb && !mDone) mb.addEventListener("click", function () { startDrill(); });
+    var th = node.querySelector("#gymThemes"); if (th) th.addEventListener("click", gymThemesView);
     var hb = node.querySelector("#gymHand"); if (hb) hb.addEventListener("click", function () { askHand(goGames); });
     if (gymVault().length) node.appendChild(gymVaultCard(goGames));
     return node;
@@ -1789,16 +1793,66 @@
     return node;
   }
 
+  /* THE GYM BY THEME (D-101, CEO 29 Sep 2026: "the questions in the daily gym exercise vs the
+     gym brain should not overlap, same as the quick fire vs the daily quiz"). Any of the
+     sixteen themes, five puzzles at a time, as often as the reader likes. Never a puzzle of
+     the daily Gym from 30 days back to a year ahead, and - like Quick-Fire - never one this
+     reader met by theme in the last 30 days. A theme with nothing new left says so. */
+  var GYM_SEEN_DAYS = 30, GYM_SEEN_PRUNE = 45, gymDailyCache = null;
+  function gymHash(s) { var h = 5381; for (var i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0; return h.toString(36); }
+  function gymSeen() { var a = LS.get("gym.seen", []); return Array.isArray(a) ? a : []; }
+  function gymSeenAdd(fp) {
+    var today = dayNumber(), h = gymHash(fp);
+    var a = gymSeen().filter(function (e) { return e && today - e.d < GYM_SEEN_PRUNE && e.f !== h; });
+    a.push({ f: h, d: today });
+    LS.set("gym.seen", a);
+  }
+  function gymAvoid() {
+    var GYM = window.CURIO_GYM, s0 = GYM.seedForDay();
+    if (!gymDailyCache || gymDailyCache.s0 !== s0) {
+      /* both ways the daily can be dealt (with and without the moving-ball puzzle) */
+      var a = GYM.dailyPrints(s0 - 30, s0 + 365, {}), b = GYM.dailyPrints(s0 - 30, s0 + 365, { exclude: ["shells"] });
+      Object.keys(b).forEach(function (k) { a[k] = true; });
+      gymDailyCache = { s0: s0, prints: a };
+    }
+    var today = dayNumber(), recent = {};
+    gymSeen().forEach(function (e) { if (e && today - e.d < GYM_SEEN_DAYS) recent[e.f] = true; });
+    return function (fp) { return !!gymDailyCache.prints[fp] || !!recent[gymHash(fp)]; };
+  }
+  function gymThemesView() {
+    var GYM = window.CURIO_GYM, fr = QLANG === "fr";
+    var node = el('<div class="card"><h3 style="margin:0 0 6px">' + t("Puzzles by theme") + '</h3>' +
+      '<p class="mini" style="margin:0 0 12px">' + t("Five puzzles of one theme, as often as you like. Never the ones in the daily Gym.") + '</p><div class="gthemes"></div></div>');
+    var list = node.querySelector(".gthemes");
+    GYM.families.forEach(function (f) {
+      var b = el('<button class="btn ghost" style="display:block;width:100%;text-align:left;margin:0 0 8px;white-space:normal"></button>');
+      b.innerHTML = '<b>' + f.icon + ' ' + esc(fr && f.nameFr ? f.nameFr : f.name) + '</b><br><span class="mini">' + esc(fr && f.blurbFr ? f.blurbFr : f.blurb) + '</span>';
+      b.addEventListener("click", function () { startBrainGym(false, f.key); });
+      list.appendChild(b);
+    });
+    render(gymHead(node));
+  }
+
   /* review: today's five once they are finished, each shown with its answer and explanation,
      nothing chosen and nothing scored (29 Sep 2026: finished puzzles stay visible until tomorrow) */
-  function startBrainGym(review) {
+  /* theme: five puzzles of one theme (D-101), never the daily's; nothing about the day is kept */
+  function startBrainGym(review, theme) {
     var GYM = window.CURIO_GYM, ART = window.CURIO_GYM_ART;
-    review = !!review && gymPuzzlesDone();
-    if (gymPuzzlesDone() && !review) { goGames(); return; }
+    theme = theme && GYM.byKey[theme] ? theme : null;
+    review = !theme && !!review && gymPuzzlesDone();
+    if (!theme && gymPuzzlesDone() && !review) { goGames(); return; }
     var seed = GYM.seedForDay(), dayRec = gymDayKey(), day = todayKey();
     var motionOff = gymMotionOff() || settings.readAloud;
-    var set = GYM.makeSet(seed, 5, QLANG, { exclude: motionOff ? ["shells"] : [] });
+    var set = theme ? GYM.practiceSet(theme, QLANG, 5, gymAvoid()) : GYM.makeSet(seed, 5, QLANG, { exclude: motionOff ? ["shells"] : [] });
     var idx = 0, right = 0, mathsSeen = 0;
+    if (theme && !set.length) {
+      var none = el('<div class="card"><h3 style="margin:0 0 6px">' + t("Nothing new in this theme for now") + '</h3>' +
+        '<p class="mini" style="margin:0 0 12px">' + t("You have met every puzzle of this theme in the last 30 days. They come back after that. Another theme has new ones.") + '</p>' +
+        '<div class="btnrow"><button class="btn" id="gymOther">' + t("Other themes") + '</button></div></div>');
+      none.querySelector("#gymOther").addEventListener("click", gymThemesView);
+      render(gymHead(none));
+      return;
+    }
 
     /* at question time a hidden list stays hidden - the rule lives in the gym module */
     function labelsOf(p) { return GYM.questionLabels ? GYM.questionLabels(p) : {}; }
@@ -1986,7 +2040,9 @@
         if (svg && svg.querySelector("#b0")) svg.insertAdjacentHTML("beforeend", '<circle cx="' + (60 + (Number(p.answer) - 1) * 100) + '" cy="56" r="29" fill="none" stroke="var(--good)" stroke-width="3"/>');
       }
       /* the last answer finishes today's puzzles: from here they wait for tomorrow (D-090) */
-      if (idx + 1 >= set.length && !review) gymMarkDone(dayRec, day, { p: right, t: set.length });
+      if (idx + 1 >= set.length && !review && !theme) gymMarkDone(dayRec, day, { p: right, t: set.length });
+      /* a theme puzzle, answered, is not dealt to this reader again for 30 days */
+      if (theme && p._fp) gymSeenAdd(p._fp);
       var after = node.querySelector("#gymAfter");
       after.appendChild(el(
         '<div class="reveal" style="margin-top:12px">' +
@@ -2008,6 +2064,21 @@
          the person). The count is a plain count of five puzzles; one main button - today's move
          if it is still to do, otherwise Home - and Home beside it. */
       var moveLeft = !gymMoveDone(), rec = gymToday();
+      if (theme) {
+        var fam = GYM.byKey[theme], name = QLANG === "fr" && fam.nameFr ? fam.nameFr : fam.name;
+        var tn = el('<div class="card result"><div class="scorebig">' + right + '/' + set.length + '</div>' +
+          '<h2>' + esc(fam.icon + ' ' + name) + '</h2>' +
+          '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
+            '<button class="btn" id="gymMore">' + t("Five more") + '</button>' +
+            '<button class="btn ghost" id="gymOther">' + t("Other themes") + '</button>' +
+            '<button class="btn ghost" id="gymBackT">' + t("← Qpio Gym") + '</button>' +
+          '</div></div>');
+        tn.querySelector("#gymMore").addEventListener("click", function () { startBrainGym(false, theme); });
+        tn.querySelector("#gymOther").addEventListener("click", gymThemesView);
+        tn.querySelector("#gymBackT").addEventListener("click", goGames);
+        render(tn);
+        return;
+      }
       var node = el(
         '<div class="card result">' +
           /* looked at again: the score is the one the set was finished with, unchanged */
