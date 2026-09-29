@@ -1,6 +1,6 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-09-28T22:59:01.878Z",
+ "generated": "2026-09-29T02:10:52.685Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",
@@ -9,7 +9,7 @@
   "added": 0,
   "changedEn": 0,
   "changedFr": 0,
-  "carriedBecauseShipped": 15,
+  "carriedBecauseShipped": 138,
   "ungoverned": 12,
   "unruled": 1971
  },
@@ -2965,7 +2965,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -2973,7 +2973,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q198": {
    "governed": true,
@@ -3974,7 +3975,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -3983,7 +3984,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q266": {
    "governed": true,
@@ -4124,7 +4126,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -4133,7 +4135,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q276": {
    "governed": true,
@@ -4304,8 +4307,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -4313,7 +4316,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q288": {
    "governed": true,
@@ -4364,8 +4368,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -4373,7 +4377,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q292": {
    "governed": true,
@@ -4710,7 +4715,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -4718,7 +4723,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q315": {
    "governed": true,
@@ -4820,7 +4826,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -4829,13 +4835,14 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q322": {
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -4844,7 +4851,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q323": {
    "governed": true,
@@ -6800,7 +6808,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -6809,7 +6817,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q454": {
    "governed": true,
@@ -6980,8 +6989,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -6989,7 +6998,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q466": {
    "governed": true,
@@ -7025,8 +7035,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -7034,7 +7044,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q469": {
    "governed": true,
@@ -7896,7 +7907,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -7904,7 +7915,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q527": {
    "governed": true,
@@ -9245,7 +9257,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -9254,7 +9266,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q617": {
    "governed": true,
@@ -10010,7 +10023,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -10019,7 +10032,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q668": {
    "governed": true,
@@ -12482,8 +12496,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -12491,14 +12505,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0832": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -12506,7 +12521,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0833": {
    "governed": true,
@@ -12692,8 +12708,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -12701,7 +12717,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0846": {
    "governed": true,
@@ -12767,8 +12784,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -12776,7 +12793,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0851": {
    "governed": true,
@@ -12797,8 +12815,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -12806,7 +12824,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0853": {
    "governed": true,
@@ -12827,8 +12846,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -12836,14 +12855,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0855": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -12851,7 +12871,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0856": {
    "governed": true,
@@ -12917,8 +12938,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -12926,7 +12947,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0862": {
    "governed": true,
@@ -12977,8 +12999,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -12986,14 +13008,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0866": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13001,7 +13024,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0867": {
    "governed": true,
@@ -13067,8 +13091,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -13076,14 +13100,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0872": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REPLACE",
    "factChecked": true,
@@ -13091,7 +13116,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0873": {
    "governed": true,
@@ -13127,8 +13153,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -13136,13 +13162,14 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0876": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "ESCALATE_HUMAN",
@@ -13151,7 +13178,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0877": {
    "governed": true,
@@ -13187,8 +13215,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13196,7 +13224,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0880": {
    "governed": true,
@@ -13382,8 +13411,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13391,7 +13420,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0893": {
    "governed": true,
@@ -13502,8 +13532,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13511,7 +13541,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0901": {
    "governed": true,
@@ -13577,8 +13608,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13586,7 +13617,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0906": {
    "governed": true,
@@ -13622,8 +13654,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13631,7 +13663,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0909": {
    "governed": true,
@@ -13667,8 +13700,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13676,14 +13709,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0913": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13691,14 +13725,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0914": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -13706,14 +13741,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0915": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -13721,7 +13757,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0916": {
    "governed": true,
@@ -13742,8 +13779,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13751,7 +13788,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0918": {
    "governed": true,
@@ -13772,8 +13810,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13781,14 +13819,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0920": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -13796,14 +13835,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0921": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13811,14 +13851,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0922": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13826,14 +13867,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0923": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13841,14 +13883,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0924": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13856,7 +13899,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0925": {
    "governed": true,
@@ -13907,8 +13951,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -13916,14 +13960,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0929": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13931,7 +13976,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0930": {
    "governed": true,
@@ -13952,8 +13998,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS",
    "factChecked": true,
@@ -13961,7 +14007,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0932": {
    "governed": true,
@@ -14087,8 +14134,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14096,7 +14143,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0943": {
    "governed": true,
@@ -14162,8 +14210,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -14171,7 +14219,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0948": {
    "governed": true,
@@ -14192,7 +14241,7 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -14283,8 +14332,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -14292,7 +14341,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0957": {
    "governed": true,
@@ -14328,8 +14378,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -14337,14 +14387,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0960": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14352,14 +14403,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0961": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14367,14 +14419,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0963": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14382,14 +14435,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0964": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14397,14 +14451,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0965": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14412,14 +14467,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0966": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14427,14 +14483,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0967": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14442,14 +14499,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0968": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14457,14 +14515,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0969": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14472,14 +14531,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0970": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14487,14 +14547,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0971": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "REWORK",
    "factChecked": true,
@@ -14502,14 +14563,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0972": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14517,7 +14579,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0973": {
    "governed": true,
@@ -14583,8 +14646,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14592,7 +14655,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0978": {
    "governed": true,
@@ -14613,8 +14677,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14622,14 +14686,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0980": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14637,7 +14702,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0981": {
    "governed": true,
@@ -14658,8 +14724,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14667,14 +14733,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0983": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14682,14 +14749,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0984": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -14697,14 +14765,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0985": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14712,14 +14781,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0986": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14727,7 +14797,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0987": {
    "governed": true,
@@ -14748,8 +14819,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14757,14 +14828,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0989": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14772,7 +14844,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0990": {
    "governed": true,
@@ -14853,8 +14926,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14862,14 +14935,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0996": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -14877,7 +14951,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0997": {
    "governed": true,
@@ -14898,7 +14973,7 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "ESCALATE_HUMAN",
@@ -14907,14 +14982,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0999": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14922,7 +14998,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1000": {
    "governed": true,
@@ -14973,8 +15050,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS",
    "factChecked": true,
@@ -14982,14 +15059,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1004": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -14997,14 +15075,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1005": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15012,7 +15091,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1006": {
    "governed": true,
@@ -15048,8 +15128,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15057,14 +15137,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1009": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15072,7 +15153,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1010": {
    "governed": true,
@@ -15093,8 +15175,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15102,14 +15184,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1012": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -15117,7 +15200,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1013": {
    "governed": true,
@@ -15258,8 +15342,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15267,7 +15351,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1024": {
    "governed": true,
@@ -15288,8 +15373,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15297,14 +15382,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1026": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15312,14 +15398,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1027": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15327,14 +15414,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1028": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -15342,7 +15430,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1029": {
    "governed": true,
@@ -15363,8 +15452,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15372,7 +15461,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1031": {
    "governed": true,
@@ -15393,8 +15483,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15402,7 +15492,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1033": {
    "governed": true,
@@ -15423,8 +15514,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15432,14 +15523,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1035": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15447,14 +15539,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1036": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15462,14 +15555,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1037": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15477,14 +15571,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1039": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15492,14 +15587,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1040": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15507,14 +15603,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1041": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -15522,14 +15619,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1042": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15537,7 +15635,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1043": {
    "governed": true,
@@ -15558,8 +15657,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -15567,14 +15666,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1045": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -15582,7 +15682,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1046": {
    "governed": true,
@@ -15603,8 +15704,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS",
    "factChecked": true,
@@ -15612,14 +15713,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1048": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15627,14 +15729,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1049": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15642,7 +15745,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1050": {
    "governed": true,
@@ -15723,8 +15827,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15732,7 +15836,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1056": {
    "governed": true,
@@ -15964,7 +16069,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS",
@@ -15973,7 +16078,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1074": {
    "governed": true,
@@ -16249,7 +16355,7 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -16258,7 +16364,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1096": {
    "governed": true,
@@ -16504,7 +16611,7 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -16513,7 +16620,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1114": {
    "governed": true,
@@ -16579,7 +16687,7 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -16588,7 +16696,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1120": {
    "governed": true,
@@ -16774,7 +16883,7 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -16783,7 +16892,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1136": {
    "governed": true,
@@ -16851,7 +16961,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -16859,7 +16969,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1144": {
    "governed": true,
@@ -16880,8 +16991,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -16889,7 +17000,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1148": {
    "governed": true,
@@ -16910,8 +17022,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -16919,7 +17031,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1150": {
    "governed": true,
@@ -16971,7 +17084,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -16979,7 +17092,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1154": {
    "governed": true,
@@ -17001,7 +17115,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -17009,7 +17123,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1157": {
    "governed": true,
@@ -17346,7 +17461,7 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -17355,7 +17470,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1183": {
    "governed": true,
@@ -17392,7 +17508,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -17400,14 +17516,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1186": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -17415,13 +17532,14 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1188": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -17430,14 +17548,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1189": {
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -17445,7 +17564,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1190": {
    "governed": true,
@@ -29488,8 +29608,8 @@
    "governed": true,
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
@@ -29497,7 +29617,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1038": {
    "governed": true,
@@ -29519,7 +29640,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -29527,7 +29648,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1177": {
    "governed": true,
@@ -29654,7 +29776,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -29662,7 +29784,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   }
  }
 }

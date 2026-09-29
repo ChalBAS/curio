@@ -470,6 +470,16 @@
          * trusts (WATCH_CHANNELS). No such video: the door is greyed, honestly. */
         var wb = window.CURIO_DOORS_BANK && q && q.id ? window.CURIO_DOORS_BANK[q.id] : null;
         var bw = wb && wb.watch ? (wb.watch[wlang] || wb.watch.any) : null;
+        /* KIDS MODE PLAYS ONLY A CHECKED VIDEO (29 Sep 2026, second independent audit). The
+           first suitable video on the list was never looked at by anyone, and the checkers
+           rejected about two in three such videos - some as unfit for children. In Kids mode
+           the Watch door opens only a video an independent check passed for this question,
+           or his own pick; otherwise it is greyed. */
+        if (bw && bw.id && bw.by !== "independent check" && bw.by !== "founder") {
+          var kidsNow = false;
+          try { kidsNow = (JSON.parse(localStorage.getItem("curio.settings") || "{}") || {}).ageMode === "kids"; } catch (eK) {}
+          if (kidsNow) bw = null;
+        }
         if (bw && bw.id) {
           return { title: bw.t || title, sub: bw.by === "founder" ? "chosen for this question" : (bw.ch || ""),
                    url: "https://www.youtube.com/watch?v=" + bw.id, video: bw.id, chosen: bw.by === "founder", search: false };

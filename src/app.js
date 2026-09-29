@@ -375,20 +375,42 @@
            each day taking the first five in the order that have rested minGapDays */
         var lastDay = {}, dayOf = function (k) { return Math.round(Date.parse(k + "T00:00:00Z") / 86400000); };
         Object.keys(lgDays).forEach(function (k) { var kn = dayOf(k); String(lgDays[k]).split(",").forEach(function (id) { if (!(lastDay[id] >= kn)) lastDay[id] = kn; }); });
-        var five2 = [];
-        for (var sd = dayOf(lastKey) + 1; sd <= d && sd <= dayOf(lastKey) + 800; sd++) {
+        var five2 = [], inPool = lgOrder.filter(function (id) { return lgById[id]; });
+        /* a list too short to keep the rule (Kids from Aug 2027): the questions that have
+           rested longest - the ledger tool's own rule - never the walk (29 Sep audit) */
+        var rested = function (sd, chosen) {
+          return inPool.filter(function (id) { return chosen.indexOf(id) === -1; })
+            .sort(function (a, b) { return (lastDay[a] === undefined ? -1e9 : lastDay[a]) - (lastDay[b] === undefined ? -1e9 : lastDay[b]); });
+        };
+        var endSim = Math.min(d, dayOf(lastKey) + 800);
+        for (var sd = dayOf(lastKey) + 1; sd <= endSim; sd++) {
           five2 = [];
-          for (var oi = 0; oi < lgOrder.length && five2.length < DAILY_COUNT; oi++) {
-            var oid = lgOrder[oi];
-            if (lgById[oid] && !(sd - lastDay[oid] < gap)) five2.push(oid);
+          for (var oi = 0; oi < inPool.length && five2.length < DAILY_COUNT; oi++) {
+            var oid = inPool[oi];
+            if (!(sd - lastDay[oid] < gap)) five2.push(oid);
           }
+          if (five2.length < DAILY_COUNT) five2 = five2.concat(rested(sd, five2).slice(0, DAILY_COUNT - five2.length));
           five2.forEach(function (id) { lastDay[id] = sd; });
+        }
+        /* more than 800 days past the ledger (a release long overdue): step through the
+           order so consecutive days still differ */
+        if (d > endSim && inPool.length >= DAILY_COUNT) {
+          var off = ((d - endSim) * DAILY_COUNT) % inPool.length; five2 = [];
+          for (var ri = 0; ri < DAILY_COUNT; ri++) five2.push(inPool[(off + ri) % inPool.length]);
         }
         if (five2.length === DAILY_COUNT) return five2.map(function (id) { return lgById[id]; });
       } else {
         /* a listed question since withdrawn: fill its place, the others kept */
         var free = lgOrder.filter(function (id) { return lgById[id] && !near[id] && !taken[id]; });
         for (var fi = 0; lgFive.length < DAILY_COUNT && fi < free.length; fi++) lgFive.push(lgById[free[fi]]);
+        /* none free (a list too short for the rule): the ones last seen longest ago */
+        if (lgFive.length < DAILY_COUNT) {
+          var seenAt = {};
+          Object.keys(lgDays).forEach(function (k) { if (k < lgKey) String(lgDays[k]).split(",").forEach(function (id) { seenAt[id] = k; }); });
+          var older = lgOrder.filter(function (id) { return lgById[id] && !taken[id] && lgFive.indexOf(lgById[id]) === -1; })
+            .sort(function (a, b) { return String(seenAt[a] || "").localeCompare(String(seenAt[b] || "")); });
+          for (var oj = 0; lgFive.length < DAILY_COUNT && oj < older.length; oj++) lgFive.push(lgById[older[oj]]);
+        }
         if (lgFive.length === DAILY_COUNT) return lgFive;
       }
     }
