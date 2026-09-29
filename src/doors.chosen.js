@@ -31,5 +31,27 @@ window.CURIO_DOORS_CHOSEN = {
    "city": null,
    "url": "https://www.tourismpanama.com/places-to-visit/panama-city/things-to-do/historical-sites/panama-canal/"
   }
+ },
+ "N0890": {
+  "book": {
+   "en": {
+    "t": "The Modern Engineering Marvel: The Exquisite Machine",
+    "a": null,
+    "u": "https://bookshop.org/p/books/the-exquisite-machine-the-new-science-of-the-heart-sian-e-harding/0f80d70e43ea9e15",
+    "isbn": null,
+    "shops": null
+   }
+  }
+ },
+ "Q267": {
+  "book": {
+   "en": {
+    "t": "Understanding the Maoist movement of Nepal",
+    "a": "Deepak Thapa",
+    "u": "https://openlibrary.org/works/OL18275471W",
+    "isbn": null,
+    "shops": null
+   }
+  }
  }
 };

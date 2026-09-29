@@ -1,6 +1,6 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-09-29T02:10:52.685Z",
+ "generated": "2026-09-29T11:04:46.156Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",
@@ -9,9 +9,9 @@
   "added": 0,
   "changedEn": 0,
   "changedFr": 0,
-  "carriedBecauseShipped": 138,
+  "carriedBecauseShipped": 137,
   "ungoverned": 12,
-  "unruled": 1971
+  "unruled": 1969
  },
  "byId": {
   "Q001": {
@@ -4012,7 +4012,12 @@
    "panel": "PASS",
    "factChecked": true,
    "ruling": {
-    "en": null,
+    "en": {
+     "verdict": "APPROVE",
+     "at": "2026-09-29T04:26:24.645Z",
+     "by": "qpiocorp@gmail.com",
+     "reason": null
+    },
     "fr": null
    },
    "qualifiedToday": true
@@ -13387,7 +13392,12 @@
    "panel": "ESCALATE_HUMAN",
    "factChecked": true,
    "ruling": {
-    "en": null,
+    "en": {
+     "verdict": "APPROVE",
+     "at": "2026-09-29T04:13:36.327Z",
+     "by": "qpiocorp@gmail.com",
+     "reason": null
+    },
     "fr": null
    },
    "qualifiedToday": true
@@ -23512,8 +23522,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": false,
-    "fr": false
+    "en": true,
+    "fr": true
    },
    "panel": "PASS",
    "factChecked": true,
@@ -23521,8 +23531,7 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": false,
-   "carriedBecauseShipped": true
+   "qualifiedToday": true
   },
   "N1598": {
    "governed": true,

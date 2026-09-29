@@ -1700,16 +1700,22 @@
         '<p class="mini" style="margin:0 0 12px">' + t("Puzzles, not questions. Nothing to know in advance. Some are fun. Some are genuinely hard. You will get better at them with time — everyone does. What that changes anywhere else is for you to find out.") + '</p>' +
         (done.length ? '<ul class="gdone">' + done.map(function (x) { return '<li><span aria-hidden="true">✓ </span>' + esc(x) + '</li>'; }).join("") + '</ul>' +
           '<p class="mini gnext">' + (pDone && mDone ? t("Done for today. The next set arrives tomorrow.") : t("The next set arrives tomorrow.")) + '</p>' : '') +
-        (pDone && mDone ? '' : '<div class="btnrow">' +
-          (pDone ? '' : '<button class="btn" id="gymToday">' + t("Today’s puzzles") + '</button>') +
-          (mDone ? '' : '<button class="btn' + (pDone ? '' : ' ghost') + '" id="gymMove">' + t("Today’s move") + '</button>') +
-        '</div>') +
+        /* WHAT IS DONE STAYS ON THE CARD UNTIL TOMORROW (CEO, 29 Sep 2026: "even if it is done for
+           today it needs to stay visible until the next day"). Finished puzzles open again to be
+           looked at, answers shown, nothing scored twice (D-090 still holds: no retake); a
+           finished move can be done again, since a move has no score. */
+        '<div class="btnrow">' +
+          (pDone ? '<button class="btn ghost" id="gymToday">' + t("Today’s puzzles: see them again") + '</button>'
+                 : '<button class="btn" id="gymToday">' + t("Today’s puzzles") + '</button>') +
+          (mDone ? '<button class="btn ghost" id="gymMove">' + t("Today’s move: do it again") + '</button>'
+                 : '<button class="btn' + (pDone ? '' : ' ghost') + '" id="gymMove">' + t("Today’s move") + '</button>') +
+        '</div>' +
         /* the one place to change it, now that the kind picker is gone */
         (hand ? '<p class="mini" style="margin:12px 0 0"><button class="linkish" id="gymHand">' + t("Change hand") + '</button></p>' : '') +
       '</div>'
     );
-    var tb = node.querySelector("#gymToday"); if (tb) tb.addEventListener("click", function () { startBrainGym(); });
-    var mb = node.querySelector("#gymMove"); if (mb) mb.addEventListener("click", function () { startDrill(); });
+    var tb = node.querySelector("#gymToday"); if (tb) tb.addEventListener("click", function () { startBrainGym(pDone); });
+    var mb = node.querySelector("#gymMove"); if (mb) mb.addEventListener("click", function () { startDrill(mDone); });
     var hb = node.querySelector("#gymHand"); if (hb) hb.addEventListener("click", function () { askHand(goGames); });
     if (gymVault().length) node.appendChild(gymVaultCard(goGames));
     return node;
@@ -1773,9 +1779,22 @@
     });
   }
 
-  function startBrainGym() {
+  /* THE WAY BACK (CEO, 29 Sep 2026, on a puzzle screen: "doesn't have the return to QPIO gym
+     section"). Every Gym screen opens with it; leaving part-way is allowed - an unfinished set
+     can be started again the same day, and a move stops where it is. */
+  function gymHead(node) {
+    var h = el('<div class="quizhead gymhead" style="margin-bottom:6px"><button class="btn ghost" style="padding:8px 12px;font-size:13px">' + t("← Qpio Gym") + '</button></div>');
+    h.querySelector("button").addEventListener("click", goGames);
+    node.insertBefore(h, node.firstChild);
+    return node;
+  }
+
+  /* review: today's five once they are finished, each shown with its answer and explanation,
+     nothing chosen and nothing scored (29 Sep 2026: finished puzzles stay visible until tomorrow) */
+  function startBrainGym(review) {
     var GYM = window.CURIO_GYM, ART = window.CURIO_GYM_ART;
-    if (gymPuzzlesDone()) { goGames(); return; }
+    review = !!review && gymPuzzlesDone();
+    if (gymPuzzlesDone() && !review) { goGames(); return; }
     var seed = GYM.seedForDay(), dayRec = gymDayKey(), day = todayKey();
     var motionOff = gymMotionOff() || settings.readAloud;
     var set = GYM.makeSet(seed, 5, QLANG, { exclude: motionOff ? ["shells"] : [] });
@@ -1792,7 +1811,7 @@
       var p = set[idx];
       /* A working-memory puzzle has to take the list away, or it is a reading
          test. Study first, then the question, and the list does not come back. */
-      if (p.hide && !p._studied) { study(p); return; }
+      if (p.hide && !p._studied && !review) { study(p); return; }
       ask(p);
     }
 
@@ -1826,7 +1845,7 @@
       node.querySelector("#gymReady").addEventListener("click", function () { p._studied = true; step(); });
       var mw = node.querySelector("#gymWays");
       if (mw) mw.addEventListener("click", function () { holdWaysPage(function () { render(node); }); });
-      render(node);
+      render(gymHead(node));
       if (canSpeak() && p.show) speak(p.show);
     }
 
@@ -1886,7 +1905,9 @@
         });
       }
       if (isPics) memWatch(node);
-      render(node);
+      render(gymHead(node));
+      /* looking back at a finished set: the answer and its explanation, straight away */
+      if (review) { answer(node, p, null); return; }
       /* A tap puzzle asks the reader to FIND something in the picture, so its scene
          description IS the answer; speaking it would hand the solution to anyone who
          turned read-aloud on for comfort. Those readers reach the picture through the
@@ -1965,7 +1986,7 @@
         if (svg && svg.querySelector("#b0")) svg.insertAdjacentHTML("beforeend", '<circle cx="' + (60 + (Number(p.answer) - 1) * 100) + '" cy="56" r="29" fill="none" stroke="var(--good)" stroke-width="3"/>');
       }
       /* the last answer finishes today's puzzles: from here they wait for tomorrow (D-090) */
-      if (idx + 1 >= set.length) gymMarkDone(dayRec, day, { p: right, t: set.length });
+      if (idx + 1 >= set.length && !review) gymMarkDone(dayRec, day, { p: right, t: set.length });
       var after = node.querySelector("#gymAfter");
       after.appendChild(el(
         '<div class="reveal" style="margin-top:12px">' +
@@ -1986,21 +2007,23 @@
       /* WHAT HAPPENED, THEN WHAT COMES NEXT (messaging.md, 24 Sep 2026: describe the round, never
          the person). The count is a plain count of five puzzles; one main button - today's move
          if it is still to do, otherwise Home - and Home beside it. */
-      var moveLeft = !gymMoveDone();
+      var moveLeft = !gymMoveDone(), rec = gymToday();
       var node = el(
         '<div class="card result">' +
-          '<div class="scorebig">' + right + '/' + set.length + '</div>' +
-          '<h2>' + t("Five puzzles done.") + '</h2>' +
+          /* looked at again: the score is the one the set was finished with, unchanged */
+          '<div class="scorebig">' + (review ? rec.p + '/' + (rec.t || set.length) : right + '/' + set.length) + '</div>' +
+          '<h2>' + (review ? t("Today’s puzzles, looked at again.") : t("Five puzzles done.")) + '</h2>' +
           '<div class="sub">' + (moveLeft ? t("The next set arrives tomorrow.") : t("Done for today. The next set arrives tomorrow.")) + '</div>' +
           '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
             (moveLeft ? '<button class="btn" id="gymDrill">' + t("Today’s move") + '</button>' : '') +
-            '<button class="btn' + (moveLeft ? ' ghost' : '') + '" id="gymHome">🏠 ' + t("Home") + '</button>' +
+            /* back to the Gym, not Home (CEO, 29 Sep 2026: "the return to QPIO gym section") */
+            '<button class="btn' + (moveLeft ? ' ghost' : '') + '" id="gymHome">' + t("← Qpio Gym") + '</button>' +
           '</div>' +
           (mathsSeen >= 3 ? '<div class="btnrow" style="justify-content:center;margin-top:10px"><button class="btn ghost" id="gymMaths">' + t("Want the facts behind the numbers? Mathematics quiz") + '</button></div>' : '') +
         '</div>');
       var md = node.querySelector("#gymDrill");
       if (md) md.addEventListener("click", function () { startDrill(); });
-      node.querySelector("#gymHome").addEventListener("click", goHome);
+      node.querySelector("#gymHome").addEventListener("click", goGames);
       /* the Train tab, where the Mathematics quiz is (this used to open a tab that does not exist) */
       var m = node.querySelector("#gymMaths");
       if (m) m.addEventListener("click", function () { LS.set("lastCat", "Science"); goGames(); });
@@ -2046,15 +2069,17 @@
     Array.prototype.forEach.call(node.querySelectorAll("button"), function (b) {
       b.addEventListener("click", function () { LS.set("gym.hand", b.getAttribute("data-h")); then(); });
     });
-    render(node);
+    render(gymHead(node));
   }
 
   /* today's move: once a day, like today's puzzles (D-090). The hand is asked first, so the move
      is picked knowing it - a two-hand move is never dealt to a reader who uses one hand. */
-  function startDrill() {
+  /* again: a move already done today, done once more (29 Sep 2026: it stays visible until
+     tomorrow; a move has no score, so doing it again changes nothing that is kept) */
+  function startDrill(again) {
     var GYM = window.CURIO_GYM;
-    if (gymMoveDone()) { goGames(); return; }
-    if (!gymHand()) { askHand(startDrill); return; }
+    if (gymMoveDone() && !again) { goGames(); return; }
+    if (!gymHand()) { askHand(function () { startDrill(again); }); return; }
     var d = GYM.makeDrill(pickDayDrill().key, GYM.seedForDay(), QLANG);
     if (d) runDrill(d);
   }
@@ -2260,7 +2285,7 @@
           '<div class="btnrow" style="justify-content:center;margin-top:14px">' +
             (!complete ? '<button class="btn" id="drillAgain">' + t("Today’s move") + '</button>'
               : puzzlesLeft ? '<button class="btn" id="drillPuzzles">' + t("Today’s puzzles") + '</button>' : '') +
-            '<button class="btn' + (complete && !puzzlesLeft ? '' : ' ghost') + '" id="drillHome">🏠 ' + t("Home") + '</button>' +
+            '<button class="btn' + (complete && !puzzlesLeft ? '' : ' ghost') + '" id="drillHome">' + t("← Qpio Gym") + '</button>' +
           '</div>' +
           '<div class="btnrow gvend" style="justify-content:center;margin-top:10px"></div>' +
         '</div>');
@@ -2272,7 +2297,7 @@
       } else gvd.appendChild(gymVaultButton("drill", d.family, function () { render(res); }));
       var ag = res.querySelector("#drillAgain"); if (ag) ag.addEventListener("click", function () { startDrill(); });
       var pz = res.querySelector("#drillPuzzles"); if (pz) pz.addEventListener("click", function () { startBrainGym(); });
-      res.querySelector("#drillHome").addEventListener("click", goHome);
+      res.querySelector("#drillHome").addEventListener("click", goGames);
       render(res);
     }
     node.querySelector("#drillNext").addEventListener("click", next);
@@ -2302,7 +2327,7 @@
       if (elapsed >= d.steps[i].seconds) { next(); return; }
       paint();
     }, 250);
-    render(node);
+    render(gymHead(node));
     show();
   }
 
@@ -4840,8 +4865,10 @@
   function onboardingView(step) {
     step = step || 0;
     var slides = [
+      /* The first sentence says WHY knowledge should be free (founder, 28 Sep 2026: people need
+         to know why; wording delegated to the builder on 29 Sep: "You can do this one too"). */
       { emoji: "🧭", title: t("Knowledge should be free."),
-        text: t("Qpio (say: cue-pee-oh) is free to use. There are no paywalls. Qpio doesn't interrupt your learning with ads. When you want to go further, you may find links to relevant books, museums, exhibitions and other resources.") },
+        text: t("Knowing the world lets you make up your own mind about it, at any age.") + " " + t("Qpio (say: cue-pee-oh) is free to use. There are no paywalls. Qpio doesn't interrupt your learning with ads. When you want to go further, you may find links to relevant books, museums, exhibitions and other resources.") },
       // 🗓️ replaced 📅 — the calendar emoji renders with "17 JUL" printed on
       // it on Android and Windows (it is the Unicode sample date), so the
       // screen appeared to name a date nobody could explain (CEO, 2026-08-09).

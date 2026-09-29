@@ -459,6 +459,10 @@
          multinational company (Charter v0.11), and a screen that arrives in
          English and gets French later is a screen that arrives twice. */
       "Today’s puzzles": "Les énigmes du jour",
+      "Today’s puzzles: see them again": "Les énigmes du jour : les revoir",
+      "Today’s move: do it again": "Le mouvement du jour : le refaire",
+      "Today’s puzzles, looked at again.": "Les énigmes du jour, revues.",
+      "← Qpio Gym": "← Qpio Gym",
       "Start": "Commencer",
       "Remember these": "Retiens ceci",
       "Take as long as you like. The list will not come back.": "Prends le temps qu’il te faut. La liste ne reviendra pas.",
@@ -473,8 +477,8 @@
       "Try again": "R\u00e9essayer",
       "Contains AI-generated images": "Contient des images g\u00e9n\u00e9r\u00e9es par IA",
       "The video is not loading. You may be offline or on a weak connection.": "La vid\u00e9o ne se charge pas. Tu es peut-\u00eatre hors ligne ou sur une connexion faible.",
-      "School ends. Learning doesn't — though with age, it may take longer.": "L’école s’arrête. Apprendre, non — même si, avec l’âge, cela peut prendre plus de temps.",
-      "School ends. Learning doesn't.": "L’école s’arrête. Apprendre, non.",
+      "School ends. Learning doesn't.": "L’école s’arrête, pas l’apprentissage.",
+      "Knowing the world lets you make up your own mind about it, at any age.": "Connaître le monde, c’est pouvoir t’en faire ta propre idée, à tout âge.",
       "Learning doesn't stop": "Apprendre ne s’arrête pas",
       "Knowing the world lets you make up your own mind about it, and understand why others see it differently.": "Connaître le monde, c’est pouvoir t’en faire ta propre idée, et comprendre pourquoi d’autres le voient autrement.",
       "That doesn't stop when school does: you can keep learning at any age, and what you already know can keep growing.": "Et cela ne s’arrête pas à la sortie de l’école : tu peux continuer d’apprendre à tout âge, et ce que tu sais déjà peut encore grandir.",

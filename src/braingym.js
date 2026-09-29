@@ -1406,8 +1406,17 @@
       en: "A woman at a table folds her arms, then points to the side with the hand tucked underneath.",
       fr: "Une femme, à une table, croise les bras, puis pointe le doigt vers le côté avec la main du dessous." },
     arms: { src: "img/gen/moves/arms.mp4",
-      en: "A woman at a table crosses her arms the usual way, uncrosses them, then crosses them the other way round.",
-      fr: "Une femme, à une table, croise les bras comme d'habitude, les décroise, puis les croise dans l'autre sens." },
+      en: "A woman at a table folds her arms, lays both hands flat on the table, then folds her arms again the other way, with the other forearm now on top.",
+      fr: "Une femme, à une table, croise les bras, pose les deux mains à plat sur la table, puis recroise les bras dans l'autre sens, avec l'autre avant-bras maintenant par-dessus." },
+    litdot: { src: "img/gen/moves/litdot.mp4",
+      en: "A woman at a table slowly follows a lit dot with one finger as it curves across a phone lying flat, her other hand resting on the table.",
+      fr: "Une femme, à une table, suit lentement du doigt un point lumineux qui dessine une courbe sur un téléphone posé à plat, l'autre main posée sur la table." },
+    sixdots: { src: "img/gen/moves/sixdots.mp4",
+      en: "A woman at a table steadies a phone lying flat with one hand, then taps the dots on its screen one after another with the thumb of her other hand.",
+      fr: "Une femme, à une table, maintient d'une main un téléphone posé à plat, puis touche les points de l'écran l'un après l'autre avec le pouce de l'autre main." },
+    watch: { src: "img/gen/moves/watch.mp4",
+      en: "A woman at a table unbuckles her watch, slides it off one wrist, and fastens it on her other wrist.",
+      fr: "Une femme, à une table, détache sa montre, la retire d'un poignet, puis l'attache à son autre poignet." },
     airname: { src: "img/gen/moves/airname.mp4",
       en: "A woman at a table slowly writes a word in the air with one finger; her other hand rests on the table.",
       fr: "Une femme, à une table, écrit lentement un mot dans l'air avec un doigt ; son autre main repose sur la table." }
@@ -1415,7 +1424,13 @@
   /* point: Higgsfield seedance_2_0 job 936d2cb3, checked frame by frame on 24 Sep 2026 (arms
      folded, the hand underneath points). arms: generated the same day and refused - she crosses
      them the same way both times, which teaches the wrong move; the item keeps its icon. */
-  var NEURO_DEMOS = { point: { poster: "img/gen/moves/point.jpg" } };
+  /* 29 Sep 2026 (CEO: "ensure all the hand exercises in the gym brains have videos, in the version
+     i tested today only one exercise had a video"): arms, litdot, sixdots and watch generated
+     with Higgsfield seedance_2_0 (jobs 33c42792, e8bdb2d9, 6bfab35c, 0f55a394), each passed by a
+     separate checker reading every quarter-second frame (tools/gym_clip_finish.js made the
+     files). arms now shows the second crossing the other way round. */
+  var NEURO_DEMOS = { point: { poster: "img/gen/moves/point.jpg" }, arms: { poster: "img/gen/moves/arms.jpg" },
+    litdot: { poster: "img/gen/moves/litdot.jpg" }, sixdots: { poster: "img/gen/moves/sixdots.jpg" }, watch: { poster: "img/gen/moves/watch.jpg" } };
   function neuroDemo(id, fr) {
     var on = NEURO_DEMOS[id], x = NEURO_CLIPS[id];
     if (!on || !x) return null;
