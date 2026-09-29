@@ -1,69 +1,158 @@
 {
  "generated": "2026-09-29",
  "live": {
-  "production": 76,
+  "production": 117,
   "uat": 117,
-  "main": 76
+  "main": 117
  },
  "drift": null,
- "awaiting": [
-  117,
-  116,
-  115,
-  113,
-  112,
-  111,
-  110,
-  109,
-  108,
-  107,
-  106,
-  105,
-  104,
-  103,
-  102,
-  101,
-  100,
-  99,
-  98,
-  97,
-  94,
-  93,
-  92,
-  89,
-  88,
-  87,
-  86,
-  85,
-  84,
-  83,
-  80,
-  78,
-  77
- ],
- "rejected": [
+ "awaiting": [],
+ "rejected": [],
+ "breaches": [
+  {
+   "version": 116,
+   "status": "AWAITING"
+  },
+  {
+   "version": 115,
+   "status": "AWAITING"
+  },
+  {
+   "version": 113,
+   "status": "AWAITING"
+  },
+  {
+   "version": 112,
+   "status": "AWAITING"
+  },
+  {
+   "version": 111,
+   "status": "AWAITING"
+  },
+  {
+   "version": 110,
+   "status": "AWAITING"
+  },
+  {
+   "version": 109,
+   "status": "AWAITING"
+  },
+  {
+   "version": 108,
+   "status": "AWAITING"
+  },
+  {
+   "version": 107,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 106,
+   "status": "AWAITING"
+  },
+  {
+   "version": 105,
+   "status": "AWAITING"
+  },
+  {
+   "version": 104,
+   "status": "AWAITING"
+  },
+  {
+   "version": 103,
+   "status": "AWAITING"
+  },
+  {
+   "version": 102,
+   "status": "AWAITING"
+  },
+  {
+   "version": 101,
+   "status": "AWAITING"
+  },
+  {
+   "version": 100,
+   "status": "AWAITING"
+  },
+  {
+   "version": 99,
+   "status": "AWAITING"
+  },
+  {
+   "version": 98,
+   "status": "AWAITING"
+  },
+  {
+   "version": 97,
+   "status": "NO ISSUE"
+  },
   {
    "version": 96,
-   "issue": 85,
-   "at": "2026-09-11T17:55:55Z"
+   "status": "REJECTED"
   },
   {
    "version": 95,
-   "issue": 84,
-   "at": "2026-09-11T16:34:41Z"
+   "status": "REJECTED"
+  },
+  {
+   "version": 94,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 93,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 92,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 89,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 88,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 87,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 86,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 85,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 84,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 83,
+   "status": "AWAITING"
   },
   {
    "version": 82,
-   "issue": 73,
-   "at": "2026-08-22T08:55:20Z"
+   "status": "REJECTED"
   },
   {
    "version": 81,
-   "issue": 64,
-   "at": "2026-08-21T13:30:20Z"
-  }
- ],
- "breaches": [
+   "status": "REJECTED"
+  },
+  {
+   "version": 80,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 78,
+   "status": "NO ISSUE"
+  },
+  {
+   "version": 77,
+   "status": "AWAITING"
+  },
   {
    "version": 74,
    "status": "NO ISSUE"
@@ -88,13 +177,17 @@
  "releases": [
   {
    "version": 117,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "LIVE",
+   "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "ACCEPTED",
+    "at": "2026-09-29T15:00:53Z",
+    "who": "ChalBAS",
+    "issue": 106,
+    "where": "body"
    },
    "messageClash": [],
    "commits": [
@@ -102,13 +195,23 @@
      "sha": "fbadab5",
      "date": "2026-09-29",
      "subject": "v117: the Gym as three cards on the Train page - today's puzzles, today's move, puzzles by theme"
+    },
+    {
+     "sha": "edc1dd0",
+     "date": "2026-09-29",
+     "subject": "Releases record: v117 on UAT"
+    },
+    {
+     "sha": "d109eab",
+     "date": "2026-09-29",
+     "subject": "Release v117 to production (merge uat -> main)"
     }
    ]
   },
   {
    "version": 116,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
    "questions": 1983,
@@ -135,8 +238,8 @@
   },
   {
    "version": 115,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
    "questions": 1983,
@@ -168,8 +271,8 @@
   },
   {
    "version": 114,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
    "questions": 1983,
@@ -201,8 +304,8 @@
   },
   {
    "version": 113,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
    "questions": 1983,
@@ -229,8 +332,8 @@
   },
   {
    "version": 112,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-29",
    "to": "2026-09-29",
    "questions": 1983,
@@ -257,8 +360,8 @@
   },
   {
    "version": 111,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-28",
    "to": "2026-09-28",
    "questions": 1983,
@@ -285,8 +388,8 @@
   },
   {
    "version": 110,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-28",
    "to": "2026-09-28",
    "questions": 1983,
@@ -313,8 +416,8 @@
   },
   {
    "version": 109,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-27",
    "to": "2026-09-28",
    "questions": 1983,
@@ -356,8 +459,8 @@
   },
   {
    "version": 108,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-25",
    "to": "2026-09-25",
    "questions": 1983,
@@ -401,8 +504,8 @@
   },
   {
    "version": 107,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-24",
    "to": "2026-09-24",
    "questions": 1983,
@@ -420,8 +523,8 @@
   },
   {
    "version": 106,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-24",
    "to": "2026-09-24",
    "questions": 1983,
@@ -453,8 +556,8 @@
   },
   {
    "version": 105,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-24",
    "to": "2026-09-24",
    "questions": 1983,
@@ -486,8 +589,8 @@
   },
   {
    "version": 104,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-24",
    "to": "2026-09-24",
    "questions": 1983,
@@ -514,8 +617,8 @@
   },
   {
    "version": 103,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-24",
    "to": "2026-09-24",
    "questions": 1968,
@@ -547,8 +650,8 @@
   },
   {
    "version": 102,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-23",
    "to": "2026-09-23",
    "questions": 1968,
@@ -585,8 +688,8 @@
   },
   {
    "version": 101,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-22",
    "to": "2026-09-22",
    "questions": 1968,
@@ -620,8 +723,8 @@
   },
   {
    "version": 100,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-21",
    "to": "2026-09-21",
    "questions": 1968,
@@ -653,8 +756,8 @@
   },
   {
    "version": 99,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-21",
    "to": "2026-09-21",
    "questions": 1968,
@@ -686,8 +789,8 @@
   },
   {
    "version": 98,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-21",
    "to": "2026-09-21",
    "questions": 1968,
@@ -719,8 +822,8 @@
   },
   {
    "version": 97,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-21",
    "to": "2026-09-21",
    "questions": 1968,
@@ -743,8 +846,8 @@
   },
   {
    "version": 96,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-12",
    "to": "2026-09-21",
    "questions": 1968,
@@ -796,8 +899,8 @@
   },
   {
    "version": 95,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-07",
    "to": "2026-09-09",
    "questions": 760,
@@ -849,8 +952,8 @@
   },
   {
    "version": 94,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-07",
    "to": "2026-09-07",
    "questions": 760,
@@ -868,8 +971,8 @@
   },
   {
    "version": 93,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-07",
    "to": "2026-09-07",
    "questions": 760,
@@ -887,8 +990,8 @@
   },
   {
    "version": 92,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-07",
    "to": "2026-09-07",
    "questions": 760,
@@ -911,8 +1014,8 @@
   },
   {
    "version": 89,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-06",
    "to": "2026-09-07",
    "questions": 760,
@@ -940,8 +1043,8 @@
   },
   {
    "version": 88,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-06",
    "to": "2026-09-06",
    "questions": 760,
@@ -959,8 +1062,8 @@
   },
   {
    "version": 87,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-06",
    "to": "2026-09-06",
    "questions": 760,
@@ -978,8 +1081,8 @@
   },
   {
    "version": 86,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-06",
    "to": "2026-09-06",
    "questions": 760,
@@ -1002,8 +1105,8 @@
   },
   {
    "version": 85,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-05",
    "to": "2026-09-06",
    "questions": 760,
@@ -1046,8 +1149,8 @@
   },
   {
    "version": 84,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-09-05",
    "to": "2026-09-05",
    "questions": 760,
@@ -1080,8 +1183,8 @@
   },
   {
    "version": 83,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-08-22",
    "to": "2026-09-05",
    "questions": 760,
@@ -1140,8 +1243,8 @@
   },
   {
    "version": 82,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-08-22",
    "to": "2026-08-22",
    "questions": 760,
@@ -1178,8 +1281,8 @@
   },
   {
    "version": 81,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-08-21",
    "to": "2026-08-21",
    "questions": 760,
@@ -1206,8 +1309,8 @@
   },
   {
    "version": 80,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-08-20",
    "to": "2026-08-20",
    "questions": 760,
@@ -1230,8 +1333,8 @@
   },
   {
    "version": 78,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-08-19",
    "to": "2026-08-19",
    "questions": 760,
@@ -1259,8 +1362,8 @@
   },
   {
    "version": 77,
-   "state": "ON UAT",
-   "branch": "uat",
+   "state": "SUPERSEDED",
+   "branch": "main",
    "from": "2026-08-19",
    "to": "2026-08-19",
    "questions": 760,
@@ -1292,9 +1395,9 @@
   },
   {
    "version": 76,
-   "state": "LIVE",
-   "branch": "uat",
-   "from": "2026-08-19",
+   "state": "SUPERSEDED",
+   "branch": "main",
+   "from": "2026-08-18",
    "to": "2026-08-19",
    "questions": 760,
    "signoff": {
@@ -1305,48 +1408,8 @@
     "where": "comment"
    },
    "messageClash": [
-    "298cef2"
-   ],
-   "commits": [
-    {
-     "sha": "0108e73",
-     "date": "2026-08-19",
-     "subject": "feat(qi): Question Intelligence V1 — validator, calibration sample, tests, docs"
-    },
-    {
-     "sha": "ebb1bb9",
-     "date": "2026-08-19",
-     "subject": "feat(crn): merge expanded global resources into app resources catalog and update integration tests"
-    },
-    {
-     "sha": "298cef2",
-     "date": "2026-08-19",
-     "subject": "feat(qi): Curiosity Engine v77 — final three-stage model, paced Daily, enriched corpus"
-    },
-    {
-     "sha": "df55649",
-     "date": "2026-08-19",
-     "subject": "chore: drop pycache, ignore it going forward"
-    }
-   ]
-  },
-  {
-   "version": 76,
-   "state": "LIVE",
-   "branch": "main",
-   "from": "2026-08-18",
-   "to": "2026-08-19",
-   "questions": 749,
-   "signoff": {
-    "status": "ACCEPTED",
-    "at": "2026-08-18T18:16:00Z",
-    "who": "ChalBAS",
-    "issue": 60,
-    "where": "comment"
-   },
-   "messageClash": [
     "c22795c",
-    "151a92b"
+    "298cef2"
    ],
    "commits": [
     {
@@ -1385,9 +1448,24 @@
      "subject": "feat(crn): implement P1.5 temporary exhibition expiration filtering and factual urgency UI"
     },
     {
-     "sha": "151a92b",
+     "sha": "0108e73",
      "date": "2026-08-19",
-     "subject": "feat: adopt AI OS project-state protocol v1"
+     "subject": "feat(qi): Question Intelligence V1 — validator, calibration sample, tests, docs"
+    },
+    {
+     "sha": "ebb1bb9",
+     "date": "2026-08-19",
+     "subject": "feat(crn): merge expanded global resources into app resources catalog and update integration tests"
+    },
+    {
+     "sha": "298cef2",
+     "date": "2026-08-19",
+     "subject": "feat(qi): Curiosity Engine v77 — final three-stage model, paced Daily, enriched corpus"
+    },
+    {
+     "sha": "df55649",
+     "date": "2026-08-19",
+     "subject": "chore: drop pycache, ignore it going forward"
     }
    ]
   },
