@@ -68,20 +68,59 @@ function loadBanks() {
   return { en: w.CURIO_QUESTIONS || [], fr: w.CURIO_QUESTIONS_FR || [] };
 }
 
+/* EVERY GOVERNED ROW, NOT THE FIRST FORTY BATCHES.
+ *
+ * This read panel batches 1-40, which was the whole Golden Source when it was
+ * written. On 29 Sep 2026 128 questions were added beside the workbook
+ * (curio-hq inventory/added-rows.json, N2001-N2128, D-098) and the panel read
+ * them as batches 41-43. A tool that stops at 40 cannot see them, so the day one
+ * of them shipped it would look "ungoverned" and be minted an X id - a second
+ * identity for a question that already has one, which is the failure this file
+ * exists to prevent (found 4 Oct 2026).
+ *
+ * So: every rows-NN.json batch that exists, by name, and then the added rows
+ * themselves, read the way curio-hq/tools/inventory/lib.js reads them - a qid the
+ * workbook already has is never replaced, and for the rest the added-rows file
+ * wins over the panel's snapshot of it, because that file holds the text the
+ * inventory (and so the app) actually uses. One record per qid. */
+const LAST_BATCH = 99;   /* rows-01 .. rows-99; a missing number is skipped, never guessed */
+const ADDED_ROWS = path.join(HQ, '03-Engine', 'question-intelligence', 'inventory', 'added-rows.json');
+
 function loadGolden() {
-  const rows = [];
-  for (let f = 1; f <= 40; f++) {
+  const byQid = new Map();
+  const fromWorkbook = new Set();   /* batches extracted from the workbook say which workbook */
+  for (let f = 1; f <= LAST_BATCH; f++) {
     const p = path.join(ROWS_DIR, 'rows-' + String(f).padStart(2, '0') + '.json');
     if (!fs.existsSync(p)) continue;
     try {
       const doc = JSON.parse(fs.readFileSync(p, 'utf8'));
-      if (doc && Array.isArray(doc.rows)) rows.push.apply(rows, doc.rows);
+      if (doc && Array.isArray(doc.rows)) {
+        for (const r of doc.rows) {
+          if (!r || !r.qid) continue;
+          byQid.set(r.qid, r);
+          if (doc.workbook) fromWorkbook.add(r.qid);
+        }
+      }
     } catch (e) {
       console.error('  qid: golden batch ' + f + ' unreadable - ' + e.message);
       process.exit(2);
     }
   }
-  return rows;
+  if (fs.existsSync(ADDED_ROWS)) {
+    let added;
+    /* unreadable is not "none": with the added rows missing, a shipped N2xxx
+       question would be minted a second identity, so stop instead */
+    try { added = JSON.parse(fs.readFileSync(ADDED_ROWS, 'utf8')).rows || []; } catch (e) {
+      console.error('  qid: added rows unreadable - ' + e.message);
+      process.exit(2);
+    }
+    for (const a of added) {
+      if (!a || !a.qid || fromWorkbook.has(a.qid)) continue;
+      byQid.set(a.qid, { qid: a.qid, releaseStatus: a.releaseStatus || 'NOT LIVE', questionEN: a.q, correctAnswer: a.answer,
+        addedRow: 'curio-hq inventory/added-rows.json' });
+    }
+  }
+  return Array.from(byQid.values());
 }
 
 /* THE LEGACY IDENTITY, reproduced EXACTLY as the app computes it today.
@@ -119,7 +158,19 @@ function loadLedger() {
   return JSON.parse(fs.readFileSync(LEDGER, 'utf8'));
 }
 
+/* The match key (explained where the banks are reconciled below). Defined here so
+ * a test can use exactly the key this tool uses. */
+const goldenKey = g => norm(g.questionEN) + ' || ' + norm(g.correctAnswer);
+const shippedKey = q => norm(q.q) + ' || ' + norm(q.options && q.options[q.answer]);
+
 /* --------------------------------------------------------------------- run it */
+
+/* REQUIRED, NOT RUN (tools/mint_canonical_qids.test.js): hand over the pieces and
+ * stop here, before anything is read or a report is written. */
+if (require.main !== module) {
+  module.exports = { loadGolden, goldenKey, shippedKey, norm, legacyQid };
+  return;
+}
 
 const { en, fr } = loadBanks();
 const golden = loadGolden();
@@ -217,9 +268,8 @@ for (let i = 0; i < en.length; i++) {
  * Text + correct answer gives 2,000 distinct keys for 2,000 rows, with none
  * dropped. If a genuine duplicate ever appears it will show up here as a
  * dropped key rather than being laundered into a mint.
+ * (goldenKey and shippedKey are defined above the run, so a test uses the same key.)
  */
-const goldenKey = g => norm(g.questionEN) + ' || ' + norm(g.correctAnswer);
-const shippedKey = q => norm(q.q) + ' || ' + norm(q.options && q.options[q.answer]);
 
 const goldenByText = new Map();
 const goldenDupText = [];
@@ -271,6 +321,22 @@ assign.forEach((id, i) => {
   else dupCheck.set(id, i);
 });
 
+/* A QUESTION THAT ALREADY HAS A PERMANENT ID KEEPS IT.
+ *
+ * Found 4 Oct 2026, running this in report mode: the bank now carries ids on
+ * every row, but 980 of them no longer match their panel batch by text (most
+ * were rewritten after the panel read them), so the loop above would hand each
+ * a NEW X id. With --write that is 980 readers' histories cut loose at once -
+ * the exact failure the header promises never happens. The one change that is
+ * allowed is the one this file was built for: an X id giving way to the
+ * Golden Source id it should have had (the legacy map carries it forward). */
+const idChanges = [];
+en.forEach((q, i) => {
+  if (!q.id || !assign[i] || q.id === assign[i]) return;
+  if (/^X\d{4}$/.test(q.id) && !/^X\d{4}$/.test(assign[i])) return;
+  idChanges.push({ i, from: q.id, to: assign[i], text: String(q.q || '').slice(0, 70) });
+});
+
 /* ------------------------------------------------------------------- the report */
 
 const report = {
@@ -288,6 +354,8 @@ const report = {
   metaDriftSample: metaDrift.slice(0, 10),
   collisions: collisions,
   shippedOnlySample: shippedOnly.slice(0, 15),
+  idChanges: idChanges.length,
+  idChangesSample: idChanges.slice(0, 15),
   written: false,
 };
 
@@ -299,6 +367,7 @@ console.log('  golden only       ' + goldenOnly.length + '  ' + JSON.stringify(r
 console.log('  pairing breaks    ' + pairingBreaks.length + (pairingBreaks.length ? '  <-- EN/FR are not the same question' : ''));
  console.log('  metadata drift    ' + metaDrift.length + '  (French copies of question facts that disagree - fixed by this run)');
 console.log('  id collisions     ' + collisions.length);
+console.log('  ids that would change ' + idChanges.length + (idChanges.length ? '  <-- questions that already have a permanent id would get another; --write refuses' : ''));
 
 if (collisions.length) {
   console.error('\n  REFUSING TO WRITE: two shipped rows would carry the same id.');
@@ -317,6 +386,13 @@ if (!WRITE) {
   fs.writeFileSync(REPORT, JSON.stringify(report, null, 1) + '\n', 'utf8');
   console.log('\n  report only, nothing written. Re-run with --write to mint and write.');
   process.exit(0);
+}
+if (idChanges.length) {
+  console.error('\n  REFUSING TO WRITE: ' + idChanges.length + ' questions that already carry a permanent id ' +
+    'would be given a different one (first: ' + idChanges.slice(0, 3).map(c => c.from + ' -> ' + c.to).join(', ') + '). ' +
+    'A changed id empties a reader\'s vault. Match them to their Golden Source rows first.');
+  fs.writeFileSync(REPORT, JSON.stringify(report, null, 1) + '\n', 'utf8');
+  process.exit(2);
 }
 
 /* --------------------------------------------------------------- write the bank */
