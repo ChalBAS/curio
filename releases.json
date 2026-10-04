@@ -2,11 +2,13 @@
  "generated": "2026-10-04",
  "live": {
   "production": 118,
-  "uat": 118,
+  "uat": 119,
   "main": 118
  },
  "drift": null,
- "awaiting": [],
+ "awaiting": [
+  119
+ ],
  "rejected": [],
  "breaches": [
   {
@@ -175,6 +177,30 @@
   }
  ],
  "releases": [
+  {
+   "version": 119,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-04",
+   "to": "2026-10-04",
+   "questions": 1983,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "416f7e2",
+     "date": "2026-10-04",
+     "subject": "v119: Gym hand exercises all have a demo - five drawn clips, labelled as AI drawings"
+    },
+    {
+     "sha": "4c8ab31",
+     "date": "2026-10-04",
+     "subject": "v119 suite: all three Gym routines now open on a clip (thumb to each finger is a drawing, no longer a photo)"
+    }
+   ]
+  },
   {
    "version": 118,
    "state": "LIVE",
