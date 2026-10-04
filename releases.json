@@ -2,11 +2,12 @@
  "generated": "2026-10-04",
  "live": {
   "production": 118,
-  "uat": 119,
+  "uat": 120,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  120,
   119
  ],
  "rejected": [],
@@ -178,7 +179,7 @@
  ],
  "releases": [
   {
-   "version": 119,
+   "version": 120,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-10-04",
@@ -186,6 +187,34 @@
    "questions": 1983,
    "signoff": {
     "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "9cd30e3",
+     "date": "2026-10-04",
+     "subject": "v120: on the test site only, #try-move=<key> opens any Gym move with its clip"
+    },
+    {
+     "sha": "7d91753",
+     "date": "2026-10-04",
+     "subject": "v120: thumb-to-finger drawing slightly smaller, so the app's 16:9 frame no longer trims the fingertips"
+    }
+   ]
+  },
+  {
+   "version": 119,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-04",
+   "to": "2026-10-04",
+   "questions": 1983,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 109,
+    "issues": [
+     109
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -198,6 +227,11 @@
      "sha": "4c8ab31",
      "date": "2026-10-04",
      "subject": "v119 suite: all three Gym routines now open on a clip (thumb to each finger is a drawing, no longer a photo)"
+    },
+    {
+     "sha": "d625e47",
+     "date": "2026-10-04",
+     "subject": "Releases record: v119 on UAT"
     }
    ]
   },
