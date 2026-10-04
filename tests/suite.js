@@ -672,14 +672,15 @@
           if (st.before && st.before.photo && photos.indexOf(st.before.photo) < 0) photos.push(st.before.photo);
           prev = st.hands;
         });
-        /* a routine opens on a video of the move, or - thumb to each finger, where no generated
-           video showed the move truly - on a photo of the pose */
+        /* a routine opens on a clip of the move: a video, or since v119 (4 Oct 2026) a drawing for
+           thumb to each finger, where no generated video showed the move truly. A photo of the
+           pose is still accepted, as the fallback it was until v118 */
         if (d.demo && d.demo.photo) { if (photos.indexOf(d.demo.src) < 0) photos.push(d.demo.src); }
         else if (d.demo) demos.push(d.demo);
         else missing.push(k + ": no demo");
       });
       s.log(lang, "moves · the first hand and every change of hands are announced, every routine opens on a demo", missing.length === 0, missing.length ? missing.join(", ") : "3 routines");
-      s.log(lang, "moves · two routines open on a video", demos.length === 2, demos.length + " videos");
+      s.log(lang, "moves · all three routines open on a clip of the move", demos.length === 3, demos.length + " clips");
       /* 24 Sep 2026: an item of "A small thing, differently" may carry its own clip, once the build
          lists it (NEURO_DEMOS in braingym.js). None listed is a pass; each one listed must be served
          like the routines' clips, and must reach the step of its item. */
