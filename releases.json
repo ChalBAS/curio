@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-29",
+ "generated": "2026-10-04",
  "live": {
   "production": 118,
   "uat": 118,
@@ -195,6 +195,11 @@
      "sha": "1a29e29",
      "date": "2026-09-29",
      "subject": "Releases record: v118 in production (accepted in ChalBAS/curio-hq#108)"
+    },
+    {
+     "sha": "925075c",
+     "date": "2026-09-29",
+     "subject": "Releases record: production reads v118"
     }
    ]
   },

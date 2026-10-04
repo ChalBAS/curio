@@ -1269,17 +1269,19 @@
        the loop (the panel caught an earlier clip in which the hands took turns, the very
        habit this routine exists to break). It draws two circles, not two different shapes:
        no generator managed two different shapes at once, and the line under it says so. */
-    /* Thumb to each finger: a PHOTO, not a video. In ten attempts across three video models
-       (23 Sep 2026: seedance_2_0 x7, kling3_0 x2, and stills) not one showed the thumb
-       touching each finger in turn - they bunched the fingers, made a fist or a "hang loose"
-       sign, or skipped the middle finger - and a demo that teaches the wrong move is worse
-       than none. So the first screen shows her holding the hand up, palm facing out, which
-       settles the orientation, and the moving drawing under it shows the touches in order. */
-    fingers: { src: "img/gen/moves/pose-right.jpg", poster: "img/gen/moves/pose-right.jpg", photo: true,
-      en: "A woman at a table holds up one open hand, palm facing out, fingers spread.", fr: "Une femme, à une table, lève une main ouverte, paume tournée vers l'avant, doigts écartés.",
-      noteEn: "Palm facing away from you, fingers open, like her. The drawing below shows the order.", noteFr: "Paume tournée vers l'avant, doigts ouverts, comme elle. Le dessin ci-dessous montre l'ordre." }
+    /* Thumb to each finger: a DRAWING, not a video. In 12 attempts across several AI video
+       models (23 and 29 Sep 2026) not one showed the thumb touching each finger in turn - the
+       ring finger folded into the palm, or they bunched the fingers or made a fist - and a demo
+       that teaches the wrong move is worse than none. On 4 Oct 2026, with the video account
+       empty, it was drawn instead (curio-hq/tools/gym_draw/fingers.html, made on our own
+       computer, free) and passed a separate frame-by-frame check: one open hand, palm facing the
+       reader, the thumb meeting the index, middle, ring and little fingertips in turn. The thumb
+       is on the left of the picture, like the reader's own right hand seen from behind. */
+    fingers: { src: "img/gen/moves/fingers.mp4", poster: "img/gen/moves/fingers.jpg", drawn: true,
+      en: "A drawing: one open hand, palm facing you; the thumb touches the index, middle, ring and little fingertips in turn.", fr: "Un dessin : une main ouverte, paume tournée vers toi ; le pouce touche le bout de l'index, du majeur, de l'annulaire puis de l'auriculaire.",
+      noteEn: "Palm facing away from you, fingers open. Here the order starts at the index; yours is different: follow the drawing below.", noteFr: "Paume tournée vers l'avant, doigts ouverts. Ici, l'ordre commence par l'index ; le tien est différent : suis le dessin ci-dessous." }
   };
-  function demoFor(key, fr) { var x = DEMOS[key]; return x ? { src: x.src, poster: x.poster, photo: !!x.photo, alt: fr ? x.fr : x.en, note: fr ? x.noteFr : x.noteEn } : null; }
+  function demoFor(key, fr) { var x = DEMOS[key]; return x ? { src: x.src, poster: x.poster, photo: !!x.photo, drawn: !!x.drawn, alt: fr ? x.fr : x.en, note: fr ? x.noteFr : x.noteEn } : null; }
 
   /* WHAT COMES NEXT (CEO, 23 Sep 2026: "in the transition you announce what is coming like
      left hand, then right hand, both hands give people the time to put down their phone ...
@@ -1417,9 +1419,18 @@
     watch: { src: "img/gen/moves/watch.mp4",
       en: "A woman at a table unbuckles her watch, slides it off one wrist, and fastens it on her other wrist.",
       fr: "Une femme, à une table, détache sa montre, la retire d'un poignet, puis l'attache à son autre poignet." },
-    airname: { src: "img/gen/moves/airname.mp4",
-      en: "A woman at a table slowly writes a word in the air with one finger; her other hand rests on the table.",
-      fr: "Une femme, à une table, écrit lentement un mot dans l'air avec un doigt ; son autre main repose sur la table." }
+    unlock: { src: "img/gen/moves/unlock.mp4", drawn: true,
+      en: "A drawing, seen as if through your own eyes: your right hand passes a locked phone to your left hand, whose thumb slides once up the screen while a blue arrow shows the swipe; only then does the screen open onto coloured squares.",
+      fr: "Un dessin, vu comme par tes propres yeux : ta main droite passe un téléphone verrouillé à ta main gauche, dont le pouce glisse une fois vers le haut de l'écran pendant qu'une flèche bleue montre le geste ; c'est seulement ensuite que l'écran s'ouvre sur des carrés de couleur." },
+    clasp: { src: "img/gen/moves/clasp.mp4", drawn: true,
+      en: "A drawing: your two hands seen from above clasp with the fingers interlaced and the left thumb on top, marked by a blue ring; they open, then clasp again the other way with the right thumb on top.",
+      fr: "Un dessin : tes deux mains vues d'en haut se joignent, doigts entrelacés, le pouce gauche dessus, marqué d'un anneau bleu ; elles s'ouvrent, puis se rejoignent dans l'autre sens, le pouce droit dessus." },
+    square: { src: "img/gen/moves/square.mp4", drawn: true,
+      en: "A drawing: a person sitting on a chair, seen from the side, traces a square on the floor with one foot while the hand on the same side draws a circle in the air; the orange square and the blue circle start together and close together.",
+      fr: "Un dessin : une personne assise sur une chaise, vue de côté, trace un carré au sol avec un pied pendant que la main du même côté dessine un cercle dans l'air ; le carré orange et le cercle bleu commencent ensemble et se ferment ensemble." },
+    airname: { src: "img/gen/moves/airname.mp4", drawn: true,
+      en: "A drawing: a left hand seen from behind, index finger up and the other fingers curled, writes the capital letters A, N, A in the air one stroke at a time, leaving a blue line that spells ANA.",
+      fr: "Un dessin : une main gauche vue de dos, l'index levé et les autres doigts repliés, écrit en l'air les majuscules A, N, A, un trait après l'autre, en laissant une ligne bleue qui forme ANA." }
   };
   /* point: Higgsfield seedance_2_0 job 936d2cb3, checked frame by frame on 24 Sep 2026 (arms
      folded, the hand underneath points). arms: generated the same day and refused - she crosses
@@ -1429,12 +1440,19 @@
      with Higgsfield seedance_2_0 (jobs 33c42792, e8bdb2d9, 6bfab35c, 0f55a394), each passed by a
      separate checker reading every quarter-second frame (tools/gym_clip_finish.js made the
      files). arms now shows the second crossing the other way round. */
+  /* 4 Oct 2026 (CEO: "propose alternative preferably free ones to execute the tasks as prescribed";
+     the AI video account was empty): airname, square, clasp and unlock are DRAWINGS made on our own
+     computer (curio-hq/tools/gym_draw/<key>.html rendered with local Chrome, finished with
+     tools/gym_clip_finish.js --drawn), each passed by a separate checker reading every
+     quarter-second frame. drawn: true makes the app say "AI-generated drawing", not "video". */
   var NEURO_DEMOS = { point: { poster: "img/gen/moves/point.jpg" }, arms: { poster: "img/gen/moves/arms.jpg" },
-    litdot: { poster: "img/gen/moves/litdot.jpg" }, sixdots: { poster: "img/gen/moves/sixdots.jpg" }, watch: { poster: "img/gen/moves/watch.jpg" } };
+    litdot: { poster: "img/gen/moves/litdot.jpg" }, sixdots: { poster: "img/gen/moves/sixdots.jpg" }, watch: { poster: "img/gen/moves/watch.jpg" },
+    airname: { poster: "img/gen/moves/airname.jpg" }, square: { poster: "img/gen/moves/square.jpg" },
+    clasp: { poster: "img/gen/moves/clasp.jpg" }, unlock: { poster: "img/gen/moves/unlock.jpg" } };
   function neuroDemo(id, fr) {
     var on = NEURO_DEMOS[id], x = NEURO_CLIPS[id];
     if (!on || !x) return null;
-    return { src: x.src, poster: (typeof on === "object" && on.poster) || "", alt: fr ? x.fr : x.en };
+    return { src: x.src, poster: (typeof on === "object" && on.poster) || "", drawn: !!x.drawn, alt: fr ? x.fr : x.en };
   }
   function makeNeurobicsDrill(seed, lang) {
     var r = rng(seed), fr = FR(lang);
