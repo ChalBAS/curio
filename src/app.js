@@ -968,6 +968,8 @@
       startDaily();
       return;
     }
+    var tm = /^try-move=([a-z]+)$/.exec(rawHash());
+    if (tm && isTestSite() && tryMove(tm[1])) return;
     var tab = currentTab();
     var lit = SUBPAGES[tab] || tab;   // a sub-page lights its parent tab
     tabBar.querySelectorAll(".tabbtn").forEach(function (b) {
@@ -2170,11 +2172,41 @@
     if (d) runDrill(d);
   }
 
+  /* TRY ANY MOVE, ON THE TEST SITE ONLY (CEO, 4 Oct 2026: "where are the videos you created?
+     what have you done in v119 then?"). The app deals one move a day (D-090), so a clip made for
+     a move cannot be seen in the app until its day comes round. On uat.qpio.app (and a local
+     copy), #try-move=<key> opens that routine (hands, fingers, bilateral) or that one "small
+     thing, differently" item (unlock, airname, clasp, square, point, arms, litdot, sixdots,
+     watch) at once, so every clip can be reviewed inside the real app. Nothing is recorded:
+     today's move stays as it was. Readers on qpio.app never get this door. */
+  function isTestSite() { return /^uat\./.test(location.hostname) || location.hostname === "localhost" || location.hostname === "127.0.0.1"; }
+  function tryMove(key) {
+    var GYM = window.CURIO_GYM;
+    if (!GYM || !GYM.drillByKey) return false;
+    var seed = GYM.seedForDay(), d = null;
+    if (GYM.drillByKey[key]) d = GYM.makeDrill(key, seed, QLANG);
+    else {
+      var it = (GYM.neuroBank || []).filter(function (x) { return x.id === key; })[0];
+      if (!it) return false;
+      d = GYM.makeDrill("neurobics", seed, QLANG);
+      if (!d) return false;
+      var fr = QLANG === "fr", dm = GYM.neuroDemos(QLANG).filter(function (x) { return x.id === key; })[0];
+      var st = { id: it.id, seconds: 15, text: fr ? it.fr : it.en, scene: it.scene || { kind: "glyph", glyph: it.glyph } };
+      if (dm) st.demo = { src: dm.src, poster: dm.poster, drawn: dm.drawn, alt: dm.alt };
+      d.steps = [st];   /* the one item alone: the routine's own intro speaks of four */
+      d.total = d.steps.reduce(function (a, s) { return a + s.seconds; }, 0);
+    }
+    if (!d) return false;
+    if (!gymHand()) askHand(function () { runDrill(d, true); });
+    else runDrill(d, true);
+    return true;
+  }
+
   /* A routine: timed steps, a picture for each, Next always works, Done always
      visible. Nothing is written anywhere but the day's "move done" (D-090). The
      interval stops itself when the card leaves the page, so render() needs no
      teardown. */
-  function runDrill(d) {
+  function runDrill(d, preview) {   /* preview: opened with #try-move on the test site, never recorded */
     var ART = window.CURIO_GYM_ART, GYM = window.CURIO_GYM;
     var i = 0, elapsed = 0, paused = false, last = Date.now(), timer = null, frameTimer = null, motion = !gymMotionOff();
     var dayRec = gymDayKey(), day = todayKey();
@@ -2360,7 +2392,7 @@
        way, one main button for what comes next, and Home. */
     function end(complete) {
       clearInterval(timer); stopFrames(); showDemo(null); document.removeEventListener("visibilitychange", onVis);
-      if (complete) gymMarkDone(dayRec, day, { m: true });
+      if (complete && !preview) gymMarkDone(dayRec, day, { m: true });
       var puzzlesLeft = !gymPuzzlesDone();
       var res = el(
         '<div class="card result">' +
