@@ -1,25 +1,25 @@
 {
-  "generated_at": "2026-10-04T15:19:04.250Z",
+  "generated_at": "2026-10-05T06:12:24.297Z",
   "totals": {
-    "questions": 1983
+    "questions": 2048
   },
   "by_level": {
-    "NONE": 1698,
-    "SENSITIVE": 285,
+    "NONE": 1755,
+    "SENSITIVE": 293,
     "CONTESTED": 0,
     "HIGHLY_CONTESTED": 0
   },
   "by_type": {
     "COLONIAL": 122,
-    "GEOPOLITICAL": 28,
-    "RELIGIOUS": 19,
+    "GEOPOLITICAL": 30,
+    "RELIGIOUS": 21,
     "ETHNIC": 13,
     "RACIAL": 19,
     "INDIGENOUS": 36,
     "WAR_ATROCITY": 26,
-    "CURRENT_POLITICS": 18,
+    "CURRENT_POLITICS": 19,
     "DISPUTED_TERRITORY": 26,
-    "OTHER": 16
+    "OTHER": 19
   },
   "flagged": [
     {
@@ -3723,6 +3723,110 @@
       "sens": "SENSITIVE",
       "sens_type": [
         "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1995,
+      "q": "The Romans called the morning star 'Lucifer', the light-bringer. Which body in the sky was",
+      "src": "https://en.wikipedia.org/wiki/Lucifer",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1998,
+      "q": "In December 1984, a gas leak at a factory in Bhopal, India, killed thousands and exposed m",
+      "src": "https://en.wikipedia.org/wiki/Bhopal_disaster",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 1999,
+      "q": "Two days after reactor 4 at Chernobyl exploded in April 1986, radiation alarms went off at",
+      "src": "https://en.wikipedia.org/wiki/Chernobyl_disaster",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 2004,
+      "q": "Just after 9 pm on 2 December 1959, the Malpasset dam above Fréjus, on the French Riviera,",
+      "src": "https://en.wikipedia.org/wiki/Malpasset_Dam",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 2013,
+      "q": "Nuclear power isn't renewable: its uranium is mined. Yet over a full life cycle, by IPCC f",
+      "src": "https://en.wikipedia.org/wiki/Life-cycle_greenhouse_gas_emissions_of_energy_sources",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "CURRENT_POLITICS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 2015,
+      "q": "By 2014, genetically modified varieties covered 82% of the world's soybean fields. The fir",
+      "src": "https://en.wikipedia.org/wiki/Genetically_modified_soybean",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "OTHER"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 2024,
+      "q": "Glacial erratics are boulders stranded far from any matching bedrock. Before ice ages were",
+      "src": "https://en.wikipedia.org/wiki/Glacial_erratic",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "RELIGIOUS"
+      ],
+      "perspective": "PASSED",
+      "release": "LIVE",
+      "explicit": true,
+      "sovereignty_adjudicating": false
+    },
+    {
+      "index": 2032,
+      "q": "Even in the tropics, coral reefs are rare along the west coasts of the Americas and Africa",
+      "src": "https://en.wikipedia.org/wiki/Coral_reef",
+      "sens": "SENSITIVE",
+      "sens_type": [
+        "GEOPOLITICAL"
       ],
       "perspective": "PASSED",
       "release": "LIVE",

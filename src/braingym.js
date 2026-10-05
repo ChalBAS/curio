@@ -1269,17 +1269,14 @@
        the loop (the panel caught an earlier clip in which the hands took turns, the very
        habit this routine exists to break). It draws two circles, not two different shapes:
        no generator managed two different shapes at once, and the line under it says so. */
-    /* Thumb to each finger: a DRAWING, not a video. In 12 attempts across several AI video
-       models (23 and 29 Sep 2026) not one showed the thumb touching each finger in turn - the
-       ring finger folded into the palm, or they bunched the fingers or made a fist - and a demo
-       that teaches the wrong move is worse than none. On 4 Oct 2026, with the video account
-       empty, it was drawn instead (curio-hq/tools/gym_draw/fingers.html, made on our own
-       computer, free) and passed a separate frame-by-frame check: one open hand, palm facing the
-       reader, the thumb meeting the index, middle, ring and little fingertips in turn. The thumb
-       is on the left of the picture, like the reader's own right hand seen from behind. */
-    fingers: { src: "img/gen/moves/fingers.mp4", poster: "img/gen/moves/fingers.jpg", drawn: true,
-      en: "A drawing: one open hand, palm facing you; the thumb touches the index, middle, ring and little fingertips in turn.", fr: "Un dessin : une main ouverte, paume tournée vers toi ; le pouce touche le bout de l'index, du majeur, de l'annulaire puis de l'auriculaire.",
-      noteEn: "Palm facing away from you, fingers open. Here the order starts at the index; yours is different: follow the drawing below.", noteFr: "Paume tournée vers l'avant, doigts ouverts. Ici, l'ordre commence par l'index ; le tien est différent : suis le dessin ci-dessous." }
+    /* Thumb to each finger: a PHOTO for now. No AI video model showed the thumb touching each
+       finger in turn (12 attempts, 23 and 29 Sep 2026), and a drawing made on 4 Oct was turned down
+       by the CEO on 5 Oct ("i want realistic human hands"). So the routine opens on her photo in the
+       pose (the hand the reader starts with). A real video of a person replaces it once one shows
+       the move truly (CEO, 5 Oct 2026: "I want a video not a animated picture"). */
+    fingers: { src: "img/gen/moves/pose-right.jpg", poster: "img/gen/moves/pose-right.jpg", photo: true,
+      en: "A woman at a table holds up one open hand, palm facing out, fingers spread.", fr: "Une femme, à une table, lève une main ouverte, paume tournée vers l'avant, doigts écartés.",
+      noteEn: "Palm facing away from you, fingers open, like her. The drawing below shows the order.", noteFr: "Paume tournée vers l'avant, doigts ouverts, comme elle. Le dessin ci-dessous montre l'ordre." }
   };
   function demoFor(key, fr) { var x = DEMOS[key]; return x ? { src: x.src, poster: x.poster, photo: !!x.photo, drawn: !!x.drawn, alt: fr ? x.fr : x.en, note: fr ? x.noteFr : x.noteEn } : null; }
 
@@ -1333,26 +1330,35 @@
 
   var FINGER_ORDERS = [[2, 4, 1, 3], [1, 3, 2, 4], [3, 1, 4, 2], [4, 2, 3, 1], [2, 1, 4, 3], [1, 4, 2, 3]];
   var FINGER_NAMES = { en: ["thumb", "index", "middle", "ring", "little"], fr: ["pouce", "index", "majeur", "annulaire", "auriculaire"] };
-  function makeFingersDrill(seed, lang) {
+  /* THE WEAKER HAND FIRST (CEO, 5 Oct 2026: "You need to mention if the person should start with
+     their weaker hands"). The routine knows which hand the reader writes with (asked once, kept on
+     the device) and starts with the other one, and says so; the stronger hand comes second. A
+     reader who uses one hand, or has not said, starts with the left. */
+  function makeFingersDrill(seed, lang, hand) {
     var r = rng(seed), fr = FR(lang);
     var beatIdx = int(r, 0, 2), beat = [0.8, 1.0, 1.2][beatIdx], scrambleIdx = int(r, 0, 5), scramble = FINGER_ORDERS[scrambleIdx];
     var up = [1, 2, 3, 4, 3, 2, 1], names = function (o) { return o.map(function (i) { return FINGER_NAMES[fr ? "fr" : "en"][i]; }).join(", "); };
     /* with motion off nothing lights, so the order is written out */
     var order = function (o) { return (fr ? "Dans l'ordre : " : "In order: ") + names(o) + "."; };
+    var weak = hand === "left" ? "right" : "left", strong = weak === "left" ? "right" : "left", known = hand === "left" || hand === "right";
+    var W = weak === "left" ? "L" : "R", S = W === "L" ? "R" : "L";
+    var main = function (side, f) { return f ? (side === "left" ? "main gauche" : "main droite") : side + " hand"; };
+    var first = known ? (fr ? "Commence par ta main la plus faible, celle avec laquelle tu n'écris pas : ta " + main(weak, true) + ". " : "Start with your weaker hand, the one you don't write with: your " + main(weak) + ". ") : "";
     var steps = [
-      { id: "intro", seconds: 12, scene: { kind: "hand", side: "R", order: [1, 2, 3, 4], beat: 1.2 }, still: order([1, 2, 3, 4]), text: fr ? "Regarde comment faire, puis touche Étape suivante. Ton pouce va toucher chaque doigt à tour de rôle — suis le doigt allumé. Une seule main, c'est très bien ; tu peux t'arrêter quand tu veux." : "Watch how it goes, then tap Next step. Your thumb will touch each finger in turn — follow the lit finger. One hand is fine; you can stop whenever you like." },
+      { id: "intro", seconds: 12, scene: { kind: "hand", side: W, order: [1, 2, 3, 4], beat: 1.2 }, still: order([1, 2, 3, 4]), text: fr ? "Regarde comment faire, puis touche Étape suivante. Ton pouce va toucher chaque doigt à tour de rôle — suis le doigt allumé. Une seule main, c'est très bien ; tu peux t'arrêter quand tu veux." : "Watch how it goes, then tap Next step. Your thumb will touch each finger in turn — follow the lit finger. One hand is fine; you can stop whenever you like." },
       { id: "one", seconds: 25, hands: "one",
-        before: announce("right", fr, fr ? "Pose le téléphone, ou tiens-le dans la main gauche. Puis lève la main droite, paume tournée vers l'avant, doigts ouverts." : "Put the phone down, or hold it in your left hand. Then hold up your right hand, palm facing away from you, fingers open.", "right"),
-        still: order(up), text: fr ? "Touche le doigt allumé avec ton pouce." : "Touch the lit finger with your thumb.", scene: { kind: "hand", side: "R", order: up, beat: beat } },
+        before: announce(weak, fr, first + (fr ? "Pose le téléphone, ou tiens-le dans la " + main(strong, true) + ". Puis lève la " + main(weak, true) + ", paume tournée vers l'avant, doigts ouverts." : "Put the phone down, or hold it in your " + main(strong) + ". Then hold up your " + main(weak) + ", palm facing away from you, fingers open."), weak),
+        still: order(up), text: fr ? "Touche le doigt allumé avec ton pouce." : "Touch the lit finger with your thumb.", scene: { kind: "hand", side: W, order: up, beat: beat } },
       { id: "other", seconds: 25, hands: "other",
-        before: announce("left", fr, fr ? "Pose le téléphone, ou passe-le dans la main droite. Puis lève la main gauche, paume tournée vers l'avant, doigts ouverts." : "Put the phone down, or move it to your right hand. Then hold up your left hand, palm facing away from you, fingers open.", "left"),
-        still: order(up), text: fr ? "Pareil : touche le doigt allumé avec ton pouce." : "Same again: touch the lit finger with your thumb.", scene: { kind: "hand", side: "L", order: up, beat: beat * 0.8 } },
+        before: announce(strong, fr, (known ? (fr ? "Maintenant ta main la plus forte. " : "Now your stronger hand. ") : "") + (fr ? "Pose le téléphone, ou passe-le dans la " + main(weak, true) + ". Puis lève la " + main(strong, true) + ", paume tournée vers l'avant, doigts ouverts." : "Put the phone down, or move it to your " + main(weak) + ". Then hold up your " + main(strong) + ", palm facing away from you, fingers open."), strong),
+        still: order(up), text: fr ? "Pareil : touche le doigt allumé avec ton pouce." : "Same again: touch the lit finger with your thumb.", scene: { kind: "hand", side: S, order: up, beat: beat * 0.8 } },
       { id: "both", seconds: 20, hands: "both",
         before: announce("both", fr, fr ? "Pose le téléphone à plat, puis lève les deux mains, paumes tournées vers l'avant, doigts ouverts." : "Put the phone down flat, then hold up both hands, palms facing away from you, fingers open.", "both"),
         still: order(up), text: fr ? "Chaque pouce touche le même doigt, sur sa main, en même temps." : "Each thumb touches the same finger on its own hand, at the same time.", scene: { kind: "hand", side: "both", order: up, orderRight: up.slice().reverse(), beat: beat } },
       { id: "new", seconds: 18, hands: "both", text: (fr ? "Dernière : un nouvel ordre. " : "Last one: a new order. ") + scramble.join("-") + " (" + names(scramble) + ").", scene: { kind: "hand", side: "both", order: scramble, orderRight: scramble, beat: beat } }
     ];
-    return { family: "fingers", kind: "drill", title: fr ? "Le pouce sur chaque doigt" : "Thumb to each finger", intro: steps[0].text, hands: "one", steps: steps, total: drillTotal(steps), demo: demoFor("fingers", fr),
+    var dm = demoFor("fingers", fr); if (dm && weak === "left") dm.src = dm.poster = POSES.left;   /* her photo shows the hand the reader starts with */
+    return { family: "fingers", kind: "drill", title: fr ? "Le pouce sur chaque doigt" : "Thumb to each finger", intro: steps[0].text, hands: "one", steps: steps, total: drillTotal(steps), demo: dm,
              trains: fr ? "toucher chaque doigt avec le pouce dans un ordre inhabituel" : "touching each finger to the thumb in an order that is not the usual one",
              safety: SAFETY[fr ? "fr" : "en"], variant: beatIdx * 6 + scrambleIdx };
   }
@@ -1419,18 +1425,9 @@
     watch: { src: "img/gen/moves/watch.mp4",
       en: "A woman at a table unbuckles her watch, slides it off one wrist, and fastens it on her other wrist.",
       fr: "Une femme, à une table, détache sa montre, la retire d'un poignet, puis l'attache à son autre poignet." },
-    unlock: { src: "img/gen/moves/unlock.mp4", drawn: true,
-      en: "A drawing, seen as if through your own eyes: your right hand passes a locked phone to your left hand, whose thumb slides once up the screen while a blue arrow shows the swipe; only then does the screen open onto coloured squares.",
-      fr: "Un dessin, vu comme par tes propres yeux : ta main droite passe un téléphone verrouillé à ta main gauche, dont le pouce glisse une fois vers le haut de l'écran pendant qu'une flèche bleue montre le geste ; c'est seulement ensuite que l'écran s'ouvre sur des carrés de couleur." },
-    clasp: { src: "img/gen/moves/clasp.mp4", drawn: true,
-      en: "A drawing: your two hands seen from above clasp with the fingers interlaced and the left thumb on top, marked by a blue ring; they open, then clasp again the other way with the right thumb on top.",
-      fr: "Un dessin : tes deux mains vues d'en haut se joignent, doigts entrelacés, le pouce gauche dessus, marqué d'un anneau bleu ; elles s'ouvrent, puis se rejoignent dans l'autre sens, le pouce droit dessus." },
-    square: { src: "img/gen/moves/square.mp4", drawn: true,
-      en: "A drawing: a person sitting on a chair, seen from the side, traces a square on the floor with one foot while the hand on the same side draws a circle in the air; the orange square and the blue circle start together and close together.",
-      fr: "Un dessin : une personne assise sur une chaise, vue de côté, trace un carré au sol avec un pied pendant que la main du même côté dessine un cercle dans l'air ; le carré orange et le cercle bleu commencent ensemble et se ferment ensemble." },
-    airname: { src: "img/gen/moves/airname.mp4", drawn: true,
-      en: "A drawing: a left hand seen from behind, index finger up and the other fingers curled, writes the capital letters A, N, A in the air one stroke at a time, leaving a blue line that spells ANA.",
-      fr: "Un dessin : une main gauche vue de dos, l'index levé et les autres doigts repliés, écrit en l'air les majuscules A, N, A, un trait après l'autre, en laissant une ligne bleue qui forme ANA." }
+    airname: { src: "img/gen/moves/airname.mp4",
+      en: "A woman at a table slowly writes a word in the air with one finger; her other hand rests on the table.",
+      fr: "Une femme, à une table, écrit lentement un mot dans l'air avec un doigt ; son autre main repose sur la table." }
   };
   /* point: Higgsfield seedance_2_0 job 936d2cb3, checked frame by frame on 24 Sep 2026 (arms
      folded, the hand underneath points). arms: generated the same day and refused - she crosses
@@ -1440,15 +1437,16 @@
      with Higgsfield seedance_2_0 (jobs 33c42792, e8bdb2d9, 6bfab35c, 0f55a394), each passed by a
      separate checker reading every quarter-second frame (tools/gym_clip_finish.js made the
      files). arms now shows the second crossing the other way round. */
-  /* 4 Oct 2026 (CEO: "propose alternative preferably free ones to execute the tasks as prescribed";
+  /* 5 Oct 2026: the drawings below were taken out again - the CEO wants realistic human hands
+     ("i want realistic human hands, the person can change depending on the exercise"); the items
+     keep their icon until a real video passes the check.
+     4 Oct 2026 (CEO: "propose alternative preferably free ones to execute the tasks as prescribed";
      the AI video account was empty): airname, square, clasp and unlock are DRAWINGS made on our own
      computer (curio-hq/tools/gym_draw/<key>.html rendered with local Chrome, finished with
      tools/gym_clip_finish.js --drawn), each passed by a separate checker reading every
      quarter-second frame. drawn: true makes the app say "AI-generated drawing", not "video". */
   var NEURO_DEMOS = { point: { poster: "img/gen/moves/point.jpg" }, arms: { poster: "img/gen/moves/arms.jpg" },
-    litdot: { poster: "img/gen/moves/litdot.jpg" }, sixdots: { poster: "img/gen/moves/sixdots.jpg" }, watch: { poster: "img/gen/moves/watch.jpg" },
-    airname: { poster: "img/gen/moves/airname.jpg" }, square: { poster: "img/gen/moves/square.jpg" },
-    clasp: { poster: "img/gen/moves/clasp.jpg" }, unlock: { poster: "img/gen/moves/unlock.jpg" } };
+    litdot: { poster: "img/gen/moves/litdot.jpg" }, sixdots: { poster: "img/gen/moves/sixdots.jpg" }, watch: { poster: "img/gen/moves/watch.jpg" } };
   function neuroDemo(id, fr) {
     var on = NEURO_DEMOS[id], x = NEURO_CLIPS[id];
     if (!on || !x) return null;
@@ -1603,7 +1601,7 @@
     /* the routines with nothing to answer — their own list, never in a set of five */
     drills: DRILLS,
     drillByKey: DRILL_BY_KEY,
-    makeDrill: function (key, seed, lang) { return DRILL_BY_KEY[key] ? DRILL_BY_KEY[key].make(seed >>> 0, lang || "en") : null; },
+    makeDrill: function (key, seed, lang, hand) { return DRILL_BY_KEY[key] ? DRILL_BY_KEY[key].make(seed >>> 0, lang || "en", hand) : null; },
     neuroBank: NEURO,
     /* the item clips this build carries (NEURO_DEMOS), in the reader's language */
     neuroDemos: function (lang) {

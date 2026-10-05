@@ -1,17 +1,17 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-09-29T11:04:46.156Z",
+ "generated": "2026-10-05T06:07:47.688Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",
  "counts": {
-  "shipped": 1983,
+  "shipped": 2048,
   "added": 0,
   "changedEn": 0,
   "changedFr": 0,
   "carriedBecauseShipped": 137,
   "ungoverned": 12,
-  "unruled": 1969
+  "unruled": 2034
  },
  "byId": {
   "Q001": {
@@ -29795,6 +29795,981 @@
    },
    "qualifiedToday": false,
    "carriedBecauseShipped": true
+  },
+  "N2003": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2004": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2005": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2008": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2009": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2010": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2013": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2014": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2016": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2017": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2018": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2019": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2020": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2021": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2026": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2027": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2028": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2029": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2030": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2032": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2035": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2038": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2040": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2041": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2048": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2049": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2051": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2055": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2056": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2057": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2058": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2059": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2061": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2063": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2064": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2066": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2069": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2072": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2073": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2075": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2077": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2078": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2079": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2082": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2083": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2088": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2089": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2090": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2092": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2093": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2094": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2098": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2099": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2100": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2103": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2105": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2106": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2110": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2111": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2112": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2114": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2116": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2120": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2127": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
+  },
+  "N2128": {
+   "governed": true,
+   "textFrom": "the golden source workbook",
+   "completeFor": {
+    "en": true,
+    "fr": true
+   },
+   "panel": "PASS_WITH_MINOR_EDIT",
+   "factChecked": true,
+   "ruling": {
+    "en": null,
+    "fr": null
+   },
+   "qualifiedToday": true
   }
  }
 }
