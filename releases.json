@@ -1,12 +1,13 @@
 {
- "generated": "2026-10-04",
+ "generated": "2026-10-05",
  "live": {
   "production": 118,
-  "uat": 120,
+  "uat": 121,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  121,
   120,
   119
  ],
@@ -179,14 +180,37 @@
  ],
  "releases": [
   {
+   "version": 121,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-05",
+   "to": "2026-10-05",
+   "questions": 2048,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "a8b62e0",
+     "date": "2026-10-05",
+     "subject": "v121: Gym demos - drawings taken out, no disclaimer sentence, weaker hand first; 65 book chapter-1 questions"
+    }
+   ]
+  },
+  {
    "version": 120,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-10-04",
-   "to": "2026-10-04",
+   "to": "2026-10-05",
    "questions": 1983,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 110,
+    "issues": [
+     110
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -199,6 +223,16 @@
      "sha": "7d91753",
      "date": "2026-10-04",
      "subject": "v120: thumb-to-finger drawing slightly smaller, so the app's 16:9 frame no longer trims the fingertips"
+    },
+    {
+     "sha": "9d17616",
+     "date": "2026-10-04",
+     "subject": "Releases record: v120 on UAT (173/173 live checks)"
+    },
+    {
+     "sha": "add3830",
+     "date": "2026-10-05",
+     "subject": "mint_canonical_qids: read batches 41-43 and the added book rows; refuse --write when a shipped question's id would change"
     }
    ]
   },

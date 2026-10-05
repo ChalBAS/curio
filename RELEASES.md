@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v118** at qpio.app |
-| On UAT | **v120** at uat.qpio.app |
+| On UAT | **v121** at uat.qpio.app |
 | Tip of `main` | v118 |
-| Generated | 2026-10-04 |
+| Generated | 2026-10-05 |
 
-> ⏳ **Awaiting your sign-off:** v120, v119. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v121, v120, v119. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v116 (AWAITING), v115 (AWAITING), v113 (AWAITING), v112 (AWAITING), v111 (AWAITING), v110 (AWAITING), v109 (AWAITING), v108 (AWAITING), v107 (NO ISSUE), v106 (AWAITING), v105 (AWAITING), v104 (AWAITING), v103 (AWAITING), v102 (AWAITING), v101 (AWAITING), v100 (AWAITING), v99 (AWAITING), v98 (AWAITING), v97 (NO ISSUE), v96 (REJECTED), v95 (REJECTED), v94 (NO ISSUE), v93 (NO ISSUE), v92 (NO ISSUE), v89 (NO ISSUE), v88 (NO ISSUE), v87 (NO ISSUE), v86 (NO ISSUE), v85 (NO ISSUE), v84 (NO ISSUE), v83 (AWAITING), v82 (REJECTED), v81 (REJECTED), v80 (NO ISSUE), v78 (NO ISSUE), v77 (AWAITING), v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
@@ -24,12 +24,20 @@ not by omission.*
 
 ---
 
+## v121 — ⏳ on UAT
+
+2026-10-05 · 2,048 questions · sign-off: **no release issue**
+
+- `a8b62e0` v121: Gym demos - drawings taken out, no disclaimer sentence, weaker hand first; 65 book chapter-1 questions
+
 ## v120 — ⏳ on UAT
 
-2026-10-04 · 1,983 questions · sign-off: **no release issue**
+2026-10-04 → 2026-10-05 · 1,983 questions · sign-off: awaiting you, [#110](https://github.com/ChalBAS/curio-hq/issues/110)
 
 - `9cd30e3` v120: on the test site only, #try-move=<key> opens any Gym move with its clip
 - `7d91753` v120: thumb-to-finger drawing slightly smaller, so the app's 16:9 frame no longer trims the fingertips
+- `9d17616` Releases record: v120 on UAT (173/173 live checks)
+- `add3830` mint_canonical_qids: read batches 41-43 and the added book rows; refuse --write when a shipped question's id would change
 
 ## v119 — ⏳ on UAT
 
