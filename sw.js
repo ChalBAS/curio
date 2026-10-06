@@ -1,7 +1,8 @@
 /* Curio service worker — offline-first for a fully static app.
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
-   index.html. Install fetches with cache:"reload" so the HTTP cache can
-   never pin a stale asset into a new SW cache. */
+   index.html. Install fetches with cache:"no-cache": the browser's copy is
+   used only after the server confirms it is unchanged, so the HTTP cache can
+   never pin a stale asset into a new SW cache (see the install handler). */
 const CACHE = "qpio-v114";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
@@ -180,7 +181,9 @@ const ASSETS = [
   "./src/daily.overrides.js?v=114",
   "./src/daily.ledger.js?v=114",
   "./src/intro.videos.js?v=114",
-  "./src/resources.js?v=114",
+  // src/resources.js is NOT here (29 Sep 2026): its box has shown nothing since
+  // 22 Sep, so it left start-up. app.js fetches it only if the box comes back
+  // (loadResourceNetwork), and the handler below keeps it once fetched.
   "./src/intelligence.js?v=114",
   "./src/intelligence.corpus.js?v=114",
   "./src/preload.js?v=114",
@@ -220,11 +223,23 @@ const ASSETS = [
 // itself.
 const OPTIONAL = ["./privacy", "./terms"];
 
+// NOT EVERYTHING TWICE (29 Sep 2026, item 2 of the speed and offline plan).
+// Install used cache:"reload", which ignores the copy the browser fetched a
+// moment earlier to draw the page, so a first visit downloaded every file
+// twice: about 1.9 MB more, on every first visit and every release. The
+// founder, 28 Sep: "we also need to answer the performance issues".
+// cache:"no-cache" asks the server whether the browser's copy is still right;
+// the server answers "not changed" and sends nothing (measured on
+// uat.qpio.app: ETag, max-age=0, a 304 with 0 bytes), and a changed file comes
+// down whole. So the old guarantee holds — nothing stale is ever pinned into
+// this cache — without paying for the same bytes twice.
+const FETCH_FRESH = { cache: "no-cache" };
+
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(CACHE)
       .then((c) => Promise.all(ASSETS.map((u) => {
-        const got = c.add(new Request(u, { cache: "reload" }));
+        const got = c.add(new Request(u, FETCH_FRESH));
         return OPTIONAL.includes(u) ? got.catch(() => {}) : got;
       })))
       .then(() => preloadFlags())
@@ -247,7 +262,7 @@ async function preloadFlags() {
   const c = await caches.open(FLAG_CACHE);
   return Promise.allSettled(FLAGS.map(async (u) => {
     if (await c.match(u)) return;
-    const res = await fetch(new Request(u, { cache: "reload" }));
+    const res = await fetch(new Request(u, FETCH_FRESH));
     if (!isPicture(res)) throw new Error("not a picture: " + u);
     await c.put(u, res);
   }));
@@ -291,6 +306,10 @@ async function tidyFlags() {
 // The shell is now NETWORK-FIRST: always fetch the newest HTML, fall back to
 // cache only when genuinely offline. Versioned assets stay cache-first, which
 // is safe precisely because their URL changes when their content does.
+// How long the page waits for the network before opening its saved copy.
+// "About 3 s" in the plan (curio-hq 10-Roadmap/proposals/
+// 2026-09-28-performance-and-offline.md §8 item 1).
+const SHELL_WAIT_MS = 3000;
 function isShell(req) {
   if (req.mode === "navigate") return true;
   const u = new URL(req.url);
@@ -364,14 +383,34 @@ self.addEventListener("fetch", (e) => {
   // way back. Now /privacy is kept as "./privacy", /terms as "./terms", the
   // app as "./index.html", and any other page is served but never stored over
   // any of them.
+  //
+  // A WEAK SIGNAL MUST NOT HOLD THE APP HOSTAGE (29 Sep 2026, item 1 of the
+  // speed and offline plan). Network-first had no time limit. With no network
+  // at all the request fails at once and the saved copy opens; but a signal
+  // that connects and then moves no data left the reader on a blank screen for
+  // as long as the browser cared to wait. Now, when the network has not
+  // answered within SHELL_WAIT_MS and a saved copy of THIS page exists, the
+  // saved copy opens. The network keeps going and its answer is kept for next
+  // time. A first visit has no saved copy and waits as before; a page kept
+  // under no name of its own (the acceptance suite, say) is never swapped for
+  // the app after the wait — only when the network fails outright, as before.
   if (isShell(req)) {
     const path = new URL(req.url).pathname;
     const key = (path === "/privacy" || path === "/privacy/") ? "./privacy"
               : (path === "/terms" || path === "/terms/") ? "./terms"
               : (path === "/" || path.endsWith("/index.html")) ? "./index.html" : null;
-    e.respondWith(fetch(req, { cache: "no-store" })
-      .then((res) => { if (key && res && res.status === 200) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(key, copy)); } return res; })
-      .catch(() => caches.match(key || "./index.html").then((hit) => hit || caches.match("./index.html")).then((hit) => hit || caches.match("./"))));
+    const saved = () => caches.match(key || "./index.html").then((hit) => hit || caches.match("./index.html")).then((hit) => hit || caches.match("./"));
+    let kept = Promise.resolve();
+    const net = fetch(req, { cache: "no-store" })
+      .then((res) => { if (key && res && res.status === 200) { const copy = res.clone(); kept = caches.open(CACHE).then((c) => c.put(key, copy)); } return res; });
+    e.respondWith(new Promise((resolve) => {
+      let done = false, timer = null;
+      const answer = (res) => { if (done || !res) return; done = true; clearTimeout(timer); resolve(res); };
+      if (key) timer = setTimeout(() => { saved().then(answer, () => {}); }, SHELL_WAIT_MS);
+      net.then(answer, () => saved().then((hit) => answer(hit || Response.error()), () => answer(Response.error())));
+    }));
+    // the network's answer, when it comes after the saved copy, is still kept
+    e.waitUntil(net.then(() => kept, () => {}).catch(() => {}));
     return;
   }
 

@@ -30,6 +30,22 @@ body {
 }
 .wrap { max-width: 720px; margin: 0 auto; padding: 20px 18px 80px; }
 
+/* A FIRST VISIT IS NOT A BLANK SCREEN (29 Sep 2026; speed and offline plan, item 1). Until
+   app.js has put anything in #app, a thin bar moves under the logo. No words: the page does not
+   yet know the reader's language (the plan's recommendation). It needs no script and goes by
+   itself the moment #app has content. Only a transform moves, so a paused animation never hides
+   anything; with reduced motion the bar simply stands still. */
+#app:empty {
+  position: relative; height: 4px; max-width: 220px; margin: 28px auto 0;
+  border-radius: 999px; background: var(--card2); overflow: hidden;
+}
+#app:empty::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%;
+  border-radius: inherit; background: var(--brand);
+  animation: qpioBoot 1.3s ease-in-out infinite;
+}
+@keyframes qpioBoot { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
+
 /* Header */
 .top { display: flex; align-items: center; justify-content: space-between; margin: 8px 0 22px; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 22px; letter-spacing: .3px; }
@@ -617,18 +633,29 @@ body {
 /* Issue #1 — the image slot never sits blank and never shows a broken glyph.
    While the picture resolves, a sand-timer holds a reserved height, so the
    card barely moves when the image lands (minimal layout shift) and the
-   half-painted frame of a slow fetch is never shown. On failure the timer
-   stays — still, not spinning: an animation would claim work that has already
-   lost. .rmotion's global animation kill switch covers the flip. */
-.qart .qart-wait { display: none; }
+   half-painted frame of a slow fetch is never shown. .rmotion's global
+   animation kill switch covers the flip.
+   On failure the timer goes and words take its place (29 Sep 2026; speed and
+   offline plan, item 1): a still, faded timer looked like a picture still on
+   its way, and offline it never is. */
+.qart .qart-wait, .qart .qart-off { display: none; }
 .qart.is-loading, .qart.is-failed {
   min-height: 110px; align-items: center; position: relative;
 }
-.qart.is-loading .qart-wait, .qart.is-failed .qart-wait {
+.qart.is-loading .qart-wait {
   display: block; font-size: 32px; line-height: 1; opacity: .65;
 }
 .qart.is-loading .qart-wait { animation: qpioTurn 1.6s ease-in-out infinite; }
-.qart.is-failed .qart-wait { opacity: .4; }
+.qart.is-failed .qart-off {
+  display: block; max-width: 30em; padding: 10px 14px; border-radius: 10px;
+  border: 1px dashed var(--line); color: var(--muted);
+  font-size: 13px; line-height: 1.35; text-align: center;
+}
+/* the answered card's slot is 32 to 84px tall: one small line, cut rather than spilled */
+.answered-view .qart.is-failed .qart-off {
+  padding: 2px 8px; border: 0; font-size: 11.5px; line-height: 1.25;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%;
+}
 .qart.is-loading img { position: absolute; opacity: 0; }
 .qart.is-failed img { display: none; }
 /* The answered card shrinks the slot hard (84px → 32px cramped); a reserved
@@ -1186,6 +1213,40 @@ body:has(.tabbar:not(.hidden)) .wrap { padding-bottom: 120px; }
 .vdone { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: #fff; text-align: center; padding: 12px; }
 .vnote { margin: 8px 0 0; opacity: .75; }
 button.gf-link, button.way { font: inherit; color: inherit; cursor: pointer; text-align: left; }
+
+/* SPEED AND OFFLINE, ITEM 1 (29 Sep 2026): say "needs internet" where the app looked broken.
+   - .vload: the video's still and "Loading the video…" over the frame until YouTube's player
+     answers (app.js openVideo). Takes no tap. Without the still, the words sit on black.
+   - .vslow: the weak-signal note covers whatever the frame shows, so it is always readable. */
+.vload { position: absolute; inset: 0; z-index: 1; display: flex; align-items: flex-end; justify-content: center; background: #000; pointer-events: none; }
+.vload img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vload p { position: relative; margin: 0 0 12px; padding: 6px 14px; border-radius: 999px; background: rgba(7,23,34,.88); color: #fff; font-size: 14px; font-weight: 700; }
+.vslow { z-index: 2; background: rgba(0,0,0,.88); }
+/* THE WATCH DOOR SAYS IT NEEDS INTERNET. With no network, app.js puts .is-offline on <html> and
+   --needs-net holds "Needs internet" in the reader's language. Every Watch door, on every screen,
+   shows those words under its name and is drawn dashed, like a door with nothing behind it; words
+   as well as the dashes, so nothing rests on colour. It stays a button: a tap says why. */
+.is-offline [data-video] { border-style: dashed; }
+.is-offline .gf-link[data-video] .gf-sub { display: none; }
+.is-offline .gf-link[data-video] .gf-text::after {
+  content: var(--needs-net, "Needs internet"); display: block;
+  margin-top: 1px; color: var(--muted); font-size: 11.5px; font-weight: 600; line-height: 1.2;
+}
+.is-offline .way[data-video] { flex-wrap: wrap; row-gap: 1px; padding-top: 4px; padding-bottom: 4px; }
+.is-offline .way[data-video]::after {
+  content: var(--needs-net, "Needs internet"); flex: 0 0 100%;
+  color: var(--muted); font-size: 10.5px; font-weight: 600; line-height: 1.2; text-align: center;
+}
+.is-offline .btn[data-video]::after { content: " \00B7  " var(--needs-net, "Needs internet"); font-weight: 600; }
+/* "Qpio now works offline." — once, on the visit the offline copy became complete (app.js) */
+.netnote {
+  position: fixed; top: max(10px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
+  z-index: 2100; pointer-events: none; max-width: calc(100% - 24px);
+  padding: 8px 16px; border-radius: 999px; border: 1px solid var(--brand);
+  background: var(--card); color: var(--ink); box-shadow: var(--shadow);
+  font-size: 14px; font-weight: 700; text-align: center;
+}
+.netnote:empty { display: none; }
 
 /* v103: a pause to change hands (23 Sep 2026) */
 .dcount { text-align: center; font-size: 40px; font-weight: 800; color: var(--brand); line-height: 1.1; min-height: 1.1em; }   /* under the picture, clear of both hands */

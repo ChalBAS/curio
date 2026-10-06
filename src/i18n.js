@@ -26,14 +26,17 @@
   window.QLANG = resolved;
 
   // Exact English innerHTML of the iOS install hint (mirrors index.html).
-  var IOS_HINT_EN = 'Install Qpio: tap <b>Share</b> <span style="font-size:16px">􀈂</span> then <b>Add to Home Screen</b>.';
+  // It gives its reason since 29 Sep 2026 (speed and offline plan, item 1):
+  // Safari deletes a site's saved data, progress included, after seven days of
+  // Safari use without the site; a Home Screen app keeps its own count.
+  var IOS_HINT_EN = 'Install Qpio: tap <b>Share</b> <span style="font-size:16px">􀈂</span> then <b>Add to Home Screen</b>, so your progress is kept.';
 
   // ---------- French dictionary ----------
   window.I18N = {
     fr: {
       // --- static chrome (index.html) ---
-      "Install Qpio: tap <b>Share</b> <span style=\"font-size:16px\">􀈂</span> then <b>Add to Home Screen</b>.":
-        "Installe Qpio : touche <b>Partager</b> <span style=\"font-size:16px\">􀈂</span> puis <b>Sur l’écran d’accueil</b>.",
+      "Install Qpio: tap <b>Share</b> <span style=\"font-size:16px\">􀈂</span> then <b>Add to Home Screen</b>, so your progress is kept.":
+        "Installe Qpio : touche <b>Partager</b> <span style=\"font-size:16px\">􀈂</span> puis <b>Sur l’écran d’accueil</b>, pour garder ta progression.",
       "⬇ Install": "⬇ Installer",
       "Comfort & settings": "Confort et réglages",
       "Comfort and settings": "Confort et réglages",
@@ -472,7 +475,6 @@
       "Close the video": "Fermer la vid\u00e9o",
       "Try again": "R\u00e9essayer",
       "Contains AI-generated images": "Contient des images g\u00e9n\u00e9r\u00e9es par IA",
-      "The video is not loading. You may be offline or on a weak connection.": "La vid\u00e9o ne se charge pas. Tu es peut-\u00eatre hors ligne ou sur une connexion faible.",
       "School ends. Learning doesn't — though with age, it may take longer.": "L’école s’arrête. Apprendre, non — même si, avec l’âge, cela peut prendre plus de temps.",
       "School ends. Learning doesn't.": "L’école s’arrête. Apprendre, non.",
       "Learning doesn't stop": "Apprendre ne s’arrête pas",
@@ -481,6 +483,14 @@
       "With the years, new things may take longer to learn and to recall — and taking longer is not the same as stopping.": "Avec les années, apprendre de nouvelles choses et s’en souvenir peuvent prendre plus de temps — et prendre plus de temps, ce n’est pas s’arrêter.",
       "The Daily Challenge has no countdown, and the Quick-Fire timer can be switched off.": "Le Défi du jour n’a pas de compte à rebours, et le chrono du Quiz éclair peut être désactivé.",
       "This video needs an internet connection. Try again when you are back online.": "Cette vid\u00e9o a besoin d\u2019une connexion internet. R\u00e9essaie quand tu seras de nouveau en ligne.",
+      /* ---- SAY "NEEDS INTERNET" WHERE THE APP LOOKED BROKEN (29 Sep 2026; speed and offline
+         plan, item 1). The words are the plan's table, both languages, exactly. The weak-signal
+         line replaces v112's "The video is not loading...", which it aligns with. */
+      "Needs internet": "Connexion internet requise",
+      "Loading the video\u2026": "Chargement de la vid\u00e9o\u2026",
+      "This video needs a better connection. Try again in a moment.": "Cette vid\u00e9o a besoin d\u2019une meilleure connexion. R\u00e9essaie dans un instant.",
+      "This picture needs an internet connection.": "Cette image a besoin d\u2019une connexion internet.",
+      "Qpio now works offline.": "Qpio fonctionne maintenant hors ligne.",
       "Watch the introduction": "Voir la vid\u00e9o d\u2019introduction",
       "subtitled": "sous-titr\u00e9e",
       "With a sign-language interpreter": "Avec un interpr\u00e8te en langue des signes",

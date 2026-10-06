@@ -37,9 +37,13 @@
     <div id="app"></div>
   </div>
 
-  <!-- iOS "add to home screen" hint (Safari has no install prompt) -->
+  <!-- iOS "add to home screen" hint (Safari has no install prompt). It gives its
+       reason (29 Sep 2026): Safari deletes a site's saved data, the reader's
+       progress included, after seven days of Safari use without the site; an
+       app on the Home Screen keeps its own count. The words are mirrored in
+       src/i18n.js (IOS_HINT_EN) and must match it byte for byte. -->
   <div class="iosbanner hidden" id="iosBanner">
-    <span id="iosHintText">Install Qpio: tap <b>Share</b> <span style="font-size:16px">􀈂</span> then <b>Add to Home Screen</b>.</span>
+    <span id="iosHintText">Install Qpio: tap <b>Share</b> <span style="font-size:16px">􀈂</span> then <b>Add to Home Screen</b>, so your progress is kept.</span>
     <button id="iosClose" aria-label="Dismiss">✕</button>
   </div>
 
@@ -87,7 +91,9 @@
   <script src="src/hooks.js?v=114"></script>
   <script src="src/hooks.q.js?v=114"></script>
   <script src="src/discovery.js?v=114"></script>
-  <script src="src/resources.js?v=114"></script>
+  <!-- src/resources.js left start-up on 29 Sep 2026: about 120 KB sent and
+       3.3 MB of memory at every first visit, for a box switched off since
+       22 Sep. If the box comes back, app.js fetches it when the box is shown. -->
   <script src="src/intelligence.js?v=114"></script>
   <script src="src/intelligence.corpus.js?v=114"></script>
   <script src="src/preload.js?v=114"></script>
