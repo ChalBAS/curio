@@ -191,6 +191,72 @@ const PIC = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Pic
   }
   t('the wait is about 3 s', /const SHELL_WAIT_MS = 3000;/.test(SW_SRC));
 
+  /* ---------- item 4: pictures fetched so the browser can see what arrived ---------- */
+  t('the photograph store has a new name, so the sealed copies go', IMG_CACHE === 'qpio-img-v2', IMG_CACHE);
+  {
+    const w = worker();
+    w.box('qpio-img-v1').set(PIC, new w.Res(null, { status: 0, type: 'opaque' }));
+    w.box(CACHE); w.box('qpio-nudge'); w.box('qpio-flags');
+    let job = null;
+    w.handlers.activate({ waitUntil: (p) => { job = p; } });
+    await job;
+    t('activate drops the old sealed store, keeps the release and the reminder queue', !w.store.has('qpio-img-v1') && w.store.has(CACHE) && w.store.has('qpio-nudge'));
+  }
+  {
+    const w = worker();
+    w.setNetwork(() => Promise.resolve(new w.Res('jpeg', { status: 200, type: 'cors', headers: { 'content-type': 'image/jpeg' } })));
+    const r = w.ask(new w.Req(PIC, { mode: 'no-cors' }));
+    await w.settle();
+    const sent = w.fetched[0] || {};
+    t('a picture the page asks for in the sealed way is fetched by the worker in the open way', sent.mode === 'cors' && sent.url === PIC, sent.mode);
+    t('... with no cookie and no referrer', sent.credentials === 'omit' && sent.referrerPolicy === 'no-referrer', sent.credentials + ' ' + sent.referrerPolicy);
+    t('... the page gets it', r.now() && r.now().body === 'jpeg');
+    t('... and it is kept, because a picture really arrived', w.box(IMG_CACHE).has(PIC));
+    w.setNetwork(() => Promise.reject(new TypeError('offline')));
+    const again = w.ask(new w.Req(PIC, { mode: 'no-cors' }));
+    await w.settle();
+    t('... and served from the store next time, offline', again.now() && again.now().body === 'jpeg');
+  }
+  {
+    const w = worker();
+    w.setNetwork(() => Promise.resolve(new w.Res('<html>Too many requests</html>', { status: 429, type: 'cors', headers: { 'content-type': 'text/html' } })));
+    const r = w.ask(new w.Req(PIC, { mode: 'no-cors' }));
+    await w.settle();
+    t('Wikimedia\'s "too many requests" page is passed on but never kept as the picture', r.now() && r.now().status === 429 && !w.box(IMG_CACHE).has(PIC));
+  }
+  {
+    const w = worker();
+    w.setNetwork(() => Promise.resolve(new w.Res('<html>', { status: 200, type: 'cors', headers: { 'content-type': 'text/html' } })));
+    w.ask(new w.Req(PIC, { mode: 'no-cors' }));
+    await w.settle();
+    t('a 200 that is not a picture is not kept either', !w.box(IMG_CACHE).has(PIC));
+  }
+  {
+    const w = worker();
+    w.setNetwork((r) => r.mode === 'cors' ? Promise.reject(new TypeError('CORS refused')) : Promise.resolve(new w.Res(null, { status: 0, type: 'opaque' })));
+    const r = w.ask(new w.Req(PIC, { mode: 'no-cors' }));
+    await w.settle();
+    t('if the open request fails, the page\'s own request still goes out and the picture still shows', r.now() && r.now().type === 'opaque' && w.fetched.length === 2);
+    t('... but a sealed answer is never kept', !w.box(IMG_CACHE).has(PIC));
+  }
+  {
+    const w = worker();
+    w.setNetwork(() => Promise.reject(new TypeError('offline')));
+    const r = w.ask(new w.Req(PIC, { mode: 'no-cors' }));
+    await w.settle();
+    t('offline and never seen: no answer, so the card says the picture needs the internet', r.now() === null && !!r.err());
+  }
+  {
+    const w = worker();
+    let n = 0;
+    w.setNetwork(() => Promise.resolve(new w.Res('jpeg', { status: 200, type: 'cors', headers: { 'content-type': 'image/jpeg' } })));
+    for (let i = 0; i < 170; i++) { w.ask(new w.Req(PIC + '?n=' + i, { mode: 'no-cors' })); n++; }
+    await w.settle(); await w.settle();
+    t('the store stays bounded at the last 160', w.box(IMG_CACHE).size <= 160, w.box(IMG_CACHE).size + ' kept of ' + n);
+  }
+  t('the privacy screen lists the store the worker now keeps', /caches\.has\("qpio-img-v2"\)/.test(APP) && /caches\.open\("qpio-img-v2"\)/.test(APP) && !/qpio-img-v1/.test(APP));
+  t('"delete everything" deletes it, and the old one', /caches\.delete\("qpio-img-v2"\)/.test(PRIV) && /caches\.delete\("qpio-img-v1"\)/.test(PRIV));
+
   /* ---------- item 1: the words, exactly the plan's, in both languages ---------- */
   const PLAN = [
     ['Needs internet', 'Connexion internet requise'],

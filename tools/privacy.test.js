@@ -143,7 +143,7 @@ const absent = (hay, list) => list.filter(s => hay.includes(s));
   let threw = false, res;
   try { res = await blocked.QpioPrivacy.wipeDevice(); } catch (e) { threw = true; }
   check('blocked storage: wipeDevice() resolves without throwing, and the caches are still cleared',
-    !threw && res === null && deleted.indexOf('qpio-img-v1') !== -1 && deleted.indexOf('qpio-nudge') !== -1,
+    !threw && res === null && deleted.indexOf('qpio-img-v2') !== -1 && deleted.indexOf('qpio-img-v1') !== -1 && deleted.indexOf('qpio-nudge') !== -1,
     'null means nothing could have been stored, which the screen treats as done');
 
   /* The whole device wipe against working stand-ins: what goes and what stays. */
@@ -170,7 +170,7 @@ const absent = (hay, list) => list.filter(s => hay.includes(s));
     halted === 1 && res && res.failed === 0 &&
     JSON.stringify(Array.from(local.m.keys()).sort()) === JSON.stringify(['curio.measure.off', 'other.app']) &&
     session.m.size === 0 &&
-    cachesDeleted.indexOf('qpio-img-v1') !== -1 && cachesDeleted.indexOf('qpio-nudge') !== -1 &&
+    cachesDeleted.indexOf('qpio-img-v2') !== -1 && cachesDeleted.indexOf('qpio-img-v1') !== -1 && cachesDeleted.indexOf('qpio-nudge') !== -1 &&
     appCache.entries.length === 1 && /app\.js/.test(appCache.entries[0].url) &&
     unregistered.join() === 'qpio-daily',
     'viewed img/gen/ pictures leave the app cache; the app files stay so Qpio reopens offline');

@@ -15,7 +15,13 @@ const NUDGE_CACHE = "qpio-nudge";
 // (same-origin) responses, so these were never cached at all. Cache-first
 // here, in its own bounded store: URLs are immutable thumbnails, so a hit is
 // always the right bytes, and the cap keeps storage honest on a phone.
-const IMG_CACHE = "qpio-img-v1";
+// v2 (6 Oct 2026; speed and offline plan, item 4): the pictures are now fetched
+// in the way Chrome can inspect (see the photograph handler below). The v1 store
+// held them in the way it cannot, and Chrome counts each such copy as about 7 MB
+// of Qpio's storage (160 pictures: about 1.1 GB, for tens of MB of pictures). A
+// new name lets activate drop the old store at once; a reader online fills the
+// new one again as pictures are seen.
+const IMG_CACHE = "qpio-img-v2";
 const IMG_CACHE_MAX = 160;
 // THE FLAGS TRAVEL WITH THE APP. CEO, 21 Sep 2026: "when off line the flags
 // don't appear, the flags should be pre-loaded in the app." The photograph
@@ -352,25 +358,42 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // The photograph store (issue #1). A plain <img> fetch is no-cors, so most
-  // of these arrive as opaque responses — expected and cacheable here; a
-  // network failure rejects and simply renders no image, exactly as before.
+  // The photograph store (issue #1).
+  //
+  // FETCHED SO THE BROWSER CAN SEE WHAT ARRIVED (6 Oct 2026; speed and offline
+  // plan, item 4). A plain <img> fetch is "no-cors": the answer comes back
+  // sealed. Two costs followed. Chrome counts every sealed copy kept here as
+  // about 7 MB of Qpio's storage, so 160 kept pictures counted as about 1.1 GB;
+  // and nothing could tell a picture from an error page, so a "too many
+  // requests" page from Wikimedia, kept under a picture's address, was served as
+  // that picture for ever. Wikimedia's picture server allows the open kind of
+  // request (it answers "Access-Control-Allow-Origin: *"; checked 6 Oct 2026).
+  // So the worker asks for the picture that way itself, on behalf of every
+  // <img> on every screen, with no cookie and no referrer (the pages' own
+  // pictures send none either), and keeps it only if it really is a picture
+  // that arrived whole (isPicture: a 200 that says it is an image). If the open
+  // request fails, the page's own request goes out as before and the picture
+  // still shows; it is simply not kept. Offline and never seen: no answer, and
+  // the question card says the picture needs the internet (app.js).
   if (new URL(req.url).host === "upload.wikimedia.org") {
     e.respondWith((async () => {
       const c = await caches.open(IMG_CACHE);
-      const hit = await c.match(req);
+      const hit = await c.match(req.url, { ignoreVary: true });
       if (hit) return hit;
-      const res = await fetch(req);
-      if (res && (res.status === 200 || res.type === "opaque")) {
+      let res = null;
+      try { res = await fetch(new Request(req.url, { mode: "cors", credentials: "omit", referrerPolicy: "no-referrer" })); }
+      catch (err) { res = null; }
+      if (isPicture(res)) {
         const copy = res.clone();
-        c.put(req, copy).then(() => {
+        c.put(req.url, copy).then(() => {
           // Bounded: past the cap, the oldest entries go first.
           c.keys().then((keys) => {
             for (let i = 0; i < keys.length - IMG_CACHE_MAX; i++) c.delete(keys[i]);
           });
-        });
+        }).catch(() => {});
+        return res;
       }
-      return res;
+      return res || fetch(req);
     })());
     return;
   }

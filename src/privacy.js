@@ -57,7 +57,9 @@
     var jobs = [];
     try {
       if (window.caches) {
-        jobs.push(caches.delete("qpio-img-v1"), caches.delete("qpio-nudge"));
+        /* the photograph store: "qpio-img-v2" since 6 Oct 2026 (sw.js IMG_CACHE); v1 too, which a
+           device keeps until the worker that drops it has taken over */
+        jobs.push(caches.delete("qpio-img-v2"), caches.delete("qpio-img-v1"), caches.delete("qpio-nudge"));
         jobs.push(caches.keys().then(function (names) {          // illustrations viewed, cached with the app (sw.js generic handler)
           return Promise.all(names.filter(function (n) { return /^qpio-v\d+$/.test(n); }).map(function (n) {
             return caches.open(n).then(function (c) { return c.keys().then(function (rs) {

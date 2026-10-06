@@ -3108,9 +3108,11 @@
   function pvPrefetch(done) {
     if (!window.caches) { pvAsync.ready = true; return; }
     try {
-      var pics = caches.has("qpio-img-v1").then(function (has) {
+      /* the photograph store sw.js keeps (IMG_CACHE; "qpio-img-v2" since 6 Oct 2026, when its
+         pictures began to be fetched in the way Chrome can inspect) */
+      var pics = caches.has("qpio-img-v2").then(function (has) {
         if (!has) return null;
-        return caches.open("qpio-img-v1").then(function (c) { return c.keys(); })
+        return caches.open("qpio-img-v2").then(function (c) { return c.keys(); })
           .then(function (rs) { return rs.map(function (r) { return r.url; }); });
       }).catch(function () { return null; });
       var queue = caches.has(NUDGE_CACHE).then(function (has) {
