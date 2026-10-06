@@ -383,7 +383,9 @@
        curio-hq/tools/publish_to_app.js. */
     var bank = window.CURIO_DOORS_BANK && q && q.id ? window.CURIO_DOORS_BANK[q.id] : null;
     var bb = bank && bank.read ? (bank.read[dl] || bank.read.en) : null;
-    var bv = bank && bank.visit ? bank.visit : null;
+    /* the place for a French reader, where the review chose one apart from the English
+       side (7 Oct 2026); {none:true} there greys the French door */
+    var bv = bank && bank.visit ? (dl === "fr" && bank.visit.fr ? bank.visit.fr : bank.visit) : null;
 
     var made = {
       /* naming the actual book is the difference between "somewhere to read"
@@ -394,6 +396,9 @@
                inventory holds nothing - the order the comment above always said, and the code
                did not do until 22 Sep 2026 */
             : bb && bb.u ? { title: bb.t || title, sub: bb.a || "", url: bb.u }
+            /* the review found no book that passes (7 Oct 2026): a greyed door, not the
+               August table's guess */
+            : bb && bb.none ? { title: "", sub: "", url: null }
             : book ? { title: book.t, sub: book.a || "", url: readUrl(title, slug) }
             : { title: title, sub: "", url: readUrl(title, slug) },
       visit:  cv && cv.none ? { title: "", sub: "", url: null }
