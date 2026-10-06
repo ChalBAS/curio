@@ -333,6 +333,25 @@ const PIC = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Pic
     t('Comfort\'s reduced motion stills the bar before app.js runs (read before the stylesheet paints)', !!early && run('{"motion":"reduced"}') === 'rmotion' && run('{"motion":"full"}') === '' && run(null) === '' && run('{bad') === '');
   }
 
+  /* ---------- item 3: the bank carries the 500-px copy wherever it is lighter ---------- */
+  {
+    const TABLE = path.join(ROOT, '..', 'curio-hq', '03-Engine', 'question-intelligence', 'inventory', 'picture-500.json');
+    if (!fs.existsSync(TABLE)) console.log('  (item 3 not checked here: no curio-hq beside this repo)');
+    else {
+      const byUrl = JSON.parse(fs.readFileSync(TABLE, 'utf8')).byUrl || {};
+      const qb = { window: {} };
+      vm.createContext(qb);
+      vm.runInContext(read('src/questions.js'), qb, { filename: 'questions.js' });
+      const ORIG = /^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\/[0-9a-f]\/[0-9a-f]{2}\/[^/?#]+$/;
+      const heavy = (qb.window.CURIO_QUESTIONS || []).filter((q) => q.img && ORIG.test(q.img.u) && byUrl[q.img.u] && byUrl[q.img.u].use !== q.img.u);
+      t('no question shows a full-size original where a lighter 500-px copy was measured', heavy.length === 0,
+        heavy.length + ' questions, e.g. ' + heavy.slice(0, 2).map((q) => q.id).join(', ') + ' - run curio-hq/tools/picture_500.js --apply');
+      const unmeasured = [...new Set((qb.window.CURIO_QUESTIONS || []).map((q) => q.img && q.img.u).filter((u) => u && ORIG.test(u) && !byUrl[u]))];
+      t('every full-size original still shipped was measured (and kept for a reason)', unmeasured.length === 0,
+        unmeasured.length + ' not measured, e.g. ' + unmeasured.slice(0, 2).join(' ') + ' - run curio-hq/tools/picture_500.js --measure');
+    }
+  }
+
   console.log('\n  speed and offline, batch A - ' + pass + ' passed, ' + fail + ' failed\n');
   process.exit(fail ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });
