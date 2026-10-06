@@ -10,7 +10,7 @@ commit, not from the commit message.*
 | Live to readers | **v118** at qpio.app |
 | On UAT | **v121** at uat.qpio.app |
 | Tip of `main` | v118 |
-| Generated | 2026-10-05 |
+| Generated | 2026-10-06 |
 
 > ⏳ **Awaiting your sign-off:** v121, v120, v119. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
@@ -26,9 +26,10 @@ not by omission.*
 
 ## v121 — ⏳ on UAT
 
-2026-10-05 · 2,048 questions · sign-off: **no release issue**
+2026-10-05 · 2,048 questions · sign-off: awaiting you, [#111](https://github.com/ChalBAS/curio-hq/issues/111)
 
 - `a8b62e0` v121: Gym demos - drawings taken out, no disclaimer sentence, weaker hand first; 65 book chapter-1 questions
+- `9d13400` Releases record: v121 on UAT (173/173 live checks)
 
 ## v120 — ⏳ on UAT
 

@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-05",
+ "generated": "2026-10-06",
  "live": {
   "production": 118,
   "uat": 121,
@@ -187,7 +187,11 @@
    "to": "2026-10-05",
    "questions": 2048,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 111,
+    "issues": [
+     111
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -195,6 +199,11 @@
      "sha": "a8b62e0",
      "date": "2026-10-05",
      "subject": "v121: Gym demos - drawings taken out, no disclaimer sentence, weaker hand first; 65 book chapter-1 questions"
+    },
+    {
+     "sha": "9d13400",
+     "date": "2026-10-05",
+     "subject": "Releases record: v121 on UAT (173/173 live checks)"
     }
    ]
   },
