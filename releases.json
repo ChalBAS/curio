@@ -2,11 +2,12 @@
  "generated": "2026-10-06",
  "live": {
   "production": 118,
-  "uat": 122,
+  "uat": 123,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  123,
   122,
   121,
   120,
@@ -181,7 +182,7 @@
  ],
  "releases": [
   {
-   "version": 122,
+   "version": 123,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-10-06",
@@ -193,9 +194,37 @@
    "messageClash": [],
    "commits": [
     {
+     "sha": "b1a328b",
+     "date": "2026-10-06",
+     "subject": "v123: strict video review for the first two beta weeks (2-15 Nov) applied"
+    }
+   ]
+  },
+  {
+   "version": 122,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-06",
+   "to": "2026-10-06",
+   "questions": 2048,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 112,
+    "issues": [
+     112
+    ]
+   },
+   "messageClash": [],
+   "commits": [
+    {
      "sha": "06a3108",
      "date": "2026-10-06",
      "subject": "v122: speed and offline batch A on the test site"
+    },
+    {
+     "sha": "5b96541",
+     "date": "2026-10-06",
+     "subject": "Releases record: v122 on UAT (173/173 live checks)"
     }
    ]
   },
