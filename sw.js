@@ -1,7 +1,8 @@
 /* Curio service worker — offline-first for a fully static app.
    Releasing a change: bump CACHE *and* the ?v= asset versions here and in
-   index.html. Install fetches with cache:"reload" so the HTTP cache can
-   never pin a stale asset into a new SW cache. */
+   index.html. Install fetches with cache:"no-cache": the browser's copy is
+   used only after the server confirms it is unchanged, so the HTTP cache can
+   never pin a stale asset into a new SW cache (see the install handler). */
 const CACHE = "qpio-v121";
 // Not a versioned asset: the page's week of daily questions, read by the
 // periodicsync handler at the bottom of this file. Survives every release.
@@ -220,11 +221,23 @@ const ASSETS = [
 // itself.
 const OPTIONAL = ["./privacy", "./terms"];
 
+// NOT EVERYTHING TWICE (29 Sep 2026, carried onto v121 on 6 Oct; item 2 of the
+// speed and offline plan). Install used cache:"reload", which ignores the copy
+// the browser fetched a moment earlier to draw the page, so a first visit
+// downloaded every file twice: about 1.9 MB more, on every first visit and
+// every release. The founder, 28 Sep: "we also need to answer the performance
+// issues". cache:"no-cache" asks the server whether the browser's copy is still
+// right; the server answers "not changed" and sends nothing (uat.qpio.app:
+// ETag, "max-age=0, must-revalidate", a 304 with no body), and a changed file
+// comes down whole. So the old guarantee holds - nothing stale is ever pinned
+// into this cache - without paying for the same bytes twice.
+const FETCH_FRESH = { cache: "no-cache" };
+
 self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(CACHE)
       .then((c) => Promise.all(ASSETS.map((u) => {
-        const got = c.add(new Request(u, { cache: "reload" }));
+        const got = c.add(new Request(u, FETCH_FRESH));
         return OPTIONAL.includes(u) ? got.catch(() => {}) : got;
       })))
       .then(() => preloadFlags())
@@ -247,7 +260,7 @@ async function preloadFlags() {
   const c = await caches.open(FLAG_CACHE);
   return Promise.allSettled(FLAGS.map(async (u) => {
     if (await c.match(u)) return;
-    const res = await fetch(new Request(u, { cache: "reload" }));
+    const res = await fetch(new Request(u, FETCH_FRESH));
     if (!isPicture(res)) throw new Error("not a picture: " + u);
     await c.put(u, res);
   }));
