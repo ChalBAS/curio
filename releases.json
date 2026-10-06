@@ -2,11 +2,12 @@
  "generated": "2026-10-06",
  "live": {
   "production": 118,
-  "uat": 123,
+  "uat": 124,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  124,
   123,
   122,
   121,
@@ -182,11 +183,11 @@
  ],
  "releases": [
   {
-   "version": 123,
+   "version": 124,
    "state": "ON UAT",
    "branch": "uat",
-   "from": "2026-10-06",
-   "to": "2026-10-06",
+   "from": "2026-10-07",
+   "to": "2026-10-07",
    "questions": 2048,
    "signoff": {
     "status": "NO ISSUE"
@@ -194,9 +195,37 @@
    "messageClash": [],
    "commits": [
     {
+     "sha": "2e18536",
+     "date": "2026-10-07",
+     "subject": "v124: books and places for the beta questions under the new standard; gambling and pirated links removed"
+    }
+   ]
+  },
+  {
+   "version": 123,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-06",
+   "to": "2026-10-06",
+   "questions": 2048,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 113,
+    "issues": [
+     113
+    ]
+   },
+   "messageClash": [],
+   "commits": [
+    {
      "sha": "b1a328b",
      "date": "2026-10-06",
      "subject": "v123: strict video review for the first two beta weeks (2-15 Nov) applied"
+    },
+    {
+     "sha": "57d6cd9",
+     "date": "2026-10-06",
+     "subject": "Releases record: v123 on UAT (173/173 live checks)"
     }
    ]
   },
