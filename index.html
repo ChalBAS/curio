@@ -13,6 +13,11 @@
   <meta name="theme-color" content="#0f1020">
   <title>Qpio — knowledge, free forever</title>
   <meta name="description" content="Qpio (say: cue-pee-oh) — five questions a day, every answer sourced, and a door out to the real world. Knowledge is free, forever. I am curious to become wise — Quaero, ergo Sapio.">
+  <!-- COMFORT BEFORE THE FIRST PAINT (6 Oct 2026; speed and offline plan, item 1). The
+       loading bar under the logo moves before app.js has run, so app.js cannot yet apply
+       the reader's "reduced motion" choice; this reads the same saved setting and applies
+       the same class. The phone's own setting needs nothing (styles.css). -->
+  <script>try { if ((JSON.parse(localStorage.getItem("curio.settings")) || {}).motion === "reduced") document.documentElement.classList.add("rmotion"); } catch (e) {}</script>
   <link rel="stylesheet" href="src/styles.css?v=121">
   <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest">
@@ -37,9 +42,13 @@
     <div id="app"></div>
   </div>
 
-  <!-- iOS "add to home screen" hint (Safari has no install prompt) -->
+  <!-- iOS "add to home screen" hint (Safari has no install prompt). It gives its
+       reason (29 Sep 2026; speed and offline plan, item 1): Safari deletes a site's
+       saved data, the reader's progress included, after seven days of Safari use
+       without the site; an app on the Home Screen keeps its own count. The words are
+       mirrored in src/i18n.js (IOS_HINT_EN) and must match it byte for byte. -->
   <div class="iosbanner hidden" id="iosBanner">
-    <span id="iosHintText">Install Qpio: tap <b>Share</b> <span style="font-size:16px">􀈂</span> then <b>Add to Home Screen</b>.</span>
+    <span id="iosHintText">Install Qpio: tap <b>Share</b> <span style="font-size:16px">􀈂</span> then <b>Add to Home Screen</b>, so your progress is kept.</span>
     <button id="iosClose" aria-label="Dismiss">✕</button>
   </div>
 

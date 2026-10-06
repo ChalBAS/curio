@@ -304,6 +304,10 @@ async function tidyFlags() {
 // The shell is now NETWORK-FIRST: always fetch the newest HTML, fall back to
 // cache only when genuinely offline. Versioned assets stay cache-first, which
 // is safe precisely because their URL changes when their content does.
+// How long the page waits for the network before opening its saved copy.
+// "About 3 s" in the plan (curio-hq 10-Roadmap/proposals/
+// 2026-09-28-performance-and-offline.md §8 item 1).
+const SHELL_WAIT_MS = 3000;
 function isShell(req) {
   if (req.mode === "navigate") return true;
   const u = new URL(req.url);
@@ -382,9 +386,29 @@ self.addEventListener("fetch", (e) => {
     const key = (path === "/privacy" || path === "/privacy/") ? "./privacy"
               : (path === "/terms" || path === "/terms/") ? "./terms"
               : (path === "/" || path.endsWith("/index.html")) ? "./index.html" : null;
-    e.respondWith(fetch(req, { cache: "no-store" })
-      .then((res) => { if (key && res && res.status === 200) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(key, copy)); } return res; })
-      .catch(() => caches.match(key || "./index.html").then((hit) => hit || caches.match("./index.html")).then((hit) => hit || caches.match("./"))));
+    // A WEAK SIGNAL MUST NOT HOLD THE APP HOSTAGE (29 Sep 2026, carried onto
+    // v121 on 6 Oct; item 1 of the speed and offline plan). Network-first had
+    // no time limit. With no network at all the request fails at once and the
+    // saved copy opens; but a signal that connects and then moves no data left
+    // the reader on a blank screen for as long as the browser cared to wait.
+    // Now, when the network has not answered within SHELL_WAIT_MS and a saved
+    // copy of THIS page exists, the saved copy opens. The network keeps going
+    // and its answer is kept for next time. A first visit has no saved copy
+    // and waits as before; a page kept under no name of its own (the
+    // acceptance suite, say) is never swapped for the app after the wait -
+    // only when the network fails outright, as before.
+    const saved = () => caches.match(key || "./index.html").then((hit) => hit || caches.match("./index.html")).then((hit) => hit || caches.match("./"));
+    let kept = Promise.resolve();
+    const net = fetch(req, { cache: "no-store" })
+      .then((res) => { if (key && res && res.status === 200) { const copy = res.clone(); kept = caches.open(CACHE).then((c) => c.put(key, copy)); } return res; });
+    e.respondWith(new Promise((resolve) => {
+      let done = false, timer = null;
+      const answer = (res) => { if (done || !res) return; done = true; clearTimeout(timer); resolve(res); };
+      if (key) timer = setTimeout(() => { caches.match(key).then(answer, () => {}); }, SHELL_WAIT_MS);
+      net.then(answer, () => saved().then((hit) => answer(hit || Response.error()), () => answer(Response.error())));
+    }));
+    // the network's answer, when it comes after the saved copy, is still kept
+    e.waitUntil(net.then(() => kept, () => {}).catch(() => {}));
     return;
   }
 

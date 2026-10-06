@@ -122,6 +122,151 @@ const PIC = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Machu_Pic
   const SW_CODE = SW_SRC.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|\s)\/\/.*$/gm, '$1');   // the comments tell the story
   t('no "reload" left anywhere in the worker\'s code', !/["'`]reload["'`]/.test(SW_CODE));
 
+  /* ---------- item 1: the page opens from its saved copy after about 3 s ---------- */
+  {
+    const w = worker();
+    w.box(CACHE).set(BASE + 'index.html', new w.Res('saved page'));
+    const net = deferred();
+    w.setNetwork(() => net.p);
+    const nav = w.navigate(BASE);
+    await w.settle();
+    t('slow network, saved copy: nothing yet, the network gets its chance', nav.now() === PENDING);
+    await w.advance(2999);
+    t('... still waiting at 2.999 s', nav.now() === PENDING);
+    await w.advance(1);
+    t('... at 3 s the saved copy opens', nav.now() !== PENDING && nav.now().body === 'saved page', nav.now() === PENDING ? 'still pending' : String(nav.now().body));
+    net.resolve(new w.Res('fresh page'));
+    await Promise.all(nav.waits);
+    await w.settle();
+    t('... and the network\'s late answer is kept for next time', w.box(CACHE).get(BASE + 'index.html').body === 'fresh page');
+  }
+  {
+    const w = worker();                                       // a first visit: nothing saved
+    const net = deferred();
+    w.setNetwork(() => net.p);
+    const nav = w.navigate(BASE);
+    await w.advance(3000);
+    t('slow network, first visit: nothing to open instead, so it keeps waiting', nav.now() === PENDING);
+    net.resolve(new w.Res('first page'));
+    await w.settle();
+    t('... and opens the network\'s page when it comes', nav.now().body === 'first page');
+  }
+  {
+    const w = worker();
+    w.box(CACHE).set(BASE + 'index.html', new w.Res('saved page'));
+    w.setNetwork(() => Promise.reject(new TypeError('offline')));
+    const nav = w.navigate(BASE);
+    await w.settle();
+    t('no network at all: the saved copy opens at once, as before', nav.now().body === 'saved page');
+  }
+  {
+    const w = worker();
+    w.box(CACHE).set(BASE + 'index.html', new w.Res('saved page'));
+    w.setNetwork(() => Promise.resolve(new w.Res('fresh page')));
+    const nav = w.navigate(BASE);
+    await w.settle();
+    await Promise.all(nav.waits);
+    t('a good network: the newest page, never the saved one', nav.now().body === 'fresh page');
+    t('... and it is saved', w.box(CACHE).get(BASE + 'index.html').body === 'fresh page');
+  }
+  {
+    const w = worker();
+    w.box(CACHE).set(BASE + 'index.html', new w.Res('saved page'));
+    w.box(CACHE).set(BASE + 'privacy', new w.Res('saved privacy'));
+    w.setNetwork(() => new Promise(() => {}));
+    const nav = w.navigate(BASE + 'privacy');
+    await w.advance(3000);
+    t('the privacy page opens its own saved copy after 3 s, not the app', nav.now().body === 'saved privacy');
+    const other = w.navigate(BASE + 'tests/uat.html');
+    await w.advance(5000);
+    t('a page with no copy of its own is never swapped for the app on a slow network', other.now() === PENDING);
+  }
+  {
+    const w = worker();
+    w.box(CACHE).set(BASE + 'index.html', new w.Res('saved page'));
+    w.setNetwork(() => new Promise(() => {}));
+    const nav = w.navigate(BASE + 'terms');
+    await w.advance(5000);
+    t('the terms page with no saved copy of its own keeps waiting, never shows the app instead', nav.now() === PENDING);
+  }
+  t('the wait is about 3 s', /const SHELL_WAIT_MS = 3000;/.test(SW_SRC));
+
+  /* ---------- item 1: the words, exactly the plan's, in both languages ---------- */
+  const PLAN = [
+    ['Needs internet', 'Connexion internet requise'],
+    ['Loading the video…', 'Chargement de la vidéo…'],
+    ['This video needs a better connection. Try again in a moment.', 'Cette vidéo a besoin d’une meilleure connexion. Réessaie dans un instant.'],
+    ['This picture needs an internet connection.', 'Cette image a besoin d’une connexion internet.'],
+    /* the plan's "Qpio now works offline." is a retired claim (offline-absolute); the register's qualified form */
+    ['Qpio is now saved on this device. Most of it works offline.', 'Qpio est maintenant enregistré sur cet appareil. L’essentiel fonctionne hors ligne.']
+  ];
+  const sb = { window: {}, localStorage: { getItem: () => 'fr' }, navigator: { language: 'fr-FR' },
+               document: { documentElement: {}, getElementById: () => null, querySelector: () => null } };
+  vm.createContext(sb);
+  vm.runInContext(I18N, sb, { filename: 'i18n.js' });
+  const FR = sb.window.I18N.fr;
+  const said = (s) => APP.includes('t(' + JSON.stringify(s) + ')') || APP.includes('t(' + JSON.stringify(s).replace(/…/g, '\\u2026') + ')');
+  PLAN.forEach(([en, fr]) => {
+    t('"' + en + '" is drawn through t()', said(en));
+    t('"' + en + '" has the plan\'s French', FR[en] === fr, JSON.stringify(FR[en]));
+  });
+  const hintEn = (/<span id="iosHintText">([\s\S]*?)<\/span>\n/.exec(HTML) || [])[1] || '';
+  t('the iPhone banner gives its reason', /, so your progress is kept\.$/.test(hintEn), hintEn);
+  t('... in French too, and index.html matches the dictionary key', /, pour garder ta progression\.$/.test(FR[hintEn] || ''), JSON.stringify(FR[hintEn]));
+  const said_ = PLAN.map((p) => p.join(' ')).join(' ') + ' so your progress is kept pour garder ta progression';
+  t('no new line claims what the claims standard forbids', !/brain|memory|smart|\bIQ\b|focus|health|cerveau|mémoire|santé/i.test(said_));
+  /* THE CLAIMS REGISTER (6 Oct 2026). The plan's table said "Qpio now works offline.", a claim
+     retired on 14 Aug (offline-absolute). Every new line is read against the register the way
+     curio-hq/tools/claims.js reads a surface: a pattern on the line is a failure unless an
+     "unless" term is on the same line. */
+  {
+    const REG = path.join(ROOT, '..', 'curio-hq', '01-Charter', 'RETIRED-CLAIMS.json');
+    if (!fs.existsSync(REG)) console.log('  (claims register not checked here: no curio-hq beside this repo)');
+    else {
+      const claims = JSON.parse(fs.readFileSync(REG, 'utf8')).claims || [];
+      const lines = PLAN.flat().concat(['so your progress is kept', 'pour garder ta progression']);
+      const hits = [];
+      lines.forEach((line) => claims.forEach((c) => {
+        let re = null; try { re = new RegExp(c.pattern, 'i'); } catch (e) { return; }
+        if (re.test(line) && !(c.unless || []).some((u) => line.includes(u))) hits.push(c.id + ': ' + line);
+      }));
+      t('no new line makes a retired claim (01-Charter/RETIRED-CLAIMS.json)', hits.length === 0, hits.join(' | '));
+    }
+  }
+  t('v112\'s "not loading" line is replaced, not kept beside the new one', !/t\("The video is not loading/.test(APP) &&
+    !Object.prototype.hasOwnProperty.call(FR, 'The video is not loading. You may be offline or on a weak connection.'));
+
+  /* the weak-signal note: one timer, about 10 s; the still at once; connecting on touch */
+  {
+    const ov = (APP.match(/function openVideo\(door\) \{([\s\S]*?)\n  \}\n/) || [])[1] || '';
+    t('the video box says it needs a better connection after about 10 s', /var VIDEO_WAIT_MS = 10000;/.test(APP) && /\}, VIDEO_WAIT_MS\);/.test(ov));
+    t('... with one timer, not a second one beside v112\'s', (ov.match(/setTimeout\(/g) || []).length === 1 && !/12000/.test(ov));
+    t('the still and "Loading the video…" are drawn with the player, at once', /class="vload" role="status"><img class="vstill" src="https:\/\/i\.ytimg\.com\/vi\//.test(ov));
+    t('... and go the moment the player answers', /heard = true; loaded\(\);/.test(ov));
+    const warm = (APP.match(/document\.addEventListener\("pointerdown", function \(e\) \{([\s\S]*?)\n  \}, true\);/) || [])[1] || '';
+    t('a Watch door starts connecting when the finger touches it', /closest\("\[data-video\]"\)/.test(warm) && /rel = "preconnect"/.test(warm) && /YT_ORIGIN/.test(warm));
+    t('... only on a touch of the door, once a visit, never offline', /if \(ytWarm \|\| navigator\.onLine === false\) return;/.test(warm) && /ytWarm = true;/.test(warm) &&
+      (APP.match(/rel = "preconnect"/g) || []).length === 1);
+  }
+
+  /* the Watch door, the picture, the loading bar */
+  t('offline, every Watch door carries the words (the stylesheet, from --needs-net)', /\.is-offline \.gf-link\[data-video\] \.gf-text::after \{\s*content: var\(--needs-net/.test(CSS) &&
+    /\.is-offline \.way\[data-video\]::after \{\s*content: var\(--needs-net/.test(CSS) && /\.is-offline \.btn\[data-video\]::after \{ content: [^;]*var\(--needs-net/.test(CSS));
+  t('... set from t("Needs internet") and toggled by the network events', /setProperty\("--needs-net", JSON\.stringify\(t\("Needs internet"\)\)\)/.test(APP) &&
+    /addEventListener\("offline", netClass\)/.test(APP) && /addEventListener\("online", netClass\)/.test(APP));
+  t('a failed picture shows words, not the sand-timer', /\.qart\.is-failed \.qart-off \{\s*display: block;/.test(CSS) && !/\.qart\.is-failed \.qart-wait/.test(CSS));
+  t('the page\'s #app starts empty, so the loading bar shows until the app draws', /<div id="app"><\/div>/.test(HTML));
+  const boot = (CSS.match(/@keyframes qpioBoot \{([^\n]*)\}/) || [])[1] || '';
+  t('the loading bar has no words', /#app:empty::after \{\s*content: "";/.test(CSS));
+  t('... and moves by transform only, so nothing is ever hidden by a paused animation', /transform/.test(boot) && !/opacity|visibility|display/.test(boot), boot);
+  {
+    const head = HTML.slice(0, HTML.indexOf('<link rel="stylesheet"'));
+    const early = (/<script>([^<]*rmotion[^<]*)<\/script>/.exec(head) || [])[1] || '';
+    const doc = { documentElement: { classList: { added: [], add(c) { this.added.push(c); } } } };
+    const run = (stored) => { doc.documentElement.classList.added = []; vm.runInNewContext(early, { document: doc, localStorage: { getItem: (k) => k === 'curio.settings' ? stored : null }, JSON }); return doc.documentElement.classList.added.join(); };
+    t('Comfort\'s reduced motion stills the bar before app.js runs (read before the stylesheet paints)', !!early && run('{"motion":"reduced"}') === 'rmotion' && run('{"motion":"full"}') === '' && run(null) === '' && run('{bad') === '');
+  }
+
   console.log('\n  speed and offline, batch A - ' + pass + ' passed, ' + fail + ' failed\n');
   process.exit(fail ? 1 : 0);
 })().catch((e) => { console.error(e); process.exit(1); });

@@ -614,6 +614,37 @@
      The player is driven through YouTube's message channel, NOT by loading YouTube's
      script into this page: their code runs in their frame, never in ours. */
   var YT_ORIGIN = "https://www.youtube-nocookie.com";
+  var VIDEO_WAIT_MS = 10000;   /* "about 10 s" before the box says the video needs a better connection */
+  /* THE DOOR SAYS IT BEFORE THE TAP (29 Sep 2026, carried onto v121 on 6 Oct; speed and
+     offline plan, item 1). The founder, 28 Sep: "How can we make the app work online
+     (regarding images loading, video playing) or we keep saying the app doesn't work
+     offline". v111 explained a Watch tap with no network, but the door itself still looked
+     ready to play. With no network, <html> now carries .is-offline and the stylesheet writes
+     "Needs internet" on every Watch door on every screen, so no door has to be redrawn when
+     the network comes and goes. The words are set here, once, in the reader's language (a
+     change of language reloads the page). The door stays a button: the tap explains. */
+  document.documentElement.style.setProperty("--needs-net", JSON.stringify(t("Needs internet")));
+  function netClass() { document.documentElement.classList.toggle("is-offline", navigator.onLine === false); }
+  window.addEventListener("online", netClass);
+  window.addEventListener("offline", netClass);
+  netClass();
+  /* CONNECTING STARTS WHEN THE FINGER TOUCHES (6 Oct 2026; plan item 1, §5). The first tap
+     on Watch waits about 3 to 4 s on ordinary 4G for YouTube's player; opening the two
+     connections the tap will need while the finger is still down saves about 0.1 to 0.3 s.
+     Only on a touch or press of a Watch door itself - never when a door merely appears,
+     which would tell YouTube about readers who never watch (the plan, §9) - once a visit,
+     and not when offline. A preconnect sends no address, no cookie and no request. */
+  var ytWarm = false;
+  document.addEventListener("pointerdown", function (e) {
+    if (ytWarm || navigator.onLine === false) return;
+    if (!(e.target && e.target.closest && e.target.closest("[data-video]"))) return;
+    ytWarm = true;
+    [YT_ORIGIN, "https://i.ytimg.com"].forEach(function (o) {
+      var l = document.createElement("link");
+      l.rel = "preconnect"; l.href = o; l.crossOrigin = "anonymous";
+      document.head.appendChild(l);
+    });
+  }, true);
   function openVideo(door) {
     if (!door || !door.video || !/^[A-Za-z0-9_-]{11}$/.test(door.video)) return;
     /* OFFLINE (28 Sep 2026): a YouTube video cannot be saved to play later - YouTube's
@@ -642,9 +673,21 @@
       '<div class="vbox">' +
         '<div class="vhead"><span class="vtitle">' + esc(door.title || "") + '</span>' +
           '<button type="button" class="btn ghost vclose" aria-label="' + esc(t("Close the video")) + '">\u2715</button></div>' +
-        '<div class="vframe"><iframe title="' + esc(door.title || t("Video")) + '" src="' + esc(src) + '" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media"></iframe></div>' +
+        '<div class="vframe"><iframe title="' + esc(door.title || t("Video")) + '" src="' + esc(src) + '" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media"></iframe>' +
+          /* THE BOX IS NEVER BLANK (29 Sep 2026, carried onto v121 on 6 Oct; plan item 1).
+             YouTube's player is about 0.8 MB on a first tap: 3 to 4 s on ordinary 4G, about 9
+             on a weak signal (the plan's estimates). Until it answers, the video's own still
+             and "Loading the video…" show at once. The still comes from YouTube's picture
+             server, which the tap is about to reach anyway; no referrer is sent. The wait
+             itself is YouTube's. */
+          '<div class="vload" role="status"><img class="vstill" src="https://i.ytimg.com/vi/' + esc(door.video) + '/hqdefault.jpg" alt="" decoding="async" referrerpolicy="no-referrer">' +
+            '<p>' + esc(t("Loading the video…")) + '</p></div></div>' +
       '</div></div>');
     var frame = sheet.querySelector("iframe"), heard = false, knocks = 0, knocker = null;
+    var loading = sheet.querySelector(".vload"), still = sheet.querySelector(".vstill");
+    /* a still that cannot come leaves the words on the dark box, never a broken picture */
+    still.addEventListener("error", function () { if (still.parentNode) still.parentNode.removeChild(still); });
+    function loaded() { if (loading && loading.parentNode) loading.parentNode.removeChild(loading); loading = null; }
     function post(o) { try { frame.contentWindow.postMessage(JSON.stringify(o), YT_ORIGIN); } catch (e1) {} }
     function stop() { window.removeEventListener("message", onMsg); if (knocker) { clearInterval(knocker); knocker = null; } if (typeof slowTimer !== "undefined") clearTimeout(slowTimer); }
     function close() {
@@ -667,7 +710,7 @@
       if (e.origin !== YT_ORIGIN || e.source !== frame.contentWindow) return;   /* only this player may speak */
       var m; try { m = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (x) { return; }
       if (!m || typeof m !== "object") return;
-      if (!heard) { heard = true; if (knocker) { clearInterval(knocker); knocker = null; } if (slowNote && slowNote.parentNode) slowNote.parentNode.removeChild(slowNote); post({ event: "command", func: "addEventListener", args: ["onStateChange"] }); }
+      if (!heard) { heard = true; loaded(); if (knocker) { clearInterval(knocker); knocker = null; } if (slowNote && slowNote.parentNode) slowNote.parentNode.removeChild(slowNote); post({ event: "command", func: "addEventListener", args: ["onStateChange"] }); }
       var state = m.event === "onStateChange" ? m.info : (m.event === "infoDelivery" && m.info ? m.info.playerState : undefined);
       if (state === 0) ended();
     }
@@ -679,18 +722,20 @@
     });
     /* WEAK SIGNAL (28 Sep 2026 audit): a phone on a network with little or no internet counts
        as online, so the check above does not catch it and the reader got a blank player. If
-       YouTube's player has not answered within 12 seconds, say so; if it answers later, the
-       note goes. */
+       YouTube's player has not answered within VIDEO_WAIT_MS, say so; if it answers later, the
+       note goes. 29 Sep 2026 (speed and offline plan, item 1): about 10 s, not 12, and the
+       plan's words, which say what to do rather than guess at the cause. */
     var slowNote = null;
     var slowTimer = setTimeout(function () {
       if (heard || !sheet.parentNode) return;
-      slowNote = el('<div class="vdone vslow"><p>' + esc(t("The video is not loading. You may be offline or on a weak connection.")) + '</p><div class="btnrow" style="justify-content:center">' +
+      loaded();
+      slowNote = el('<div class="vdone vslow" role="status"><p>' + esc(t("This video needs a better connection. Try again in a moment.")) + '</p><div class="btnrow" style="justify-content:center">' +
         '<button type="button" class="btn" data-a="retry">' + esc(t("Try again")) + '</button>' +
         '<button type="button" class="btn ghost" data-a="back">' + esc(t("Back to Qpio")) + '</button></div></div>');
       slowNote.querySelector('[data-a="retry"]').addEventListener("click", function () { close(); openVideo(door); });
       slowNote.querySelector('[data-a="back"]').addEventListener("click", close);
       sheet.querySelector(".vframe").appendChild(slowNote);
-    }, 12000);
+    }, VIDEO_WAIT_MS);
     window.addEventListener("message", onMsg);
     document.addEventListener("keydown", onKey);
     sheet.addEventListener("click", function (e) { if (e.target === sheet) close(); });
@@ -3663,6 +3708,12 @@
           '<div class="qart' + (q.img.fit === "contain" ? " is-contain" : "") +
               (isGen ? " is-generated" : "") + ' is-loading">' +
             '<span class="qart-wait" aria-hidden="true">⏳</span>' +
+            // A PICTURE THAT CANNOT COME SAYS SO (29 Sep 2026, carried onto v121
+            // on 6 Oct; speed and offline plan, item 1). A failed picture used to
+            // keep a faded, motionless sand-timer, which looks like it is still
+            // loading. Shown only in the failed state (styles.css), in the
+            // timer's place.
+            '<span class="qart-off">' + esc(t("This picture needs an internet connection.")) + '</span>' +
             '<img src="' + esc(picURL(q.img.u)) + '"' +
               // the Commons address stays on the element: if the bundled copy
               // cannot be read (the new worker not yet installed, then no
@@ -5343,6 +5394,32 @@
   // tab's pagehide cannot send its open round or write firstweek and mhealth
   // back, then restart on the empty storage.
   window.addEventListener("storage", function (e) { if (e.key === "qpio.wiped" && e.newValue) { WIPING = true; try { QpioMeasure.halt(); } catch (x) {} location.replace("/"); } });
+
+  /* "QPIO NOW WORKS OFFLINE." (29 Sep 2026, carried onto v121 on 6 Oct; speed and offline
+     plan, item 1). The offline copy is several megabytes, fetched after the page has loaded;
+     closed before it is complete, Qpio does not work offline yet, and nothing said when it
+     was ready. The offline helper (sw.js) takes charge of the page only once its install has
+     saved every file, so on the visit where a page with no helper gains one, one line says
+     so. A returning reader, and a release (the page already had a helper), never see it. It
+     sits above everything but takes no tap, and goes after a few seconds; the words arrive a
+     moment after the box so a screen reader announces them. */
+  (function offlineReady() {
+    var SW = navigator.serviceWorker;
+    if (!SW || SW.controller) return;
+    var said = false;
+    SW.addEventListener("controllerchange", function () {
+      if (said) return;
+      said = true;
+      var note = el('<div class="netnote" role="status"></div>');
+      document.body.appendChild(note);
+      /* Not the plan's "Qpio now works offline.": that is a retired claim (curio-hq
+         01-Charter/RETIRED-CLAIMS.json, offline-absolute, Product Truth Audit 14 Aug 2026),
+         and untrue as it stands - a picture never seen and every video still need the
+         internet. The register's own qualified form instead (6 Oct 2026). */
+      setTimeout(function () { note.textContent = t("Qpio is now saved on this device. Most of it works offline."); }, 60);
+      setTimeout(function () { if (note.parentNode) note.parentNode.removeChild(note); }, 6000);
+    });
+  })();
 
   function openApp() {
     if (appOpen) return;
