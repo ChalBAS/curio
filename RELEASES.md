@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v118** at qpio.app |
-| On UAT | **v121** at uat.qpio.app |
+| On UAT | **v122** at uat.qpio.app |
 | Tip of `main` | v118 |
 | Generated | 2026-10-06 |
 
-> ⏳ **Awaiting your sign-off:** v121, v120, v119. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v122, v121, v120, v119. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v116 (AWAITING), v115 (AWAITING), v113 (AWAITING), v112 (AWAITING), v111 (AWAITING), v110 (AWAITING), v109 (AWAITING), v108 (AWAITING), v107 (NO ISSUE), v106 (AWAITING), v105 (AWAITING), v104 (AWAITING), v103 (AWAITING), v102 (AWAITING), v101 (AWAITING), v100 (AWAITING), v99 (AWAITING), v98 (AWAITING), v97 (NO ISSUE), v96 (REJECTED), v95 (REJECTED), v94 (NO ISSUE), v93 (NO ISSUE), v92 (NO ISSUE), v89 (NO ISSUE), v88 (NO ISSUE), v87 (NO ISSUE), v86 (NO ISSUE), v85 (NO ISSUE), v84 (NO ISSUE), v83 (AWAITING), v82 (REJECTED), v81 (REJECTED), v80 (NO ISSUE), v78 (NO ISSUE), v77 (AWAITING), v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
@@ -24,12 +24,22 @@ not by omission.*
 
 ---
 
+## v122 — ⏳ on UAT
+
+2026-10-06 · 2,048 questions · sign-off: **no release issue**
+
+- `06a3108` v122: speed and offline batch A on the test site
+
 ## v121 — ⏳ on UAT
 
-2026-10-05 · 2,048 questions · sign-off: awaiting you, [#111](https://github.com/ChalBAS/curio-hq/issues/111)
+2026-10-05 → 2026-10-06 · 2,048 questions · sign-off: awaiting you, [#111](https://github.com/ChalBAS/curio-hq/issues/111)
 
 - `a8b62e0` v121: Gym demos - drawings taken out, no disclaimer sentence, weaker hand first; 65 book chapter-1 questions
 - `9d13400` Releases record: v121 on UAT (173/173 live checks)
+- `911184e` Speed batch A, item 2: the offline copy stops downloading every file twice
+- `363a3a2` Speed batch A, item 1: say "needs internet" where the app looked broken
+- `e423a00` Speed batch A, item 4: pictures fetched so Chrome can see what arrived
+- `9c6df78` Speed batch A, item 3: question pictures at 500 px where that is lighter
 
 ## v120 — ⏳ on UAT
 

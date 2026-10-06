@@ -2,11 +2,12 @@
  "generated": "2026-10-06",
  "live": {
   "production": 118,
-  "uat": 121,
+  "uat": 122,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  122,
   121,
   120,
   119
@@ -180,11 +181,30 @@
  ],
  "releases": [
   {
+   "version": 122,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-06",
+   "to": "2026-10-06",
+   "questions": 2048,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "06a3108",
+     "date": "2026-10-06",
+     "subject": "v122: speed and offline batch A on the test site"
+    }
+   ]
+  },
+  {
    "version": 121,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-10-05",
-   "to": "2026-10-05",
+   "to": "2026-10-06",
    "questions": 2048,
    "signoff": {
     "status": "AWAITING",
@@ -204,6 +224,26 @@
      "sha": "9d13400",
      "date": "2026-10-05",
      "subject": "Releases record: v121 on UAT (173/173 live checks)"
+    },
+    {
+     "sha": "911184e",
+     "date": "2026-10-06",
+     "subject": "Speed batch A, item 2: the offline copy stops downloading every file twice"
+    },
+    {
+     "sha": "363a3a2",
+     "date": "2026-10-06",
+     "subject": "Speed batch A, item 1: say \"needs internet\" where the app looked broken"
+    },
+    {
+     "sha": "e423a00",
+     "date": "2026-10-06",
+     "subject": "Speed batch A, item 4: pictures fetched so Chrome can see what arrived"
+    },
+    {
+     "sha": "9c6df78",
+     "date": "2026-10-06",
+     "subject": "Speed batch A, item 3: question pictures at 500 px where that is lighter"
     }
    ]
   },
