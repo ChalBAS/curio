@@ -88,6 +88,11 @@ function check(name, ok, detail) {
   const viaStmt = stmts.find(s => /cohort_via_week/.test(s.sql));
   check('a finished round is counted by whether the reminder opened it, apart from country and language',
     viaStmt && !/country|lang/.test(viaStmt.sql) && I.VIAS.size === 2 && I.VIAS.has('reminder') && I.VIAS.has('direct'));
+  /* C6: the one-time return mark adds exactly one coarse increment, and only when present */
+  const withRet = I.upserts(Object.assign({}, round, { ret: 1 }), 'GB');
+  const retStmt = withRet.find(s => /return_week/.test(s.sql));
+  check('the first return on its own adds one to a weekly total, and nothing else about the device',
+    withRet.length === stmts.length + 1 && retStmt && JSON.stringify(retStmt.bind) === JSON.stringify(['2026-W36']) && !stmts.some(s => /return_week/.test(s.sql)));
   check('a round without via (a build before the reminder) counts as direct',
     I.pick(I.VIAS, undefined, 'direct') === 'direct' && I.pick(I.VIAS, 'push-id-123', 'direct') === 'direct');
 
@@ -197,6 +202,27 @@ function check(name, ok, detail) {
   M.mark(1, true, true);
   check('an abandoned round still reports what was shown', M.finish() !== false,
     'without this, a question people give up on looks exactly like a question nobody was given');
+
+  /* C6 (20 Oct 2026): the one-time "came back on its own" mark, read from what is actually sent */
+  {
+    let sent = null;
+    const keepBlob = global.Blob, keepBeacon = global.navigator.sendBeacon;
+    global.Blob = function (parts) { this.parts = parts; };
+    global.navigator.sendBeacon = (u, b) => { beacons++; sent = JSON.parse(b.parts[0]); return true; };
+    const play = () => { sent = null; M.begin({ surface: 'daily', mode: 'adult', questions: [{ id: 'Q001', qrev: 1, lrev: 1 }] }); M.mark(1, true, true); M.finish(true); return sent || {}; };
+    delete store['curio.firstday']; delete store['curio.returned'];
+    const first = play();
+    check('the first day carries no return mark, and the first day is kept on the device, never sent',
+      first.ret === 0 && !!store['curio.firstday'] && Object.keys(first).every(k => ['d', 'lang', 'mode', 'surface', 'plat', 'inst', 'av', 'cv', 'ds', 'band', 'via', 'ret', 'done', 'q', 'doors'].includes(k)));
+    check('another round the same day is not a return', play().ret === 0);
+    store['curio.firstday'] = JSON.stringify('2026-01-01');
+    global.sessionStorage = { getItem: k => (k === 'curio.via' ? 'reminder' : null), setItem() {} };
+    check('a later day opened from the morning reminder is not "on its own"', play().ret === 0 && !store['curio.returned']);
+    delete global.sessionStorage;
+    check('the first finished daily round on a later day, opened directly, carries the mark', play().ret === 1);
+    check('...and no round ever carries it again', play().ret === 0 && play().ret === 0);
+    global.Blob = keepBlob; global.navigator.sendBeacon = keepBeacon;
+  }
 
   check('a round cannot be sent twice', M.finish() === false,
     'a double send would inflate every denominator and look like growth');

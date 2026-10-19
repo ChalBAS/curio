@@ -188,6 +188,16 @@ function upserts(p, country) {
       'INSERT INTO cohort_via_week (iso_week,first_seen_band,via,rounds_completed) VALUES (?1,?2,?3,1) ' +
       'ON CONFLICT (iso_week,first_seen_band,via) DO UPDATE SET rounds_completed=rounds_completed+1',
       week, p.band, p.via);
+    /* CAME BACK ON ITS OWN, counted once per device (launch plan C6, 20 Oct 2026). The device
+     * sends ret: 1 the first time it finishes a daily round on a later day, not opened from the
+     * reminder, and never again; the sum over weeks is the number of devices that came back on
+     * their own. Nothing here can tell which. */
+    if (p.ret) {
+      add(
+        'INSERT INTO return_week (iso_week,first_returns) VALUES (?1,1) ' +
+        'ON CONFLICT (iso_week) DO UPDATE SET first_returns=first_returns+1',
+        week);
+    }
   }
 
   for (const d of p.doors) {
@@ -322,6 +332,8 @@ export function handleAnalytics(request, env, ctx, url) {
     const p = {
       day: body.d,
       lang, mode, surface, platform, band, discovery, country, via,
+      /* only a finished daily round can carry the return mark */
+      ret: body.ret === 1 && surface === 'daily' && body.done ? 1 : 0,
       installed: body.inst ? 1 : 0,
       appVersion: versionOf(body.av),
       contentVersion: versionOf(body.cv),
@@ -370,6 +382,7 @@ export async function pruneAnalytics(env) {
     ['question_country_week', 'iso_week', cutWeek],
     ['cohort_week', 'iso_week', cutWeek],
     ['cohort_via_week', 'iso_week', cutWeek],
+    ['return_week', 'iso_week', cutWeek],
   ];
   for (const [table, col, cut] of jobs) {
     try {

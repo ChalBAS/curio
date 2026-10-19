@@ -19,6 +19,8 @@
  *   how they once said they found Qpio         tiktok
  *   which week-band they first played in       new | w2_4 | w5_12 | w13plus
  *   whether the visit came from the reminder   reminder | direct
+ *   the first time this device came back       ret: 1, once per device; otherwise 0
+ *   on its own (a later day, not the reminder)
  *   per question: id, revision, translation revision, position, answered, correct
  *   per door tapped: question id, class, slot
  *
@@ -46,6 +48,13 @@
   var ENDPOINT = "/m";
   var QUEUE_KEY = "curio.mq";        // rounds that could not be sent yet
   var FIRST_KEY = "curio.firstweek"; // the week this device first played
+  /* CAME BACK ON ITS OWN (launch plan C6, 20 Oct 2026). The day this device first played is kept
+   * HERE, never sent. The first time a daily round is finished on a later day, opened directly
+   * rather than from the morning reminder, its summary carries ret: 1, once, and the device
+   * notes that it has sent it. The server only adds one to a weekly total, so it can count
+   * devices that came back without knowing which. */
+  var FIRSTDAY_KEY = "curio.firstday";
+  var RETURNED_KEY = "curio.returned";
   var OFF_KEY = "curio.measure.off"; // the reader said no
   var HEALTH_KEY = "curio.mhealth";  // what the instrument knows about itself
   var MAX_QUEUE = 20;                 // bounded: a queue that grows without limit is a leak
@@ -290,6 +299,16 @@
       if (d && d.id && d.cls && d.slot) doors.push({ id: String(d.id), cls: d.cls, slot: d.slot, n: 1 });
     }
 
+    /* the one-time return mark (see RETURNED_KEY): a finished daily round, on a later day than
+       the first, not opened from the reminder. Marked as sent before sending, so a round that
+       fails and waits in the queue can never be counted twice. */
+    var today = contentDay(), firstDay = LSget(FIRSTDAY_KEY, null), ret = 0;
+    if (!firstDay) LSset(FIRSTDAY_KEY, today);
+    else if ((r.surface || "daily") === "daily" && r.done && firstDay < today && via() === "direct" && !LSget(RETURNED_KEY, false)) {
+      ret = 1;
+      LSset(RETURNED_KEY, true);
+    }
+
     var payload = {
       d: contentDay(),
       lang: (window.QLANG === "fr" ? "fr" : "en"),
@@ -302,6 +321,7 @@
       ds: discovery(),
       band: band(),
       via: via(),
+      ret: ret,
       done: r.done ? 1 : 0,
       q: qs,
       doors: doors

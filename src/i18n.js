@@ -173,6 +173,7 @@
       "Get the first question of the day on your phone each morning.": "Reçois chaque matin la première question du jour sur ton téléphone.",
       // the morning reminder in the privacy texts (N5, 19 Oct 2026)
       "whether you opened Qpio from the morning reminder": "si tu as ouvert Qpio depuis le rappel du matin",
+      "once only: that this device has come back on its own, the first time it does": "une seule fois : que cet appareil est revenu de lui-même, la première fois que c’est le cas",
       "Only if you turn it on. To wake your phone each morning, Qpio's server keeps three things: your phone's push address, your time zone and the hour you chose.": "Seulement si tu l’actives. Pour réveiller ton téléphone chaque matin, le serveur de Qpio garde trois choses : l’adresse de notification de ton téléphone, ton fuseau horaire et l’heure que tu as choisie.",
       "They are kept in their own database in the European Union, apart from the counting, and are never linked to your answers.": "Elles sont gardées dans leur propre base, dans l’Union européenne, à part du comptage, et ne sont jamais reliées à tes réponses.",
       "The morning wake-up carries no question and nothing about you. Your phone shows today's question from the copy it already has.": "Le réveil du matin ne contient aucune question et rien sur toi. Ton téléphone affiche la question du jour à partir de la copie qu’il a déjà.",

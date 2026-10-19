@@ -171,6 +171,15 @@ CREATE TABLE IF NOT EXISTS cohort_via_week (
   PRIMARY KEY (iso_week, first_seen_band, via)
 ) WITHOUT ROWID;
 
+-- Devices that came back on their own, counted once each (launch plan C6, 20 Oct 2026). A device
+-- sends the mark the first time it finishes a daily round on a later day than its first, not
+-- opened from the reminder, and never again. The sum over weeks = devices that returned unprompted.
+-- One number per week; nothing to tell devices apart.
+CREATE TABLE IF NOT EXISTS return_week (
+  iso_week      TEXT    NOT NULL PRIMARY KEY,
+  first_returns INTEGER NOT NULL DEFAULT 0
+) WITHOUT ROWID;
+
 -- ------------------------------------------------------------ 5 · CONTENT REGISTRY
 -- What each question IS, so analysis never needs the app bundle to read the
 -- numbers, and so a question retired from the bank keeps its meaning in the
