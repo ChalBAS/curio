@@ -1805,7 +1805,10 @@
       '<p class="mini" style="margin:0 0 12px">' + t("Five puzzles of one theme, as often as you like. Never the ones in the daily Gym.") + '</p>' +
       '<div class="gthemes" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px"></div></div>');
     var list = ct.querySelector(".gthemes");
+    /* the same rule as gymThemesView: a hand-written theme with nothing new this year is left out */
+    var avoidT = gymAvoid();
     GYM.families.forEach(function (f) {
+      if (!f.infinite && !GYM.practiceSet(f.key, QLANG, 1, avoidT).length) return;
       var nm = fr && f.nameFr ? f.nameFr : f.name, bl = fr && f.blurbFr ? f.blurbFr : f.blurb;
       var b = el('<button class="btn ghost" style="text-align:left;white-space:normal;padding:10px 12px"></button>');
       b.innerHTML = '<span aria-hidden="true">' + f.icon + '</span> ' + esc(nm);
@@ -1901,12 +1904,13 @@
     LS.set("gym.seen", a);
   }
   function gymAvoid() {
-    var GYM = window.CURIO_GYM, s0 = GYM.seedForDay();
-    if (!gymDailyCache || gymDailyCache.s0 !== s0) {
+    var GYM = window.CURIO_GYM, s0 = GYM.seedForDay(), kidsNow = settings.ageMode === "kids";
+    if (GYM.setKids) GYM.setKids(kidsNow);   /* Kids mode leaves out the items not meant for children */
+    if (!gymDailyCache || gymDailyCache.s0 !== s0 || gymDailyCache.kids !== kidsNow) {
       /* both ways the daily can be dealt (with and without the moving-ball puzzle) */
       var a = GYM.dailyPrints(s0 - 30, s0 + 365, {}), b = GYM.dailyPrints(s0 - 30, s0 + 365, { exclude: ["shells"] });
       Object.keys(b).forEach(function (k) { a[k] = true; });
-      gymDailyCache = { s0: s0, prints: a };
+      gymDailyCache = { s0: s0, kids: kidsNow, prints: a };
     }
     var today = dayNumber(), recent = {};
     gymSeen().forEach(function (e) { if (e && today - e.d < GYM_SEEN_DAYS) recent[e.f] = true; });
@@ -1917,7 +1921,11 @@
     var node = el('<div class="card"><h3 style="margin:0 0 6px">' + t("Puzzles by theme") + '</h3>' +
       '<p class="mini" style="margin:0 0 12px">' + t("Five puzzles of one theme, as often as you like. Never the ones in the daily Gym.") + '</p><div class="gthemes"></div></div>');
     var list = node.querySelector(".gthemes");
+    /* a hand-written theme whose every puzzle is in the daily Gym this year has nothing to give
+       (D-101; 19 Oct 2026, launch plan B9): it is left out rather than shown as an empty door */
+    var avoid = gymAvoid();
     GYM.families.forEach(function (f) {
+      if (!f.infinite && !GYM.practiceSet(f.key, QLANG, 1, avoid).length) return;
       var b = el('<button class="btn ghost" style="display:block;width:100%;text-align:left;margin:0 0 8px;white-space:normal"></button>');
       b.innerHTML = '<b>' + f.icon + ' ' + esc(fr && f.nameFr ? f.nameFr : f.name) + '</b><br><span class="mini">' + esc(fr && f.blurbFr ? f.blurbFr : f.blurb) + '</span>';
       b.addEventListener("click", function () { startBrainGym(false, f.key); });
@@ -1936,6 +1944,7 @@
     if (!theme && gymPuzzlesDone() && !review) { goGames(); return; }
     var seed = GYM.seedForDay(), dayRec = gymDayKey(), day = todayKey();
     var motionOff = gymMotionOff() || settings.readAloud;
+    if (GYM.setKids) GYM.setKids(settings.ageMode === "kids");
     var set = theme ? GYM.practiceSet(theme, QLANG, 5, gymAvoid()) : GYM.makeSet(seed, 5, QLANG, { exclude: motionOff ? ["shells"] : [] });
     var idx = 0, right = 0, mathsSeen = 0;
     if (theme && !set.length) {

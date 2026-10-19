@@ -854,7 +854,11 @@
             a: "Ce sont deux triplés",
             opts: ["Ce sont deux triplés", "Elles ont été adoptées", "L'une est née un an plus tard", "Elles ont des pères différents"],
             why: "« Pas des jumeaux » te pousse à remettre en cause la naissance, alors que ce qu'il faut remettre en cause, c'est le chiffre deux." } },
-    { en: { q: "A woman shoots her husband, holds him under water for five minutes, then hangs him. Twenty minutes later they go out to dinner together. How?",
+    /* retired 19 Oct 2026 (launch plan B8): a shooting, a drowning and a hanging, dealt to everyone
+       including Kids on 6 Nov in the beta. Kept, so the bank's positions and every other day's
+       puzzles do not move; never dealt. */
+    { retired: "violent imagery; dealt to everyone, Kids included (18 Oct audit)",
+      en: { q: "A woman shoots her husband, holds him under water for five minutes, then hangs him. Twenty minutes later they go out to dinner together. How?",
             a: "She is a photographer developing a picture",
             opts: ["She is a photographer developing a picture", "He survived the attack", "It was a dream", "She hired an actor"],
             why: "Every verb has a second, ordinary meaning. The puzzle works because you take the first one." },
@@ -874,7 +878,10 @@
       fr: { q: "Tu es dans une course et tu doubles le deuxième. À quelle place es-tu maintenant ?",
             a: "Deuxième", opts: ["Deuxième", "Première", "Troisième", "Cela dépend du nombre de coureurs"],
             why: "Tu as pris sa place, pas celle de la première. Presque tout le monde répond « première » la première fois." } },
-    { en: { q: "A doctor gives you three pills and says take one every half hour. How long until you have taken them all?",
+    /* not for Kids (19 Oct 2026, launch plan B8): a puzzle about taking pills is a poor thing to
+       hand a child, however harmless the arithmetic */
+    { kidsOff: "taking medicine",
+      en: { q: "A doctor gives you three pills and says take one every half hour. How long until you have taken them all?",
             a: "One hour", opts: ["One hour", "One and a half hours", "Half an hour", "Three hours"],
             why: "You take the first one now. The gaps between three pills are two, not three." },
       fr: { q: "Un médecin te donne trois comprimés et te dit d'en prendre un toutes les demi-heures. Au bout de combien de temps les auras-tu tous pris ?",
@@ -977,10 +984,17 @@
             why: "Allume le premier interrupteur quelques minutes, puis éteins-le ; allume le deuxième ; ouvre la porte. Allumée : c'est le deuxième. Chaude : c'est le premier. Froide et éteinte : c'est le troisième. L'ampoule donne deux sortes d'indices, et tout le monde n'en cherche qu'une." } }
   ];
 
+  /* KIDS (19 Oct 2026, launch plan B8): set by the app from the reader's age mode before it deals.
+     A hand-written item marked kidsOff is not dealt in Kids mode; one marked retired is dealt to
+     nobody. Either way the draw moves to the next item, so every other day deals exactly what
+     it dealt before. */
+  var KIDS = false;
+  function dealable(bank) { return bank.filter(function (x) { return !x.retired; }).length; }
   function makeHand(bank, familyKey, trainsEn, trainsFr) {
     return function (seed, lang) {
       var r = rng(seed), fr = FR(lang);
       var idx = Math.floor(r() * bank.length);
+      for (var guard = 0; guard < bank.length && (bank[idx].retired || (KIDS && bank[idx].kidsOff)); guard++) idx = (idx + 1) % bank.length;
       var item = bank[idx], t = fr ? item.fr : item.en;
       /* the order is drawn once, on indices, so both languages show the same
          choices in the same places */
@@ -1567,7 +1581,11 @@
      theme from a stream of seeds of its own, skipping any the caller says to avoid. */
   /* picture puzzles share their words and choices ("Find the odd tile", cells 1-16): the picture
      itself, and where the answer is, tell them apart */
-  function fingerprint(p) { return p ? [p.family, p.prompt || "", p.show || "", (p.options || []).join("|"), String(p.answer), p.scene ? JSON.stringify(p.scene) : ""].join("#") : ""; }
+  /* the choices in ANY order (19 Oct 2026, launch plan B9): the same puzzle with its choices
+     shuffled differently is the same puzzle to a reader, and keying on their order let 6 of the
+     16 themes deal a daily puzzle on launch day. Every family's answer is the choice itself,
+     never its position, so sorting cannot change which puzzle a print names. */
+  function fingerprint(p) { return p ? [p.family, p.prompt || "", p.show || "", (p.options || []).slice().sort().join("|"), String(p.answer), p.scene ? JSON.stringify(p.scene) : ""].join("#") : ""; }
   function dailyPrints(fromSeed, toSeed, opts) {
     var out = {};
     for (var s = fromSeed; s <= toSeed; s++) makeSet(s, 5, "en", opts).forEach(function (p) { out[fingerprint(p)] = true; });
@@ -1598,6 +1616,8 @@
     make: function (key, seed, lang) { return BY_KEY[key] ? BY_KEY[key].make(seed >>> 0, lang || "en") : null; },
     makeSet: makeSet,
     seedForDay: seedForDay,
+    /* the reader's age mode, set by the app before every deal (see KIDS above) */
+    setKids: function (on) { KIDS = !!on; },
     /* the routines with nothing to answer — their own list, never in a set of five */
     drills: DRILLS,
     drillByKey: DRILL_BY_KEY,
@@ -1670,7 +1690,9 @@
                  "improves memory in daily life", "transfers to work or study",
                  "any medical or cognitive-health claim"]
     },
-    counts: { families: FAMILIES.length, generated: infinite, handWritten: FERMI.length + LATERAL.length,
-              estimation: FERMI.length, lateral: LATERAL.length, drills: DRILLS.length }
+    /* what can be dealt: a retired item stays in its bank but is never counted */
+    counts: { families: FAMILIES.length, generated: infinite,
+              handWritten: dealable(FERMI) + dealable(LATERAL),
+              estimation: dealable(FERMI), lateral: dealable(LATERAL), drills: DRILLS.length }
   };
 })();
