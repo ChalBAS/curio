@@ -2593,6 +2593,8 @@
      PUSH_KEY is the server's public key. While it is empty nothing leaves the phone and
      the reminder works as before: it is set in the release that ships the server (N3, N4)
      and the privacy text that describes it (N5). */
+  /* N5 sets it to the server's key: BLJI6Zt1Y0k7cCW-R4XP6IAXFzJxh9AGHGTwS_Ds6t2S_aeOPV60tqGgjKVJ2zUqrBwOFkcHecvMn92ti4yfn3I
+     (the private half: ~/.config/qpio/vapid-private.json, and the workers' VAPID_PRIVATE_JWK) */
   var PUSH_KEY = "";
   var PUSH_API = "/api/push/";
   function pushReady() {

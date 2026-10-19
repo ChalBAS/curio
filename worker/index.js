@@ -40,6 +40,10 @@ const AI_CRAWLERS = [
   "scrapy", "python-requests", "node-fetch", "go-http-client", "libwww-perl"
 ];
 
+// The morning question (launch plan N3/N4): sign-up endpoints and the sender.
+// Answers 503 wherever PUSH_DB is not bound, so a site without it changes nothing.
+import { handlePush, sendDue, PUSH_CRON } from "./push.js";
+
 // Search crawlers that make Qpio findable. Never blocked — they index the page,
 // they do not build models from it, and being invisible to them would cost more
 // than the bank is worth.
@@ -203,6 +207,8 @@ export default {
     const kind = classify(request.headers.get("user-agent"));
 
     if (url.pathname === "/api/stats") return stats(request, env, url);
+    const push = handlePush(request, env, url);
+    if (push) return push;
 
     // A DEMO VIDEO, A PIECE AT A TIME (v103). An iPhone plays a video only if the
     // server answers a request for part of it with that part. The asset layer
@@ -293,5 +299,10 @@ export default {
       return out;
     }
     return res;
+  },
+
+  // PUSH_CRON (every 15 minutes): the morning question to the phones whose hour has come.
+  async scheduled(event, env, ctx) {
+    if (event.cron === PUSH_CRON) ctx.waitUntil(sendDue(env));
   }
 };

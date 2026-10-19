@@ -13,6 +13,7 @@ import app from "./index.js";
 import { handleDoorInstrument, pruneOld } from "./doors.js";
 import { handleLanding, pruneLanding } from "./landing.js";
 import { handleAnalytics, pruneAnalytics } from "./analytics.js";
+import { PUSH_CRON } from "./push.js";
 
 export default {
   async fetch(request, env, ctx) {
@@ -61,6 +62,8 @@ export default {
   // per day. There is NO nightly aggregation job: aggregation happens at write
   // time and raw lines never exist.
   async scheduled(event, env, ctx) {
+    // every 15 minutes: the morning question (worker/push.js), nothing else
+    if (event.cron === PUSH_CRON) return app.scheduled(event, env, ctx);
     ctx.waitUntil(pruneOld(env));
     ctx.waitUntil(pruneLanding(env));
     ctx.waitUntil(pruneAnalytics(env));

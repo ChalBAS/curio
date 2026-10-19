@@ -65,7 +65,15 @@
 
   // Nightly retention prune â€” aggregate rows older than 13 months. One
   // invocation per day. There is no nightly aggregation job.
-  "triggers": { "crons": ["10 3 * * *"] },
+  // "*/15 * * * *": the morning question (worker/push.js PUSH_CRON) - every quarter
+  // hour, so half- and quarter-hour time zones get their own 08:00.
+  "triggers": { "crons": ["10 3 * * *", "*/15 * * * *"] },
+
+  // Sign-ups to the morning question, per IP, counted in Cloudflare's memory at the
+  // edge and never stored by us (worker/push.js). 10 a minute is far above a reader.
+  "ratelimits": [
+    { "name": "PUSH_LIMIT", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } }
+  ],
 
   // WHAT CLOUDFLARE ITSELF WRITES DOWN, and why this is not left at the default.
   //
