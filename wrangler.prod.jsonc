@@ -82,6 +82,28 @@
     "not_found_handling": "single-page-application"
   },
 
+  // THE MORNING QUESTION (worker/push.js), as on UAT: one row per phone that asked for
+  // it - push address, time zone, hour - in its own EU database (qpio-push-eu, created
+  // 20 Oct 2026 by tools/push_setup.ps1 -Prod -DatabaseOnly; jurisdiction "eu").
+  // ORDER AT THE PROMOTION THAT SHIPS IT (B14): first `tools/push_setup.ps1 -Prod`, which
+  // stores the signing key VAPID_PRIVATE_JWK on qpio-prod, then deploy. Deployed without
+  // the key, sign-ups answer 503 and the app tells readers the server could not be reached.
+  "d1_databases": [
+    {
+      "binding": "PUSH_DB",
+      "database_name": "qpio-push-eu",
+      "database_id": "bc863146-124d-43f3-9f73-472e4aead974"
+    }
+  ],
+  // every quarter hour, so half- and quarter-hour time zones get their own 08:00. The
+  // only cron here: production counting (G6) and its 03:10 prune are not switched on.
+  "triggers": { "crons": ["*/15 * * * *"] },
+  // sign-ups per IP, counted in Cloudflare's memory and never stored by us. Its own
+  // namespace, so UAT tests never use up production's allowance.
+  "ratelimits": [
+    { "name": "PUSH_LIMIT", "namespace_id": "1002", "simple": { "limit": 10, "period": 60 } }
+  ],
+
   // head_sampling_rate defaults to 1.0 — one log line per invocation, 20 million
   // included per month. Left at the default alongside the broad glob above it
   // was the same multiplier applied twice. One per cent is plenty to spot a
