@@ -25,33 +25,50 @@ const OUT = path.join(ROOT, 'worker', 'door_hosts.js');
 
 function collectHosts() {
   const hosts = new Set();
+  /* only an absolute http(s) address names a host; anything else is skipped rather than
+     crashing the build (20 Oct 2026: a non-absolute readUrl stopped this tool from v124 on,
+     and the list sat on its 22 Aug contents) */
+  const addUrl = (u) => { if (typeof u === 'string' && /^https?:\/\//i.test(u)) { try { hosts.add(new URL(u).hostname.toLowerCase()); } catch (e) { /* not an address */ } } };
   global.window = {};
   // country.js provides window.CURIO_COUNTRY; golinks reads it inside readUrl.
   require(path.join(ROOT, 'src', 'country.js'));
+  /* the per-question doors that, since 6 Oct 2026, decide what a reader actually gets
+     (doors.chosen.js wins over doors.bank.js, which wins over golinks.js's own tables) */
+  for (const f of ['doors.chosen.js', 'doors.bank.js']) { const fp = path.join(ROOT, 'src', f); if (fs.existsSync(fp)) require(fp); }
   require(path.join(ROOT, 'src', 'golinks.js'));
   const GO = global.window.CURIO_GO;
   if (!GO) throw new Error('golinks.js did not register window.CURIO_GO');
 
   Object.keys(GO.places).forEach((k) => {
     const p = GO.places[k];
-    hosts.add(new URL(p.url).hostname.toLowerCase());
-    if (p.tour) hosts.add(new URL(p.tour).hostname.toLowerCase());   // verified official visitor page
+    addUrl(p.url);
+    if (p.tour) addUrl(p.tour);   // verified official visitor page
   });
 
   // readUrl: one public destination (openlibrary.org) since 2026-08-22 (#70) —
   // the country-walk stays, so a future route change can never drift the list.
   ['US', 'GB', null].forEach((cc) => {
     global.window.CURIO_COUNTRY = { get: () => cc };
-    hosts.add(new URL(GO.readUrl('probe')).hostname.toLowerCase());
+    addUrl(GO.readUrl('probe'));
   });
 
   ['History', 'Science', 'Geography', 'Arts', 'Tech', 'Nature'].forEach((cat) => {
     ['en', 'fr'].forEach((lang) => {
       global.window.QLANG = lang;
-      const u = GO.watchUrl('probe', cat);
-      if (u) hosts.add(new URL(u).hostname.toLowerCase());
+      addUrl(GO.watchUrl('probe', cat));
     });
   });
+
+  /* every address in the two door files (read, visit and source links, both languages) */
+  const walk = (o) => {
+    if (!o || typeof o !== 'object') return;
+    for (const [k, v] of Object.entries(o)) {
+      if ((k === 'u' || k === 'url' || k === 'tour') && typeof v === 'string') addUrl(v);
+      else if (v && typeof v === 'object') walk(v);
+    }
+  };
+  walk(global.window.CURIO_DOORS_CHOSEN);
+  walk(global.window.CURIO_DOORS_BANK);
 
   return [...hosts].sort();
 }
