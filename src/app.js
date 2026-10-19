@@ -346,8 +346,8 @@
        each day's five are read from a published record, src/daily.ledger.js, written by
        curio-hq tools/daily_ledger.js: it deals only questions whose last day in the daily
        is at least minGapDays (365) ago, and it never rewrites a day already served. So
-       adding questions can no longer re-cut the deck and bring one back. Before launch the
-       walk below is used as before.
+       adding questions can no longer re-cut the deck and bring one back. Before launch,
+       outside the beta weeks below, the walk is used as before.
        NEVER THE WALK AFTER LAUNCH (28 Sep 2026 audit): a date the ledger does not cover, or
        a listed question since withdrawn, used to fall back to the walk, which can repeat a
        question within weeks. Instead the gap is filled from the ledger's own order with
@@ -357,6 +357,28 @@
     var lgMode = settings.ageMode === "kids" ? "kids" : "adult";
     var lgDays = LG && LG[lgMode];
     var lgKey = new Date(d * 86400000).toISOString().slice(0, 10);
+    /* THE BETA WEEKS (19 Oct 2026, launch plan B3: "beta daily = the reviewed locked
+       days"). From LG.beta.from to LG.beta.to the five are the locked beta days in
+       src/daily.ledger.js, the schedule whose questions were reviewed - until now the
+       app never read them and dealt the walk. A listed question since withdrawn is
+       filled, day by day in date order so no fill is used twice, from questions in no
+       beta day, those the ledger deals latest after launch first. */
+    var BT = LG && LG.beta, btDays = BT && BT[lgMode];
+    if (btDays && lgKey >= BT.from && lgKey <= BT.to && btDays[lgKey]) {
+      var btById = {}, inBeta = {}, firstAt = {};
+      for (var bi = 0; bi < p.length; bi++) btById[qid(p[bi])] = p[bi];
+      var btKeys = Object.keys(btDays).sort();
+      btKeys.forEach(function (k) { String(btDays[k]).split(",").forEach(function (id) { inBeta[id] = 1; }); });
+      Object.keys(lgDays || {}).sort().reverse().forEach(function (k) { String(lgDays[k]).split(",").forEach(function (id) { firstAt[id] = k; }); });
+      var btFree = (LG.order && LG.order[lgMode] ? String(LG.order[lgMode]).split(",") : p.map(qid))
+        .filter(function (id) { return btById[id] && !inBeta[id]; })
+        .sort(function (a, b) { return String(firstAt[b] || "9999").localeCompare(String(firstAt[a] || "9999")); });
+      for (var bk = 0, bf = 0; bk < btKeys.length && btKeys[bk] <= lgKey; bk++) {
+        /* in place: the other four keep their slots */
+        var btFive = String(btDays[btKeys[bk]]).split(",").map(function (id) { return btById[id] || (bf < btFree.length ? btById[btFree[bf++]] : null); }).filter(Boolean);
+        if (btKeys[bk] === lgKey && btFive.length === DAILY_COUNT) return btFive;
+      }
+    }
     if (lgDays && LG.from && lgKey >= LG.from) {
       var lgById = {};
       for (var li = 0; li < p.length; li++) lgById[qid(p[li])] = p[li];
@@ -438,6 +460,15 @@
       var ovKey = new Date(d * 86400000).toISOString().slice(0, 10);
       var ovFive = OV.resolve(ovKey, win, function (c) { return p.indexOf(c) + 1; }, DAILY_COUNT, settings.ageMode === "kids" ? "kids" : "adult");
       if (ovFive) return ovFive;
+    }
+    /* before the beta weeks, a card that is on a beta day leaves the window, so a tester who
+       starts early never meets it twice (the Kids walk dealt N0906 on 1 Nov, its beta day
+       15 Nov). Only ever a subset of the day's own window, so the walk still cannot repeat. */
+    if (btDays && lgKey < BT.from) {
+      var onBt = {};
+      Object.keys(btDays).forEach(function (k) { String(btDays[k]).split(",").forEach(function (id) { onBt[id] = 1; }); });
+      var winBt = win.filter(function (c) { return !onBt[qid(c)]; });
+      if (winBt.length >= DAILY_COUNT) win = winBt;
     }
     if (window.CURIO_QI && window.CURIO_QI.paceDaily && p.length >= DAILY_WINDOW)
       return window.CURIO_QI.paceDaily(win, DAILY_COUNT, d);
@@ -2540,9 +2571,9 @@
   // not the chore. "Qpio" plus a nag is a reminder; a question you cannot
   // answer is a reason to open the app.
   //
-  // No push server, and there will not be one: this is a local notification
-  // scheduled by the page while it is open, which is what a static app can
-  // honestly do. Android and desktop honour it; iOS Safari does not support
+  // This began as a local notification scheduled by the page while it is open,
+  // which is what a static app can honestly do; the morning push below (N2,
+  // 19 Oct 2026) adds a server wake-up once its key is set. Android and desktop honour it; iOS Safari does not support
   // web notifications outside an installed PWA, so the card says so rather
   // than pretending.
   function notifySupported() {
@@ -2551,6 +2582,88 @@
   function notifyState() {
     if (!notifySupported()) return "unsupported";
     return Notification.permission;   // default | granted | denied
+  }
+  /* THE MORNING QUESTION BY PUSH (N2, 19 Oct 2026; design note: curio-hq 10-Roadmap/
+     proposals/2026-10-19-daily-notification-web-push.md). Periodic Background Sync below
+     reaches only Chrome on an Android phone with Qpio installed, and never an iPhone. So
+     once a reader turns the reminder on, the phone is subscribed to Web Push and our server
+     sends it an empty wake-up at the reader's hour; the service worker then shows the
+     question this page left it, exactly as the periodic sync does. The server keeps the
+     push address, the time zone and the hour - never the language, the list or any answer.
+     PUSH_KEY is the server's public key. While it is empty nothing leaves the phone and
+     the reminder works as before: it is set in the release that ships the server (N3, N4)
+     and the privacy text that describes it (N5). */
+  var PUSH_KEY = "";
+  var PUSH_API = "/api/push/";
+  function pushReady() {
+    return !!PUSH_KEY && notifySupported() && "PushManager" in window;
+  }
+  function isIOS() {
+    var ua = navigator.userAgent || "";
+    return /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  }
+  function isStandalone() {
+    return navigator.standalone === true || !!(window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+  }
+  /* an iPhone that could have the push once Qpio is on the Home Screen, but is not yet */
+  function needsHomeScreen() {
+    return !!PUSH_KEY && isIOS() && !isStandalone();
+  }
+  function pushKeyBytes() {
+    var s = PUSH_KEY.replace(/-/g, "+").replace(/_/g, "/");
+    var raw = atob(s + "===".slice((s.length + 3) % 4));
+    var out = new Uint8Array(raw.length);
+    for (var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+    return out;
+  }
+  function pushZone() {
+    try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"; } catch (e) { return "UTC"; }
+  }
+  function pushPost(path, body) {
+    return fetch(PUSH_API + path, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body), keepalive: true
+    }).then(function (r) { if (!r.ok) throw new Error("push " + path + " " + r.status); return r; });
+  }
+  /* Subscribe (or find the subscription the phone already holds) and tell the server.
+     Resolves true when the server has it. The last address/zone/hour the server
+     accepted is remembered, so a reader who travels or changes the hour is re-sent
+     once, and an unreachable server is retried at the next start. */
+  function pushSubscribe() {
+    if (!pushReady()) return Promise.resolve(false);
+    return navigator.serviceWorker.ready.then(function (reg) {
+      return reg.pushManager.getSubscription().then(function (sub) {
+        return sub || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: pushKeyBytes() });
+      });
+    }).then(function (sub) {
+      var body = { endpoint: sub.endpoint, tz: pushZone(), hour: LS.get("nudgeHour", 8) };
+      var sig = body.endpoint + "|" + body.tz + "|" + body.hour;
+      LS.set("pushOn", true);
+      if (LS.get("pushSync", "") === sig) return true;
+      return pushPost("subscribe", body).then(function () { LS.set("pushSync", sig); return true; });
+    }).catch(function () { return false; });
+  }
+  function pushUnsubscribe() {
+    LS.set("pushOn", false); LS.set("pushSync", "");
+    if (!("serviceWorker" in navigator)) return Promise.resolve();
+    return navigator.serviceWorker.ready.then(function (reg) {
+      return reg.pushManager && reg.pushManager.getSubscription();
+    }).then(function (sub) {
+      if (!sub) return;
+      pushPost("unsubscribe", { endpoint: sub.endpoint }).catch(function () {});
+      return sub.unsubscribe();
+    }).catch(function () {});
+  }
+  function pushOn() { return pushReady() && !!LS.get("pushOn", false); }
+  /* the iPhone steps, shown in place of a prompt iPhone would refuse */
+  function homeScreenSteps() {
+    return '<p class="mini" style="margin:0 0 6px">' + t("On iPhone, Qpio can send the morning question once it is on your Home Screen:") + '</p>' +
+      '<ol class="mini" style="margin:0 0 12px;padding-left:20px">' +
+        '<li>' + t("Tap the Share button ⬆ at the bottom of Safari.") + '</li>' +
+        '<li>' + t("Choose “Add to Home Screen”.") + '</li>' +
+        '<li>' + t("Open Qpio from the new icon.") + '</li>' +
+        '<li>' + t("Come back here and tap “Remind me each morning”.") + '</li>' +
+      '</ol>';
   }
   // WAKING A PHONE WITHOUT A SERVER.
   //
@@ -2598,6 +2711,7 @@
           // its own schedule, so this is "from HH:00", not "at HH:00" — the
           // Settings copy says so honestly.
           hour: LS.get("nudgeHour", 8),
+          lang: QLANG,   // for the push handler's fallback line when a day is missing
           days: queue
         }), { headers: { "Content-Type": "application/json" } }));
       });
@@ -2608,6 +2722,8 @@
     if (!("serviceWorker" in navigator)) return;
     navigator.serviceWorker.ready.then(function (reg) {
       if (!reg.periodicSync) return;   // not Chrome/Android, or not installed
+      /* push has replaced it on this phone: one morning notification, not two */
+      if (pushOn()) { reg.periodicSync.unregister("qpio-daily").catch(function () {}); return; }
       // The permission is granted by the browser on engagement, not by a
       // prompt; a refusal here is normal and must stay silent.
       navigator.permissions.query({ name: "periodic-background-sync" })
@@ -2622,6 +2738,8 @@
   function scheduleDailyNudge() {
     primeNudge();
     if (notifyState() !== "granted" || !LS.get("nudge", false)) return;
+    /* re-sent only if the address, zone or hour changed, or the last send failed */
+    if (pushOn()) pushSubscribe();
     registerPeriodicNudge();
     var q = dailyQuestions()[0];
     if (!q) return;
@@ -2647,7 +2765,11 @@
   }
   function nudgeCard() {
     var state = notifyState();
+    /* an iPhone in Safari: the steps to the Home Screen replace the button, since
+       iPhone shows web notifications only from there */
+    if (needsHomeScreen()) state = "unsupported";
     var on = LS.get("nudge", false) && state === "granted";
+    var push = pushReady(), pushed = on && pushOn();
     var hour = LS.get("nudgeHour", 8);
     var hourOpts = "";
     for (var h = 5; h <= 22; h++) {
@@ -2659,16 +2781,19 @@
         '<div class="section-title" style="margin-top:0">🔔 ' + t("A question a day") + '</div>' +
         '<p class="mini" style="margin:0 0 12px">' +
           (state === "unsupported"
-            ? t("Your browser cannot show notifications. On iPhone, add Qpio to your home screen first.")
-            // Says exactly what it does on the reader's own device. Qpio has no
-            // server, so on Android the phone itself wakes the app once a day
-            // — and everywhere else the question can only arrive while Qpio is
-            // open. Promising more than that would be a lie we could not fix.
-            : t("Get today's actual question as a notification — the question itself, and tapping it opens Qpio straight into the daily challenge. On Android, install Qpio to your home screen and your phone delivers it on its own. Turn it off any time.")) +
+            ? (needsHomeScreen() ? '' : t("Your browser cannot show notifications. On iPhone, add Qpio to your home screen first."))
+            // Says exactly what it does on the reader's own device. Without the
+            // push server (PUSH_KEY empty) the phone itself wakes the app once a
+            // day on Android only — and everywhere else the question can only
+            // arrive while Qpio is open. Promising more would be a lie.
+            : push
+              ? t("Get today's actual question as a notification each morning — the question itself, and tapping it opens today's challenge. Works on Android, and on iPhone once Qpio is on your Home Screen. Turn it off any time.")
+              : t("Get today's actual question as a notification — the question itself, and tapping it opens Qpio straight into the daily challenge. On Android, install Qpio to your home screen and your phone delivers it on its own. Turn it off any time.")) +
         '</p>' +
+        (needsHomeScreen() ? homeScreenSteps() : '') +
         (state === "unsupported" ? '' :
           '<div class="btnrow" style="align-items:center;flex-wrap:wrap">' +
-            '<button class="btn' + (on ? " ghost" : "") + '" id="nudgeBtn">' + (on ? t("Turn off") : t("Turn on")) + '</button>' +
+            '<button class="btn' + (on ? " ghost" : "") + '" id="nudgeBtn">' + (on ? t("Turn off") : push ? t("Remind me each morning") : t("Turn on")) + '</button>' +
             (on ? '<label class="mini" style="display:inline-flex;align-items:center;gap:6px">' + t("from") +
               ' <select class="cselect" id="nudgeHour" style="width:auto;min-height:38px;margin:0">' + hourOpts + '</select></label>' : '') +
             (on ? '<button class="btn ghost" id="nudgeTest">' + t("Send a test now") + '</button>' : '') +
@@ -2684,7 +2809,12 @@
     // The status line answers "why is it not working?" without a support desk:
     // each prerequisite is checked on THIS device and reported in one line.
     var st = node.querySelector("#nudgeStatus");
-    if (st && state !== "unsupported") {
+    if (st && pushed) {
+      var hh = (hour < 10 ? "0" : "") + hour;
+      st.innerHTML = LS.get("pushSync", "")
+        ? "✅ " + tf("Delivered each morning from {h}:00 — no need to open Qpio", { h: hh })
+        : "⚠️ " + t("Turned on, but Qpio's server could not be reached — it tries again the next time you open Qpio.");
+    } else if (st && state !== "unsupported") {
       var bits = [];
       bits.push((state === "granted" ? "✅ " : "⚠️ ") + t("Permission") + ": " + t(state));
       var standalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches;
@@ -2708,6 +2838,7 @@
     if (hourSel) hourSel.addEventListener("change", function () {
       LS.set("nudgeHour", parseInt(hourSel.value, 10) || 8);
       primeNudge();
+      if (pushOn()) { pushSubscribe().then(function () { renderTab("settings"); }); return; }
       renderTab("settings");
     });
     var testBtn = node.querySelector("#nudgeTest");
@@ -2730,6 +2861,7 @@
       if (on) {
         LS.set("nudge", false);
         primeNudge();   // the service worker reads `on` from the queue, so off means off
+        if (LS.get("pushOn", false)) pushUnsubscribe();   // and the server forgets the phone
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker.ready.then(function (reg) {
             if (reg.periodicSync) reg.periodicSync.unregister("qpio-daily").catch(function () {});
@@ -2738,12 +2870,51 @@
         renderTab("settings");
         return;
       }
-      Notification.requestPermission().then(function (p) {
-        if (p === "granted") { LS.set("nudge", true); scheduleDailyNudge(); }
-        renderTab("settings");
-      });
+      enableNudge(function () { renderTab("settings"); });
     });
     return node;
+  }
+  /* Turning it on, from Settings or from the card after the first daily. Must run from a
+     tap: iPhone refuses a permission prompt that a tap did not start. */
+  function enableNudge(done) {
+    Notification.requestPermission().then(function (p) {
+      if (p !== "granted") return done();
+      LS.set("nudge", true);
+      primeNudge();
+      (pushReady() ? pushSubscribe() : Promise.resolve(false)).then(function () { scheduleDailyNudge(); done(); });
+    });
+  }
+  /* Asked once, after the reader's first daily five; never in Kids mode, never again
+     once answered or turned on, and only where the morning push can actually arrive. */
+  function nudgeAskCard() {
+    if (settings.ageMode === "kids" || LS.get("nudgeAsked", false) || LS.get("nudge", false)) return null;
+    if (!pushReady() && !needsHomeScreen()) return null;
+    if (notifyState() === "denied") return null;
+    LS.set("nudgeAsked", true);
+    var card = el(
+      '<div class="card">' +
+        '<div class="section-title" style="margin-top:0">🔔 ' + t("A question a day") + '</div>' +
+        '<p class="mini" style="margin:0 0 12px">' + t("Get the first question of the day on your phone each morning.") + '</p>' +
+        (needsHomeScreen() ? homeScreenSteps() :
+          '<div class="btnrow"><button class="btn" id="askYes">' + t("Remind me each morning") + '</button>' +
+          '<button class="btn ghost" id="askNo">' + t("Not now") + '</button></div>') +
+        '<div class="mini" id="askMsg" style="margin-top:8px"></div>' +
+      '</div>'
+    );
+    var yes = card.querySelector("#askYes"), no = card.querySelector("#askNo");
+    if (no) no.addEventListener("click", function () { card.remove(); });
+    if (yes) yes.addEventListener("click", function () {
+      yes.disabled = true;
+      enableNudge(function () {
+        var m = card.querySelector("#askMsg");
+        if (!LS.get("nudge", false)) { m.textContent = t("Notifications are blocked for this site in your browser settings."); return; }
+        m.textContent = LS.get("pushSync", "")
+          ? tf("Delivered each morning from {h}:00 — no need to open Qpio", { h: (LS.get("nudgeHour", 8) < 10 ? "0" : "") + LS.get("nudgeHour", 8) })
+          : t("Turned on, but Qpio's server could not be reached — it tries again the next time you open Qpio.");
+        no && no.remove(); yes.remove();
+      });
+    });
+    return card;
   }
 
   // WHO YOU REPRESENT.
@@ -4216,6 +4387,9 @@
     if (rec.date === todayKey()) {
       var gf = shelfCard(dailyQuestions(), rec.marks);
       if (gf) node.parentNode.appendChild(gf);
+      /* the morning reminder, offered once, under the shelf so the shelf keeps the top */
+      var ask = !already && nudgeAskCard();
+      if (ask) node.parentNode.appendChild(ask);
       // UAT curiosity diagnostic: why the daily was paced the way it was.
       if (QI_DIAG && QI) {
         var dqs = dailyQuestions();

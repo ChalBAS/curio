@@ -160,6 +160,17 @@
       "Test sent — check your notification shade. Tapping it opens today's challenge.": "Test envoyé — regarde tes notifications. En la touchant, tu ouvres le défi du jour.",
       "Could not reach the service worker — reload once and try again.": "Impossible de joindre le service worker — recharge la page et réessaie.",
       "Get today's actual question as a notification — the question itself, and tapping it opens Qpio straight into the daily challenge. On Android, install Qpio to your home screen and your phone delivers it on its own. Turn it off any time.": "Reçois la vraie question du jour en notification — la question elle-même, et en la touchant tu ouvres Qpio directement sur le défi du jour. Sur Android, installe Qpio sur ton écran d’accueil et ton téléphone la livre tout seul. Désactivable à tout moment.",
+      // the morning push (N2, 19 Oct 2026; app.js pushSubscribe)
+      "Get today's actual question as a notification each morning — the question itself, and tapping it opens today's challenge. Works on Android, and on iPhone once Qpio is on your Home Screen. Turn it off any time.": "Reçois chaque matin la vraie question du jour en notification — la question elle-même, et en la touchant tu ouvres le défi du jour. Fonctionne sur Android, et sur iPhone une fois Qpio sur ton écran d’accueil. Désactivable à tout moment.",
+      "Remind me each morning": "Me prévenir chaque matin",
+      "On iPhone, Qpio can send the morning question once it is on your Home Screen:": "Sur iPhone, Qpio peut t’envoyer la question du matin une fois sur ton écran d’accueil :",
+      "Tap the Share button ⬆ at the bottom of Safari.": "Touche le bouton Partager ⬆ en bas de Safari.",
+      "Choose “Add to Home Screen”.": "Choisis « Sur l’écran d’accueil ».",
+      "Open Qpio from the new icon.": "Ouvre Qpio depuis la nouvelle icône.",
+      "Come back here and tap “Remind me each morning”.": "Reviens ici et touche « Me prévenir chaque matin ».",
+      "Delivered each morning from {h}:00 — no need to open Qpio": "Livrée chaque matin à partir de {h}:00 — inutile d’ouvrir Qpio",
+      "Turned on, but Qpio's server could not be reached — it tries again the next time you open Qpio.": "Activé, mais le serveur de Qpio est injoignable — nouvel essai à ta prochaine ouverture de Qpio.",
+      "Get the first question of the day on your phone each morning.": "Reçois chaque matin la première question du jour sur ton téléphone.",
       "{n} to explore": "{n} à explorer",
       "Nothing here yet": "Rien ici pour l’instant",
       // The short form, for the three doors under an answer: at 360px a

@@ -502,6 +502,42 @@ self.addEventListener("periodicsync", (e) => {
   if (e.tag === "qpio-daily") e.waitUntil(nudgeToday());
 });
 
+// THE MORNING PUSH (N2, 19 Oct 2026; app.js pushSubscribe). Our server sends an empty
+// push at the reader's hour; the question comes from the queue the page left, as above.
+// A notification is ALWAYS shown: iPhone withdraws push from a site that receives one and
+// shows nothing. If the queue has no question for today, a plain line says the five are
+// ready. The day is marked sent, so the periodic sync never repeats it.
+async function pushToday() {
+  const c = await caches.open(NUDGE_CACHE);
+  const hit = await c.match(NUDGE_URL);
+  const data = hit ? await hit.json().catch(() => null) : null;
+  const n = new Date();
+  const key = n.getFullYear() + "-" +
+    String(n.getMonth() + 1).padStart(2, "0") + "-" +
+    String(n.getDate()).padStart(2, "0");
+  const day = data && data.days && data.days[key];
+  const fallback = data && data.lang === "fr" ? "Les cinq questions du jour sont prêtes." : "Today's five questions are ready.";
+  await self.registration.showNotification("Qpio", {
+    body: (day && day.q) || fallback,
+    tag: "qpio-daily-" + key,
+    badge: "icons/favicon-32.png",
+    icon: "brand/icons/qpio-icon-192.png",
+    data: { url: "./#daily" }
+  });
+  if (day && !day.sent) {
+    day.sent = true;
+    await c.put(NUDGE_URL, new Response(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json" }
+    }));
+  }
+}
+
+self.addEventListener("push", (e) => {
+  e.waitUntil(pushToday().catch(() => self.registration.showNotification("Qpio", {
+    body: "Today's five questions are ready.", tag: "qpio-daily", data: { url: "./#daily" }
+  })));
+});
+
 // Tapping the question lands the reader INSIDE the daily challenge — the Hanzi
 // pattern the CEO asked for: the notification is the first question, the tap
 // is the way to answer it. An already-open tab is navigated to #daily, not

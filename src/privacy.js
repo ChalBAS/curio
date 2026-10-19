@@ -73,6 +73,20 @@
       if (navigator.serviceWorker && navigator.serviceWorker.getRegistration) jobs.push(navigator.serviceWorker.getRegistration()
         .then(function (r) { return r && r.periodicSync ? r.periodicSync.unregister("qpio-daily") : null; }));
     } catch (e) {}
+    /* the morning push (app.js pushSubscribe): the server forgets this phone, and the phone
+       drops its subscription, so no notification arrives after a wipe */
+    try {
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistration) jobs.push(navigator.serviceWorker.getRegistration()
+        .then(function (r) { return r && r.pushManager ? r.pushManager.getSubscription() : null; })
+        .then(function (sub) {
+          if (!sub) return null;
+          try {
+            fetch("/api/push/unsubscribe", { method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ endpoint: sub.endpoint }), keepalive: true }).catch(function () {});
+          } catch (e) {}
+          return sub.unsubscribe();
+        }));
+    } catch (e) {}
     var all = Promise.all(jobs.map(function (p) { return Promise.resolve(p).catch(function () {}); }));
     return Promise.race([all, new Promise(function (r) { setTimeout(r, 3000); })]).then(function () { return res; });
   }
