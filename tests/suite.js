@@ -625,7 +625,12 @@
         s.log(lang, "gym by theme · today's puzzles, today's move and the themes are three separate cards", !!$(w, "#gymThemesCard") && $$(w, ".gymcard").length >= 3 && !$(w, "#gymThemesCard #gymToday") && !$(w, "#gymThemesCard #gymMove"), $$(w, ".gymcard").length + " card(s)");
         /* v117 acceptance (29 Sep 2026): the vault beside today's move, less empty space */
         s.log(lang, "gym · today's puzzles and today's move share one row", $$(w, ".gymrow > .gymcard").length === 2, $$(w, ".gymrow > .gymcard").length + " card(s) in the row");
-        s.log(lang, "gym by theme · all sixteen themes are on the Train page", $$(w, "#gymThemesCard .gthemes button").length === 16, $$(w, "#gymThemesCard .gthemes button").length + " theme(s)");
+        /* 19 Oct 2026 (v125, launch plan B9): every theme with something new is on the page; a
+           hand-written one whose every puzzle the daily Gym deals this year is left out (D-101) */
+        var GYMw = w.CURIO_GYM, s0w = GYMw.seedForDay(), avw = GYMw.dailyPrints(s0w - 30, s0w + 365, {});
+        Object.assign(avw, GYMw.dailyPrints(s0w - 30, s0w + 365, { exclude: ["shells"] }));
+        var wantThemes = GYMw.families.filter(function (f) { return f.infinite || GYMw.practiceSet(f.key, "en", 1, function (fp) { return !!avw[fp]; }).length; }).length;
+        s.log(lang, "gym by theme · every theme with something new is on the Train page", $$(w, "#gymThemesCard .gthemes button").length === wantThemes, $$(w, "#gymThemesCard .gthemes button").length + " of " + wantThemes + " theme(s)");
         return Promise.resolve();
       }).then(function () {
         var tb0 = $(w, "#gymToday"), done = $$(w, ".gdone li");
