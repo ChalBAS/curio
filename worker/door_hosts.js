@@ -153,7 +153,6 @@ export const DOOR_HOSTS = [
   "www.sejongpac.or.kr",
   "www.slub-dresden.de",
   "www.sobral.ce.gov.br",
-  "www.socotraisland.org",
   "www.spri.cam.ac.uk",
   "www.stadt-muenster.de",
   "www.stadt-salzburg.at",

@@ -172,6 +172,13 @@ function fakeD1() {
   const o3 = await P.sendDue({ PUSH_DB: many }, NOW, async () => { n2++; return new Response(null, { status: 201 }); });
   ok('no signing key: sends nothing', n2 === 0 && o3.due === 0);
 
+  /* 19 Oct 2026: the key stored on UAT through a PowerShell pipe began with a byte-order
+     mark and ended with a line break, JSON.parse refused it, and every send failed */
+  const marked = fakeD1();
+  marked.db.prepare('INSERT INTO push_sub (id, endpoint, tz, hour, next_utc, created) VALUES (?, ?, ?, 8, ?, 0)').run('m1', 'https://fcm.googleapis.com/fcm/send/m1', 'UTC', nowS - 60);
+  const o4 = await P.sendDue({ PUSH_DB: marked, VAPID_PRIVATE_JWK: '﻿' + senv.VAPID_PRIVATE_JWK + '\r\n' }, NOW, async () => new Response(null, { status: 201 }));
+  ok('a key stored with a byte-order mark and a line break still signs', o4.sent === 1 && o4.failed === 0, JSON.stringify(o4));
+
   console.log('\n  morning question (push) - ' + (failed ? failed + ' FAILED' : 'all checks passed'));
   process.exit(failed ? 1 : 0);
 })().catch(e => { console.error(e); process.exit(1); });

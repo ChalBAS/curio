@@ -8,6 +8,9 @@
 #   powershell -File tools/push_setup.ps1          UAT:        qpio-push-uat-eu + secret on qpio-uat
 #   powershell -File tools/push_setup.ps1 -Prod    production: qpio-push-eu + secret on qpio-prod
 #                                                  (run at the promotion that ships push)
+#   ... -Prod -DatabaseOnly                        the database and table only, ahead of time.
+#                                                  Storing a secret republishes the worker, so on
+#                                                  production that waits for the accepted release.
 #
 # WHY THE LAPTOP LOGIN: the CLOUDFLARE_API_TOKEN in the user environment has no D1
 # permission, so this uses wrangler's own login. If it has expired, run
@@ -19,7 +22,7 @@
 # After a first run, put the printed database id into wrangler.jsonc (UAT) or
 # wrangler.prod.jsonc (-Prod) as the PUSH_DB binding.
 
-param([switch]$Prod)
+param([switch]$Prod, [switch]$DatabaseOnly)
 $ErrorActionPreference = "Stop"
 $app = Split-Path -Parent $PSScriptRoot
 $db = if ($Prod) { "qpio-push-eu" } else { "qpio-push-uat-eu" }
@@ -53,9 +56,18 @@ $tmp = Join-Path $env:TEMP "qpio-push-setup"; New-Item -ItemType Directory -Forc
 Push-Location $tmp
 try { & npx --no-install wrangler d1 execute $db --remote --yes --file (Join-Path $app "worker\push-schema.sql") } finally { Pop-Location }
 
-# 3. The signing key, as a secret of the worker. Piped, never printed.
-Push-Location $app
-try { Get-Content $key -Raw | & npx --no-install wrangler secret put VAPID_PRIVATE_JWK -c $cfg } finally { Pop-Location }
+# 3. The signing key, as a secret of the worker. Never printed.
+#    Handed over by cmd's file redirect, byte for byte. NOT a PowerShell pipe: Windows
+#    PowerShell 5.1 re-encodes piped text and puts an invisible byte-order mark in front
+#    and a line break behind, the server cannot read a key that starts with that mark,
+#    and every morning send failed (found 19 Oct 2026 by the end-to-end test).
+if ($DatabaseOnly) {
+  Write-Output "secret not stored (-DatabaseOnly): run again without it at the promotion"
+} else {
+  Push-Location $app
+  try { & cmd /c "npx --no-install wrangler secret put VAPID_PRIVATE_JWK -c $cfg < `"$key`"" } finally { Pop-Location }
+  if ($LASTEXITCODE -ne 0) { throw "storing the signing key failed" }
+}
 
 Write-Output ""
 Write-Output "PUSH_DB for $cfg -> database_name $db, database_id $($found.uuid)"

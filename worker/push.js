@@ -168,7 +168,10 @@ async function pushRoute(request, env, url) {
 let KEY = null;   // { jwk, private CryptoKey, k (public key, raw, base64url) }
 async function vapidKey(env) {
   if (KEY && KEY.jwk === env.VAPID_PRIVATE_JWK) return KEY;
-  const jwk = JSON.parse(env.VAPID_PRIVATE_JWK);
+  /* a byte-order mark or a line break around the stored key is not part of it: Windows
+     PowerShell adds both when the key is piped in, and JSON.parse refuses the mark, which
+     silently failed every send on UAT until 19 Oct 2026 */
+  const jwk = JSON.parse(String(env.VAPID_PRIVATE_JWK).replace(/^﻿/, '').trim());
   const priv = await crypto.subtle.importKey('jwk', { kty: 'EC', crv: 'P-256', x: jwk.x, y: jwk.y, d: jwk.d, ext: true },
     { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
   const raw = new Uint8Array(65);
