@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v118** at qpio.app |
-| On UAT | **v124** at uat.qpio.app |
+| On UAT | **v125** at uat.qpio.app |
 | Tip of `main` | v118 |
-| Generated | 2026-10-06 |
+| Generated | 2026-10-19 |
 
-> ⏳ **Awaiting your sign-off:** v124, v123, v122, v121, v120, v119. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v125, v124, v123, v122, v121, v120, v119. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v116 (AWAITING), v115 (AWAITING), v113 (AWAITING), v112 (AWAITING), v111 (AWAITING), v110 (AWAITING), v109 (AWAITING), v108 (AWAITING), v107 (NO ISSUE), v106 (AWAITING), v105 (AWAITING), v104 (AWAITING), v103 (AWAITING), v102 (AWAITING), v101 (AWAITING), v100 (AWAITING), v99 (AWAITING), v98 (AWAITING), v97 (NO ISSUE), v96 (REJECTED), v95 (REJECTED), v94 (NO ISSUE), v93 (NO ISSUE), v92 (NO ISSUE), v89 (NO ISSUE), v88 (NO ISSUE), v87 (NO ISSUE), v86 (NO ISSUE), v85 (NO ISSUE), v84 (NO ISSUE), v83 (AWAITING), v82 (REJECTED), v81 (REJECTED), v80 (NO ISSUE), v78 (NO ISSUE), v77 (AWAITING), v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
@@ -24,11 +24,27 @@ not by omission.*
 
 ---
 
+## v125 — ⏳ on UAT
+
+2026-10-20 · 2,048 questions · sign-off: **no release issue**
+
+- `25a4532` v125: the beta build - locked beta days, the morning reminder (sign-up, server, privacy text), safer doors and Gym
+- `28cd280` UAT suite: every Gym theme with something new is on the Train page (was: all sixteen), matching v125 / B9
+
 ## v124 — ⏳ on UAT
 
-2026-10-07 · 2,048 questions · sign-off: **no release issue**
+2026-10-07 → 2026-10-20 · 2,048 questions · sign-off: awaiting you, [#114](https://github.com/ChalBAS/curio-hq/issues/114)
 
 - `2e18536` v124: books and places for the beta questions under the new standard; gambling and pirated links removed
+- `5d693ac` Releases record: v124 on UAT (173/173 live checks)
+- `9baf359` Beta days dealt from the locked schedule (B3); morning push sign-up, dormant until the server ships (N2)
+- `c89628f` Morning question server: sign-up endpoints (N3) and the quarter-hourly sender (N4)
+- `72be4f7` Morning question: EU database qpio-push-uat-eu created and bound (PUSH_DB); signing key stored on qpio-uat
+- `9812d00` Privacy text for the morning reminder (N5), and the reminder switched on: PUSH_KEY set
+- `cc8dfa5` Daily ledger: the locked beta weeks start on the 1 Nov soft launch (B4)
+- `f787d68` Count visits opened from the morning reminder apart (N6)
+- `c4b53f5` Read doors: unsafe or off-subject books out, 13 reviewed books in (B10)
+- `4136f60` Gym: theme rounds never repeat the daily puzzles (B9); the shooting riddle retired, a Kids filter (B8)
 
 ## v123 — ⏳ on UAT
 

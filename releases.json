@@ -1,12 +1,13 @@
 {
- "generated": "2026-10-06",
+ "generated": "2026-10-19",
  "live": {
   "production": 118,
-  "uat": 124,
+  "uat": 125,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  125,
   124,
   123,
   122,
@@ -183,11 +184,11 @@
  ],
  "releases": [
   {
-   "version": 124,
+   "version": 125,
    "state": "ON UAT",
    "branch": "uat",
-   "from": "2026-10-07",
-   "to": "2026-10-07",
+   "from": "2026-10-20",
+   "to": "2026-10-20",
    "questions": 2048,
    "signoff": {
     "status": "NO ISSUE"
@@ -195,9 +196,82 @@
    "messageClash": [],
    "commits": [
     {
+     "sha": "25a4532",
+     "date": "2026-10-20",
+     "subject": "v125: the beta build - locked beta days, the morning reminder (sign-up, server, privacy text), safer doors and Gym"
+    },
+    {
+     "sha": "28cd280",
+     "date": "2026-10-20",
+     "subject": "UAT suite: every Gym theme with something new is on the Train page (was: all sixteen), matching v125 / B9"
+    }
+   ]
+  },
+  {
+   "version": 124,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-07",
+   "to": "2026-10-20",
+   "questions": 2048,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 114,
+    "issues": [
+     114
+    ]
+   },
+   "messageClash": [],
+   "commits": [
+    {
      "sha": "2e18536",
      "date": "2026-10-07",
      "subject": "v124: books and places for the beta questions under the new standard; gambling and pirated links removed"
+    },
+    {
+     "sha": "5d693ac",
+     "date": "2026-10-07",
+     "subject": "Releases record: v124 on UAT (173/173 live checks)"
+    },
+    {
+     "sha": "9baf359",
+     "date": "2026-10-19",
+     "subject": "Beta days dealt from the locked schedule (B3); morning push sign-up, dormant until the server ships (N2)"
+    },
+    {
+     "sha": "c89628f",
+     "date": "2026-10-19",
+     "subject": "Morning question server: sign-up endpoints (N3) and the quarter-hourly sender (N4)"
+    },
+    {
+     "sha": "72be4f7",
+     "date": "2026-10-19",
+     "subject": "Morning question: EU database qpio-push-uat-eu created and bound (PUSH_DB); signing key stored on qpio-uat"
+    },
+    {
+     "sha": "9812d00",
+     "date": "2026-10-19",
+     "subject": "Privacy text for the morning reminder (N5), and the reminder switched on: PUSH_KEY set"
+    },
+    {
+     "sha": "cc8dfa5",
+     "date": "2026-10-19",
+     "subject": "Daily ledger: the locked beta weeks start on the 1 Nov soft launch (B4)"
+    },
+    {
+     "sha": "f787d68",
+     "date": "2026-10-19",
+     "subject": "Count visits opened from the morning reminder apart (N6)"
+    },
+    {
+     "sha": "c4b53f5",
+     "date": "2026-10-19",
+     "subject": "Read doors: unsafe or off-subject books out, 13 reviewed books in (B10)"
+    },
+    {
+     "sha": "4136f60",
+     "date": "2026-10-20",
+     "subject": "Gym: theme rounds never repeat the daily puzzles (B9); the shooting riddle retired, a Kids filter (B8)"
     }
    ]
   },
