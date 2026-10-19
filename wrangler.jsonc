@@ -60,6 +60,16 @@
       "binding": "ANALYTICS_DB",
       "database_name": "qpio-analytics-eu",
       "database_id": "a6e9f9b4-98cc-4e32-842b-71aab98fe1a3"
+    },
+    // THE MORNING QUESTION (worker/push.js): one row per phone that asked for it -
+    // push address, time zone, hour. Personal data, so its own database, apart from
+    // the anonymous counting. Created 19 Oct 2026 by tools/push_setup.ps1 with
+    // --jurisdiction=eu (confirmed: jurisdiction "eu"). The signing key is the
+    // worker secret VAPID_PRIVATE_JWK, stored by the same script.
+    {
+      "binding": "PUSH_DB",
+      "database_name": "qpio-push-uat-eu",
+      "database_id": "6a9e037d-5a19-4177-9c96-6a6c30c0dd1c"
     }
   ],
 

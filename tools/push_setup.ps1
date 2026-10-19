@@ -10,8 +10,9 @@
 #                                                  (run at the promotion that ships push)
 #
 # WHY THE LAPTOP LOGIN: the CLOUDFLARE_API_TOKEN in the user environment has no D1
-# permission, so this uses wrangler's own login. If it has expired, wrangler opens a
-# dash.cloudflare.com page in the browser; the founder clicks Allow, once.
+# permission, so this uses wrangler's own login. If it has expired, run
+# tools/cf_login.ps1 first: a short code the founder approves on any device. (The
+# browser-callback login timed out twice on 19 Oct; the code login worked first time.)
 #
 # The private key is read from ~/.config/qpio/vapid-private.json (this Windows user
 # only) and piped straight into wrangler. It is never printed and never in the repo.
@@ -30,7 +31,9 @@ Remove-Item Env:\CLOUDFLARE_API_TOKEN -ErrorAction SilentlyContinue
 function W { Push-Location $app; try { & npx --no-install wrangler @args } finally { Pop-Location } }
 
 # 1. The database, in the EU. The jurisdiction can only be chosen at creation.
-$list = (W d1 list --json | Out-String) | ConvertFrom-Json
+$raw = W d1 list --json | Out-String
+if ($LASTEXITCODE -ne 0) { throw "Cloudflare login missing or expired - run tools/cf_login.ps1 first (a short code to approve on any device)." }
+$list = $raw | ConvertFrom-Json
 $found = $list | Where-Object { $_.name -eq $db }
 if ($found) {
   Write-Output "database $db exists: $($found.uuid)"
