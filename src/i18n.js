@@ -163,7 +163,7 @@
       // the morning push (N2, 19 Oct 2026; app.js pushSubscribe)
       "Get today's actual question as a notification each morning — the question itself, and tapping it opens today's challenge. Works on Android, and on iPhone once Qpio is on your Home Screen. Turn it off any time.": "Reçois chaque matin la vraie question du jour en notification — la question elle-même, et en la touchant tu ouvres le défi du jour. Fonctionne sur Android, et sur iPhone une fois Qpio sur ton écran d’accueil. Désactivable à tout moment.",
       "Remind me each morning": "Me prévenir chaque matin",
-      "On iPhone, Qpio can send the morning question once it is on your Home Screen:": "Sur iPhone, Qpio peut t’envoyer la question du matin une fois sur ton écran d’accueil :",
+      "On iPhone, Qpio can send the morning question once it is on your Home Screen:": "Sur iPhone, Qpio peut t’envoyer la question du matin une fois sur ton écran d’accueil :",
       "Tap the Share button ⬆ at the bottom of Safari.": "Touche le bouton Partager ⬆ en bas de Safari.",
       "Choose “Add to Home Screen”.": "Choisis « Sur l’écran d’accueil ».",
       "Open Qpio from the new icon.": "Ouvre Qpio depuis la nouvelle icône.",
@@ -171,6 +171,19 @@
       "Delivered each morning from {h}:00 — no need to open Qpio": "Livrée chaque matin à partir de {h}:00 — inutile d’ouvrir Qpio",
       "Turned on, but Qpio's server could not be reached — it tries again the next time you open Qpio.": "Activé, mais le serveur de Qpio est injoignable — nouvel essai à ta prochaine ouverture de Qpio.",
       "Get the first question of the day on your phone each morning.": "Reçois chaque matin la première question du jour sur ton téléphone.",
+      // the morning reminder in the privacy texts (N5, 19 Oct 2026)
+      "Only if you turn it on. To wake your phone each morning, Qpio's server keeps three things: your phone's push address, your time zone and the hour you chose.": "Seulement si tu l’actives. Pour réveiller ton téléphone chaque matin, le serveur de Qpio garde trois choses : l’adresse de notification de ton téléphone, ton fuseau horaire et l’heure que tu as choisie.",
+      "They are kept in their own database in the European Union, apart from the counting, and are never linked to your answers.": "Elles sont gardées dans leur propre base, dans l’Union européenne, à part du comptage, et ne sont jamais reliées à tes réponses.",
+      "The morning wake-up carries no question and nothing about you. Your phone shows today's question from the copy it already has.": "Le réveil du matin ne contient aucune question et rien sur toi. Ton téléphone affiche la question du jour à partir de la copie qu’il a déjà.",
+      "They are deleted as soon as you turn the reminder off or delete everything on this device, or when your phone's push service says the address no longer works.": "Elles sont effacées dès que tu désactives le rappel ou effaces tout sur cet appareil, ou quand le service de notifications de ton téléphone indique que l’adresse ne fonctionne plus.",
+      "The morning reminder": "Le rappel du matin",
+      "Your reminder is on, so Qpio's server has these three things.": "Ton rappel est activé : le serveur de Qpio a donc ces trois choses.",
+      "Your reminder is off, so Qpio's server has nothing for this device.": "Ton rappel est désactivé : le serveur de Qpio n’a donc rien pour cet appareil.",
+      "If you turn on the morning reminder, your phone's push service (Google, Apple, Mozilla or Microsoft) carries Qpio's wake-up. It already knows your phone; from Qpio it gets only an empty message.": "Si tu actives le rappel du matin, le service de notifications de ton téléphone (Google, Apple, Mozilla ou Microsoft) transporte le réveil de Qpio. Il connaît déjà ton téléphone ; de Qpio, il ne reçoit qu’un message vide.",
+      "The one exception is the morning reminder, if you turned it on. Turning it off, or deleting everything on this device, removes it from Qpio's server at once.": "Seule exception : le rappel du matin, si tu l’as activé. Le désactiver, ou tout effacer sur cet appareil, le supprime aussitôt du serveur de Qpio.",
+      "on, from {h}:00 (Qpio's server has your push address)": "activé, à partir de {h}:00 (le serveur de Qpio a ton adresse de notification)",
+      "Turning it on gives Qpio your phone's push address, your time zone and the hour, kept in the European Union until you turn it off.": "L’activer donne à Qpio l’adresse de notification de ton téléphone, ton fuseau horaire et l’heure, gardés dans l’Union européenne jusqu’à ce que tu le désactives.",
+      "What is kept": "Ce qui est gardé",
       "{n} to explore": "{n} à explorer",
       "Nothing here yet": "Rien ici pour l’instant",
       // The short form, for the three doors under an answer: at 360px a

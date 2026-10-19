@@ -175,6 +175,34 @@ const absent = (hay, list) => list.filter(s => hay.includes(s));
     unregistered.join() === 'qpio-daily',
     'viewed img/gen/ pictures leave the app cache; the app files stay so Qpio reopens offline');
 
+  /* 4b. the morning reminder (N5, 19 Oct 2026): the full delete also makes the server
+     forget the phone, and the phone drop its subscription */
+  const posted = [];
+  let dropped = 0;
+  const withPush = load({
+    localStorage: fakeStorage({}).st, sessionStorage: fakeStorage({}).st,
+    fetch: (u, o) => { posted.push({ u, body: o && o.body }); return Promise.resolve({ ok: true }); },
+    navigator: { serviceWorker: { getRegistration: () => Promise.resolve({
+      pushManager: { getSubscription: () => Promise.resolve({ endpoint: 'https://fcm.googleapis.com/fcm/send/x', unsubscribe: () => { dropped++; return Promise.resolve(true); } }) }
+    }) } },
+  });
+  await withPush.QpioPrivacy.wipeDevice();
+  check('the full delete tells the server to forget the phone, and drops the subscription on the phone',
+    posted.length === 1 && posted[0].u === '/api/push/unsubscribe' && JSON.parse(posted[0].body).endpoint === 'https://fcm.googleapis.com/fcm/send/x' && dropped === 1,
+    JSON.stringify(posted));
+
+  /* 4c. /privacy says what the reminder keeps, in both languages, and the table has nothing more */
+  const schema = read('worker/push-schema.sql');
+  const cols = [...schema.matchAll(/^\s+(\w+)\s+(?:TEXT|INTEGER)/gm)].map(m => m[1]).sort().join();
+  check('the reminder table holds only address, zone, hour and its own bookkeeping (a new column must be described on /privacy first)',
+    cols === 'created,endpoint,fails,hour,id,last_sent,next_utc,tz', cols);
+  const pushKey = (/var\s+PUSH_KEY\s*=\s*"([^"]*)"/.exec(app) || [])[1];
+  check('with the reminder switched on in the app, /privacy describes it in English and French',
+    !pushKey || (page.includes('id="reminder"') && page.includes('id="rappel"') &&
+      ['push address', 'time zone', 'hour you chose', 'European Union', 'deleted <strong>at once</strong>'].every(s => page.includes(s)) &&
+      ['adresse de notification', 'fuseau horaire', 'heure choisie', 'Union européenne', 'effacées <strong>immédiatement</strong>'].every(s => page.includes(s))),
+    pushKey ? 'PUSH_KEY set' : 'PUSH_KEY empty');
+
   console.log('\nPrivacy — the app\n');
 
   /* 5 */

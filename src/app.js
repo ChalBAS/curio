@@ -2590,12 +2590,13 @@
      sends it an empty wake-up at the reader's hour; the service worker then shows the
      question this page left it, exactly as the periodic sync does. The server keeps the
      push address, the time zone and the hour - never the language, the list or any answer.
-     PUSH_KEY is the server's public key. While it is empty nothing leaves the phone and
-     the reminder works as before: it is set in the release that ships the server (N3, N4)
-     and the privacy text that describes it (N5). */
-  /* N5 sets it to the server's key: BLJI6Zt1Y0k7cCW-R4XP6IAXFzJxh9AGHGTwS_Ds6t2S_aeOPV60tqGgjKVJ2zUqrBwOFkcHecvMn92ti4yfn3I
-     (the private half: ~/.config/qpio/vapid-private.json, and the workers' VAPID_PRIVATE_JWK) */
-  var PUSH_KEY = "";
+     PUSH_KEY is the server's public key; with it empty, nothing leaves the phone and the
+     reminder works as it did before push. Set 19 Oct 2026 (N5), together with the privacy
+     text that describes it (/privacy#reminder, and the Privacy screen's reminder card).
+     The private half: ~/.config/qpio/vapid-private.json on the founder's laptop, and the
+     workers' secret VAPID_PRIVATE_JWK (tools/push_setup.ps1). A new key would orphan
+     every phone already signed up. */
+  var PUSH_KEY = "BLJI6Zt1Y0k7cCW-R4XP6IAXFzJxh9AGHGTwS_Ds6t2S_aeOPV60tqGgjKVJ2zUqrBwOFkcHecvMn92ti4yfn3I";
   var PUSH_API = "/api/push/";
   function pushReady() {
     return !!PUSH_KEY && notifySupported() && "PushManager" in window;
@@ -2658,6 +2659,11 @@
   }
   function pushOn() { return pushReady() && !!LS.get("pushOn", false); }
   /* the iPhone steps, shown in place of a prompt iPhone would refuse */
+  /* said at the moment of turning it on, in the words /privacy uses (N5) */
+  function pushNotice() {
+    return '<p class="mini" style="margin:0 0 12px">' + t("Turning it on gives Qpio your phone's push address, your time zone and the hour, kept in the European Union until you turn it off.") +
+      ' <a href="/privacy#' + (QLANG === "fr" ? "rappel" : "reminder") + '">' + t("What is kept") + '</a></p>';
+  }
   function homeScreenSteps() {
     return '<p class="mini" style="margin:0 0 6px">' + t("On iPhone, Qpio can send the morning question once it is on your Home Screen:") + '</p>' +
       '<ol class="mini" style="margin:0 0 12px;padding-left:20px">' +
@@ -2793,6 +2799,7 @@
               : t("Get today's actual question as a notification — the question itself, and tapping it opens Qpio straight into the daily challenge. On Android, install Qpio to your home screen and your phone delivers it on its own. Turn it off any time.")) +
         '</p>' +
         (needsHomeScreen() ? homeScreenSteps() : '') +
+        (push && !on && state !== "unsupported" ? pushNotice() : '') +
         (state === "unsupported" ? '' :
           '<div class="btnrow" style="align-items:center;flex-wrap:wrap">' +
             '<button class="btn' + (on ? " ghost" : "") + '" id="nudgeBtn">' + (on ? t("Turn off") : push ? t("Remind me each morning") : t("Turn on")) + '</button>' +
@@ -2897,7 +2904,7 @@
       '<div class="card">' +
         '<div class="section-title" style="margin-top:0">🔔 ' + t("A question a day") + '</div>' +
         '<p class="mini" style="margin:0 0 12px">' + t("Get the first question of the day on your phone each morning.") + '</p>' +
-        (needsHomeScreen() ? homeScreenSteps() :
+        (needsHomeScreen() ? homeScreenSteps() : pushNotice() +
           '<div class="btnrow"><button class="btn" id="askYes">' + t("Remind me each morning") + '</button>' +
           '<button class="btn ghost" id="askNo">' + t("Not now") + '</button></div>') +
         '<div class="mini" id="askMsg" style="margin-top:8px"></div>' +
@@ -3264,6 +3271,7 @@
     wrap.appendChild(el('<div class="card"><h3 style="margin:0 0 8px">' + t("Your curiosity is yours.") + '</h3><p class="mini" style="margin:0">' + t("Qpio collects only information that has a defined purpose for improving the product, understanding its performance, operating a feature the reader chose, or fulfilling a transaction the reader initiated. We are transparent about what we collect, we do not sell reader data, and anonymous behaviour is not turned into a personal profile.") + '</p></div>'));
     wrap.appendChild(pvDeviceCard(kids));
     wrap.appendChild(pvCountingCard(kids));
+    if (PUSH_KEY) wrap.appendChild(pvReminderCard(kids));
     wrap.appendChild(pvServicesCard(kids));
     wrap.appendChild(pvRightsCard(kids));
     // Same window on purpose: a new tab can have separate storage on an
@@ -3308,7 +3316,7 @@
   // Keys the list names on a line of its own; anything else Qpio keeps is
   // counted on the last line, so nothing is left out of the picture.
   var PV_LISTED = ["playerName", "leaderboard", "country", "discovery", "vault", "stats", "streak", "hiscore",
-    "gym.vault", "gym.day", "gym.day.kids", "qseen2", "settings", "lang", "nudge", "nudgeHour", "measure.off", "firstweek", "mq", "mhealth", "terms"];
+    "gym.vault", "gym.day", "gym.day.kids", "qseen2", "settings", "lang", "nudge", "nudgeHour", "pushOn", "pushSync", "measure.off", "firstweek", "mq", "mhealth", "terms"];
   function pvRow(label, value) { return '<div><dt>' + label + '</dt><dd>' + esc(value) + '</dd></div>'; }
 
   // Built each time the panel opens, so every value is what is stored now.
@@ -3358,7 +3366,9 @@
     // The agreement to the terms (src/terms.js): which version, and the day.
     var tr = window.QpioTerms ? QpioTerms.read() : null;
     rows.push(pvRow(t("Terms of use you agreed to"), tr ? tf("{version}, on {date}", { version: termsName(tr.terms), date: termsDay(tr.at) }) : t("none")));
-    rows.push(pvRow(t("Daily reminder"), (LS.get("nudge", false) && notifyState() === "granted") ? tf("on, from {h}:00", { h: LS.get("nudgeHour", 8) }) : t("off")));
+    rows.push(pvRow(t("Daily reminder"), (LS.get("nudge", false) && notifyState() === "granted")
+      ? (pushOn() ? tf("on, from {h}:00 (Qpio's server has your push address)", { h: LS.get("nudgeHour", 8) }) : tf("on, from {h}:00", { h: LS.get("nudgeHour", 8) }))
+      : t("off")));
     rows.push(pvRow(t("Counting"), (window.QpioMeasure && !QpioMeasure.isOff()) ? t("on") : t("off")));
     var ws = window.QpioPrivacy ? QpioPrivacy.weekStart(LS.get("firstweek", null)) : null;
     if (ws) rows.push(pvRow(t("When this device first played (used for counting)"), tf("week of {date}", { date: pvDate(ws, true) })));
@@ -3601,6 +3611,22 @@
     return node;
   }
 
+  // ---- 3b. The morning reminder (N5, 19 Oct 2026) ----
+  // What Qpio's server keeps when the reader turns the reminder on (worker/push.js,
+  // push-schema.sql), said in the same words as /privacy#reminder.
+  function pvReminderCard(kids) {
+    var on = LS.get("nudge", false) && pushOn();
+    var body =
+      pvLine(t("Only if you turn it on. To wake your phone each morning, Qpio's server keeps three things: your phone's push address, your time zone and the hour you chose.")) +
+      pvLine(t("They are kept in their own database in the European Union, apart from the counting, and are never linked to your answers.")) +
+      pvLine(t("The morning wake-up carries no question and nothing about you. Your phone shows today's question from the copy it already has.")) +
+      pvLine(t("They are deleted as soon as you turn the reminder off or delete everything on this device, or when your phone's push service says the address no longer works."));
+    return el('<div class="card">' + pvHead("🔔", t("The morning reminder")) +
+      pvLine('<b>' + (on ? t("Your reminder is on, so Qpio's server has these three things.") : t("Your reminder is off, so Qpio's server has nothing for this device.")) + '</b>') +
+      (kids ? '<details class="pv-more"><summary>' + t("More detail for grown-ups") + '</summary>' + body + '</details>' : body) +
+    '</div>');
+  }
+
   // ---- 4. Other services ----
   // Claims nothing about what these services do with the data: their own
   // policies apply, and the links say whose.
@@ -3611,6 +3637,7 @@
       pvLine(t("Wikimedia sends most of the pictures. It is not told which Qpio page you are on.")) +
       pvLine(t("YouTube plays a video only when you open one. It is told which video it is and that it played in Qpio, and it can store information in your browser.")) +
       pvLine(t("Links you tap, such as Open Library, Wikipedia, UNESCO or a museum, open that site like any other visit.")) +
+      (PUSH_KEY ? pvLine(t("If you turn on the morning reminder, your phone's push service (Google, Apple, Mozilla or Microsoft) carries Qpio's wake-up. It already knows your phone; from Qpio it gets only an empty message.")) : '') +
       '<ul class="mini" style="margin:0 0 6px;padding-left:18px">' +
         '<li style="padding:4px 0">' + pvExt("https://www.cloudflare.com/privacypolicy/", tf("{name} privacy policy", { name: "Cloudflare" })) + '</li>' +
         '<li style="padding:4px 0">' + pvExt("https://foundation.wikimedia.org/wiki/Policy:Privacy_policy", tf("{name} privacy policy", { name: "Wikimedia" })) + '</li>' +
@@ -3643,6 +3670,7 @@
         regs
       : pvLine(t("Privacy laws in many countries give you rights over information about you: to see it, correct it, delete it, limit how it is used or say no to it, and to complain.")) +
         pvLine(t("Qpio can't look you up, because nothing it keeps says who you are. So there is nothing on its side to find, correct or delete.")) +
+        (PUSH_KEY ? pvLine(t("The one exception is the morning reminder, if you turned it on. Turning it off, or deleting everything on this device, removes it from Qpio's server at once.")) : '') +
         pvLine(t("A total can sometimes describe one person, for example the only player from a country on a given day.")) +
         pvLine(PRIVACY_CONTACT ? tf("If you think that applies to you, or for any other request, write to {email}. We reply within one month.", { email: mail }) : t("Qpio does not yet have an address you can write to about your data.")) +
         pvLine(t("You can also complain to the data protection regulator where you live. For example:")) +

@@ -55,7 +55,10 @@
   "use strict";
   var TERMS_VERSION = "1";              // terms.html data-terms-version, EN and FR, must match
   var TERMS_DATE = "2026-09-25";        // the date terms.html prints for this wording, EN and FR
-  var PRIVACY_VERSION = "2026-09-25";   // the "Last updated" date on privacy.html, EN and FR
+  /* 19 Oct 2026: the morning reminder (push). Not raised with TERMS_VERSION: it applies only
+     to a reader who turns the reminder on, and the sign-up card says what is kept at that
+     moment. Everyone is asked again with terms v2 (launch plan G9, 1 Dec). */
+  var PRIVACY_VERSION = "2026-10-19";   // the "Last updated" date on privacy.html, EN and FR
   var KEY = "curio.terms";
   var session = null;                   // agreed during this page load (blocked storage)
 
