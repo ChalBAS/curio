@@ -43,6 +43,10 @@ const AI_CRAWLERS = [
 // The morning question (launch plan N3/N4): sign-up endpoints and the sender.
 // Answers 503 wherever PUSH_DB is not bound, so a site without it changes nothing.
 import { handlePush, sendDue, PUSH_CRON } from "./push.js";
+// The social bio links (/s/tt, /s/yt, /s/ig, /s/fb). On UAT worker/uat.js counts them first; here,
+// where no counting database is bound, they still send the reader to the app instead of a broken
+// page (launch plan DS2, 20 Oct 2026).
+import { handleLanding } from "./landing.js";
 
 // Search crawlers that make Qpio findable. Never blocked — they index the page,
 // they do not build models from it, and being invisible to them would cost more
@@ -209,6 +213,8 @@ export default {
     if (url.pathname === "/api/stats") return stats(request, env, url);
     const push = handlePush(request, env, url);
     if (push) return push;
+    const landing = handleLanding(request, env, null, url);
+    if (landing) return landing;
 
     // A DEMO VIDEO, A PIECE AT A TIME (v103). An iPhone plays a video only if the
     // server answers a request for part of it with that part. The asset layer
@@ -220,17 +226,24 @@ export default {
     // disallow list and the block list can never drift apart — they are the
     // same array.
     if (url.pathname === "/robots.txt") {
+      /* SEARCH ENGINES MAY READ THE QUESTIONS (20 Oct 2026, launch plan DS2). "Disallow: /src/"
+         for every crawler kept the scripts that hold every question's text away from search
+         engines too, so nothing could ever be found. The search crawlers this file never blocks
+         (SEARCH_CRAWLERS) now get their own group, which a crawler obeys instead of "*"; AI
+         crawlers are refused exactly as before. The Sitemap line pointed at a file that does not
+         exist and is gone until one does. */
+      const SEARCH_AGENTS = ["Googlebot", "Bingbot", "DuckDuckBot", "Slurp", "Baiduspider", "YandexBot"];
       const lines = [
-        "# Qpio — knowledge, free forever.",
-        "# The pages are open. The question bank is not: it is verified, sourced",
-        "# work and it is not training data. See /ai.txt for the full position.",
+        "# Qpio — free to play.",
+        "# The pages are open. The question bank is not training data: it is verified,",
+        "# sourced work. Search engines may read it to index Qpio. See /ai.txt.",
         "",
+        ...SEARCH_AGENTS.flatMap((b) => [`User-agent: ${b}`, "Allow: /", ""]),
         "User-agent: *",
         "Allow: /",
         "Disallow: /src/",
         "",
-        ...AI_CRAWLERS.flatMap((b) => [`User-agent: ${b}`, "Disallow: /", ""]),
-        `Sitemap: ${url.origin}/sitemap.xml`
+        ...AI_CRAWLERS.flatMap((b) => [`User-agent: ${b}`, "Disallow: /", ""])
       ];
       return new Response(lines.join("\n"), {
         headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "public, max-age=3600" }

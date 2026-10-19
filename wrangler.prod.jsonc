@@ -69,6 +69,10 @@
       "/src/entities.fr.js",
       "/robots.txt",
       "/api/*",
+      // the social bio links /s/tt /s/yt /s/ig /s/fb: a 302 to the app (worker/landing.js via
+      // worker/index.js), uncounted here. Without this line they fall to the app shell's fallback
+      // and show a broken page (launch plan DS2, 20 Oct 2026).
+      "/s/*",
       // v103: the routine demo videos, cut into the pieces an iPhone asks for
       // (worker/index.js serveVideo). One invocation per video a reader opens.
       "/img/gen/moves/*",

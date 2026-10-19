@@ -1,6 +1,7 @@
-/* Social landing-path counter — server half. UAT ONLY (same construction as
- * doors.js: this module is imported only by worker/uat.js, and "/s/*" appears
- * only in wrangler.jsonc's run_worker_first).
+/* Social landing-path counter — server half. COUNTS ON UAT ONLY: worker/uat.js calls it first,
+ * with the context it needs to write. Since 20 Oct 2026 (launch plan DS2) worker/index.js also
+ * calls it, with no context and no counting database on production, so on qpio.app the bio
+ * links simply redirect to the app instead of falling to a broken page.
  *
  * WHAT IT IS. The D-067 ruling-free measurement tier: counting requests to
  * NAMED LANDING PATHS, nothing else. The approved cadence (D-083, the signed
