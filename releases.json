@@ -192,7 +192,11 @@
    "to": "2026-10-20",
    "questions": 2048,
    "signoff": {
-    "status": "NO ISSUE"
+    "status": "AWAITING",
+    "issue": 117,
+    "issues": [
+     117
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -205,6 +209,11 @@
      "sha": "7d5a5f7",
      "date": "2026-10-20",
      "subject": "Production config for the morning reminder, ready for B14"
+    },
+    {
+     "sha": "4944489",
+     "date": "2026-10-20",
+     "subject": "Releases record: v126 on UAT (173/173 live checks)"
     }
    ]
   },

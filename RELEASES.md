@@ -26,10 +26,11 @@ not by omission.*
 
 ## v126 — ⏳ on UAT
 
-2026-10-20 · 2,048 questions · sign-off: **no release issue**
+2026-10-20 · 2,048 questions · sign-off: awaiting you, [#117](https://github.com/ChalBAS/curio-hq/issues/117)
 
 - `c2deb6b` v126: the beta build, completed - first-return count, "Free to play", reminder key fix, unsafe link closed
 - `7d5a5f7` Production config for the morning reminder, ready for B14
+- `4944489` Releases record: v126 on UAT (173/173 live checks)
 
 ## v125 — ⏳ on UAT
 
