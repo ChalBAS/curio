@@ -159,6 +159,18 @@ CREATE TABLE IF NOT EXISTS cohort_week (
   PRIMARY KEY (iso_week, first_seen_band, lang, country)
 ) WITHOUT ROWID;
 
+-- Completed rounds by whether the visit was opened from the morning reminder (launch plan N6,
+-- 19 Oct 2026). Tells "came back because a reminder arrived" from "came back on its own", which
+-- the beta's return bar (M2) needs. Deliberately without country or language: the coarser, the
+-- safer, and the question it answers does not need them.
+CREATE TABLE IF NOT EXISTS cohort_via_week (
+  iso_week         TEXT    NOT NULL,
+  first_seen_band  TEXT    NOT NULL,   -- new | w2_4 | w5_12 | w13plus
+  via              TEXT    NOT NULL,   -- reminder | direct
+  rounds_completed INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (iso_week, first_seen_band, via)
+) WITHOUT ROWID;
+
 -- ------------------------------------------------------------ 5 · CONTENT REGISTRY
 -- What each question IS, so analysis never needs the app bundle to read the
 -- numbers, and so a question retired from the bank keeps its meaning in the

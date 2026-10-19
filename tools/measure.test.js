@@ -75,15 +75,21 @@ function check(name, ok, detail) {
   /* ------------------------------------------------------------- the write set */
   const round = {
     day: '2026-09-06', lang: 'en', mode: 'adult', surface: 'daily', platform: 'ios',
-    band: 'new', discovery: 'tiktok', installed: 1, appVersion: '86',
+    band: 'new', discovery: 'tiktok', via: 'reminder', installed: 1, appVersion: '86',
     contentVersion: '760-6fe7b0dd', answers: 5, completed: 1,
     questions: [1, 2, 3, 4, 5].map(p => ({ id: 'Q00' + p, qrev: 1, lrev: 1, pos: p, answered: 1, correct: p % 2 })),
     doors: [{ id: 'Q001', cls: 'read', slot: 'lead', n: 1 }],
   };
   const stmts = I.upserts(round, 'GB');
 
-  check('a five-question round is one bounded batch', stmts.length === 14,
-    stmts.length + ' statements: 5 questions x 2 tables, plus audience, cohort, one door and the health row');
+  check('a five-question round is one bounded batch', stmts.length === 15,
+    stmts.length + ' statements: 5 questions x 2 tables, plus audience, cohort, cohort by reminder, one door and the health row');
+  /* N6: a finished round says whether the visit came from the morning reminder - two values, nothing else */
+  const viaStmt = stmts.find(s => /cohort_via_week/.test(s.sql));
+  check('a finished round is counted by whether the reminder opened it, apart from country and language',
+    viaStmt && !/country|lang/.test(viaStmt.sql) && I.VIAS.size === 2 && I.VIAS.has('reminder') && I.VIAS.has('direct'));
+  check('a round without via (a build before the reminder) counts as direct',
+    I.pick(I.VIAS, undefined, 'direct') === 'direct' && I.pick(I.VIAS, 'push-id-123', 'direct') === 'direct');
 
   const sql = stmts.map(s => s.sql).join(' ');
   check('every write is an increment into a key that already existed',

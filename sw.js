@@ -487,7 +487,7 @@ async function nudgeToday() {
     tag: "qpio-daily-" + key,
     badge: "icons/favicon-32.png",
     icon: "brand/icons/qpio-icon-192.png",
-    data: { url: "./#daily" }
+    data: { url: "./?via=reminder#daily" }
   });
 
   // Marked here rather than by the page: the page may not open for days, and
@@ -522,7 +522,7 @@ async function pushToday() {
     tag: "qpio-daily-" + key,
     badge: "icons/favicon-32.png",
     icon: "brand/icons/qpio-icon-192.png",
-    data: { url: "./#daily" }
+    data: { url: "./?via=reminder#daily" }
   });
   if (day && !day.sent) {
     day.sent = true;
@@ -534,7 +534,7 @@ async function pushToday() {
 
 self.addEventListener("push", (e) => {
   e.waitUntil(pushToday().catch(() => self.registration.showNotification("Qpio", {
-    body: "Today's five questions are ready.", tag: "qpio-daily", data: { url: "./#daily" }
+    body: "Today's five questions are ready.", tag: "qpio-daily", data: { url: "./?via=reminder#daily" }
   })));
 });
 

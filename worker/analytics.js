@@ -60,6 +60,11 @@ const SLOTS = new Set(['lead', 'shelf1', 'shelf2', 'shelf3', 'shelf4', 'shelf5']
 const DISCOVERY = new Set(['tiktok', 'youtube', 'instagram', 'facebook', 'search',
   'referral', 'other', 'dontremember', 'unknown']);
 
+/* Whether this visit was opened by tapping the morning reminder (sw.js adds ?via=reminder to the
+ * address it opens; measure.js reads it once per tab). Two values; nothing about the reminder or
+ * the phone travels with it. */
+const VIAS = new Set(['reminder', 'direct']);
+
 const MAX_QUESTIONS = 20;   // a quick-fire round is ten; twenty is generous and bounded
 const MAX_DOORS = 20;
 const MAX_BODY = 8192;
@@ -175,6 +180,14 @@ function upserts(p, country) {
       'INSERT INTO cohort_week (iso_week,first_seen_band,lang,country,rounds_completed) VALUES (?1,?2,?3,?4,1) ' +
       'ON CONFLICT (iso_week,first_seen_band,lang,country) DO UPDATE SET rounds_completed=rounds_completed+1',
       week, p.band, p.lang, country);
+    /* PROMPTED OR UNPROMPTED (launch plan N6, 19 Oct 2026). A device that comes back because the
+     * morning reminder arrived is not the same evidence as one that came back on its own, and
+     * the beta's return bar (M2) is about the second. Two values, shared by everyone, kept apart
+     * from country and language so the table stays coarse. */
+    add(
+      'INSERT INTO cohort_via_week (iso_week,first_seen_band,via,rounds_completed) VALUES (?1,?2,?3,1) ' +
+      'ON CONFLICT (iso_week,first_seen_band,via) DO UPDATE SET rounds_completed=rounds_completed+1',
+      week, p.band, p.via);
   }
 
   for (const d of p.doors) {
@@ -271,6 +284,8 @@ export function handleAnalytics(request, env, ctx, url) {
     const band = pick(BANDS, body.band, null);
     if (!band) return bad('bad_band');
     const discovery = pick(DISCOVERY, body.ds, 'unknown');
+    /* builds before v125 send no via, and had no reminder to be opened from */
+    const via = pick(VIAS, body.via, 'direct');
 
     const rawQ = Array.isArray(body.q) ? body.q : null;
     if (!rawQ || !rawQ.length) return bad('no_questions');
@@ -306,7 +321,7 @@ export function handleAnalytics(request, env, ctx, url) {
 
     const p = {
       day: body.d,
-      lang, mode, surface, platform, band, discovery, country,
+      lang, mode, surface, platform, band, discovery, country, via,
       installed: body.inst ? 1 : 0,
       appVersion: versionOf(body.av),
       contentVersion: versionOf(body.cv),
@@ -354,6 +369,7 @@ export async function pruneAnalytics(env) {
     ['rejected_day', 'content_day', cutDay],
     ['question_country_week', 'iso_week', cutWeek],
     ['cohort_week', 'iso_week', cutWeek],
+    ['cohort_via_week', 'iso_week', cutWeek],
   ];
   for (const [table, col, cut] of jobs) {
     try {
@@ -365,6 +381,6 @@ export async function pruneAnalytics(env) {
 export const _internals = {
   isHuman, isPrefetch, countryOf, isoWeekOf, dayAcceptable, pick, intIn,
   versionOf, qidOf, upserts, SCHEMA_VERSION,
-  LANGS, MODES, SURFACES, PLATFORMS, BANDS, DOOR_CLASSES, SLOTS, DISCOVERY,
+  LANGS, MODES, SURFACES, PLATFORMS, BANDS, DOOR_CLASSES, SLOTS, DISCOVERY, VIAS,
   MAX_QUESTIONS, MAX_DOORS, MAX_BODY,
 };

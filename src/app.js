@@ -3574,6 +3574,7 @@
         '<li>' + t("which version of the app and of the questions you had") + '</li>' +
         '<li>' + t("how you said you found Qpio") + '</li>' +
         '<li>' + t("roughly how many weeks since this device first played") + '</li>' +
+        '<li>' + t("whether you opened Qpio from the morning reminder") + '</li>' +
       '</ul>';
     var facts =
       pvLine(t("Qpio adds the country your internet connection comes from. It does not use the country you picked.")) +

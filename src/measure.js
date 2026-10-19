@@ -18,6 +18,7 @@
  *   app build and bank release                 86 · 2026-09-06
  *   how they once said they found Qpio         tiktok
  *   which week-band they first played in       new | w2_4 | w5_12 | w13plus
+ *   whether the visit came from the reminder   reminder | direct
  *   per question: id, revision, translation revision, position, answered, correct
  *   per door tapped: question id, class, slot
  *
@@ -166,6 +167,21 @@
     var v = LSget("curio.discovery", null);
     return typeof v === "string" && v ? v : "unknown";
   }
+  /* OPENED FROM THE MORNING REMINDER (launch plan N6, 19 Oct 2026). sw.js opens
+   * "./?via=reminder#daily" when the reminder is tapped. The mark is kept for this tab
+   * only (sessionStorage, gone when the tab closes) and taken out of the address bar, so
+   * a bookmark or a shared link never carries it. Two values, the same for everyone who
+   * tapped: "reminder" or "direct". */
+  var VIA_KEY = "curio.via";
+  try {
+    if (/[?&]via=reminder(?:&|$)/.test(location.search)) {
+      sessionStorage.setItem(VIA_KEY, "reminder");
+      if (history.replaceState) history.replaceState(null, "", location.pathname + location.hash);
+    }
+  } catch (e) { /* no session storage: the visit counts as direct */ }
+  function via() {
+    try { return sessionStorage.getItem(VIA_KEY) === "reminder" ? "reminder" : "direct"; } catch (e) { return "direct"; }
+  }
 
   /* --------------------------------------------------------- health, locally */
   /* An instrument that fails quietly is worse than no instrument: a broken
@@ -285,6 +301,7 @@
       cv: contentVersion(),
       ds: discovery(),
       band: band(),
+      via: via(),
       done: r.done ? 1 : 0,
       q: qs,
       doors: doors
@@ -401,7 +418,7 @@
     storable: WRITABLE,
     /* exposed for the tests, which check the parts rather than the network */
     _internals: { contentDay: contentDay, isoWeek: isoWeek, weeksBetween: weeksBetween,
-      band: band, platform: platform, appVersion: appVersion, discovery: discovery }
+      band: band, platform: platform, appVersion: appVersion, discovery: discovery, via: via }
   };
 
   /* Anything stranded by a closed tab or a dropped connection goes on the next
