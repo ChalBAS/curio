@@ -2,11 +2,12 @@
  "generated": "2026-10-19",
  "live": {
   "production": 118,
-  "uat": 125,
+  "uat": 126,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  126,
   125,
   124,
   123,
@@ -184,7 +185,7 @@
  ],
  "releases": [
   {
-   "version": 125,
+   "version": 126,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-10-20",
@@ -192,6 +193,34 @@
    "questions": 2048,
    "signoff": {
     "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "c2deb6b",
+     "date": "2026-10-20",
+     "subject": "v126: the beta build, completed - first-return count, \"Free to play\", reminder key fix, unsafe link closed"
+    },
+    {
+     "sha": "7d5a5f7",
+     "date": "2026-10-20",
+     "subject": "Production config for the morning reminder, ready for B14"
+    }
+   ]
+  },
+  {
+   "version": 125,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-20",
+   "to": "2026-10-20",
+   "questions": 2048,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 116,
+    "issues": [
+     116
+    ]
    },
    "messageClash": [],
    "commits": [
@@ -204,6 +233,36 @@
      "sha": "28cd280",
      "date": "2026-10-20",
      "subject": "UAT suite: every Gym theme with something new is on the Train page (was: all sixteen), matching v125 / B9"
+    },
+    {
+     "sha": "ec30444",
+     "date": "2026-10-20",
+     "subject": "Releases record: v125 on UAT (175/175 live checks)"
+    },
+    {
+     "sha": "cb2c042",
+     "date": "2026-10-20",
+     "subject": "Count devices that came back on their own, once each, without knowing which (C6)"
+    },
+    {
+     "sha": "c3d6c4b",
+     "date": "2026-10-20",
+     "subject": "DS1: 'Free forever' becomes 'Free to play' (founder, curio-hq #47); README no longer claims zero-dependency"
+    },
+    {
+     "sha": "959da74",
+     "date": "2026-10-20",
+     "subject": "DS2: search engines may read the questions; no sitemap line without a sitemap; /s/ bio links redirect on production"
+    },
+    {
+     "sha": "cc96688",
+     "date": "2026-10-20",
+     "subject": "Door allow-list builder: stop crashing, read the per-question door files"
+    },
+    {
+     "sha": "3833d71",
+     "date": "2026-10-20",
+     "subject": "Morning reminder: the stored key must be read byte for byte; C4: Q679's gambling link closed"
     }
    ]
   },

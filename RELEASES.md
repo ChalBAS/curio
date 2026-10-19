@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v118** at qpio.app |
-| On UAT | **v125** at uat.qpio.app |
+| On UAT | **v126** at uat.qpio.app |
 | Tip of `main` | v118 |
 | Generated | 2026-10-19 |
 
-> ⏳ **Awaiting your sign-off:** v125, v124, v123, v122, v121, v120, v119. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v126, v125, v124, v123, v122, v121, v120, v119. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v116 (AWAITING), v115 (AWAITING), v113 (AWAITING), v112 (AWAITING), v111 (AWAITING), v110 (AWAITING), v109 (AWAITING), v108 (AWAITING), v107 (NO ISSUE), v106 (AWAITING), v105 (AWAITING), v104 (AWAITING), v103 (AWAITING), v102 (AWAITING), v101 (AWAITING), v100 (AWAITING), v99 (AWAITING), v98 (AWAITING), v97 (NO ISSUE), v96 (REJECTED), v95 (REJECTED), v94 (NO ISSUE), v93 (NO ISSUE), v92 (NO ISSUE), v89 (NO ISSUE), v88 (NO ISSUE), v87 (NO ISSUE), v86 (NO ISSUE), v85 (NO ISSUE), v84 (NO ISSUE), v83 (AWAITING), v82 (REJECTED), v81 (REJECTED), v80 (NO ISSUE), v78 (NO ISSUE), v77 (AWAITING), v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
@@ -24,12 +24,25 @@ not by omission.*
 
 ---
 
-## v125 — ⏳ on UAT
+## v126 — ⏳ on UAT
 
 2026-10-20 · 2,048 questions · sign-off: **no release issue**
 
+- `c2deb6b` v126: the beta build, completed - first-return count, "Free to play", reminder key fix, unsafe link closed
+- `7d5a5f7` Production config for the morning reminder, ready for B14
+
+## v125 — ⏳ on UAT
+
+2026-10-20 · 2,048 questions · sign-off: awaiting you, [#116](https://github.com/ChalBAS/curio-hq/issues/116)
+
 - `25a4532` v125: the beta build - locked beta days, the morning reminder (sign-up, server, privacy text), safer doors and Gym
 - `28cd280` UAT suite: every Gym theme with something new is on the Train page (was: all sixteen), matching v125 / B9
+- `ec30444` Releases record: v125 on UAT (175/175 live checks)
+- `cb2c042` Count devices that came back on their own, once each, without knowing which (C6)
+- `c3d6c4b` DS1: 'Free forever' becomes 'Free to play' (founder, curio-hq #47); README no longer claims zero-dependency
+- `959da74` DS2: search engines may read the questions; no sitemap line without a sitemap; /s/ bio links redirect on production
+- `cc96688` Door allow-list builder: stop crashing, read the per-question door files
+- `3833d71` Morning reminder: the stored key must be read byte for byte; C4: Q679's gambling link closed
 
 ## v124 — ⏳ on UAT
 
