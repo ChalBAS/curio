@@ -1,14 +1,15 @@
 # 🦉 Curio
 
-**Daily general-knowledge challenges, quick-fire quizzes and streaks.
-Free forever. I am curious to become wise.**
+**Five questions a day about the world, each with the story behind the
+answer. Free to play. I am curious to become wise.**
 
-Curio is a zero-dependency progressive web app: pure HTML/CSS/JS, no build
-step, no backend. Your streaks and scores live in your own browser
-(localStorage), and nothing here ever asks for a name or an email — Qpio
-measures the pool, never the person (Charter §8). Install it from your
-phone's browser — the questions, answers and sources stay on your device;
-the doors out to the real world need a connection.
+Qpio is a progressive web app in plain HTML, CSS and JavaScript with no build
+step, served by a small Cloudflare Worker (worker/) that also runs the
+anonymous counting and the optional morning reminder. Your progress and
+settings live in your own browser (localStorage), and nothing here ever asks
+for a name or an email — Qpio measures the pool, never the person (Charter §8).
+Install it from your phone's browser; the doors out to the real world need a
+connection.
 
 ## Principles
 

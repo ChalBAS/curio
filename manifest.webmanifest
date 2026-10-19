@@ -1,7 +1,7 @@
 {
-  "name": "Qpio — knowledge, free forever",
+  "name": "Qpio — free to play",
   "short_name": "Qpio",
-  "description": "Qpio (say: cue-pee-oh) — five questions a day, every answer sourced, and a door out to the real world. Knowledge is free, forever. I am curious to become wise — Quaero, ergo Sapio.",
+  "description": "Qpio (say: cue-pee-oh) — five questions a day, every answer sourced, and a door out to the real world. Free to play. I am curious to become wise — Quaero, ergo Sapio.",
   "id": "qpio-app",
   "start_url": "./index.html?source=pwa",
   "scope": "./",

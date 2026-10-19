@@ -40,7 +40,7 @@
       "⬇ Install": "⬇ Installer",
       "Comfort & settings": "Confort et réglages",
       "Comfort and settings": "Confort et réglages",
-      "knowledge · free · forever": "savoir · gratuit · pour toujours",
+      "free to play": "gratuit",
       "Dismiss": "Fermer",
 
       // --- home: hero ---
@@ -63,8 +63,7 @@
       "Saved as your best — {pts} points. ⭐": "Enregistré comme ton meilleur score — {pts} points. ⭐",
       "Your best is still {pts} points.": "Ton meilleur score reste {pts} points.",
 
-      "Free forever": "Gratuit pour toujours",
-      // "Free to play" replaces "Free forever" on the hero (CEO, 2026-08-13:
+            // "Free to play" replaces "Free forever" on the hero (CEO, 2026-08-13:
       // "this is more accurate"). The old key stays until every surface moves.
       "Free to play": "Gratuit",
       "Kids mode": "Mode enfants",
@@ -691,7 +690,7 @@
       "facts mastered": "faits maîtrisés",
 
       // --- footer ---
-      "Qpio — knowledge is free, forever.": "Qpio — le savoir est gratuit, pour toujours.",
+      "Qpio — free to play.": "Qpio — gratuit.",
       "I am curious to become wise. 🧠": "La curiosité me rend sage. 🧠",
 
       // --- comfort panel ---
@@ -789,7 +788,7 @@
       "Home": "Accueil",
       "1-day streak": "série de 1 jour",
       "{n}-day streak": "série de {n} jours",
-      "free, forever.": "gratuit, pour toujours.",
+      "free to play.": "gratuit.",
       "Shared! 🎉": "Partagé ! 🎉",
       "Copied to clipboard! 📋 Paste it anywhere.": "Copié dans le presse-papiers ! 📋 Colle-le où tu veux.",
 
@@ -879,6 +878,6 @@
       homeBtn.setAttribute("aria-label", window.t("Home"));
     }
     var tag = document.querySelector(".top .tag");
-    if (tag) tag.textContent = window.t("knowledge · free · forever");
+    if (tag) tag.textContent = window.t("free to play");
   }
 })();

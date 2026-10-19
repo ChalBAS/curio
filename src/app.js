@@ -1440,7 +1440,7 @@
       // Charter promise stands unchanged; stating it in the footer defended
       // against an accusation nobody had made, and third-party destinations
       // now sit one screen away — a claim that invites a lawyer to parse it.
-      '<div class="footer">' + t("Qpio — knowledge is free, forever.") + '<br>' +
+      '<div class="footer">' + t("Qpio — free to play.") + '<br>' +
       t("I am curious to become wise. 🧠") + ' · <a href="#" id="openComfort2">' + t("Comfort & settings") + '</a>' +
       // A privacy page nobody can find is not transparency. One link, on every
       // screen that carries the footer, to the in-app Privacy screen - where the
@@ -4419,7 +4419,7 @@
     node.querySelector("#share").addEventListener("click", function () {
       var text = "Qpio Daily " + rec.date + "\n" + emoji + " " + rec.score + "/" + rec.total +
         "\n🔥 " + (s.count === 1 ? t("1-day streak") : tf("{n}-day streak", { n: s.count })) +
-        "\nhttps://qpio.app — " + t("free, forever.");
+        "\nhttps://qpio.app — " + t("free to play.");
       shareOrCopy(text, node.querySelector("#msg"));
     });
     // The daily set is deterministic for the day, so the questions can be
