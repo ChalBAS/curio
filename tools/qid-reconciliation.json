@@ -1,13 +1,13 @@
 {
- "generated": "2026-09-29T11:08:54.499Z",
- "shipped": 1983,
- "golden": 2000,
- "matched": 991,
+ "generated": "2026-10-19T15:48:26.376Z",
+ "shipped": 2048,
+ "golden": 2128,
+ "matched": 1056,
  "shippedOnly": 992,
- "goldenOnly": 1009,
+ "goldenOnly": 1072,
  "goldenOnlyByStatus": {
   "LIVE UAT": 2,
-  "NOT LIVE": 1007
+  "NOT LIVE": 1070
  },
  "mintedThisRun": 980,
  "pairingBreaks": [],
@@ -104,7 +104,100 @@
    "i": 780,
    "text": "According to the American Heart Association, a normal resting adult heart rate i",
    "cat": "Science",
-   "legacy": "qa0lj28"
+   "legacy": "qfpw1fq"
+  }
+ ],
+ "idChanges": 980,
+ "idChangesSample": [
+  {
+   "i": 109,
+   "from": "Q110",
+   "to": "X0080",
+   "text": "Which part of the cell holds most of its DNA, packed into chromosomes?"
+  },
+  {
+   "i": 541,
+   "from": "Q542",
+   "to": "X0081",
+   "text": "What is a flying buttress's main structural job in a Gothic cathedral?"
+  },
+  {
+   "i": 780,
+   "from": "N0770",
+   "to": "X0082",
+   "text": "According to the American Heart Association, a normal resting adult he"
+  },
+  {
+   "i": 781,
+   "from": "N0771",
+   "to": "X0083",
+   "text": "Thermal conductivity is measured, in SI units, in what?"
+  },
+  {
+   "i": 782,
+   "from": "N0772",
+   "to": "X0084",
+   "text": "Which Roman emperor levied a tax of one hundredth on goods sold at auc"
+  },
+  {
+   "i": 783,
+   "from": "N0773",
+   "to": "X0085",
+   "text": "The Egyptian Berlin Papyrus 6619, written about 1800 BC, poses a probl"
+  },
+  {
+   "i": 784,
+   "from": "N0775",
+   "to": "X0086",
+   "text": "HTTPS has been used more often than plain HTTP since which year?"
+  },
+  {
+   "i": 785,
+   "from": "N0776",
+   "to": "X0087",
+   "text": "Public-key encryption on its own conceals a message's content — but do"
+  },
+  {
+   "i": 786,
+   "from": "N0777",
+   "to": "X0088",
+   "text": "Whose 1841 invention of the collapsible paint tube made painting outdo"
+  },
+  {
+   "i": 787,
+   "from": "N0778",
+   "to": "X0089",
+   "text": "Which word for pay comes from the Latin word for salt?"
+  },
+  {
+   "i": 788,
+   "from": "N0779",
+   "to": "X0090",
+   "text": "The World Health Organization reports that licensed vaccines exist for"
+  },
+  {
+   "i": 789,
+   "from": "N0780",
+   "to": "X0091",
+   "text": "Space journalist James Oberg says what keeps satellites in orbit — not"
+  },
+  {
+   "i": 790,
+   "from": "N0781",
+   "to": "X0092",
+   "text": "For the US National Weather Service, 'probability of precipitation' me"
+  },
+  {
+   "i": 791,
+   "from": "N0782",
+   "to": "X0093",
+   "text": "All the land uphill of a river that feeds it with water is called its "
+  },
+  {
+   "i": 792,
+   "from": "N0783",
+   "to": "X0094",
+   "text": "At Vienna General Hospital's First Obstetrical Clinic, what did Semmel"
   }
  ],
  "written": false
