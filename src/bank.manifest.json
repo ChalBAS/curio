@@ -1,6 +1,6 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-10-20T16:04:10.998Z",
+ "generated": "2026-10-20T21:03:37.644Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",
@@ -9,7 +9,7 @@
   "added": 0,
   "changedEn": 0,
   "changedFr": 0,
-  "carriedBecauseShipped": 187,
+  "carriedBecauseShipped": 201,
   "ungoverned": 12,
   "unruled": 2034
  },
@@ -1481,7 +1481,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS",
    "factChecked": true,
@@ -1489,7 +1489,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q099": {
    "governed": true,
@@ -2321,7 +2322,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": false
+    "fr": true
    },
    "panel": "PASS",
    "factChecked": true,
@@ -2329,8 +2330,7 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": false,
-   "carriedBecauseShipped": true
+   "qualifiedToday": true
   },
   "Q155": {
    "governed": true,
@@ -2773,7 +2773,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS",
    "factChecked": true,
@@ -2781,7 +2781,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q185": {
    "governed": true,
@@ -4441,7 +4442,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -4449,7 +4450,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q296": {
    "governed": true,
@@ -5219,7 +5221,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -5227,7 +5229,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q347": {
    "governed": true,
@@ -6690,8 +6693,8 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
-    "fr": true
+    "en": false,
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -6699,13 +6702,14 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q445": {
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -6714,14 +6718,15 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q446": {
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -6729,7 +6734,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q447": {
    "governed": true,
@@ -7414,7 +7420,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -7422,7 +7428,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q493": {
    "governed": true,
@@ -9441,7 +9448,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -9449,7 +9456,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q628": {
    "governed": true,
@@ -12398,7 +12406,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -12406,7 +12414,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0824": {
    "governed": true,
@@ -13593,7 +13602,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -13601,7 +13610,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N0903": {
    "governed": true,
@@ -15891,7 +15901,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -15899,7 +15909,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1059": {
    "governed": true,
@@ -16177,7 +16188,7 @@
    "textFrom": "the golden source workbook",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -16185,7 +16196,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1080": {
    "governed": true,
@@ -20404,7 +20416,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -20412,7 +20424,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1381": {
    "governed": true,
@@ -22452,7 +22465,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -22460,7 +22473,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1523": {
    "governed": true,
