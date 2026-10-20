@@ -171,5 +171,6 @@ export const DOOR_HOSTS = [
   "www.youtube.com",
   "www.zambiatourism.com",
   "www.zoobeauval.com",
+  "yalebooks.yale.edu",
   "zimbabwetourism.net"
 ];
