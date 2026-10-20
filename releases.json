@@ -1,12 +1,13 @@
 {
- "generated": "2026-10-19",
+ "generated": "2026-10-20",
  "live": {
   "production": 118,
-  "uat": 126,
+  "uat": 127,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  127,
   126,
   125,
   124,
@@ -185,6 +186,29 @@
  ],
  "releases": [
   {
+   "version": 127,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-20",
+   "to": "2026-10-20",
+   "questions": 2048,
+   "signoff": {
+    "status": "AWAITING",
+    "issue": 118,
+    "issues": [
+     118
+    ]
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "b33aa01",
+     "date": "2026-10-20",
+     "subject": "v127: the beta build for the Sunday check - v126 plus the contact address and the replaced book links"
+    }
+   ]
+  },
+  {
    "version": 126,
    "state": "ON UAT",
    "branch": "uat",
@@ -214,6 +238,26 @@
      "sha": "4944489",
      "date": "2026-10-20",
      "subject": "Releases record: v126 on UAT (173/173 live checks)"
+    },
+    {
+     "sha": "8016bda",
+     "date": "2026-10-20",
+     "subject": "Releases record: v126 sign-off issue #117"
+    },
+    {
+     "sha": "3f51e3c",
+     "date": "2026-10-20",
+     "subject": "C11: new books for the 15 beta-day Read doors that answered \"not found\""
+    },
+    {
+     "sha": "397dc01",
+     "date": "2026-10-20",
+     "subject": "CT1 (part): new books for 91 more Read doors that answered \"not found\""
+    },
+    {
+     "sha": "ce67c72",
+     "date": "2026-10-20",
+     "subject": "B5: the contact address hello@qpio.app on /privacy, in the terms and in Settings"
     }
    ]
   },

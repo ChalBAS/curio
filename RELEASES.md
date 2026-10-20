@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v118** at qpio.app |
-| On UAT | **v126** at uat.qpio.app |
+| On UAT | **v127** at uat.qpio.app |
 | Tip of `main` | v118 |
-| Generated | 2026-10-19 |
+| Generated | 2026-10-20 |
 
-> ⏳ **Awaiting your sign-off:** v126, v125, v124, v123, v122, v121, v120, v119. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v127, v126, v125, v124, v123, v122, v121, v120, v119. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v116 (AWAITING), v115 (AWAITING), v113 (AWAITING), v112 (AWAITING), v111 (AWAITING), v110 (AWAITING), v109 (AWAITING), v108 (AWAITING), v107 (NO ISSUE), v106 (AWAITING), v105 (AWAITING), v104 (AWAITING), v103 (AWAITING), v102 (AWAITING), v101 (AWAITING), v100 (AWAITING), v99 (AWAITING), v98 (AWAITING), v97 (NO ISSUE), v96 (REJECTED), v95 (REJECTED), v94 (NO ISSUE), v93 (NO ISSUE), v92 (NO ISSUE), v89 (NO ISSUE), v88 (NO ISSUE), v87 (NO ISSUE), v86 (NO ISSUE), v85 (NO ISSUE), v84 (NO ISSUE), v83 (AWAITING), v82 (REJECTED), v81 (REJECTED), v80 (NO ISSUE), v78 (NO ISSUE), v77 (AWAITING), v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
@@ -24,6 +24,12 @@ not by omission.*
 
 ---
 
+## v127 — ⏳ on UAT
+
+2026-10-20 · 2,048 questions · sign-off: awaiting you, [#118](https://github.com/ChalBAS/curio-hq/issues/118)
+
+- `b33aa01` v127: the beta build for the Sunday check - v126 plus the contact address and the replaced book links
+
 ## v126 — ⏳ on UAT
 
 2026-10-20 · 2,048 questions · sign-off: awaiting you, [#117](https://github.com/ChalBAS/curio-hq/issues/117)
@@ -31,6 +37,10 @@ not by omission.*
 - `c2deb6b` v126: the beta build, completed - first-return count, "Free to play", reminder key fix, unsafe link closed
 - `7d5a5f7` Production config for the morning reminder, ready for B14
 - `4944489` Releases record: v126 on UAT (173/173 live checks)
+- `8016bda` Releases record: v126 sign-off issue #117
+- `3f51e3c` C11: new books for the 15 beta-day Read doors that answered "not found"
+- `397dc01` CT1 (part): new books for 91 more Read doors that answered "not found"
+- `ce67c72` B5: the contact address hello@qpio.app on /privacy, in the terms and in Settings
 
 ## v125 — ⏳ on UAT
 
