@@ -369,7 +369,12 @@
        ledger; {none:true} is a door he closed on purpose. */
     var dl = window.QLANG === "fr" ? "fr" : "en";
     var chosenDoors = window.CURIO_DOORS_CHOSEN && q && q.id ? window.CURIO_DOORS_CHOSEN[q.id] : null;
-    var cb = chosenDoors && chosenDoors.book ? (chosenDoors.book[dl] || chosenDoors.book.en) : null;
+    /* A FRENCH READER NEVER GETS AN ENGLISH BOOK (founder, 20 Oct 2026: "why are we putting
+       english links for french? that shouldn't be it makes no sense"). Until 20 Oct both his
+       pick and the checked pick fell back to the English one; now a French reader with no
+       French book gets a greyed Read door, and the month check (curio-hq tools/month_gaps.js)
+       keeps such a day off his review page until a French book is found. */
+    var cb = chosenDoors && chosenDoors.book ? chosenDoors.book[dl] : null;
     var cv = chosenDoors ? chosenDoors.visit : null;
 
     /* THE BOOK AND THE PLACE FOUND FOR THIS QUESTION — under his choice, above
@@ -382,7 +387,7 @@
        could not see it. Written per question id by
        curio-hq/tools/publish_to_app.js. */
     var bank = window.CURIO_DOORS_BANK && q && q.id ? window.CURIO_DOORS_BANK[q.id] : null;
-    var bb = bank && bank.read ? (bank.read[dl] || bank.read.en) : null;
+    var bb = bank && bank.read ? bank.read[dl] : null;
     /* the place for a French reader, where the review chose one apart from the English
        side (7 Oct 2026); {none:true} there greys the French door */
     var bv = bank && bank.visit ? (dl === "fr" && bank.visit.fr ? bank.visit.fr : bank.visit) : null;
@@ -399,6 +404,8 @@
             /* the review found no book that passes (7 Oct 2026): a greyed door, not the
                August table's guess */
             : bb && bb.none ? { title: "", sub: "", url: null }
+            /* the August subject tables are English books: never for a French reader */
+            : dl === "fr" ? { title: "", sub: "", url: null }
             : book ? { title: book.t, sub: book.a || "", url: readUrl(title, slug) }
             : { title: title, sub: "", url: readUrl(title, slug) },
       visit:  cv && cv.none ? { title: "", sub: "", url: null }

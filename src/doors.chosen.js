@@ -53,5 +53,44 @@ window.CURIO_DOORS_CHOSEN = {
     "shops": null
    }
   }
+ },
+ "N0909": {
+  "book": {
+   "en": {
+    "t": "Spring Forward: The Annual Madness of Daylight Saving Time",
+    "a": null,
+    "u": "https://books.google.com/books?vid=ISBN9781593760533",
+    "isbn": "9781593760533",
+    "shops": "https://en.wikipedia.org/wiki/Special:BookSources/9781593760533"
+   },
+   "fr": {
+    "t": null,
+    "a": null,
+    "u": "https://www.librest.com/livres/le-dernier-changement-d-heure-edgar-l-sorel_0-15669417_9782378551162.html",
+    "isbn": null,
+    "shops": null
+   }
+  }
+ },
+ "Q510": {
+  "book": {
+   "en": {
+    "t": "Entangled Life: How Fungi Make Our Worlds, Change Our Minds & Shape Our Futures",
+    "a": "Merlin Sheldrake",
+    "u": "https://books.google.com/books?vid=ISBN9780525510314",
+    "isbn": "9780525510314",
+    "shops": "https://en.wikipedia.org/wiki/Special:BookSources/9780525510314"
+   },
+   "fr": {
+    "t": null,
+    "a": null,
+    "u": "https://www.grasset.fr/livre/les-champignons-de-lapocalypse-9782246835646/",
+    "isbn": null,
+    "shops": null
+   }
+  },
+  "visit": {
+   "none": true
+  }
  }
 };

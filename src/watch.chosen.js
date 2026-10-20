@@ -29,6 +29,14 @@ window.CURIO_WATCH_CHOSEN = {
   "en": "https://youtu.be/zCx7_VzR1Ho",
   "fr": "https://youtu.be/pW-4JUCTBtg"
  },
+ "N0909": {
+  "en": "https://youtu.be/DRQcW9ODoP4",
+  "fr": "https://youtu.be/DRQcW9ODoP4"
+ },
+ "Q510": {
+  "en": "https://youtu.be/XuKjBIBBAL8",
+  "fr": "https://youtu.be/r7_dy0z5Xp0"
+ },
  "N0890": {
   "en": "https://youtu.be/mC9tYJjmvYQ"
  },
