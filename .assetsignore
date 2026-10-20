@@ -11,6 +11,7 @@
 .assetsignore
 wrangler.jsonc
 wrangler.prod.jsonc
+wrangler.mail.jsonc
 .claude
 tools
 worker

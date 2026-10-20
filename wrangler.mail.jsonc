@@ -1,0 +1,14 @@
+{
+  // QPIO MAIL - hello@qpio.app delivered to two inboxes (worker/mail.js).
+  //
+  //   npx --no-install wrangler deploy -c wrangler.mail.jsonc
+  //
+  // No address of its own and no page: Cloudflare Email Routing on qpio.app sends the messages
+  // for hello@qpio.app to it (routing rule "Send to a Worker", set in the dashboard).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "qpio-mail",
+  "compatibility_date": "2026-08-01",
+  "main": "worker/mail.js",
+  "workers_dev": false,
+  "observability": { "enabled": true, "logs": { "invocation_logs": false, "head_sampling_rate": 1 } }
+}
