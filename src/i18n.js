@@ -212,6 +212,9 @@
       "Privacy & your data": "Confidentialité et tes données",
       "What is kept on this device, what Qpio counts, and your choices.":
         "Ce qui est gardé sur cet appareil, ce que Qpio compte et tes choix.",
+      "Contact us, or report a problem": "Nous écrire, ou signaler un problème",
+      "A wrong answer, something broken, or a question: write to {email}.":
+        "Une réponse fausse, quelque chose qui ne marche pas, ou une question : écris à {email}.",
       "Your curiosity is yours.": "Ta curiosité t’appartient.",
       "Qpio collects only information that has a defined purpose for improving the product, understanding its performance, operating a feature the reader chose, or fulfilling a transaction the reader initiated. We are transparent about what we collect, we do not sell reader data, and anonymous behaviour is not turned into a personal profile.":
         "Qpio ne collecte que les informations qui ont une finalité définie : améliorer le produit, comprendre ses performances, faire marcher une fonctionnalité choisie par le lecteur ou réaliser une transaction qu’il a initiée. Nous sommes transparents sur ce que nous collectons, nous ne vendons pas les données de nos lecteurs et les comportements anonymes ne sont pas transformés en profils personnels.",

@@ -26,7 +26,9 @@
   // Privacy screen then says there is no address yet, and no mailto appears
   // anywhere. Production requires a working address here AND the same address
   // on privacy.html (tools/privacy.test.js checks they match).
-  var PRIVACY_CONTACT = "";
+  // 20 Oct 2026 (launch plan B5): hello@qpio.app, Cloudflare Email Routing on qpio.app
+  // forwarding to the founder's Qpio inbox; a test email was forwarded the same day.
+  var PRIVACY_CONTACT = "hello@qpio.app";
 
   // ---------- question banks (per-language; FR falls back to EN while empty) ----------
   //
@@ -2989,6 +2991,7 @@
     /* Privacy first (24 Sep 2026): at the bottom, under the long Comfort card, the founder
        could not find it. */
     wrap.appendChild(privacyEntryCard());
+    wrap.appendChild(contactCard());
     wrap.appendChild(nudgeCard());
     wrap.appendChild(learningCard());
     wrap.appendChild(countryCard());
@@ -3235,6 +3238,15 @@
       pvOpenedInApp = true; pvOpener = "openPrivacy"; location.hash = "privacy";
     });
     return node;
+  }
+
+  // WHERE A READER WRITES TO US (launch plan B5, 20 Oct 2026): second in Settings, so a
+  // tester finds it without searching. Absent while PRIVACY_CONTACT is empty. An email
+  // reaches our inbox with the sender's address; /privacy (#contact) says so.
+  function contactCard() {
+    if (!PRIVACY_CONTACT) return document.createDocumentFragment();
+    var href = "mailto:" + PRIVACY_CONTACT + "?subject=Qpio";
+    return el('<div class="card"><a class="rowlink" id="contactUs" href="' + esc(href) + '"><span><span aria-hidden="true">✉️</span> ' + t("Contact us, or report a problem") + '</span><span class="chev" aria-hidden="true">›</span></a><p class="mini" style="margin:8px 0 0">' + tf("A wrong answer, something broken, or a question: write to {email}.", { email: esc(PRIVACY_CONTACT) }) + '</p></div>');
   }
 
   // Back returns to where the reader came from. Opened from inside the app, that
