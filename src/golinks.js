@@ -375,7 +375,11 @@
        French book gets a greyed Read door, and the month check (curio-hq tools/month_gaps.js)
        keeps such a day off his review page until a French book is found. */
     var cb = chosenDoors && chosenDoors.book ? chosenDoors.book[dl] : null;
-    var cv = chosenDoors ? chosenDoors.visit : null;
+    /* his place, per language where he chose one for a single language (22 Oct 2026: "the
+       visits for a language are not necessarily the same for the other"); a language he did
+       not choose for falls through to the review's place for that language */
+    var cvAll = chosenDoors ? chosenDoors.visit : null;
+    var cv = cvAll && (cvAll.en || cvAll.fr) ? (cvAll[dl] || null) : cvAll;
 
     /* THE BOOK AND THE PLACE FOUND FOR THIS QUESTION — under his choice, above
        the subject tables.

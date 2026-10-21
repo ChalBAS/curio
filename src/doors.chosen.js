@@ -3,7 +3,8 @@
 // THE BOOK AND THE PLACE THE FOUNDER CHOSE, PER QUESTION.
 //
 // Written from the HQ review ledger. book is per language ({en, fr}); a
-// place is for every language. {none:true} means he looked and said there is
+// place is for every language, or per language ({en, fr}) where he chose one
+// for a single language (from 22 Oct 2026). {none:true} means he looked and said there is
 // nothing worth sending a reader to, so that door stays greyed on purpose.
 // golinks.js reads this ahead of its own lists.
 //
@@ -91,6 +92,84 @@ window.CURIO_DOORS_CHOSEN = {
   },
   "visit": {
    "none": true
+  }
+ },
+ "Q737": {
+  "book": {
+   "en": {
+    "t": "The Stars: The Definitive Visual Guide to the Cosmos",
+    "a": "DK (foreword by Maggie Aderin-Pocock)",
+    "u": "https://books.google.com/books?vid=ISBN9780241226025",
+    "isbn": "9780241226025",
+    "shops": "https://en.wikipedia.org/wiki/Special:BookSources/9780241226025"
+   },
+   "fr": {
+    "t": "Vie et mort des étoiles (nouvelle édition)",
+    "a": "Priscilla Abraham, Bruno Mauguin",
+    "u": "https://books.google.fr/books?hl=fr&vid=ISBN9782843987397",
+    "isbn": "9782843987397",
+    "shops": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Ouvrages_de_r%C3%A9f%C3%A9rence/9782843987397"
+   }
+  },
+  "visit": {
+   "where": "Kielder Observatory",
+   "city": "Kielder, Northumberland",
+   "url": "https://kielderobservatory.org/"
+  }
+ },
+ "N0856": {
+  "book": {
+   "en": {
+    "t": "The Code Book: How to Make It, Break It, Hack It, Crack It (young readers' edition; now sold as 'The Code Book: The Secrets Behind Codebreaking')",
+    "a": "Simon Singh",
+    "u": "https://books.google.com/books?vid=ISBN9780385730624",
+    "isbn": "9780385730624",
+    "shops": "https://en.wikipedia.org/wiki/Special:BookSources/9780385730624"
+   }
+  },
+  "visit": {
+   "where": "Bletchley Park",
+   "city": "Bletchley, Milton Keynes",
+   "url": "https://www.bletchleypark.org.uk/our-story/enigma/"
+  }
+ },
+ "N1019": {
+  "book": {
+   "fr": {
+    "t": "Alastrim : l'homme et la variole",
+    "a": "Serge Kernbaum",
+    "u": "https://books.google.fr/books?hl=fr&vid=ISBN9782343037264",
+    "isbn": "9782343037264",
+    "shops": "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Ouvrages_de_r%C3%A9f%C3%A9rence/9782343037264"
+   },
+   "en": {
+    "t": "The Last Days of Smallpox: Tragedy in Birmingham",
+    "a": "Mark Pallen",
+    "u": "https://books.google.com/books?vid=ISBN9781980455226",
+    "isbn": "9781980455226",
+    "shops": "https://en.wikipedia.org/wiki/Special:BookSources/9781980455226"
+   }
+  },
+  "visit": {
+   "where": "Musée de l'Histoire de la Médecine",
+   "city": "France",
+   "url": "https://paris-promeneurs.com/le-musee-dhistoire-de-la-medecine/"
+  }
+ },
+ "Q405": {
+  "book": {
+   "en": {
+    "t": "How the Internet Really Works: An Illustrated Guide to Protocols, Privacy, Censorship, and Governance",
+    "a": "ARTICLE 19 (contributors Ulrike Uhlig, Mallory Knodel, Niels ten Oever, Corinne Cath)",
+    "u": "https://books.google.com/books?vid=ISBN9781718500297",
+    "isbn": "9781718500297",
+    "shops": "https://en.wikipedia.org/wiki/Special:BookSources/9781718500297"
+   }
+  },
+  "visit": {
+   "where": "Computer Museum NAM-IP",
+   "city": "Belgium",
+   "url": "https://museozoom.be/en/mus%C3%A9e/computer-museum-nam-ip/"
   }
  }
 };

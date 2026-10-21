@@ -37,11 +37,26 @@ window.CURIO_WATCH_CHOSEN = {
   "en": "https://youtu.be/XuKjBIBBAL8",
   "fr": "https://youtu.be/r7_dy0z5Xp0"
  },
+ "Q737": {
+  "en": "https://youtu.be/Gmif_35NB2Q",
+  "fr": "https://youtu.be/2GpxD9qNREk"
+ },
+ "N0856": {
+  "en": "https://youtu.be/acDgmSa0Bb4",
+  "fr": "https://youtu.be/HiCwEeGNDD0"
+ },
+ "N1019": {
+  "fr": "https://youtu.be/ctCf6fW4YO0",
+  "en": "https://youtu.be/oBSandHijDc"
+ },
  "N0890": {
   "en": "https://youtu.be/mC9tYJjmvYQ"
  },
  "Q267": {
   "en": "https://youtu.be/jhbv9ipmuYk"
+ },
+ "Q405": {
+  "en": "https://youtu.be/Mb50bQ5RsUk"
  }
 };
 window.CURIO_WATCH_DECLINED = {};
