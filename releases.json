@@ -1,12 +1,14 @@
 {
- "generated": "2026-10-20",
+ "generated": "2026-10-22",
  "live": {
   "production": 118,
-  "uat": 127,
+  "uat": 129,
   "main": 118
  },
  "drift": null,
  "awaiting": [
+  129,
+  128,
   127,
   126,
   125,
@@ -186,11 +188,59 @@
  ],
  "releases": [
   {
+   "version": 129,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-23",
+   "to": "2026-10-23",
+   "questions": 2048,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "6a3b266",
+     "date": "2026-10-23",
+     "subject": "v129: v128 plus no English travel guide for a French reader"
+    },
+    {
+     "sha": "b719d7d",
+     "date": "2026-10-23",
+     "subject": "releases.js: three tries at GitHub before writing the record without sign-offs"
+    }
+   ]
+  },
+  {
+   "version": 128,
+   "state": "ON UAT",
+   "branch": "uat",
+   "from": "2026-10-23",
+   "to": "2026-10-23",
+   "questions": 2048,
+   "signoff": {
+    "status": "NO ISSUE"
+   },
+   "messageClash": [],
+   "commits": [
+    {
+     "sha": "adfbf90",
+     "date": "2026-10-23",
+     "subject": "v128: the November beta build - v127 plus every November book, Kids book and place, per language"
+    },
+    {
+     "sha": "c2e612c",
+     "date": "2026-10-23",
+     "subject": "French readers never get an English travel guide: the French Wikivoyage page for the same place, or a greyed door (312 doors)"
+    }
+   ]
+  },
+  {
    "version": 127,
    "state": "ON UAT",
    "branch": "uat",
    "from": "2026-10-20",
-   "to": "2026-10-20",
+   "to": "2026-10-22",
    "questions": 2048,
    "signoff": {
     "status": "AWAITING",
@@ -205,6 +255,126 @@
      "sha": "b33aa01",
      "date": "2026-10-20",
      "subject": "v127: the beta build for the Sunday check - v126 plus the contact address and the replaced book links"
+    },
+    {
+     "sha": "6e496b9",
+     "date": "2026-10-20",
+     "subject": "Releases record: v127 on UAT (173/173 live checks), sign-off #118"
+    },
+    {
+     "sha": "3aa0736",
+     "date": "2026-10-20",
+     "subject": "hello@qpio.app delivered to two inboxes: the Qpio one and a copy to the founder's Gmail"
+    },
+    {
+     "sha": "0438096",
+     "date": "2026-10-21",
+     "subject": "French readers never get an English book; your 1 Nov review choices applied"
+    },
+    {
+     "sha": "4e27237",
+     "date": "2026-10-21",
+     "subject": "November content: books and videos in each reader's language, hooks rewritten, 15 beta slots swapped"
+    },
+    {
+     "sha": "5f25d35",
+     "date": "2026-10-21",
+     "subject": "1 Nov Kids: N0958 swapped for Q154 (founder ruling); French and English books for the six swapped-in November questions"
+    },
+    {
+     "sha": "218bbc3",
+     "date": "2026-10-22",
+     "subject": "His 21 Oct review choices applied (videos, books, places for 1 Nov); golinks reads his place per language"
+    },
+    {
+     "sha": "df7289a",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "6f289c0",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "722fc57",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "6d984a8",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "c599f4e",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "78907b0",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "2b15adf",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied: Kids books 15-17 Nov (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "2a1915f",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "02814c0",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "ba19cd2",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "f7fc4f2",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "a71b2e2",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "b17cd4b",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "9273f0c",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "bbf22a9",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "30aecb1",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
+    },
+    {
+     "sha": "b6bfb63",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1): places for 22-30 Nov"
+    },
+    {
+     "sha": "f4cebe5",
+     "date": "2026-10-22",
+     "subject": "His review rulings applied (tools/process_rulings.ps1)"
     }
    ]
   },

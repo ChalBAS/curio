@@ -8,11 +8,11 @@ commit, not from the commit message.*
 | | |
 |---|---|
 | Live to readers | **v118** at qpio.app |
-| On UAT | **v127** at uat.qpio.app |
+| On UAT | **v129** at uat.qpio.app |
 | Tip of `main` | v118 |
-| Generated | 2026-10-20 |
+| Generated | 2026-10-22 |
 
-> ⏳ **Awaiting your sign-off:** v127, v126, v125, v124, v123, v122, v121, v120, v119. Write **Accepted for production**
+> ⏳ **Awaiting your sign-off:** v129, v128, v127, v126, v125, v124, v123, v122, v121, v120, v119. Write **Accepted for production**
 > — or **Rejected — <reason>** — in that version's release issue.
 
 > 🔴 **Reached readers without a recorded sign-off:** v116 (AWAITING), v115 (AWAITING), v113 (AWAITING), v112 (AWAITING), v111 (AWAITING), v110 (AWAITING), v109 (AWAITING), v108 (AWAITING), v107 (NO ISSUE), v106 (AWAITING), v105 (AWAITING), v104 (AWAITING), v103 (AWAITING), v102 (AWAITING), v101 (AWAITING), v100 (AWAITING), v99 (AWAITING), v98 (AWAITING), v97 (NO ISSUE), v96 (REJECTED), v95 (REJECTED), v94 (NO ISSUE), v93 (NO ISSUE), v92 (NO ISSUE), v89 (NO ISSUE), v88 (NO ISSUE), v87 (NO ISSUE), v86 (NO ISSUE), v85 (NO ISSUE), v84 (NO ISSUE), v83 (AWAITING), v82 (REJECTED), v81 (REJECTED), v80 (NO ISSUE), v78 (NO ISSUE), v77 (AWAITING), v74 (NO ISSUE), v73 (REJECTED), v72 (NO ISSUE), v71 (NO ISSUE), v70 (NO ISSUE).
@@ -24,11 +24,49 @@ not by omission.*
 
 ---
 
+## v129 — ⏳ on UAT
+
+2026-10-23 · 2,048 questions · sign-off: **no release issue**
+
+- `6a3b266` v129: v128 plus no English travel guide for a French reader
+- `b719d7d` releases.js: three tries at GitHub before writing the record without sign-offs
+
+## v128 — ⏳ on UAT
+
+2026-10-23 · 2,048 questions · sign-off: **no release issue**
+
+- `adfbf90` v128: the November beta build - v127 plus every November book, Kids book and place, per language
+- `c2e612c` French readers never get an English travel guide: the French Wikivoyage page for the same place, or a greyed door (312 doors)
+
 ## v127 — ⏳ on UAT
 
-2026-10-20 · 2,048 questions · sign-off: awaiting you, [#118](https://github.com/ChalBAS/curio-hq/issues/118)
+2026-10-20 → 2026-10-22 · 2,048 questions · sign-off: awaiting you, [#118](https://github.com/ChalBAS/curio-hq/issues/118)
 
 - `b33aa01` v127: the beta build for the Sunday check - v126 plus the contact address and the replaced book links
+- `6e496b9` Releases record: v127 on UAT (173/173 live checks), sign-off #118
+- `3aa0736` hello@qpio.app delivered to two inboxes: the Qpio one and a copy to the founder's Gmail
+- `0438096` French readers never get an English book; your 1 Nov review choices applied
+- `4e27237` November content: books and videos in each reader's language, hooks rewritten, 15 beta slots swapped
+- `5f25d35` 1 Nov Kids: N0958 swapped for Q154 (founder ruling); French and English books for the six swapped-in November questions
+- `218bbc3` His 21 Oct review choices applied (videos, books, places for 1 Nov); golinks reads his place per language
+- `df7289a` His review rulings applied (tools/process_rulings.ps1)
+- `6f289c0` His review rulings applied (tools/process_rulings.ps1)
+- `722fc57` His review rulings applied (tools/process_rulings.ps1)
+- `6d984a8` His review rulings applied (tools/process_rulings.ps1)
+- `c599f4e` His review rulings applied (tools/process_rulings.ps1)
+- `78907b0` His review rulings applied (tools/process_rulings.ps1)
+- `2b15adf` His review rulings applied: Kids books 15-17 Nov (tools/process_rulings.ps1)
+- `2a1915f` His review rulings applied (tools/process_rulings.ps1)
+- `02814c0` His review rulings applied (tools/process_rulings.ps1)
+- `ba19cd2` His review rulings applied (tools/process_rulings.ps1)
+- `f7fc4f2` His review rulings applied (tools/process_rulings.ps1)
+- `a71b2e2` His review rulings applied (tools/process_rulings.ps1)
+- `b17cd4b` His review rulings applied (tools/process_rulings.ps1)
+- `9273f0c` His review rulings applied (tools/process_rulings.ps1)
+- `bbf22a9` His review rulings applied (tools/process_rulings.ps1)
+- `30aecb1` His review rulings applied (tools/process_rulings.ps1)
+- `b6bfb63` His review rulings applied (tools/process_rulings.ps1): places for 22-30 Nov
+- `f4cebe5` His review rulings applied (tools/process_rulings.ps1)
 
 ## v126 — ⏳ on UAT
 
