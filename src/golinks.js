@@ -395,6 +395,14 @@
     /* the place for a French reader, where the review chose one apart from the English
        side (7 Oct 2026); {none:true} there greys the French door */
     var bv = bank && bank.visit ? (dl === "fr" && bank.visit.fr ? bank.visit.fr : bank.visit) : null;
+    /* KIDS MODE OFFERS ONLY A BOOK CHECKED FOR CHILDREN (27 Oct 2026; founder, 22 Oct: "be
+       careful for Kids, the videos and books need to be age appropriate"). As with the Watch
+       door below: his own pick, or a book a children's review passed for this question (k:1,
+       written by curio-hq/tools/publish_to_app.js); anything else - an unchecked book, the
+       August subject table, a search - is a greyed door in Kids mode. */
+    var kidsRead = false;
+    try { kidsRead = (JSON.parse(localStorage.getItem("curio.settings") || "{}") || {}).ageMode === "kids"; } catch (eKR) {}
+    if (kidsRead && bb && bb.u && !bb.k && bb.by !== "founder") bb = { none: true };
 
     var made = {
       /* naming the actual book is the difference between "somewhere to read"
@@ -409,7 +417,7 @@
                August table's guess */
             : bb && bb.none ? { title: "", sub: "", url: null }
             /* the August subject tables are English books: never for a French reader */
-            : dl === "fr" ? { title: "", sub: "", url: null }
+            : dl === "fr" || kidsRead ? { title: "", sub: "", url: null }
             : book ? { title: book.t, sub: book.a || "", url: readUrl(title, slug) }
             : { title: title, sub: "", url: readUrl(title, slug) },
       visit:  cv && cv.none ? { title: "", sub: "", url: null }
