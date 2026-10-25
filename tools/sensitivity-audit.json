@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-22T17:04:23.054Z",
+  "generated_at": "2026-10-25T23:23:04.621Z",
   "totals": {
     "questions": 2048
   },
@@ -936,7 +936,7 @@
     },
     {
       "index": 670,
-      "q": "Jaipur is known as India's Pink City. Why was it painted pink?",
+      "q": "Jaipur's old city was famously painted pink in 1876. According to the usual story, who was",
       "src": "https://en.wikipedia.org/wiki/Jaipur",
       "sens": "SENSITIVE",
       "sens_type": [
