@@ -1,6 +1,6 @@
 {
  "$schema": "qpio-bank-manifest/1",
- "generated": "2026-10-25T23:14:55.662Z",
+ "generated": "2026-10-25T23:32:00.337Z",
  "tool": "curio-hq/tools/publish_to_app.js",
  "note": "NOT served to readers. One record per shipped question: where its text came from, whether the panel read it, whether it is complete in each language, and the founder's ruling. The acceptance run and the HQ inventory page read this, so a claim about the build can be checked against the build.",
  "gate": "test build — complete in both languages and not sent back; NOT approved",
@@ -9,7 +9,7 @@
   "added": 0,
   "changedEn": 0,
   "changedFr": 0,
-  "carriedBecauseShipped": 234,
+  "carriedBecauseShipped": 237,
   "ungoverned": 12,
   "unruled": 2034
  },
@@ -820,7 +820,7 @@
    "governed": true,
    "textFrom": "the golden source workbook",
    "completeFor": {
-    "en": true,
+    "en": false,
     "fr": true
    },
    "panel": "PASS_WITH_MINOR_EDIT",
@@ -829,7 +829,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "Q055": {
    "governed": true,
@@ -22948,7 +22949,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -22956,7 +22957,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1553": {
    "governed": true,
@@ -26088,7 +26090,7 @@
    "textFrom": "rewritten from the source article on 2026-09-11",
    "completeFor": {
     "en": true,
-    "fr": true
+    "fr": false
    },
    "panel": "PASS_WITH_MINOR_EDIT",
    "factChecked": true,
@@ -26096,7 +26098,8 @@
     "en": null,
     "fr": null
    },
-   "qualifiedToday": true
+   "qualifiedToday": false,
+   "carriedBecauseShipped": true
   },
   "N1764": {
    "governed": true,
