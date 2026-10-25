@@ -675,7 +675,7 @@ window.CURIO_HOOKS_Q = {
   "Q668":{"en":"The answer is Myanmar. What does this fact actually change for the people, animals or economies involved?","fr":null},
   "Q669":{"en":"The answer is Lion city. What does this fact actually change for the people, animals or economies involved?","fr":null},
   "Q670":{"en":"The answer is Ulaanbaatar. What does this fact actually change for the people, animals or economies involved?","fr":null},
-  "Q671":{"en":"The answer is To welcome a visiting British prince. What does this fact actually change for the people, animals or economies involved?","fr":null},
+  "Q671":{"en":"A whole city repainted for one guest, and it never changed back. What would your town paint itself for?","fr":"Toute une ville repeinte pour un seul invité, et elle n'a jamais changé de couleur. Pour qui votre ville se repeindrait-elle ?"},
   "Q672":{"en":"The answer is Borneo. What does this fact actually change for the people, animals or economies involved?","fr":null},
   "Q673":{"en":"The answer is The Inca empire. What does this fact actually change for the people, animals or economies involved?","fr":null},
   "Q674":{"en":"Hotels near it are built almost entirely from blocks of salt cut from the flat: the walls, the roof, even the furniture.","fr":"Près du salar, des hôtels sont presque entièrement bâtis en blocs de sel taillés sur place : les murs, le toit et même les meubles."},
