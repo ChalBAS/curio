@@ -402,7 +402,9 @@
        August subject table, a search - is a greyed door in Kids mode. */
     var kidsRead = false;
     try { kidsRead = (JSON.parse(localStorage.getItem("curio.settings") || "{}") || {}).ageMode === "kids"; } catch (eKR) {}
-    if (kidsRead && bb && bb.u && !bb.k && bb.by !== "founder") bb = { none: true };
+    /* where a good adult book stays for everyday readers, the Kids review's children's book for
+       the same question rides on the door as `kid` (27 Oct 2026) and opens instead */
+    if (kidsRead && bb && bb.u && !bb.k && bb.by !== "founder") bb = bb.kid && bb.kid.u ? bb.kid : { none: true };
 
     var made = {
       /* naming the actual book is the difference between "somewhere to read"
